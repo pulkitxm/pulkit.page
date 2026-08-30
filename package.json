@@ -1,0 +1,23 @@
+{
+  "name": "pulkit-page",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun scripts/build.mjs",
+    "check:comments": "bun scripts/check-comments.mjs",
+    "check:generated": "bun scripts/check-generated.mjs",
+    "check:repository": "bun scripts/check-repository.mjs",
+    "check:site": "bun scripts/check-site.mjs dist",
+    "ci": "bun scripts/ci.mjs",
+    "format": "biome format --write . && prettier --write \"**/*.{html,md,mdx,yml,yaml}\"",
+    "format:check": "biome format . && prettier --check \"**/*.{html,md,mdx,yml,yaml}\"",
+    "lint": "biome lint . && html-validate \"**/*.html\"",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@babel/parser": "8.0.4",
+    "@biomejs/biome": "2.5.11",
+    "html-validate": "11.10.0",
+    "prettier": "3.9.6"
+  }
+}

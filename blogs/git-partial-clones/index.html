@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How partial clones, shallow clones, and sparse checkout reduce the cost of working with large Git repositories.">
+    <meta name="theme-color" content="#f2eadf">
+    <script src="/theme.js"></script>
+    <title>Partial clones, shallow clones, and sparse checkout</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="site-mark" href="/">Pulkit</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/experience/">Experience</a>
+          <a href="/blogs/" aria-current="page">Writing</a>
+          <a href="/contact/">Contact</a>
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false"><span aria-hidden="true">Dark</span></button>
+        </nav>
+      </header>
+
+      <main class="site-main">
+        <a class="back-link" href="/blogs/">Back to writing</a>
+        <article>
+          <header>
+            <p class="detail-kicker">Git · 8 min read</p>
+            <h1 class="detail-title">Partial clones, shallow clones, and sparse checkout</h1>
+            <p class="detail-summary">Three independent Git features can turn a multi-gigabyte clone into a small, focused checkout.</p>
+            <p class="detail-meta"><time datetime="2026-08-03">03 August 2026</time></p>
+          </header>
+
+          <div class="prose">
+            <p>Recently I needed to change one file in a repository with years of history and a large collection of committed media. A normal clone would download far more data than the task required.</p>
+            <p>Git already has the tools to avoid that work. The useful part is understanding that each one controls a different dimension of the repository.</p>
+
+            <h2>The short version</h2>
+            <pre><code>git clone --filter=blob:none --depth 1 --no-checkout --branch main &lt;url&gt; repo
+cd repo
+git sparse-checkout set --no-cone /README.md
+git checkout main</code></pre>
+
+            <h2>What each option changes</h2>
+            <ul>
+              <li><code>--filter=blob:none</code> leaves file contents on the server until they are needed.</li>
+              <li><code>--depth 1</code> downloads the latest commit instead of the full history.</li>
+              <li><code>--no-checkout</code> prevents Git from immediately materializing every file.</li>
+              <li><code>sparse-checkout</code> limits the working tree to the paths you choose.</li>
+            </ul>
+
+            <h2>Why they compose</h2>
+            <p>Shallow clone cuts history, partial clone cuts file content, and sparse checkout cuts the working tree. Because they operate on separate parts of the repository, they can be combined without changing the normal commit and push workflow.</p>
+          </div>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 Pulkit</p>
+        <p><a href="/blogs/">All writing</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

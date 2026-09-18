@@ -49,6 +49,10 @@ export function icon(node, className = "") {
   return svg.outerHTML;
 }
 
+export function prefersReducedMotion() {
+  return matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export function html(strings, ...values) {
   return strings.reduce(
     (result, part, index) =>

@@ -1,0 +1,24 @@
+{
+  "article": "design-engineering/psychology-of-motion",
+  "index": 0,
+  "component": "spatial-relationship",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "App.tsx",
+      "language": "tsx",
+      "code": "import \"./slide-panel.css\";\nimport { Settings, X } from \"lucide-react\";\nimport { useState } from \"react\";\nimport { Button } from \"../ui/button\";\n\nexport function SpatialRelationshipDemo() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <div className=\"container\">\n      <Button onClick={() => setIsOpen((prev) => !prev)}>\n        <Settings className=\"size-4\" />\n        {isOpen ? \"Close\" : \"Open\"} Settings\n      </Button>\n\n      <div\n        className={`panel ${isOpen ? \"panel--open\" : \"\"}`}\n      >\n        <div className=\"panel__header\">\n          <span>Settings</span>\n          <Button onClick={() => setIsOpen(false)}>\n            <X className=\"size-4\" />\n          </Button>\n        </div>\n        <div className=\"panel__content\">\n          {/* Settings content */}\n        </div>\n      </div>\n    </div>\n  );\n}"
+    },
+    {
+      "filename": "slide-panel.css",
+      "language": "css",
+      "code": ".panel {\n  position: absolute;\n  top: 0;\n  right: 0;\n  height: 100%;\n  width: 13rem;\n  transform: translateX(100%);\n  transition: transform 400ms cubic-bezier(0.32, 0.72, 0, 1);\n}\n\n.panel--open {\n  transform: translateX(0);\n}"
+    }
+  ]
+}

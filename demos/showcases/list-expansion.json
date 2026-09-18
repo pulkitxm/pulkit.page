@@ -1,0 +1,24 @@
+{
+  "article": "design-engineering/psychology-of-motion",
+  "index": 1,
+  "component": "list-expansion",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "list-expansion.tsx",
+      "language": "tsx",
+      "code": "import \"./list-expansion.css\";\nimport { useState, useRef } from \"react\";\n\nfunction ListWithAnimation() {\n  const [selected, setSelected] = useState<Item | null>(\n    null,\n  );\n  const containerRef = useRef<HTMLDivElement>(null);\n\n  return (\n    <div ref={containerRef} className=\"list-container\">\n      <div\n        className={`view ${selected ? \"view--hidden\" : \"view--visible\"}`}\n      >\n        {items.map((item) => (\n          <ListItem\n            key={item.id}\n            item={item}\n            onSelect={setSelected}\n          />\n        ))}\n      </div>\n\n      <div\n        className={`view ${selected ? \"view--visible\" : \"view--hidden\"}`}\n      >\n        {selected && (\n          <DetailView\n            item={selected}\n            onBack={() => setSelected(null)}\n          />\n        )}\n      </div>\n    </div>\n  );\n}"
+    },
+    {
+      "filename": "list-expansion.css",
+      "language": "css",
+      "code": ".list-container {\n  position: relative;\n}\n\n.view {\n  transition: opacity 100ms ease-out;\n}\n\n.view--visible {\n  opacity: 1;\n}\n\n.view--hidden {\n  opacity: 0;\n  pointer-events: none;\n  position: absolute;\n  inset: 0;\n}"
+    }
+  ]
+}

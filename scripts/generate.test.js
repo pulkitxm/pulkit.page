@@ -205,7 +205,14 @@ test("deployment build copies generated pages and assets and rejects legacy root
   expect(existsSync(join(cwd, "dist/CNAME"))).toBe(false);
   expect(readFileSync(join(cwd, "dist/dev-3456/index.html"), "utf8")).toBe("running preview");
   expect(run("build.mjs").status).toBe(0);
-  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).toBe(
+  const built = readFileSync(join(cwd, "dist/index.html"), "utf8");
+  const [, styles] = built.match(/href="\/(styles\.[0-9a-f]{12}\.css)"/);
+  const [, theme] = built.match(/src="\/(theme\.[0-9a-f]{12}\.js)"/);
+  expect(existsSync(join(cwd, "dist", styles))).toBe(true);
+  expect(existsSync(join(cwd, "dist", theme))).toBe(true);
+  expect(existsSync(join(cwd, "dist/styles.css"))).toBe(false);
+  expect(existsSync(join(cwd, "dist/theme.js"))).toBe(false);
+  expect(built.replace(`/${styles}`, "/styles.css").replace(`/${theme}`, "/theme.js")).toBe(
     readFileSync(join(cwd, "pages/index.html"), "utf8"),
   );
   expect(readFileSync(join(cwd, "dist/assets/example.txt"), "utf8")).toBe("asset");

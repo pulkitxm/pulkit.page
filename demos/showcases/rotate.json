@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/moving-things-without-moving-them",
+  "index": 3,
+  "component": "rotate",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

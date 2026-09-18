@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/keyframe-animations",
+  "index": 6,
+  "component": "skeleton-loader",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

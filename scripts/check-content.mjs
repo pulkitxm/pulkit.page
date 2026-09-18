@@ -271,8 +271,12 @@ export function checkContent(file, source) {
     }
     if (node.type === "paragraph" && sourceText(node).includes(":::")) {
       const text = sourceText(node);
-      if (!/^:::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?$/.test(text)) {
-        fail("invalid or embedded list directive", node);
+      if (
+        !/^(?::::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?|:::carousel|:::)$/.test(
+          text,
+        )
+      ) {
+        fail("invalid or embedded directive", node);
       }
     }
     for (const child of node.children ?? []) {

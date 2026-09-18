@@ -178,6 +178,7 @@
             </p>
             <p class="mt-0 mb-6">The naive approach? Store everything in a set:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> watchedPosts <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Set</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">&gt;();</span>
 
@@ -251,6 +252,7 @@ watchedPosts<span class="text-syn-u">.</span><span class="text-syn-f">add</span>
               Let&#39;s walk through a simple example. Say we have an 8-bit Bloom filter:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Index:  0   1   2   3   4   5   6   7
 Bits:  [0] [0] [0] [0] [0] [0] [0] [0]
@@ -267,6 +269,7 @@ Bits:  [0] [0] [0] [0] [0] [0] [0] [0]
               <li>Set bit at index 2 to 1</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Index:  0   1   2   3   4   5   6   7
 Bits:  [0] [0] [1] [0] [0] [0] [0] [0]
@@ -280,6 +283,7 @@ Bits:  [0] [0] [1] [0] [0] [0] [0] [0]
               <li>Set bit at index 6 to 1</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Index:  0   1   2   3   4   5   6   7
 Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
@@ -293,6 +297,7 @@ Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
               <li>Set bit at index 2 to 1 (already 1, no change)</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Index:  0   1   2   3   4   5   6   7
 Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
@@ -316,6 +321,7 @@ Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
               <li><strong>Definitely NOT present</strong></li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Index:  0   1   2   3   4   5   6   7
 Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
@@ -333,6 +339,7 @@ Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
               <li><strong>Might be present</strong> (false positive!)</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Index:  0   1   2   3   4   5   6   7
 Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
@@ -409,6 +416,7 @@ Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
               are 1. At that point, almost any query returns &quot;might be present.&quot;
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Empty:     [0][0][0][0][0][0][0][0]  → Low false positive rate
 Some keys: [0][1][1][0][1][0][1][0]  → Medium false positive rate
@@ -428,6 +436,7 @@ Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
             </ol>
             <p class="mt-0 mb-6">There&#39;s a mathematical formula for this:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-math rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">m = \frac{-n \cdot \ln(p)}{(\ln 2)^2}
 </code></pre>
@@ -456,6 +465,7 @@ Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
               For example, if you expect 1 million keys and want a 1% false positive rate:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-math rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">m = \frac{-1,000,000 \cdot \ln(0.01)}{(\ln 2)^2} \approx 9,585,059 \text{ bits} \approx 1.14 \text{ MB}
 </code></pre>
@@ -473,6 +483,7 @@ Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
               different functions, and k bits are set.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">addToBloomFilter</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash1 <span class="text-syn-o">=</span> <span class="text-syn-f">murmurhash</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
@@ -499,6 +510,7 @@ Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
             </p>
             <p class="mt-0 mb-6">The optimal number of hash functions is:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-math rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">k = \frac{m}{n} \cdot \ln 2
 </code></pre>
@@ -536,6 +548,7 @@ Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
               incorrectly indicate &quot;cat&quot; isn&#39;t present.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Before: [0][0][1][0][0][0][1][0]  → apple and cat both at index 2
 
@@ -584,6 +597,7 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
               </li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">BloomFilterConfig</span> <span class="text-syn-u">{</span>
   expectedElements<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
@@ -623,6 +637,7 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
             </p>
             <p class="mt-0 mb-6">Here&#39;s how you use it via Redis CLI:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic"># Create a Bloom filter named &quot;watched_posts&quot;</span>
 <span class="text-syn-c italic"># 0.01 = 1% false positive rate</span>
@@ -696,6 +711,7 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
             </table>
             <p class="mt-0 mb-6">In TypeScript with ioredis:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
@@ -742,6 +758,7 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
               consumed.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">User requests feed
     ↓
@@ -766,6 +783,7 @@ Return filtered feed
               Track which URLs have already been crawled. Don&#39;t waste resources re-crawling.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">crawl</span><span class="text-syn-u">(</span>startUrl<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> queue <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>startUrl<span class="text-syn-u">];</span>
@@ -796,6 +814,7 @@ Return filtered feed
               skip the database query entirely.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">User</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> mightExist <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.EXISTS&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_ids&quot;</span><span class="text-syn-u">,</span> userId<span class="text-syn-u">);</span>
@@ -817,6 +836,7 @@ Return filtered feed
               right, that profile shouldn&#39;t appear again.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getNextProfiles</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> candidates <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCandidateProfiles</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>

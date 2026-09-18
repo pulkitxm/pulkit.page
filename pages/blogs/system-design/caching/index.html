@@ -228,6 +228,7 @@
               <li>No database query needed</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">;</span>
@@ -303,6 +304,7 @@
               <li>Performance degrades, but the system keeps functioning</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">;</span>
@@ -407,6 +409,7 @@
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> CACHE_TTL <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">USER_SESSION:</span> <span class="text-syn-n">3600</span><span class="text-syn-u">,</span>
@@ -433,6 +436,7 @@
               At their core, caches have a simple access pattern: <strong>key-value</strong>.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">PUT(key, value)  → stores data
 GET(key)         → retrieves data
@@ -446,6 +450,7 @@ DEL(key)         → removes data
               <li>Get it out with that same key</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Cache</span> <span class="text-syn-u">{</span>
   <span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;;</span>
@@ -486,6 +491,7 @@ DEL(key)         → removes data
               <li>API server memory is nearer than Redis</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">class</span> <span class="text-syn-t">MultiLevelCache</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">private</span> localCache <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> value<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span> expiry<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">}&gt;();</span>
@@ -543,6 +549,7 @@ DEL(key)         → removes data
               single request. If you hit the database for every token validation:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">1000 requests/second × 1 DB query each = 1000 DB queries/second
 </code></pre>
@@ -550,6 +557,7 @@ DEL(key)         → removes data
               That&#39;s unnecessary load on your database. Instead, cache authentication tokens:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">validateToken</span><span class="text-syn-u">(</span>token<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">User</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`auth:${token}`</span><span class="text-syn-u">;</span>
@@ -585,6 +593,7 @@ DEL(key)         → removes data
               origin server.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Origin Server (far) → CDN Edge (near) → User
 
@@ -618,6 +627,7 @@ DEL(key)         → removes data
               <li>Atomic operations</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
@@ -822,6 +832,7 @@ DEL(key)         → removes data
               let requests come in, experience cache misses, and then populate the cache.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getBlog</span><span class="text-syn-u">(</span>blogId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Blog</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`blog:${blogId}`</span><span class="text-syn-u">;</span>
@@ -869,6 +880,7 @@ DEL(key)         → removes data
               <li>Classic memory leak</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> value<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">300</span><span class="text-syn-u">);</span>
 
@@ -920,6 +932,7 @@ DEL(key)         → removes data
             </p>
             <p class="mt-0 mb-6">With eager population:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">updateScore</span><span class="text-syn-u">(</span>matchId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> newScore<span class="text-syn-o">:</span> <span class="text-syn-t">Score</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;UPDATE matches SET score = $1 WHERE id = $2&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>newScore<span class="text-syn-u">,</span> matchId<span class="text-syn-u">]);</span>
@@ -933,6 +946,7 @@ DEL(key)         → removes data
               for expiry.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Commentator updates score
          │
@@ -968,6 +982,7 @@ DEL(key)         → removes data
               cache miss), you proactively push it to cache.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createTweet</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> content<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Tweet</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> tweet <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">createTweet</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">,</span> content<span class="text-syn-u">);</span>
@@ -993,6 +1008,7 @@ DEL(key)         → removes data
               can proactively cache that video&#39;s metadata.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">addToRecommendationFeed</span><span class="text-syn-u">(</span>videoId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> userIds<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>userIds<span class="text-syn-u">.</span>length <span class="text-syn-o">&gt;</span> <span class="text-syn-n">10000</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
@@ -1104,6 +1120,7 @@ DEL(key)         → removes data
               When your cache is read-heavy (most caches are), add read replicas.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">              ┌─────────────┐
               │   Master    │ ← All writes
@@ -1133,6 +1150,7 @@ DEL(key)         → removes data
               When you have too much data for a single node, shard your cache.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">                    ┌─────────┐
                     │   API   │
@@ -1153,6 +1171,7 @@ DEL(key)         → removes data
               <li>Each shard can have its own replicas</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getShardForKey</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Redis</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashFunction</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
@@ -1250,6 +1269,7 @@ DEL(key)         → removes data
             </p>
             <p class="mt-0 mb-6">Some data cannot be cached:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getAccountBalance</span><span class="text-syn-u">(</span>accountId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT balance FROM accounts WHERE id = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>accountId<span class="text-syn-u">]);</span>
@@ -1301,6 +1321,7 @@ DEL(key)         → removes data
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> CACHE_KEY <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;user_preferences&quot;</span><span class="text-syn-u">;</span>
 
@@ -1348,12 +1369,14 @@ DEL(key)         → removes data
               Let&#39;s say your servers are in India. A user in the US makes a request:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">US User → Atlantic Ocean → India Server → Atlantic Ocean → US User
 </code></pre>
             <p class="mt-0 mb-6">That&#39;s a round trip across the globe. Latency is high.</p>
             <p class="mt-0 mb-6">With a CDN:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">US User → US CDN Server → Response
 </code></pre>
@@ -1362,6 +1385,7 @@ DEL(key)         → removes data
             </p>
             <p class="mt-0 mb-6"><strong>How CDNs work:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">User (India) ──→ Mumbai CDN ──→ (if miss) ──→ Origin Server (Sydney)
                      │                              │
@@ -1387,6 +1411,7 @@ DEL(key)         → removes data
               region populates that region&#39;s cache.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> CDN_BASE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;https://cdn.example.com&quot;</span><span class="text-syn-u">;</span>
 
@@ -1424,6 +1449,7 @@ DEL(key)         → removes data
               <li>Shared across your entire infrastructure</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌──────────┐     ┌──────────┐     ┌──────────┐
 │ API 1    │     │ API 2    │     │ API 3    │
@@ -1464,6 +1490,7 @@ DEL(key)         → removes data
               profile. The straightforward approach:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">SELECT</span> <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">FROM</span> posts <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> abc;
 </code></pre>
@@ -1480,11 +1507,13 @@ DEL(key)         → removes data
               column to the users table:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">ALTER</span> <span class="text-syn-k">TABLE</span> users <span class="text-syn-k">ADD</span> COLUMN total_posts <span class="text-syn-k">INT</span> <span class="text-syn-k">DEFAULT</span> <span class="text-syn-n">0</span>;
 </code></pre>
             <p class="mt-0 mb-6">Now, whenever a post is published:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createPost</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> content<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Post</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> db<span class="text-syn-u">.</span><span class="text-syn-f">transaction</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">(</span>trx<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
@@ -1505,6 +1534,7 @@ DEL(key)         → removes data
               query.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Before: expensive</span>
 <span class="text-syn-k">SELECT</span> <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">FROM</span> posts <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> abc;

@@ -166,6 +166,7 @@
             </h2>
             <p class="mt-0 mb-6">The whole trick is these four commands:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--filter=blob:none</span> <span class="text-syn-s">--depth</span> <span class="text-syn-s">1</span> <span class="text-syn-s">--no-checkout</span> <span class="text-syn-s">--branch</span> <span class="text-syn-s">main</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span> <span class="text-syn-s">repo</span>
 <span class="text-syn-f">cd</span> <span class="text-syn-s">repo</span>
@@ -252,6 +253,7 @@
               </li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">   commit ──► root tree ──► blob        README.md
                  │
@@ -293,6 +295,7 @@
             </h2>
             <p class="mt-0 mb-6">The oldest and best-known knob:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--depth</span> <span class="text-syn-s">1</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span>
 </code></pre>
@@ -324,6 +327,7 @@
             </p>
             <p class="mt-0 mb-6">You can change your mind later:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">fetch</span> <span class="text-syn-s">--deepen=50</span>      <span class="text-syn-c italic"># pull in 50 more commits of history</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">fetch</span> <span class="text-syn-s">--unshallow</span>      <span class="text-syn-c italic"># give up, download everything</span>
@@ -346,6 +350,7 @@
             </h2>
             <p class="mt-0 mb-6">This is the modern one, and the one that changes everything:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--filter=blob:none</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span>
 </code></pre>
@@ -369,6 +374,7 @@
             </p>
             <p class="mt-0 mb-6">You can watch it happen. In a fresh blobless clone:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">log</span> <span class="text-syn-s">--oneline</span> <span class="text-syn-s">-20</span>        <span class="text-syn-c italic"># instant, commits are local</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">ls-tree</span> <span class="text-syn-s">HEAD</span>             <span class="text-syn-c italic"># instant, trees are local</span>
@@ -380,6 +386,7 @@
             </p>
             <p class="mt-0 mb-6">There are other filters worth knowing:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">--filter<span class="text-syn-o">=</span><span class="text-syn-s">blob:none</span>        <span class="text-syn-c italic"># no blobs (the one you want 95% of the time)</span>
 --filter<span class="text-syn-o">=</span><span class="text-syn-s">blob:</span>limit<span class="text-syn-o">=</span><span class="text-syn-s">1m</span>    <span class="text-syn-c italic"># blobs over 1 MB stay behind, small ones come along</span>
@@ -409,6 +416,7 @@
               <strong>which files git materializes into your working directory.</strong>
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">set</span> <span class="text-syn-s">apps/web</span> <span class="text-syn-s">shared/ui</span>
 </code></pre>
@@ -432,6 +440,7 @@
               working tree down to individual files, you need patterns:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">set</span> <span class="text-syn-s">--no-cone</span> <span class="text-syn-s">/README.md</span>
 </code></pre>
@@ -452,6 +461,7 @@
             </p>
             <p class="mt-0 mb-6">The rest of the surface is small:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">list</span>           <span class="text-syn-c italic"># show current patterns</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">add</span> <span class="text-syn-s">docs/</span>      <span class="text-syn-c italic"># widen the checkout</span>
@@ -473,6 +483,7 @@
             </h2>
             <p class="mt-0 mb-6">Here it is again, the whole thing:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--filter=blob:none</span> <span class="text-syn-s">--depth</span> <span class="text-syn-s">1</span> <span class="text-syn-s">--no-checkout</span> <span class="text-syn-s">--branch</span> <span class="text-syn-s">main</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span> <span class="text-syn-s">repo</span>
 <span class="text-syn-f">cd</span> <span class="text-syn-s">repo</span>
@@ -538,6 +549,7 @@
               Need more of the repo later? Widen it, and git fetches just the difference:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">add</span> <span class="text-syn-s">scripts/</span>     <span class="text-syn-c italic"># fetches only the blobs under scripts/</span>
 </code></pre>
@@ -577,6 +589,7 @@
             </p>
             <p class="mt-0 mb-6">Then push:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">push</span> <span class="text-syn-s">origin</span> <span class="text-syn-s">main</span>
 </code></pre>
@@ -630,6 +643,7 @@
               need historical blobs, and those live on the server:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">log</span> <span class="text-syn-s">-p</span>            <span class="text-syn-c italic"># fetches blobs for EVERY commit it displays, one batch at a time</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">blame</span> <span class="text-syn-s">src/app.ts</span>  <span class="text-syn-c italic"># fetches every historical version of that file</span>
@@ -754,6 +768,7 @@
               a tool that bundles the recommended setup:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">scalar</span> <span class="text-syn-s">clone</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span>
 </code></pre>
@@ -856,6 +871,7 @@
             </table>
             <p class="mt-0 mb-6">And the axes, because this is the picture to keep:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">                 history (commits)
                        ▲

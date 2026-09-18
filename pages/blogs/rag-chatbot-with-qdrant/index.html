@@ -196,6 +196,7 @@
             </ul>
             <p class="mt-0 mb-6">Here&#39;s a simplified example:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">ContentChunk</span> <span class="text-syn-u">{</span>
   id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -270,6 +271,7 @@
             <p class="mt-0 mb-6"><strong>Sample embedding</strong></p>
             <p class="mt-0 mb-6"><strong>JSON input</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
     text<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hi there&quot;</span><span class="text-syn-u">,</span>
@@ -277,6 +279,7 @@
 </code></pre>
             <p class="mt-0 mb-6"><strong>Output shape</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;dimensions&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">3072</span><span class="text-syn-u">,</span>
@@ -292,6 +295,7 @@
               3072-dimensional vectors. The embedding API is straightforward:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">generateEmbedding</span><span class="text-syn-u">(</span>text<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> openai<span class="text-syn-u">.</span>embeddings<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
@@ -308,6 +312,7 @@
               approach is to hash each chunk&#39;s text and cache the embeddings:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">ChunkWithVector</span> <span class="text-syn-k">extends</span> ContentChunk <span class="text-syn-u">{</span>
   vector<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">[];</span>
@@ -348,6 +353,7 @@
             </p>
             <p class="mt-0 mb-6">Setting up a collection is straightforward:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> QdrantClient <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@qdrant/js-client-rest&quot;</span><span class="text-syn-u">;</span>
 
@@ -379,6 +385,7 @@
               &quot;point&quot; with an ID, a vector, and a payload (your metadata):
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">uploadChunks</span><span class="text-syn-u">(</span>chunks<span class="text-syn-o">:</span> <span class="text-syn-t">ChunkWithVector</span><span class="text-syn-u">[])</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> points <span class="text-syn-o">=</span> chunks<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>chunk<span class="text-syn-u">,</span> index<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
@@ -434,6 +441,7 @@
             </ol>
             <p class="mt-0 mb-6">Here&#39;s how that looks:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getRelevantContext</span><span class="text-syn-u">(</span>
   question<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
@@ -498,6 +506,7 @@
             </ul>
             <p class="mt-0 mb-6">Here&#39;s a simplified version:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">buildSystemPrompt</span><span class="text-syn-u">(</span>contextChunks<span class="text-syn-o">:</span> <span class="text-syn-t">ContextChunk</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> contextText <span class="text-syn-o">=</span> contextChunks
@@ -539,6 +548,7 @@
               <li>Returns the response</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">POST</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> messages <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> req<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">();</span>

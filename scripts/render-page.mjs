@@ -274,7 +274,11 @@ ${[
 function collectionItems(pages, route, collection, limit) {
   return pages
     .filter(
-      (page) => page.route !== route && !page.index && page.route.startsWith(`/${collection}/`),
+      (page) =>
+        page.route !== route &&
+        !page.index &&
+        page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
+          `/${collection}/`,
     )
     .sort(
       (a, b) =>

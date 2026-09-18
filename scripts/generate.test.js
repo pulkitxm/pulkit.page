@@ -307,15 +307,20 @@ test("shared metadata changes invalidate output and clean only removes orphan pa
   expect(run("--check").status).toBe(0);
 });
 
-test("collections discover nested posts, sort by date, and respect limits", async () => {
+test("collections list direct posts, keep nested posts in their category, and respect limits", async () => {
   const pages = [
     { route: "/blogs/older/", metadata: { title: "Older", date: "2025-01-01" } },
+    { route: "/blogs/oldest/", metadata: { title: "Oldest", date: "2024-01-01" } },
     { route: "/blogs/series/new/", metadata: { title: "Newer", date: "2026-01-01" } },
     { route: "/blogs/series/", index: true, metadata: { title: "Series" } },
   ];
   const html = await renderPage(`${source}\n:::list blogs limit=1\n`, { pages });
-  expect(html).toContain("Newer");
-  expect(html).not.toContain("Older");
+  expect(html).toContain("Older");
+  expect(html).not.toContain("Oldest");
+  expect(html).not.toContain("Newer");
+  const category = await renderPage(`${source}\n:::list blogs/series\n`, { pages });
+  expect(category).toContain("Newer");
+  expect(category).not.toContain("Older");
   expect(html).not.toContain('href="/blogs/series/"');
   await expect(renderPage(`${source}\n:::list missing\n`, { pages })).rejects.toThrow(
     "Empty or unknown collection",

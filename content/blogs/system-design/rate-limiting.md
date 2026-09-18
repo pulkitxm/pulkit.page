@@ -185,7 +185,7 @@ Think of it as a guest book. Every time someone enters, you write down the exact
 
 Incoming traffic is checked against the timestamps still inside `[now − windowSize, now]`. Expired stamps are removed before you compare against the limit. Accepted requests get appended to the log. Denied requests are never logged because they never counted toward the quota.
 
-[Interactive example: Sliding Window Log](https://www.pulkit.blog/series/system-design/rate-limiting)
+:::demo sliding-window-log
 
 Scaled up to longer windows, the mechanics stay identical: at **t = 59** seconds inside a **60-second** quota you can still be full while **t = 61** drops the earliest stamp so a slot frees up-there is never a sharp calendar-minute reset.
 

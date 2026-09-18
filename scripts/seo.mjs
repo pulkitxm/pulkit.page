@@ -1,7 +1,10 @@
 export function imagePath(route) {
   return `/og/${route === "/" ? "home" : route.slice(1, -1)}/card.png`;
 }
-export function pageTitle(metadata, site) {
+export function pageTitle(metadata, site, route) {
+  if (route === "/") {
+    return site.brand ?? "Pulkit";
+  }
   return `${metadata.title} | ${site.brand ?? "Pulkit"}`;
 }
 export function ancestors(route, pages) {
@@ -86,7 +89,11 @@ export function structuredData(route, metadata, site, pages) {
   };
   if (index) {
     const entries = pages
-      .filter((entry) => !entry.index && entry.route.startsWith(route))
+      .filter(
+        (entry) =>
+          !entry.index &&
+          entry.route.slice(0, entry.route.lastIndexOf("/", entry.route.length - 2) + 1) === route,
+      )
       .sort(
         (a, b) =>
           (b.metadata.date ?? "").localeCompare(a.metadata.date ?? "") ||

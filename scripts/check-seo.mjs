@@ -17,7 +17,7 @@ export function validateSeo(html, route, metadata, site, readAsset) {
   require((html.match(/<h1[ >]/g) ?? []).length === 1, "expected exactly one H1");
   require((html.match(/<main[ >]/g) ?? []).length === 1, "expected exactly one main landmark");
   require(html.includes(
-    `<title>${escapeHtml(pageTitle(metadata, site))}</title>`,
+    `<title>${escapeHtml(pageTitle(metadata, site, route))}</title>`,
   ), "incorrect title");
   const metas = new Map();
   for (const match of html.matchAll(/<meta\s+(?:name|property)="([^"]+)"\s+content="([^"]*)"/g)) {
@@ -29,8 +29,8 @@ export function validateSeo(html, route, metadata, site, readAsset) {
     "og:description": metadata.description,
     "twitter:description": metadata.description,
     "og:url": url,
-    "og:title": pageTitle(metadata, site),
-    "twitter:title": pageTitle(metadata, site),
+    "og:title": pageTitle(metadata, site, route),
+    "twitter:title": pageTitle(metadata, site, route),
     "og:image": site.url + imagePath(route),
     "twitter:image": site.url + imagePath(route),
     "og:image:width": "1200",

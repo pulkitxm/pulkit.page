@@ -5,7 +5,9 @@ description: Full Stack Engineer internship at Datawave Labs, developing scalabl
   infrastructure automation, and real-time notifications.
 role: Full Stack Engineer
 date: 2024-04-01
-period: "2024"
+period: Apr 2024 – Sep 2024
+endDate: 2024-09-30
+icon: /assets/experience/datawavelabs.webp
 ---
 
 Built parts of a cloud-based data intelligence platform during my full-stack internship.

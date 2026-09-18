@@ -18,7 +18,18 @@ const markdown = unified().use(remarkParse).use(remarkGfm).use(remarkStringify, 
   rule: "-",
   ruleRepetition: 3,
 });
-const pageFields = ["title", "description", "layout", "date", "role", "period", "tags"];
+const pageFields = [
+  "title",
+  "description",
+  "layout",
+  "date",
+  "role",
+  "period",
+  "endDate",
+  "icon",
+  "secondaryIcon",
+  "tags",
+];
 const siteFields = ["brand", "description", "copyright", "navigation", "social"];
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const isText = (value) => typeof value === "string" && value.length > 0 && value === value.trim();
@@ -75,13 +86,27 @@ function metadataErrors(data, file) {
   if (data.layout && (!slug.test(data.layout) || !existsSync(`layouts/${data.layout}.html`))) {
     errors.push("layout must name an existing layout");
   }
-  if (
-    data.date &&
-    (!/^\d{4}-\d{2}-\d{2}$/.test(data.date) ||
-      Number.isNaN(Date.parse(data.date)) ||
-      new Date(data.date).toISOString().slice(0, 10) !== data.date)
-  ) {
-    errors.push("date must be a real YYYY-MM-DD date");
+  for (const field of ["date", "endDate"]) {
+    if (
+      data[field] &&
+      (!/^\d{4}-\d{2}-\d{2}$/.test(data[field]) ||
+        Number.isNaN(Date.parse(data[field])) ||
+        new Date(data[field]).toISOString().slice(0, 10) !== data[field])
+    ) {
+      errors.push(`${field} must be a real YYYY-MM-DD date`);
+    }
+  }
+  if (data.endDate && (!data.date || data.endDate < data.date)) {
+    errors.push("endDate must be on or after date");
+  }
+  for (const field of ["icon", "secondaryIcon"]) {
+    if (
+      data[field] &&
+      (!/^\/assets\/experience\/[a-z0-9-]+\.(webp|svg)$/.test(data[field]) ||
+        !existsSync(data[field].slice(1)))
+    ) {
+      errors.push(`${field} must reference an existing experience icon`);
+    }
   }
   if (
     data.tags !== undefined &&

@@ -21,6 +21,9 @@ export function readPage(source) {
     "date",
     "role",
     "period",
+    "endDate",
+    "icon",
+    "secondaryIcon",
     "layout",
     "brand",
     "copyright",
@@ -46,6 +49,45 @@ function safeUrl(value) {
     throw new Error(`Invalid link: ${value}`);
   }
   return escapeHtml(value);
+}
+function listingDate(metadata, exact = false, recent = false) {
+  if (metadata.period || !metadata.date) {
+    return escapeHtml(metadata.period ?? "");
+  }
+  const month = new Intl.DateTimeFormat("en-US", {
+    day: exact || recent ? "numeric" : undefined,
+    month: "short",
+    year:
+      recent && Number(metadata.date.slice(0, 4)) === new Date().getUTCFullYear()
+        ? undefined
+        : "numeric",
+    timeZone: "UTC",
+  }).format(new Date(metadata.date));
+  return `<time datetime="${escapeHtml(metadata.date)}">${month}</time>`;
+}
+function experiencePeriod(metadata) {
+  const month = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  const exact = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  const date = (value) =>
+    `<time datetime="${escapeHtml(value)}" title="${exact.format(new Date(value))}">${month.format(new Date(value))}</time>`;
+  return `${date(metadata.date)} – ${metadata.endDate ? date(metadata.endDate) : "present"}`;
+}
+function experienceEntry(page) {
+  const { metadata } = page;
+  const icons = [metadata.icon, metadata.secondaryIcon]
+    .filter(Boolean)
+    .map((icon) => `<img src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`)
+    .join("");
+  return `<li><a class="entry-link experience-link" href="${safeUrl(page.route)}"><span class="experience-icons">${icons}</span><span class="experience-info"><span class="entry-title">${escapeHtml(metadata.title)}</span><span class="experience-role">${escapeHtml(metadata.role)}</span></span><span class="entry-meta experience-period">${experiencePeriod(metadata)}</span></a></li>`;
 }
 export async function renderPage(
   source,
@@ -124,13 +166,32 @@ export async function renderPage(
           if (!items.length) {
             throw new Error(`Empty or unknown collection: ${token.collection}`);
           }
-          return `<ul class="entry-list">${items
-            .slice(0, token.limit)
+          const grouped = route === "/blogs/" && token.collection === "blogs";
+          const list = (entries) =>
+            `<ul class="entry-list">${entries
+              .map((page) =>
+                page.metadata.icon
+                  ? experienceEntry(page)
+                  : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
+              )
+              .join("")}</ul>`;
+          if (!grouped) {
+            return list(items);
+          }
+          const years = new Map();
+          for (const page of items) {
+            const year = page.metadata.date.slice(0, 4);
+            if (!years.has(year)) {
+              years.set(year, []);
+            }
+            years.get(year).push(page);
+          }
+          return [...years]
             .map(
-              (page) =>
-                `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${escapeHtml(page.metadata.period ?? page.metadata.date?.slice(0, 4) ?? "")}</span></a></li>`,
+              ([year, entries]) =>
+                `<h2 class="writing-year">${escapeHtml(year)}</h2>${list(entries)}`,
             )
-            .join("")}</ul>`;
+            .join("");
         },
       },
     ],
@@ -156,7 +217,7 @@ export async function renderPage(
       : "";
   return formatHtml(
     applyLayout(layouts, layout, {
-      title: escapeHtml(pageTitle(metadata, site)),
+      title: escapeHtml(pageTitle(metadata, site, route)),
       seo: site.url ? seoHead(route, metadata, site, pages) : "",
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages),
@@ -168,7 +229,7 @@ export async function renderPage(
       heading: escapeHtml(metadata.title),
       date:
         detail || metadata.role
-          ? `<p class="detail-meta">${[escapeHtml(metadata.role ?? ""), escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
+          ? `<p class="detail-meta">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
           : "",
       content: await markdown.parse(body),
     }),
@@ -218,7 +279,7 @@ ${[
   ["og:type", article ? "article" : "website"],
   ["og:site_name", site.brand],
   ["og:locale", "en_US"],
-  ["og:title", pageTitle(metadata, site)],
+  ["og:title", pageTitle(metadata, site, route)],
   ["og:description", metadata.description],
   ["og:url", url],
   ["og:image", image],
@@ -233,7 +294,7 @@ ${[
 ${article && metadata.date ? meta("article:published_time", metadata.date, true) + meta("article:author", `${site.url}/about/`, true) : ""}
 ${[
   ["twitter:card", "summary_large_image"],
-  ["twitter:title", pageTitle(metadata, site)],
+  ["twitter:title", pageTitle(metadata, site, route)],
   ["twitter:description", metadata.description],
   ["twitter:image", image],
   ["twitter:image:alt", metadata.title],
@@ -246,7 +307,11 @@ ${[
 function collectionItems(pages, route, collection, limit) {
   return pages
     .filter(
-      (page) => page.route !== route && !page.index && page.route.startsWith(`/${collection}/`),
+      (page) =>
+        page.route !== route &&
+        !page.index &&
+        page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
+          `/${collection}/`,
     )
     .sort(
       (a, b) =>
@@ -258,6 +323,7 @@ function collectionItems(pages, route, collection, limit) {
 
 export function renderDependencies(page, pages, site) {
   return {
+    year: page.route === "/" ? new Date().getUTCFullYear() : undefined,
     seo: seoHead(page.route, page.metadata, site, pages),
     breadcrumbs: breadcrumbs(page.route, pages),
     related: relatedNavigation(page.route, page.metadata, pages),
@@ -273,6 +339,10 @@ export function renderDependencies(page, pages, site) {
           entry.metadata.title,
           entry.metadata.period,
           entry.metadata.date,
+          entry.metadata.endDate,
+          entry.metadata.icon,
+          entry.metadata.secondaryIcon,
+          entry.metadata.role,
         ]),
     ),
   };

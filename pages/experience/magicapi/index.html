@@ -112,35 +112,523 @@
           </header>
           <div class="wrap-anywhere">
             <p class="mt-0 mb-6">
-              I joined MagicAPI in March 2025, working on API.market before moving to Noveum.ai.
+              After my sudden departure from the previous company, I was going through a rough
+              patch. One of my most trusted mentors recommended me to API.market, and I couldn&#39;t
+              be more grateful. The referral led me to a team I genuinely admire. The work, culture,
+              and people here have been incredibly motivating and fulfilling. I had a lot of
+              ownership of the platform. Things like revenue, databases etc. were shared
+              transparently.
             </p>
-            <ul class="mt-0 mb-6">
-              <li>
-                Improved API.market&#39;s code quality, responsive layouts, seller dashboard, and
-                onboarding.
-              </li>
-              <li>Built wallet and voucher flows for payments and account credits.</li>
-              <li>
-                At Noveum.ai, built interfaces for traces, datasets, and agent-assisted ETL
-                workflows.
-              </li>
-              <li>Helped migrate infrastructure to AWS.</li>
-            </ul>
             <p class="mt-0 mb-6">
-              <strong>Tools:</strong>
-              TypeScript, React, Next.js, Python, and AWS.
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/website.webp"
+                alt="API.market Website"
+                loading="lazy"
+              />
+            </p>
+            <h2 id="my-work" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              My Work
+            </h2>
+            <p class="mt-0 mb-6">
+              I have been working at a lot of tasks, but to mention some of the major changes to
+              which I contributed:
+            </p>
+            <h3 id="code-clean-up" class="mt-8 text-lg leading-tight tracking-tight">
+              Code Clean up
+            </h3>
+            <p class="mt-0 mb-6">
+              After my onboarding my first task was to clean up the code with the best practice. The
+              Co-founder mentioned this:
+            </p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
+                <strong>Shashank Aggarwal</strong>
+                - CEO &amp; Founder of API.market
+              </p>
+              <p class="mt-0 mb-6">
+                Why is it so important to have good code and why are we focussing so much on code
+                quality? It directly affects our revenue, operations and where we spend our time. I
+                can not express the compounding effects of maintaining a good code base and a
+                terrible experience of maintaining a terrible codebase that affects our mental
+                health and indirectly our revenue.
+              </p>
+            </blockquote>
+            <p class="mt-0 mb-6">
+              We had over 240 errors and warnings, after the cleanup there were just 19.
+            </p>
+            <h3
+              id="responsiveness-for-the-platform-over-various-devices"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Responsiveness for the platform over various devices
+            </h3>
+            <p class="mt-0 mb-6">
+              The mobile UI was not the most important thing we cared about as our customers were
+              business people on desktops, but it had to be fixed. So I fixed and optimised the UI
+              for mobile. Things like duplicate nav menus, I had to see and fix the components.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/resp-comparison.webp"
+                alt="Responsiveness Comparison"
+                loading="lazy"
+              />
+            </p>
+            <h3
+              id="re-designing-seller-dashboard-for-better-managing-apis"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Re-Designing Seller Dashboard for better managing APIs
+            </h3>
+            <p class="mt-0 mb-6">
+              This re-design was majorly focussed to improve the usability of the seller Dashboard
+              supported by API.market for the sellers to manage and visualize APIs and their
+              revenues. In this work I improved the design of the dashboard using shadcn-ui and
+              improved the responsiveness.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/seller-dash.webp"
+                alt="Seller Dashboard"
+                loading="lazy"
+              />
+            </p>
+            <h3
+              id="added-wallet-system-for-users-to-add-and-store-funds"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Added Wallet system for users to add and store funds
+            </h3>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/wallet.webp"
+                alt="Wallet System"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              This was done by keeping some future things in mind like wallets will be used to store
+              credits provided to users, also we were planning to add. So in the old way of
+              transactions on API.market users had to add their cards and the card marked as default
+              would be used to make a transaction. But after the introduction of this wallet system
+              users can add money via cards or we add credits in their account(to be implemented in
+              future) and use them in any transaction on API.market platform like this:
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/transaction-popup.webp"
+                alt="Transaction Popup"
+                loading="lazy"
+              />
+            </p>
+            <h3
+              id="adding-vouchers-for-users-to-redeem-credits-in-wallet"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Adding Vouchers for users to redeem Credits in Wallet
+            </h3>
+            <p class="mt-0 mb-6">
+              During our product launch, we had a plan to give 100 vouchers worth $5 each to all the
+              production people who came to our website. Additionally, when we had a hackathon on
+              our campus, we wanted to provide vouchers for participants. With these requirements in
+              mind, we developed a comprehensive voucher system where users could claim public
+              vouchers and the money would be credited into their wallet, which they could then
+              utilize on the platform.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/voucher.webp"
+                alt="Voucher System"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              We implemented two distinct types of vouchers to meet different use cases. The first
+              type was a targeted voucher system where we could could claim the voucher by
+              mentioning specific email addresses. This allowed for precise control over voucher
+              distribution for specific events or user groups. The second type was a where people
+              could freely claim it once per account, with a maximum limit of 100 people. This
+              system provided provided flexibility for both controlled distribution and open public
+              access while maintaining security and preventing abuse.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/user-specific-vouchers.webp"
+                alt="Targeted vouchers claimed by specific emails"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/public-vouchers.webp"
+                alt="Public vouchers with a claim limit"
+                loading="lazy"
+              />
+            </p>
+            <h3 id="new-hero-section-design" class="mt-8 text-lg leading-tight tracking-tight">
+              New Hero Section Design
+            </h3>
+            <p class="mt-0 mb-6">
+              I redesigned the hero section of the API.market website to enhance user engagement and
+              provide clearer information hierarchy. The new design featured improved visual flow,
+              better call-to-action placement, and more intuitive navigation elements.
             </p>
             <p class="mt-0 mb-6">
               <a
                 class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="/blogs/cron-jobs-with-bullmq/"
-                >Read about the ETL work</a
+                href="https://www.pulkit.page/exp/magicapi/new-hero-section.mp4"
+                >New Hero Section</a
               >
-              ·
+            </p>
+            <h3 id="smart-onboarding-form" class="mt-8 text-lg leading-tight tracking-tight">
+              Smart Onboarding form
+            </h3>
+            <p class="mt-0 mb-6">
+              I redesigned the smart onboarding form to enhance user engagement and provide clearer
+              information hierarchy. The new design featured improved visual flow, better
+              call-to-action placement, and more intuitive navigation elements.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/smart-onboarding-form/step-1.webp"
+                alt="Smart onboarding form, step 1"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/smart-onboarding-form/step-2.webp"
+                alt="Smart onboarding form, step 2"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/smart-onboarding-form/step-3.webp"
+                alt="Smart onboarding form, step 3"
+                loading="lazy"
+              />
+            </p>
+            <h3 id="converting-full-time" class="mt-8 text-lg leading-tight tracking-tight">
+              Converting full time!!
+            </h3>
+            <p class="mt-0 mb-6">
+              At the end of June, Shashank asked if I wanted to continue full-time. I was confident
+              in my ability to work at that capacity, so I immediately said yes. I had recently
+              received a full-time offer and unexpectedly exited that role. The internship had begun
+              around the same time but offered slightly less pay than the full-time position.
+              However, it was a clear decision for me, as I received a decent raise.
+            </p>
+            <h3 id="moving-to-noveum-ai" class="mt-8 text-lg leading-tight tracking-tight">
+              Moving to Noveum.ai
+            </h3>
+            <p class="mt-0 mb-6">
+              Around the same time I got full-time, the company was moving to it&#39;s next venture
+              on
               <a
                 class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://noveum.ai"
                 >Noveum.ai</a
+              >. Noveum is a platform to evaluate AI agents and auto-fix them. It was very exciting
+              for me to work on a company from the very ideation phase to build it from ground up.
+              In the starting I was the only person working on the infra/tech side. I managed the
+              complete kubernetes clusters and the architecture for building a system that was gonna
+              handle millions of requests/day!
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/original-dash.webp"
+                alt="Noveum Dash"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              We didn&#39;t build everything in the next.js app from ground app, instead we had
+              purchased a
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://supastarter.dev"
+                >template</a
+              >, so it had everything like auth, multi-org login and onboarding flow setup. Some of
+              the major parts of my work at noveum were:
+            </p>
+            <h4 id="traces-ui" class="leading-tight tracking-tight">Traces UI</h4>
+            <p class="mt-0 mb-6">
+              I worked on the traces UI to make agent executions easy to inspect. Traces are
+              basically an end-to-end timeline of an agent run (steps, inputs/outputs, errors and
+              latency). So the traces ui included a main trace view, flow visualization, expanded
+              flow graphs, and filters like date ranges so debugging production runs was actually
+              practical.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/traces/main-view.webp"
+                alt="Traces main view"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/traces/with-span.webp"
+                alt="Trace with an expanded span"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/traces/flow-chart.webp"
+                alt="Trace flow visualization"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/traces/date-selector.webp"
+                alt="Trace date range filter"
+                loading="lazy"
+              />
+            </p>
+            <h4 id="datasets-ui" class="leading-tight tracking-tight">Datasets UI</h4>
+            <p class="mt-0 mb-6">
+              Datasets are curated collections of examples extracted from traces (inputs, outputs,
+              and selected spans). They’re used to run specific scorers at evaluation time, so you
+              can measure quality, compare changes, and catch regressions in agents/prompts/models.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/datasets/datasets.webp"
+                alt="Datasets list"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/datasets/example-dataset-items.webp"
+                alt="Example dataset items"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/datasets/chat-ui.webp"
+                alt="Dataset chat view"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/datasets/scorer-ui.webp"
+                alt="Dataset scorer view"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/datasets/json-view.webp"
+                alt="Dataset item JSON view"
+                loading="lazy"
+              />
+            </p>
+            <h4 id="completing-six-months" class="leading-tight tracking-tight">
+              Completing Six Months
+            </h4>
+            <p class="mt-0 mb-6">
+              On October 1st 2025, I completed six months at MagicAPI. It had been a remarkable
+              journey, starting with API.Market and evolving into building Noveum AI from the ground
+              up. Beyond just shipping features, I grew a lot as an engineer here. The team&#39;s
+              culture of sharing what works, iterating fast, and pushing each other on AI-assisted
+              workflows shaped how I approach building software today.
+            </p>
+            <p class="mt-0 mb-6">
+              I shared my reflections on
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.linkedin.com/posts/pulkitxm_as-i-reflect-on-completing-6-months-with-activity-7379207712821325824-xuhn"
+                >LinkedIn</a
+              >
+              as well.
+            </p>
+            <h4 id="etl-job-with-agent" class="leading-tight tracking-tight">ETL Job with Agent</h4>
+            <p class="mt-0 mb-6">
+              The ETL (Extract, Transform, Load) pipeline converted traces into datasets via an
+              asynchronous background workflow. I built the end-to-end job orchestration using
+              BullMQ workers, deployed it to a Kubernetes cluster, and operated the Redis
+              infrastructure it depended on.
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/etl-jobs.webp"
+                alt="ETL jobs list"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-agent.webp"
+                alt="ETL mapper agent"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/trace-picker.webp"
+                alt="ETL trace picker"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/complete-trace-view.webp"
+                alt="Complete trace view for an ETL job"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/create-job.webp"
+                alt="Creating an ETL job"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-code.webp"
+                alt="ETL mapper code"
+                loading="lazy"
+              />
+            </p>
+            <p class="mt-0 mb-6">
+              <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                src="/assets/content/exp/magicapi/noveum.ai/etl-job/etl-job-runs.webp"
+                alt="ETL job runs"
+                loading="lazy"
+              />
+            </p>
+            <h3 id="aws-infrastructure-migration" class="mt-8 text-lg leading-tight tracking-tight">
+              AWS Infrastructure Migration
+            </h3>
+            <p class="mt-0 mb-6">
+              I played a major role in migrating our infrastructure from
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.ovhcloud.com"
+                >OVHCloud</a
+              >
+              to
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://aws.amazon.com"
+                >AWS</a
+              >. This was a complete overhaul of how we deployed and managed our services. We
+              partnered with
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://axcess.io"
+                >Axcess.io</a
+              >
+              for this migration.
+            </p>
+            <p class="mt-0 mb-6">
+              The previous setup on OVHCloud was getting difficult to manage as we scaled. We needed
+              better reliability, proper environment separation, and a more robust CI/CD pipeline.
+              The migration to AWS gave us all of that.
+            </p>
+            <p class="mt-0 mb-6">The new setup included:</p>
+            <ul class="mt-0 mb-6">
+              <li>
+                <strong>EKS (Elastic Kubernetes Service)</strong>
+                - Moved our Kubernetes clusters to EKS for better container orchestration and
+                scaling
+              </li>
+              <li>
+                <strong>S3</strong>
+                - Used for storing profile images and audio uploads with proper bucket policies
+              </li>
+              <li>
+                <strong>ECR (Elastic Container Registry)</strong>
+                - All our Docker images are now stored and versioned in ECR
+              </li>
+              <li>
+                <strong>Separate AWS Accounts</strong>
+                - We have completely isolated dev and prod environments in different AWS accounts.
+                Watchtower handles automated deployments by watching for new image pushes
+              </li>
+              <li>
+                <strong>CodeBuild</strong>
+                - Set up CI/CD pipelines similar to GitHub Actions for building and deploying our
+                services
+              </li>
+              <li>
+                <strong>WAF (Web Application Firewall)</strong>
+                - Added protection layer for our APIs against common web exploits
+              </li>
+              <li>
+                <strong>IAM Roles</strong>
+                - Proper role-based access for team members. Each person has only the permissions
+                they need
+              </li>
+              <li>
+                <strong>VPC with Bastion Server</strong>
+                - All our infrastructure sits inside a VPC. To access internal resources like
+                databases or debug pods, we connect through a Bastion server
+              </li>
+            </ul>
+            <p class="mt-0 mb-6">
+              This migration improved our deployment reliability and gave us proper separation
+              between environments which we didn&#39;t have before.
+            </p>
+            <h2
+              id="technologies-skills"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Technologies &amp; Skills
+            </h2>
+            <p class="mt-0 mb-6">
+              TypeScript · JavaScript · Nextjs (Pages Router) · Next Auth (Auth.js) · Stripe ·
+              Tailwind CSS · Elasticsearch · PostgreSQL · Kubernetes · Turborepo · Docker · Git ·
+              AWS · EKS · S3 · ECR · CodeBuild · WAF · IAM · VPC · Redis · BullMQ
+            </p>
+            <h2 id="documents" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Documents
+            </h2>
+            <p class="mt-0 mb-6">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.pulkit.page/exp/magicapi/offer-letter.pdf"
+                >Offer Letter</a
+              >
+            </p>
+            <p class="mt-0 mb-6">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.pulkit.page/exp/magicapi/internship-completion-letter.pdf"
+                >Internship Completion Letter</a
               >
             </p>
           </div>

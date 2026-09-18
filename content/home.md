@@ -1,5 +1,5 @@
 ---
-title: Building & breaking things.
+title: Pulkit
 layout: home
 description: Pulkit is a software engineer based in India, building products for the web at Noveum.ai.
 ---

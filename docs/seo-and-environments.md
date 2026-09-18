@@ -6,12 +6,12 @@
 
 [resolveSiteOrigin](../scripts/site-origin.mjs) supplies the origin used by canonical URLs, JSON-LD entity IDs, social-image URLs, sitemap locations, robots, and card hostname branding. `_site.md` does not allow a `url` field, preventing a second production-domain configuration source.
 
-| Environment                           | Origin without override                                     | Default generation output |
-| ------------------------------------- | ----------------------------------------------------------- | ------------------------- |
-| Unset or production                   | HTTPS plus root CNAME (`https://new.pulkit.page` currently) | `pages/`                  |
-| Development                           | `http://127.0.0.1:<PORT>`, default 3000                     | `dist/`                   |
-| Other NODE\_ENV                       | Fails unless SITE\_URL is supplied                          | `dist/`                   |
-| Explicit SITE\_URL in any environment | Validated override                                          | `dist/`                   |
+| Environment                           | Origin without override                                 | Default generation output |
+| ------------------------------------- | ------------------------------------------------------- | ------------------------- |
+| Unset or production                   | HTTPS plus root CNAME (`https://pulkit.page` currently) | `pages/`                  |
+| Development                           | `http://127.0.0.1:<PORT>`, default 3000                 | `dist/`                   |
+| Other NODE\_ENV                       | Fails unless SITE\_URL is supplied                      | `dist/`                   |
+| Explicit SITE\_URL in any environment | Validated override                                      | `dist/`                   |
 
 SITE\_URL must be an absolute HTTP(S) origin without credentials, non-root path, query, or fragment. Trailing slash is normalized. CNAME must be one hostname matching the local validation pattern. SITE\_OUTPUT\_DIR allows `pages`, `dist`, or lowercase kebab-case nested directories under dist; it rejects traversal and arbitrary paths. Explicit SITE\_URL or nonproduction NODE\_ENV cannot target pages. Production with no override can explicitly target dist.
 

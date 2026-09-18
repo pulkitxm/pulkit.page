@@ -23,7 +23,7 @@ The root package contains pinned tooling dependencies under `devDependencies`: M
 
 `dist/` is ignored output. Build first verifies production `pages/`, clears deployment files while preserving `dist/dev-<port>/`, then copies the verified snapshot for production or renders other environments. Both paths copy source assets, theme JS, and `.nojekyll`, then compile Tailwind CSS; production assembly includes CNAME. Vite development renders requested pages in memory and serves shared source assets directly. Persistent render caches stay under `.cache/generate/`; development does not write into dist. Root routes named `dev-<port>` are reserved. Local deployment validation excludes those preview directories; clean CI workspaces have no local preview output. `.cache/generate/` holds disposable, ignored generation caches outside the deployment artifact.
 
-`CNAME` currently says `new.pulkit.page`. `.nojekyll` accompanies the Pages artifact. Root-relative URLs assume deployment at the domain root; there is no configurable project-site base path. Repository files describe intended deployment, not proof that remote DNS or Pages settings are correct.
+`CNAME` currently says `pulkit.page`. `.nojekyll` accompanies the Pages artifact. Root-relative URLs assume deployment at the domain root; there is no configurable project-site base path. Repository files describe intended deployment, not proof that remote DNS or Pages settings are correct.
 
 ## Checks and operational configuration
 

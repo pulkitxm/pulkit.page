@@ -17,7 +17,8 @@ function shorten(label) {
   return label.length > 8 ? `${label.slice(0, 8)}...` : label;
 }
 
-export function render({ documents }, { assets, escapeHtml }) {
+export function render({ documents }, context) {
+  const { assets, escapeHtml } = context;
   const layout = layouts[documents.length];
   if (!layout) {
     throw new Error(`Unsupported document-tabs count: ${documents.length}`);
@@ -33,7 +34,7 @@ export function render({ documents }, { assets, escapeHtml }) {
   const panels = documents
     .map(
       (entry, index) =>
-        `<div class="mt-6" id="tabpanel-doc-${index}" role="tabpanel" data-document-panel aria-labelledby="tab-doc-${index}"${index === 0 ? "" : " hidden"}>${documentCard(entry, escapeHtml)}</div>`,
+        `<div class="mt-6" id="tabpanel-doc-${index}" role="tabpanel" data-document-panel aria-labelledby="tab-doc-${index}"${index === 0 ? "" : " hidden"}>${documentCard(entry, context)}</div>`,
     )
     .join("");
   const indicator = `<span class="${indicatorClass} ${layout.width}" aria-hidden="true" data-document-indicator></span>`;

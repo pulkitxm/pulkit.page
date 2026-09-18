@@ -82,7 +82,7 @@ const sourceFiles = readdirSync(`${reference}/content`, { recursive: true })
   .sort();
 const routes = new Map();
 for (const file of sourceFiles) {
-  const path = file.replace(/^experiences\//, "experience/").replace(/\.mdx$/, "");
+  const path = file.replace(/^experiences\//, "exp/").replace(/\.mdx$/, "");
   const route = `/${path.replace(/\/index$/, "")}/`;
   if (file.startsWith("blogs/")) {
     routes.set(file.split("/").at(-1).replace(".mdx", ""), route);
@@ -104,7 +104,7 @@ function linkUrl(value) {
     return value.replace("/series/", "/blogs/").replace(/\/?$/, "/");
   }
   if (value.startsWith("/exp/") && !extname(value.split(/[?#]/)[0])) {
-    return value.replace("/exp/", "/experience/").replace(/\/?$/, "/");
+    return value.replace(/\/?$/, "/");
   }
   if (value === "/blogs" || value === "/contact" || value === "/about") {
     return `${value}/`;
@@ -119,7 +119,7 @@ function linkUrl(value) {
   if (
     value.startsWith("/") &&
     !value.startsWith("/blogs/") &&
-    !value.startsWith("/experience/") &&
+    !value.startsWith("/exp/") &&
     !["/about/", "/contact/", "/"].includes(value)
   ) {
     return `https://www.pulkit.page${value}`;
@@ -394,7 +394,7 @@ for (const file of sourceFiles.filter((path) => !blogsOnly || path.startsWith("b
   const front = parse(match[1]);
   const experience = file.startsWith("experiences/");
   const collection = file.endsWith("/index.mdx");
-  const output = `content/${file.replace(/^experiences\//, "experience/").replace(/\.mdx$/, ".md")}`;
+  const output = `content/${file.replace(/^experiences\//, "exp/").replace(/\.mdx$/, ".md")}`;
   if (existsSync(output) && !blogsOnly) {
     throw new Error(`Refusing to replace existing source: ${output}`);
   }

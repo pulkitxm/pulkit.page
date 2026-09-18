@@ -41,11 +41,11 @@ function imageSize(src) {
   throw new Error(`Unsupported image-grid image format: ${src}`);
 }
 
-export function render({ images, columns = 2 }, context) {
+export function render({ images, columns = 2, label = "Image carousel" }, context) {
   const resolved = images.map((src) => ({ src, ...imageSize(src) }));
   if (resolved.length > 2) {
     const slides = resolved.map((image, index) => ({ ...image, alt: `Slide ${index + 1}` }));
-    const carousel = renderCarousel(slides, { frame: "plain", label: "Image carousel" }, context);
+    const carousel = renderCarousel(slides, { frame: "plain", label }, context);
     return `<div class="mt-0 mb-6 flex items-center justify-center"><div class="relative mx-auto w-full max-w-[64rem]"><div class="mx-auto w-full max-w-[48rem]">${carousel}</div></div></div>`;
   }
   const { assets, escapeHtml } = context;

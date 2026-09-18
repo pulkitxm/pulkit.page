@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   for (const carousel of document.querySelectorAll("[data-carousel]")) {
     const track = carousel.querySelector("[data-carousel-track]");
+    if (!track) {
+      continue;
+    }
     const previous = carousel.querySelector("[data-carousel-previous]");
     const next = carousel.querySelector("[data-carousel-next]");
     const status = carousel.querySelector("[data-carousel-status]");
@@ -52,7 +55,7 @@ function entryTransition(event, otherUrl) {
   }
   const current = new URL(window.location.href);
   const other = new URL(otherUrl);
-  const collection = /^\/(blogs|experience)\//.exec(current.pathname)?.[0];
+  const collection = /^\/(blogs|exp)\//.exec(current.pathname)?.[0];
   const titles = [...document.querySelectorAll("[data-title]")];
   const title =
     titles.find((candidate) => candidate.closest("a")?.href === other.href) ??

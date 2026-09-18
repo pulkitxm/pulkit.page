@@ -35,21 +35,21 @@ The tools list includes a MacBook/BenQ desk setup, phone/watch/earbuds, keyboard
 
 [blogs/index.md](../content/blogs/index.md) is Writing: it manually links the two series and then lists all eligible articles recursively using the broad blog list directive. The series indexes themselves do not appear in that automatic list, because all `/index.md` sources are excluded from lists.
 
-[design-engineering/index.md](../content/blogs/design-engineering/index.md) contains its collection directive. [system-design/index.md](../content/blogs/system-design/index.md) adds a paragraph linking the external systems repository before its directive. [experience/index.md](../content/experience/index.md) introduces the work history and lists experience details.
+[design-engineering/index.md](../content/blogs/design-engineering/index.md) contains its collection directive. [system-design/index.md](../content/blogs/system-design/index.md) adds a paragraph linking the external systems repository before its directive. [exp/index.md](../content/exp/index.md) introduces the work history and lists experience details.
 
 Collections are directory-prefix selections, not explicit membership arrays or tags. A post's directory determines which series list includes it; all nested blog articles also belong to the broad Writing list. All collection indexes use the simple shell by default. Breadcrumbs and collection navigation derive from these real index routes; tags separately help select related articles.
 
 ## Experience details
 
-| Source                                                     | Role and period                             | Sorting date | Selected contributions                                                                               |
-| ---------------------------------------------------------- | ------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
-| [magicapi.md](../content/experience/magicapi.md)           | Software Engineer, MagicAPI; 2025–present   | 2025-03-01   | API.market dashboard/onboarding, wallet/vouchers, Noveum traces/datasets/ETL, AWS migration          |
-| [crowdvolt.md](../content/experience/crowdvolt.md)         | Software Engineer, CrowdVolt (YC W24); 2025 | 2025-02-03   | Web features, fixes, performance, lint/format consistency, design collaboration                      |
-| [datawavelabs.md](../content/experience/datawavelabs.md)   | Full Stack Engineer; 2024                   | 2024-04-01   | Cloud data platform, auth/access, storage integration, infrastructure workflows, Redis notifications |
-| [geeksforgeeks.md](../content/experience/geeksforgeeks.md) | Campus Mantri; 2024–2025                    | 2024-04-01   | Workshops, learning resources, competitions, campus community; external certificate link             |
-| [deviators.md](../content/experience/deviators.md)         | Chairperson; 2024–2025                      | 2024-02-01   | Coding community, 36-hour hackathon, registration/payment platform, event infrastructure             |
+| Source                                              | Role and period                             | Sorting date | Selected contributions                                                                               |
+| --------------------------------------------------- | ------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| [magicapi.md](../content/exp/magicapi.md)           | Software Engineer, MagicAPI; 2025–present   | 2025-03-01   | API.market dashboard/onboarding, wallet/vouchers, Noveum traces/datasets/ETL, AWS migration          |
+| [crowdvolt.md](../content/exp/crowdvolt.md)         | Software Engineer, CrowdVolt (YC W24); 2025 | 2025-02-03   | Web features, fixes, performance, lint/format consistency, design collaboration                      |
+| [datawavelabs.md](../content/exp/datawavelabs.md)   | Full Stack Engineer; 2024                   | 2024-04-01   | Cloud data platform, auth/access, storage integration, infrastructure workflows, Redis notifications |
+| [geeksforgeeks.md](../content/exp/geeksforgeeks.md) | Campus Mantri; 2024–2025                    | 2024-04-01   | Workshops, learning resources, competitions, campus community; external certificate link             |
+| [deviators.md](../content/exp/deviators.md)         | Chairperson; 2024–2025                      | 2024-02-01   | Coding community, 36-hour hackathon, registration/payment platform, event infrastructure             |
 
-Each page carries the original site's full write-up: prose, screenshots and photos under `assets/content/exp/`, technology lists, and links to offer letters and other documents, which remain hosted at the original site's URLs. Image grids, document viewers, the video, and the embedded post became standard images, links, and a quote. Dates are sorting keys; displayed periods are independent human-readable strings.
+Each page carries the original site's full write-up: prose, screenshots and photos under `assets/content/exp/`, technology lists, and offer letters and other documents, now stored beside those images rather than linked to the original site. Image grids, document viewers and tabs, the hero video, and the embedded post use the components described in the [authoring guide](authoring-guide.md). Dates are sorting keys; displayed periods are independent human-readable strings.
 
 ## Shared metadata and assets
 

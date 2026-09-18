@@ -13,7 +13,7 @@ const viewports = [
 ];
 const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const blockingImpacts = new Set(["serious", "critical"]);
-const collections = ["/blogs/", "/experience/"];
+const collections = ["/blogs/", "/exp/"];
 const problems = new Set();
 
 function routes(directory, prefix = "/") {

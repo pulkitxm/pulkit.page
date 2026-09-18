@@ -21,7 +21,7 @@ test("experience dates preserve exact days and render ongoing roles without an e
   expect(html).toContain('title="June 30, 2025"');
   expect(html).toContain("Mar 2025");
   expect(html).toContain("Jun 2025");
-  expect(html).toContain('class="experience-role">Engineer');
+  expect(html).toContain('class="text-xs text-muted">Engineer');
   expect(html).toContain('src="/assets/experience/example.webp"');
   const ongoing = await renderPage(source, {
     pages: [{ ...entry, metadata: { ...metadata, endDate: undefined } }],

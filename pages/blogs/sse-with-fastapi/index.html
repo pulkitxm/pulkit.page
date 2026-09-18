@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,73 +58,106 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">FastAPI SSE: Server-Sent Events in Python</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>FastAPI SSE: Server-Sent Events in Python</h1>
-            <p class="detail-meta"><time datetime="2024-07-26">2024-07-26</time></p>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              FastAPI SSE: Server-Sent Events in Python
+            </h1>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2024-07-26">2024-07-26</time>
+            </p>
           </header>
-          <div class="prose">
-            <p>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
               During my recent internship, I faced a task where the server needed to run a
               long-running process. This couldn&#39;t be done with just a POST request because the
               task could take up to 15 minutes to complete. So, we needed an alternative for this
               use case. And yes, you guessed it right, the solution is server-sent events.
             </p>
-            <h2 id="what-exactly-is-the-server-sent-event">
+            <h2
+              id="what-exactly-is-the-server-sent-event"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
               What exactly is the server-sent event?
             </h2>
-            <p>
+            <p class="mt-0 mb-6">
               It is a standard allowing servers to push updates to the client over a single HTTP
               connection. This is useful for tasks that take a long time to complete, as it keeps
               the client informed about the progress without needing to constantly poll the server.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               SSEs (Server-Sent Events) are essentially a subset of a WebSocket connection. While
               WebSockets provide a two-way communication channel, SSEs offer a one-way connection
               from the server to the client. This allows the server to send updates to the client
               without the client needing to request them repeatedly.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Since the client of our app doesn&#39;t need to push any updates to the server for
               this task, it fits well with the use case.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="https://miro.medium.com/v2/resize:fit:1400/1*_y_9SbfC1hFniWc1wrebfA.png"
                 alt="Server-Sent Events diagram showing client-server communication"
                 loading="lazy"
               />
             </p>
-            <h3 id="use-cases-for-a-server-sent-events-sse-server">
+            <h3
+              id="use-cases-for-a-server-sent-events-sse-server"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
               Use Cases for a Server-Sent Events (SSE) Server
             </h3>
-            <p>
+            <p class="mt-0 mb-6">
               Server-Sent Events (SSE) provide a way for servers to push real-time updates to
               clients over a single HTTP connection. This is particularly useful for applications
               that require live data updates without the need for constant polling.
             </p>
-            <ol>
+            <ol class="mt-0 mb-6">
               <li>
                 <strong>Real-Time Notifications</strong>: SSE is perfect for sending instant
                 notifications to users, such as updates on social media platforms, email alerts, or
@@ -138,163 +174,229 @@
                 trends and changes as they happen.
               </li>
             </ol>
-            <h3 id="basic-fastapi-server-initialization">
+            <h3
+              id="basic-fastapi-server-initialization"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
               <strong>Basic FastAPI Server Initialization</strong>
             </h3>
-            <p>
+            <p class="mt-0 mb-6">
               Follow these steps to create an SSE endpoint, and watch your server push updates to
               the client with lightning speed and efficiency!
             </p>
             <pre
-            ><code class="language-bash"><span class="f">python3</span> <span class="s">-m</span> <span class="s">venv</span> <span class="s">venv</span>
-<span class="f">source</span> <span class="s">venv/bin/activate</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">python3</span> <span class="text-syn-s">-m</span> <span class="text-syn-s">venv</span> <span class="text-syn-s">venv</span>
+<span class="text-syn-f">source</span> <span class="text-syn-s">venv/bin/activate</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/server-sent-events-with-fastapi/bc758d6d-c914-4c4a-bf5d-8dfbf2ce3183.webp"
                 alt="Terminal showing Python virtual environment activation"
                 loading="lazy"
               />
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pip</span> <span class="s">install</span> <span class="s">fastapi</span> <span class="s">sse-starlette</span> <span class="s">uvicorn</span> <span class="s">asyncio</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pip</span> <span class="text-syn-s">install</span> <span class="text-syn-s">fastapi</span> <span class="text-syn-s">sse-starlette</span> <span class="text-syn-s">uvicorn</span> <span class="text-syn-s">asyncio</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/server-sent-events-with-fastapi/2c5d09d7-fa01-46f2-9f38-21ebc2587012.webp"
                 alt="Terminal showing FastAPI dependencies installation"
                 loading="lazy"
               />
             </p>
-            <p>Let&#39;s set up a basic FastAPI server.</p>
+            <p class="mt-0 mb-6">Let&#39;s set up a basic FastAPI server.</p>
             <pre
-            ><code class="language-python"><span class="k">from</span> fastapi <span class="k">import</span> FastAPI<span class="u">,</span> Response
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">from</span> fastapi <span class="text-syn-k">import</span> FastAPI<span class="text-syn-u">,</span> Response
 
-app<span class="o">=</span> FastAPI<span class="u">()</span>
+app<span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
 
-<span class="f">@app.get</span><span class="u">(</span><span class="s">&quot;/&quot;</span><span class="u">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="f">root</span><span class="u">():</span>
-    <span class="k">return</span> <span class="u">{</span><span class="s">&quot;message&quot;</span><span class="u">:</span> <span class="s">&quot;Hello World&quot;</span><span class="u">}</span>
+<span class="text-syn-f">@app.get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">root</span><span class="text-syn-u">():</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;message&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hello World&quot;</span><span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/server-sent-events-with-fastapi/6c00af74-1de9-46c1-b6e3-eee5ff533c99.webp"
                 alt="Terminal showing FastAPI server running"
                 loading="lazy"
               />
             </p>
             <pre
-            ><code class="language-bash"><span class="f">uvicorn</span> <span class="s">main:app</span> <span class="s">--reload</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">uvicorn</span> <span class="text-syn-s">main:app</span> <span class="text-syn-s">--reload</span>
 </code></pre>
-            <p>And the server runs as expected.</p>
-            <h3 id="adding-the-sse-server-sent-events">Adding the SSE (Server-Sent Events)</h3>
+            <p class="mt-0 mb-6">And the server runs as expected.</p>
+            <h3
+              id="adding-the-sse-server-sent-events"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Adding the SSE (Server-Sent Events)
+            </h3>
             <pre
-            ><code class="language-python"><span class="k">from</span> sse_starlette<span class="u">.</span>sse <span class="k">import</span> EventSourceResponse
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">from</span> sse_starlette<span class="text-syn-u">.</span>sse <span class="text-syn-k">import</span> EventSourceResponse
 </code></pre>
-            <p>
-              Import the <code>EventSourceResponse</code> from <code>sse_starlette</code>. The
-              <code>EventSourceResponse</code>
+            <p class="mt-0 mb-6">
+              Import the
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >EventSourceResponse</code
+              >
+              from
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >sse_starlette</code
+              >. The
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >EventSourceResponse</code
+              >
               is used to create a Server-Sent Events (SSE) endpoint that can push updates to the
               client in real-time.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Note:</strong>
-              For now, I am adding a test <code>event_generator</code> function that works as a
-              long-running task.
+              For now, I am adding a test
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >event_generator</code
+              >
+              function that works as a long-running task.
             </p>
             <pre
-            ><code class="language-python"><span class="k">async</span> <span class="k">def</span> <span class="f">event_generator</span><span class="u">():</span>
-    i<span class="o">=</span> <span class="n">1</span>
-    <span class="k">while</span> i<span class="o">&lt;=</span><span class="n">5</span><span class="u">:</span>
-        <span class="k">await</span> asyncio<span class="u">.</span>sleep<span class="u">(</span><span class="n">1</span><span class="u">)</span>
-        i<span class="o">+=</span><span class="n">1</span>
-        <span class="k">yield</span> <span class="u">{</span><span class="s">&quot;data&quot;</span><span class="u">:</span> <span class="s">&quot;New update&quot;</span><span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">event_generator</span><span class="text-syn-u">():</span>
+    i<span class="text-syn-o">=</span> <span class="text-syn-n">1</span>
+    <span class="text-syn-k">while</span> i<span class="text-syn-o">&lt;=</span><span class="text-syn-n">5</span><span class="text-syn-u">:</span>
+        <span class="text-syn-k">await</span> asyncio<span class="text-syn-u">.</span>sleep<span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">)</span>
+        i<span class="text-syn-o">+=</span><span class="text-syn-n">1</span>
+        <span class="text-syn-k">yield</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;data&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;New update&quot;</span><span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Just like we return a response with
-              <code>return { &quot;message&quot;: &quot;Hello World&quot;}</code>, we will now yield
-              updates from our event generator function. This allows the server to push new data to
-              the client continuously.yield is simply a way to send data back to the client without
-              closing the connection.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >return { &quot;message&quot;: &quot;Hello World&quot;}</code
+              >, we will now yield updates from our event generator function. This allows the server
+              to push new data to the client continuously.yield is simply a way to send data back to
+              the client without closing the connection.
             </p>
-            <p>So the final code looks like</p>
+            <p class="mt-0 mb-6">So the final code looks like</p>
             <pre
-            ><code class="language-python"><span class="k">from</span> fastapi <span class="k">import</span> FastAPI<span class="u">,</span> Response
-<span class="k">from</span> sse_starlette<span class="u">.</span>sse <span class="k">import</span> EventSourceResponse
-<span class="k">import</span> asyncio
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">from</span> fastapi <span class="text-syn-k">import</span> FastAPI<span class="text-syn-u">,</span> Response
+<span class="text-syn-k">from</span> sse_starlette<span class="text-syn-u">.</span>sse <span class="text-syn-k">import</span> EventSourceResponse
+<span class="text-syn-k">import</span> asyncio
 
-app <span class="o">=</span> FastAPI<span class="u">()</span>
+app <span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
 
-<span class="f">@app.get</span><span class="u">(</span><span class="s">&quot;/&quot;</span><span class="u">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="f">root</span><span class="u">():</span>
-    <span class="k">return</span> <span class="u">{</span><span class="s">&quot;message&quot;</span><span class="u">:</span> <span class="s">&quot;Hello World&quot;</span><span class="u">}</span>
+<span class="text-syn-f">@app.get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">root</span><span class="text-syn-u">():</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;message&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hello World&quot;</span><span class="text-syn-u">}</span>
 
-<span class="f">@app.get</span><span class="u">(</span><span class="s">&quot;/sse&quot;</span><span class="u">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="f">sse_endpoint</span><span class="u">():</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="f">event_generator</span><span class="u">():</span>
-        i<span class="o">=</span> <span class="n">1</span>
-        <span class="k">while</span> i<span class="o">&lt;=</span><span class="n">5</span><span class="u">:</span>
-            <span class="k">await</span> asyncio<span class="u">.</span>sleep<span class="u">(</span><span class="n">1</span><span class="u">)</span>
-            i<span class="o">+=</span><span class="n">1</span>
-            <span class="k">yield</span> <span class="u">{</span><span class="s">&quot;data&quot;</span><span class="u">:</span> <span class="s">&quot;New update&quot;</span><span class="u">}</span>
+<span class="text-syn-f">@app.get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/sse&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">sse_endpoint</span><span class="text-syn-u">():</span>
+    <span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">event_generator</span><span class="text-syn-u">():</span>
+        i<span class="text-syn-o">=</span> <span class="text-syn-n">1</span>
+        <span class="text-syn-k">while</span> i<span class="text-syn-o">&lt;=</span><span class="text-syn-n">5</span><span class="text-syn-u">:</span>
+            <span class="text-syn-k">await</span> asyncio<span class="text-syn-u">.</span>sleep<span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">)</span>
+            i<span class="text-syn-o">+=</span><span class="text-syn-n">1</span>
+            <span class="text-syn-k">yield</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;data&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;New update&quot;</span><span class="text-syn-u">}</span>
 
-    <span class="k">return</span> EventSourceResponse<span class="u">(</span>event_generator<span class="u">())</span>
+    <span class="text-syn-k">return</span> EventSourceResponse<span class="text-syn-u">(</span>event_generator<span class="text-syn-u">())</span>
 
-<span class="k">if</span> __name__ <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="u">:</span>
-    <span class="k">import</span> uvicorn
-    uvicorn<span class="u">.</span>run<span class="u">(</span>app<span class="u">,</span> host<span class="o">=</span><span class="s">&quot;0.0.0.0&quot;</span><span class="u">,</span> port<span class="o">=</span><span class="n">8000</span><span class="u">,</span> reload<span class="o">=</span><span class="k">True</span><span class="u">)</span>
+<span class="text-syn-k">if</span> __name__ <span class="text-syn-o">==</span> <span class="text-syn-s">&quot;__main__&quot;</span><span class="text-syn-u">:</span>
+    <span class="text-syn-k">import</span> uvicorn
+    uvicorn<span class="text-syn-u">.</span>run<span class="text-syn-u">(</span>app<span class="text-syn-u">,</span> host<span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.0.0.0&quot;</span><span class="text-syn-u">,</span> port<span class="text-syn-o">=</span><span class="text-syn-n">8000</span><span class="text-syn-u">,</span> reload<span class="text-syn-o">=</span><span class="text-syn-k">True</span><span class="text-syn-u">)</span>
 </code></pre>
-            <p>Now if we send a GET request to <code>http://127.0.0.1:8000/sse</code></p>
-            <p>
+            <p class="mt-0 mb-6">
+              Now if we send a GET request to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >http://127.0.0.1:8000/sse</code
+              >
+            </p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/server-sent-events-with-fastapi/99b548a0-2158-4379-9306-8f6175079f12.webp"
                 alt="Browser showing SSE stream response"
                 loading="lazy"
               />
             </p>
-            <p>You can even see the same response in the developer tools.</p>
-            <p>
+            <p class="mt-0 mb-6">You can even see the same response in the developer tools.</p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/server-sent-events-with-fastapi/215331ad-97a2-4797-b0cb-647eea17584f.webp"
                 alt="Browser developer tools showing SSE events"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Now if we send a GET request to
-              <a href="http://127.0.0.1:8000/sse">http://127.0.0.1:8000/sse</a>, you will see a
-              stream of updates being sent from the server to the client in real-time, which you can
-              also observe in the developer tools, providing a seamless and efficient way to handle
-              real-time data updates in your application.
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="http://127.0.0.1:8000/sse"
+                >http://127.0.0.1:8000/sse</a
+              >, you will see a stream of updates being sent from the server to the client in
+              real-time, which you can also observe in the developer tools, providing a seamless and
+              efficient way to handle real-time data updates in your application.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               I hope this guide helps you implement Server-Sent Events with FastAPI smoothly. Happy
               coding! 🚀
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
-          <ul>
-            <li>
-              <a href="/blogs/python-poetry-guide/">Python Dependency Management with Poetry</a>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/python-poetry-guide/"
+                >Python Dependency Management with Poetry</a
+              >
             </li>
-            <li>
-              <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/aws-s3-with-nodejs/"
+                >AWS S3 with Node.js: Upload Files with SDK v3</a
+              >
             </li>
-            <li><a href="/blogs/creating-npx-command/">Creating Your Own npx Command</a></li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/creating-npx-command/"
+                >Creating Your Own npx Command</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

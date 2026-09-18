@@ -1,4 +1,4 @@
-import { Marked } from "marked";
+import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
 import { formatFence } from "./format-code.mjs";
 import { formatHtml } from "./format-html.mjs";
@@ -6,6 +6,19 @@ import { highlightFence } from "./highlight.mjs";
 import { applyLayout, loadLayouts } from "./layouts.mjs";
 import { ancestors, imagePath, pageTitle, relatedPages, safeJson, structuredData } from "./seo.mjs";
 
+const link = "text-inherit decoration-muted underline-offset-4 hover:decoration-current";
+const codeFont = "[font:0.84em/1.65_var(--font-mono)]";
+const blockSpacing = "mt-0 mb-6";
+const headingClasses = {
+  2: "mt-12 text-xl font-semibold leading-tight tracking-tight",
+  3: "mt-8 text-lg leading-tight tracking-tight",
+  4: "leading-tight tracking-tight",
+};
+const portrait = "/assets/content/pulkit-portrait.webp";
+
+function withClass(html, classes) {
+  return html.replace(/^<(\w+)/, `<$1 class="${classes}"`);
+}
 export function readPage(source) {
   const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(source);
   if (!match) {
@@ -78,16 +91,19 @@ function experiencePeriod(metadata) {
     timeZone: "UTC",
   });
   const date = (value) =>
-    `<time datetime="${escapeHtml(value)}" title="${exact.format(new Date(value))}">${month.format(new Date(value))}</time>`;
+    `<time class="cursor-help underline decoration-line decoration-dotted underline-offset-4" datetime="${escapeHtml(value)}" title="${exact.format(new Date(value))}">${month.format(new Date(value))}</time>`;
   return `${date(metadata.date)} – ${metadata.endDate ? date(metadata.endDate) : "present"}`;
 }
 function experienceEntry(page) {
   const { metadata } = page;
   const icons = [metadata.icon, metadata.secondaryIcon]
     .filter(Boolean)
-    .map((icon) => `<img src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`)
+    .map(
+      (icon, index) =>
+        `<img class="${index ? "m-0 -ml-6 translate-y-2.5" : "m-0"} size-9 rounded-xl border-2 border-bg bg-icon object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`,
+    )
     .join("");
-  return `<li><a class="entry-link experience-link" href="${safeUrl(page.route)}"><span class="experience-icons">${icons}</span><span class="experience-info"><span class="entry-title">${escapeHtml(metadata.title)}</span><span class="experience-role">${escapeHtml(metadata.role)}</span></span><span class="entry-meta experience-period">${experiencePeriod(metadata)}</span></a></li>`;
+  return `<li class="border-b border-line"><a class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-normal text-inherit no-underline underline-offset-4 max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3" href="${safeUrl(page.route)}"><span class="flex w-12 items-center max-sm:row-span-2">${icons}</span><span class="grid gap-0.75"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="text-xs text-muted">${escapeHtml(metadata.role)}</span></span><span class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs">${experiencePeriod(metadata)}</span></a></li>`;
 }
 export async function renderPage(
   source,
@@ -131,13 +147,70 @@ export async function renderPage(
           id = `${base}-${suffix++}`;
         }
         ids.add(id);
-        return `<h${depth} id="${id}">${this.parser.parseInline(token.tokens)}</h${depth}>`;
+        const classes = headingClasses[depth] ? ` class="${headingClasses[depth]}"` : "";
+        return `<h${depth} id="${id}"${classes}>${this.parser.parseInline(token.tokens)}</h${depth}>`;
+      },
+      paragraph(token) {
+        return withClass(Renderer.prototype.paragraph.call(this, token), blockSpacing);
+      },
+      list(token) {
+        return withClass(Renderer.prototype.list.call(this, token), blockSpacing);
+      },
+      listitem(token) {
+        const html = Renderer.prototype.listitem.call(this, token);
+        return token.loose ? withClass(html, "[&>p]:mb-2") : html;
+      },
+      blockquote(token) {
+        return withClass(
+          Renderer.prototype.blockquote.call(this, token),
+          "mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted",
+        );
+      },
+      code(token) {
+        return Renderer.prototype.code
+          .call(this, token)
+          .replace(
+            /^<pre><code(?: class="([^"]*)")?>/,
+            (_, language) =>
+              `<pre class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"><code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
+          );
+      },
+      codespan(token) {
+        return withClass(
+          Renderer.prototype.codespan.call(this, token),
+          `rounded-sm bg-surface px-1 py-0.5 ${codeFont}`,
+        );
+      },
+      hr(token) {
+        return withClass(
+          Renderer.prototype.hr.call(this, token),
+          "mx-0 my-10 border-0 border-t border-line",
+        );
+      },
+      table(token) {
+        return withClass(
+          Renderer.prototype.table.call(this, token),
+          "mt-0 mb-6 block overflow-x-auto border-collapse text-md",
+        );
+      },
+      tablecell(token) {
+        return withClass(
+          Renderer.prototype.tablecell.call(this, token),
+          "border-b border-line px-3.5 py-2.5 text-left",
+        );
+      },
+      link(token) {
+        return withClass(Renderer.prototype.link.call(this, token), link);
       },
       html(token) {
         return escapeHtml(token.text);
       },
       image(token) {
-        return `<img src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}" loading="lazy">`;
+        const classes =
+          token.href === portrait
+            ? "mx-0 mt-0 mb-7 block size-36 max-w-full rounded-[50%] object-cover"
+            : "mx-auto my-7 block h-auto max-w-full rounded-md";
+        return `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}" loading="lazy">`;
       },
     },
   });
@@ -168,11 +241,11 @@ export async function renderPage(
           }
           const grouped = route === "/blogs/" && token.collection === "blogs";
           const list = (entries) =>
-            `<ul class="entry-list">${entries
+            `<ul class="mt-0 mb-6 list-none p-0">${entries
               .map((page) =>
                 page.metadata.icon
                   ? experienceEntry(page)
-                  : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
+                  : `<li class="border-b border-line"><a class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3" href="${safeUrl(page.route)}"><span class="group-hover:underline" data-title>${escapeHtml(page.metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
               )
               .join("")}</ul>`;
           if (!grouped) {
@@ -189,7 +262,7 @@ export async function renderPage(
           return [...years]
             .map(
               ([year, entries]) =>
-                `<h2 class="writing-year">${escapeHtml(year)}</h2>${list(entries)}`,
+                `<h2 class="mt-10 mb-2 flex items-center gap-4 text-md font-medium leading-tight tracking-normal text-muted after:h-px after:flex-1 after:bg-line">${escapeHtml(year)}</h2>${list(entries)}`,
             )
             .join("");
         },
@@ -208,7 +281,7 @@ export async function renderPage(
     items
       .map(
         (item) =>
-          `<a href="${safeUrl(item.href)}"${navigation && item.href === route ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a>`,
+          `<a class="${navigation ? "text-inherit no-underline aria-[current=page]:text-fg" : "text-inherit no-underline"}" href="${safeUrl(item.href)}"${navigation && item.href === route ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a>`,
       )
       .join(navigation ? "\n" : " · ");
   const detail =
@@ -229,7 +302,7 @@ export async function renderPage(
       heading: escapeHtml(metadata.title),
       date:
         detail || metadata.role
-          ? `<p class="detail-meta">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
+          ? `<p class="mt-0 mb-6 text-sm text-muted">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
           : "",
       content: await markdown.parse(body),
     }),
@@ -239,7 +312,7 @@ export async function renderPage(
 function breadcrumbs(route, pages) {
   const parents = ancestors(route, pages);
   return parents.length
-    ? `<nav class="breadcrumbs" aria-label="Breadcrumb"><ol>${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
+    ? `<nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb"><ol class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current">${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
     : "";
 }
 function relatedNavigation(route, metadata, pages) {
@@ -262,10 +335,10 @@ function relatedNavigation(route, metadata, pages) {
     entries
       .map(
         (page) =>
-          `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.metadata.title)}</a></li>`,
+          `<li class="my-2"><a class="${link}" href="${escapeHtml(page.route)}">${escapeHtml(page.metadata.title)}</a></li>`,
       )
       .join("");
-  return `${collections.length && route !== "/" ? `<nav class="related" aria-label="Collections"><h2>Explore collections</h2><ul>${links(collections)}</ul></nav>` : ""}${related.length ? `<nav class="related" aria-label="Related writing"><h2>Related writing</h2><ul>${links(related)}</ul></nav>` : ""}`;
+  return `${collections.length && route !== "/" ? `<nav class="mt-12 text-[0.9rem]" aria-label="Collections"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Explore collections</h2><ul class="mt-0 mb-6">${links(collections)}</ul></nav>` : ""}${related.length ? `<nav class="mt-12 text-[0.9rem]" aria-label="Related writing"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2><ul class="mt-0 mb-6">${links(related)}</ul></nav>` : ""}`;
 }
 function seoHead(route, metadata, site, pages) {
   const url = site.url + route;

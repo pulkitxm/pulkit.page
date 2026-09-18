@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,282 +61,414 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">React Image Gallery with PhotoSwipe</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>React Image Gallery with PhotoSwipe</h1>
-            <p class="detail-meta"><time datetime="2024-08-12">2024-08-12</time></p>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              React Image Gallery with PhotoSwipe
+            </h1>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2024-08-12">2024-08-12</time>
+            </p>
           </header>
-          <div class="prose">
-            <p>
-              In one of my recent projects(<a href="https://github.com/Pulkitxm/image-tweaker"
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
+              In one of my recent projects(<a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://github.com/Pulkitxm/image-tweaker"
                 >image-tweaker</a
               >), I provided users with the ability to upload images, which were then displayed in a
               collection on the dashboard. I was searching for a way to give these images a cool
               animated view, and that&#39;s when I discovered
-              <a href="https://photoswipe.com">PhotoSwipe</a>!
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://photoswipe.com"
+                >PhotoSwipe</a
+              >!
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               PhotoSwipe is a powerful, easy-to-use JavaScript library that allows you to create
               beautiful, animated image galleries. It provides a smooth and responsive experience,
               making your image collections look stunning on any device.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Let&#39;s make an image gallery in React with the
-              <a href="https://www.npmjs.com/package/react-photoswipe-gallery"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.npmjs.com/package/react-photoswipe-gallery"
                 >react-photoswipe-gallery</a
               >.
             </p>
-            <h2 id="let-s-start-by-bootstrapping-a-fresh-react-ts-app">
+            <h2
+              id="let-s-start-by-bootstrapping-a-fresh-react-ts-app"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
               Let&#39;s Start by Bootstrapping a Fresh React-TS App
             </h2>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">create</span> <span class="s">vite@latest</span> <span class="s">react-app-gallery</span> <span class="s">--</span> <span class="s">--template</span> <span class="s">react</span>
-<span class="f">cd</span> <span class="s">react-app-gallery</span>
-<span class="f">pnpm</span> <span class="s">install</span>
-<span class="f">pnpm</span> <span class="s">dev</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">create</span> <span class="text-syn-s">vite@latest</span> <span class="text-syn-s">react-app-gallery</span> <span class="text-syn-s">--</span> <span class="text-syn-s">--template</span> <span class="text-syn-s">react</span>
+<span class="text-syn-f">cd</span> <span class="text-syn-s">react-app-gallery</span>
+<span class="text-syn-f">pnpm</span> <span class="text-syn-s">install</span>
+<span class="text-syn-f">pnpm</span> <span class="text-syn-s">dev</span>
 </code></pre>
-            <p>And just like that, we have our plain Vite React app ready to go!</p>
-            <p>
+            <p class="mt-0 mb-6">
+              And just like that, we have our plain Vite React app ready to go!
+            </p>
+            <p class="mt-0 mb-6">
               This will set up a new React project with TypeScript support. You should see a default
               Vite React app running at
-              <a href="http://localhost:3000"><code>http://localhost:3000</code></a>.
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="http://localhost:3000"
+                ><code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >http://localhost:3000</code
+                ></a
+              >.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/react-image-gallery-with-photoswipe/40786bd6-5690-47a8-a52c-b7bf7aba230c.webp"
                 alt="Default Vite React app running in browser"
                 loading="lazy"
               />
             </p>
-            <h3 id="clean-up-the-default-setup">Clean Up the Default Setup</h3>
-            <p>
-              You can also remove the default CSS in <code>App.css</code> and
-              <code>index.css</code>.
+            <h3 id="clean-up-the-default-setup" class="mt-8 text-lg leading-tight tracking-tight">
+              Clean Up the Default Setup
+            </h3>
+            <p class="mt-0 mb-6">
+              You can also remove the default CSS in
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >App.css</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >index.css</code
+              >.
             </p>
             <pre
-            ><code class="language-tsx"><span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">&lt;</span><span class="g">div</span><span class="u">&gt;</span>App<span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>App<span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <h3 id="adding-photoswipe">Adding PhotoSwipe</h3>
-            <p>Now let&#39;s start adding the dependencies</p>
+            <h3 id="adding-photoswipe" class="mt-8 text-lg leading-tight tracking-tight">
+              Adding PhotoSwipe
+            </h3>
+            <p class="mt-0 mb-6">Now let&#39;s start adding the dependencies</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">react-photoswipe-gallery</span> <span class="s">photoswipe</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">react-photoswipe-gallery</span> <span class="text-syn-s">photoswipe</span>
 </code></pre>
-            <p>
-              Include the CSS file from <code>photoswipe</code>. (As a best practice, I typically
-              add these types of default CSS files in <code>main.tsx</code>.)
+            <p class="mt-0 mb-6">
+              Include the CSS file from
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >photoswipe</code
+              >. (As a best practice, I typically add these types of default CSS files in
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >main.tsx</code
+              >.)
             </p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="s">&quot;photoswipe/dist/photoswipe.css&quot;</span><span class="u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-s">&quot;photoswipe/dist/photoswipe.css&quot;</span><span class="text-syn-u">;</span>
 </code></pre>
-            <h3 id="creating-the-image-gallery">Creating the Image Gallery</h3>
-            <p>
+            <h3 id="creating-the-image-gallery" class="mt-8 text-lg leading-tight tracking-tight">
+              Creating the Image Gallery
+            </h3>
+            <p class="mt-0 mb-6">
               Now, let&#39;s create a simple image gallery using
-              <code>react-photoswipe-gallery</code>. Update <code>App.tsx</code> with the following
-              code:
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >react-photoswipe-gallery</code
+              >. Update
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >App.tsx</code
+              >
+              with the following code:
             </p>
-            <p>Add some images and include their links in App.tsx, like this:</p>
+            <p class="mt-0 mb-6">Add some images and include their links in App.tsx, like this:</p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> Image1 <span class="k">from</span> <span class="s">&quot;./assets/image1.png&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image2 <span class="k">from</span> <span class="s">&quot;./assets/image2.png&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image3 <span class="k">from</span> <span class="s">&quot;./assets/image3.png&quot;</span><span class="u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Image1 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image1.png&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image2 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image2.png&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image3 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image3.png&quot;</span><span class="text-syn-u">;</span>
 </code></pre>
-            <p>make an array of images(you can use external links as well)</p>
+            <p class="mt-0 mb-6">make an array of images(you can use external links as well)</p>
             <pre
-            ><code class="language-tsx"><span class="k">const</span> images <span class="o">=</span> <span class="u">[</span>Image1<span class="u">,</span> Image2<span class="u">,</span> Image3<span class="u">];</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> images <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>Image1<span class="text-syn-u">,</span> Image2<span class="text-syn-u">,</span> Image3<span class="text-syn-u">];</span>
 </code></pre>
-            <p>
-              Now, to add the <code>photoswipe</code> gallery, let&#39;s wrap the images in
-              <code>Gallery</code>.
+            <p class="mt-0 mb-6">
+              Now, to add the
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >photoswipe</code
+              >
+              gallery, let&#39;s wrap the images in
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >Gallery</code
+              >.
             </p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="u">{</span> Gallery<span class="u">,</span> Item <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react-photoswipe-gallery&quot;</span><span class="u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Gallery<span class="text-syn-u">,</span> Item <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react-photoswipe-gallery&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> Image1 <span class="k">from</span> <span class="s">&quot;./assets/image1.png&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image2 <span class="k">from</span> <span class="s">&quot;./assets/image2.png&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image3 <span class="k">from</span> <span class="s">&quot;./assets/image3.png&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> Image1 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image1.png&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image2 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image2.png&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image3 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image3.png&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> images <span class="o">=</span> <span class="u">[</span>Image1<span class="u">,</span> Image2<span class="u">,</span> Image3<span class="u">];</span>
-  <span class="k">return</span> <span class="u">&lt;</span><span class="g">Gallery</span><span class="u">&gt;</span>// images here<span class="u">&lt;/</span><span class="g">Gallery</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> images <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>Image1<span class="text-syn-u">,</span> Image2<span class="text-syn-u">,</span> Image3<span class="text-syn-u">];</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">Gallery</span><span class="text-syn-u">&gt;</span>// images here<span class="text-syn-u">&lt;/</span><span class="text-syn-g">Gallery</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>A single image inside the gallery looks like this:</p>
+            <p class="mt-0 mb-6">A single image inside the gallery looks like this:</p>
             <pre
-            ><code class="language-tsx"><span class="u">&lt;</span><span class="g">Item</span> <span class="p">original</span><span class="o">=</span><span class="u">{</span>image<span class="u">}</span> <span class="p">width</span><span class="o">=</span><span class="s">&quot;1024&quot;</span> <span class="p">height</span><span class="o">=</span><span class="s">&quot;768&quot;</span><span class="u">&gt;</span>
-  <span class="u">{({</span> ref<span class="u">,</span> open <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">img</span>
-      <span class="p">ref</span><span class="o">=</span><span class="u">{</span>ref<span class="u">}</span>
-      <span class="p">onClick</span><span class="o">=</span><span class="u">{</span>open<span class="u">}</span>
-      <span class="p">src</span><span class="o">=</span><span class="u">{</span>image<span class="u">}</span>
-      <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-        <span class="p">width:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-        <span class="p">height:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-      <span class="u">}}</span>
-    <span class="u">/&gt;</span>
-  <span class="u">)}</span>
-<span class="u">&lt;/</span><span class="g">Item</span><span class="u">&gt;;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">&lt;</span><span class="text-syn-g">Item</span> <span class="text-syn-p">original</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span> <span class="text-syn-p">width</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;1024&quot;</span> <span class="text-syn-p">height</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;768&quot;</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">{({</span> ref<span class="text-syn-u">,</span> open <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">img</span>
+      <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>ref<span class="text-syn-u">}</span>
+      <span class="text-syn-p">onClick</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>open<span class="text-syn-u">}</span>
+      <span class="text-syn-p">src</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span>
+      <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+        <span class="text-syn-p">width:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">}}</span>
+    <span class="text-syn-u">/&gt;</span>
+  <span class="text-syn-u">)}</span>
+<span class="text-syn-u">&lt;/</span><span class="text-syn-g">Item</span><span class="text-syn-u">&gt;;</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               This code creates an image item within a gallery using the
-              <code>react-photoswipe-gallery</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >react-photoswipe-gallery</code
+              >
               library. Here&#39;s a breakdown of this spooky code:
             </p>
-            <ul>
+            <ul class="mt-0 mb-6">
               <li>
-                <code>&lt;Item&gt;</code>: This is a component from the
-                <code>react-photoswipe-gallery</code>
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >&lt;Item&gt;</code
+                >: This is a component from the
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >react-photoswipe-gallery</code
+                >
                 library that represents a single image item in the gallery.
-                <ul>
+                <ul class="mt-0 mb-6">
                   <li>
-                    <code>original= { image}</code>: This prop sets the original, full-size image
-                    source.
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >original= { image}</code
+                    >: This prop sets the original, full-size image source.
                   </li>
                 </ul>
               </li>
               <li>
-                <code>{ ( { ref, open }) =&gt; (...)}</code>: This is a render prop function that
-                provides two arguments:
-                <ul>
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >{ ( { ref, open }) =&gt; (...)}</code
+                >: This is a render prop function that provides two arguments:
+                <ul class="mt-0 mb-6">
                   <li>
-                    <code>ref</code>: A reference to the image element, used to track and manipulate
-                    the DOM element.
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >ref</code
+                    >: A reference to the image element, used to track and manipulate the DOM
+                    element.
                   </li>
                   <li>
-                    <code>open</code>: A function that opens the image in the gallery when called.
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >open</code
+                    >: A function that opens the image in the gallery when called.
                   </li>
                 </ul>
               </li>
             </ul>
-            <p>But we have an array of images, so we simply map the array</p>
-            <pre><code class="language-tsx"><span class="u">{</span>
-  images<span class="u">.</span><span class="f">map</span><span class="u">((</span>image<span class="u">,</span> index<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">Item</span> <span class="p">key</span><span class="o">=</span><span class="u">{</span>index<span class="u">}</span> <span class="p">original</span><span class="o">=</span><span class="u">{</span>image<span class="u">}</span> <span class="p">width</span><span class="o">=</span><span class="s">&quot;1024&quot;</span> <span class="p">height</span><span class="o">=</span><span class="s">&quot;768&quot;</span><span class="u">&gt;</span>
-      <span class="u">{({</span> ref<span class="u">,</span> open <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">(</span>
-        <span class="u">&lt;</span><span class="g">img</span>
-          <span class="p">ref</span><span class="o">=</span><span class="u">{</span>ref<span class="u">}</span>
-          <span class="p">onClick</span><span class="o">=</span><span class="u">{</span>open<span class="u">}</span>
-          <span class="p">src</span><span class="o">=</span><span class="u">{</span>image<span class="u">}</span>
-          <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-            <span class="p">width:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-            <span class="p">height:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-          <span class="u">}}</span>
-        <span class="u">/&gt;</span>
-      <span class="u">)}</span>
-    <span class="u">&lt;/</span><span class="g">Item</span><span class="u">&gt;</span>
-  <span class="u">));</span>
-<span class="u">}</span>
+            <p class="mt-0 mb-6">But we have an array of images, so we simply map the array</p>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
+  images<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>image<span class="text-syn-u">,</span> index<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">Item</span> <span class="text-syn-p">key</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>index<span class="text-syn-u">}</span> <span class="text-syn-p">original</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span> <span class="text-syn-p">width</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;1024&quot;</span> <span class="text-syn-p">height</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;768&quot;</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">{({</span> ref<span class="text-syn-u">,</span> open <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">img</span>
+          <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>ref<span class="text-syn-u">}</span>
+          <span class="text-syn-p">onClick</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>open<span class="text-syn-u">}</span>
+          <span class="text-syn-p">src</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span>
+          <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+            <span class="text-syn-p">width:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+            <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-u">}}</span>
+        <span class="text-syn-u">/&gt;</span>
+      <span class="text-syn-u">)}</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Item</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>Currently, the image appears quite congested.</p>
-            <p>
+            <p class="mt-0 mb-6">Currently, the image appears quite congested.</p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/react-image-gallery-with-photoswipe/a8b7da7f-f81c-494c-a15c-44d489fbc207.webp"
                 alt="Three images displayed without spacing"
                 loading="lazy"
               />
             </p>
-            <p>Just so as to add some breathing space let&#39;s add some styles</p>
-            <pre><code class="language-tsx">style<span class="o">=</span><span class="u">{{</span>
-  width<span class="u">:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-  height<span class="u">:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-  margin<span class="u">:</span> <span class="n">10</span><span class="u">,</span>
-  cursor<span class="u">:</span> <span class="s">&quot;pointer&quot;</span><span class="u">,</span>
-  borderRadius<span class="u">:</span> <span class="n">10</span><span class="u">,</span>
-<span class="u">}}</span>
-</code></pre>
-            <p>And yes, it works fine now, here&#39;s the complete code</p>
+            <p class="mt-0 mb-6">
+              Just so as to add some breathing space let&#39;s add some styles
+            </p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="u">{</span> Gallery<span class="u">,</span> Item <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react-photoswipe-gallery&quot;</span><span class="u">;</span>
-
-<span class="k">import</span> Image1 <span class="k">from</span> <span class="s">&quot;./assets/image1.png&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image2 <span class="k">from</span> <span class="s">&quot;./assets/image2.png&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image3 <span class="k">from</span> <span class="s">&quot;./assets/image3.png&quot;</span><span class="u">;</span>
-
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> images <span class="o">=</span> <span class="u">[</span>Image1<span class="u">,</span> Image2<span class="u">,</span> Image3<span class="u">];</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">Gallery</span><span class="u">&gt;</span>
-      <span class="u">{</span>images<span class="u">.</span><span class="f">map</span><span class="u">((</span>image<span class="u">,</span> index<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">(</span>
-        <span class="u">&lt;</span><span class="g">Item</span> <span class="p">key</span><span class="o">=</span><span class="u">{</span>index<span class="u">}</span> <span class="p">original</span><span class="o">=</span><span class="u">{</span>image<span class="u">}</span> <span class="p">width</span><span class="o">=</span><span class="s">&quot;1024&quot;</span> <span class="p">height</span><span class="o">=</span><span class="s">&quot;768&quot;</span><span class="u">&gt;</span>
-          <span class="u">{({</span> ref<span class="u">,</span> open <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">(</span>
-            <span class="u">&lt;</span><span class="g">img</span>
-              <span class="p">ref</span><span class="o">=</span><span class="u">{</span>ref<span class="u">}</span>
-              <span class="p">onClick</span><span class="o">=</span><span class="u">{</span>open<span class="u">}</span>
-              <span class="p">src</span><span class="o">=</span><span class="u">{</span>image<span class="u">}</span>
-              <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-                <span class="p">width:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-                <span class="p">height:</span> <span class="s">&quot;200px&quot;</span><span class="u">,</span>
-                <span class="p">margin:</span> <span class="n">10</span><span class="u">,</span>
-                <span class="p">cursor:</span> <span class="s">&quot;pointer&quot;</span><span class="u">,</span>
-                <span class="p">borderRadius:</span> <span class="n">10</span><span class="u">,</span>
-              <span class="u">}}</span>
-            <span class="u">/&gt;</span>
-          <span class="u">)}</span>
-        <span class="u">&lt;/</span><span class="g">Item</span><span class="u">&gt;</span>
-      <span class="u">))}</span>
-    <span class="u">&lt;/</span><span class="g">Gallery</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">style<span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+  width<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+  height<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+  margin<span class="text-syn-u">:</span> <span class="text-syn-n">10</span><span class="text-syn-u">,</span>
+  cursor<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;pointer&quot;</span><span class="text-syn-u">,</span>
+  borderRadius<span class="text-syn-u">:</span> <span class="text-syn-n">10</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">}}</span>
 </code></pre>
-            <h3 id="here-s-the-final-version">Here&#39;s the final version!</h3>
-            <p>
-              <a href="https://codesandbox.io/embed/m3x8ct?view=preview&amp;module=%2Fsrc%2FApp.tsx"
+            <p class="mt-0 mb-6">And yes, it works fine now, here&#39;s the complete code</p>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Gallery<span class="text-syn-u">,</span> Item <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react-photoswipe-gallery&quot;</span><span class="text-syn-u">;</span>
+
+<span class="text-syn-k">import</span> Image1 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image1.png&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image2 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image2.png&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image3 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image3.png&quot;</span><span class="text-syn-u">;</span>
+
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> images <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>Image1<span class="text-syn-u">,</span> Image2<span class="text-syn-u">,</span> Image3<span class="text-syn-u">];</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">Gallery</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">{</span>images<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>image<span class="text-syn-u">,</span> index<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Item</span> <span class="text-syn-p">key</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>index<span class="text-syn-u">}</span> <span class="text-syn-p">original</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span> <span class="text-syn-p">width</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;1024&quot;</span> <span class="text-syn-p">height</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;768&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">{({</span> ref<span class="text-syn-u">,</span> open <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
+            <span class="text-syn-u">&lt;</span><span class="text-syn-g">img</span>
+              <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>ref<span class="text-syn-u">}</span>
+              <span class="text-syn-p">onClick</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>open<span class="text-syn-u">}</span>
+              <span class="text-syn-p">src</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span>
+              <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+                <span class="text-syn-p">width:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+                <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
+                <span class="text-syn-p">margin:</span> <span class="text-syn-n">10</span><span class="text-syn-u">,</span>
+                <span class="text-syn-p">cursor:</span> <span class="text-syn-s">&quot;pointer&quot;</span><span class="text-syn-u">,</span>
+                <span class="text-syn-p">borderRadius:</span> <span class="text-syn-n">10</span><span class="text-syn-u">,</span>
+              <span class="text-syn-u">}}</span>
+            <span class="text-syn-u">/&gt;</span>
+          <span class="text-syn-u">)}</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Item</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">))}</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Gallery</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
+</code></pre>
+            <h3 id="here-s-the-final-version" class="mt-8 text-lg leading-tight tracking-tight">
+              Here&#39;s the final version!
+            </h3>
+            <p class="mt-0 mb-6">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://codesandbox.io/embed/m3x8ct?view=preview&amp;module=%2Fsrc%2FApp.tsx"
                 >Image gallery demo with PhotoSwipe</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               With these changes, your image gallery should now look much cleaner and more
               user-friendly. The added margin and rounded corners give each image some breathing
               room and a polished appearance. Enjoy your improved gallery!
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
-          <ul>
-            <li>
-              <a href="/blogs/context-menu-in-react/">React Context Menu with react-contexify</a>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/context-menu-in-react/"
+                >React Context Menu with react-contexify</a
+              >
             </li>
-            <li>
-              <a href="/blogs/scroll-indicator-with-framer/"
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/scroll-indicator-with-framer/"
                 >Scroll Indicator with Framer Motion useScroll</a
               >
             </li>
-            <li><a href="/blogs/typewriter-effect-in-react/">Typewriter Effect in React</a></li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/typewriter-effect-in-react/"
+                >Typewriter Effect in React</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

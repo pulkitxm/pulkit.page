@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,248 +45,386 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/" aria-current="page">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a
+            class="text-inherit no-underline aria-[current=page]:text-fg"
+            href="/blogs/"
+            aria-current="page"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="simple">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li aria-current="page">Writing</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Writing</h1>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              Writing
+            </h1>
           </header>
-          <div class="prose">
-            <p>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
               Things I&#39;ve learned while building. Browse
-              <a href="/blogs/system-design/">system design</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/"
+                >system design</a
+              >
               or
-              <a href="/blogs/design-engineering/">design engineering</a>.
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/"
+                >design engineering</a
+              >.
             </p>
-            <h2 class="writing-year">2026</h2>
-            <ul class="entry-list">
-              <li>
-                <a class="entry-link" href="/blogs/kaksha/"
-                  ><span class="entry-title">Kaksha: The App I Built for My Mother</span
-                  ><span class="entry-meta"><time datetime="2026-08-09">Aug 9, 2026</time></span></a
+            <h2
+              class="mt-10 mb-2 flex items-center gap-4 text-md font-medium leading-tight tracking-normal text-muted after:h-px after:flex-1 after:bg-line"
+            >
+              2026
+            </h2>
+            <ul class="mt-0 mb-6 list-none p-0">
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/kaksha/"
+                  ><span class="group-hover:underline" data-title
+                    >Kaksha: The App I Built for My Mother</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2026-08-09">Aug 9, 2026</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/git-partial-clones/"
-                  ><span class="entry-title"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/git-partial-clones/"
+                  ><span class="group-hover:underline" data-title
                     >Partial Clones, Shallow Clones, and Sparse Checkout</span
-                  ><span class="entry-meta"><time datetime="2026-08-03">Aug 3, 2026</time></span></a
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2026-08-03">Aug 3, 2026</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/my-first-talk/"
-                  ><span class="entry-title">My First Talk: Claude Directory</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/my-first-talk/"
+                  ><span class="group-hover:underline" data-title
+                    >My First Talk: Claude Directory</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2026-06-13">Jun 13, 2026</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/git-worktrees/"
-                  ><span class="entry-title">Git Worktrees</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/git-worktrees/"
+                  ><span class="group-hover:underline" data-title>Git Worktrees</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2026-05-29">May 29, 2026</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/cookie-sync-pattern/"
-                  ><span class="entry-title">The Cookie Sync Pattern</span
-                  ><span class="entry-meta"><time datetime="2026-05-04">May 4, 2026</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/cookie-sync-pattern/"
+                  ><span class="group-hover:underline" data-title>The Cookie Sync Pattern</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2026-05-04">May 4, 2026</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/mcp-server-that-writes-itself/"
-                  ><span class="entry-title">An MCP Server That Writes Itself</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/mcp-server-that-writes-itself/"
+                  ><span class="group-hover:underline" data-title
+                    >An MCP Server That Writes Itself</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2026-04-22">Apr 22, 2026</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/cron-jobs-with-bullmq/"
-                  ><span class="entry-title">BullMQ Cron Jobs with Redis in Node.js</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/cron-jobs-with-bullmq/"
+                  ><span class="group-hover:underline" data-title
+                    >BullMQ Cron Jobs with Redis in Node.js</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2026-03-29">Mar 29, 2026</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/smooth-scroll/"
-                  ><span class="entry-title">Smooth Scrolling in Next.js</span
-                  ><span class="entry-meta"><time datetime="2026-03-03">Mar 3, 2026</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/smooth-scroll/"
+                  ><span class="group-hover:underline" data-title>Smooth Scrolling in Next.js</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2026-03-03">Mar 3, 2026</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/how-i-use-cursor/"
-                  ><span class="entry-title">How I Use Cursor to Build at 1000x Speed</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/how-i-use-cursor/"
+                  ><span class="group-hover:underline" data-title
+                    >How I Use Cursor to Build at 1000x Speed</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2026-02-26">Feb 26, 2026</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/virtualized-list/"
-                  ><span class="entry-title">React Virtualized List from Scratch</span
-                  ><span class="entry-meta"><time datetime="2026-01-04">Jan 4, 2026</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/virtualized-list/"
+                  ><span class="group-hover:underline" data-title
+                    >React Virtualized List from Scratch</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2026-01-04">Jan 4, 2026</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/ssg-in-nextjs/"
-                  ><span class="entry-title">Next.js Build Output Symbols (● ○ ƒ) and SSG</span
-                  ><span class="entry-meta"><time datetime="2026-01-01">Jan 1, 2026</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/ssg-in-nextjs/"
+                  ><span class="group-hover:underline" data-title
+                    >Next.js Build Output Symbols (● ○ ƒ) and SSG</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2026-01-01">Jan 1, 2026</time></span
+                  ></a
                 >
               </li>
             </ul>
-            <h2 class="writing-year">2025</h2>
-            <ul class="entry-list">
-              <li>
-                <a class="entry-link" href="/blogs/branded-types-in-typescript/"
-                  ><span class="entry-title">Branded Types in TypeScript</span
-                  ><span class="entry-meta"
+            <h2
+              class="mt-10 mb-2 flex items-center gap-4 text-md font-medium leading-tight tracking-normal text-muted after:h-px after:flex-1 after:bg-line"
+            >
+              2025
+            </h2>
+            <ul class="mt-0 mb-6 list-none p-0">
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/branded-types-in-typescript/"
+                  ><span class="group-hover:underline" data-title>Branded Types in TypeScript</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2025-12-26">Dec 26, 2025</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/seo-for-nextjs-portfolio/"
-                  ><span class="entry-title">SEO for Next.js Portfolio</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/seo-for-nextjs-portfolio/"
+                  ><span class="group-hover:underline" data-title>SEO for Next.js Portfolio</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2025-12-21">Dec 21, 2025</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/rag-chatbot-with-qdrant/"
-                  ><span class="entry-title">RAG Chatbot with Qdrant</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/rag-chatbot-with-qdrant/"
+                  ><span class="group-hover:underline" data-title>RAG Chatbot with Qdrant</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2025-12-11">Dec 11, 2025</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/deploying-on-coolify/"
-                  ><span class="entry-title">Coolify: Self-Host Postgres, Redis &amp; Next.js</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/deploying-on-coolify/"
+                  ><span class="group-hover:underline" data-title
+                    >Coolify: Self-Host Postgres, Redis &amp; Next.js</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2025-07-26">Jul 26, 2025</time></span
                   ></a
                 >
               </li>
             </ul>
-            <h2 class="writing-year">2024</h2>
-            <ul class="entry-list">
-              <li>
-                <a class="entry-link" href="/blogs/contact-form-with-resend/"
-                  ><span class="entry-title">Build a Contact Form with Resend in Next.js</span
-                  ><span class="entry-meta"
+            <h2
+              class="mt-10 mb-2 flex items-center gap-4 text-md font-medium leading-tight tracking-normal text-muted after:h-px after:flex-1 after:bg-line"
+            >
+              2024
+            </h2>
+            <ul class="mt-0 mb-6 list-none p-0">
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/contact-form-with-resend/"
+                  ><span class="group-hover:underline" data-title
+                    >Build a Contact Form with Resend in Next.js</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-12-13">Dec 13, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/og-images-in-nextjs/"
-                  ><span class="entry-title">Open Graph Images in Next.js</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/og-images-in-nextjs/"
+                  ><span class="group-hover:underline" data-title>Open Graph Images in Next.js</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-11-15">Nov 15, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/prisma-with-postgresql/"
-                  ><span class="entry-title">Prisma ORM with PostgreSQL</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/prisma-with-postgresql/"
+                  ><span class="group-hover:underline" data-title>Prisma ORM with PostgreSQL</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-08-17">Aug 17, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/image-gallery-with-photoswipe/"
-                  ><span class="entry-title">React Image Gallery with PhotoSwipe</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/image-gallery-with-photoswipe/"
+                  ><span class="group-hover:underline" data-title
+                    >React Image Gallery with PhotoSwipe</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-08-12">Aug 12, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/context-menu-in-react/"
-                  ><span class="entry-title">React Context Menu with react-contexify</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/context-menu-in-react/"
+                  ><span class="group-hover:underline" data-title
+                    >React Context Menu with react-contexify</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-08-10">Aug 10, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/aws-s3-with-nodejs/"
-                  ><span class="entry-title">AWS S3 with Node.js: Upload Files with SDK v3</span
-                  ><span class="entry-meta"><time datetime="2024-08-08">Aug 8, 2024</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/aws-s3-with-nodejs/"
+                  ><span class="group-hover:underline" data-title
+                    >AWS S3 with Node.js: Upload Files with SDK v3</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2024-08-08">Aug 8, 2024</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/nodejs-on-ec2/"
-                  ><span class="entry-title">Node.js on EC2 with PM2 and NGINX</span
-                  ><span class="entry-meta"><time datetime="2024-08-05">Aug 5, 2024</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/nodejs-on-ec2/"
+                  ><span class="group-hover:underline" data-title
+                    >Node.js on EC2 with PM2 and NGINX</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2024-08-05">Aug 5, 2024</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/creating-npx-command/"
-                  ><span class="entry-title">Creating Your Own npx Command</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/creating-npx-command/"
+                  ><span class="group-hover:underline" data-title
+                    >Creating Your Own npx Command</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-07-27">Jul 27, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/sse-with-fastapi/"
-                  ><span class="entry-title">FastAPI SSE: Server-Sent Events in Python</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/sse-with-fastapi/"
+                  ><span class="group-hover:underline" data-title
+                    >FastAPI SSE: Server-Sent Events in Python</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-07-26">Jul 26, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/scroll-indicator-with-framer/"
-                  ><span class="entry-title">Scroll Indicator with Framer Motion useScroll</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/scroll-indicator-with-framer/"
+                  ><span class="group-hover:underline" data-title
+                    >Scroll Indicator with Framer Motion useScroll</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-07-24">Jul 24, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/python-poetry-guide/"
-                  ><span class="entry-title">Python Dependency Management with Poetry</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/python-poetry-guide/"
+                  ><span class="group-hover:underline" data-title
+                    >Python Dependency Management with Poetry</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-07-13">Jul 13, 2024</time></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/vscode-in-browser/"
-                  ><span class="entry-title">VSCode in Your Browser</span
-                  ><span class="entry-meta"><time datetime="2024-07-04">Jul 4, 2024</time></span></a
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/vscode-in-browser/"
+                  ><span class="group-hover:underline" data-title>VSCode in Your Browser</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
+                    ><time datetime="2024-07-04">Jul 4, 2024</time></span
+                  ></a
                 >
               </li>
-              <li>
-                <a class="entry-link" href="/blogs/typewriter-effect-in-react/"
-                  ><span class="entry-title">Typewriter Effect in React</span
-                  ><span class="entry-meta"
+              <li class="border-b border-line">
+                <a
+                  class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3"
+                  href="/blogs/typewriter-effect-in-react/"
+                  ><span class="group-hover:underline" data-title>Typewriter Effect in React</span
+                  ><span class="shrink-0 text-xs text-muted max-sm:text-2xs"
                     ><time datetime="2024-04-28">Apr 28, 2024</time></span
                   ></a
                 >
@@ -291,23 +432,46 @@
             </ul>
           </div>
         </article>
-        <nav class="related" aria-label="Collections">
-          <h2>Explore collections</h2>
-          <ul>
-            <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
-            <li><a href="/blogs/system-design/">System Design</a></li>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Collections">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Explore collections
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/"
+                >Design Engineering</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/"
+                >System Design</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

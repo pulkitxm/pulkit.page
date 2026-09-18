@@ -50,6 +50,17 @@ function safeUrl(value) {
   }
   return escapeHtml(value);
 }
+function listingDate(metadata) {
+  if (metadata.period || !metadata.date) {
+    return escapeHtml(metadata.period ?? "");
+  }
+  const month = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(metadata.date));
+  return `<time datetime="${escapeHtml(metadata.date)}">${month}</time>`;
+}
 function experiencePeriod(metadata) {
   const month = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -156,7 +167,7 @@ export async function renderPage(
             .map((page) =>
               page.metadata.icon
                 ? experienceEntry(page)
-                : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${escapeHtml(page.metadata.period ?? page.metadata.date?.slice(0, 4) ?? "")}</span></a></li>`,
+                : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata)}</span></a></li>`,
             )
             .join("")}</ul>`;
         },

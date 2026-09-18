@@ -145,9 +145,9 @@
   --color-neutral-200: color-mix(in oklab, var(--site-light), var(--site-dark) 7.5%);
   --color-neutral-300: color-mix(in oklab, var(--site-light), var(--site-dark) 13.7%);
   --color-neutral-400: color-mix(in oklab, var(--site-light), var(--site-dark) 33%);
-  --color-neutral-500: color-mix(in oklab, var(--site-light), var(--site-dark) 51.1%);
-  --color-neutral-600: color-mix(in oklab, var(--site-light), var(--site-dark) 65%);
-  --color-neutral-700: color-mix(in oklab, var(--site-light), var(--site-dark) 73.1%);
+  --color-neutral-500: color-mix(in oklab, var(--site-light), var(--site-dark) 58%);
+  --color-neutral-600: color-mix(in oklab, var(--site-light), var(--site-dark) 68%);
+  --color-neutral-700: color-mix(in oklab, var(--site-light), var(--site-dark) 74%);
   --color-neutral-800: color-mix(in oklab, var(--site-light), var(--site-dark) 85.2%);
   --color-neutral-900: color-mix(in oklab, var(--site-light), var(--site-dark) 92.9%);
   --color-neutral-950: color-mix(in oklab, var(--site-light), var(--site-dark) 100%);

@@ -38,7 +38,7 @@ Animation serves four purposes in interfaces:
 - **Continuity** maintains context during transitions. A list item expanding into a detail view shows these are the same entity, not two disconnected screens.
 - **Delight** creates memorable moments. A celebration animation after completing an onboarding flow leaves a positive impression.
 
-[Interactive example: Purpose](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo purpose
 
 A simple like button can demonstrate two purposes at once. The scale down on press provides feedback. The bounce and color fill create delight. Neither animation is strictly necessary, but together they make the interaction feel satisfying.
 
@@ -50,7 +50,7 @@ How often users encounter an animation determines whether it helps or hurts.
 
 Open Spotlight on your Mac. Notice there's no entrance animation. It just appears. Apple made this choice deliberately. Power users invoke Spotlight hundreds of times daily. Any animation, even a fast one, would accumulate into noticeable friction.
 
-[Interactive example: Frequency Toggle](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo frequency-toggle
 
 Toggle the menu above using `J` (animated) and `K` (instant). After a few toggles, the difference becomes clear. The animated version feels fluid in isolation. But imagine using it every minute of your workday. Suddenly instant feels better.
 
@@ -69,7 +69,7 @@ The mistake I see most often: treating every interaction as if users will only s
 
 When someone reaches for their keyboard instead of their mouse, they're signaling intent. They want speed. They've committed the shortcut to muscle memory and expect the interface to keep up.
 
-[Interactive example: Keyboard Nav](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo keyboard-nav
 
 Focus the list above and navigate with arrow keys. Toggle animation with Shift. Feel how the animated highlight creates a disconnect between your keystrokes and the visual response?
 
@@ -86,7 +86,7 @@ Most UI animations should complete in 300 milliseconds or less. This isn't arbit
 - **300ms to 500ms** is noticeable but acceptable. Use sparingly for larger movements.
 - **Over 500ms** feels slow. Reserve for intentional dramatic moments.
 
-[Interactive example: Duration Comparison](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo duration-comparison
 
 Click both dropdowns. The 180ms version feels snappy. The 400ms version feels sluggish. Same easing, same elements, but the duration changes the entire character of the interaction.
 
@@ -96,7 +96,7 @@ When you find yourself thinking "this animation needs to be longer," question th
 
 Animation doesn't just affect feel. It affects how fast your application seems to perform.
 
-[Interactive example: Spinner Speed](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo spinner-speed
 
 Both spinners represent the same wait time. But the faster rotation creates an illusion of activity. Users perceive the application as working harder, even though nothing changed about the actual load time.
 
@@ -112,7 +112,7 @@ Three ways animation affects perceived performance:
 
 Tooltips need special handling. They require a delay before appearing to prevent accidental triggers, but once one tooltip is open, switching between tooltips should be instant.
 
-[Interactive example: Tooltip Delay](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo tooltip-delay
 
 Hover over the icons. The first tooltip waits 400ms. After that, moving between icons shows tooltips immediately with no animation.
 
@@ -124,7 +124,7 @@ The same logic applies to nested menus, tab groups, and any interface where user
 
 Bigger elements need longer animations. This feels counterintuitive until you think about physics.
 
-[Interactive example: Element Size](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo element-size
 
 A small indicator moving quickly feels natural. A large modal moving at the same speed feels weightless and artificial. Visual weight creates expectations of physical weight.
 
@@ -143,7 +143,7 @@ These aren't rules, they're starting points. The specific duration depends on th
 
 Your marketing site and your product serve different purposes. Animation should reflect this.
 
-[Interactive example: Product Vs Marketing](https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip)
+:::demo product-vs-marketing
 
 **Product UI** optimizes for repeated use. Users have tasks to complete. They've already bought into your product. Animation should enhance efficiency, not demonstrate creativity.
 

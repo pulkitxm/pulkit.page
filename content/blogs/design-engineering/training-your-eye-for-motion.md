@@ -21,7 +21,7 @@ This is taste. And it's becoming the most valuable skill you can have.
 
 Press both buttons below. Same duration. Same scale value. One uses spring easing with overshoot, the other uses linear timing. Completely different experience.
 
-[Interactive example: Taste Comparison](https://www.pulkit.blog/series/design-engineering/training-your-eye-for-motion)
+:::demo taste-comparison
 
 The difference isn't subjective. One feels alive, the other feels mechanical. Developing the ability to see this difference and know how to fix it is what this post is about.
 

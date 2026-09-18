@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/when-to-animate-and-when-to-skip",
+  "index": 5,
+  "component": "tooltip-delay",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/the-physics-behind-natural-motion",
+  "index": 5,
+  "component": "bounce-comparison",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

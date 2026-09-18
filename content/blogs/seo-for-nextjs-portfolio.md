@@ -18,13 +18,11 @@ Recently, I randomly searched for "Deploying portfolio on Coolify" and was pleas
 
 I even tweeted about it:
 
-> Randomly searched for 'Deploying portfolio on Coolify' and my blog appeared on top on google
->
-> <http://pulkitxm.com/blogs/deploying>...
->
-> let's discuss how I did this?🧵
->
-> [View post on X](https://x.com/_pulkitxm/status/1992553456054436067)
+:::embed tweet
+{"content":"Randomly searched for 'Deploying portfolio on Coolify' and my blog appeared on top on google\n\nhttp://pulkitxm.com/blogs/deploying...\n\nlet's discuss how I did this?🧵","link":"https://x.com/_pulkitxm/status/1992553456054436067","user":{"name":"Pulkit","username":"_pulkitxm","profileLink":"https://x.com/_pulkitxm","verified":true},"timestamp":"4:48 PM · Nov 23, 2025"}
+:::
+
+<br>
 
 I don't use any third-party platforms for my content (I used to write on Hashnode earlier, but not anymore). Now I have everything integrated into my Next.js portfolio, giving me complete control over SEO optimization. But with that control comes responsibility, you need to implement all the right techniques to rank well on search engines.
 
@@ -226,7 +224,7 @@ I store cover images in my public folder and reference them in the frontmatter. 
 
 ### Why Sitemaps Matter
 
-A [sitemap](/sitemap.xml) helps search engines discover and crawl your content more efficiently. I use this specifically for Google Search index improvement via [Google Search Console](https://search.google.com/search-console). Your sitemap helps:
+A [sitemap](https://www.pulkit.page/sitemap.xml) helps search engines discover and crawl your content more efficiently. I use this specifically for Google Search index improvement via [Google Search Console](https://search.google.com/search-console). Your sitemap helps:
 
 - Find new pages quickly
 - Understand your site structure

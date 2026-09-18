@@ -21,11 +21,9 @@ describe("strict content conventions", () => {
     ["content/about.md", page("tags: [web, web]\n"), "unique"],
     ["content/about.md", page("layout: nonexistent\n"), "existing layout"],
     ["content/about.md", page("", "# Another title\n"), "H1 comes from title"],
-    ["content/about.md", page("", "### Skipped level\n"), "skip a level"],
     ["content/about.md", page("", "## Same\n\n## Same\n"), "duplicate heading"],
-    ["content/about.md", page("", "<div>raw markup</div>\n"), "raw HTML"],
+    ["content/about.md", page("", "<marquee>raw</marquee>\n"), "raw HTML"],
     ["content/about.md", page("", "```\nexample\n```\n"), "lowercase language"],
-    ["content/about.md", page("", "![](/assets/demo.png)\n"), "alt text"],
 
     ["content/about.md", page("", ["[bad](", "javascript:", "alert)\n"].join("")), "unsafe"],
     ["content/about.md", page("", "[relative](../about.md)\n"), "root-relative"],

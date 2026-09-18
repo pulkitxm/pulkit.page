@@ -21,7 +21,7 @@ Sending emails is a common feature in web applications, whether for user signups
 
 I'm quite particular about my portfolio, and while browsing through some developer portfolios online, I noticed that most of them had a contact section with a form in addition to contact links. This led me to research some good email solutions. Initially, I tried [emailjs](https://www.emailjs.com), but its free tier was pretty basic. That's how I eventually discovered Resend.
 
-[![Contact form on portfolio website](/assets/content/blogs/emails-with-resend/fb91fd24-5e0d-463d-90c9-223671d3db5c.webp)](/contact/)
+[![Contact form on portfolio website](/assets/content/blogs/emails-with-resend/fb91fd24-5e0d-463d-90c9-223671d3db5c.webp)](https://pulkitxm.com/contact)
 
 So let me show you how you can easily integrate an awesome contact form into your Next.js project!
 
@@ -361,7 +361,7 @@ When you send an email without a verified domain, it’s likely to be flagged by
 
 ### Adding a custom domain
 
-I had added a custom domain from my portfolio domain: [**pulkitxm.com**](/). Here’s a step-by-step guide on how I did it:
+I had added a custom domain from my portfolio domain: [**pulkitxm.com**](https://pulkitxm.com). Here’s a step-by-step guide on how I did it:
 
 1. **Add Domain**: First, I logged into my Resend dashboard and added my portfolio domain **pulkitxm.com**. This is the domain from which I wanted to send emails.
 2. **DNS Settings**: After adding the domain, Resend prompted me to configure the **DNS settings**. It provided specific records, such as **SPF**, **DKIM**, and **DMARC**, which I needed to add to the DNS settings for my domain.

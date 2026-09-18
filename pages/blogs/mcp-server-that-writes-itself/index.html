@@ -314,14 +314,16 @@
               A Typical Session
             </h3>
             <p class="mt-0 mb-6">A typical session looks like this:</p>
-            <p class="mt-0 mb-6">
+            <div class="mt-0 mb-6 text-center [&_img]:mx-auto">
               <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                class="mx-auto my-7 block rounded-lg w-auto h-auto max-w-full"
                 src="/assets/content/blogs/mcp-server-that-writes-itself/typical-session.webp"
                 alt="MCP session sequence: Client and Server exchange initialize, serverInfo, notifications/initialized, tools/list, resources/list, prompts/list, and tools/call with JSON-RPC style messages."
                 loading="lazy"
+                decoding="async"
               />
-            </p>
+            </div>
+            <br />
             <p class="mt-0 mb-6">
               The spec allows two ways to connect. <strong>stdio</strong> is for a local process the
               editor starts on your machine. <strong>HTTP</strong> is for a URL on the public

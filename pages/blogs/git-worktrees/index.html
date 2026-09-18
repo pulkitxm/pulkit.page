@@ -868,24 +868,27 @@
   <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">&quot;$wt&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">branch</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6"><strong>The full version I actually use in my workflow</strong></p>
-            <p class="mt-0 mb-6">
-              This is the real one. It does a fair bit more than the simple version above: it reads
-              a
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >.worktreeinclude</code
-              >
-              (or falls back to a default list) and copies nested config like
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >config/secrets.json</code
-              >
-              across with a portable tar-pipe, it attaches to a branch that already exists instead
-              of erroring, and it detects Bun.
-            </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">wt</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+            <details class="mt-0 mb-6 rounded-lg border border-line p-4 [&>*:last-child]:mb-0">
+              <summary class="cursor-pointer font-bold">
+                The full version I actually use in my workflow
+              </summary>
+              <p class="mt-0 mb-6">
+                This is the real one. It does a fair bit more than the simple version above: it
+                reads a
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >.worktreeinclude</code
+                >
+                (or falls back to a default list) and copies nested config like
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >config/secrets.json</code
+                >
+                across with a portable tar-pipe, it attaches to a branch that already exists instead
+                of erroring, and it detects Bun.
+              </p>
+              <pre
+                tabindex="0"
+                class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+              ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">wt</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-f">emulate</span> <span class="text-syn-s">-L</span> <span class="text-syn-s">bash</span> <span class="text-syn-o">2&gt;</span><span class="text-syn-s">/dev/null</span> <span class="text-syn-o">||</span> <span class="text-syn-f">true</span>
   <span class="text-syn-k">local</span> branch<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$1&quot;</span>
   <span class="text-syn-k">local</span> base<span class="text-syn-o">=</span><span class="text-syn-s">&quot;${2:-origin/HEAD}&quot;</span>
@@ -942,6 +945,7 @@
   <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">&quot;$wt&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">branch</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span>
 <span class="text-syn-u">}</span>
 </code></pre>
+            </details>
             <p class="mt-0 mb-6">
               Now
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"

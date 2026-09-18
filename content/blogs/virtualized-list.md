@@ -68,7 +68,13 @@ The key inputs we need are:
 - Height of the scroll container
 - Current scroll position
 
-![Virtualized list example](/assets/content/blogs/virtualized-list/example.gif)
+<center>
+
+:::embed image
+{"src":"/assets/content/blogs/virtualized-list/example.gif","alt":"Virtualized list example","loading":"lazy","decoding":"async","style":{"borderRadius":"0.5rem","width":"auto","height":"auto","maxHeight":"400px"}}
+:::
+
+</center>
 
 ## The Math That Powers Virtualization
 
@@ -204,7 +210,9 @@ Now we return the JSX with a scrollable container and absolutely positioned item
 - The inner div with `totalHeight` creates the illusion of a full list
 - Each visible item is positioned absolutely at its correct location using `top: index * itemHeight`
 
-**Complete VirtualList Component Code**
+<details>
+
+<summary>Complete VirtualList Component Code</summary>
 
 ```typescript
 import { useRef, useState } from "react"
@@ -266,6 +274,8 @@ export function VirtualList<T>({
 }
 ```
 
+</details>
+
 ## Using the Virtualized List
 
 Here's how you can use this component in your app:
@@ -295,7 +305,7 @@ Even with **100,000 items**, only a handful of rows are rendered at any time. Sc
 
 Here's a live comparison showing the performance difference between virtualized and normal lists. Try scrolling through both to see how virtualization keeps everything smooth even with thousands of items:
 
-[Virtualized list demo comparing performance with normal lists](https://codesandbox.io/embed/hr8wwf?view=preview\&module=%2Fsrc%2FApp.tsx)
+<iframe src="https://codesandbox.io/embed/hr8wwf?view=preview&amp;module=%2Fsrc%2FApp.tsx" title="Virtualized list demo comparing performance with normal lists" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
 
 ## When Should You Use Virtualized Lists?
 

@@ -4,6 +4,8 @@
 @source "./layouts";
 @source "./scripts/render-page.mjs";
 @source "./scripts/highlight.mjs";
+@source "./scripts/embeds.mjs";
+@source "./scripts/embeds";
 
 @font-face {
   font-family: "Comic Relief";

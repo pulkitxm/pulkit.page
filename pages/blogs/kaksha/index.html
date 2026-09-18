@@ -40,6 +40,8 @@
     <script
       type="application/ld+json"
     >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://pulkit.page/#person","name":"Pulkit","url":"https://pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://pulkit.page/#website","url":"https://pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://pulkit.page/blogs/kaksha/#image","contentUrl":"https://pulkit.page/og/blogs/kaksha/card.png","width":1200,"height":630,"caption":"Kaksha: The App I Built for My Mother"},{"@type":"BlogPosting","@id":"https://pulkit.page/blogs/kaksha/#article","headline":"Kaksha: The App I Built for My Mother","description":"My mother has spent the last year building the timetable for an entire government school by hand. I finally sat down, made her explain how it actually works, and shipped an Android tablet app for her in one night. This is that story.","datePublished":"2026-08-09","author":{"@id":"https://pulkit.page/#person"},"publisher":{"@id":"https://pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://pulkit.page/blogs/kaksha/#webpage"},"isPartOf":{"@id":"https://pulkit.page/blogs/#webpage"},"image":{"@id":"https://pulkit.page/blogs/kaksha/#image"},"url":"https://pulkit.page/blogs/kaksha/","inLanguage":"en","keywords":["React Native","Expo","Claude Code","Android","TypeScript","Zod","Building in Public","Product"]},{"@type":"BreadcrumbList","@id":"https://pulkit.page/blogs/kaksha/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Kaksha: The App I Built for My Mother","item":"https://pulkit.page/blogs/kaksha/"}]},{"@type":"WebPage","@id":"https://pulkit.page/blogs/kaksha/#webpage","url":"https://pulkit.page/blogs/kaksha/","name":"Kaksha: The App I Built for My Mother","description":"My mother has spent the last year building the timetable for an entire government school by hand. I finally sat down, made her explain how it actually works, and shipped an Android tablet app for her in one night. This is that story.","isPartOf":{"@id":"https://pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://pulkit.page/blogs/kaksha/#image"},"inLanguage":"en","mainEntity":{"@id":"https://pulkit.page/blogs/kaksha/#article"},"breadcrumb":{"@id":"https://pulkit.page/blogs/kaksha/#breadcrumbs"}}]}</script>
+    <link rel="stylesheet" href="/assets/embeds/photoswipe.css" />
+    <script type="module" src="/assets/embeds/blog-media.js"></script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>Kaksha: The App I Built for My Mother | Pulkit</title>
@@ -157,18 +159,28 @@
               you have to redo when one teacher goes on leave.
             </p>
             <p class="mt-0 mb-6">And this is what came out of that conversation:</p>
-            <p class="mt-0 mb-6">
-              <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
-                src="/assets/content/public/blogs/kaksha/paper-and-tablet.webp"
-                alt="A handwritten list on school notepaper next to an Android tablet running the Kaksha app. The list reads: 1 Teachers Add/Del, 2 Sub Add/Del, 3 Full Tr. Time Table, 4 Clash of T.T., 5 Sub-Tr (Data feed), 6 Notes, with a boxed mapping of class numbers to section letters underneath."
-                loading="lazy"
-              />
-            </p>
-            <p class="mt-0 mb-6">
-              The actual spec. Six numbered lines on school notepaper, and a boxed list of how many
-              sections each class runs.
-            </p>
+            <figure class="mx-0 my-6 flex flex-col items-center gap-2">
+              <a
+                href="/assets/content/public/blogs/kaksha/paper-and-tablet.webp"
+                class="block max-w-full"
+                data-media-zoom
+                data-width="1200"
+                data-height="1600"
+                ><img
+                  src="/assets/content/public/blogs/kaksha/paper-and-tablet.webp"
+                  alt="A handwritten list on school notepaper next to an Android tablet running the Kaksha app. The list reads: 1 Teachers Add/Del, 2 Sub Add/Del, 3 Full Tr. Time Table, 4 Clash of T.T., 5 Sub-Tr (Data feed), 6 Notes, with a boxed mapping of class numbers to section letters underneath."
+                  width="1200"
+                  height="1600"
+                  class="block cursor-zoom-in rounded-lg border border-line h-auto w-auto max-w-full max-h-[620px]"
+                  loading="lazy"
+                  decoding="async"
+                /></a
+              >
+              <figcaption class="text-center text-muted text-sm">
+                The actual spec. Six numbered lines on school notepaper, and a boxed list of how
+                many sections each class runs.
+              </figcaption>
+            </figure>
             <p class="mt-0 mb-6">
               Six lines. Add and delete teachers. Add and delete subjects. The full per-teacher
               timetable. Clashes. Subject-to-teacher data feed. Notes. Then a box in the middle
@@ -265,17 +277,27 @@
               run on a sample dataset. The layout is real, the data is not.
             </p>
             <h3 id="the-grid" class="mt-8 text-lg leading-tight tracking-tight">The grid</h3>
-            <p class="mt-0 mb-6">
-              <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
-                src="/assets/content/public/blogs/kaksha/timetable-grid.webp"
-                alt="The Kaksha timetable screen on an Android tablet. Sections A and B are shown as rows, periods 0 to 6 as columns, and each cell holds coloured subject chips with teacher names underneath."
-                loading="lazy"
-              />
-            </p>
-            <p class="mt-0 mb-6">
-              Class VI. Sections down the side, periods across the top, day numbers on each block.
-            </p>
+            <figure class="mx-0 my-6 flex flex-col items-center gap-2">
+              <a
+                href="/assets/content/public/blogs/kaksha/timetable-grid.webp"
+                class="block w-full"
+                data-media-zoom
+                data-width="1920"
+                data-height="1200"
+                ><img
+                  src="/assets/content/public/blogs/kaksha/timetable-grid.webp"
+                  alt="The Kaksha timetable screen on an Android tablet. Sections A and B are shown as rows, periods 0 to 6 as columns, and each cell holds coloured subject chips with teacher names underneath."
+                  width="1920"
+                  height="1200"
+                  class="block cursor-zoom-in rounded-lg border border-line h-auto w-full"
+                  loading="lazy"
+                  decoding="async"
+                /></a
+              >
+              <figcaption class="text-center text-muted text-sm">
+                Class VI. Sections down the side, periods across the top, day numbers on each block.
+              </figcaption>
+            </figure>
             <p class="mt-0 mb-6">
               This is the screen she lives in. Sections down the left, periods across the top, and
               inside each cell the subject chip, the teacher, and the days that block runs on.
@@ -295,17 +317,28 @@
               painful.
             </p>
             <h3 id="clashes" class="mt-8 text-lg leading-tight tracking-tight">Clashes</h3>
-            <p class="mt-0 mb-6">
-              <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
-                src="/assets/content/public/blogs/kaksha/clash-detection.webp"
-                alt="The Kaksha clashes screen listing four teacher overlaps. Each card names a teacher, says &#39;Booked in two places at once&#39;, and lists the conflicting sections, subjects and the period and days involved."
-                loading="lazy"
-              />
-            </p>
-            <p class="mt-0 mb-6">
-              Four teacher overlaps, each one telling you exactly who, which period, and which days.
-            </p>
+            <figure class="mx-0 my-6 flex flex-col items-center gap-2">
+              <a
+                href="/assets/content/public/blogs/kaksha/clash-detection.webp"
+                class="block w-full"
+                data-media-zoom
+                data-width="1920"
+                data-height="1200"
+                ><img
+                  src="/assets/content/public/blogs/kaksha/clash-detection.webp"
+                  alt="The Kaksha clashes screen listing four teacher overlaps. Each card names a teacher, says &#39;Booked in two places at once&#39;, and lists the conflicting sections, subjects and the period and days involved."
+                  width="1920"
+                  height="1200"
+                  class="block cursor-zoom-in rounded-lg border border-line h-auto w-full"
+                  loading="lazy"
+                  decoding="async"
+                /></a
+              >
+              <figcaption class="text-center text-muted text-sm">
+                Four teacher overlaps, each one telling you exactly who, which period, and which
+                days.
+              </figcaption>
+            </figure>
             <p class="mt-0 mb-6">This is the screen that justifies the whole app.</p>
             <p class="mt-0 mb-6">
               Take the first card. That teacher is booked in two places in period 4, on Tuesday,
@@ -319,18 +352,28 @@
               thing she used to burn hours checking by hand, and now it is a tab.
             </p>
             <h3 id="teachers" class="mt-8 text-lg leading-tight tracking-tight">Teachers</h3>
-            <p class="mt-0 mb-6">
-              <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
-                src="/assets/content/public/blogs/kaksha/teacher-load.webp"
-                alt="The Kaksha teachers screen showing a sample staff list. Each row has a teacher&#39;s name, their department and slot count, a green load bar, subject chips, and their weekly lecture count on the right."
-                loading="lazy"
-              />
-            </p>
-            <p class="mt-0 mb-6">
-              Every teacher with their weekly load as a bar. Overloading someone becomes visible
-              instead of theoretical.
-            </p>
+            <figure class="mx-0 my-6 flex flex-col items-center gap-2">
+              <a
+                href="/assets/content/public/blogs/kaksha/teacher-load.webp"
+                class="block w-full"
+                data-media-zoom
+                data-width="1920"
+                data-height="1200"
+                ><img
+                  src="/assets/content/public/blogs/kaksha/teacher-load.webp"
+                  alt="The Kaksha teachers screen showing a sample staff list. Each row has a teacher&#39;s name, their department and slot count, a green load bar, subject chips, and their weekly lecture count on the right."
+                  width="1920"
+                  height="1200"
+                  class="block cursor-zoom-in rounded-lg border border-line h-auto w-full"
+                  loading="lazy"
+                  decoding="async"
+                /></a
+              >
+              <figcaption class="text-center text-muted text-sm">
+                Every teacher with their weekly load as a bar. Overloading someone becomes visible
+                instead of theoretical.
+              </figcaption>
+            </figure>
             <p class="mt-0 mb-6">
               The whole staff list, each with their weekly lecture count and a load bar. Fairness in
               a timetable is mostly about load distribution, and load distribution is basically
@@ -348,17 +391,27 @@
             <p class="mt-0 mb-6">
               Then the part she actually cared about most, which I did not see coming.
             </p>
-            <p class="mt-0 mb-6">
-              <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
-                src="/assets/content/public/blogs/kaksha/share-screen.webp"
-                alt="The Kaksha share screen. A dropdown selects a teacher, a light and dark style toggle sits below it, a rendered weekly timetable card is previewed, and there are &#39;Preview illustration&#39; and &#39;Share as illustration&#39; buttons at the bottom."
-                loading="lazy"
-              />
-            </p>
-            <p class="mt-0 mb-6">
-              Pick a teacher, pick light or dark, and it renders their week as a card.
-            </p>
+            <figure class="mx-0 my-6 flex flex-col items-center gap-2">
+              <a
+                href="/assets/content/public/blogs/kaksha/share-screen.webp"
+                class="block w-full"
+                data-media-zoom
+                data-width="1920"
+                data-height="1200"
+                ><img
+                  src="/assets/content/public/blogs/kaksha/share-screen.webp"
+                  alt="The Kaksha share screen. A dropdown selects a teacher, a light and dark style toggle sits below it, a rendered weekly timetable card is previewed, and there are &#39;Preview image&#39; and &#39;Share as image&#39; buttons at the bottom."
+                  width="1920"
+                  height="1200"
+                  class="block cursor-zoom-in rounded-lg border border-line h-auto w-full"
+                  loading="lazy"
+                  decoding="async"
+                /></a
+              >
+              <figcaption class="text-center text-muted text-sm">
+                Pick a teacher, pick light or dark, and it renders their week as a card.
+              </figcaption>
+            </figure>
             <p class="mt-0 mb-6">
               Every teacher needs their own personal timetable. Not the whole school grid, just
               their week. And the way that gets distributed in real life is WhatsApp.
@@ -375,17 +428,27 @@
               >
               to fire the intent. One tap, pick the chat, done.
             </p>
-            <p class="mt-0 mb-6">
-              <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
-                src="/assets/content/public/blogs/kaksha/teacher-export.webp"
-                alt="An exported timetable card for a single teacher, showing 27 lectures per week across classes VI, VII, VIII and X, laid out as periods by weekday with colour-coded subject blocks."
-                loading="lazy"
-              />
-            </p>
-            <p class="mt-0 mb-6">
-              What actually lands in the WhatsApp group. One teacher&#39;s whole week, one image.
-            </p>
+            <figure class="mx-0 my-6 flex flex-col items-center gap-2">
+              <a
+                href="/assets/content/public/blogs/kaksha/teacher-export.webp"
+                class="block w-full"
+                data-media-zoom
+                data-width="1920"
+                data-height="1204"
+                ><img
+                  src="/assets/content/public/blogs/kaksha/teacher-export.webp"
+                  alt="An exported timetable card for a single teacher, showing 27 lectures per week across classes VI, VII, VIII and X, laid out as periods by weekday with colour-coded subject blocks."
+                  width="1920"
+                  height="1204"
+                  class="block cursor-zoom-in rounded-lg border border-line h-auto w-full"
+                  loading="lazy"
+                  decoding="async"
+                /></a
+              >
+              <figcaption class="text-center text-muted text-sm">
+                What actually lands in the WhatsApp group. One teacher&#39;s whole week, one image.
+              </figcaption>
+            </figure>
             <p class="mt-0 mb-6">
               This is the feature that made her go from politely humouring me to actually asking for
               changes. Distribution was never a step in my head, because I was thinking about the

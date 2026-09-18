@@ -187,7 +187,7 @@ Incoming traffic is checked against the timestamps still inside `[now − window
 
 :::demo sliding-window-log
 
-Scaled up to longer windows, the mechanics stay identical: at **t = 59** seconds inside a **60-second** quota you can still be full while **t = 61** drops the earliest stamp so a slot frees up-there is never a sharp calendar-minute reset.
+Scaled up to longer windows, the mechanics stay identical: at **t = 59** seconds inside a **60-second** quota you can still be full while **t = 61** drops the earliest stamp so a slot frees up, there is never a sharp calendar-minute reset.
 
 In Redis, a [sorted set](https://redis.io/docs/latest/develop/data-types/sorted-sets) is perfect for this. The score is the timestamp, the member is a unique identifier for the request:
 
@@ -217,7 +217,7 @@ async function slidingWindowLog(
 
 ### 3. Sliding Window Counter
 
-The sliding window counter keeps the rolling boundary you get from a log, but avoids storing timestamps. Storage is tiny: typically **two keys per client**, one counter for each of the last two aligned fixed windows-the same coarse buckets fixed-window counters already use.
+The sliding window counter keeps the rolling boundary you get from a log, but avoids storing timestamps. Storage is tiny: typically **two keys per client**, one counter for each of the last two aligned fixed windows, the same coarse buckets fixed-window counters already use.
 
 Align the clock into windows of length `windowSeconds` (minute boundaries when the window is 60 seconds). At any instant `now`, only two of those buckets can overlap the sliding interval **`[now − windowSeconds, now]`**: the bucket you are inside now (**current**) and the one that ended immediately before it (**previous**). Everything older has fully fallen outside the horizon.
 
@@ -229,9 +229,9 @@ Let `elapsed` ∈ \[0, 1) be progress through **current**: `elapsed = 0` at the 
 effective_estimate = previous_count × (1 − elapsed) + current_count
 ```
 
-Intuition: `(1 − elapsed)` is how large a slice of the previous fixed window still overlaps your sliding horizon. Twenty percent through the minute means roughly eighty percent of the previous bucket’s arrivals still sits inside `[now − 60 s, now]`, so last minute’s counter is scaled by `0.8`. Requests already counted against **current** enter the estimate in full-they are all inside the horizon with this common (slightly pessimistic) variant.
+Intuition: `(1 − elapsed)` is how large a slice of the previous fixed window still overlaps your sliding horizon. Twenty percent through the minute means roughly eighty percent of the previous bucket’s arrivals still sits inside `[now − 60 s, now]`, so last minute’s counter is scaled by `0.8`. Requests already counted against **current** enter the estimate in full, they are all inside the horizon with this common (slightly pessimistic) variant.
 
-Nothing here is mathematically identical to trimming by timestamp-it’s cheap and usually close: **counts per bucket**, not per request.
+Nothing here is mathematically identical to trimming by timestamp, it’s cheap and usually close: **counts per bucket**, not per request.
 
 ```typescript
 async function slidingWindowCounter(
@@ -263,9 +263,9 @@ async function slidingWindowCounter(
 
 TTL on the active key is stretched (here `windowSeconds * 2`) so the minute before’s counter is still readable while you overlap it; keys for older buckets fall off naturally.
 
-**Pros:** **Memory efficient**-two counters, not millions of timestamps. Smooths fixed-window bursts because the overlap weight bleeds quota across boundaries instead of a hard reset stripe. Operators like Cloudflare publish error rates measured on huge traffic (**\~0.003% misclassified** among hundreds of millions of requests).
+**Pros:** **Memory efficient**, two counters, not millions of timestamps. Smooths fixed-window bursts because the overlap weight bleeds quota across boundaries instead of a hard reset stripe. Operators like Cloudflare publish error rates measured on huge traffic (**\~0.003% misclassified** among hundreds of millions of requests).
 
-**Cons:** **Approximate**. It assumes traffic is roughly uniform inside each fixed window. Real clusters (everyone hits you on the second, or the top of the hour) can skew the estimate-occasionally a bit loose or a bit tight compared to a true sliding log. For many APIs that margin is acceptable next to the memory win.
+**Cons:** **Approximate**. It assumes traffic is roughly uniform inside each fixed window. Real clusters (everyone hits you on the second, or the top of the hour) can skew the estimate, occasionally a bit loose or a bit tight compared to a true sliding log. For many APIs that margin is acceptable next to the memory win.
 
 ### 4. Token Bucket
 

@@ -15,8 +15,8 @@ Remember the Vercel conference badge? The 3D lanyard that swung when you dragged
 
 :::demo vercel-badge
 
-Based on [Vercel's interactive 3D event
-badge](https://vercel.com/blog/building-an-interactive-3d-event-badge-with-react-three-fiber)
+<small>Based on [Vercel's interactive 3D event
+badge](https://vercel.com/blog/building-an-interactive-3d-event-badge-with-react-three-fiber)</small>
 
 The badge doesn't follow your cursor directly. It lags behind, overshoots, and settles. That's physics, damping controls the resistance, gravity pulls it down, and joint constraints keep it connected. No one specified "animate for 400ms." The motion emerges from the physical properties themselves.
 
@@ -49,7 +49,7 @@ The bottom ball uses spring physics. Notice how it overshoots slightly and settl
 
 This distinction matters more than you might think. iOS uses spring animations everywhere. It's why swiping between apps feels fluid. It's why the Dynamic Island morphs like a living thing. Apple didn't choose springs because they're fancy. They chose them because human perception is incredibly sensitive to motion that doesn't match physical expectations.
 
-[Watch demonstration](https://www.pulkit.page/series/design-engineering/the-physics-behind-natural-motion/ios-dynamic-island.mp4)
+<video src="/assets/content/public/series/design-engineering/the-physics-behind-natural-motion/ios-dynamic-island.mp4" autoplay loop muted playsinline><track kind="captions"></video>
 
 ## The Physics of Springs
 

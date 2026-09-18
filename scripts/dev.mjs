@@ -5,7 +5,12 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
-import { bundleDemoScripts, compileDemoStyles, fontFile } from "./demo-assets.mjs";
+import {
+  bundleDemoScripts,
+  bundleEmbedScripts,
+  compileDemoStyles,
+  fontFile,
+} from "./demo-assets.mjs";
 import { developmentLog } from "./dev-log.mjs";
 import { developmentRenderer } from "./dev-renderer.mjs";
 import { formatDuration } from "./duration.mjs";
@@ -18,6 +23,8 @@ if (!Number.isInteger(port) || port < 0 || port > 65535) {
 }
 let origin;
 const demoOutput = ".cache/demos-dev";
+const embedOutput = ".cache/embeds-dev";
+let embedBundle;
 let demoBundle;
 
 async function demoAsset(name) {
@@ -109,6 +116,64 @@ const server = await createServer({
             if (pathname.startsWith("/@") || pathname.startsWith("/node_modules/")) {
               asset = true;
               next();
+              return;
+            }
+            if (pathname.startsWith("/assets/katex/")) {
+              asset = true;
+              const katex = resolve(
+                fileURLToPath(new URL("dist", import.meta.resolve("katex/package.json"))),
+              );
+              const file = resolve(katex, `.${pathname.slice("/assets/katex".length)}`);
+              if (!file.startsWith(`${katex}${sep}`) || !existsSync(file)) {
+                response.writeHead(404).end("Not found");
+                return;
+              }
+              response.writeHead(200, {
+                "Content-Type": file.endsWith(".css") ? "text/css" : "font/woff2",
+                "Cache-Control": "no-store",
+              });
+              response.end(request.method === "HEAD" ? undefined : readFileSync(file));
+              return;
+            }
+            if (pathname.startsWith("/assets/embeds/")) {
+              asset = true;
+              const name = pathname.slice("/assets/embeds/".length);
+              if (name === "photoswipe.css") {
+                response.writeHead(200, {
+                  "Content-Type": "text/css",
+                  "Cache-Control": "no-store",
+                });
+                response.end(
+                  request.method === "HEAD"
+                    ? undefined
+                    : readFileSync(
+                        fileURLToPath(
+                          new URL(
+                            "dist/photoswipe.css",
+                            import.meta.resolve("photoswipe/package.json"),
+                          ),
+                        ),
+                      ),
+                );
+                return;
+              }
+              if (!/-[a-z0-9]{8}\.js$/.test(name) || !embedBundle) {
+                embedBundle = (embedBundle ?? Promise.resolve()).then(async () => {
+                  await rm(embedOutput, { force: true, recursive: true });
+                  await bundleEmbedScripts(embedOutput, { minify: false });
+                });
+              }
+              await embedBundle;
+              const file = resolve(embedOutput, name);
+              if (!/^[\w.-]+\.js$/.test(name) || !existsSync(file)) {
+                response.writeHead(404).end("Not found");
+                return;
+              }
+              response.writeHead(200, {
+                "Content-Type": "text/javascript",
+                "Cache-Control": "no-store",
+              });
+              response.end(request.method === "HEAD" ? undefined : readFileSync(file));
               return;
             }
             if (pathname.startsWith("/assets/demos/")) {

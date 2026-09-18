@@ -32,11 +32,9 @@ But it didn't fit our use case. We wanted to self-host the whole thing inside ou
 
 This is what we ended up building:
 
-![noveum cron dash](/assets/content/blogs/cron-jobs-with-bullmq/noveum-cron-dash.webp)
-
-![cron runs](/assets/content/blogs/cron-jobs-with-bullmq/cron-runs.webp)
-
-![create cron form](/assets/content/blogs/cron-jobs-with-bullmq/create-cron-form.webp)
+:::embed image-grid
+{"images":["/assets/content/blogs/cron-jobs-with-bullmq/noveum-cron-dash.webp","/assets/content/blogs/cron-jobs-with-bullmq/cron-runs.webp","/assets/content/blogs/cron-jobs-with-bullmq/create-cron-form.webp"]}
+:::
 
 In this post, I'll walk through how to build a production-grade cron system with BullMQ and Redis: what cron expressions are, why common alternatives hit limits, how BullMQ implements scheduling with repeatable jobs, then hands-on setup, workers, error handling, and keeping your database in sync with Redis.
 
@@ -120,9 +118,9 @@ The repeatable configuration itself stays in Redis regardless. It doesn't expire
 
 Install BullMQ:
 
-```sh
-npm install bullmq
-```
+:::embed install-tabs
+{"packages":"bullmq"}
+:::
 
 BullMQ uses Redis under the hood. You'll need a Redis instance running, whether locally via Docker or a managed service like Upstash or AWS ElastiCache.
 

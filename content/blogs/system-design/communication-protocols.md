@@ -13,7 +13,7 @@ tags:
   - gRPC
 ---
 
-Two machines need to talk to each other. One machine (the client) wants something done. The other machine (the server) does the heavy lifting. This is the client-server model, and it's how almost everything on the internet works.
+Two machines need to talk to each other. One machine (the client) wants something done. The other machine (the server) does the heavy lifting. This is the <u>client-server model</u>, and it's how almost everything on the internet works.
 
 Your browser asks a server for a webpage. Your phone asks a server for your messages. Your laptop asks a server to spin up an EC2 instance. The pattern is always the same: client demands, server delivers.
 

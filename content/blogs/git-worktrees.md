@@ -245,7 +245,9 @@ wtrm() {
 }
 ```
 
-**The full version I actually use in my workflow**
+<details>
+
+<summary>The full version I actually use in my workflow</summary>
 
 This is the real one. It does a fair bit more than the simple version above: it reads a `.worktreeinclude` (or falls back to a default list) and copies nested config like `config/secrets.json` across with a portable tar-pipe, it attaches to a branch that already exists instead of erroring, and it detects Bun.
 
@@ -307,6 +309,8 @@ wtrm() {
   git worktree remove "$wt" && git branch -D "$branch" && git worktree prune
 }
 ```
+
+</details>
 
 Now `wt feat-auth` gives me a working worktree in seconds: branched, config seeded, dependencies installed, ready for an agent. `wtrm` from inside one tears it down cleanly.
 

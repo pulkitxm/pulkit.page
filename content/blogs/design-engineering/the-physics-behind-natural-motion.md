@@ -13,7 +13,7 @@ tags:
 
 Remember the Vercel conference badge? The 3D lanyard that swung when you dragged it, responding to your movements with satisfying weight and momentum? That wasn't just a cool demo. It was physics-based animation at its finest, rigid body simulation with damping, gravity, and joint constraints creating motion that feels genuinely real.
 
-[Interactive example: Vercel Badge](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo vercel-badge
 
 Based on [Vercel's interactive 3D event
 badge](https://vercel.com/blog/building-an-interactive-3d-event-badge-with-react-three-fiber)
@@ -43,7 +43,7 @@ Spring animations flip this around. They're defined by physical properties, how 
 
 ## Seeing the Difference
 
-[Interactive example: Spring Vs Easing](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo spring-vs-easing
 
 The bottom ball uses spring physics. Notice how it overshoots slightly and settles into position. The top ball moves with a fixed duration ease-out. Both technically "work," but one feels alive and the other feels calculated.
 
@@ -61,7 +61,7 @@ A spring animation simulates an object attached to a spring. Three properties co
 
 **Mass** is how heavy the object is. Heavier objects take longer to accelerate and decelerate. They have more inertia.
 
-[Interactive example: Spring Config Playground](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo spring-config-playground
 
 These properties are unintuitive at first. There's no actual mass or spring in your interface. But the mental model helps: if you want something to feel heavy and deliberate, increase mass. If you want something snappy and responsive, increase stiffness. If you want less bounce, increase damping.
 
@@ -92,7 +92,7 @@ With CSS, if you change an element's target position mid-animation, the element 
 
 With springs, the animation preserves velocity when re-targeted. If the object was moving right and you change its target to the left, it doesn't stop and restart. It curves naturally toward the new target, using its existing momentum.
 
-[Interactive example: Interruptibility](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo interruptibility
 
 Click around rapidly. Notice how the ball curves toward each new position, never losing its momentum. This is impossible with CSS transitions. It's why libraries like Framer Motion exist.
 
@@ -102,7 +102,7 @@ This matters for any UI where users can interact faster than your animations com
 
 [Emil Kowalski](https://x.com/emilkowalski), who created [Sonner](https://sonner.emilkowal.ski)(the toast library), made an interesting choice. He used CSS animations for enter transitions. The problem? If you trigger two toasts quickly, the first toast jumps to its new position because CSS animations can't be interrupted smoothly.
 
-[Interactive example: Toast Interrupt](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo toast-interrupt
 
 This is a trade-off. Sonner prioritizes bundle size over perfectly smooth interruptions. For most use cases, it's fine. But it illustrates why spring animations matter: they handle the edge cases that CSS can't.
 
@@ -123,7 +123,7 @@ It's inappropriate for:
 - **Data displays.** Tables updating shouldn't call attention to themselves
 - **Professional apps.** Banking, medical, enterprise software
 
-[Interactive example: Bounce Comparison](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo bounce-comparison
 
 The rule I follow: if the user physically interacted (drag, swipe, throw), bounce can make sense. If the system initiated the motion (show modal, display toast, load content), keep it smooth.
 
@@ -157,11 +157,11 @@ Apple solved this elegantly. Instead of stiffness and damping, you can define sp
 
 **Perceptual duration** is how long the animation *feels* like it takes. This is the duration parameter you actually set. Apple designed it to be predictable and stable, it doesn't shift around as you change other spring parameters. It's roughly how long until the animation is "mostly done," even if subtle settling continues after.
 
-[Interactive example: Perceptual Duration](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo perceptual-duration
 
 This approach gives you the natural feel of spring physics while letting you think in familiar timing terms. A 300ms spring with no bounce behaves similarly to a 300ms ease-out, but handles interruptions better.
 
-[Interactive example: Easing Curve](https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion)
+:::demo easing-curve spring
 
 Notice how at `bounce: 0`, the spring curve closely matches `ease-out`. As you increase bounce, the curve overshoots past 100% before settling. The key difference isn't visible in the graph: the spring can be interrupted mid-animation and will preserve its velocity, while `ease-out` would restart from zero.
 

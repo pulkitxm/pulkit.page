@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/the-physics-behind-natural-motion",
+  "index": 2,
+  "component": "spring-config-playground",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "spring-config.tsx",
+      "language": "tsx",
+      "code": "import { motion } from \"motion/react\";\n\nfunction SpringDemo() {\n  return (\n    <motion.div\n      animate={{ x: 200 }}\n      transition={{\n        type: \"spring\",\n        stiffness: 300,\n        damping: 20,\n        mass: 1,\n      }}\n    />\n  );\n}\n\n// Higher stiffness = snappier\n// Higher damping = less bounce\n// Higher mass = more inertia"
+    }
+  ]
+}

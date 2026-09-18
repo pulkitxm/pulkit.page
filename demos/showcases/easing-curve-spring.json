@@ -1,0 +1,17 @@
+{
+  "article": "design-engineering/the-physics-behind-natural-motion",
+  "index": 7,
+  "component": "easing-curve",
+  "props": {
+    "easeOut": true,
+    "spring": true,
+    "allowBounce": true
+  },
+  "frame": {
+    "focusCode": false,
+    "replayButton": true,
+    "bitBigger": true,
+    "fullHeight": false
+  },
+  "files": []
+}

@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/the-physics-behind-natural-motion",
+  "index": 0,
+  "component": "vercel-badge",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

@@ -35,7 +35,7 @@ Watch a ball rolling across a table. It doesn't move at constant speed. Friction
 
 Linear motion (constant speed from start to finish) exists only in physics problems without friction. In the real world, everything accelerates and decelerates.
 
-[Interactive example: Ball Drop](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo ball-drop
 
 Your brain has spent your entire life learning how objects move. When something on screen violates those expectations, it registers as wrong. Not consciously. You just feel it.
 
@@ -62,7 +62,7 @@ The element starts fast and slows down as it reaches its destination.
 }
 ```
 
-[Interactive example: Easing Curve](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo easing-curve ease-out
 
 **Use for**: Almost everything that appears or moves into position. Modals opening, dropdowns appearing, elements sliding into view.
 
@@ -84,7 +84,7 @@ The element starts fast and slows down as it reaches its destination.
 
 This tiny detail makes the difference between "I clicked" and "the button responded to me."
 
-[Interactive example: Button Press](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo button-press
 
 ### Ease In
 
@@ -96,7 +96,7 @@ The element starts slow and speeds up.
 }
 ```
 
-[Interactive example: Easing Curve](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo easing-curve ease-in
 
 **Use for**: Elements leaving the screen. Modals closing, items being dismissed.
 
@@ -116,7 +116,7 @@ Slow start, fast middle, slow end.
 }
 ```
 
-[Interactive example: Easing Curve](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo easing-curve ease-in-out
 
 **Use for**: Elements that are already visible and need to transform. A progress bar growing, a card expanding into a detail view, a sidebar resizing. Also good for looping animations where there's no clear entry or exit.
 
@@ -136,7 +136,7 @@ CSS's default. Similar to ease-in-out but asymmetrical: it starts faster and end
 }
 ```
 
-[Interactive example: Easing Curve](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo easing-curve ease
 
 This is what you get if you don't specify anything. But don't dismiss it as a generic default.
 
@@ -169,7 +169,7 @@ x1, y1 = first control point
 x2, y2 = second control point
 ```
 
-[Interactive example: Cubic Bezier Playground](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo cubic-bezier-playground
 
 **X values** (0 to 1): Position in time. 0 is the start, 1 is the end.
 
@@ -197,7 +197,7 @@ This is more aggressive than standard ease-out. The element reaches near its fin
 
 The y2 value (1.56) exceeds 1, so the element overshoots its target before settling back. Creates a playful, bouncy feel.
 
-[Interactive example: Easing Personalities](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo easing-personalities
 
 **Undershoot first** (pull back before moving):
 
@@ -306,11 +306,11 @@ For a "hold to delete" button, you want the progress to fill linearly. Why? Beca
 }
 ```
 
-[Interactive example: Hold To Delete](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo hold-to-delete
 
 A marquee scrolling text is another case. Constant speed feels correct because the text is moving through a window, not arriving at a destination. Easing would make it feel like the text is "trying to get somewhere" rather than flowing.
 
-[Interactive example: Marquee](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo marquee
 
 And sometimes dramatic easing is wrong:
 
@@ -355,7 +355,7 @@ Many open-source libraries ship with carefully tuned curves. Vaul (the drawer co
 
 Not everyone experiences motion the same way. For some users, animations can cause discomfort, nausea, or seizures. The `prefers-reduced-motion` media query lets you respect user preferences.
 
-[Interactive example: Reduced Motion](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo reduced-motion
 
 ### The Media Query
 
@@ -466,7 +466,7 @@ Always test your site with reduced motion enabled. What seems like a minor anima
 
 Here's a side-by-side comparison of all the standard easing curves. Each curve animates using its own easing function, so you can see how they feel in practice. Click on any legend item to toggle its visibility.
 
-[Interactive example: Easing Curve](https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural)
+:::demo easing-curve all
 
 ## Conclusion
 

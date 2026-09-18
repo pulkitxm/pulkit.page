@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/easing-curves-that-feel-natural",
+  "index": 2,
+  "component": "button-press",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

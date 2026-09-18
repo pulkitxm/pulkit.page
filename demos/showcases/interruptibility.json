@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/the-physics-behind-natural-motion",
+  "index": 3,
+  "component": "interruptibility",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "interruptible.tsx",
+      "language": "tsx",
+      "code": "import { motion } from \"motion/react\";\nimport { useState } from \"react\";\n\nfunction InterruptibleDemo() {\n  const [position, setPosition] = useState({ x: 0, y: 0 });\n\n  return (\n    <div\n      onClick={(e) => {\n        const rect =\n          e.currentTarget.getBoundingClientRect();\n        setPosition({\n          x: e.clientX - rect.left - 24,\n          y: e.clientY - rect.top - 24,\n        });\n      }}\n    >\n      <motion.div\n        className=\"ball\"\n        animate={position}\n        transition={{\n          type: \"spring\",\n          stiffness: 200,\n          damping: 20,\n        }}\n      />\n    </div>\n  );\n}"
+    }
+  ]
+}

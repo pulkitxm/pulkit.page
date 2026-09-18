@@ -55,6 +55,8 @@
     <script
       type="application/ld+json"
     >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#image","contentUrl":"https://new.pulkit.page/og/blogs/design-engineering/easing-curves-that-feel-natural/card.png","width":1200,"height":630,"caption":"Easing Curves That Feel Natural"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#article","headline":"Easing Curves That Feel Natural","description":"Master easing curves to make your animations feel natural. Learn why linear is almost always wrong, how cubic-bezier works, and which easing to use for different interactions.","datePublished":"2026-01-27","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#image"},"url":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/","inLanguage":"en","keywords":["CSS","Cubic Bezier","Motion Design","UI Animation","Framer Motion"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://new.pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"Easing Curves That Feel Natural","item":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#webpage","url":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/","name":"Easing Curves That Feel Natural","description":"Master easing curves to make your animations feel natural. Learn why linear is almost always wrong, how cubic-bezier works, and which easing to use for different interactions.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/design-engineering/easing-curves-that-feel-natural/#breadcrumbs"}}]}</script>
+    <link rel="stylesheet" href="/assets/demos/document.css" />
+    <script type="module" src="/assets/demos/index.js"></script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>Easing Curves That Feel Natural | Pulkit</title>
@@ -187,13 +189,12 @@
               Linear motion (constant speed from start to finish) exists only in physics problems
               without friction. In the real world, everything accelerates and decelerates.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Ball Drop</a
-              >
-            </p>
+            <demo-showcase
+              data-component="ball-drop"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Your brain has spent your entire life learning how objects move. When something on
               screen violates those expectations, it registers as wrong. Not consciously. You just
@@ -233,13 +234,12 @@
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Easing Curve</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-curve"
+              data-props='{"easeOut":true}'
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               <strong>Use for</strong>: Almost everything that appears or moves into position.
               Modals opening, dropdowns appearing, elements sliding into view.
@@ -284,13 +284,12 @@
               This tiny detail makes the difference between &quot;I clicked&quot; and &quot;the
               button responded to me.&quot;
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Button Press</a
-              >
-            </p>
+            <demo-showcase
+              data-component="button-press"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <h3 id="ease-in" class="mt-8 text-lg leading-tight tracking-tight">Ease In</h3>
             <p class="mt-0 mb-6">The element starts slow and speeds up.</p>
             <pre
@@ -300,13 +299,12 @@
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-in</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Easing Curve</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-curve"
+              data-props='{"easeIn":true}'
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               <strong>Use for</strong>: Elements leaving the screen. Modals closing, items being
               dismissed.
@@ -332,13 +330,12 @@
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-in-out</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Easing Curve</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-curve"
+              data-props='{"easeInOut":true}'
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               <strong>Use for</strong>: Elements that are already visible and need to transform. A
               progress bar growing, a card expanding into a detail view, a sidebar resizing. Also
@@ -372,13 +369,12 @@
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Easing Curve</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-curve"
+              data-props='{"ease":true}'
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               This is what you get if you don&#39;t specify anything. But don&#39;t dismiss it as a
               generic default.
@@ -440,13 +436,12 @@ linear      = cubic-bezier(0<span class="text-syn-u">,</span> 0<span class="text
 x1, y1 = first control point
 x2, y2 = second control point
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Cubic Bezier Playground</a
-              >
-            </p>
+            <demo-showcase
+              data-component="cubic-bezier-playground"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               <strong>X values</strong>
               (0 to 1): Position in time. 0 is the start, 1 is the end.
@@ -483,13 +478,12 @@ x2, y2 = second control point
               The y2 value (1.56) exceeds 1, so the element overshoots its target before settling
               back. Creates a playful, bouncy feel.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Easing Personalities</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-personalities"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6"><strong>Undershoot first</strong> (pull back before moving):</p>
             <pre
               tabindex="0"
@@ -715,25 +709,23 @@ x2, y2 = second control point
   <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Hold To Delete</a
-              >
-            </p>
+            <demo-showcase
+              data-component="hold-to-delete"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               A marquee scrolling text is another case. Constant speed feels correct because the
               text is moving through a window, not arriving at a destination. Easing would make it
               feel like the text is &quot;trying to get somewhere&quot; rather than flowing.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Marquee</a
-              >
-            </p>
+            <demo-showcase
+              data-component="marquee"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">And sometimes dramatic easing is wrong:</p>
             <ul class="mt-0 mb-6">
               <li><strong>Banking/finance apps</strong>: keep it subtle</li>
@@ -806,13 +798,12 @@ x2, y2 = second control point
               >
               media query lets you respect user preferences.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Reduced Motion</a
-              >
-            </p>
+            <demo-showcase
+              data-component="reduced-motion"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <h3 id="the-media-query" class="mt-8 text-lg leading-tight tracking-tight">
               The Media Query
             </h3>
@@ -947,13 +938,12 @@ x2, y2 = second control point
               animates using its own easing function, so you can see how they feel in practice.
               Click on any legend item to toggle its visibility.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/easing-curves-that-feel-natural"
-                >Interactive example: Easing Curve</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-curve"
+              data-props='{"linear":true,"easeIn":true,"easeOut":true,"easeInOut":true,"ease":true,"spring":true}'
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Conclusion
             </h2>

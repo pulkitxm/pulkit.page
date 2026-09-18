@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/offloading-motion-to-the-gpu",
+  "index": 0,
+  "component": "janky-vs-smooth",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

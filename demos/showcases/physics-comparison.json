@@ -1,0 +1,24 @@
+{
+  "article": "design-engineering/psychology-of-motion",
+  "index": 3,
+  "component": "physics-comparison",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "physics-comparison-demo.tsx",
+      "language": "tsx",
+      "code": "import \"./physics-comparison.css\";\nimport { useState } from \"react\";\n\nexport function PhysicsComparisonDemo() {\n  const [animate, setAnimate] = useState(false);\n\n  return (\n    <div className=\"demo\">\n      <button onClick={() => setAnimate(!animate)}>\n        {animate ? \"Reset\" : \"Animate\"}\n      </button>\n\n      <div className=\"row\">\n        <span className=\"label\">Linear</span>\n        <div\n          className={`box box--linear ${animate ? \"box--moved\" : \"\"}`}\n        />\n      </div>\n\n      <div className=\"row\">\n        <span className=\"label\">Ease-out</span>\n        <div\n          className={`box box--ease-out ${animate ? \"box--moved\" : \"\"}`}\n        />\n      </div>\n\n      <div className=\"row\">\n        <span className=\"label\">Spring</span>\n        <div\n          className={`box box--spring ${animate ? \"box--moved\" : \"\"}`}\n        />\n      </div>\n    </div>\n  );\n}"
+    },
+    {
+      "filename": "physics-comparison.css",
+      "language": "css",
+      "code": ".box {\n  width: 48px;\n  height: 48px;\n  border-radius: 4px;\n}\n\n/_ Linear: constant speed, abrupt stop _/\n.box--linear {\n  background: #a3a3a3;\n  transition: transform 500ms linear;\n}\n\n/_ Ease-out: decelerates into position _/\n.box--ease-out {\n  background: #737373;\n  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);\n}\n\n/_ Spring-like: overshoot with settle _/\n.box--spring {\n  background: #525252;\n  transition: transform 500ms\n    cubic-bezier(0.34, 1.56, 0.64, 1);\n}\n\n.box--moved {\n  transform: translateX(200px);\n}"
+    }
+  ]
+}

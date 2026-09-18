@@ -55,7 +55,7 @@ The goal isn't to pick a side. It's to know when each approach makes sense. Let'
 
 Nothing teaches better than fixing something broken. Here's a demo with two grids animating identically, but using different CSS properties. Click "Block Main Thread" to simulate JavaScript doing heavy work.
 
-[Interactive example: Janky Vs Smooth](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo janky-vs-smooth
 
 Both grids animate a pulsing effect. The left grid animates `width` and `height`. The right grid animates only `transform: scale()`. Same visual result, completely different performance.
 
@@ -131,7 +131,7 @@ Two properties get this special treatment: `transform` and `opacity`.
 
 When you animate these properties, the browser creates a separate layer for the element and hands it to the GPU. The GPU can move, rotate, scale, and fade that layer without touching the main thread. Your JavaScript can be running expensive calculations, and the animation stays smooth.
 
-[Interactive example: GPUAcceleration](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo gpuacceleration
 
 Add some load to the page using the button above. Notice how the transform animation keeps running smoothly while the width animation stutters. That's GPU acceleration in action.
 
@@ -213,7 +213,7 @@ A button that scales on hover doesn't need JavaScript.
 }
 ```
 
-[Interactive example: Hover Button](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo hover-button
 
 This runs at 60fps regardless of what else is happening on your page. No React re-renders. No state management. Just CSS doing what CSS does well.
 
@@ -259,7 +259,7 @@ Loading spinners, pulsing indicators, scrolling marquees. These should always be
 }
 ```
 
-[Interactive example: Infinite Animation](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo infinite-animation
 
 A JavaScript spinner would need to run code 60 times per second forever. A CSS spinner tells the GPU "rotate this layer continuously" and never touches the main thread again.
 
@@ -275,7 +275,7 @@ JavaScript animations have capabilities CSS can't match.
 
 When you click rapidly between states, CSS transitions restart from the beginning. JavaScript animations can preserve velocity and curve smoothly to new targets.
 
-[Interactive example: Interruptibility Comparison](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo interruptibility-comparison
 
 Click the targets rapidly. The CSS version jumps. The JavaScript version (using spring physics) flows. For interactive UI where users move faster than animations complete, JavaScript handles it better.
 
@@ -323,7 +323,7 @@ CSS animations using `transform` and `opacity` get promoted to their own composi
 
 JavaScript animations work differently. Framer Motion, React Spring, and similar libraries use `requestAnimationFrame` to update element positions. Each frame, your code runs on the main thread. If the main thread is busy doing other work, your animation waits its turn. Frames get dropped.
 
-[Interactive example: Performance Stress Test](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo performance-stress-test
 
 Increase the item count and add some artificial load. The CSS side keeps moving at 60fps. The JavaScript side starts stuttering. This isn't a criticism of Framer Motion. It's just physics. You can't run JavaScript off the main thread.
 
@@ -333,7 +333,7 @@ The bundle size difference matters too. CSS animations ship with the browser. Fr
 
 Let's put this into practice. We'll build a pulsing notification dot that runs forever without draining batteries.
 
-[Interactive example: Notification Dot](https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu)
+:::demo notification-dot
 
 The bad version:
 

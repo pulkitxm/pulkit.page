@@ -55,6 +55,8 @@
     <script
       type="application/ld+json"
     >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#image","contentUrl":"https://new.pulkit.page/og/blogs/design-engineering/offloading-motion-to-the-gpu/card.png","width":1200,"height":630,"caption":"Offloading Motion to the GPU"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#article","headline":"Offloading Motion to the GPU","description":"Fix janky CSS animations by understanding the rendering pipeline. Learn which properties trigger GPU acceleration, why transform beats width, and when to choose CSS over JavaScript.","datePublished":"2026-02-03","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#image"},"url":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/","inLanguage":"en","keywords":["CSS","Animations","Performance","Motion Design","GPU Acceleration"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://new.pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"Offloading Motion to the GPU","item":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#webpage","url":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/","name":"Offloading Motion to the GPU","description":"Fix janky CSS animations by understanding the rendering pipeline. Learn which properties trigger GPU acceleration, why transform beats width, and when to choose CSS over JavaScript.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/design-engineering/offloading-motion-to-the-gpu/#breadcrumbs"}}]}</script>
+    <link rel="stylesheet" href="/assets/demos/document.css" />
+    <script type="module" src="/assets/demos/index.js"></script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>Offloading Motion to the GPU | Pulkit</title>
@@ -213,13 +215,12 @@
               animating identically, but using different CSS properties. Click &quot;Block Main
               Thread&quot; to simulate JavaScript doing heavy work.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: Janky Vs Smooth</a
-              >
-            </p>
+            <demo-showcase
+              data-component="janky-vs-smooth"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Both grids animate a pulsing effect. The left grid animates
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
@@ -428,13 +429,12 @@ transform change:  Style → Composite                   (fastest)
               without touching the main thread. Your JavaScript can be running expensive
               calculations, and the animation stays smooth.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: GPUAcceleration</a
-              >
-            </p>
+            <demo-showcase
+              data-component="gpu-acceleration"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Add some load to the page using the button above. Notice how the transform animation
               keeps running smoothly while the width animation stutters. That&#39;s GPU acceleration
@@ -581,13 +581,12 @@ transform change:  Style → Composite                   (fastest)
   <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.98</span><span class="text-syn-u">);</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: Hover Button</a
-              >
-            </p>
+            <demo-showcase
+              data-component="hover-button"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               This runs at 60fps regardless of what else is happening on your page. No React
               re-renders. No state management. Just CSS doing what CSS does well.
@@ -640,13 +639,12 @@ transform change:  Style → Composite                   (fastest)
   <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> spin <span class="text-syn-n">1s</span> <span class="text-syn-k">linear</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: Infinite Animation</a
-              >
-            </p>
+            <demo-showcase
+              data-component="infinite-animation"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               A JavaScript spinner would need to run code 60 times per second forever. A CSS spinner
               tells the GPU &quot;rotate this layer continuously&quot; and never touches the main
@@ -674,13 +672,12 @@ transform change:  Style → Composite                   (fastest)
               When you click rapidly between states, CSS transitions restart from the beginning.
               JavaScript animations can preserve velocity and curve smoothly to new targets.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: Interruptibility Comparison</a
-              >
-            </p>
+            <demo-showcase
+              data-component="interruptibility-comparison"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Click the targets rapidly. The CSS version jumps. The JavaScript version (using spring
               physics) flows. For interactive UI where users move faster than animations complete,
@@ -771,13 +768,12 @@ transform change:  Style → Composite                   (fastest)
               main thread is busy doing other work, your animation waits its turn. Frames get
               dropped.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: Performance Stress Test</a
-              >
-            </p>
+            <demo-showcase
+              data-component="performance-stress-test"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Increase the item count and add some artificial load. The CSS side keeps moving at
               60fps. The JavaScript side starts stuttering. This isn&#39;t a criticism of Framer
@@ -798,13 +794,12 @@ transform change:  Style → Composite                   (fastest)
               Let&#39;s put this into practice. We&#39;ll build a pulsing notification dot that runs
               forever without draining batteries.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
-                >Interactive example: Notification Dot</a
-              >
-            </p>
+            <demo-showcase
+              data-component="notification-dot"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">The bad version:</p>
             <pre
               tabindex="0"

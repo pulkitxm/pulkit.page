@@ -77,7 +77,7 @@ Tags influence related writing and JSON-LD, not tag archives. Dates sort and sup
 
 Browser CSS uses system fonts; card rendering uses a bundled TTF. Other font assets are copied even when unused by browser CSS. Knip checks code/dependency reachability, not source-asset or Markdown garbage collection. No source-image compression, redirects, RSS/Atom, browser visual regression, or external-link monitor is implemented.
 
-Local Bun is 1.4.2 while CI pins 1.3.14. Align versions when diagnosing output changes. Keep the historical audit unchanged; record new migration decisions separately. Preserve comments in historical article examples: they are explicitly exempt from comment stripping, while the separate em-dash rule still applies to their text.
+Local development and CI both use Bun 1.4.2. Keep the historical audit unchanged; record new migration decisions separately. Preserve comments in historical article examples: they are explicitly exempt from comment stripping, while the separate em-dash rule still applies to their text.
 
 ## Verification record
 

@@ -344,6 +344,20 @@ test("invalid metadata and list directives fail instead of publishing broken mar
   expect(new Set(ids).size).toBe(ids.length);
 });
 
+test("carousel directives render sliding images and reject stray content", async () => {
+  const images = ["First", "Second"].map((alt) => `![${alt}](/assets/${alt}.webp)`).join("\n\n");
+  const html = await renderPage(`${source}\n:::carousel\n\n${images}\n\n:::\n`);
+  expect(html.match(/data-carousel-track/g)).toHaveLength(1);
+  expect(html).toContain('alt="Second"');
+  expect(html).toContain("1 / 2");
+  await expect(renderPage(`${source}\n:::carousel\n\n${images}\n\nText\n\n:::\n`)).rejects.toThrow(
+    "Invalid carousel directive",
+  );
+  await expect(
+    renderPage(`${source}\n:::carousel\n\n![Only](/assets/a.webp)\n\n:::\n`),
+  ).rejects.toThrow("Invalid carousel directive");
+});
+
 test("sitemap and image synchronization detects missing, stale, extra and changed page inventory", () => {
   const cwd = workspace();
   writeFileSync(join(cwd, "CNAME"), "example.com\n");

@@ -217,6 +217,44 @@ export async function renderPage(
   markdown.use({
     extensions: [
       {
+        name: "carousel",
+        level: "block",
+        start: (src) => src.indexOf(":::carousel"),
+        tokenizer(src) {
+          if (!/^:::carousel\b/.test(src)) {
+            return;
+          }
+          const match = /^:::carousel[ \t]*\n([\s\S]*?)\n:::[ \t]*(?:\n|$)/.exec(src);
+          const images = match
+            ? [...match[1].matchAll(/!\[([^\]\n]+)\]\(([^)\s]+)\)/g)].map(([, alt, href]) => ({
+                alt,
+                href,
+              }))
+            : [];
+          if (
+            !match ||
+            images.length < 2 ||
+            match[1].replace(/!\[[^\]\n]+\]\([^)\s]+\)/g, "").trim()
+          ) {
+            throw new Error(
+              "Invalid carousel directive; wrap two or more images in :::carousel and :::",
+            );
+          }
+          return { type: "carousel", raw: match[0], images };
+        },
+        renderer(token) {
+          const slides = token.images
+            .map(
+              (image) =>
+                `<img class="block h-auto max-h-[70vh] w-full shrink-0 snap-center object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}" loading="lazy">`,
+            )
+            .join("");
+          const button =
+            "cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit] disabled:cursor-default disabled:opacity-40";
+          return `<figure class="mx-0 my-7" data-carousel><section class="flex snap-x snap-mandatory items-center overflow-x-auto overscroll-x-contain rounded-md [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-roledescription="carousel" aria-label="${escapeHtml(`${token.images[0].alt} and ${token.images.length - 1} more`)}" data-carousel-track>${slides}</section><figcaption class="mt-3 flex items-center justify-center gap-4 text-xs text-muted"><button class="${button}" type="button" aria-label="Previous image" data-carousel-previous>Prev</button><span aria-live="polite" data-carousel-status>1 / ${token.images.length}</span><button class="${button}" type="button" aria-label="Next image" data-carousel-next>Next</button></figcaption></figure>`;
+        },
+      },
+      {
         name: "listing",
         level: "block",
         start: (src) => src.indexOf(":::list"),

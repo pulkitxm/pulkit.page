@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Schedule cron jobs in Node.js with BullMQ repeatable jobs and Redis: workers, scheduler internals, graceful shutdown, and DB sync. Full TypeScript code."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/cron-jobs-with-bullmq/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="BullMQ Cron Jobs with Redis in Node.js | Pulkit" />
+    <meta
+      property="og:description"
+      content="Schedule cron jobs in Node.js with BullMQ repeatable jobs and Redis: workers, scheduler internals, graceful shutdown, and DB sync. Full TypeScript code."
+    />
+    <meta property="og:url" content="https://new.pulkit.page/blogs/cron-jobs-with-bullmq/" />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/cron-jobs-with-bullmq/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/cron-jobs-with-bullmq/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="BullMQ Cron Jobs with Redis in Node.js" />
+    <meta property="article:published_time" content="2026-03-29" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BullMQ Cron Jobs with Redis in Node.js | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Schedule cron jobs in Node.js with BullMQ repeatable jobs and Redis: workers, scheduler internals, graceful shutdown, and DB sync. Full TypeScript code."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/cron-jobs-with-bullmq/card.png"
+    />
+    <meta name="twitter:image:alt" content="BullMQ Cron Jobs with Redis in Node.js" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#image","contentUrl":"https://new.pulkit.page/og/blogs/cron-jobs-with-bullmq/card.png","width":1200,"height":630,"caption":"BullMQ Cron Jobs with Redis in Node.js"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#article","headline":"BullMQ Cron Jobs with Redis in Node.js","description":"Schedule cron jobs in Node.js with BullMQ repeatable jobs and Redis: workers, scheduler internals, graceful shutdown, and DB sync. Full TypeScript code.","datePublished":"2026-03-29","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#image"},"url":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/","inLanguage":"en","keywords":["BullMQ","Repeatable Jobs","Cron Jobs","Redis","Node.js","TypeScript","Backend"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"BullMQ Cron Jobs with Redis in Node.js","item":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#webpage","url":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/","name":"BullMQ Cron Jobs with Redis in Node.js","description":"Schedule cron jobs in Node.js with BullMQ repeatable jobs and Redis: workers, scheduler internals, graceful shutdown, and DB sync. Full TypeScript code.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/cron-jobs-with-bullmq/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>BullMQ Cron Jobs with Redis in Node.js | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li aria-current="page">BullMQ Cron Jobs with Redis in Node.js</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>BullMQ Cron Jobs with Redis in Node.js</h1>
+            <p class="detail-meta"><time datetime="2026-03-29">2026-03-29</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              I was building cron jobs at <a href="https://noveum.ai">Noveum.ai</a>. We needed users
+              to schedule automated analysis reports on their own terms: daily at 6 AM, every Monday
+              at noon, every 15 minutes during business hours. The kind of thing where the schedule
+              lives in a database and each user can create, edit, or delete their own.
+            </p>
+            <p>
+              Before writing any code, I looked at how
+              <a href="https://vercel.com/docs/cron-jobs">Vercel handles cron</a>. It&#39;s dead
+              simple: you define a schedule in <code>vercel.json</code>, and Vercel hits your API
+              route at that interval. No infrastructure to manage, no Redis, no workers. For simple
+              periodic tasks, it&#39;s perfect.
+            </p>
+            <pre><code class="language-json"><span class="u">{</span>
+  <span class="p">&quot;crons&quot;</span><span class="u">:</span> <span class="u">[</span>
+    <span class="u">{</span>
+      <span class="p">&quot;path&quot;</span><span class="u">:</span> <span class="s">&quot;/api/cron/daily-digest&quot;</span><span class="u">,</span>
+      <span class="p">&quot;schedule&quot;</span><span class="u">:</span> <span class="s">&quot;0 8 * * *&quot;</span>
+    <span class="u">}</span>
+  <span class="u">]</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              But it didn&#39;t fit our use case. We wanted to self-host the whole thing inside our
+              AWS VPC: workers talking to Redis and our databases on private networks, not a
+              platform-managed cron hitting a public API route. Vercel cron schedules are also
+              static, defined at deploy time, and we needed dynamic schedules created at runtime by
+              users. On top of that we needed retries with exponential backoff, concurrency control,
+              long-running jobs that go well beyond serverless timeouts, and distributed workers
+              that can scale horizontally. That&#39;s what led me to
+              <a href="https://docs.bullmq.io">BullMQ</a>. Since we are already using it for our
+              workers and it was super easy to set up cron jobs with it, it was a no-brainer.
+            </p>
+            <p>This is what we ended up building:</p>
+            <p>
+              <img
+                src="/assets/content/blogs/cron-jobs-with-bullmq/noveum-cron-dash.webp"
+                alt="noveum cron dash"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/cron-jobs-with-bullmq/cron-runs.webp"
+                alt="cron runs"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/cron-jobs-with-bullmq/create-cron-form.webp"
+                alt="create cron form"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              In this post, I&#39;ll walk through how to build a production-grade cron system with
+              BullMQ and Redis: what cron expressions are, why common alternatives hit limits, how
+              BullMQ implements scheduling with repeatable jobs, then hands-on setup, workers, error
+              handling, and keeping your database in sync with Redis.
+            </p>
+            <h2 id="what-are-cron-jobs">What Are Cron Jobs?</h2>
+            <p>
+              Cron comes from Unix. It&#39;s a time-based scheduler that runs commands at specified
+              intervals. You define a schedule using a <strong>cron expression</strong>, a compact
+              string with five fields:
+            </p>
+            <pre><code class="language-text">┌───────────── minute (0–59)
+│ ┌───────────── hour (0–23)
+│ │ ┌───────────── day of month (1–31)
+│ │ │ ┌───────────── month (1–12)
+│ │ │ │ ┌───────────── day of week (0–7, where 0 and 7 = Sunday)
+│ │ │ │ │
+* * * * *
+</code></pre>
+            <p>Some common patterns:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Expression</th>
+                  <th>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>0 8 * * *</code></td>
+                  <td>Every day at 8:00 AM</td>
+                </tr>
+                <tr>
+                  <td><code>*/15 * * * *</code></td>
+                  <td>Every 15 minutes</td>
+                </tr>
+                <tr>
+                  <td><code>0 9 * * 1-5</code></td>
+                  <td>Weekdays at 9:00 AM</td>
+                </tr>
+                <tr>
+                  <td><code>0 0 1 * *</code></td>
+                  <td>First day of every month at midnight</td>
+                </tr>
+                <tr>
+                  <td><code>30 14 * * 0</code></td>
+                  <td>Every Sunday at 2:30 PM</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 id="why-not-vercel-cron-node-cron-setinterval">
+              Why Not Vercel Cron / node-cron / setInterval?
+            </h2>
+            <p>
+              Before reaching for BullMQ, it&#39;s worth understanding where simpler tools fit and
+              where they fall short.
+            </p>
+            <p>
+              <strong>Vercel Cron</strong>
+              is great when you need to run a serverless function on a fixed schedule. You define it
+              once in <code>vercel.json</code>, deploy, and it just works. If you want long-lived
+              workers self-hosted inside your own AWS VPC with private access to Redis and internal
+              services, that is a different shape than the platform calling a public URL on a timer.
+              The schedules are static, so you can&#39;t let users create their own. It&#39;s also
+              bound by serverless function timeouts, has no built-in retry or backoff, and you have
+              a limited number of cron jobs depending on your plan.
+            </p>
+            <p>
+              <strong><code>node-cron</code> and <code>setInterval</code></strong>
+              run in-process. The moment your server restarts, all schedules are gone. There&#39;s
+              no persistence, no retries, and no way to distribute work across multiple servers.
+              Fine for a dev script, not for production.
+            </p>
+            <p>
+              <strong>BullMQ</strong>
+              sits in a different category entirely. Schedules are persisted in Redis, so they
+              survive restarts. Failed jobs automatically retry with configurable exponential
+              backoff. You get concurrency control, long-running job support, and distributed
+              workers, so multiple processes or servers can consume from the same queue. Most
+              importantly, schedules can be created, modified, and removed at runtime through your
+              API.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Vercel Cron</th>
+                  <th>node-cron / setInterval</th>
+                  <th>BullMQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Self-hosted in your VPC</td>
+                  <td>No (platform invokes your deployment)</td>
+                  <td>Yes, if your Node process runs there</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Persistence</td>
+                  <td>Survives deploys</td>
+                  <td>None</td>
+                  <td>Redis-backed</td>
+                </tr>
+                <tr>
+                  <td>Dynamic schedules</td>
+                  <td>No (deploy-time only)</td>
+                  <td>No (code-time only)</td>
+                  <td>Yes (runtime API)</td>
+                </tr>
+                <tr>
+                  <td>Retries &amp; backoff</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>Yes (configurable)</td>
+                </tr>
+                <tr>
+                  <td>Concurrency control</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Long-running jobs</td>
+                  <td>Limited by function timeout</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Distributed workers</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Setup complexity</td>
+                  <td>Minimal</td>
+                  <td>Minimal</td>
+                  <td>Moderate</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              If Vercel cron covers your use case, use it. Reach for BullMQ when you need the extra
+              control.
+            </p>
+            <h2 id="how-bullmq-manages-cron-jobs-under-the-hood">
+              How BullMQ Manages Cron Jobs Under the Hood
+            </h2>
+            <p>
+              BullMQ doesn&#39;t have a separate &quot;cron scheduler&quot; daemon. There&#39;s no
+              long-running process with a timer that wakes up and says &quot;time to run this
+              job.&quot; Instead, the entire mechanism is built on top of
+              <a href="https://docs.bullmq.io/guide/jobs/repeatable">repeatable jobs</a>, which are
+              really just <strong>delayed jobs that keep re-adding themselves</strong>.
+            </p>
+            <p>Here&#39;s what happens step by step:</p>
+            <h3 id="section-1-registration">1. Registration</h3>
+            <p>
+              When you call
+              <code
+                >queue.add(&quot;my-job&quot;, data, { repeat: { pattern: &quot;0 8 * * *&quot; }
+                })</code
+              >, BullMQ does two things:
+            </p>
+            <ul>
+              <li>
+                Creates a <strong>repeatable job configuration</strong> in Redis. This is a metadata
+                entry (not a regular job) that stores the cron pattern, timezone, job name, and a
+                generated
+                <a href="https://api.docs.bullmq.io/classes/v5.Job.html#repeatJobKey"
+                  ><code>repeatJobKey</code></a
+                >. This config is what persists across restarts.
+              </li>
+              <li>
+                Immediately schedules the <strong>first delayed job</strong> for the next matching
+                time. If you register at 4:07 AM and the pattern is every hour, the first job gets
+                scheduled for 5:00 AM. BullMQ
+                <a href="https://docs.bullmq.io/guide/jobs/repeatable"
+                  >aligns to the cron boundaries</a
+                >, so the first run always lands &quot;on the hour.&quot;
+              </li>
+            </ul>
+            <h3 id="section-2-execution-and-chaining">2. Execution and chaining</h3>
+            <p>
+              From the <a href="https://docs.bullmq.io/guide/jobs/repeatable">BullMQ docs</a>:
+              &quot;Every time a repeatable job is picked up for processing, the next repeatable job
+              is added to the queue with a proper delay.&quot; This is the core trick: each run
+              chains into the next. The cron pattern is evaluated, the next timestamp is computed,
+              and a new delayed job is placed in the queue.
+            </p>
+            <p>
+              This means repeatable jobs are fundamentally just <strong>delayed jobs</strong> with
+              automatic re-scheduling. There&#39;s no background scheduler polling Redis on an
+              interval. The chain is self-sustaining as long as workers are processing. The newer
+              <a href="https://docs.bullmq.io/guide/job-schedulers">Job Schedulers API</a>
+              (BullMQ 5.16.0+) works the same way, noting that &quot;the scheduler will only
+              generate new jobs when the last job begins processing.&quot;
+            </p>
+            <h3 id="section-3-deduplication">3. Deduplication</h3>
+            <p>
+              BullMQ is
+              <a href="https://docs.bullmq.io/guide/jobs/repeatable"
+                >smart enough not to add the same repeatable job</a
+              >
+              if the repeat options are the same. It generates a unique key for each repeatable job
+              based on the job name, cron pattern, and any custom <code>jobId</code> you provide. If
+              you call <code>queue.add()</code> with the same repeat options twice, it won&#39;t
+              create a duplicate. This is important for deploy safety: your startup code can
+              register repeatable jobs idempotently without worrying about creating duplicates each
+              time the app restarts.
+            </p>
+            <h3 id="section-4-what-if-no-workers-are-running">
+              4. What if no workers are running?
+            </h3>
+            <p>
+              This is a common concern. The BullMQ docs are explicit here: &quot;If there are no
+              workers running, repeatable jobs will not accumulate next time a worker is
+              online&quot; (<a href="https://docs.bullmq.io/guide/jobs/repeatable">source</a>).
+              Since the next occurrence is only scheduled when the current one is picked up, jobs
+              don&#39;t pile up. If workers are offline for 3 hours and you have a job that runs
+              every 15 minutes, you won&#39;t come back to 12 queued jobs. You&#39;ll have at most
+              one delayed job waiting, and processing resumes from there.
+            </p>
+            <p>
+              The repeatable configuration itself stays in Redis regardless. It doesn&#39;t expire
+              or get lost because workers are offline. When workers come back, the chain picks up
+              from the next scheduled time.
+            </p>
+            <h2 id="setting-up">Setting Up</h2>
+            <p>Install BullMQ:</p>
+            <pre
+            ><code class="language-sh"><span class="f">npm</span> <span class="s">install</span> <span class="s">bullmq</span>
+</code></pre>
+            <p>
+              BullMQ uses Redis under the hood. You&#39;ll need a Redis instance running, whether
+              locally via Docker or a managed service like Upstash or AWS ElastiCache.
+            </p>
+            <p>First, set up the Redis connection:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="k">type</span> <span class="u">{</span> ConnectionOptions <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+
+<span class="k">function</span> <span class="f">createRedisConnection</span><span class="u">()</span><span class="o">:</span> <span class="t">ConnectionOptions</span> <span class="u">{</span>
+  <span class="k">const</span> host <span class="o">=</span> process<span class="u">.</span>env<span class="u">.</span>REDIS_HOST<span class="u">;</span>
+  <span class="k">const</span> port <span class="o">=</span> process<span class="u">.</span>env<span class="u">.</span>REDIS_PORT<span class="u">;</span>
+
+  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>host <span class="o">||</span> <span class="o">!</span>port<span class="u">)</span> <span class="u">{</span>
+    <span class="k">throw</span> <span class="o">new</span> <span class="f">Error</span><span class="u">(</span><span class="s">&quot;REDIS_HOST and REDIS_PORT are required&quot;</span><span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> <span class="u">{</span>
+    host<span class="u">,</span>
+    <span class="p">port:</span> <span class="f">parseInt</span><span class="u">(</span>port<span class="u">,</span> <span class="n">10</span><span class="u">),</span>
+    <span class="p">password:</span> process<span class="u">.</span>env<span class="u">.</span>REDIS_PASSWORD <span class="o">||</span> <span class="k">undefined</span><span class="u">,</span>
+    <span class="p">maxRetriesPerRequest:</span> <span class="k">null</span><span class="u">,</span>
+    <span class="p">enableOfflineQueue:</span> <span class="k">true</span><span class="u">,</span>
+  <span class="u">};</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The
+              <a href="https://docs.bullmq.io/guide/connections"
+                ><code>maxRetriesPerRequest: null</code></a
+              >
+              is important: BullMQ requires this for workers to function properly. Without it,
+              you&#39;ll get errors when the worker tries to block-wait for jobs.
+            </p>
+            <p>Now create a queue:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Queue <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> connection <span class="o">=</span> <span class="f">createRedisConnection</span><span class="u">();</span>
+
+<span class="k">const</span> scheduledQueue <span class="o">=</span> <span class="o">new</span> <span class="f">Queue</span><span class="u">(</span><span class="s">&quot;scheduled-reports&quot;</span><span class="u">,</span> <span class="u">{</span>
+  connection<span class="u">,</span>
+  <span class="p">defaultJobOptions:</span> <span class="u">{</span>
+    <span class="p">removeOnComplete:</span> <span class="n">50</span><span class="u">,</span>
+    <span class="p">removeOnFail:</span> <span class="n">25</span><span class="u">,</span>
+    <span class="p">attempts:</span> <span class="n">2</span><span class="u">,</span>
+    <span class="p">backoff:</span> <span class="u">{</span>
+      <span class="p">type:</span> <span class="s">&quot;exponential&quot;</span><span class="u">,</span>
+      <span class="p">delay:</span> <span class="n">5000</span><span class="u">,</span>
+    <span class="u">},</span>
+  <span class="u">},</span>
+<span class="u">});</span>
+</code></pre>
+            <p>The <code>defaultJobOptions</code> matter in production:</p>
+            <ul>
+              <li>
+                <strong><code>removeOnComplete: 50</code></strong>: keeps the last 50 completed jobs
+                in Redis for debugging, then auto-cleans. Without this, completed jobs pile up
+                forever.
+              </li>
+              <li>
+                <strong><code>removeOnFail: 25</code></strong>: same idea for failed jobs.
+              </li>
+              <li>
+                <strong><code>attempts: 2</code></strong>: retry once on failure (2 total attempts).
+              </li>
+              <li>
+                <strong><code>backoff</code></strong>:
+                <a href="https://docs.bullmq.io/guide/retrying-failing-jobs">exponential backoff</a>
+                starting at 5 seconds. First retry at ~5s, second at ~10s, and so on.
+              </li>
+            </ul>
+            <h2 id="adding-repeatable-cron-jobs">Adding Repeatable (Cron) Jobs</h2>
+            <p>
+              This is the core of the whole system. To schedule a repeating job, you call
+              <code>queue.add()</code>
+              with a <code>repeat</code> option:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ScheduledJobData</span> <span class="u">{</span>
+  jobId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  scheduleId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  userId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  reportType<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">addScheduledJob</span><span class="u">(</span>data<span class="o">:</span> <span class="t">ScheduledJobData</span><span class="u">,</span> cronExpression<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
+  <span class="k">const</span> job <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;generate-report&quot;</span><span class="u">,</span> data<span class="u">,</span> <span class="u">{</span>
+    <span class="p">repeat:</span> <span class="u">{</span>
+      <span class="p">pattern:</span> cronExpression<span class="u">,</span>
+      <span class="p">tz:</span> <span class="s">&quot;UTC&quot;</span><span class="u">,</span>
+    <span class="u">},</span>
+  <span class="u">});</span>
+
+  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Scheduled job registered&quot;</span><span class="u">,</span> <span class="u">{</span>
+    <span class="p">scheduleId:</span> data<span class="u">.</span><span class="p">scheduleId</span><span class="u">,</span>
+    cronExpression<span class="u">,</span>
+    <span class="p">repeatJobKey:</span> job<span class="u">.</span><span class="p">repeatJobKey</span><span class="u">,</span>
+  <span class="u">});</span>
+
+  <span class="k">return</span> job<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>A few things happening here:</p>
+            <ul>
+              <li>
+                <strong><code>repeat.pattern</code></strong>
+                takes a standard cron expression.
+              </li>
+              <li>
+                <strong><code>repeat.tz</code></strong>
+                sets the timezone. I&#39;d recommend always using <code>&quot;UTC&quot;</code> and
+                converting in your application layer, which avoids a whole class of timezone bugs.
+              </li>
+              <li>
+                <strong><code>job.repeatJobKey</code></strong>
+                is a stable key BullMQ generates for this repeatable job. You&#39;ll need it later
+                for removal.
+              </li>
+            </ul>
+            <p>
+              BullMQ deduplicates repeatable jobs by their combination of job name, cron pattern,
+              and any <code>jobId</code> you provide. If you call <code>addScheduledJob</code> with
+              the same parameters twice, it won&#39;t create a duplicate; it just returns the
+              existing one.
+            </p>
+            <h3 id="managing-repeatable-jobs">Managing Repeatable Jobs</h3>
+            <p>
+              To list all active schedules using
+              <a href="https://api.docs.bullmq.io/classes/v5.Queue.html#getRepeatableJobs"
+                ><code>getRepeatableJobs()</code></a
+              >:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getSchedules</span><span class="u">()</span> <span class="u">{</span>
+  <span class="k">const</span> jobs <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">getRepeatableJobs</span><span class="u">();</span>
+  <span class="k">return</span> jobs<span class="u">.</span><span class="f">map</span><span class="u">((</span>job<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
+    <span class="p">key:</span> job<span class="u">.</span><span class="p">key</span><span class="u">,</span>
+    <span class="p">name:</span> job<span class="u">.</span><span class="p">name</span><span class="u">,</span>
+    <span class="p">pattern:</span> job<span class="u">.</span><span class="p">pattern</span><span class="u">,</span>
+    <span class="p">next:</span> <span class="o">new</span> <span class="f">Date</span><span class="u">(</span>job<span class="u">.</span><span class="p">next</span><span class="u">),</span>
+  <span class="u">}));</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              To remove a schedule using
+              <a href="https://api.docs.bullmq.io/classes/v5.Queue.html#removeRepeatableByKey"
+                ><code>removeRepeatableByKey()</code></a
+              >:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">removeSchedule</span><span class="u">(</span>repeatJobKey<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
+  <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>repeatJobKey<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>You can also find and remove by scanning through repeatable jobs:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">removeScheduleById</span><span class="u">(</span>scheduleId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
+  <span class="k">const</span> repeatableJobs <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">getRepeatableJobs</span><span class="u">();</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> job <span class="o">of</span> repeatableJobs<span class="u">)</span> <span class="u">{</span>
+    <span class="k">if</span> <span class="u">(</span>job<span class="u">.</span>key<span class="u">.</span><span class="f">includes</span><span class="u">(</span>scheduleId<span class="u">))</span> <span class="u">{</span>
+      <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>job<span class="u">.</span><span class="p">key</span><span class="u">);</span>
+      <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <h2 id="building-the-worker">Building the Worker</h2>
+            <p>
+              The worker is the process that actually picks up and executes jobs when BullMQ fires
+              them according to the cron schedule.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Worker<span class="u">,</span> <span class="k">type</span> Job<span class="u">,</span> UnrecoverableError <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> connection <span class="o">=</span> <span class="f">createRedisConnection</span><span class="u">();</span>
+
+<span class="k">const</span> worker <span class="o">=</span> <span class="o">new</span> <span class="f">Worker</span><span class="u">&lt;</span><span class="t">ScheduledJobData</span><span class="u">&gt;(</span>
+  <span class="s">&quot;scheduled-reports&quot;</span><span class="u">,</span>
+  <span class="k">async</span> <span class="u">(</span>job<span class="o">:</span> <span class="t">Job</span><span class="u">&lt;</span><span class="t">ScheduledJobData</span><span class="u">&gt;)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Processing scheduled job&quot;</span><span class="u">,</span> <span class="u">{</span>
+      <span class="p">jobId:</span> job<span class="u">.</span><span class="p">id</span><span class="u">,</span>
+      <span class="p">scheduleId:</span> job<span class="u">.</span>data<span class="u">.</span><span class="p">scheduleId</span><span class="u">,</span>
+      <span class="p">attempt:</span> job<span class="u">.</span><span class="p">attemptsMade</span> <span class="o">+</span> <span class="n">1</span><span class="u">,</span>
+    <span class="u">});</span>
+
+    <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> <span class="f">generateReport</span><span class="u">(</span>job<span class="u">.</span><span class="p">data</span><span class="u">);</span>
+
+    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>result<span class="u">.</span><span class="p">success</span><span class="u">)</span> <span class="u">{</span>
+      <span class="k">if</span> <span class="u">(</span>result<span class="u">.</span><span class="p">error</span> <span class="o">===</span> <span class="s">&quot;cancelled&quot;</span><span class="u">)</span> <span class="u">{</span>
+        <span class="k">throw</span> <span class="o">new</span> <span class="f">UnrecoverableError</span><span class="u">(</span><span class="s">&quot;Job was cancelled&quot;</span><span class="u">);</span>
+      <span class="u">}</span>
+      <span class="k">throw</span> <span class="o">new</span> <span class="f">Error</span><span class="u">(</span>result<span class="u">.</span><span class="p">error</span> <span class="o">||</span> <span class="s">&quot;Report generation failed&quot;</span><span class="u">);</span>
+    <span class="u">}</span>
+
+    <span class="k">return</span> result<span class="u">;</span>
+  <span class="u">},</span>
+  <span class="u">{</span>
+    connection<span class="u">,</span>
+    <span class="p">concurrency:</span> <span class="n">3</span><span class="u">,</span>
+    <span class="p">lockDuration:</span> <span class="n">1800000</span><span class="u">,</span>
+    <span class="p">lockRenewTime:</span> <span class="n">300000</span><span class="u">,</span>
+    <span class="p">stalledInterval:</span> <span class="n">1800000</span><span class="u">,</span>
+  <span class="u">},</span>
+<span class="u">);</span>
+</code></pre>
+            <p>The worker options are tuned for long-running jobs:</p>
+            <ul>
+              <li>
+                <strong><code>concurrency: 3</code></strong>: process up to 3 jobs simultaneously.
+              </li>
+              <li>
+                <strong><code>lockDuration: 1800000</code></strong>
+                (30 minutes): how long a job can run before BullMQ considers it
+                <a href="https://docs.bullmq.io/guide/workers/stalled-jobs">stalled</a>. Set this
+                higher than your longest expected job.
+              </li>
+              <li>
+                <strong><code>lockRenewTime: 300000</code></strong>
+                (5 minutes): how often the worker renews the lock. Must be less than
+                <code>lockDuration</code>.
+              </li>
+              <li>
+                <strong><code>stalledInterval: 1800000</code></strong>: how often BullMQ checks for
+                stalled jobs.
+              </li>
+            </ul>
+            <p>
+              The
+              <a href="https://docs.bullmq.io/guide/retrying-failing-jobs#unrecoverable-errors"
+                ><code>UnrecoverableError</code></a
+              >
+              is a BullMQ feature: throwing it tells BullMQ &quot;don&#39;t retry this job, it&#39;s
+              permanently failed.&quot; Use it for cancellations, invalid data, or any case where
+              retrying won&#39;t help.
+            </p>
+            <h3 id="error-handling">Error Handling</h3>
+            <p>Hook into worker events to log failures:</p>
+            <pre
+            ><code class="language-typescript">worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;completed&quot;</span><span class="u">,</span> <span class="u">(</span>job<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Job completed&quot;</span><span class="u">,</span> <span class="u">{</span>
+    <span class="p">jobId:</span> job<span class="u">.</span><span class="p">id</span><span class="u">,</span>
+    <span class="p">scheduleId:</span> job<span class="u">.</span>data<span class="u">.</span><span class="p">scheduleId</span><span class="u">,</span>
+  <span class="u">});</span>
+<span class="u">});</span>
+
+worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;failed&quot;</span><span class="u">,</span> <span class="u">(</span>job<span class="u">,</span> err<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+  console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Job failed&quot;</span><span class="u">,</span> <span class="u">{</span>
+    <span class="p">jobId:</span> job<span class="u">?.</span><span class="p">id</span><span class="u">,</span>
+    <span class="p">scheduleId:</span> job<span class="u">?.</span>data<span class="u">?.</span><span class="p">scheduleId</span><span class="u">,</span>
+    <span class="p">error:</span> err<span class="u">.</span><span class="p">message</span><span class="u">,</span>
+    <span class="p">attempt:</span> job<span class="u">?.</span><span class="p">attemptsMade</span><span class="u">,</span>
+  <span class="u">});</span>
+<span class="u">});</span>
+
+worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;error&quot;</span><span class="u">,</span> <span class="u">(</span>err<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+  console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Worker error&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">error:</span> err<span class="u">.</span><span class="p">message</span> <span class="u">});</span>
+<span class="u">});</span>
+</code></pre>
+            <h3 id="graceful-shutdown">Graceful Shutdown</h3>
+            <p>
+              In production, you want your worker to finish active jobs before shutting down instead
+              of killing them mid-execution. Here&#39;s the pattern:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">let</span> isShuttingDown <span class="o">=</span> <span class="k">false</span><span class="u">;</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">shutdown</span><span class="u">()</span> <span class="u">{</span>
+  <span class="k">if</span> <span class="u">(</span>isShuttingDown<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+  isShuttingDown <span class="o">=</span> <span class="k">true</span><span class="u">;</span>
+
+  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Starting graceful shutdown&quot;</span><span class="u">);</span>
+
+  <span class="k">const</span> SHUTDOWN_TIMEOUT <span class="o">=</span> <span class="n">120_000</span><span class="u">;</span>
+
+  <span class="k">try</span> <span class="u">{</span>
+    <span class="k">await</span> <span class="t">Promise</span><span class="u">.</span><span class="f">race</span><span class="u">([</span>
+      <span class="f">waitForActiveJobs</span><span class="u">(),</span>
+      <span class="o">new</span> <span class="t">Promise</span><span class="u">((</span>_<span class="u">,</span> reject<span class="u">)</span> <span class="k">=&gt;</span>
+        <span class="f">setTimeout</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="f">reject</span><span class="u">(</span><span class="o">new</span> <span class="f">Error</span><span class="u">(</span><span class="s">&quot;Shutdown timeout&quot;</span><span class="u">)),</span> SHUTDOWN_TIMEOUT<span class="u">),</span>
+      <span class="u">),</span>
+    <span class="u">]);</span>
+  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>err<span class="u">)</span> <span class="u">{</span>
+    console<span class="u">.</span><span class="f">warn</span><span class="u">(</span><span class="s">&quot;Shutdown timeout, forcing close&quot;</span><span class="u">);</span>
+  <span class="u">}</span> <span class="k">finally</span> <span class="u">{</span>
+    <span class="k">await</span> worker<span class="u">.</span><span class="f">close</span><span class="u">();</span>
+    <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">close</span><span class="u">();</span>
+    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Worker stopped&quot;</span><span class="u">);</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">waitForActiveJobs</span><span class="u">()</span> <span class="u">{</span>
+  <span class="k">const</span> MAX_CHECKS <span class="o">=</span> <span class="n">120</span><span class="u">;</span>
+  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> MAX_CHECKS<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> active <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">getActiveCount</span><span class="u">();</span>
+    <span class="k">if</span> <span class="u">(</span>active <span class="o">===</span> <span class="n">0</span><span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`Waiting for ${active} active jobs...`</span><span class="u">);</span>
+    <span class="k">await</span> <span class="o">new</span> <span class="t">Promise</span><span class="u">((</span>r<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">setTimeout</span><span class="u">(</span>r<span class="u">,</span> <span class="n">1000</span><span class="u">));</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+
+process<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;SIGTERM&quot;</span><span class="u">,</span> shutdown<span class="u">);</span>
+process<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;SIGINT&quot;</span><span class="u">,</span> shutdown<span class="u">);</span>
+</code></pre>
+            <p>
+              The idea: when we receive a shutdown signal, stop accepting new jobs and wait up to 2
+              minutes for active ones to complete. If they don&#39;t finish in time, force-close.
+              This avoids both data loss (killing mid-job) and hanging deploys (waiting forever).
+            </p>
+            <h2 id="keeping-schedules-in-sync">Keeping Schedules in Sync</h2>
+            <p>
+              Here&#39;s a production problem that catches people off guard: your database says
+              &quot;schedule X runs at <code>0 8 * * *</code>,&quot; but Redis disagrees. This
+              happens when:
+            </p>
+            <ul>
+              <li>Redis gets flushed or restarted without persistence</li>
+              <li>Someone updates a schedule via the API but the Redis write fails</li>
+              <li>A deploy rolls back the code but not the Redis state</li>
+              <li>You migrate to a new Redis instance</li>
+            </ul>
+            <p>
+              The fix is a <strong>reconciliation script</strong> that compares what your database
+              says against what Redis has, and brings them in line:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Queue <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+
+<span class="k">interface</span> <span class="t">DbSchedule</span> <span class="u">{</span>
+  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  cronExpression<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  userId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  reportType<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  enabled<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">syncSchedules</span><span class="u">(</span>dbSchedules<span class="o">:</span> <span class="t">DbSchedule</span><span class="u">[],</span> queue<span class="o">:</span> <span class="t">Queue</span><span class="u">)</span> <span class="u">{</span>
+  <span class="k">const</span> enabledSchedules <span class="o">=</span> dbSchedules<span class="u">.</span><span class="f">filter</span><span class="u">((</span>s<span class="u">)</span> <span class="k">=&gt;</span> s<span class="u">.</span><span class="p">enabled</span><span class="u">);</span>
+  <span class="k">const</span> repeatableJobs <span class="o">=</span> <span class="k">await</span> queue<span class="u">.</span><span class="f">getRepeatableJobs</span><span class="u">();</span>
+
+  <span class="k">const</span> desiredIds <span class="o">=</span> <span class="o">new</span> <span class="f">Set</span><span class="u">(</span>enabledSchedules<span class="u">.</span><span class="f">map</span><span class="u">((</span>s<span class="u">)</span> <span class="k">=&gt;</span> s<span class="u">.</span><span class="p">id</span><span class="u">));</span>
+
+  <span class="k">const</span> existingByScheduleId <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="u">{</span> key<span class="o">:</span> <span class="t">string</span><span class="u">;</span> pattern<span class="o">:</span> <span class="t">string</span> <span class="u">}&gt;();</span>
+  <span class="k">const</span> orphaned<span class="o">:</span> <span class="t">string</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[];</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> job <span class="o">of</span> repeatableJobs<span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> scheduleId <span class="o">=</span> <span class="f">extractScheduleId</span><span class="u">(</span>job<span class="u">.</span><span class="p">key</span><span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span>scheduleId <span class="o">&amp;&amp;</span> desiredIds<span class="u">.</span><span class="f">has</span><span class="u">(</span>scheduleId<span class="u">))</span> <span class="u">{</span>
+      existingByScheduleId<span class="u">.</span><span class="f">set</span><span class="u">(</span>scheduleId<span class="u">,</span> <span class="u">{</span>
+        <span class="p">key:</span> job<span class="u">.</span><span class="p">key</span><span class="u">,</span>
+        <span class="p">pattern:</span> job<span class="u">.</span><span class="p">pattern</span> <span class="o">??</span> <span class="s">&quot;&quot;</span><span class="u">,</span>
+      <span class="u">});</span>
+    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
+      orphaned<span class="u">.</span><span class="f">push</span><span class="u">(</span>job<span class="u">.</span><span class="p">key</span><span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">let</span> removed <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> key <span class="o">of</span> orphaned<span class="u">)</span> <span class="u">{</span>
+    <span class="k">await</span> queue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>key<span class="u">);</span>
+    removed<span class="o">++</span><span class="u">;</span>
+  <span class="u">}</span>
+
+  <span class="k">let</span> added <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
+  <span class="k">let</span> updated <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
+  <span class="k">let</span> unchanged <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> schedule <span class="o">of</span> enabledSchedules<span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> existing <span class="o">=</span> existingByScheduleId<span class="u">.</span><span class="f">get</span><span class="u">(</span>schedule<span class="u">.</span><span class="p">id</span><span class="u">);</span>
+
+    <span class="k">if</span> <span class="u">(</span>existing <span class="o">&amp;&amp;</span> existing<span class="u">.</span><span class="p">pattern</span> <span class="o">===</span> schedule<span class="u">.</span><span class="p">cronExpression</span><span class="u">)</span> <span class="u">{</span>
+      unchanged<span class="o">++</span><span class="u">;</span>
+      <span class="k">continue</span><span class="u">;</span>
+    <span class="u">}</span>
+
+    <span class="k">if</span> <span class="u">(</span>existing<span class="u">)</span> <span class="u">{</span>
+      <span class="k">await</span> queue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>existing<span class="u">.</span><span class="p">key</span><span class="u">);</span>
+    <span class="u">}</span>
+
+    <span class="k">await</span> queue<span class="u">.</span><span class="f">add</span><span class="u">(</span>
+      <span class="s">&quot;generate-report&quot;</span><span class="u">,</span>
+      <span class="u">{</span>
+        <span class="p">jobId:</span> <span class="s">`scheduled-${schedule.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span>
+        <span class="p">scheduleId:</span> schedule<span class="u">.</span><span class="p">id</span><span class="u">,</span>
+        <span class="p">userId:</span> schedule<span class="u">.</span><span class="p">userId</span><span class="u">,</span>
+        <span class="p">reportType:</span> schedule<span class="u">.</span><span class="p">reportType</span><span class="u">,</span>
+      <span class="u">},</span>
+      <span class="u">{</span>
+        <span class="p">repeat:</span> <span class="u">{</span>
+          <span class="p">pattern:</span> schedule<span class="u">.</span><span class="p">cronExpression</span><span class="u">,</span>
+          <span class="p">tz:</span> <span class="s">&quot;UTC&quot;</span><span class="u">,</span>
+        <span class="u">},</span>
+      <span class="u">},</span>
+    <span class="u">);</span>
+
+    existing <span class="o">?</span> updated<span class="o">++</span> <span class="o">:</span> added<span class="o">++</span><span class="u">;</span>
+  <span class="u">}</span>
+
+  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Schedule sync complete&quot;</span><span class="u">,</span> <span class="u">{</span>
+    <span class="p">total:</span> enabledSchedules<span class="u">.</span>length<span class="u">,</span>
+    added<span class="u">,</span>
+    updated<span class="u">,</span>
+    unchanged<span class="u">,</span>
+    <span class="p">removedOrphans:</span> removed<span class="u">,</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">extractScheduleId</span><span class="u">(</span>jobKey<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="o">|</span> <span class="t">null</span> <span class="u">{</span>
+  <span class="k">const</span> match <span class="o">=</span> jobKey<span class="u">.</span><span class="f">match</span><span class="u">(</span><span class="s">/scheduled-([a-zA-Z0-9_-]+)/</span><span class="u">);</span>
+  <span class="k">return</span> match<span class="u">?.[</span><span class="n">1</span><span class="u">]</span> <span class="o">??</span> <span class="k">null</span><span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>The logic is straightforward:</p>
+            <ol>
+              <li>Load all enabled schedules from your database</li>
+              <li>Load all repeatable jobs from Redis</li>
+              <li>Remove orphaned Redis jobs (exist in Redis but not in DB)</li>
+              <li>
+                For each DB schedule: if Redis has it with the same pattern, skip. If the pattern
+                changed, remove the old one and add the new one. If it&#39;s missing, add it.
+              </li>
+            </ol>
+            <p>
+              Run this script on deploy, on a health check interval, or after any Redis incident.
+              It&#39;s idempotent, so running it multiple times is safe.
+            </p>
+            <p>
+              At Noveum, we run this as a Kubernetes
+              <a href="https://kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+                >init container</a
+              >
+              on the worker deployment. Before the worker pod starts accepting jobs, the init
+              container runs the sync script to reconcile the database with Redis:
+            </p>
+            <pre
+            ><code class="language-yaml"><span class="s">initContainers</span><span class="u">:</span>
+  <span class="u">-</span> <span class="s">name</span><span class="u">:</span> <span class="s">sync-schedules</span>
+    <span class="s">image</span><span class="u">:</span> <span class="s">your-workers-image:latest</span>
+    <span class="s">command</span><span class="u">:</span> <span class="u">[</span><span class="s">&quot;tsx&quot;</span><span class="u">,</span> <span class="s">&quot;scripts/sync-schedules.ts&quot;</span><span class="u">]</span>
+</code></pre>
+            <p>
+              This guarantees that every time a worker pod starts (fresh deploy, restart after a
+              crash, scaling event), Redis has the correct set of repeatable jobs before the worker
+              begins processing. The main container only starts after the init container exits
+              successfully, so there&#39;s no window where the worker is running with stale or
+              missing schedules.
+            </p>
+            <h2 id="why-this-architecture-is-resilient">Why This Architecture Is Resilient</h2>
+            <p>
+              One of the biggest advantages of BullMQ with Redis is that the
+              <strong>schedule itself lives in Redis, not in your application code</strong>. There
+              is no &quot;scheduler process&quot; running a <code>setInterval</code> or a
+              <code>node-cron</code>
+              somewhere. The cron pattern, the next run time, and the repeatable job metadata all
+              live in Redis as durable state.
+            </p>
+            <p>In our setup at Noveum, we have three moving pieces:</p>
+            <ol>
+              <li>
+                <strong>Next.js app</strong>
+                (via API routes): this is where users create, update, and delete schedules. The API
+                calls <code>queue.add(..., { repeat: { pattern, tz } })</code> to register a
+                repeatable job in Redis.
+              </li>
+              <li>
+                <strong>Worker processes</strong>: these run the BullMQ <code>Worker</code> that
+                picks up and executes jobs when they fire.
+              </li>
+              <li>
+                <strong>Redis</strong>: this holds the queue, the repeatable job definitions, and
+                all job state.
+              </li>
+            </ol>
+            <p>
+              The key insight is that
+              <strong
+                >none of the scheduling logic runs inside your Next.js app or your workers</strong
+              >. BullMQ&#39;s repeatable job mechanism is a Redis-native operation. Once a
+              repeatable job is registered, Redis knows the cron pattern and the next execution
+              time. When that time comes, BullMQ promotes the job into the waiting queue
+              automatically.
+            </p>
+            <p>This means:</p>
+            <ul>
+              <li>
+                <strong>Next.js goes down?</strong>
+                Doesn&#39;t matter. Existing schedules keep ticking because they&#39;re already
+                registered in Redis. You only lose the ability to create or edit schedules until the
+                API is back.
+              </li>
+              <li>
+                <strong>Workers go down?</strong>
+                Jobs pile up in the Redis queue. The moment a worker comes back online, it drains
+                the backlog and processes everything that was waiting.
+              </li>
+              <li>
+                <strong>Both Next.js and workers go down?</strong>
+                The cron schedules are still not affected. Redis continues to track the repeatable
+                patterns and queue new job instances on schedule. When your workers recover, they
+                pick up right where things left off.
+              </li>
+            </ul>
+            <p>
+              The only real failure mode is <strong>Redis itself going down</strong>. If Redis is
+              gone, the schedules, the queue, and all job state go with it. That&#39;s why Redis
+              persistence (RDB snapshots, AOF, or a managed Redis service with automatic backups)
+              matters. And even in that worst case, the reconciliation script we built earlier can
+              rebuild all repeatable jobs from your database.
+            </p>
+            <p>
+              Compare this to <code>node-cron</code> or <code>setInterval</code>, where the
+              scheduler, the executor, and the state all live in the same Node process. If that
+              process dies, everything is gone. With BullMQ, you&#39;ve cleanly separated
+              <strong>who registers schedules</strong>
+              (API),
+              <strong>who executes jobs</strong>
+              (workers), and
+              <strong>who holds the schedule state</strong>
+              (Redis). Each can fail independently without taking down the others.
+            </p>
+            <h2 id="wrapping-up">Wrapping Up</h2>
+            <p>
+              The full architecture looks like this: a <strong>Queue</strong> backed by Redis holds
+              the cron patterns, a <strong>Worker</strong> process picks up jobs when they fire,
+              your <strong>API</strong> lets users create and manage schedules, and an optional
+              <strong>sync script</strong>
+              reconciles the database with Redis when things drift.
+            </p>
+            <p>
+              For sending emails as part of your cron jobs (weekly digests, reports, notifications),
+              I&#39;ve covered that in a
+              <a href="/blogs/contact-form-with-resend/"
+                >previous post about email delivery with Resend</a
+              >.
+            </p>
+            <p>
+              I&#39;ve put together a working example with all the code from this post that you can
+              run locally:
+              <a href="https://github.com/pulkitxm/systems/tree/main/messaging/cron-jobs"
+                >cron-jobs on GitHub</a
+              >. It includes the queue setup, worker with task handlers, schedule management
+              scripts, and the reconciliation logic, all wired up with Docker Compose for Redis.
+            </p>
+            <p>
+              If your scheduling needs are simple, like a fixed cron that hits an API route, Vercel
+              cron or <code>node-cron</code> will serve you well. But when users need to define
+              their own schedules, when jobs run for minutes instead of seconds, when you need
+              retries and distributed processing, that&#39;s where BullMQ earns its place. It&#39;s
+              more setup upfront, but the reliability and flexibility in production makes it worth
+              it.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li><a href="/blogs/prisma-with-postgresql/">Prisma ORM with PostgreSQL</a></li>
+            <li>
+              <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
+            </li>
+            <li><a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a></li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

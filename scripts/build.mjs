@@ -1,46 +1,47 @@
 import { execFileSync } from "node:child_process";
-import { copyFileSync, mkdirSync, rmSync } from "node:fs";
-import { dirname, extname, join } from "node:path";
+import { copyFileSync, cpSync, existsSync, readdirSync, rmSync } from "node:fs";
+import process from "node:process";
+import { logDuration } from "./duration.mjs";
+import { resolveSiteOrigin } from "./site-origin.mjs";
 
-const output = "dist";
-const excludedRoots = new Set([".github", "content", "dist", "node_modules", "scripts", "tests"]);
-const excludedNames = new Set([
-  ".gitignore",
-  ".htmlvalidate.json",
-  ".prettierignore",
-  "biome.json",
-  "bun.lock",
-  "package.json",
-]);
-const sourceExtensions = new Set([".md", ".mdx"]);
-const files = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" })
-  .split("\0")
-  .filter(Boolean);
-const copied = new Map();
+const buildStartedAt = performance.now();
+const origin = resolveSiteOrigin();
 
-function destinationFor(file) {
-  const parts = file.split("/");
-  if (excludedRoots.has(parts[0])) return null;
-  if (excludedNames.has(file)) return null;
-  if (sourceExtensions.has(extname(file).toLowerCase())) return null;
-  const relative = parts[0] === "public" ? parts.slice(1).join("/") : file;
-  if (!relative || relative.startsWith(".")) return null;
-  return join(output, relative);
-}
-
-rmSync(output, { force: true, recursive: true });
-
-for (const file of files) {
-  const destination = destinationFor(file);
-  if (!destination) continue;
-  if (copied.has(destination)) {
-    throw new Error(`${file} and ${copied.get(destination)} resolve to ${destination}`);
+let stepStartedAt = performance.now();
+execFileSync("sh", ["scripts/check-sync.sh"], {
+  stdio: "inherit",
+  env: { ...process.env, NODE_ENV: "production", SITE_URL: "", SITE_OUTPUT_DIR: "pages" },
+});
+logDuration("Verified production pages", stepStartedAt);
+stepStartedAt = performance.now();
+if (existsSync("dist")) {
+  for (const entry of readdirSync("dist")) {
+    if (!/^dev-[0-9]+$/.test(entry)) {
+      rmSync(`dist/${entry}`, { force: true, recursive: true });
+    }
   }
-  copied.set(destination, file);
-  mkdirSync(dirname(destination), { recursive: true });
-  copyFileSync(file, destination);
 }
-
-if (!copied.has(join(output, "index.html")))
-  throw new Error("build did not produce dist/index.html");
-console.log(`built ${copied.size} files in ${output}`);
+logDuration("Cleared previous build", stepStartedAt);
+const production =
+  (!process.env.NODE_ENV || process.env.NODE_ENV === "production") &&
+  origin === resolveSiteOrigin({ NODE_ENV: "production" });
+stepStartedAt = performance.now();
+if (production) {
+  cpSync("pages", "dist", { recursive: true });
+} else {
+  execFileSync(process.execPath, ["scripts/generate.mjs"], {
+    stdio: "inherit",
+    env: { ...process.env, SITE_OUTPUT_DIR: "dist" },
+  });
+}
+logDuration(production ? "Copied production pages" : "Rendered preview pages", stepStartedAt);
+stepStartedAt = performance.now();
+cpSync("assets", "dist/assets", { recursive: true });
+for (const file of ["styles.css", "theme.js", ".nojekyll"]) {
+  copyFileSync(file, `dist/${file}`);
+}
+if (production) {
+  copyFileSync("CNAME", "dist/CNAME");
+}
+logDuration("Copied shared assets", stepStartedAt);
+logDuration(`Built dist for ${origin}`, buildStartedAt);

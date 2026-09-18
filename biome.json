@@ -1,16 +1,104 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
   "files": {
-    "includes": ["**", "!dist", "!assets/fonts"]
+    "includes": ["**", "!!dist", "!!extras", "!!node_modules", "!assets/fonts"]
   },
   "formatter": {
     "indentStyle": "space",
-    "lineWidth": 100
+    "lineWidth": 100,
+    "enabled": true,
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "formatWithErrors": false
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "preset": "all",
+        "useQwikValidLexicalScope": "off",
+        "noUnresolvedImports": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noDebugger": "error",
+        "noDoubleEquals": "error",
+        "noFocusedTests": "error",
+        "noSkippedTests": "error",
+        "noVar": "error",
+        "noImplicitAnyLet": "error",
+        "noConsole": "error",
+        "noTsIgnore": "error",
+        "noExportsInTest": "error",
+        "noDuplicateTestHooks": "error",
+        "useErrorMessage": "error"
+      },
+      "style": {
+        "useConst": "error",
+        "noCommonJs": "error",
+        "noDefaultExport": "error",
+        "noParameterAssign": "error",
+        "noNonNullAssertion": "error",
+        "useBlockStatements": "error",
+        "useNodejsImportProtocol": "error",
+        "useNodeAssertStrict": "error",
+        "useTemplate": "error",
+        "useThrowOnlyError": "error",
+        "useThrowNewError": "error",
+        "useDefaultParameterLast": "error",
+        "useSingleVarDeclarator": "error",
+        "useNumberNamespace": "error",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"],
+            "requireAscii": true
+          }
+        }
+      },
+      "a11y": {
+        "preset": "all"
+      },
+      "security": {
+        "preset": "all",
+        "noSecrets": "error"
+      }
     }
-  }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "html": {
+    "parser": {
+      "interpolation": true
+    },
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true,
+      "selfCloseVoidElements": "always"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["scripts/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          },
+          "correctness": {
+            "noNodejsModules": "off"
+          }
+        }
+      },
+      "javascript": {
+        "globals": ["Bun"]
+      }
+    }
+  ]
 }

@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+root=$(git rev-parse --show-toplevel)
+cd "$root"
+if ! command -v bun >/dev/null 2>&1 || [ ! -d node_modules ]; then
+  printf '%s\n' 'Pre-commit requires Bun and dependencies. Run bun install first.' >&2
+  exit 1
+fi
+snapshot=$(mktemp -d "${TMPDIR:-/tmp}/pulkit-page-pre-commit.XXXXXX")
+trap 'rm -rf "$snapshot"' EXIT
+trap 'exit 1' HUP INT TERM
+git checkout-index --all --prefix="$snapshot/"
+(
+  unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES
+  cd "$snapshot"
+  git init --quiet
+  git add --all
+  ln -s "$root/node_modules" node_modules
+  printf '%s\n' 'Checking the staged snapshot...'
+  bun run ci
+)

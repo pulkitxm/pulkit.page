@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  {{ > head }}
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      {{ > header }}
+      <main id="main" class="article">
+        {{ breadcrumbs }}
+        <article>
+          <header class="page-heading">
+            <h1>{{ heading }}</h1>
+            {{ date }}
+          </header>
+          <div class="prose">{{ content }}</div>
+        </article>
+        {{ related }}
+      </main>
+      {{ > footer }}
+    </div>
+  </body>
+</html>

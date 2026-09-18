@@ -1,0 +1,148 @@
+{
+  "date": "2026-09-18",
+  "hardware": {
+    "model": "Mac16,7",
+    "processor": "Apple M4 Pro",
+    "memory_gib": 24
+  },
+  "vite": "8.3.0",
+  "baseline_commit": "f3c6682",
+  "implementation_commit": "8abe11e",
+  "before": {
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "bun": "1.4.2",
+    "article": "/blogs/system-design/understanding-database-scaling-sharding/",
+    "article_fences": 36,
+    "runs": [
+      {
+        "cold_ready_ms": 11312.15,
+        "first_home_ms": 5.86,
+        "first_article_ms": 0.37,
+        "repeat_article_ms": 0.3,
+        "warm_ready_ms": 128.22,
+        "warm_home_ms": 0.96,
+        "body_edit_ms": 309.13,
+        "metadata_edit_ms": 483.46,
+        "layout_edit_ms": 4021.53,
+        "production_build_ms": 11617.5
+      },
+      {
+        "cold_ready_ms": 11519.73,
+        "first_home_ms": 1.37,
+        "first_article_ms": 0.41,
+        "repeat_article_ms": 0.36,
+        "warm_ready_ms": 132.75,
+        "warm_home_ms": 0.99,
+        "body_edit_ms": 303.44,
+        "metadata_edit_ms": 493.45,
+        "layout_edit_ms": 4110.67,
+        "production_build_ms": 11697.62
+      },
+      {
+        "cold_ready_ms": 11725.65,
+        "first_home_ms": 1.15,
+        "first_article_ms": 0.37,
+        "repeat_article_ms": 0.33,
+        "warm_ready_ms": 133.98,
+        "warm_home_ms": 1.03,
+        "body_edit_ms": 309.87,
+        "metadata_edit_ms": 493.48,
+        "layout_edit_ms": 4147.02,
+        "production_build_ms": 11805.91
+      }
+    ],
+    "median_ms": {
+      "cold_ready_ms": 11519.73,
+      "first_home_ms": 1.37,
+      "first_article_ms": 0.37,
+      "repeat_article_ms": 0.33,
+      "warm_ready_ms": 132.75,
+      "warm_home_ms": 0.99,
+      "body_edit_ms": 309.13,
+      "metadata_edit_ms": 493.45,
+      "layout_edit_ms": 4110.67,
+      "production_build_ms": 11697.62
+    },
+    "range_ms": {
+      "cold_ready_ms": [11312.15, 11725.65],
+      "first_home_ms": [1.15, 5.86],
+      "first_article_ms": [0.37, 0.41],
+      "repeat_article_ms": [0.3, 0.36],
+      "warm_ready_ms": [128.22, 133.98],
+      "warm_home_ms": [0.96, 1.03],
+      "body_edit_ms": [303.44, 309.87],
+      "metadata_edit_ms": [483.46, 493.48],
+      "layout_edit_ms": [4021.53, 4147.02],
+      "production_build_ms": [11617.5, 11805.91]
+    }
+  },
+  "after": {
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "bun": "1.4.2",
+    "article": "/blogs/system-design/understanding-database-scaling-sharding/",
+    "article_fences": 36,
+    "runs": [
+      {
+        "cold_ready_ms": 141.77,
+        "first_home_ms": 102.43,
+        "first_article_ms": 356.62,
+        "repeat_article_ms": 7.76,
+        "warm_ready_ms": 135.82,
+        "warm_home_ms": 29.44,
+        "body_edit_ms": 194.15,
+        "metadata_edit_ms": 158.83,
+        "layout_edit_ms": 128.11,
+        "production_build_ms": 12172.59
+      },
+      {
+        "cold_ready_ms": 137.26,
+        "first_home_ms": 94.61,
+        "first_article_ms": 363.49,
+        "repeat_article_ms": 8.44,
+        "warm_ready_ms": 135.73,
+        "warm_home_ms": 28.24,
+        "body_edit_ms": 219.08,
+        "metadata_edit_ms": 154.54,
+        "layout_edit_ms": 130.13,
+        "production_build_ms": 11675.16
+      },
+      {
+        "cold_ready_ms": 137.97,
+        "first_home_ms": 90.96,
+        "first_article_ms": 357.05,
+        "repeat_article_ms": 12.8,
+        "warm_ready_ms": 133.51,
+        "warm_home_ms": 38.01,
+        "body_edit_ms": 212.86,
+        "metadata_edit_ms": 155.62,
+        "layout_edit_ms": 124.96,
+        "production_build_ms": 11637.4
+      }
+    ],
+    "median_ms": {
+      "cold_ready_ms": 137.97,
+      "first_home_ms": 94.61,
+      "first_article_ms": 357.05,
+      "repeat_article_ms": 8.44,
+      "warm_ready_ms": 135.73,
+      "warm_home_ms": 29.44,
+      "body_edit_ms": 212.86,
+      "metadata_edit_ms": 155.62,
+      "layout_edit_ms": 128.11,
+      "production_build_ms": 11675.16
+    },
+    "range_ms": {
+      "cold_ready_ms": [137.26, 141.77],
+      "first_home_ms": [90.96, 102.43],
+      "first_article_ms": [356.62, 363.49],
+      "repeat_article_ms": [7.76, 12.8],
+      "warm_ready_ms": [133.51, 135.82],
+      "warm_home_ms": [28.24, 38.01],
+      "body_edit_ms": [194.15, 219.08],
+      "metadata_edit_ms": [154.54, 158.83],
+      "layout_edit_ms": [124.96, 130.13],
+      "production_build_ms": [11637.4, 12172.59]
+    }
+  },
+  "cache_scope": "Renderer caches, Vite optimizer caches, and dist cleared before each cold start; OS caches retained."
+}

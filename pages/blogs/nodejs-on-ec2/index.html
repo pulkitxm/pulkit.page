@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn to deploy Node.js applications on EC2 using PM2 and NGINX for robust and scalable production environments. Step-by-step guide included"
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/nodejs-on-ec2/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Node.js on EC2 with PM2 and NGINX | Pulkit" />
+    <meta
+      property="og:description"
+      content="Learn to deploy Node.js applications on EC2 using PM2 and NGINX for robust and scalable production environments. Step-by-step guide included"
+    />
+    <meta property="og:url" content="https://new.pulkit.page/blogs/nodejs-on-ec2/" />
+    <meta property="og:image" content="https://new.pulkit.page/og/blogs/nodejs-on-ec2/card.png" />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/nodejs-on-ec2/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Node.js on EC2 with PM2 and NGINX" />
+    <meta property="article:published_time" content="2024-08-05" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Node.js on EC2 with PM2 and NGINX | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Learn to deploy Node.js applications on EC2 using PM2 and NGINX for robust and scalable production environments. Step-by-step guide included"
+    />
+    <meta name="twitter:image" content="https://new.pulkit.page/og/blogs/nodejs-on-ec2/card.png" />
+    <meta name="twitter:image:alt" content="Node.js on EC2 with PM2 and NGINX" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#image","contentUrl":"https://new.pulkit.page/og/blogs/nodejs-on-ec2/card.png","width":1200,"height":630,"caption":"Node.js on EC2 with PM2 and NGINX"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#article","headline":"Node.js on EC2 with PM2 and NGINX","description":"Learn to deploy Node.js applications on EC2 using PM2 and NGINX for robust and scalable production environments. Step-by-step guide included","datePublished":"2024-08-05","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#image"},"url":"https://new.pulkit.page/blogs/nodejs-on-ec2/","inLanguage":"en","keywords":["AWS","EC2","Node.js","PM2","NGINX","Deployment","DevOps"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Node.js on EC2 with PM2 and NGINX","item":"https://new.pulkit.page/blogs/nodejs-on-ec2/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#webpage","url":"https://new.pulkit.page/blogs/nodejs-on-ec2/","name":"Node.js on EC2 with PM2 and NGINX","description":"Learn to deploy Node.js applications on EC2 using PM2 and NGINX for robust and scalable production environments. Step-by-step guide included","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/nodejs-on-ec2/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Node.js on EC2 with PM2 and NGINX | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li aria-current="page">Node.js on EC2 with PM2 and NGINX</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Node.js on EC2 with PM2 and NGINX</h1>
+            <p class="detail-meta"><time datetime="2024-08-05">2024-08-05</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Deploying Node.js applications can be a daunting task, especially when aiming for a
+              robust and scalable production environment. However, with the right tools and a clear
+              process, it becomes much more manageable. In this guide, I will walk you through the
+              easy deployment of Node.js applications on Amazon EC2 using PM2 and NGINX. By the end
+              of this article, you&#39;ll have a solid understanding of how to set up your server,
+              manage your application processes, and configure a reverse proxy to handle incoming
+              traffic efficiently. Let&#39;s dive in!
+            </p>
+            <h2 id="initializing-the-node-project">Initializing the Node project</h2>
+            <p>
+              <strong
+                >For this walkthrough, I will be deploying a simple Express hello-world application
+                on EC2. Let&#39;s start by initialize a simple express app</strong
+              >
+            </p>
+            <pre><code class="language-bash"><span class="f">pnpm</span> <span class="s">init</span>
+</code></pre>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/90d8aa96-dad8-4b4e-abaf-14e859a8b118.webp"
+                alt="Terminal showing npm init command output"
+                loading="lazy"
+              />
+            </p>
+            <h3 id="add-express-as-a-dependency">Add express as a dependency</h3>
+            <pre
+            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">express</span>
+</code></pre>
+            <h3 id="adding-a-simple-endpoint-that-returns-a-hello-world-object">
+              Adding a simple / endpoint that returns a hello world object
+            </h3>
+            <pre
+            ><code class="language-javascript"><span class="k">const</span> express <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;express&quot;</span><span class="u">);</span>
+
+<span class="k">const</span> app <span class="o">=</span> <span class="f">express</span><span class="u">();</span>
+
+app<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">&quot;/&quot;</span><span class="u">,</span> <span class="u">(</span>req<span class="u">,</span> res<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+  res<span class="u">.</span><span class="f">json</span><span class="u">({</span> <span class="p">message:</span> <span class="s">&quot;Hello world&quot;</span> <span class="u">});</span>
+<span class="u">});</span>
+
+<span class="k">const</span> PORT <span class="o">=</span> <span class="n">3000</span><span class="u">;</span>
+app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>PORT<span class="u">,</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
+  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;app is listening on port &quot;</span> <span class="o">+</span> PORT<span class="u">);</span>
+<span class="u">});</span>
+</code></pre>
+            <h3 id="start-your-express-application">Start your express application</h3>
+            <pre
+            ><code class="language-bash"><span class="f">node</span> <span class="s">index.js</span>
+</code></pre>
+            <p>and you see a / endpoint like this</p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/e4c258cd-a01a-4dc5-8339-c79f74ac4a04.webp"
+                alt="Browser showing Hello World JSON response from Express app"
+                loading="lazy"
+              />
+            </p>
+            <h2 id="deploying-the-app-on-aws-ec2">Deploying the app on AWS EC2</h2>
+            <h3 id="let-s-bootstrap-an-ec2-instance">Let&#39;s bootstrap an EC2 instance</h3>
+            <p>
+              You can directly head over to
+              <a
+                href="https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#LaunchInstances"
+                >AWS EC2 create instance page</a
+              >
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/ea5f89a4-48a0-4fa0-8e17-ad1b8977ae74.webp"
+                alt="AWS EC2 launch instance page"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              You can name the ec2 instance according to you, I am naming it
+              <code>demo-nodejs</code>.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/62d86fd2-805f-4b60-be5b-0d1c81b5fecb.webp"
+                alt="EC2 instance name configuration"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Select any image that suits you best, or you can learn more about these
+              <a
+                href="https://aws.amazon.com/ec2/features/#product-features#ec2-features#operating-systems-and-software"
+                >in the operating systems guide</a
+              >. I have selected the basic Ubuntu image, as it is widely used and has good support.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/4fb4dc83-b7e0-43c1-bec9-70c540e271e8.webp"
+                alt="EC2 Ubuntu illustration selection"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Since I am using this instance for this walkthrough, I have selected a free-tier
+              Instance type, you can choose the instance types according to your need, know more
+              about this
+              <a href="https://repost.aws/knowledge-center/ec2-instance-choose-type-for-workload"
+                >in the instance selection guide</a
+              >
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f97c6597-38ba-4044-86e9-253a725ac5c4.webp"
+                alt="EC2 instance type selection showing free tier option"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              And finally launch the instance, I am going to access this instance from AWS connect,
+              If you want to ssh into the instance you can create a key-pair and do that
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/1b308264-6a14-4ca7-a363-63c5969f226c.webp"
+                alt="EC2 instance connect button"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              <strong
+                >Click on connect to access your instance and start setting up your
+                environment.</strong
+              >
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/caa0cfbf-2bab-468c-8cb2-c5f784a7fc9f.webp"
+                alt="AWS EC2 connect interface"
+                loading="lazy"
+              />
+            </p>
+            <p>Now you have access to you ec2 instance from your brower</p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f8750e50-0ff3-4a07-965f-4879ca537887.webp"
+                alt="Terminal connected to EC2 instance"
+                loading="lazy"
+              />
+            </p>
+            <h3 id="setting-up-the-environment-in-the-instance">
+              Setting up the Environment in the instance
+            </h3>
+            <p>Update the package lists by running:</p>
+            <pre
+            ><code class="language-bash"><span class="f">sudo</span> <span class="s">apt-get</span> <span class="s">update</span> <span class="u">&amp;&amp;</span> <span class="f">sudo</span> <span class="s">apt-get</span> <span class="s">upgrade</span>
+</code></pre>
+            <p><strong>Installing node using the NVM(Node Version Manager)</strong></p>
+            <p>
+              Reference:
+              <a
+                href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04#option-3-installing-node-using-the-node-version-manager"
+                >How To Install Node.js on Ubuntu 20.04</a
+              >
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">curl</span> <span class="s">-o-</span> <span class="s">https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh</span> <span class="o">|</span> <span class="f">bash</span>
+</code></pre>
+            <p>
+              This will install the <code>nvm</code> script to your user account. To use it, you
+              must first source your <code>.bashrc</code> file:
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">source</span> <span class="s">~/.bashrc</span>
+</code></pre>
+            <p>Now let&#39;s install node using the nvm</p>
+            <pre
+            ><code class="language-bash"><span class="f">nvm</span> <span class="s">install</span> <span class="s">node</span>
+</code></pre>
+            <p>To check if it is installed correctly:</p>
+            <pre
+            ><code class="language-bash"><span class="f">node</span> <span class="s">--version</span>
+</code></pre>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/e2fbe875-ea75-4c8e-863f-0bd37b5509b9.webp"
+                alt="Terminal showing Node.js version check"
+                loading="lazy"
+              />
+            </p>
+            <h3 id="starting-the-server-on-ec2">Starting the server on EC2</h3>
+            <p>
+              You can either upload your code on GitHub and then clone it in Ec2 or use any other
+              viable method to get your code on the instance.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/77ce1c50-d9de-48e7-898d-ae795e410d17.webp"
+                alt="Terminal showing Node.js server running on EC2"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              If you are able to see this or whatever log you added in the
+              <code>app.listen()</code>
+              you are good to go.
+            </p>
+            <h3 id="starting-the-server-with-pm2">Starting the server with pm2</h3>
+            <p>
+              Now we can do a <code>node index.js</code> and we&#39;re good to go, but this approach
+              has its limitations. Running your application this way means it won&#39;t
+              automatically restart if it crashes, and it won&#39;t start again if the server
+              reboots. This is where PM2 comes in. PM2 is a production process manager for Node.js
+              applications that ensures your application stays online, even in the face of
+              unexpected issues. It provides features like process monitoring, automatic restarts,
+              and load balancing, making it an essential tool for managing Node.js applications in a
+              production environment. Let&#39;s explore how to set up and use PM2 to manage our
+              Node.js application on EC2.
+            </p>
+            <p><strong>So let&#39;s install pm2</strong></p>
+            <pre
+            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">-g</span> <span class="s">pm2</span>
+</code></pre>
+            <p>Now we&#39;ll start the express app using pm2</p>
+            <pre
+            ><code class="language-bash"><span class="f">pm2</span> <span class="s">start</span> <span class="s">index.js</span>
+</code></pre>
+            <p>
+              Now we have deployed the app, but it won&#39;t be accessible on the internet yet. To
+              make it accessible, let&#39;s configure the necessary security groups and open the
+              required ports. This will allow external traffic to reach our application.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/5e20e499-617c-40b1-833b-cf2fea46af60.webp"
+                alt="EC2 instance security tab"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Navigate to the Security tab on the Instance page. and click on the Security group
+              which is <code>sg-09f5337d4845d84fb (launch-wizard-1)</code> here.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8b2d346c-a515-4df3-aee8-7f526afea3c9.webp"
+                alt="Security group edit inbound rules button"
+                loading="lazy"
+              />
+            </p>
+            <p>Click on <code>Edit inbound rules</code></p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8c98a4d5-0b95-499b-9892-21589eac283a.webp"
+                alt="Edit inbound rules page"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Add a new Inbound rue with Type of <code>Custom TCP</code> and PORT <code>3000</code>.
+              To make it accessible add <code>0.0.0.0/0</code> from the CIDR block.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/274c4781-394f-495a-9c05-5d573867df6a.webp"
+                alt="Adding custom TCP rule for port 3000"
+                loading="lazy"
+              />
+            </p>
+            <p>Now get the Ip from the home page of your instance</p>
+            <p>
+              My Instance&#39;s Ip is <code>ec2-54-242-52-243.compute-1.amazonaws.com</code>, Now
+              the app is deployed on port 300, So to access the app navigate to
+            </p>
+            <p><code>http://ec2-54-242-52-243.compute-1.amazonaws.com:3000</code></p>
+            <p>And voilà! Your application is now accessible on the internet.</p>
+            <p>
+              <img
+                src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/ae71dec0-4c28-4348-b407-8c4a3258477c.webp"
+                alt="Browser showing Hello World response from deployed app"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              But wait the url for the application is
+              <a href="http://ec2-54-242-52-243.compute-1.amazonaws.com:3000"
+                >https://ec2-54-242-52-243.compute-1.amazonaws.com:3000</a
+              >, prettly ugly to add <code>:3000</code> in the url. Have you ever seen we go to
+              <a href="http://google.com">http://google.com:5173</a>. No! right, So let&#39;s fix
+              this next
+            </p>
+            <h2 id="configuring-nginx">Configuring Nginx</h2>
+            <p>
+              To make your application accessible without appending the port number to the URL, we
+              will set up NGINX as a reverse proxy. This will allow NGINX to handle incoming traffic
+              on the default HTTP port (80) and forward it to your Node.js application running on
+              port 3000.
+            </p>
+            <h3 id="steps-to-add-and-install-nginx">Steps to add and Install nginx</h3>
+            <ol>
+              <li>
+                <p><strong>Install NGINX</strong></p>
+                <p>First, install NGINX on your EC2 instance by running the following commands:</p>
+                <pre
+                ><code class="language-bash"><span class="f">sudo</span> <span class="s">apt</span> <span class="s">update</span>
+<span class="f">sudo</span> <span class="s">apt</span> <span class="s">install</span> <span class="s">nginx</span>
+</code></pre>
+              </li>
+              <li>
+                <p><strong>Start and Enable NGINX</strong></p>
+                <p>Ensure that NGINX is running and set to start on boot:</p>
+                <pre
+                ><code class="language-bash"><span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">start</span> <span class="s">nginx</span>
+<span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">enable</span> <span class="s">nginx</span>
+</code></pre>
+              </li>
+              <li>
+                <p><strong>Configure NGINX as a Reverse Proxy</strong></p>
+                <p>Open the NGINX configuration file for editing:</p>
+                <pre
+                ><code class="language-bash"><span class="f">sudo</span> <span class="s">vi</span> <span class="s">/etc/nginx/sites-available/default</span>
+</code></pre>
+                <p>Replace the contents of the file with the following configuration:</p>
+                <pre><code class="language-nginx"><span class="k">server</span> {
+   <span class="k"> listen </span><span class="n">80</span><span class="u">;</span>
+   <span class="k"> server_name </span>ec2-54-242-52-243.compute-1.amazonaws.com<span class="u">;</span>
+
+    <span class="k">location</span> / {
+       <span class="k"> proxy_pass </span>http://localhost:3000<span class="u">;</span>
+       <span class="k"> proxy_http_version </span><span class="n">1.1</span><span class="u">;</span>
+       <span class="k"> proxy_set_header </span>Upgrade <span class="u">$</span>http_upgrade<span class="u">;</span>
+       <span class="k"> proxy_set_header </span>Connection <span class="s">&#39;upgrade&#39;</span><span class="u">;</span>
+       <span class="k"> proxy_set_header </span>Host <span class="u">$</span>host<span class="u">;</span>
+       <span class="k"> proxy_cache_bypass </span><span class="u">$</span>http_upgrade<span class="u">;</span>
+    }
+}
+</code></pre>
+                <ol start="4">
+                  <li>
+                    <p>
+                      Make sure to replace
+                      <code>ec2-54-242-52-243.compute-1.amazonaws.com</code>
+                      with your actual domain name or public IP address.
+                    </p>
+                  </li>
+                  <li>
+                    <p><strong>Test the NGINX Configuration</strong></p>
+                    <p>Test the NGINX configuration to ensure there are no syntax errors:</p>
+                    <pre
+                    ><code class="language-bash"><span class="f">sudo</span> <span class="s">nginx</span> <span class="s">-t</span>
+</code></pre>
+                    <p>
+                      If the test is successful, you should see a message indicating that the
+                      configuration file is okay.
+                    </p>
+                    <p>
+                      <img
+                        src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8f6847e8-3efe-454e-969a-fa65b23e37b0.webp"
+                        alt="Terminal showing nginx configuration test success"
+                        loading="lazy"
+                      />
+                    </p>
+                  </li>
+                  <li>
+                    <p><strong>Restart NGINX</strong></p>
+                    <p>Restart NGINX to apply the new configuration:</p>
+                    <pre
+                    ><code class="language-bash"><span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">restart</span> <span class="s">nginx</span>
+</code></pre>
+                  </li>
+                  <li>
+                    <p><strong>Update Security Group to Allow HTTP Traffic</strong></p>
+                    <p>
+                      Ensure that your EC2 instance&#39;s security group allows inbound traffic on
+                      port 80. Navigate to the Security Groups section in the AWS Management
+                      Console, select your instance&#39;s security group, and add a rule to allow
+                      HTTP traffic on port 80 from any IP address (0.0.0.0/0)
+                      <strong>and you may remove the 3000 port that&#39;s no more needed</strong>
+                    </p>
+                  </li>
+                  <li>
+                    <p><strong>Access Your Application</strong></p>
+                    <p>
+                      Now, you should be able to access your Node.js application using your domain
+                      name or public IP address without appending the port number. For example:
+                    </p>
+                    <pre><code class="language-http">http://your_domain_or_IP
+</code></pre>
+                    <p>
+                      Your application should be accessible, and NGINX will forward the traffic to
+                      your Node.js application running on port 3000.
+                    </p>
+                  </li>
+                </ol>
+                <p>
+                  <img
+                    src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/c162d6ac-1631-4780-b34e-b90301392655.webp"
+                    alt="Browser showing app accessible without port number"
+                    loading="lazy"
+                  />
+                </p>
+              </li>
+            </ol>
+            <p>
+              By following this guide, you have successfully deployed a Node.js application on an
+              EC2 instance using PM2 and NGINX. This setup not only ensures that your application
+              remains robust and scalable but also provides a clean and professional URL for your
+              users. With PM2 managing your application processes and NGINX handling incoming
+              traffic, you can focus on developing your application further, knowing that your
+              deployment is in good hands. Happy coding!
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li>
+              <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
+            </li>
+            <li>
+              <a href="/blogs/deploying-on-coolify/"
+                >Coolify: Self-Host Postgres, Redis &amp; Next.js</a
+              >
+            </li>
+            <li><a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a></li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,58 +1,21 @@
-(() => {
-  const root = document.documentElement;
-  const preference = window.matchMedia("(prefers-color-scheme: dark)");
-  const storageKey = "pulkit-theme";
-
-  const readSavedTheme = () => {
+const themeKey = "portfolio-theme";
+let selectedTheme;
+try {
+  selectedTheme = localStorage.getItem(themeKey);
+} catch {}
+if (selectedTheme === "light" || selectedTheme === "dark") {
+  document.documentElement.dataset.theme = selectedTheme;
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.querySelector("[data-theme-toggle]");
+  button?.addEventListener("click", () => {
+    const dark = document.documentElement.dataset.theme
+      ? document.documentElement.dataset.theme === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const theme = dark ? "light" : "dark";
+    document.documentElement.dataset.theme = theme;
     try {
-      const value = localStorage.getItem(storageKey);
-      return value === "light" || value === "dark" ? value : null;
-    } catch {
-      return null;
-    }
-  };
-
-  const saveTheme = (theme) => {
-    try {
-      localStorage.setItem(storageKey, theme);
-    } catch {
-      return;
-    }
-  };
-
-  const preferredTheme = () => readSavedTheme() || (preference.matches ? "dark" : "light");
-
-  const applyTheme = (theme) => {
-    root.dataset.theme = theme;
-    root.style.colorScheme = theme;
-
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-    const toggle = document.querySelector("[data-theme-toggle]");
-
-    themeColor?.setAttribute("content", theme === "dark" ? "#2d1a14" : "#f2eadf");
-
-    if (toggle) {
-      toggle.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} mode`);
-      toggle.setAttribute("aria-pressed", String(theme === "dark"));
-      toggle.querySelector("span").textContent = theme === "dark" ? "Light" : "Dark";
-    }
-  };
-
-  applyTheme(preferredTheme());
-
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(preferredTheme());
-
-    document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {
-      const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
-      saveTheme(nextTheme);
-      applyTheme(nextTheme);
-    });
+      localStorage.setItem(themeKey, theme);
+    } catch {}
   });
-
-  preference.addEventListener("change", () => {
-    if (!readSavedTheme()) {
-      applyTheme(preferredTheme());
-    }
-  });
-})();
+});

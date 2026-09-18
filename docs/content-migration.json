@@ -1,0 +1,595 @@
+{
+  "pages": [
+    {
+      "source": "blogs/aws-s3-with-nodejs.mdx",
+      "output": "content/blogs/aws-s3-with-nodejs.md",
+      "codeBlocks": 12
+    },
+    {
+      "source": "blogs/branded-types-in-typescript.mdx",
+      "output": "content/blogs/branded-types-in-typescript.md",
+      "codeBlocks": 23
+    },
+    {
+      "source": "blogs/contact-form-with-resend.mdx",
+      "output": "content/blogs/contact-form-with-resend.md",
+      "codeBlocks": 10
+    },
+    {
+      "source": "blogs/context-menu-in-react.mdx",
+      "output": "content/blogs/context-menu-in-react.md",
+      "codeBlocks": 15
+    },
+    {
+      "source": "blogs/cookie-sync-pattern.mdx",
+      "output": "content/blogs/cookie-sync-pattern.md",
+      "codeBlocks": 10
+    },
+    {
+      "source": "blogs/creating-npx-command.mdx",
+      "output": "content/blogs/creating-npx-command.md",
+      "codeBlocks": 7
+    },
+    {
+      "source": "blogs/cron-jobs-with-bullmq.mdx",
+      "output": "content/blogs/cron-jobs-with-bullmq.md",
+      "codeBlocks": 13
+    },
+    {
+      "source": "blogs/deploying-on-coolify.mdx",
+      "output": "content/blogs/deploying-on-coolify.md",
+      "codeBlocks": 3
+    },
+    {
+      "source": "blogs/design-engineering/clip-path-reveals.mdx",
+      "output": "content/blogs/design-engineering/clip-path-reveals.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/design-engineering/css-transitions.mdx",
+      "output": "content/blogs/design-engineering/css-transitions.md",
+      "codeBlocks": 3
+    },
+    {
+      "source": "blogs/design-engineering/easing-curves-that-feel-natural.mdx",
+      "output": "content/blogs/design-engineering/easing-curves-that-feel-natural.md",
+      "codeBlocks": 22
+    },
+    {
+      "source": "blogs/design-engineering/index.mdx",
+      "output": "content/blogs/design-engineering/index.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/design-engineering/keyframe-animations.mdx",
+      "output": "content/blogs/design-engineering/keyframe-animations.md",
+      "codeBlocks": 6
+    },
+    {
+      "source": "blogs/design-engineering/moving-things-without-moving-them.mdx",
+      "output": "content/blogs/design-engineering/moving-things-without-moving-them.md",
+      "codeBlocks": 12
+    },
+    {
+      "source": "blogs/design-engineering/offloading-motion-to-the-gpu.mdx",
+      "output": "content/blogs/design-engineering/offloading-motion-to-the-gpu.md",
+      "codeBlocks": 16
+    },
+    {
+      "source": "blogs/design-engineering/psychology-of-motion.mdx",
+      "output": "content/blogs/design-engineering/psychology-of-motion.md",
+      "codeBlocks": 5
+    },
+    {
+      "source": "blogs/design-engineering/the-physics-behind-natural-motion.mdx",
+      "output": "content/blogs/design-engineering/the-physics-behind-natural-motion.md",
+      "codeBlocks": 7
+    },
+    {
+      "source": "blogs/design-engineering/training-your-eye-for-motion.mdx",
+      "output": "content/blogs/design-engineering/training-your-eye-for-motion.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/design-engineering/when-to-animate-and-when-to-skip.mdx",
+      "output": "content/blogs/design-engineering/when-to-animate-and-when-to-skip.md",
+      "codeBlocks": 1
+    },
+    {
+      "source": "blogs/git-partial-clones.mdx",
+      "output": "content/blogs/git-partial-clones.md",
+      "codeBlocks": 16
+    },
+    {
+      "source": "blogs/git-worktrees.mdx",
+      "output": "content/blogs/git-worktrees.md",
+      "codeBlocks": 16
+    },
+    {
+      "source": "blogs/how-i-use-cursor.mdx",
+      "output": "content/blogs/how-i-use-cursor.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/image-gallery-with-photoswipe.mdx",
+      "output": "content/blogs/image-gallery-with-photoswipe.md",
+      "codeBlocks": 11
+    },
+    {
+      "source": "blogs/kaksha.mdx",
+      "output": "content/blogs/kaksha.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/mcp-server-that-writes-itself.mdx",
+      "output": "content/blogs/mcp-server-that-writes-itself.md",
+      "codeBlocks": 15
+    },
+    {
+      "source": "blogs/my-first-talk.mdx",
+      "output": "content/blogs/my-first-talk.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/nodejs-on-ec2.mdx",
+      "output": "content/blogs/nodejs-on-ec2.md",
+      "codeBlocks": 18
+    },
+    {
+      "source": "blogs/og-images-in-nextjs.mdx",
+      "output": "content/blogs/og-images-in-nextjs.md",
+      "codeBlocks": 3
+    },
+    {
+      "source": "blogs/prisma-with-postgresql.mdx",
+      "output": "content/blogs/prisma-with-postgresql.md",
+      "codeBlocks": 17
+    },
+    {
+      "source": "blogs/python-poetry-guide.mdx",
+      "output": "content/blogs/python-poetry-guide.md",
+      "codeBlocks": 7
+    },
+    {
+      "source": "blogs/rag-chatbot-with-qdrant.mdx",
+      "output": "content/blogs/rag-chatbot-with-qdrant.md",
+      "codeBlocks": 10
+    },
+    {
+      "source": "blogs/scroll-indicator-with-framer.mdx",
+      "output": "content/blogs/scroll-indicator-with-framer.md",
+      "codeBlocks": 6
+    },
+    {
+      "source": "blogs/seo-for-nextjs-portfolio.mdx",
+      "output": "content/blogs/seo-for-nextjs-portfolio.md",
+      "codeBlocks": 9
+    },
+    {
+      "source": "blogs/smooth-scroll.mdx",
+      "output": "content/blogs/smooth-scroll.md",
+      "codeBlocks": 15
+    },
+    {
+      "source": "blogs/sse-with-fastapi.mdx",
+      "output": "content/blogs/sse-with-fastapi.md",
+      "codeBlocks": 7
+    },
+    {
+      "source": "blogs/ssg-in-nextjs.mdx",
+      "output": "content/blogs/ssg-in-nextjs.md",
+      "codeBlocks": 10
+    },
+    {
+      "source": "blogs/system-design/async-processing.mdx",
+      "output": "content/blogs/system-design/async-processing.md",
+      "codeBlocks": 30
+    },
+    {
+      "source": "blogs/system-design/big-data-tools.mdx",
+      "output": "content/blogs/system-design/big-data-tools.md",
+      "codeBlocks": 7
+    },
+    {
+      "source": "blogs/system-design/bloom-filters.mdx",
+      "output": "content/blogs/system-design/bloom-filters.md",
+      "codeBlocks": 17
+    },
+    {
+      "source": "blogs/system-design/caching.mdx",
+      "output": "content/blogs/system-design/caching.md",
+      "codeBlocks": 30
+    },
+    {
+      "source": "blogs/system-design/circuit-breakers.mdx",
+      "output": "content/blogs/system-design/circuit-breakers.md",
+      "codeBlocks": 22
+    },
+    {
+      "source": "blogs/system-design/communication-protocols.mdx",
+      "output": "content/blogs/system-design/communication-protocols.md",
+      "codeBlocks": 20
+    },
+    {
+      "source": "blogs/system-design/consistent-hashing.mdx",
+      "output": "content/blogs/system-design/consistent-hashing.md",
+      "codeBlocks": 17
+    },
+    {
+      "source": "blogs/system-design/db-transaction-internals.mdx",
+      "output": "content/blogs/system-design/db-transaction-internals.md",
+      "codeBlocks": 23
+    },
+    {
+      "source": "blogs/system-design/high-availability.mdx",
+      "output": "content/blogs/system-design/high-availability.md",
+      "codeBlocks": 29
+    },
+    {
+      "source": "blogs/system-design/index.mdx",
+      "output": "content/blogs/system-design/index.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "blogs/system-design/load-balancers.mdx",
+      "output": "content/blogs/system-design/load-balancers.md",
+      "codeBlocks": 23
+    },
+    {
+      "source": "blogs/system-design/non-relational-databases.mdx",
+      "output": "content/blogs/system-design/non-relational-databases.md",
+      "codeBlocks": 15
+    },
+    {
+      "source": "blogs/system-design/rate-limiting.mdx",
+      "output": "content/blogs/system-design/rate-limiting.md",
+      "codeBlocks": 15
+    },
+    {
+      "source": "blogs/system-design/understanding-database-scaling-sharding.mdx",
+      "output": "content/blogs/system-design/understanding-database-scaling-sharding.md",
+      "codeBlocks": 36
+    },
+    {
+      "source": "blogs/typewriter-effect-in-react.mdx",
+      "output": "content/blogs/typewriter-effect-in-react.md",
+      "codeBlocks": 8
+    },
+    {
+      "source": "blogs/virtualized-list.mdx",
+      "output": "content/blogs/virtualized-list.md",
+      "codeBlocks": 8
+    },
+    {
+      "source": "blogs/vscode-in-browser.mdx",
+      "output": "content/blogs/vscode-in-browser.md",
+      "codeBlocks": 3
+    },
+    {
+      "source": "experiences/crowdvolt.mdx",
+      "output": "content/experience/crowdvolt.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "experiences/datawavelabs.mdx",
+      "output": "content/experience/datawavelabs.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "experiences/deviators.mdx",
+      "output": "content/experience/deviators.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "experiences/geeksforgeeks.mdx",
+      "output": "content/experience/geeksforgeeks.md",
+      "codeBlocks": 0
+    },
+    {
+      "source": "experiences/magicapi.mdx",
+      "output": "content/experience/magicapi.md",
+      "codeBlocks": 0
+    }
+  ],
+  "assets": [
+    "assets/content/blogs/async-processing/amazon-sqs.webp",
+    "assets/content/blogs/async-processing/async-flow.webp",
+    "assets/content/blogs/async-processing/async.webp",
+    "assets/content/blogs/async-processing/image-processing.webp",
+    "assets/content/blogs/async-processing/kafka.webp",
+    "assets/content/blogs/async-processing/message-buffering.webp",
+    "assets/content/blogs/async-processing/message-queues.webp",
+    "assets/content/blogs/async-processing/message-requque.webp",
+    "assets/content/blogs/async-processing/pubsub.webp",
+    "assets/content/blogs/async-processing/rabbitmq.webp",
+    "assets/content/blogs/async-processing/streams-approach-1.webp",
+    "assets/content/blogs/async-processing/streams-approach-2.webp",
+    "assets/content/blogs/async-processing/streams-approach-3.webp",
+    "assets/content/blogs/async-processing/streams-vs-queues.webp",
+    "assets/content/blogs/async-processing/sync.webp",
+    "assets/content/blogs/async-processing/topics-partitions.webp",
+    "assets/content/blogs/big-data-tools/coordinator-pattern.webp",
+    "assets/content/blogs/big-data-tools/distributed-computing.webp",
+    "assets/content/blogs/big-data-tools/spark-architecture.webp",
+    "assets/content/blogs/big-data-tools/tools-value.webp",
+    "assets/content/blogs/caching/cache-db.webp",
+    "assets/content/blogs/caching/caching-at-different-levels.webp",
+    "assets/content/blogs/caching/cdn.webp",
+    "assets/content/blogs/caching/client-side-cache.webp",
+    "assets/content/blogs/caching/eager-update.webp",
+    "assets/content/blogs/caching/lazy-update.webp",
+    "assets/content/blogs/caching/memcached.webp",
+    "assets/content/blogs/caching/populating-cache.webp",
+    "assets/content/blogs/caching/redis.webp",
+    "assets/content/blogs/caching/remote-cache.webp",
+    "assets/content/blogs/caching/request-flow.webp",
+    "assets/content/blogs/caching/scaling.webp",
+    "assets/content/blogs/circuit-breakers/cascading-failure.webp",
+    "assets/content/blogs/circuit-breakers/config-bottleneck.webp",
+    "assets/content/blogs/circuit-breakers/implementation.webp",
+    "assets/content/blogs/circuit-breakers/pubsub-updates.webp",
+    "assets/content/blogs/circuit-breakers/service-architecture.webp",
+    "assets/content/blogs/circuit-breakers/three-states.webp",
+    "assets/content/blogs/circuit-breakers/with-without-comparison.webp",
+    "assets/content/blogs/communication-protocols/connection-keep-alive.webp",
+    "assets/content/blogs/communication-protocols/http-1-1-flow.webp",
+    "assets/content/blogs/communication-protocols/https-vs-ws.webp",
+    "assets/content/blogs/communication-protocols/protocol-layer-stack.webp",
+    "assets/content/blogs/communication-protocols/real-time-use-case.webp",
+    "assets/content/blogs/communication-protocols/sse-flow.webp",
+    "assets/content/blogs/communication-protocols/tcp-2-way-teardown.webp",
+    "assets/content/blogs/communication-protocols/tcp-3-way-handshake.webp",
+    "assets/content/blogs/consistent-hashing/hash-based-routing.webp",
+    "assets/content/blogs/consistent-hashing/rehashing-problem.webp",
+    "assets/content/blogs/consistent-hashing/ring.webp",
+    "assets/content/blogs/consistent-hashing/scale-up.webp",
+    "assets/content/blogs/creating-a-dynamic-horizontal-scroll-percentage-indicator-with-react-and-framer-motion/a1036438-6dac-4c32-bcf3-78d877cd2de8.webp",
+    "assets/content/blogs/creating-a-dynamic-horizontal-scroll-percentage-indicator-with-react-and-framer-motion/ba462a68-961b-4df5-b230-3011f8297166.webp",
+    "assets/content/blogs/cron-jobs-with-bullmq/create-cron-form.webp",
+    "assets/content/blogs/cron-jobs-with-bullmq/cron-runs.webp",
+    "assets/content/blogs/cron-jobs-with-bullmq/noveum-cron-dash.webp",
+    "assets/content/blogs/database-scaling/horizontal-partitioning.webp",
+    "assets/content/blogs/database-scaling/horizontal-scaling.webp",
+    "assets/content/blogs/database-scaling/read-replicas.webp",
+    "assets/content/blogs/database-scaling/sharding-vs-partioning.webp",
+    "assets/content/blogs/database-scaling/sharding.webp",
+    "assets/content/blogs/database-scaling/vertical-partitioning.webp",
+    "assets/content/blogs/database-scaling/vertical-scaling.webp",
+    "assets/content/blogs/db-transaction-internals/acid-properties.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/1b308264-6a14-4ca7-a363-63c5969f226c.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/274c4781-394f-495a-9c05-5d573867df6a.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/4fb4dc83-b7e0-43c1-bec9-70c540e271e8.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/5e20e499-617c-40b1-833b-cf2fea46af60.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/62d86fd2-805f-4b60-be5b-0d1c81b5fecb.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/77ce1c50-d9de-48e7-898d-ae795e410d17.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8b2d346c-a515-4df3-aee8-7f526afea3c9.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8c98a4d5-0b95-499b-9892-21589eac283a.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8f6847e8-3efe-454e-969a-fa65b23e37b0.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/90d8aa96-dad8-4b4e-abaf-14e859a8b118.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/ae71dec0-4c28-4348-b407-8c4a3258477c.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/c162d6ac-1631-4780-b34e-b90301392655.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/caa0cfbf-2bab-468c-8cb2-c5f784a7fc9f.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/e2fbe875-ea75-4c8e-863f-0bd37b5509b9.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/e4c258cd-a01a-4dc5-8339-c79f74ac4a04.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/ea5f89a4-48a0-4fa0-8e17-ad1b8977ae74.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f8750e50-0ff3-4a07-965f-4879ca537887.webp",
+    "assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f97c6597-38ba-4044-86e9-253a725ac5c4.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/1d67e1ef-f3db-4d6d-bf5e-715153039872.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/3095fd2e-c030-4cb3-9d47-eddf13735c6b.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/3dfa3ba5-9def-4254-b0d5-5e898bc38cf2.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/4401c7fe-c1df-48fe-bea3-84efa5fb9057.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/57c0ed18-7fe3-4e7a-b3ff-5dac9d8b251a.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/62fddf51-739b-4866-a2de-14b4dad78d68.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/74bc75e6-73ff-4485-8c21-1e1058fa736f.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/78df5c83-af18-48c2-9505-dfebb08389ed.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/9434ba4b-bc77-4b13-baf3-f60892cb2c76.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/957441f5-3da3-4609-8955-67517ceda1cb.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/99bcc776-539b-4e3c-8676-262019add16b.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/9c970786-0745-49c1-8028-6b32912534d9.webp",
+    "assets/content/blogs/deploying-postgres-redis-and-a-nextjs-app-on-coolify/d0c59bbe-b6ff-4f3a-9be2-c2769508d982.webp",
+    "assets/content/blogs/emails-with-resend/957f2ab3-d003-4467-900a-03c6abbd3d7b.webp",
+    "assets/content/blogs/emails-with-resend/c42f0db8-a864-4d0a-8c43-018b179f3742.webp",
+    "assets/content/blogs/emails-with-resend/faf1f878-5818-441e-a6b1-1b8c9527e1bf.webp",
+    "assets/content/blogs/emails-with-resend/fb91fd24-5e0d-463d-90c9-223671d3db5c.webp",
+    "assets/content/blogs/high-availability/automatic-failover.webp",
+    "assets/content/blogs/high-availability/backup-strategy.webp",
+    "assets/content/blogs/high-availability/continuous-redundancy.webp",
+    "assets/content/blogs/high-availability/disaster-recovery.webp",
+    "assets/content/blogs/high-availability/failure-scenarios.webp",
+    "assets/content/blogs/high-availability/leader-follower-setup.webp",
+    "assets/content/blogs/high-availability/orchestrator-problem.webp",
+    "assets/content/blogs/high-availability/recursion-problem.webp",
+    "assets/content/blogs/high-availability/redundancy-levels.webp",
+    "assets/content/blogs/high-availability/stateless-vs-stateful.webp",
+    "assets/content/blogs/how-i-created-npx-devpulkit/c7e73998-b9bf-4bc1-aafb-e743296c1f7a.webp",
+    "assets/content/blogs/how-i-use-cursor/cursor-2025-models.webp",
+    "assets/content/blogs/how-i-use-cursor/cursor-2025.webp",
+    "assets/content/blogs/how-i-use-cursor/cursor-top-11-perc.webp",
+    "assets/content/blogs/how-i-use-cursor/mail.webp",
+    "assets/content/blogs/how-i-use-cursor/plan-mode.webp",
+    "assets/content/blogs/how-i-use-cursor/pricing.webp",
+    "assets/content/blogs/how-i-use-cursor/rollback.webp",
+    "assets/content/blogs/how-i-use-cursor/using-source-control.webp",
+    "assets/content/blogs/how-this-website-ranks-on-google/lighthouse-score.webp",
+    "assets/content/blogs/load-balancers/availability.webp",
+    "assets/content/blogs/load-balancers/hash-based.webp",
+    "assets/content/blogs/load-balancers/least-connections.webp",
+    "assets/content/blogs/load-balancers/overview.webp",
+    "assets/content/blogs/load-balancers/request-flow.webp",
+    "assets/content/blogs/load-balancers/round-robin.webp",
+    "assets/content/blogs/load-balancers/scalability.webp",
+    "assets/content/blogs/load-balancers/single-point-of-contact.webp",
+    "assets/content/blogs/load-balancers/weighted-round-robin.webp",
+    "assets/content/blogs/mcp-server-that-writes-itself/typical-session.webp",
+    "assets/content/blogs/moving-things-without-moving-them/garage-door.gif",
+    "assets/content/blogs/moving-things-without-moving-them/revolving-door.gif",
+    "assets/content/blogs/nodejs-s3-integration/02b29ad8-d5be-476d-b3dc-60ca8f310377.webp",
+    "assets/content/blogs/nodejs-s3-integration/0f93f326-b0e9-4cd9-856f-f5ce2ffff65f.webp",
+    "assets/content/blogs/nodejs-s3-integration/5ad4671f-dfe7-4c58-8fd8-fb00526603a9.webp",
+    "assets/content/blogs/nodejs-s3-integration/5b6ea3fe-1b1f-4b50-bd84-92356ee98ff1.webp",
+    "assets/content/blogs/nodejs-s3-integration/62d8b52e-5425-42ad-b743-d95a7c3d53ba.webp",
+    "assets/content/blogs/nodejs-s3-integration/66caf838-335e-4afe-bfbd-7f8f57c27bcf.webp",
+    "assets/content/blogs/nodejs-s3-integration/6850b022-9690-4d09-8d0b-28a6af0e5052.webp",
+    "assets/content/blogs/nodejs-s3-integration/95d9f416-5220-44ac-8db4-5205f59c2fb5.webp",
+    "assets/content/blogs/nodejs-s3-integration/9e1bb99e-246f-49c3-9f2a-7e061c6c0b0a.webp",
+    "assets/content/blogs/nodejs-s3-integration/af0dc97c-b1f1-493f-8982-2b38253ece39.webp",
+    "assets/content/blogs/nodejs-s3-integration/f9c8acee-6b6e-418e-899e-d7e390ef9cc3.webp",
+    "assets/content/blogs/nodejs-s3-integration/fb2fbc95-712e-4ec4-a20a-3b404bf5c186.webp",
+    "assets/content/blogs/non-relational-databases/document-db.webp",
+    "assets/content/blogs/non-relational-databases/graph-db.webp",
+    "assets/content/blogs/non-relational-databases/key-value-db.webp",
+    "assets/content/blogs/non-relational-databases/types.webp",
+    "assets/content/blogs/offloading-motion-to-the-gpu/frame-budget.webp",
+    "assets/content/blogs/offloading-motion-to-the-gpu/rendering-pipeline.webp",
+    "assets/content/blogs/open-graph-images-in-nextjs/bc65d989-c82d-4ae3-a834-1fb6aa9b642e.webp",
+    "assets/content/blogs/rate-limiting/fixed-window-edge.webp",
+    "assets/content/blogs/rate-limiting/placement-middleware.webp",
+    "assets/content/blogs/rate-limiting/placement-proxy.webp",
+    "assets/content/blogs/rate-limiting/rate-limiter-overview.webp",
+    "assets/content/blogs/rate-limiting/scaling-sharding.webp",
+    "assets/content/blogs/rate-limiting/service-vs-library.webp",
+    "assets/content/blogs/react-contexify-context-menu/4824af70-c43f-4ee9-832d-7edcabcb9cac.webp",
+    "assets/content/blogs/react-contexify-context-menu/a79f3b33-1b19-42ab-834b-943be2b7275d.webp",
+    "assets/content/blogs/react-image-gallery-with-photoswipe/40786bd6-5690-47a8-a52c-b7bf7aba230c.webp",
+    "assets/content/blogs/react-image-gallery-with-photoswipe/a8b7da7f-f81c-494c-a15c-44d489fbc207.webp",
+    "assets/content/blogs/server-sent-events-with-fastapi/215331ad-97a2-4797-b0cb-647eea17584f.webp",
+    "assets/content/blogs/server-sent-events-with-fastapi/2c5d09d7-fa01-46f2-9f38-21ebc2587012.webp",
+    "assets/content/blogs/server-sent-events-with-fastapi/6c00af74-1de9-46c1-b6e3-eee5ff533c99.webp",
+    "assets/content/blogs/server-sent-events-with-fastapi/99b548a0-2158-4379-9306-8f6175079f12.webp",
+    "assets/content/blogs/server-sent-events-with-fastapi/bc758d6d-c914-4c4a-bf5d-8dfbf2ce3183.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/19097be8-be04-4232-b5ff-98ad69a394e2.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/8ea0f089-8cb2-4137-9159-cfe657b51cbd.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/a24a1098-6c0e-436a-b6d3-baf7e2f21a61.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/c573a7c1-fe3f-4d92-996d-d00a14ca3002.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/e4b5b000-b3fb-40ce-8a69-f448b49400c8.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/ec031e29-236e-4e62-8795-9fb7c0e0ee6b.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/f076b941-a257-47ad-ad15-eb4665e8808f.webp",
+    "assets/content/blogs/simplifying-python-dependency-management-with-poetry/fdfbc518-fe35-464e-9829-089b274f21d6.webp",
+    "assets/content/blogs/ssg-in-nextjs/todo-1-ssr.webp",
+    "assets/content/blogs/step-by-step-guide-to-implementing-typewriter-effect-in-react/296bc3f4-3dae-406f-9b02-8f821399fad5.webp",
+    "assets/content/blogs/step-by-step-guide-to-implementing-typewriter-effect-in-react/746c7b25-e1fe-4899-9efe-fad41d734ac2.gif",
+    "assets/content/blogs/virtualized-list/example.gif",
+    "assets/content/blogs/vscode-server-in-browser/124e039a-8bf8-4bfc-851e-d458a185e0b3.webp",
+    "assets/content/blogs/vscode-server-in-browser/4c52e535-8a6b-4cbd-bb92-0824071d152c.webp",
+    "assets/content/blogs/vscode-server-in-browser/6082f3fe-bb08-495d-a275-fb3d7a327828.webp",
+    "assets/content/blogs/vscode-server-in-browser/9ee65c06-6667-43b1-a56b-43feb7b80d37.webp",
+    "assets/content/public/blogs/kaksha/clash-detection.webp",
+    "assets/content/public/blogs/kaksha/paper-and-tablet.webp",
+    "assets/content/public/blogs/kaksha/share-screen.webp",
+    "assets/content/public/blogs/kaksha/teacher-export.webp",
+    "assets/content/public/blogs/kaksha/teacher-load.webp",
+    "assets/content/public/blogs/kaksha/timetable-grid.webp",
+    "assets/content/public/blogs/my-first-talk/01.webp",
+    "assets/content/public/blogs/my-first-talk/02.webp",
+    "assets/content/public/blogs/my-first-talk/03.webp",
+    "assets/content/public/blogs/my-first-talk/04.webp",
+    "assets/content/public/blogs/my-first-talk/05.webp",
+    "assets/content/public/blogs/my-first-talk/06.webp",
+    "assets/content/public/blogs/my-first-talk/07.webp",
+    "assets/content/public/blogs/my-first-talk/08.webp",
+    "assets/content/public/blogs/my-first-talk/09.webp",
+    "assets/content/public/blogs/my-first-talk/claude-code-usage.webp"
+  ],
+  "components": {
+    "details": 4,
+    "summary": 4,
+    "strong": 1,
+    "code": 2,
+    "YoutubeEmbed": 2,
+    "ImageGrid": 8,
+    "InstallTabs": 1,
+    "DemoShowcase": 73,
+    "ClipPathBasicsDemo": 1,
+    "InsetDemo": 1,
+    "ComparisonSliderDemo": 1,
+    "TextMaskDemo": 1,
+    "ImageRevealDemo": 1,
+    "ScrollRevealDemo": 1,
+    "TransitionBasicsDemo": 1,
+    "TransitionPropertyDemo": 1,
+    "InterruptibleTransitionDemo": 1,
+    "ToastStackDemo": 1,
+    "ButtonHoverDemo": 1,
+    "CardRevealDemo": 1,
+    "BallDropDemo": 1,
+    "EasingCurveDemo": 6,
+    "ButtonPressDemo": 1,
+    "CubicBezierPlayground": 1,
+    "EasingPersonalitiesDemo": 1,
+    "HoldToDeleteDemo": 1,
+    "MarqueeDemo": 1,
+    "ReducedMotionDemo": 1,
+    "FadeInDemo": 1,
+    "BlinkingCursorDemo": 1,
+    "FillModeDemo": 1,
+    "BackwardsFillDemo": 1,
+    "PlayStateDemo": 1,
+    "StackedAnimationsDemo": 1,
+    "SkeletonLoaderDemo": 1,
+    "TransformVsMarginDemo": 1,
+    "TranslatePercentageDemo": 1,
+    "ScaleVsWidthHeightDemo": 1,
+    "RotateDemo": 1,
+    "SkewDemo": 1,
+    "TransformOrderDemo": 1,
+    "TransformOriginDemo": 1,
+    "ImagePopup": 2,
+    "PerspectiveDemo": 1,
+    "TiltCardDemo": 1,
+    "ButtonPressPatternDemo": 1,
+    "SlideInPatternDemo": 1,
+    "ShakePatternDemo": 1,
+    "FlipCardPatternDemo": 1,
+    "JankyVsSmoothDemo": 1,
+    "GPUAccelerationDemo": 1,
+    "HoverButtonDemo": 1,
+    "InfiniteAnimationDemo": 1,
+    "InterruptibilityComparisonDemo": 1,
+    "PerformanceStressTestDemo": 1,
+    "NotificationDotDemo": 1,
+    "SpatialRelationshipDemo": 1,
+    "ListExpansionDemo": 1,
+    "UncannyValleyDemo": 1,
+    "PhysicsComparisonDemo": 1,
+    "VercelBadgeDemo": 1,
+    "small": 1,
+    "SpringVsEasingDemo": 1,
+    "video": 1,
+    "track": 1,
+    "SpringConfigPlayground": 1,
+    "InterruptibilityDemo": 1,
+    "ToastInterruptDemo": 1,
+    "BounceComparisonDemo": 1,
+    "PerceptualDurationDemo": 1,
+    "TasteComparisonDemo": 1,
+    "PurposeDemo": 1,
+    "FrequencyToggleDemo": 1,
+    "KeyboardNavDemo": 1,
+    "DurationComparisonDemo": 1,
+    "SpinnerSpeedDemo": 1,
+    "TooltipDelayDemo": 1,
+    "ElementSizeDemo": 1,
+    "ProductVsMarketingDemo": 1,
+    "center": 6,
+    "Image": 6,
+    "br": 18,
+    "CodeQuote": 2,
+    "CmdKey": 2,
+    "iframe": 3,
+    "BlogImage": 7,
+    "TweetEmbed": 2,
+    "RepliesCarousel": 1,
+    "BlogGallery": 1,
+    "Tweet": 1,
+    "InfoTip": 3,
+    "Math": 14,
+    "u": 1,
+    "div": 1,
+    "SlidingWindowLogDemo": 1,
+    "TechBadges": 3,
+    "DocumentViewer": 2,
+    "DocumentTabs": 2,
+    "VideoPlayer": 1
+  },
+  "experienceTreatment": "Concise summaries of roles and selected contributions; article prose and code preserved."
+}

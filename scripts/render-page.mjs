@@ -50,11 +50,12 @@ function safeUrl(value) {
   }
   return escapeHtml(value);
 }
-function listingDate(metadata) {
+function listingDate(metadata, exact = false) {
   if (metadata.period || !metadata.date) {
     return escapeHtml(metadata.period ?? "");
   }
   const month = new Intl.DateTimeFormat("en-US", {
+    day: exact ? "numeric" : undefined,
     month: "short",
     year: "numeric",
     timeZone: "UTC",
@@ -162,14 +163,32 @@ export async function renderPage(
           if (!items.length) {
             throw new Error(`Empty or unknown collection: ${token.collection}`);
           }
-          return `<ul class="entry-list">${items
-            .slice(0, token.limit)
-            .map((page) =>
-              page.metadata.icon
-                ? experienceEntry(page)
-                : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata)}</span></a></li>`,
+          const grouped = route === "/blogs/" && token.collection === "blogs";
+          const list = (entries) =>
+            `<ul class="entry-list">${entries
+              .map((page) =>
+                page.metadata.icon
+                  ? experienceEntry(page)
+                  : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata, grouped)}</span></a></li>`,
+              )
+              .join("")}</ul>`;
+          if (!grouped) {
+            return list(items);
+          }
+          const years = new Map();
+          for (const page of items) {
+            const year = page.metadata.date.slice(0, 4);
+            if (!years.has(year)) {
+              years.set(year, []);
+            }
+            years.get(year).push(page);
+          }
+          return [...years]
+            .map(
+              ([year, entries]) =>
+                `<h2 class="writing-year">${escapeHtml(year)}</h2>${list(entries)}`,
             )
-            .join("")}</ul>`;
+            .join("");
         },
       },
     ],

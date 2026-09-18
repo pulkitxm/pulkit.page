@@ -460,3 +460,20 @@ button {
   white-space: nowrap;
   border: 0;
 }
+
+.writing-year {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.writing-year::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}

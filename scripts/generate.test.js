@@ -502,3 +502,23 @@ test("cached generation matches full checks and preserves explicit cleanup seman
   run("--check");
   expect(existsSync(join(cwd, "pages/index.html"))).toBe(false);
 }, 30000);
+
+test("writing groups years newest first and shows exact dates only in the archive", async () => {
+  const pages = [
+    { route: "/blogs/old/", metadata: { title: "Old", date: "2024-12-31" } },
+    { route: "/blogs/new/", metadata: { title: "New", date: "2025-01-01" } },
+    { route: "/blogs/later/", metadata: { title: "Later", date: "2025-03-02" } },
+  ];
+  const markdown = `${source}\n:::list blogs\n`;
+  const html = await renderPage(markdown, { pages, route: "/blogs/" });
+  expect(html.match(/class="writing-year"/g)).toHaveLength(2);
+  expect(html.indexOf('class="writing-year">2025')).toBeLessThan(
+    html.indexOf('class="writing-year">2024'),
+  );
+  expect(html).toContain('datetime="2025-01-01">Jan 1, 2025</time>');
+  expect(html).toContain('datetime="2024-12-31">Dec 31, 2024</time>');
+  expect(html.indexOf('href="/blogs/later/"')).toBeLessThan(html.indexOf('href="/blogs/new/"'));
+  const home = await renderPage(markdown, { pages });
+  expect(home).not.toContain('class="writing-year"');
+  expect(home).toContain('datetime="2025-01-01">Jan 2025</time>');
+});

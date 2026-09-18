@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/offloading-motion-to-the-gpu",
+  "index": 5,
+  "component": "performance-stress-test",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

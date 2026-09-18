@@ -38,7 +38,7 @@ Animation isn't decoration. It's a language. Every movement communicates somethi
 
 **Spatial relationships**: When a modal slides in from the right, your brain understands it came from "somewhere" to the right. When you dismiss it, it should go back there. This creates a mental model of space in your interface.
 
-[Interactive example: Spatial Relationship](https://www.pulkit.blog/series/design-engineering/psychology-of-motion)
+:::demo spatial-relationship
 
 **State changes**: When a button shrinks slightly on press, it communicates "I received your input." When it bounces back, it communicates "action complete." No text needed.
 
@@ -46,7 +46,7 @@ Animation isn't decoration. It's a language. Every movement communicates somethi
 
 **Continuity**: When an item in a list expands into a detail view, the animation shows that they're the same thing. Without it, users have to work harder to understand the relationship.
 
-[Interactive example: List Expansion](https://www.pulkit.blog/series/design-engineering/psychology-of-motion)
+:::demo list-expansion
 
 ## The Uncanny Valley
 
@@ -82,7 +82,7 @@ Think of it this way:
 
 Try hovering over the buttons below to feel the difference between each zone. Pay attention to how each one moves, or doesn't move:
 
-[Interactive example: Uncanny Valley](https://www.pulkit.blog/series/design-engineering/psychology-of-motion)
+:::demo uncanny-valley
 
 ### Why Linear Animation Feels Wrong
 
@@ -150,7 +150,7 @@ Digital objects should behave the same way:
 }
 ```
 
-[Interactive example: Physics Comparison](https://www.pulkit.blog/series/design-engineering/psychology-of-motion)
+:::demo physics-comparison
 
 ## Context Matters
 

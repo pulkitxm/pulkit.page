@@ -1,0 +1,24 @@
+{
+  "article": "design-engineering/psychology-of-motion",
+  "index": 2,
+  "component": "uncanny-valley",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "uncanny-valley-demo.tsx",
+      "language": "tsx",
+      "code": "import \"./uncanny-valley.css\";\n\nexport function UncannyValleyDemo() {\n  return (\n    <div className=\"demo-container\">\n      {/* Zone 1: No Animation */}\n      <div className=\"zone\">\n        <p className=\"zone__label\">\n          Zone 1: No Animation (Accepted) ✓\n        </p>\n        <button className=\"btn btn--instant\">\n          Instant Change\n        </button>\n        <p className=\"zone__description\">\n          Your brain says: \"It's a computer, things change\n          instantly.\"\n        </p>\n      </div>\n\n      {/* Zone 2: Uncanny Valley */}\n      <div className=\"zone\">\n        <p className=\"zone__label\">\n          Zone 2: Linear Animation (Uncanny) ⚠️\n        </p>\n        <button className=\"btn btn--linear\">\n          Linear Motion\n        </button>\n        <p className=\"zone__description\">\n          Your brain says: \"Something feels mechanical and\n          wrong.\"\n        </p>\n      </div>\n\n      {/* Zone 3: Just Right */}\n      <div className=\"zone\">\n        <p className=\"zone__label\">\n          Zone 3: Spring Animation (Natural) ✓\n        </p>\n        <button className=\"btn btn--spring\">\n          Spring Motion\n        </button>\n        <p className=\"zone__description\">\n          Your brain says: \"That feels right. Natural.\"\n        </p>\n      </div>\n    </div>\n  );\n}"
+    },
+    {
+      "filename": "uncanny-valley.css",
+      "language": "css",
+      "code": "/_ Zone 1: No transition - instant change _/\n.btn--instant {\n  /* No transition property */\n}\n.btn--instant:hover {\n  background: #d4d4d4;\n}\n\n/_ Zone 2: Linear - feels robotic _/\n.btn--linear {\n  transition: transform 300ms linear;\n}\n.btn--linear:hover {\n  transform: scale(1.05);\n}\n\n/_ Zone 3: Spring-like curve - feels natural _/\n.btn--spring {\n  transition: transform 300ms\n    cubic-bezier(0.34, 1.56, 0.64, 1);\n}\n.btn--spring:hover {\n  transform: scale(1.05);\n}"
+    }
+  ]
+}

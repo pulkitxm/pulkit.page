@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/training-your-eye-for-motion",
+  "index": 0,
+  "component": "taste-comparison",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

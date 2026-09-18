@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/offloading-motion-to-the-gpu",
+  "index": 3,
+  "component": "infinite-animation",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

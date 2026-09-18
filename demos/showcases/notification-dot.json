@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/offloading-motion-to-the-gpu",
+  "index": 6,
+  "component": "notification-dot",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

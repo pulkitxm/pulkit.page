@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/offloading-motion-to-the-gpu",
+  "index": 1,
+  "component": "gpu-acceleration",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

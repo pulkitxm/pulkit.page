@@ -1,0 +1,13 @@
+{
+  "article": "system-design/rate-limiting",
+  "index": 0,
+  "component": "sliding-window-log",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": true
+  },
+  "files": []
+}

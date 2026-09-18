@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/when-to-animate-and-when-to-skip",
+  "index": 4,
+  "component": "spinner-speed",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

@@ -21,6 +21,9 @@ export function readPage(source) {
     "date",
     "role",
     "period",
+    "endDate",
+    "icon",
+    "secondaryIcon",
     "layout",
     "brand",
     "copyright",
@@ -46,6 +49,30 @@ function safeUrl(value) {
     throw new Error(`Invalid link: ${value}`);
   }
   return escapeHtml(value);
+}
+function experiencePeriod(metadata) {
+  const month = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  const exact = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  const date = (value) =>
+    `<time datetime="${escapeHtml(value)}" title="${exact.format(new Date(value))}">${month.format(new Date(value))}</time>`;
+  return `${date(metadata.date)} – ${metadata.endDate ? date(metadata.endDate) : "present"}`;
+}
+function experienceEntry(page) {
+  const { metadata } = page;
+  const icons = [metadata.icon, metadata.secondaryIcon]
+    .filter(Boolean)
+    .map((icon) => `<img src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`)
+    .join("");
+  return `<li><a class="entry-link experience-link" href="${safeUrl(page.route)}"><span class="experience-icons">${icons}</span><span class="experience-info"><span class="entry-title">${escapeHtml(metadata.title)}</span><span class="experience-role">${escapeHtml(metadata.role)}</span></span><span class="entry-meta experience-period">${experiencePeriod(metadata)}</span></a></li>`;
 }
 export async function renderPage(
   source,
@@ -126,9 +153,10 @@ export async function renderPage(
           }
           return `<ul class="entry-list">${items
             .slice(0, token.limit)
-            .map(
-              (page) =>
-                `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${escapeHtml(page.metadata.period ?? page.metadata.date?.slice(0, 4) ?? "")}</span></a></li>`,
+            .map((page) =>
+              page.metadata.icon
+                ? experienceEntry(page)
+                : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${escapeHtml(page.metadata.period ?? page.metadata.date?.slice(0, 4) ?? "")}</span></a></li>`,
             )
             .join("")}</ul>`;
         },
@@ -168,7 +196,7 @@ export async function renderPage(
       heading: escapeHtml(metadata.title),
       date:
         detail || metadata.role
-          ? `<p class="detail-meta">${[escapeHtml(metadata.role ?? ""), escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
+          ? `<p class="detail-meta">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
           : "",
       content: await markdown.parse(body),
     }),
@@ -273,6 +301,10 @@ export function renderDependencies(page, pages, site) {
           entry.metadata.title,
           entry.metadata.period,
           entry.metadata.date,
+          entry.metadata.endDate,
+          entry.metadata.icon,
+          entry.metadata.secondaryIcon,
+          entry.metadata.role,
         ]),
     ),
   };

@@ -280,6 +280,60 @@ hr {
   color: var(--muted);
   font-size: 12px;
 }
+.experience-link {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+}
+.experience-icons {
+  display: flex;
+  align-items: center;
+  width: 48px;
+}
+.prose .experience-icons img {
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  border: 2px solid var(--bg);
+  border-radius: 10px;
+  object-fit: contain;
+  background: #181916;
+}
+.prose .experience-icons img + img {
+  margin-left: -24px;
+  transform: translateY(10px);
+}
+.experience-info {
+  display: grid;
+  gap: 3px;
+}
+.experience-role {
+  color: var(--muted);
+  font-size: 12px;
+}
+.experience-period {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+time[title] {
+  cursor: help;
+  text-decoration: underline dotted var(--line);
+  text-underline-offset: 4px;
+}
+@media (max-width: 560px) {
+  .experience-link {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 4px 12px;
+  }
+  .experience-icons {
+    grid-row: span 2;
+  }
+  .experience-period {
+    grid-column: 2;
+  }
+}
 .site-footer {
   border-top: 1px solid var(--line);
   padding: 24px 0 40px;

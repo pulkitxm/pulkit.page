@@ -114,6 +114,7 @@ a:hover {
   font-size: 13px;
   color: var(--muted);
 }
+.site-footer a,
 .site-header nav a {
   text-decoration: none;
 }
@@ -284,9 +285,6 @@ hr {
   padding: 24px 0 40px;
   font-size: 12px;
   color: var(--muted);
-}
-.site-footer a {
-  text-decoration: none;
 }
 .footer-bottom {
   display: flex;

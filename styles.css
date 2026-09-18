@@ -1,10 +1,10 @@
 :root {
   color-scheme: light dark;
-  --bg: #faf9f6;
-  --fg: #242521;
-  --muted: #73756d;
-  --line: #e4e4dc;
-  --surface: #f0f0ea;
+  --bg: #faf7f0;
+  --fg: #292720;
+  --muted: #777166;
+  --line: #e7dfd2;
+  --surface: #f2ece1;
   --syn-k: #3d5a36;
   --syn-s: #8b4d2a;
   --syn-c: var(--muted);
@@ -35,11 +35,11 @@
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #faf9f6;
-  --fg: #242521;
-  --muted: #73756d;
-  --line: #e4e4dc;
-  --surface: #f0f0ea;
+  --bg: #faf7f0;
+  --fg: #292720;
+  --muted: #777166;
+  --line: #e7dfd2;
+  --surface: #f2ece1;
   --syn-k: #3d5a36;
   --syn-s: #8b4d2a;
   --syn-n: #2c6460;

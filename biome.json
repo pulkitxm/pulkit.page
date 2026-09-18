@@ -114,6 +114,26 @@
           }
         }
       }
+    },
+    {
+      "includes": ["demos/**/*.js"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noSecrets": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["demos/styles.css"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
     }
   ]
 }

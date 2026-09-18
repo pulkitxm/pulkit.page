@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/clip-path-reveals",
+  "index": 5,
+  "component": "scroll-reveal",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": true,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "scroll-reveal-demo.tsx",
+      "language": "tsx",
+      "code": "\"use client\";\n\nimport {\n  forwardRef,\n  useEffect,\n  useImperativeHandle,\n  useRef,\n  useState,\n} from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport type { DemoRef } from \"../demo-showcase\";\n\nconst panels = [\n  {\n    from: \"from-slate-600\",\n    id: \"slate\",\n    to: \"to-slate-800\",\n  },\n  {\n    from: \"from-rose-500\",\n    id: \"rose\",\n    to: \"to-orange-600\",\n  },\n  {\n    from: \"from-emerald-500\",\n    id: \"emerald\",\n    to: \"to-teal-700\",\n  },\n] as const;\n\nfunction RevealPanel({\n  from,\n  to,\n}: {\n  from: string;\n  to: string;\n  remountId: string;\n}) {\n  const ref = useRef<HTMLDivElement>(null);\n  const [visible, setVisible] = useState(false);\n\n  useEffect(() => {\n    const el = ref.current;\n    if (!el) {\n      return;\n    }\n    const root = el.closest(\"[data-scroll-reveal-root]\");\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (entry?.isIntersecting) {\n          setVisible(true);\n        }\n      },\n      {\n        root: root instanceof Element ? root : null,\n        rootMargin: \"0px\",\n        threshold: 0.35,\n      },\n    );\n    observer.observe(el);\n    return () => {\n      observer.disconnect();\n    };\n  }, []);\n\n  return (\n    <div ref={ref} className=\"shrink-0 px-2 pb-4\">\n      <div\n        className={cn(\n          \"h-28 w-full max-w-full rounded-xl bg-linear-to-br shadow-md transition-[clip-path] duration-700 ease-out\",\n          from,\n          to,\n        )}\n        style={{\n          clipPath: visible\n            ? \"inset(0)\"\n            : \"inset(0 100% 0 0)\",\n        }}\n      />\n    </div>\n  );\n}\n\nexport const ScrollRevealDemo = forwardRef<DemoRef>(\n  function ScrollRevealDemo(_, ref) {\n    const [remountId, setRemountId] = useState(\"0\");\n\n    useImperativeHandle(ref, () => ({\n      replay: () => {\n        setRemountId(String(Date.now()));\n      },\n    }));\n\n    return (\n      <div className=\"flex size-full flex-col items-center justify-center gap-3 p-4\">\n        <div\n          data-scroll-reveal-root={true}\n          className=\"h-64 w-full max-w-sm overflow-y-auto overflow-x-hidden rounded-xl border border-neutral-200 bg-neutral-100/80 dark:border-neutral-700 dark:bg-neutral-900/80\"\n        >\n          <div className=\"py-3\">\n            <p className=\"px-4 pb-2 text-center text-neutral-500 text-xs dark:text-neutral-400\">\n              Scroll inside this box\n            </p>\n            <div\n              className=\"h-24 shrink-0\"\n              aria-hidden={true}\n            />\n            {panels.map((p) => (\n              <RevealPanel\n                key={`${remountId}-${p.id}`}\n                remountId={remountId}\n                from={p.from}\n                to={p.to}\n              />\n            ))}\n            <div\n              className=\"h-40 shrink-0\"\n              aria-hidden={true}\n            />\n          </div>\n        </div>\n        <p className=\"max-w-sm text-center text-neutral-600 text-sm dark:text-neutral-400\">\n          Each strip uses an IntersectionObserver with this\n          scroll container as{\" \"}\n          <code className=\"rounded bg-neutral-200 px-1 dark:bg-neutral-800\">\n            root\n          </code>\n          . When it crosses the threshold,{\" \"}\n          <code className=\"rounded bg-neutral-200 px-1 dark:bg-neutral-800\">\n            clip-path\n          </code>{\" \"}\n          eases from off-screen to full.\n        </p>\n      </div>\n    );\n  },\n);"
+    }
+  ]
+}

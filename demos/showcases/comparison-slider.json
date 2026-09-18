@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/clip-path-reveals",
+  "index": 2,
+  "component": "comparison-slider",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "comparison-slider-demo.tsx",
+      "language": "tsx",
+      "code": "\"use client\";\n\nimport { useCallback, useRef, useState } from \"react\";\n\nexport function ComparisonSliderDemo() {\n  const [pct, setPct] = useState(50);\n  const dragging = useRef(false);\n  const containerRef = useRef<HTMLDivElement>(null);\n\n  const updateFromClientX = useCallback(\n    (clientX: number) => {\n      const el = containerRef.current;\n      if (!el) return;\n      const rect = el.getBoundingClientRect();\n      const x = Math.min(\n        Math.max(clientX - rect.left, 0),\n        rect.width,\n      );\n      setPct(Math.round((x / rect.width) * 100));\n    },\n    [],\n  );\n\n  const rightInset = 100 - pct;\n\n  return (\n    <div\n      ref={containerRef}\n      className=\"relative aspect-video overflow-hidden\"\n      onPointerDown={(e) => {\n        e.currentTarget.setPointerCapture(e.pointerId);\n        dragging.current = true;\n        updateFromClientX(e.clientX);\n      }}\n      onPointerMove={(e) => {\n        if (!dragging.current) return;\n        updateFromClientX(e.clientX);\n      }}\n      onPointerUp={(e) => {\n        if (\n          e.currentTarget.hasPointerCapture(e.pointerId)\n        ) {\n          e.currentTarget.releasePointerCapture(\n            e.pointerId,\n          );\n        }\n        dragging.current = false;\n      }}\n      onPointerCancel={(e) => {\n        if (\n          e.currentTarget.hasPointerCapture(e.pointerId)\n        ) {\n          e.currentTarget.releasePointerCapture(\n            e.pointerId,\n          );\n        }\n        dragging.current = false;\n      }}\n    >\n      <div\n        className=\"absolute inset-0 bg-amber-500\"\n        aria-hidden\n      />\n      <div\n        className=\"absolute inset-0 bg-emerald-500\"\n        style={{ clipPath: `inset(0 ${rightInset}% 0 0)` }}\n        aria-hidden\n      />\n      <div\n        className=\"pointer-events-none absolute inset-y-0 w-0.5 bg-white\"\n        style={{\n          left: `${pct}%`,\n          transform: \"translateX(-50%)\",\n        }}\n      />\n    </div>\n  );\n}"
+    }
+  ]
+}

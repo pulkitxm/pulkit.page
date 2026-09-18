@@ -172,6 +172,7 @@ test("deployment build copies generated pages and assets and rejects legacy root
   writeFileSync(join(cwd, "content/home.md"), source);
   mkdirSync(join(cwd, "assets"), { recursive: true });
   writeFileSync(join(cwd, "assets/example.txt"), "asset");
+  cpSync(join(root, "demos"), join(cwd, "demos"), { recursive: true });
   for (const file of ["styles.css", "theme.js", ".nojekyll"]) {
     writeFileSync(join(cwd, file), "");
   }

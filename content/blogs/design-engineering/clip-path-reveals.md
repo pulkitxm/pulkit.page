@@ -26,7 +26,7 @@ You have probably seen `clip-path` used to turn a box into a triangle or a circl
 
 `clip-path` defines a region. Pixels outside that region are not drawn. Pixels inside stay visible. It is a visual cut, not a change to width, height, or document flow.
 
-[Interactive example: Clip Path Basics](https://www.pulkit.blog/series/design-engineering/clip-path-reveals)
+:::demo clip-path-basics
 
 Because layout is unchanged, you can stack two full size layers, clip only the top one, and get a perfect split without resizing either child.
 
@@ -36,7 +36,7 @@ Because layout is unchanged, you can stack two full size layers, clip only the t
 
 For interactive wipes and scroll reveals, `inset` is usually the right default. It takes up to four offsets, top, right, bottom, and left, measured from each edge toward the center. A value of `100%` on every side (`inset(100%)`) clips the whole element away. `inset(0)` shows everything.
 
-[Interactive example: Inset](https://www.pulkit.blog/series/design-engineering/clip-path-reveals)
+:::demo inset
 
 `inset(0 50% 0 0)` pulls the clip inward from the right by half the width, so only the left half of the layer stays visible. Swap which edge you inset and you change the direction of the wipe.
 
@@ -44,7 +44,7 @@ For interactive wipes and scroll reveals, `inset` is usually the right default. 
 
 A classic pattern is two images aligned in the same box. The top image gets a clip that follows the handle. As the user drags, you update one inset value from `0%` to `100%`.
 
-[Interactive example: Comparison Slider](https://www.pulkit.blog/series/design-engineering/clip-path-reveals)
+:::demo comparison-slider
 
 You could solve the same problem with two elements and `overflow: hidden` plus animated widths, but `clip-path` keeps both layers full size and often stays cheaper to paint during the drag because you are not thrashing layout.
 
@@ -52,7 +52,7 @@ You could solve the same problem with two elements and `overflow: hidden` plus a
 
 The same stacking trick works for typography. Layer a stroked outline and a solid fill, then clip each layer with complementary insets. Moving the split line reads as a single treatment instead of a literal slider.
 
-[Interactive example: Text Mask](https://www.pulkit.blog/series/design-engineering/clip-path-reveals)
+:::demo text-mask
 
 Here the outline uses something like `inset(0 0 calc(100% - var(--y)) 0)` while the fill uses `inset(var(--y) 0 0 0)`, both driven from the same pointer position.
 
@@ -60,7 +60,7 @@ Here the outline uses something like `inset(0 0 calc(100% - var(--y)) 0)` while 
 
 Animating `height` from `0` to `auto` is still awkward on the web. Animating `clip-path` from fully clipped to `inset(0)` gives a similar feeling with a fixed box. The content is already there, you are only changing what is visible, so surrounding layout does not jump when the reveal finishes.
 
-[Interactive example: Image Reveal](https://www.pulkit.blog/series/design-engineering/clip-path-reveals)
+:::demo image-reveal
 
 That difference matters for images and hero media where you do not want the page to reflow as the file appears.
 
@@ -70,7 +70,7 @@ A reveal that runs while the element is below the fold might finish before the u
 
 The Intersection Observer API is the lightweight choice. Create an observer with a sensible `threshold`, toggle a class or state when `isIntersecting` is true, and run the `clip-path` transition in CSS or inline styles. If you already ship [Framer Motion](https://www.framer.com/motion/), its `useInView` hook wraps the same idea with a React friendly API, at the cost of pulling the library into that bundle.
 
-[Interactive example: Scroll Reveal](https://www.pulkit.blog/series/design-engineering/clip-path-reveals)
+:::demo scroll-reveal
 
 Pass the scrollable container as the `root` option when the reveal lives inside an overflow element so thresholds are measured against the right viewport.
 

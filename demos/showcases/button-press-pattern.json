@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/moving-things-without-moving-them",
+  "index": 9,
+  "component": "button-press-pattern",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "button.css",
+      "language": "css",
+      "code": ".button {\n  transition: transform 150ms ease-out;\n}\n\n.button:active {\n  transform: scale(0.97);\n}"
+    }
+  ]
+}

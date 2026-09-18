@@ -1,0 +1,24 @@
+{
+  "article": "design-engineering/moving-things-without-moving-them",
+  "index": 8,
+  "component": "tilt-card",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "App.tsx",
+      "language": "tsx",
+      "code": "import { TiltCard } from \"./tilt-card\";\n\nexport default function App() {\n  return (\n    <div className=\"flex min-h-screen items-center justify-center\">\n      <TiltCard />\n    </div>\n  );\n}"
+    },
+    {
+      "filename": "tilt-card.tsx",
+      "language": "tsx",
+      "code": "import { useRef, useState } from \"react\";\n\nexport function TiltCard() {\n  const [rotation, setRotation] = useState({ x: 0, y: 0 });\n  const cardRef = useRef<HTMLDivElement>(null);\n\nconst handleMouseMove = (e: React.MouseEvent) => {\nconst rect = cardRef.current!.getBoundingClientRect();\nconst x = e.clientX - rect.left;\nconst y = e.clientY - rect.top;\nconst centerX = rect.width / 2;\nconst centerY = rect.height / 2;\nconst rotateX = ((y - centerY) / centerY) _ -15;\nconst rotateY = ((x - centerX) / centerX) _ 15;\nsetRotation({ x: rotateX, y: rotateY });\n};\n\nreturn (\n\n<div style={{ perspective: \"1000px\" }}>\n<div\nref={cardRef}\nonMouseMove={handleMouseMove}\nonMouseLeave={() => setRotation({ x: 0, y: 0 })}\nstyle={{\n          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,\n          transformStyle: \"preserve-3d\",\n          transition: \"transform 0.1s ease-out\",\n        }} >\n{/* Card content */}\n</div>\n</div>\n);\n}"
+    }
+  ]
+}

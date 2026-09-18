@@ -307,15 +307,20 @@ test("shared metadata changes invalidate output and clean only removes orphan pa
   expect(run("--check").status).toBe(0);
 });
 
-test("collections discover nested posts, sort by date, and respect limits", async () => {
+test("collections list direct posts, keep nested posts in their category, and respect limits", async () => {
   const pages = [
     { route: "/blogs/older/", metadata: { title: "Older", date: "2025-01-01" } },
+    { route: "/blogs/oldest/", metadata: { title: "Oldest", date: "2024-01-01" } },
     { route: "/blogs/series/new/", metadata: { title: "Newer", date: "2026-01-01" } },
     { route: "/blogs/series/", index: true, metadata: { title: "Series" } },
   ];
   const html = await renderPage(`${source}\n:::list blogs limit=1\n`, { pages });
-  expect(html).toContain("Newer");
-  expect(html).not.toContain("Older");
+  expect(html).toContain("Older");
+  expect(html).not.toContain("Oldest");
+  expect(html).not.toContain("Newer");
+  const category = await renderPage(`${source}\n:::list blogs/series\n`, { pages });
+  expect(category).toContain("Newer");
+  expect(category).not.toContain("Older");
   expect(html).not.toContain('href="/blogs/series/"');
   await expect(renderPage(`${source}\n:::list missing\n`, { pages })).rejects.toThrow(
     "Empty or unknown collection",
@@ -497,3 +502,34 @@ test("cached generation matches full checks and preserves explicit cleanup seman
   run("--check");
   expect(existsSync(join(cwd, "pages/index.html"))).toBe(false);
 }, 30000);
+
+test("writing groups years newest first and shows exact publication dates", async () => {
+  const pages = [
+    { route: "/blogs/old/", metadata: { title: "Old", date: "2024-12-31" } },
+    { route: "/blogs/new/", metadata: { title: "New", date: "2025-01-01" } },
+    { route: "/blogs/later/", metadata: { title: "Later", date: "2025-03-02" } },
+  ];
+  const markdown = `${source}\n:::list blogs\n`;
+  const html = await renderPage(markdown, { pages, route: "/blogs/" });
+  expect(html.match(/class="writing-year"/g)).toHaveLength(2);
+  expect(html.indexOf('class="writing-year">2025')).toBeLessThan(
+    html.indexOf('class="writing-year">2024'),
+  );
+  expect(html).toContain('datetime="2025-01-01">Jan 1, 2025</time>');
+  expect(html).toContain('datetime="2024-12-31">Dec 31, 2024</time>');
+  expect(html.indexOf('href="/blogs/later/"')).toBeLessThan(html.indexOf('href="/blogs/new/"'));
+  const home = await renderPage(markdown, { pages });
+  expect(home).not.toContain('class="writing-year"');
+  expect(home).toContain('datetime="2025-01-01">Jan 1');
+});
+
+test("recent writing omits the current year and retains older years", async () => {
+  const year = new Date().getUTCFullYear();
+  const pages = [
+    { route: "/blogs/current/", metadata: { title: "Current", date: `${year}-08-14` } },
+    { route: "/blogs/previous/", metadata: { title: "Previous", date: `${year - 1}-12-31` } },
+  ];
+  const html = await renderPage(`${source}\n:::list blogs\n`, { pages });
+  expect(html).toContain(`datetime="${year}-08-14">Aug 14</time>`);
+  expect(html).toContain(`datetime="${year - 1}-12-31">Dec 31, ${year - 1}</time>`);
+});

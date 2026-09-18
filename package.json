@@ -29,7 +29,8 @@
     "check:em-dashes": "bun scripts/check-em-dashes.mjs",
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "import:reference": "bun scripts/import-reference.mjs",
-    "check:seo": "bun scripts/check-seo.mjs"
+    "check:seo": "bun scripts/check-seo.mjs",
+    "browser:check": "bun scripts/check-browser.mjs"
   },
   "devDependencies": {
     "@babel/parser": "8.0.4",
@@ -39,6 +40,7 @@
     "knip": "6.37.0",
     "marked": "18.0.13",
     "parse5": "8.0.1",
+    "playwright": "1.63.0",
     "remark-gfm": "4.0.1",
     "remark-mdx": "3.1.1",
     "remark-parse": "11.0.0",

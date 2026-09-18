@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/css-transitions",
+  "index": 5,
+  "component": "card-reveal",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

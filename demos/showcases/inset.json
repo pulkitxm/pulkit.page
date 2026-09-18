@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/clip-path-reveals",
+  "index": 1,
+  "component": "inset",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

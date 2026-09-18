@@ -43,7 +43,7 @@ That means: transition the `transform` property over `0.2s` with the `ease` timi
 
 When the value of `transform` changes (e.g. on hover from `scale(1)` to `scale(1.5)`), the browser interpolates between the two over 0.2s with ease.
 
-[Interactive example: Transition Basics](https://www.pulkit.blog/series/design-engineering/css-transitions)
+:::demo transition-basics
 
 Hover and unhover before the transition finishes and it smoothly reverses. That behavior is central to transitions and we will come back to it.
 
@@ -60,7 +60,7 @@ Listing the properties you transition keeps the effect predictable. If you use `
 
 Same duration and easing for multiple properties: set them once in the shorthand, then specify only the property names. That reduces repetition and keeps behavior consistent. I avoid the shorthand for delay; `transition-delay: 1s` is clearer than a fourth value in the shorthand.
 
-[Interactive example: Transition Property](https://www.pulkit.blog/series/design-engineering/css-transitions)
+:::demo transition-property
 
 The left box uses `all`, so both transform and background transition. The right box only transitions `transform`; the background change is instant. Being explicit avoids animating properties you do not care about and can prevent layout or paint surprises.
 
@@ -70,7 +70,7 @@ When you hover and then unhover mid-transition, the browser does not finish the 
 
 That is different from CSS keyframe animations. If a keyframe animation is applied on hover and you unhover, the animation is removed and the element snaps back to its base state; there is no smooth reversal from the current intermediate value. So for hover or other reversible state changes, transitions are usually the right tool.
 
-[Interactive example: Interruptible Transition](https://www.pulkit.blog/series/design-engineering/css-transitions)
+:::demo interruptible-transition
 
 Hover the left button and move the cursor away quickly: the circle smoothly reverses. The right side uses a keyframe; once started, it runs to the end. Interruptibility is why transitions fit so well for hover and focus.
 
@@ -80,7 +80,7 @@ Transitions are not only for hover. They work for elements entering or leaving t
 
 Consider a stack of toasts. When a new toast is added while the previous one is still animating in, the previous toast’s target position changes. With CSS transitions, the browser simply updates the target; the element smoothly moves to its new position. With a keyframe animation, the element would jump or behave oddly because the animation was defined for a fixed end state.
 
-[Interactive example: Toast Stack](https://www.pulkit.blog/series/design-engineering/css-transitions)
+:::demo toast-stack
 
 Add several toasts in quick succession. Each new toast shifts the positions of the ones below; with transitions on `transform`, those shifts are animated. That is why libraries like Sonner use transitions for toast stack layout: the “destination” can change mid-flight and the result still looks correct.
 
@@ -106,11 +106,11 @@ Most of the time you are transitioning a small set of properties: `transform`, `
 
 **Button hover:** color and background with the same duration and easing.
 
-[Interactive example: Button Hover](https://www.pulkit.blog/series/design-engineering/css-transitions)
+:::demo button-hover
 
 **Card reveal:** hide the description by default and reveal it on hover with `transform` and `opacity`. Use transform (e.g. `translateY`) so the animation stays on the compositor and does not trigger layout.
 
-[Interactive example: Card Reveal](https://www.pulkit.blog/series/design-engineering/css-transitions)
+:::demo card-reveal
 
 **Press feedback:** a short transition on `transform` with `scale(0.97)` or similar on `:active` gives immediate tactile feedback. Pair with `ease-out` so the press feels snappy. You already saw this pattern in the transforms post; it is one of the most common transition use cases.
 

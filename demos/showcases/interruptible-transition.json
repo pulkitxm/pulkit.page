@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/css-transitions",
+  "index": 2,
+  "component": "interruptible-transition",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

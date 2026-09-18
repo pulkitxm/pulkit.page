@@ -1,9 +1,11 @@
-import { realpathSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
+import { rm } from "node:fs/promises";
 import { resolve, sep } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
+import { bundleDemoScripts, compileDemoStyles, fontFile } from "./demo-assets.mjs";
 import { developmentLog } from "./dev-log.mjs";
 import { developmentRenderer } from "./dev-renderer.mjs";
 import { formatDuration } from "./duration.mjs";
@@ -15,6 +17,30 @@ if (!Number.isInteger(port) || port < 0 || port > 65535) {
   throw new Error("PORT must be an integer between 0 and 65535 (0 selects an available port)");
 }
 let origin;
+const demoOutput = ".cache/demos-dev";
+let demoBundle;
+
+async function demoAsset(name) {
+  if (name === "demos.css" || name === "document.css") {
+    const styles = compileDemoStyles({ minify: false });
+    return { type: "text/css", body: name === "demos.css" ? styles.shadow : styles.document };
+  }
+  const font = fontFile(name);
+  if (font) {
+    return { type: "font/woff2", body: readFileSync(font) };
+  }
+  if (!/^[\w.-]+\.js$/.test(name)) {
+    return undefined;
+  }
+  if (name === "index.js" || !demoBundle) {
+    demoBundle = rm(demoOutput, { force: true, recursive: true }).then(() =>
+      bundleDemoScripts(demoOutput, { minify: false }),
+    );
+  }
+  await demoBundle;
+  const file = resolve(demoOutput, name);
+  return existsSync(file) ? { type: "text/javascript", body: readFileSync(file) } : undefined;
+}
 const renderer = developmentRenderer(() => origin);
 const server = await createServer({
   configFile: false,
@@ -39,7 +65,13 @@ const server = await createServer({
             return;
           }
           const path = file.slice(`${process.cwd()}/`.length);
-          const reset = /^(?:scripts\/|bun.lock$|biome.json$|assets\/fonts\/)/.test(path);
+          const reset =
+            /^(?:scripts\/|bun.lock$|biome.json$|assets\/fonts\/|demos\/showcases\/)/.test(path);
+          if (/^demos\//.test(path) && !reset) {
+            demoBundle = undefined;
+            vite.ws.send({ type: "full-reload" });
+            return;
+          }
           if (reset || /^(?:content\/|layouts\/|CNAME$)/.test(path)) {
             renderer.invalidate(reset);
             developmentLog(`Changed ${path}. Pages rebuild when requested.`);
@@ -77,6 +109,17 @@ const server = await createServer({
             if (pathname.startsWith("/@") || pathname.startsWith("/node_modules/")) {
               asset = true;
               next();
+              return;
+            }
+            if (pathname.startsWith("/assets/demos/")) {
+              asset = true;
+              const demo = await demoAsset(pathname.slice("/assets/demos/".length));
+              if (!demo) {
+                response.writeHead(404).end("Not found");
+                return;
+              }
+              response.writeHead(200, { "Content-Type": demo.type, "Cache-Control": "no-store" });
+              response.end(request.method === "HEAD" ? undefined : demo.body);
               return;
             }
             if (

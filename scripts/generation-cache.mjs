@@ -19,6 +19,9 @@ export function generationVersion() {
     ...(existsSync("scripts") ? readdirSync("scripts", { recursive: true }) : [])
       .filter((path) => path.endsWith(".mjs"))
       .map((path) => join("scripts", path)),
+    ...(existsSync("demos/showcases") ? readdirSync("demos/showcases") : []).map((path) =>
+      join("demos/showcases", path),
+    ),
     "biome.json",
     "bun.lock",
     "assets/fonts/ibm-plex-mono-regular.ttf",

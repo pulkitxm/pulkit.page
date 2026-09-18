@@ -1,5 +1,6 @@
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
+import { renderDemo } from "./demos.mjs";
 import { formatFence } from "./format-code.mjs";
 import { formatHtml } from "./format-html.mjs";
 import { highlightFence } from "./highlight.mjs";
@@ -129,6 +130,9 @@ export async function renderPage(
         token.text = await (cache ? cache.get("fence", [language, text], render) : render());
         token.escaped = true;
       }
+      if (token.type === "demo") {
+        token.html = await renderDemo(token.name, token.variant);
+      }
     },
     renderer: {
       heading(token) {
@@ -216,6 +220,20 @@ export async function renderPage(
   });
   markdown.use({
     extensions: [
+      {
+        name: "demo",
+        level: "block",
+        start: (src) => src.indexOf(":::demo"),
+        tokenizer(src) {
+          const match = /^:::demo ([a-z0-9-]+)(?: ([a-z0-9-]+))?\s*(?:\n|$)/.exec(src);
+          if (match) {
+            return { type: "demo", raw: match[0], name: match[1], variant: match[2] };
+          }
+        },
+        renderer(token) {
+          return token.html;
+        },
+      },
       {
         name: "carousel",
         level: "block",
@@ -329,7 +347,7 @@ export async function renderPage(
   return formatHtml(
     applyLayout(layouts, layout, {
       title: escapeHtml(pageTitle(metadata, site, route)),
-      seo: site.url ? seoHead(route, metadata, site, pages) : "",
+      seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages),
       description: escapeHtml(metadata.description ?? site.description ?? metadata.title),

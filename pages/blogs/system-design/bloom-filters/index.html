@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn how Bloom filters work: a probabilistic data structure that tells you with 100% certainty when something doesn&#39;t exist. Understand hash functions, bit arrays, false positives, and real-world use cases like recommendation engines and web crawlers."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/system-design/bloom-filters/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Bloom Filters | Pulkit" />
+    <meta
+      property="og:description"
+      content="Learn how Bloom filters work: a probabilistic data structure that tells you with 100% certainty when something doesn&#39;t exist. Understand hash functions, bit arrays, false positives, and real-world use cases like recommendation engines and web crawlers."
+    />
+    <meta property="og:url" content="https://new.pulkit.page/blogs/system-design/bloom-filters/" />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/system-design/bloom-filters/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/system-design/bloom-filters/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bloom Filters" />
+    <meta property="article:published_time" content="2026-01-24" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Bloom Filters | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Learn how Bloom filters work: a probabilistic data structure that tells you with 100% certainty when something doesn&#39;t exist. Understand hash functions, bit arrays, false positives, and real-world use cases like recommendation engines and web crawlers."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/system-design/bloom-filters/card.png"
+    />
+    <meta name="twitter:image:alt" content="Bloom Filters" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#image","contentUrl":"https://new.pulkit.page/og/blogs/system-design/bloom-filters/card.png","width":1200,"height":630,"caption":"Bloom Filters"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#article","headline":"Bloom Filters","description":"Learn how Bloom filters work: a probabilistic data structure that tells you with 100% certainty when something doesn't exist. Understand hash functions, bit arrays, false positives, and real-world use cases like recommendation engines and web crawlers.","datePublished":"2026-01-24","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#image"},"url":"https://new.pulkit.page/blogs/system-design/bloom-filters/","inLanguage":"en","keywords":["System Design","Data Structures","Bloom Filters","Probabilistic","Redis"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://new.pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"Bloom Filters","item":"https://new.pulkit.page/blogs/system-design/bloom-filters/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#webpage","url":"https://new.pulkit.page/blogs/system-design/bloom-filters/","name":"Bloom Filters","description":"Learn how Bloom filters work: a probabilistic data structure that tells you with 100% certainty when something doesn't exist. Understand hash functions, bit arrays, false positives, and real-world use cases like recommendation engines and web crawlers.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/system-design/bloom-filters/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Bloom Filters | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/system-design/">System Design</a></li>
+            <li aria-current="page">Bloom Filters</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Bloom Filters</h1>
+            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Instagram wants to recommend reels to you. But does it make sense to recommend a reel
+              you&#39;ve already watched? No. You&#39;d see the exact same video you saw an hour
+              ago. That&#39;s a terrible experience.
+            </p>
+            <p>
+              So whenever Instagram recommends something, it needs to ensure you&#39;re seeing
+              something new. Not something you&#39;ve already watched. But how do you efficiently
+              check if a user has seen a particular reel among millions of reels they&#39;ve watched
+              over months?
+            </p>
+            <p>This is exactly where Bloom filters shine.</p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong>Bloom filters</strong>
+                are probabilistic data structures that tell you with 100% certainty when something
+                does NOT exist
+              </li>
+              <li>
+                <strong>When it says no</strong>: The element is definitely not in the set.
+                Guaranteed
+              </li>
+              <li>
+                <strong>When it says yes</strong>: The element might be present. You need to verify
+              </li>
+              <li>
+                <strong>How it works</strong>: Hash the key, set bits in a bit array, check bits for
+                existence
+              </li>
+              <li>
+                <strong>Space efficient</strong>: Stores existence of thousands of items in a tiny
+                bit array (no actual keys stored)
+              </li>
+              <li>
+                <strong>False positives</strong>: Bloom filter can say &quot;yes&quot; when the
+                element isn&#39;t there. This rate increases as you add more keys
+              </li>
+              <li>
+                <strong>No deletions</strong>: Once you add something, you can&#39;t remove it (bits
+                are shared)
+              </li>
+              <li>
+                <strong>Sizing matters</strong>: Pick the right size based on expected keys and
+                acceptable false positive rate
+              </li>
+              <li>
+                <strong>Real-world uses</strong>: Recommendation engines, web crawlers, feed
+                generation, Tinder, Medium
+              </li>
+              <li>
+                <strong>Redis support</strong>: Redis offers Bloom filters as a native data
+                structure. Use it
+              </li>
+            </ul>
+            <h2 id="the-problem">The Problem</h2>
+            <p>
+              Let&#39;s say you&#39;re building Instagram&#39;s recommendation engine. You need to
+              track everything a user has watched so you don&#39;t recommend it again.
+            </p>
+            <p>The naive approach? Store everything in a set:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> watchedPosts <span class="o">=</span> <span class="o">new</span> <span class="f">Set</span><span class="u">&lt;</span><span class="t">string</span><span class="u">&gt;();</span>
+
+watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_1&quot;</span><span class="u">);</span>
+watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_9&quot;</span><span class="u">);</span>
+watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_7&quot;</span><span class="u">);</span>
+watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_1024&quot;</span><span class="u">);</span>
+
+<span class="k">function</span> <span class="f">hasUserWatched</span><span class="u">(</span>postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">boolean</span> <span class="u">{</span>
+  <span class="k">return</span> watchedPosts<span class="u">.</span><span class="f">has</span><span class="u">(</span>postId<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              This works. But think about the scale. People watch hundreds of reels every single
+              day. Over months, the set of all posts watched by a user becomes massive.
+            </p>
+            <p>
+              To check if a key exists in a set implemented as a hash table or binary search tree,
+              you have to load the entire set into memory. When millions of users watch thousands of
+              reels daily, the memory and compute required becomes prohibitively expensive.
+            </p>
+            <p>Can we do better?</p>
+            <h2 id="the-key-insight">The Key Insight</h2>
+            <p>
+              Here&#39;s a crucial observation: once someone has watched a reel, they can&#39;t
+              &quot;unwatch&quot; it. The view is registered. It&#39;s done.
+            </p>
+            <p>
+              In a normal set, you can add and remove elements. But for tracking watched content, we
+              only ever add. We never remove.
+            </p>
+            <p>
+              This constraint lets us relax the data structure. We don&#39;t need the full power of
+              a set. We just need to know: &quot;Has this user definitely NOT seen this post?&quot;
+            </p>
+            <p>
+              If we can answer that question with 100% certainty, we can discard posts the user has
+              seen and only recommend new ones. Even if we occasionally miss recommending something
+              (false positive (A false positive is when the Bloom filter says an element is present,
+              but it actually isn&#39;t.)), that&#39;s okay. Performance matters more than perfect
+              recall.
+            </p>
+            <p>This trade-off is the foundation of Bloom filters.</p>
+            <h2 id="what-is-a-bloom-filter">What is a Bloom Filter?</h2>
+            <p>
+              A Bloom filter is a probabilistic data structure. It can tell you with 100% certainty
+              that an element does NOT belong to a set. But when it says an element IS present, it
+              might be wrong.
+            </p>
+            <p>
+              The word &quot;filter&quot; in Bloom filter refers to a <strong>bit array</strong>.
+              Not a byte array. An array of individual bits. Each bit is either 0 or 1.
+            </p>
+            <p>The name comes from Burton Howard Bloom, who invented it in 1970.</p>
+            <h3 id="how-it-works">How It Works</h3>
+            <p>Let&#39;s walk through a simple example. Say we have an 8-bit Bloom filter:</p>
+            <pre><code class="language-text">Index:  0   1   2   3   4   5   6   7
+Bits:  [0] [0] [0] [0] [0] [0] [0] [0]
+</code></pre>
+            <p>
+              We want to store the existence of words: &quot;apple&quot;, &quot;ball&quot;, and
+              &quot;cat&quot;.
+            </p>
+            <p><strong>Adding &quot;apple&quot;:</strong></p>
+            <ol>
+              <li>Pass &quot;apple&quot; through a hash function</li>
+              <li>Take the result modulo 8 (our filter size)</li>
+              <li>Let&#39;s say we get 2</li>
+              <li>Set bit at index 2 to 1</li>
+            </ol>
+            <pre><code class="language-text">Index:  0   1   2   3   4   5   6   7
+Bits:  [0] [0] [1] [0] [0] [0] [0] [0]
+                ↑
+              apple
+</code></pre>
+            <p><strong>Adding &quot;ball&quot;:</strong></p>
+            <ol>
+              <li>Hash &quot;ball&quot;, mod 8</li>
+              <li>Let&#39;s say we get 6</li>
+              <li>Set bit at index 6 to 1</li>
+            </ol>
+            <pre><code class="language-text">Index:  0   1   2   3   4   5   6   7
+Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
+                ↑               ↑
+              apple            ball
+</code></pre>
+            <p><strong>Adding &quot;cat&quot;:</strong></p>
+            <ol>
+              <li>Hash &quot;cat&quot;, mod 8</li>
+              <li>Let&#39;s say we get 2 (same as apple!)</li>
+              <li>Set bit at index 2 to 1 (already 1, no change)</li>
+            </ol>
+            <pre><code class="language-text">Index:  0   1   2   3   4   5   6   7
+Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
+                ↑               ↑
+             apple/cat         ball
+</code></pre>
+            <p>
+              Notice that &quot;apple&quot; and &quot;cat&quot; hash to the same index. This is
+              called a <strong>collision</strong>, and it&#39;s expected. We&#39;re compressing
+              arbitrary data into a tiny bit array.
+            </p>
+            <h3 id="checking-for-existence">Checking for Existence</h3>
+            <p>Now let&#39;s check if some words exist:</p>
+            <p><strong>Does &quot;dog&quot; exist?</strong></p>
+            <ol>
+              <li>Hash &quot;dog&quot;, mod 8</li>
+              <li>Let&#39;s say we get 5</li>
+              <li>Check bit at index 5 → it&#39;s 0</li>
+              <li><strong>Definitely NOT present</strong></li>
+            </ol>
+            <pre><code class="language-text">Index:  0   1   2   3   4   5   6   7
+Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
+                            ↑
+                    dog → 0 = NOT PRESENT ✓
+</code></pre>
+            <p>
+              The Bloom filter says no. We can be 100% certain that &quot;dog&quot; was never added.
+            </p>
+            <p><strong>Does &quot;elephant&quot; exist?</strong></p>
+            <ol>
+              <li>Hash &quot;elephant&quot;, mod 8</li>
+              <li>Let&#39;s say we get 6</li>
+              <li>Check bit at index 6 → it&#39;s 1</li>
+              <li><strong>Might be present</strong> (false positive!)</li>
+            </ol>
+            <pre><code class="language-text">Index:  0   1   2   3   4   5   6   7
+Bits:  [0] [0] [1] [0] [0] [0] [1] [0]
+                                ↑
+                  elephant → 1 = MAYBE PRESENT?
+</code></pre>
+            <p>
+              We never added &quot;elephant&quot;. But it hashes to the same index as
+              &quot;ball&quot;. The Bloom filter incorrectly says it might be present. This is a
+              <strong>false positive</strong>.
+            </p>
+            <h2 id="the-golden-rule">The Golden Rule</h2>
+            <p>
+              <strong
+                >When Bloom filter says NO → Element is definitely NOT present (100%
+                certain)</strong
+              >
+            </p>
+            <p>
+              <strong
+                >When Bloom filter says YES → Element MIGHT be present (need to verify)</strong
+              >
+            </p>
+            <p>
+              This asymmetry is what makes Bloom filters useful. For recommendation engines, we care
+              about the &quot;no&quot; case. If the Bloom filter says a user hasn&#39;t seen a post,
+              we can confidently recommend it.
+            </p>
+            <h2 id="space-efficiency">Space Efficiency</h2>
+            <p>Let&#39;s compare the space used:</p>
+            <p><strong>Storing actual words:</strong></p>
+            <ul>
+              <li>&quot;apple&quot; = 5 bytes</li>
+              <li>&quot;ball&quot; = 4 bytes</li>
+              <li>&quot;cat&quot; = 3 bytes</li>
+              <li>Total = 12 bytes (plus overhead for the set data structure)</li>
+            </ul>
+            <p><strong>Bloom filter:</strong></p>
+            <ul>
+              <li>8 bits = 1 byte</li>
+            </ul>
+            <p>
+              We stored the existence of 3 words in just 1 byte. That&#39;s a massive space saving.
+            </p>
+            <p>
+              In practice, you&#39;d use larger Bloom filters (1 KB, 10 KB, etc.) to reduce false
+              positive rates. But even then, the space savings are significant. A 10 KB Bloom filter
+              can track millions of items.
+            </p>
+            <p>
+              This is because <strong>Bloom filters don&#39;t store the actual keys</strong>. They
+              only store existence information compressed into a bit array. You can&#39;t retrieve
+              the original keys from a Bloom filter. You can only ask &quot;is this key
+              present?&quot;
+            </p>
+            <h2 id="false-positive-rate">False Positive Rate</h2>
+            <p>
+              As you add more keys to a Bloom filter, more bits get set to 1. Eventually, most bits
+              are 1. At that point, almost any query returns &quot;might be present.&quot;
+            </p>
+            <pre
+            ><code class="language-text">Empty:     [0][0][0][0][0][0][0][0]  → Low false positive rate
+Some keys: [0][1][1][0][1][0][1][0]  → Medium false positive rate
+Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
+</code></pre>
+            <p>The false positive rate increases as:</p>
+            <ul>
+              <li>More keys are added</li>
+              <li>The Bloom filter size stays the same</li>
+            </ul>
+            <p>This is the fundamental trade-off. You need to size your Bloom filter based on:</p>
+            <ol>
+              <li>Expected number of keys</li>
+              <li>Acceptable false positive rate</li>
+            </ol>
+            <p>There&#39;s a mathematical formula for this:</p>
+            <pre><code class="language-math">m = \frac{-n \cdot \ln(p)}{(\ln 2)^2}
+</code></pre>
+            <p>Where:</p>
+            <ul>
+              <li><code>m</code> = number of bits needed</li>
+              <li><code>n</code> = expected number of elements</li>
+              <li><code>p</code> = desired false positive probability</li>
+            </ul>
+            <p>For example, if you expect 1 million keys and want a 1% false positive rate:</p>
+            <pre
+            ><code class="language-math">m = \frac{-1,000,000 \cdot \ln(0.01)}{(\ln 2)^2} \approx 9,585,059 \text{ bits} \approx 1.14 \text{ MB}
+</code></pre>
+            <p>About 1 MB to track a million items with 1% false positives. Not bad.</p>
+            <h2 id="multiple-hash-functions">Multiple Hash Functions</h2>
+            <p>
+              Real Bloom filters use multiple hash functions, not just one. Each key is hashed by k
+              different functions, and k bits are set.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">addToBloomFilter</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  <span class="k">const</span> hash1 <span class="o">=</span> <span class="f">murmurhash</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+  <span class="k">const</span> hash2 <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+  <span class="k">const</span> hash3 <span class="o">=</span> <span class="f">fnv1a</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+
+  bitArray<span class="u">[</span>hash1<span class="u">]</span> <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
+  bitArray<span class="u">[</span>hash2<span class="u">]</span> <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
+  bitArray<span class="u">[</span>hash3<span class="u">]</span> <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">mightExist</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">boolean</span> <span class="u">{</span>
+  <span class="k">const</span> hash1 <span class="o">=</span> <span class="f">murmurhash</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+  <span class="k">const</span> hash2 <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+  <span class="k">const</span> hash3 <span class="o">=</span> <span class="f">fnv1a</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+
+  <span class="k">return</span> bitArray<span class="u">[</span>hash1<span class="u">]</span> <span class="o">===</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> bitArray<span class="u">[</span>hash2<span class="u">]</span> <span class="o">===</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> bitArray<span class="u">[</span>hash3<span class="u">]</span> <span class="o">===</span> <span class="n">1</span><span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              With multiple hash functions, all k bits must be set for a &quot;might exist&quot;
+              response. This reduces false positives because it&#39;s less likely that all k bits
+              were coincidentally set by other keys.
+            </p>
+            <p>The optimal number of hash functions is:</p>
+            <pre><code class="language-math">k = \frac{m}{n} \cdot \ln 2
+</code></pre>
+            <p>Where:</p>
+            <ul>
+              <li><code>k</code> = number of hash functions</li>
+              <li><code>m</code> = number of bits</li>
+              <li><code>n</code> = expected number of elements</li>
+            </ul>
+            <h2 id="the-deletion-problem">The Deletion Problem</h2>
+            <p>You cannot delete from a standard Bloom filter.</p>
+            <p>
+              Why? Because bits are shared. If &quot;apple&quot; and &quot;cat&quot; both hash to
+              index 2, you can&#39;t unset that bit when removing &quot;apple&quot; it would
+              incorrectly indicate &quot;cat&quot; isn&#39;t present.
+            </p>
+            <pre
+            ><code class="language-text">Before: [0][0][1][0][0][0][1][0]  → apple and cat both at index 2
+
+If we &quot;remove&quot; apple by unsetting bit 2:
+After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
+</code></pre>
+            <p>This is why Bloom filters work best for append-only use cases:</p>
+            <ul>
+              <li>Tracking watched content</li>
+              <li>Caching negative lookups</li>
+              <li>Checking if URL was crawled</li>
+            </ul>
+            <p>
+              If you need deletions, look into <strong>Counting Bloom Filters</strong> or
+              <strong>Cuckoo Filters</strong>
+              (alternatives that support removal).
+            </p>
+            <h2 id="scaling-a-bloom-filter">Scaling a Bloom Filter</h2>
+            <p>
+              What happens when your Bloom filter fills up and false positives become unacceptable?
+            </p>
+            <p><strong>You cannot resize a Bloom filter in place.</strong></p>
+            <p>
+              The hash function results depend on the filter size (mod operation). If you change the
+              size, all the mappings change.
+            </p>
+            <p>Your options:</p>
+            <ol>
+              <li>
+                <p>
+                  <strong>Recreate with larger size</strong>: Create a new, larger Bloom filter. Go
+                  back to your source of truth (database), iterate through all keys, and re-insert
+                  them into the new filter.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Start big</strong>: Estimate the maximum keys you&#39;ll need and
+                  provision a large enough filter from the start. This is the recommended approach.
+                </p>
+              </li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">BloomFilterConfig</span> <span class="u">{</span>
+  expectedElements<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+  falsePositiveRate<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">calculateOptimalSize</span><span class="u">(</span>config<span class="o">:</span> <span class="t">BloomFilterConfig</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
+  <span class="k">const</span> <span class="u">{</span> expectedElements<span class="u">,</span> falsePositiveRate <span class="u">}</span> <span class="o">=</span> config<span class="u">;</span>
+  <span class="k">const</span> bits <span class="o">=</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>
+    <span class="u">(</span><span class="o">-</span>expectedElements <span class="o">*</span> Math<span class="u">.</span><span class="f">log</span><span class="u">(</span>falsePositiveRate<span class="u">))</span> <span class="o">/</span> Math<span class="u">.</span><span class="f">pow</span><span class="u">(</span>Math<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="n">2</span><span class="u">),</span> <span class="n">2</span><span class="u">),</span>
+  <span class="u">);</span>
+  <span class="k">return</span> bits<span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">const</span> config<span class="o">:</span> <span class="t">BloomFilterConfig</span> <span class="o">=</span> <span class="u">{</span>
+  <span class="p">expectedElements:</span> <span class="n">10_000_000</span><span class="u">,</span>
+  <span class="p">falsePositiveRate:</span> <span class="n">0.01</span><span class="u">,</span>
+<span class="u">};</span>
+
+<span class="k">const</span> filterSize <span class="o">=</span> <span class="f">calculateOptimalSize</span><span class="u">(</span>config<span class="u">);</span>
+</code></pre>
+            <h2 id="bloom-filters-with-redis">Bloom Filters with Redis</h2>
+            <p>
+              You don&#39;t need to implement Bloom filters from scratch. Redis offers them as a
+              native data structure through the
+              <a href="https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter"
+                >RedisBloom</a
+              >
+              module.
+            </p>
+            <p>Here&#39;s how you use it via Redis CLI:</p>
+            <pre
+            ><code class="language-bash"><span class="c"># Create a Bloom filter named &quot;watched_posts&quot;</span>
+<span class="c"># 0.01 = 1% false positive rate</span>
+<span class="c"># 1000000 = expected capacity of 1 million items</span>
+<span class="f">BF.RESERVE</span> <span class="s">watched_posts</span> <span class="s">0.01</span> <span class="s">1000000</span>
+
+<span class="c"># Add items to the filter</span>
+<span class="f">BF.ADD</span> <span class="s">watched_posts</span> <span class="s">post_123</span>
+<span class="f">BF.ADD</span> <span class="s">watched_posts</span> <span class="s">post_456</span>
+
+<span class="c"># Check if an item exists</span>
+<span class="f">BF.EXISTS</span> <span class="s">watched_posts</span> <span class="s">post_123</span>  <span class="c"># Returns 1 (might exist)</span>
+<span class="f">BF.EXISTS</span> <span class="s">watched_posts</span> <span class="s">post_789</span>  <span class="c"># Returns 0 (definitely not)</span>
+
+<span class="c"># Add multiple items at once</span>
+<span class="f">BF.MADD</span> <span class="s">watched_posts</span> <span class="s">post_1</span> <span class="s">post_2</span> <span class="s">post_3</span>
+</code></pre>
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What it does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>BF.RESERVE name error_rate capacity</code></td>
+                  <td>
+                    Creates a new Bloom filter with specified false positive rate and capacity
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>BF.ADD name item</code></td>
+                  <td>Adds an item to the filter</td>
+                </tr>
+                <tr>
+                  <td><code>BF.EXISTS name item</code></td>
+                  <td>Checks if item might exist (1) or definitely doesn&#39;t (0)</td>
+                </tr>
+                <tr>
+                  <td><code>BF.MADD name item1 item2 ...</code></td>
+                  <td>Adds multiple items in one call</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>In TypeScript with ioredis:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> redis <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">markAsWatched</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.ADD&quot;</span><span class="u">,</span> <span class="s">`watched:${userId}`</span><span class="u">,</span> postId<span class="u">);</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">hasUserWatched</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">`watched:${userId}`</span><span class="u">,</span> postId<span class="u">);</span>
+  <span class="k">return</span> result <span class="o">===</span> <span class="n">1</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">recommendPost</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> mightHaveWatched <span class="o">=</span> <span class="k">await</span> <span class="f">hasUserWatched</span><span class="u">(</span>userId<span class="u">,</span> postId<span class="u">);</span>
+
+  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>mightHaveWatched<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>When creating a Bloom filter in Redis, you specify:</p>
+            <ul>
+              <li>
+                <strong>Error rate</strong>: The desired false positive rate (e.g., 0.01 for 1%)
+              </li>
+              <li><strong>Capacity</strong>: Expected number of elements</li>
+            </ul>
+            <p>Redis handles the optimal sizing internally.</p>
+            <h2 id="real-world-use-cases">Real-World Use Cases</h2>
+            <h3 id="recommendation-engines">Recommendation Engines</h3>
+            <p>
+              Track what users have seen. Only recommend content they definitely haven&#39;t
+              consumed.
+            </p>
+            <pre><code class="language-text">User requests feed
+    ↓
+Generate candidate posts
+    ↓
+For each candidate:
+    Check Bloom filter → &quot;Definitely not seen?&quot;
+        Yes → Include in feed
+        No  → Skip (might have seen)
+    ↓
+Return filtered feed
+</code></pre>
+            <p>
+              Medium uses Bloom filters for article recommendations. For every article you read,
+              it&#39;s added to your Bloom filter. The recommendation engine only suggests articles
+              that pass the &quot;definitely not read&quot; check.
+            </p>
+            <h3 id="web-crawlers">Web Crawlers</h3>
+            <p>
+              Track which URLs have already been crawled. Don&#39;t waste resources re-crawling.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">crawl</span><span class="u">(</span>startUrl<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> queue <span class="o">=</span> <span class="u">[</span>startUrl<span class="u">];</span>
+
+  <span class="k">while</span> <span class="u">(</span>queue<span class="u">.</span>length <span class="o">&gt;</span> <span class="n">0</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> url <span class="o">=</span> queue<span class="u">.</span><span class="f">shift</span><span class="u">()</span><span class="o">!</span><span class="u">;</span>
+
+    <span class="k">const</span> alreadyCrawled <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">&quot;crawled_urls&quot;</span><span class="u">,</span> url<span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span>alreadyCrawled<span class="u">)</span> <span class="u">{</span>
+      <span class="k">continue</span><span class="u">;</span>
+    <span class="u">}</span>
+
+    <span class="k">const</span> html <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span>url<span class="u">);</span>
+    <span class="k">await</span> <span class="f">processPage</span><span class="u">(</span>html<span class="u">);</span>
+
+    <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.ADD&quot;</span><span class="u">,</span> <span class="s">&quot;crawled_urls&quot;</span><span class="u">,</span> url<span class="u">);</span>
+
+    <span class="k">const</span> links <span class="o">=</span> <span class="f">extractLinks</span><span class="u">(</span>html<span class="u">);</span>
+    queue<span class="u">.</span><span class="f">push</span><span class="u">(</span><span class="o">...</span>links<span class="u">);</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+</code></pre>
+            <h3 id="database-query-optimization">Database Query Optimization</h3>
+            <p>
+              Check if a key might exist before hitting the database. If the Bloom filter says no,
+              skip the database query entirely.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getUser</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">User</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> mightExist <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">&quot;user_ids&quot;</span><span class="u">,</span> userId<span class="u">);</span>
+
+  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>mightExist<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> <span class="k">null</span><span class="u">;</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>userId<span class="u">]);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              This is particularly useful for negative lookups. If most queries are for non-existent
+              keys, Bloom filters save massive database load.
+            </p>
+            <h3 id="tinder-feed">Tinder Feed</h3>
+            <p>
+              Don&#39;t show profiles you&#39;ve already swiped on. Whether you swiped left or
+              right, that profile shouldn&#39;t appear again.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getNextProfiles</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span><span class="u">[]&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> candidates <span class="o">=</span> <span class="k">await</span> <span class="f">getCandidateProfiles</span><span class="u">(</span>userId<span class="u">);</span>
+
+  <span class="k">const</span> unseen <span class="o">=</span> <span class="u">[];</span>
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> profile <span class="o">of</span> candidates<span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> seen <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">`swiped:${userId}`</span><span class="u">,</span> profile<span class="u">.</span><span class="p">id</span><span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>seen<span class="u">)</span> <span class="u">{</span>
+      unseen<span class="u">.</span><span class="f">push</span><span class="u">(</span>profile<span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> unseen<span class="u">.</span><span class="f">slice</span><span class="u">(</span><span class="n">0</span><span class="u">,</span> <span class="n">10</span><span class="u">);</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">recordSwipe</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> profileId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.ADD&quot;</span><span class="u">,</span> <span class="s">`swiped:${userId}`</span><span class="u">,</span> profileId<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <h3 id="spell-checkers">Spell Checkers</h3>
+            <p>
+              Dictionary lookups. If a word is definitely not in the dictionary, it&#39;s
+              misspelled.
+            </p>
+            <h3 id="cache-lookups">Cache Lookups</h3>
+            <p>
+              Before checking a distributed cache, check a local Bloom filter. If the key is
+              definitely not cached, don&#39;t bother with the network request.
+            </p>
+            <h2 id="when-not-to-use-bloom-filters">When NOT to Use Bloom Filters</h2>
+            <p>Bloom filters aren&#39;t always the answer:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Use Case</th>
+                  <th>Bloom Filter?</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Need exact answers</td>
+                  <td>❌</td>
+                  <td>False positives are unacceptable</td>
+                </tr>
+                <tr>
+                  <td>Need to delete items</td>
+                  <td>❌</td>
+                  <td>Standard Bloom filters don&#39;t support deletion</td>
+                </tr>
+                <tr>
+                  <td>Small dataset</td>
+                  <td>❌</td>
+                  <td>Just use a regular set</td>
+                </tr>
+                <tr>
+                  <td>Need to retrieve values</td>
+                  <td>❌</td>
+                  <td>Bloom filters only store existence, not values</td>
+                </tr>
+                <tr>
+                  <td>Financial transactions</td>
+                  <td>❌</td>
+                  <td>Can&#39;t afford false positives</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              If you can&#39;t tolerate false positives, Bloom filters aren&#39;t for you. For
+              example, checking if a bank account exists before a transfer, a false positive could
+              cause real problems.
+            </p>
+            <h2 id="hands-on-practice">Hands-on Practice</h2>
+            <p>
+              I&#39;ve created hands-on demos you can run locally, here:
+              <a href="https://github.com/pulkitxm/systems/tree/main/data-structures/bloom-filters"
+                >bloom-filters</a
+              >: TypeScript implementation of Bloom filters from scratch. Includes demos for basic
+              usage, false positive rate visualization, and Redis integration.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              Bloom filters are elegant. They trade perfect accuracy for massive space and time
+              efficiency.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Bloom Filter</th>
+                  <th>Regular Set</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Space</td>
+                  <td>Tiny (bits)</td>
+                  <td>Large (stores keys)</td>
+                </tr>
+                <tr>
+                  <td>&quot;Not exists&quot;</td>
+                  <td>100% accurate</td>
+                  <td>100% accurate</td>
+                </tr>
+                <tr>
+                  <td>&quot;Exists&quot;</td>
+                  <td>May have false positives</td>
+                  <td>100% accurate</td>
+                </tr>
+                <tr>
+                  <td>Deletion</td>
+                  <td>Not supported</td>
+                  <td>Supported</td>
+                </tr>
+                <tr>
+                  <td>Lookup time</td>
+                  <td>O(k) hash functions</td>
+                  <td>O(1) to O(log n)</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              The key insight: <strong>when Bloom filter says no, it&#39;s definitely no</strong>.
+              This makes them perfect for filtering out things you&#39;ve seen before, URLs
+              you&#39;ve crawled, or keys that don&#39;t exist in your cache.
+            </p>
+            <p>Use them when:</p>
+            <ul>
+              <li>You&#39;re okay with occasional false positives</li>
+              <li>You need space efficiency</li>
+              <li>You only add, never remove</li>
+              <li>You need fast existence checks at scale</li>
+            </ul>
+            <p>
+              Redis makes it trivial to use Bloom filters in production. Create one with
+              <code>BF.RESERVE</code>, add with <code>BF.ADD</code>, check with
+              <code>BF.EXISTS</code>. That&#39;s it.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li><a href="/blogs/system-design/caching/">Caching</a></li>
+            <li><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
+            <li>
+              <a href="/blogs/system-design/async-processing/"
+                >Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

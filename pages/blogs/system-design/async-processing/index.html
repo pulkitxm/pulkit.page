@@ -1,0 +1,1455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Message queues vs streams explained with SQS, RabbitMQ, Kafka, and Redis Pub/Sub, covering ack, dead letter queues, and async processing at scale."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/system-design/async-processing/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:title"
+      content="Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub | Pulkit"
+    />
+    <meta
+      property="og:description"
+      content="Message queues vs streams explained with SQS, RabbitMQ, Kafka, and Redis Pub/Sub, covering ack, dead letter queues, and async processing at scale."
+    />
+    <meta
+      property="og:url"
+      content="https://new.pulkit.page/blogs/system-design/async-processing/"
+    />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/system-design/async-processing/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/system-design/async-processing/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub"
+    />
+    <meta property="article:published_time" content="2026-01-10" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub | Pulkit"
+    />
+    <meta
+      name="twitter:description"
+      content="Message queues vs streams explained with SQS, RabbitMQ, Kafka, and Redis Pub/Sub, covering ack, dead letter queues, and async processing at scale."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/system-design/async-processing/card.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub"
+    />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/system-design/async-processing/#image","contentUrl":"https://new.pulkit.page/og/blogs/system-design/async-processing/card.png","width":1200,"height":630,"caption":"Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/system-design/async-processing/#article","headline":"Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub","description":"Message queues vs streams explained with SQS, RabbitMQ, Kafka, and Redis Pub/Sub, covering ack, dead letter queues, and async processing at scale.","datePublished":"2026-01-10","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/async-processing/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/system-design/async-processing/#image"},"url":"https://new.pulkit.page/blogs/system-design/async-processing/","inLanguage":"en","keywords":["System Design","Message Queues","RabbitMQ","AWS SQS","Kafka","Redis Pub/Sub","Dead Letter Queue"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/system-design/async-processing/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://new.pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub","item":"https://new.pulkit.page/blogs/system-design/async-processing/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/system-design/async-processing/#webpage","url":"https://new.pulkit.page/blogs/system-design/async-processing/","name":"Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub","description":"Message queues vs streams explained with SQS, RabbitMQ, Kafka, and Redis Pub/Sub, covering ack, dead letter queues, and async processing at scale.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/async-processing/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/system-design/async-processing/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/system-design/async-processing/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/system-design/">System Design</a></li>
+            <li aria-current="page">Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</h1>
+            <p class="detail-meta"><time datetime="2026-01-10">2026-01-10</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Most web interactions are synchronous. You click, the server processes, you get a
+              response. Loading your feed, logging in, making a payment. All synchronous. Request
+              in, response out, done.
+            </p>
+            <p>
+              But some operations take time. Minutes. Hours. Making users stare at a spinner that
+              long isn&#39;t just bad UX, it&#39;s impractical. This is where async processing comes
+              in.
+            </p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong>Sync</strong>: Request handled immediately, response returned. Most web
+                interactions
+              </li>
+              <li>
+                <strong>Async</strong>: Request acknowledged instantly, work happens in background.
+                For long-running tasks
+              </li>
+              <li>
+                <strong>Message queues</strong>
+                (SQS, RabbitMQ): One message → one consumer. Consumers <strong>pull</strong>. Delete
+                after processing
+              </li>
+              <li>
+                <strong>Message streams</strong>
+                (Kafka, Kinesis): One message → multiple consumer types. Consumers
+                <strong>pull</strong>. &quot;Write once, read by many&quot;
+              </li>
+              <li>
+                <strong>Real-time Pub/Sub</strong>
+                (Redis): Messages <strong>pushed</strong> to subscribers instantly. Zero buffering.
+                Miss it if not connected
+              </li>
+              <li>
+                <strong>Queue lifecycle</strong>: Consume → Process → Delete. Crash before delete?
+                Message reappears
+              </li>
+              <li>
+                <strong>Stream lifecycle</strong>: Consume → Process → Commit offset. Messages stay
+                for configured retention
+              </li>
+              <li>
+                <strong>Dead letter queues</strong>: Catch poison messages after N failures.
+                Prevents blocking
+              </li>
+              <li>
+                <strong>Delivery</strong>: At-least-once is common. Handle duplicates with
+                idempotent consumers
+              </li>
+              <li>
+                <strong>Scaling</strong>: Add workers based on queue depth. Keep them stateless
+              </li>
+            </ul>
+            <h2 id="sync-vs-async-processing">Sync vs Async Processing</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/sync.webp"
+                alt="User sends request and server handles it immediately - this is synchronous"
+                loading="lazy"
+              />
+            </p>
+            <p>Logging in is synchronous:</p>
+            <ol>
+              <li>Enter credentials</li>
+              <li>Server validates</li>
+              <li>Session created</li>
+              <li>You&#39;re in</li>
+            </ol>
+            <p>Milliseconds. Done. The request waited for completion.</p>
+            <p>
+              Now imagine ordering food on Zomato. The restaurant takes 30 minutes to prepare your
+              biryani. Should the app freeze for 30 minutes? Should your HTTP connection stay open
+              that long?
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/async.webp"
+                alt="Long-running tasks shouldn&#39;t block the user"
+                loading="lazy"
+              />
+            </p>
+            <p>Instead:</p>
+            <ol>
+              <li>You place the order</li>
+              <li>App responds: &quot;Order confirmed! Preparing your food&quot;</li>
+              <li>You browse memes, watch reels, whatever</li>
+              <li>Kitchen prepares the food</li>
+              <li>Status updates: &quot;Out for delivery&quot;</li>
+            </ol>
+            <p>
+              That&#39;s async. You got immediate feedback. The actual work happened in the
+              background.
+            </p>
+            <h2 id="when-to-go-async">When to Go Async</h2>
+            <p><strong>Long-running tasks:</strong></p>
+            <ul>
+              <li>Generating PDF reports (seconds to minutes)</li>
+              <li>Processing uploaded images (resizing, filters)</li>
+              <li>Running ML inference</li>
+              <li>Exporting large datasets</li>
+              <li>Provisioning cloud resources</li>
+            </ul>
+            <p><strong>Tasks that don&#39;t need instant results:</strong></p>
+            <ul>
+              <li>Sending emails and push notifications</li>
+              <li>Updating search indexes</li>
+              <li>Syncing to analytics systems</li>
+              <li>Generating thumbnails</li>
+            </ul>
+            <p><strong>Tasks that can fail and retry:</strong></p>
+            <ul>
+              <li>Webhook deliveries</li>
+              <li>Payment confirmations</li>
+              <li>Third-party API calls</li>
+            </ul>
+            <p>
+              Pattern is always the same: acknowledge immediately, process in background, update
+              status when done.
+            </p>
+            <h2 id="how-async-processing-works">How Async Processing Works</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/async-flow.webp"
+                alt="Typical async flow with API, broker, and workers"
+                loading="lazy"
+              />
+            </p>
+            <p>Let&#39;s trace through a food order:</p>
+            <ol>
+              <li>You tap &quot;Place Order&quot; in Zomato</li>
+              <li>API creates database entry: <code>order_id: xyz, status: confirmed</code></li>
+              <li>API pushes task to queue: &quot;Notify restaurant about order xyz&quot;</li>
+              <li>API responds instantly: &quot;Order placed!&quot;</li>
+              <li>Worker pulls task from queue</li>
+              <li>Worker calls restaurant&#39;s system, waits for acknowledgment</li>
+              <li>Worker updates database: <code>status: preparing</code></li>
+              <li>You see &quot;Restaurant is preparing your order&quot;</li>
+            </ol>
+            <p>
+              You weren&#39;t blocked. You could close the app, come back later, and check status
+              anytime.
+            </p>
+            <h2 id="message-queues">Message Queues</h2>
+            <p>
+              The key component enabling async is the <strong>message queue</strong> (or message
+              broker). SQS and RabbitMQ are popular examples.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/message-queues.webp"
+                alt="Message queues help services communicate through messages"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              A queue sits between producers (who create tasks) and consumers (who process them).
+              Two services communicate without knowing about each other.
+            </p>
+            <h3 id="why-queues">Why Queues?</h3>
+            <p><strong>1. Decoupling</strong></p>
+            <p>
+              Your order service doesn&#39;t care how notifications work. It pushes a message and
+              moves on.
+            </p>
+            <pre><code class="language-text">Order Service ──→ Queue ──→ Notification Service
+      │                            │
+      │    (don&#39;t know about       │
+      │     each other)            │
+      └────────────────────────────┘
+</code></pre>
+            <p><strong>2. Load Buffering</strong></p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/message-buffering.webp"
+                alt="Brokers buffer messages - consumers process at their own pace"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              IPL final night. Zomato gets 50,000 orders per minute. The SMS gateway handles 1,000
+              per minute.
+            </p>
+            <p>Without queue: SMS service dies, orders fail, angry customers.</p>
+            <p>
+              With queue: Messages pile up. SMS service processes at its pace. Everyone gets their
+              &quot;Order Confirmed&quot; text eventually.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">OrderPlaced</span> <span class="u">{</span>
+  orderId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  customerPhone<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  restaurantName<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">onOrderPlaced</span><span class="u">(</span>order<span class="o">:</span> <span class="t">Order</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> sqs<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span>
+    <span class="p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="u">,</span>
+    <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
+      <span class="p">orderId:</span> order<span class="u">.</span><span class="p">id</span><span class="u">,</span>
+      <span class="p">customerPhone:</span> order<span class="u">.</span><span class="p">phone</span><span class="u">,</span>
+      <span class="p">restaurantName:</span> order<span class="u">.</span>restaurant<span class="u">.</span><span class="p">name</span><span class="u">,</span>
+    <span class="u">}</span> <span class="k">satisfies</span> <span class="t">OrderPlaced</span><span class="u">),</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Order service fires the message and moves on. SMS worker picks it up whenever it can.
+            </p>
+            <p><strong>3. Message Retention</strong></p>
+            <p>
+              Queues hold messages for a configurable period. SQS retains up to 14 days. Consumer
+              down for maintenance? Messages wait. Consumer comes back, picks up where it left off.
+            </p>
+            <p><strong>4. Automatic Retry</strong></p>
+            <p>
+              When you read a message, it&#39;s not deleted immediately. You must explicitly delete
+              it after processing.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/message-requque.webp"
+                alt="If consumer crashes before deleting, message reappears"
+                loading="lazy"
+              />
+            </p>
+            <p>Flow:</p>
+            <ol>
+              <li>Consumer reads message</li>
+              <li>Message becomes &quot;invisible&quot; (visibility timeout)</li>
+              <li>Consumer processes it</li>
+              <li>Consumer deletes message</li>
+              <li>Done</li>
+            </ol>
+            <p>
+              What if consumer crashes at step 3? Message was never deleted. After visibility
+              timeout, it reappears. Another consumer picks it up.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processSmsNotifications</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">while</span> <span class="u">(</span><span class="k">true</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">receiveMessage</span><span class="u">({</span>
+      <span class="p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="u">,</span>
+      <span class="p">MaxNumberOfMessages:</span> <span class="n">1</span><span class="u">,</span>
+      <span class="p">WaitTimeSeconds:</span> <span class="n">20</span><span class="u">,</span>
+    <span class="u">});</span>
+
+    <span class="k">const</span> message <span class="o">=</span> response<span class="u">.</span><span class="p">Messages</span><span class="u">?.[</span><span class="n">0</span><span class="u">];</span>
+    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>message<span class="u">)</span> <span class="k">continue</span><span class="u">;</span>
+
+    <span class="k">try</span> <span class="u">{</span>
+      <span class="k">const</span> notification<span class="o">:</span> <span class="t">OrderPlaced</span> <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">.</span><span class="p">Body</span> <span class="o">??</span> <span class="s">&quot;{}&quot;</span><span class="u">);</span>
+
+      <span class="k">await</span> smsGateway<span class="u">.</span><span class="f">send</span><span class="u">({</span>
+        <span class="p">to:</span> notification<span class="u">.</span><span class="p">customerPhone</span><span class="u">,</span>
+        <span class="p">text:</span> <span class="s">`Order confirmed! ${notification.</span><span class="p">restaurantName</span><span class="s">} is preparing your food.`</span><span class="u">,</span>
+      <span class="u">});</span>
+
+      <span class="k">await</span> sqs<span class="u">.</span><span class="f">deleteMessage</span><span class="u">({</span>
+        <span class="p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="u">,</span>
+        <span class="p">ReceiptHandle:</span> message<span class="u">.</span><span class="p">ReceiptHandle</span><span class="u">,</span>
+      <span class="u">});</span>
+    <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
+      console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Failed to send SMS:&quot;</span><span class="u">,</span> error<span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+</code></pre>
+            <p>Delete happens only after success. Crash mid-way? Message retries automatically.</p>
+            <h3 id="handling-duplicates">Handling Duplicates</h3>
+            <p>This retry mechanism has a side effect: messages can deliver more than once.</p>
+            <p>Scenario:</p>
+            <ol>
+              <li>Consumer reads message</li>
+              <li>Sends SMS successfully</li>
+              <li>Crashes before deleting message</li>
+              <li>Message reappears (visibility timeout expired)</li>
+              <li>Another consumer picks it up</li>
+              <li>SMS sent again</li>
+            </ol>
+            <p>
+              Customer gets two identical texts. Annoying, but not catastrophic here. For critical
+              operations, make consumers <strong>idempotent</strong>:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processSmsNotification</span><span class="u">(</span>notification<span class="o">:</span> <span class="t">OrderPlaced</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> alreadySent <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">`sms_sent:${notification.</span><span class="p">orderId</span><span class="s">}`</span><span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span>alreadySent<span class="u">)</span> <span class="u">{</span>
+    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`SMS already sent for ${notification.</span><span class="p">orderId</span><span class="s">}, skipping`</span><span class="u">);</span>
+    <span class="k">return</span><span class="u">;</span>
+  <span class="u">}</span>
+
+  <span class="k">await</span> smsGateway<span class="u">.</span><span class="f">send</span><span class="u">({</span>
+    <span class="p">to:</span> notification<span class="u">.</span><span class="p">customerPhone</span><span class="u">,</span>
+    <span class="p">text:</span> <span class="s">`Order confirmed! ${notification.</span><span class="p">restaurantName</span><span class="s">} is preparing your food.`</span><span class="u">,</span>
+  <span class="u">});</span>
+
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`sms_sent:${notification.</span><span class="p">orderId</span><span class="s">}`</span><span class="u">,</span> <span class="s">&quot;true&quot;</span><span class="u">,</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">86400</span><span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>Track what you&#39;ve processed. Skip duplicates.</p>
+            <h3 id="dead-letter-queues">Dead Letter Queues</h3>
+            <p>
+              What happens when a message fails repeatedly? Maybe the payload is malformed. Maybe a
+              dependency is permanently down. Retrying forever wastes resources.
+            </p>
+            <p>
+              Dead Letter Queues (DLQ) catch these poison messages. After N failed attempts, the
+              message moves to a separate queue for inspection.
+            </p>
+            <pre><code class="language-text">Main Queue ──→ Consumer ──→ Success ──→ Delete
+                  │
+                  └──→ Fail (attempt 1)
+                  └──→ Fail (attempt 2)
+                  └──→ Fail (attempt 3)
+                          │
+                          ▼
+                    Dead Letter Queue
+</code></pre>
+            <p>SQS configuration:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> mainQueue <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">createQueue</span><span class="u">({</span>
+  <span class="p">QueueName:</span> <span class="s">&quot;image-processing&quot;</span><span class="u">,</span>
+  <span class="p">Attributes:</span> <span class="u">{</span>
+    <span class="p">RedrivePolicy:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
+      <span class="p">deadLetterTargetArn:</span> dlqArn<span class="u">,</span>
+      <span class="p">maxReceiveCount:</span> <span class="s">&quot;3&quot;</span><span class="u">,</span>
+    <span class="u">}),</span>
+  <span class="u">},</span>
+<span class="u">});</span>
+</code></pre>
+            <p>After 3 failures, message goes to DLQ. You can:</p>
+            <ul>
+              <li>Alert on DLQ depth (something&#39;s wrong)</li>
+              <li>Inspect messages manually</li>
+              <li>Fix the bug, replay messages back to main queue</li>
+              <li>Archive for debugging</li>
+            </ul>
+            <p>DLQs prevent one bad message from blocking your entire pipeline.</p>
+            <h3 id="delivery-semantics">Delivery Semantics</h3>
+            <p>
+              When a producer sends a message, how many times does the consumer receive it? This is
+              the delivery guarantee. Networks fail, consumers crash, acknowledgments get lost. The
+              system must decide how to handle these failures.
+            </p>
+            <p>Three delivery guarantees exist:</p>
+            <p>
+              <strong>At-most-once</strong>: Message delivered zero or one time. Fire and forget.
+              Fast, but you might lose messages.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">await</span> queue<span class="u">.</span><span class="f">send</span><span class="u">(</span>message<span class="u">);</span>
+</code></pre>
+            <p>
+              <strong>At-least-once</strong>: Message delivered one or more times. Most common.
+              Safe, but you might get duplicates.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">while</span> <span class="u">(</span><span class="o">!</span>acknowledged<span class="u">)</span> <span class="u">{</span>
+  <span class="k">await</span> queue<span class="u">.</span><span class="f">send</span><span class="u">(</span>message<span class="u">);</span>
+  <span class="k">await</span> <span class="f">waitForAck</span><span class="u">();</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              <strong>Exactly-once</strong>: Message delivered exactly one time. Ideal, but
+              expensive and complex.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Guarantee</th>
+                  <th>Lost messages?</th>
+                  <th>Duplicates?</th>
+                  <th>Complexity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>At-most-once</td>
+                  <td>Possible</td>
+                  <td>No</td>
+                  <td>Low</td>
+                </tr>
+                <tr>
+                  <td>At-least-once</td>
+                  <td>No</td>
+                  <td>Possible</td>
+                  <td>Medium</td>
+                </tr>
+                <tr>
+                  <td>Exactly-once</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>High</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Most systems use <strong>at-least-once</strong> with
+              <strong>idempotent consumers</strong>. You accept that duplicates happen and handle
+              them in your code. This is simpler than trying to achieve exactly-once delivery.
+            </p>
+            <p>
+              Exactly-once requires coordination between producer, broker, and consumer. Kafka
+              supports it, but with performance overhead. For most use cases, idempotency is the
+              pragmatic choice.
+            </p>
+            <h2 id="example-image-processing">Example: Image Processing</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/image-processing.webp"
+                alt="illustration upload triggers async processing for multiple sizes"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              User uploads a profile picture on your app. You need to create multiple sizes:
+              thumbnail (50x50), medium (200x200), large (800x800). Original might be 5MB,
+              processing takes a few seconds per size.
+            </p>
+            <p>Should the upload API wait 15 seconds? No.</p>
+            <p><strong>Step 1: Upload</strong></p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">uploadProfilePic</span><span class="u">(</span>file<span class="o">:</span> <span class="t">File</span><span class="u">,</span> userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Image</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> imageId <span class="o">=</span> <span class="f">generateId</span><span class="u">();</span>
+  <span class="k">const</span> s3Key <span class="o">=</span> <span class="s">`uploads/${userId}/${imageId}/original.jpg`</span><span class="u">;</span>
+
+  <span class="k">await</span> s3<span class="u">.</span><span class="f">upload</span><span class="u">({</span>
+    <span class="p">Bucket:</span> IMAGE_BUCKET<span class="u">,</span>
+    <span class="p">Key:</span> s3Key<span class="u">,</span>
+    <span class="p">Body:</span> file<span class="u">,</span>
+  <span class="u">});</span>
+
+  <span class="k">const</span> image <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>image<span class="u">.</span><span class="f">create</span><span class="u">({</span>
+    <span class="p">data:</span> <span class="u">{</span>
+      <span class="p">id:</span> imageId<span class="u">,</span>
+      userId<span class="u">,</span>
+      <span class="p">status:</span> <span class="s">&quot;processing&quot;</span><span class="u">,</span>
+      <span class="p">originalKey:</span> s3Key<span class="u">,</span>
+    <span class="u">},</span>
+  <span class="u">});</span>
+
+  <span class="k">await</span> sqs<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span>
+    <span class="p">QueueUrl:</span> IMAGE_PROCESSING_QUEUE<span class="u">,</span>
+    <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
+      imageId<span class="u">,</span>
+      userId<span class="u">,</span>
+      s3Key<span class="u">,</span>
+      <span class="p">sizes:</span> <span class="u">[</span><span class="s">&quot;thumbnail&quot;</span><span class="u">,</span> <span class="s">&quot;medium&quot;</span><span class="u">,</span> <span class="s">&quot;large&quot;</span><span class="u">],</span>
+    <span class="u">}),</span>
+  <span class="u">});</span>
+
+  <span class="k">return</span> image<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Upload original to S3, create DB record with <code>status: processing</code>, push
+              task to queue, return immediately. User sees a placeholder while processing happens.
+            </p>
+            <p><strong>Step 2: Processing</strong></p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ImageTask</span> <span class="u">{</span>
+  imageId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  userId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  s3Key<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  sizes<span class="o">:</span> <span class="t">string</span><span class="u">[];</span>
+<span class="u">}</span>
+
+<span class="k">const</span> SIZE_MAP <span class="o">=</span> <span class="u">{</span>
+  <span class="p">thumbnail:</span> <span class="u">{</span> <span class="p">width:</span> <span class="n">50</span><span class="u">,</span> <span class="p">height:</span> <span class="n">50</span> <span class="u">},</span>
+  <span class="p">medium:</span> <span class="u">{</span> <span class="p">width:</span> <span class="n">200</span><span class="u">,</span> <span class="p">height:</span> <span class="n">200</span> <span class="u">},</span>
+  <span class="p">large:</span> <span class="u">{</span> <span class="p">width:</span> <span class="n">800</span><span class="u">,</span> <span class="p">height:</span> <span class="n">800</span> <span class="u">},</span>
+<span class="u">};</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">processImage</span><span class="u">(</span>task<span class="o">:</span> <span class="t">ImageTask</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> originalBuffer <span class="o">=</span> <span class="k">await</span> <span class="f">downloadFromS3</span><span class="u">(</span>task<span class="u">.</span><span class="p">s3Key</span><span class="u">);</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> size <span class="o">of</span> task<span class="u">.</span><span class="p">sizes</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> dimensions <span class="o">=</span> SIZE_MAP<span class="u">[</span>size<span class="u">];</span>
+    <span class="k">const</span> resized <span class="o">=</span> <span class="k">await</span> <span class="f">sharp</span><span class="u">(</span>originalBuffer<span class="u">)</span>
+      <span class="u">.</span><span class="f">resize</span><span class="u">(</span>dimensions<span class="u">.</span><span class="p">width</span><span class="u">,</span> dimensions<span class="u">.</span><span class="p">height</span><span class="u">)</span>
+      <span class="u">.</span><span class="f">jpeg</span><span class="u">({</span> <span class="p">quality:</span> <span class="n">80</span> <span class="u">})</span>
+      <span class="u">.</span><span class="f">toBuffer</span><span class="u">();</span>
+
+    <span class="k">await</span> s3<span class="u">.</span><span class="f">upload</span><span class="u">({</span>
+      <span class="p">Bucket:</span> IMAGE_BUCKET<span class="u">,</span>
+      <span class="p">Key:</span> <span class="s">`processed/${task.</span><span class="p">userId</span><span class="s">}/${task.</span><span class="p">imageId</span><span class="s">}/${size}.jpg`</span><span class="u">,</span>
+      <span class="p">Body:</span> resized<span class="u">,</span>
+    <span class="u">});</span>
+  <span class="u">}</span>
+
+  <span class="k">await</span> db<span class="u">.</span>image<span class="u">.</span><span class="f">update</span><span class="u">({</span>
+    <span class="p">where:</span> <span class="u">{</span> <span class="p">id:</span> task<span class="u">.</span><span class="p">imageId</span> <span class="u">},</span>
+    <span class="p">data:</span> <span class="u">{</span> <span class="p">status:</span> <span class="s">&quot;ready&quot;</span> <span class="u">},</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Worker downloads original, creates resized versions, uploads them, updates status.
+              User&#39;s profile pic appears once ready.
+            </p>
+            <h2 id="queue-options">Queue Options</h2>
+            <h3 id="aws-sqs">AWS SQS</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/amazon-sqs.webp"
+                alt="AWS SQS is a managed message queue"
+                loading="lazy"
+              />
+            </p>
+            <p>Managed queue. No servers. Auto-scales. Pay per request.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span>
+  SQSClient<span class="u">,</span>
+  SendMessageCommand<span class="u">,</span>
+  ReceiveMessageCommand<span class="u">,</span>
+  DeleteMessageCommand<span class="u">,</span>
+<span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@aws-sdk/client-sqs&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> sqs <span class="o">=</span> <span class="o">new</span> <span class="f">SQSClient</span><span class="u">({</span> <span class="p">region:</span> <span class="s">&quot;us-east-1&quot;</span> <span class="u">});</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">sendTask</span><span class="u">(</span>task<span class="o">:</span> <span class="t">ImageTask</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> sqs<span class="u">.</span><span class="f">send</span><span class="u">(</span>
+    <span class="o">new</span> <span class="f">SendMessageCommand</span><span class="u">({</span>
+      <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
+      <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>task<span class="u">),</span>
+    <span class="u">}),</span>
+  <span class="u">);</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">receiveTask</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">ImageTask</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">send</span><span class="u">(</span>
+    <span class="o">new</span> <span class="f">ReceiveMessageCommand</span><span class="u">({</span>
+      <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
+      <span class="p">MaxNumberOfMessages:</span> <span class="n">1</span><span class="u">,</span>
+      <span class="p">WaitTimeSeconds:</span> <span class="n">20</span><span class="u">,</span>
+    <span class="u">}),</span>
+  <span class="u">);</span>
+
+  <span class="k">const</span> message <span class="o">=</span> response<span class="u">.</span><span class="p">Messages</span><span class="u">?.[</span><span class="n">0</span><span class="u">];</span>
+  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>message<span class="u">)</span> <span class="k">return</span> <span class="k">null</span><span class="u">;</span>
+
+  <span class="k">return</span> <span class="u">{</span>
+    <span class="o">...</span>JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">.</span><span class="p">Body</span> <span class="o">??</span> <span class="s">&quot;{}&quot;</span><span class="u">),</span>
+    <span class="p">receiptHandle:</span> message<span class="u">.</span><span class="p">ReceiptHandle</span><span class="u">,</span>
+  <span class="u">};</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">deleteTask</span><span class="u">(</span>receiptHandle<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> sqs<span class="u">.</span><span class="f">send</span><span class="u">(</span>
+    <span class="o">new</span> <span class="f">DeleteMessageCommand</span><span class="u">({</span>
+      <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
+      <span class="p">ReceiptHandle:</span> receiptHandle<span class="u">,</span>
+    <span class="u">}),</span>
+  <span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>Key features:</p>
+            <ul>
+              <li>14-day retention</li>
+              <li>Configurable visibility timeout</li>
+              <li>Dead letter queues for failures</li>
+              <li>FIFO queues for ordering</li>
+            </ul>
+            <h3 id="rabbitmq">RabbitMQ</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/rabbitmq.webp"
+                alt="RabbitMQ is an open-source message broker"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Open-source. Self-hosted or managed. More features, more control, more ops overhead.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> amqp <span class="k">from</span> <span class="s">&quot;amqplib&quot;</span><span class="u">;</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">setupRabbitMQ</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">amqp</span><span class="u">.</span><span class="t">Channel</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> connection <span class="o">=</span> <span class="k">await</span> amqp<span class="u">.</span><span class="f">connect</span><span class="u">(</span><span class="s">&quot;amqp://localhost&quot;</span><span class="u">);</span>
+  <span class="k">const</span> channel <span class="o">=</span> <span class="k">await</span> connection<span class="u">.</span><span class="f">createChannel</span><span class="u">();</span>
+  <span class="k">await</span> channel<span class="u">.</span><span class="f">assertQueue</span><span class="u">(</span><span class="s">&quot;image_processing&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">durable:</span> <span class="k">true</span> <span class="u">});</span>
+  <span class="k">return</span> channel<span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">sendTask</span><span class="u">(</span>channel<span class="o">:</span> <span class="t">amqp</span><span class="u">.</span><span class="t">Channel</span><span class="u">,</span> task<span class="o">:</span> <span class="t">ImageTask</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  channel<span class="u">.</span><span class="f">sendToQueue</span><span class="u">(</span><span class="s">&quot;image_processing&quot;</span><span class="u">,</span> Buffer<span class="u">.</span><span class="f">from</span><span class="u">(</span>JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>task<span class="u">)),</span> <span class="u">{</span>
+    <span class="p">persistent:</span> <span class="k">true</span><span class="u">,</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">consumeTasks</span><span class="u">(</span>channel<span class="o">:</span> <span class="t">amqp</span><span class="u">.</span><span class="t">Channel</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  channel<span class="u">.</span><span class="f">consume</span><span class="u">(</span><span class="s">&quot;image_processing&quot;</span><span class="u">,</span> <span class="k">async</span> <span class="u">(</span>msg<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>msg<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+
+    <span class="k">const</span> task<span class="o">:</span> <span class="t">ImageTask</span> <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>msg<span class="u">.</span>content<span class="u">.</span><span class="f">toString</span><span class="u">());</span>
+
+    <span class="k">try</span> <span class="u">{</span>
+      <span class="k">await</span> <span class="f">processImage</span><span class="u">(</span>task<span class="u">);</span>
+      channel<span class="u">.</span><span class="f">ack</span><span class="u">(</span>msg<span class="u">);</span>
+    <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
+      channel<span class="u">.</span><span class="f">nack</span><span class="u">(</span>msg<span class="u">,</span> <span class="k">false</span><span class="u">,</span> <span class="k">true</span><span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>Key features:</p>
+            <ul>
+              <li>Exchanges and routing keys</li>
+              <li>Pub/sub, work queues, RPC patterns</li>
+              <li>Fine-grained acknowledgments</li>
+              <li>Configurable durability</li>
+            </ul>
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>SQS</th>
+                  <th>RabbitMQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Hosting</td>
+                  <td>Managed</td>
+                  <td>Self-hosted or managed</td>
+                </tr>
+                <tr>
+                  <td>Scaling</td>
+                  <td>Automatic</td>
+                  <td>Manual</td>
+                </tr>
+                <tr>
+                  <td>Routing</td>
+                  <td>Simple</td>
+                  <td>Advanced (exchanges, topics)</td>
+                </tr>
+                <tr>
+                  <td>Protocol</td>
+                  <td>HTTP</td>
+                  <td>AMQP</td>
+                </tr>
+                <tr>
+                  <td>Ordering</td>
+                  <td>FIFO queues</td>
+                  <td>Built-in</td>
+                </tr>
+                <tr>
+                  <td>Cost</td>
+                  <td>Pay per request</td>
+                  <td>Infrastructure</td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td>AWS apps, simplicity</td>
+                  <td>Complex routing, on-prem</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 id="scaling-workers">Scaling Workers</h2>
+            <p>Queue depth grows. Messages pile up. How do you scale?</p>
+            <h3 id="horizontal-scaling">Horizontal Scaling</h3>
+            <p>Add more workers. Each pulls from the same queue independently.</p>
+            <pre><code class="language-text">Queue (1000 messages)
+  ├── Worker 1 (processing)
+  ├── Worker 2 (processing)
+  ├── Worker 3 (processing)
+  └── Worker 4 (processing)
+</code></pre>
+            <p>
+              Twice the workers = roughly half the time to clear the backlog. Works until you hit
+              other bottlenecks (database, external APIs).
+            </p>
+            <h3 id="auto-scaling-based-on-queue-depth">Auto-scaling Based on Queue Depth</h3>
+            <p>Don&#39;t run 10 workers at 3 AM when the queue is empty. Scale based on demand.</p>
+            <p>AWS example with CloudWatch:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> scalingPolicy <span class="o">=</span> <span class="u">{</span>
+  <span class="p">PolicyName:</span> <span class="s">&quot;scale-on-queue-depth&quot;</span><span class="u">,</span>
+  <span class="p">ServiceNamespace:</span> <span class="s">&quot;ecs&quot;</span><span class="u">,</span>
+  <span class="p">ResourceId:</span> <span class="s">&quot;service/cluster/image-processor&quot;</span><span class="u">,</span>
+  <span class="p">ScalableDimension:</span> <span class="s">&quot;ecs:service:DesiredCount&quot;</span><span class="u">,</span>
+  <span class="p">PolicyType:</span> <span class="s">&quot;TargetTrackingScaling&quot;</span><span class="u">,</span>
+  <span class="p">TargetTrackingScalingPolicyConfiguration:</span> <span class="u">{</span>
+    <span class="p">TargetValue:</span> <span class="n">100</span><span class="u">,</span>
+    <span class="p">CustomizedMetricSpecification:</span> <span class="u">{</span>
+      <span class="p">MetricName:</span> <span class="s">&quot;ApproximateNumberOfMessagesVisible&quot;</span><span class="u">,</span>
+      <span class="p">Namespace:</span> <span class="s">&quot;AWS/SQS&quot;</span><span class="u">,</span>
+      <span class="p">Dimensions:</span> <span class="u">[{</span> <span class="p">Name:</span> <span class="s">&quot;QueueName&quot;</span><span class="u">,</span> <span class="p">Value:</span> <span class="s">&quot;image-processing&quot;</span> <span class="u">}],</span>
+      <span class="p">Statistic:</span> <span class="s">&quot;Average&quot;</span><span class="u">,</span>
+    <span class="u">},</span>
+    <span class="p">ScaleInCooldown:</span> <span class="n">300</span><span class="u">,</span>
+    <span class="p">ScaleOutCooldown:</span> <span class="n">60</span><span class="u">,</span>
+  <span class="u">},</span>
+<span class="u">};</span>
+</code></pre>
+            <p>
+              Target: 100 messages per worker. Queue hits 500 messages? Spin up 5 workers. Queue
+              drains? Scale back down.
+            </p>
+            <h3 id="scaling-considerations">Scaling Considerations</h3>
+            <p>
+              <strong>Scale-out is faster than scale-in.</strong>
+              Spin up workers quickly (60s cooldown). Scale down slowly (300s cooldown). Prevents
+              flapping.
+            </p>
+            <p>
+              <strong>Workers should be stateless.</strong>
+              Any worker can process any message. No local state, no sticky sessions.
+            </p>
+            <p>
+              <strong>Watch downstream limits.</strong>
+              10 workers hammering a database that handles 5 concurrent connections = trouble. Add
+              connection pooling or rate limiting.
+            </p>
+            <p><strong>Batch processing helps.</strong> Instead of one message at a time:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">receiveMessage</span><span class="u">({</span>
+  <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
+  <span class="p">MaxNumberOfMessages:</span> <span class="n">10</span><span class="u">,</span>
+  <span class="p">WaitTimeSeconds:</span> <span class="n">20</span><span class="u">,</span>
+<span class="u">});</span>
+
+<span class="k">for</span> <span class="u">(</span><span class="k">const</span> message <span class="o">of</span> response<span class="u">.</span><span class="p">Messages</span> <span class="o">??</span> <span class="u">[])</span> <span class="u">{</span>
+  <span class="k">await</span> <span class="f">processMessage</span><span class="u">(</span>message<span class="u">);</span>
+  <span class="k">await</span> sqs<span class="u">.</span><span class="f">deleteMessage</span><span class="u">({</span>
+    <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
+    <span class="p">ReceiptHandle:</span> message<span class="u">.</span><span class="p">ReceiptHandle</span><span class="u">,</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>Fewer network round-trips. Higher throughput per worker.</p>
+            <h2 id="message-streams">Message Streams</h2>
+            <p>
+              Queues work great when all consumers do the same thing. But what if one event needs to
+              trigger multiple different operations?
+            </p>
+            <h3 id="the-multi-consumer-problem">The Multi-Consumer Problem</h3>
+            <p>
+              You&#39;re building an e-commerce platform. When a product is listed, you need to:
+            </p>
+            <ol>
+              <li>Index it in Elasticsearch (for search)</li>
+              <li>Update category counts in the database</li>
+              <li>Trigger recommendation engine retraining</li>
+            </ol>
+            <p>Three different operations from one event.</p>
+            <p><strong>Approach 1: One Queue, Consumer Does Everything</strong></p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/streams-approach-1.webp"
+                alt="One broker with consumer doing multiple things"
+                loading="lazy"
+              />
+            </p>
+            <p>Single RabbitMQ queue. Consumer handles all three:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">onProductListed</span><span class="u">(</span>event<span class="o">:</span> <span class="t">ProductListedEvent</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> elasticsearch<span class="u">.</span><span class="f">index</span><span class="u">({</span>
+    <span class="p">index:</span> <span class="s">&quot;products&quot;</span><span class="u">,</span>
+    <span class="p">id:</span> event<span class="u">.</span><span class="p">productId</span><span class="u">,</span>
+    <span class="p">body:</span> event<span class="u">.</span><span class="p">product</span><span class="u">,</span>
+  <span class="u">});</span>
+
+  <span class="k">await</span> db<span class="u">.</span>category<span class="u">.</span><span class="f">update</span><span class="u">({</span>
+    <span class="p">where:</span> <span class="u">{</span> <span class="p">id:</span> event<span class="u">.</span><span class="p">categoryId</span> <span class="u">},</span>
+    <span class="p">data:</span> <span class="u">{</span> <span class="p">productCount:</span> <span class="u">{</span> <span class="p">increment:</span> <span class="n">1</span> <span class="u">}</span> <span class="u">},</span>
+  <span class="u">});</span>
+
+  <span class="k">await</span> recommendationService<span class="u">.</span><span class="f">triggerRetrain</span><span class="u">(</span>event<span class="u">.</span><span class="p">categoryId</span><span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              <strong>Problem</strong>: What if Elasticsearch write succeeds but DB update fails?
+              Search shows the product, but category count is wrong. What if recommendation call
+              times out after DB succeeded? Inconsistent state.
+            </p>
+            <p><strong>Approach 2: Multiple Queues</strong></p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/streams-approach-2.webp"
+                alt="Two brokers with two sets of consumers"
+                loading="lazy"
+              />
+            </p>
+            <p>Three separate queues. API writes to all three:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">listProduct</span><span class="u">(</span>product<span class="o">:</span> <span class="t">Product</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> db<span class="u">.</span>product<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> product <span class="u">});</span>
+
+  <span class="k">await</span> searchQueue<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span> <span class="p">productId:</span> product<span class="u">.</span><span class="p">id</span><span class="u">,</span> product <span class="u">});</span>
+  <span class="k">await</span> categoryQueue<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span> <span class="p">categoryId:</span> product<span class="u">.</span><span class="p">categoryId</span> <span class="u">});</span>
+  <span class="k">await</span> recommendationQueue<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span> <span class="p">categoryId:</span> product<span class="u">.</span><span class="p">categoryId</span> <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              <strong>Problem</strong>: API writes to three places. What if write to first queue
+              succeeds, then API crashes before writing to others? Same inconsistency, just moved
+              upstream.
+            </p>
+            <p><strong>Root Cause</strong></p>
+            <p>
+              We&#39;re writing to multiple destinations. Any failure after a success = inconsistent
+              state.
+            </p>
+            <p>What we need: <strong>write once, read by many</strong>.</p>
+            <h3 id="enter-message-streams">Enter Message Streams</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/streams-vs-queues.webp"
+                alt="Message streams allow multiple consumer types to read the same message"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Message streams (Kafka, Kinesis) differ from queues in one key way:
+              <strong>multiple consumer types read the same message</strong>.
+            </p>
+            <p>In a queue:</p>
+            <ul>
+              <li>Message → one consumer</li>
+              <li>All consumers identical</li>
+              <li>Delete after processing</li>
+            </ul>
+            <p>In a stream:</p>
+            <ul>
+              <li>Message written once</li>
+              <li>Multiple consumer groups read independently</li>
+              <li>Each group iterates at its own pace</li>
+              <li>Messages retained (not deleted on read)</li>
+            </ul>
+            <p><strong>Approach 3: One Stream, Multiple Consumers</strong></p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/streams-approach-3.webp"
+                alt="Using Kafka with multiple consumer types"
+                loading="lazy"
+              />
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">listProduct</span><span class="u">(</span>product<span class="o">:</span> <span class="t">Product</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> db<span class="u">.</span>product<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> product <span class="u">});</span>
+
+  <span class="k">await</span> kafka<span class="u">.</span><span class="f">send</span><span class="u">({</span>
+    <span class="p">topic:</span> <span class="s">&quot;product-listed&quot;</span><span class="u">,</span>
+    <span class="p">messages:</span> <span class="u">[</span>
+      <span class="u">{</span>
+        <span class="p">key:</span> product<span class="u">.</span><span class="p">categoryId</span><span class="u">,</span>
+        <span class="p">value:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
+          <span class="p">productId:</span> product<span class="u">.</span><span class="p">id</span><span class="u">,</span>
+          <span class="p">categoryId:</span> product<span class="u">.</span><span class="p">categoryId</span><span class="u">,</span>
+          product<span class="u">,</span>
+        <span class="u">}),</span>
+      <span class="u">},</span>
+    <span class="u">],</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              API writes one message. Three consumer groups (search, category-counter,
+              recommendations) all read it independently.
+            </p>
+            <p>
+              Search consumer down? Category counter keeps working. Recommendations slow? Search
+              keeps indexing. Eventually, all three will have processed everything. Consistency
+              achieved.
+            </p>
+            <h3 id="queues-vs-streams">Queues vs Streams</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Queues (SQS, RabbitMQ)</th>
+                  <th>Streams (Kafka, Kinesis)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Consumer model</td>
+                  <td>One message → one consumer</td>
+                  <td>One message → multiple groups</td>
+                </tr>
+                <tr>
+                  <td>Message lifecycle</td>
+                  <td>Deleted after processing</td>
+                  <td>Retained for configured period</td>
+                </tr>
+                <tr>
+                  <td>Consumer types</td>
+                  <td>All do the same thing</td>
+                  <td>Different groups do different things</td>
+                </tr>
+                <tr>
+                  <td>After processing</td>
+                  <td>Delete</td>
+                  <td>Commit offset</td>
+                </tr>
+                <tr>
+                  <td>Replay</td>
+                  <td>No (message gone)</td>
+                  <td>Yes (reprocess from any offset)</td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td>Task distribution</td>
+                  <td>Event sourcing, multiple downstream</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3 id="kafka-basics">Kafka Basics</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/kafka.webp"
+                alt="Kafka is a distributed streaming platform"
+                loading="lazy"
+              />
+            </p>
+            <p>Kafka is the most popular stream. Core concepts every engineer should know:</p>
+            <p><strong>Topics and Partitions</strong></p>
+            <p>
+              A <strong>topic</strong> is a named category where messages live. Think of it like a
+              folder. All product-listing events go to the <code>product-listed</code> topic. All
+              order events go to the <code>orders</code> topic. Producers write to topics. Consumers
+              read from topics.
+            </p>
+            <p>
+              But a single topic can receive millions of messages per second. One consumer can&#39;t
+              keep up. You need parallelism.
+            </p>
+            <p>That&#39;s where <strong>partitions</strong> come in.</p>
+            <p>
+              A partition is a subset of a topic. It&#39;s an ordered, immutable sequence of
+              messages. Each message in a partition gets a sequential ID called an
+              <strong>offset</strong>.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/topics-partitions.webp"
+                alt="A topic split into multiple partitions, each with sequential offsets"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Key insight:
+              <strong>ordering is guaranteed within a partition, not across partitions</strong>.
+            </p>
+            <p>
+              If you send messages A, B, C to partition 0, consumers will always see A before B
+              before C. But if A goes to partition 0 and B goes to partition 1, no ordering
+              guarantee exists between them.
+            </p>
+            <p><strong>How Messages Get Assigned to Partitions</strong></p>
+            <p>When you send a message, Kafka decides which partition it goes to:</p>
+            <ol>
+              <li>
+                <strong>With a key</strong>: Kafka hashes the key and picks a partition. Same key
+                always goes to the same partition.
+              </li>
+              <li><strong>Without a key</strong>: Round-robin across partitions.</li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">await</span> kafka<span class="u">.</span><span class="f">send</span><span class="u">({</span>
+  <span class="p">topic:</span> <span class="s">&quot;product-listed&quot;</span><span class="u">,</span>
+  <span class="p">messages:</span> <span class="u">[</span>
+    <span class="u">{</span>
+      <span class="p">key:</span> categoryId<span class="u">,</span>
+      <span class="p">value:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>event<span class="u">),</span>
+    <span class="u">},</span>
+  <span class="u">],</span>
+<span class="u">});</span>
+</code></pre>
+            <p>
+              Using <code>categoryId</code> as the key means all products in the same category go to
+              the same partition. This guarantees ordering for category-related operations.
+            </p>
+            <p><strong>Why This Matters</strong></p>
+            <p>
+              Imagine you&#39;re updating category counts. Product A (category: electronics)
+              arrives, then Product B (category: electronics) arrives. If they go to different
+              partitions and different consumers process them, the count might be wrong.
+            </p>
+            <pre><code class="language-text">Without key:
+  Product A → Partition 0 → Consumer 1 → count = 1
+  Product B → Partition 1 → Consumer 2 → count = 1  (doesn&#39;t see Product A&#39;s update)
+  Final count: 1 (wrong, should be 2)
+
+With category key:
+  Product A → Partition 0 → Consumer 1 → count = 1
+  Product B → Partition 0 → Consumer 1 → count = 2  (sees Product A&#39;s update)
+  Final count: 2 (correct)
+</code></pre>
+            <p>
+              Same key = same partition = guaranteed ordering for that key. Different keys can
+              process in parallel without conflicts.
+            </p>
+            <p><strong>Consumer Groups</strong></p>
+            <p>A <strong>consumer group</strong> is a set of consumers sharing work on a topic:</p>
+            <pre><code class="language-text">Topic: product-listed (3 partitions)
+
+Search Group:
+├── Consumer 1 → Partition 0
+├── Consumer 2 → Partition 1
+└── Consumer 3 → Partition 2
+
+Category Counter Group:
+├── Consumer A → Partition 0, 1
+└── Consumer B → Partition 2
+</code></pre>
+            <p>Rules:</p>
+            <ul>
+              <li>One partition → one consumer (within a group)</li>
+              <li>Max parallelism = partition count</li>
+              <li>3 partitions, 5 consumers = 2 idle</li>
+            </ul>
+            <p><strong>Committing Offsets</strong></p>
+            <p>
+              Instead of deleting messages, you <strong>commit offsets</strong>. This is your
+              position in the partition:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> consumer <span class="o">=</span> kafka<span class="u">.</span><span class="f">consumer</span><span class="u">({</span> <span class="p">groupId:</span> <span class="s">&quot;search-indexer&quot;</span> <span class="u">});</span>
+
+<span class="k">await</span> consumer<span class="u">.</span><span class="f">subscribe</span><span class="u">({</span> <span class="p">topic:</span> <span class="s">&quot;product-listed&quot;</span> <span class="u">});</span>
+
+<span class="k">await</span> consumer<span class="u">.</span><span class="f">run</span><span class="u">({</span>
+  <span class="p">eachMessage:</span> <span class="k">async</span> <span class="u">({</span> topic<span class="u">,</span> partition<span class="u">,</span> message <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">{</span>
+    <span class="k">const</span> event <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">.</span>value<span class="u">?.</span><span class="f">toString</span><span class="u">()</span> <span class="o">??</span> <span class="s">&quot;{}&quot;</span><span class="u">);</span>
+
+    <span class="k">await</span> elasticsearch<span class="u">.</span><span class="f">index</span><span class="u">({</span>
+      <span class="p">index:</span> <span class="s">&quot;products&quot;</span><span class="u">,</span>
+      <span class="p">id:</span> event<span class="u">.</span><span class="p">productId</span><span class="u">,</span>
+      <span class="p">body:</span> event<span class="u">.</span><span class="p">product</span><span class="u">,</span>
+    <span class="u">});</span>
+  <span class="u">},</span>
+<span class="u">});</span>
+</code></pre>
+            <p>
+              Commit says &quot;I&#39;ve processed up to here.&quot; Consumer restarts? Resumes from
+              last committed offset.
+            </p>
+            <p><strong>Retention</strong></p>
+            <p>
+              Messages aren&#39;t deleted on read. They&#39;re kept based on
+              <strong>retention policy</strong>
+              (e.g., 7 days):
+            </p>
+            <ul>
+              <li><strong>Replay</strong>: New consumer groups can process historical messages</li>
+              <li>
+                <strong>Recovery</strong>: Bug in consumer? Fix it, reprocess from the beginning
+              </li>
+              <li>
+                <strong>Speed differences</strong>: Fast consumers don&#39;t wait for slow ones
+              </li>
+            </ul>
+            <pre><code class="language-text">Retention: 7 days
+
+Day 1: [msg1, msg2, msg3]
+Day 4: [msg1, msg2, msg3, ..., msg500]
+Day 8: [msg200, ..., msg700]  ← Old messages deleted
+</code></pre>
+            <h3 id="choosing-between-them">Choosing Between Them</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Choose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>One event → one type of work</td>
+                  <td>Queue</td>
+                </tr>
+                <tr>
+                  <td>One event → multiple types of work</td>
+                  <td>Stream</td>
+                </tr>
+                <tr>
+                  <td>Need to replay messages</td>
+                  <td>Stream</td>
+                </tr>
+                <tr>
+                  <td>Simple task distribution</td>
+                  <td>Queue</td>
+                </tr>
+                <tr>
+                  <td>Event sourcing / audit log</td>
+                  <td>Stream</td>
+                </tr>
+                <tr>
+                  <td>Multiple downstream systems need same events</td>
+                  <td>Stream</td>
+                </tr>
+                <tr>
+                  <td>Fire-and-forget notifications</td>
+                  <td>Queue</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 id="real-time-pub-sub">Real-time Pub/Sub</h2>
+            <p>
+              Queues and streams have something in common: consumers <strong>pull</strong> messages.
+              They ask for data when they&#39;re ready. This gives them flexibility. Each consumer
+              moves at its own pace while messages buffer.
+            </p>
+            <p>
+              But what if you don&#39;t want consumers to pull? What if you want to
+              <strong>push</strong>
+              data to them the moment it arrives?
+            </p>
+            <p>That&#39;s real-time Pub/Sub.</p>
+            <h3 id="push-vs-pull">Push vs Pull</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/async-processing/pubsub.webp"
+                alt="Pub/Sub pushes messages to subscribers instead of them pulling"
+                loading="lazy"
+              />
+            </p>
+            <p>In queues and streams:</p>
+            <ul>
+              <li>Consumer polls: &quot;Got anything for me?&quot;</li>
+              <li>Broker responds with messages (or nothing)</li>
+              <li>Consumer processes, comes back later</li>
+            </ul>
+            <p>In Pub/Sub:</p>
+            <ul>
+              <li>Subscriber connects and waits</li>
+              <li>Publisher sends message to channel</li>
+              <li>Broker immediately pushes to all connected subscribers</li>
+            </ul>
+            <p>No polling. No waiting. Instant delivery.</p>
+            <h3 id="redis-pub-sub">Redis Pub/Sub</h3>
+            <p>
+              Redis is famous for caching, but it also has a Pub/Sub system built in. Simple and
+              fast.
+            </p>
+            <p><strong>Publisher:</strong></p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> redis <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">publishConfigChange</span><span class="u">(</span>config<span class="o">:</span> <span class="t">AppConfig</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span><span class="s">&quot;config-updates&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>config<span class="u">));</span>
+<span class="u">}</span>
+</code></pre>
+            <p><strong>Subscriber:</strong></p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> subscriber <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
+
+subscriber<span class="u">.</span><span class="f">subscribe</span><span class="u">(</span><span class="s">&quot;config-updates&quot;</span><span class="u">);</span>
+
+subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;message&quot;</span><span class="u">,</span> <span class="u">(</span>channel<span class="u">,</span> message<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> config<span class="o">:</span> <span class="t">AppConfig</span> <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">);</span>
+  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`Received config update on ${channel}:`</span><span class="u">,</span> config<span class="u">);</span>
+  <span class="f">applyConfig</span><span class="u">(</span>config<span class="u">);</span>
+<span class="u">});</span>
+</code></pre>
+            <p>Publisher sends. All connected subscribers receive instantly.</p>
+            <h3 id="use-cases">Use Cases</h3>
+            <p><strong>1. Configuration Push</strong></p>
+            <p>
+              You have 50 API servers. An admin changes a feature flag. Instead of waiting for each
+              server to poll for changes, push the update to all of them immediately.
+            </p>
+            <pre><code class="language-text">Admin Dashboard → Redis Pub/Sub → All 50 API Servers
+                                  (instantly updated)
+</code></pre>
+            <p><strong>2. Message Broadcast</strong></p>
+            <p>
+              Chat applications. User sends a message. Server publishes to a channel. All connected
+              clients subscribed to that channel receive it in real-time.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">sendChatMessage</span><span class="u">(</span>roomId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> message<span class="o">:</span> <span class="t">ChatMessage</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> db<span class="u">.</span>message<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> message <span class="u">});</span>
+
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span><span class="s">`room:${roomId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>message<span class="u">));</span>
+<span class="u">}</span>
+</code></pre>
+            <p>All users in the room get the message pushed to them. No polling required.</p>
+            <p><strong>3. Real-time Notifications</strong></p>
+            <p>User gets a new follower. Push notification to their active sessions immediately.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">notifyNewFollower</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> follower<span class="o">:</span> <span class="t">User</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span>
+    <span class="s">`notifications:${userId}`</span><span class="u">,</span>
+    JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
+      <span class="p">type:</span> <span class="s">&quot;new_follower&quot;</span><span class="u">,</span>
+      <span class="p">follower:</span> <span class="u">{</span> <span class="p">id:</span> follower<span class="u">.</span><span class="p">id</span><span class="u">,</span> <span class="p">name:</span> follower<span class="u">.</span><span class="p">name</span> <span class="u">},</span>
+    <span class="u">}),</span>
+  <span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <h3 id="the-catch-no-buffering">The Catch: No Buffering</h3>
+            <p>
+              Here&#39;s the critical difference. Queues and streams buffer messages. Consumer
+              offline? Messages wait. Consumer comes back? Picks up where it left off.
+            </p>
+            <p>Pub/Sub doesn&#39;t buffer anything.</p>
+            <pre><code class="language-text">Timeline:
+  t=0: Subscriber A connects
+  t=1: Subscriber B connects
+  t=2: Publisher sends message → A and B receive it
+  t=3: Subscriber C connects
+  t=4: Publisher sends message → A, B, and C receive it
+
+  C never gets the message from t=2. It wasn&#39;t connected.
+</code></pre>
+            <p>
+              If you&#39;re not connected when the message is sent, you don&#39;t get it. Ever. The
+              message is gone.
+            </p>
+            <h3 id="when-to-use-what">When to Use What</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Need</th>
+                  <th>Solution</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Guaranteed delivery</td>
+                  <td>Queue or Stream</td>
+                </tr>
+                <tr>
+                  <td>Process later if offline</td>
+                  <td>Queue or Stream</td>
+                </tr>
+                <tr>
+                  <td>Replay historical messages</td>
+                  <td>Stream</td>
+                </tr>
+                <tr>
+                  <td>Instant push, connected only</td>
+                  <td>Pub/Sub</td>
+                </tr>
+                <tr>
+                  <td>Configuration broadcast</td>
+                  <td>Pub/Sub</td>
+                </tr>
+                <tr>
+                  <td>Real-time chat/notifications</td>
+                  <td>Pub/Sub</td>
+                </tr>
+                <tr>
+                  <td>Background job processing</td>
+                  <td>Queue</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              <strong>Pub/Sub is not a replacement for queues or streams.</strong>
+              It solves a different problem: low-latency push to connected clients. If reliability
+              matters more than speed, use a queue. If you need both, use a queue for persistence
+              and Pub/Sub for instant notification.
+            </p>
+            <h3 id="combining-them">Combining Them</h3>
+            <p>Common pattern: use both.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processOrder</span><span class="u">(</span>order<span class="o">:</span> <span class="t">Order</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> db<span class="u">.</span>order<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> order <span class="u">});</span>
+
+  <span class="k">await</span> sqs<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span>
+    <span class="p">QueueUrl:</span> ORDER_PROCESSING_QUEUE<span class="u">,</span>
+    <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>order<span class="u">),</span>
+  <span class="u">});</span>
+
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span>
+    <span class="s">`user:${order.</span><span class="p">userId</span><span class="s">}:orders`</span><span class="u">,</span>
+    JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span> <span class="p">type:</span> <span class="s">&quot;order_created&quot;</span><span class="u">,</span> <span class="p">orderId:</span> order<span class="u">.</span><span class="p">id</span> <span class="u">}),</span>
+  <span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              SQS ensures the order gets processed (even if workers are temporarily down). Redis
+              Pub/Sub notifies connected clients immediately. Best of both worlds.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              Async processing is essential for responsive systems. Task takes more than a few
+              seconds? Move it to the background.
+            </p>
+            <p>The pattern:</p>
+            <ol>
+              <li>Receive request</li>
+              <li>Create DB record (status: pending)</li>
+              <li>Push to queue or stream</li>
+              <li>Return immediately</li>
+              <li>Workers process and update status</li>
+              <li>User checks back or gets notified</li>
+            </ol>
+            <p>Three tools, three purposes:</p>
+            <p>
+              <strong>Queues</strong>
+              (SQS, RabbitMQ): One event, one type of work. Consumers pull. Messages deleted after
+              processing. Reliable delivery.
+            </p>
+            <p>
+              <strong>Streams</strong>
+              (Kafka, Kinesis): One event, multiple consumer types. Consumers pull. Messages
+              retained. Write once, read by many.
+            </p>
+            <p>
+              <strong>Pub/Sub</strong>
+              (Redis): Real-time push to connected subscribers. Zero buffering. Miss it if not
+              connected. Lowest latency.
+            </p>
+            <p>
+              Trade-off is complexity: queues to monitor, workers to scale, duplicates to handle.
+              But for long tasks, the UX win is worth it. Nobody wants to stare at a spinner for
+              five minutes.
+            </p>
+            <p>
+              I&#39;ve created a Kafka demo you can run locally:
+              <a href="https://github.com/pulkitxm/systems/tree/main/messaging/kafka"
+                >github.com/pulkitxm/systems/tree/main/messaging/kafka</a
+              >. It sets up Kafka with Docker Compose and includes producer/consumer scripts to see
+              topics, partitions, and consumer groups in action.
+            </p>
+            <p>
+              Start with RabbitMQ locally. Push messages, consume them. Try Kafka to see consumer
+              groups in action. Set up Redis Pub/Sub to feel the difference between pull and push.
+              Once you understand all three, you&#39;ll know exactly which fits each problem.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li>
+              <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
+            </li>
+            <li><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
+            <li><a href="/blogs/system-design/caching/">Caching</a></li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

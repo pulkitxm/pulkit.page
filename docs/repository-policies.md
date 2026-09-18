@@ -1,0 +1,53 @@
+# Repository text and dead-code policies
+
+The repository rejects source-code comments, literal em dash characters, and unused JavaScript/TypeScript code. These checks run locally, in GitHub CI, and against the staged index in pre-commit. They report failures without rewriting files.
+
+## Scope
+
+The inventory comes from `git ls-files --cached --others --exclude-standard --deduplicate`. It includes every existing tracked file, even files force-tracked inside ignored folders, and nonignored new files. Deleted working-tree paths are omitted. The pre-commit hook runs the same checks on a temporary staged snapshot, so unstaged repairs cannot hide staged violations.
+
+Known binary media and fonts have no source-code comment syntax and are excluded from text parsing. Other files must be valid UTF-8; unexpected binary data and repository symlinks fail. There is no directory exclusion for tracked documentation, generated pages, or fixtures.
+
+## No em dashes
+
+[check-em-dashes.mjs](../scripts/check-em-dashes.mjs) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, code examples, and generated HTML. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
+
+## No source-code comments
+
+[check-comments.mjs](../scripts/check-comments.mjs) parses syntax rather than searching every slash or hash as a comment.
+
+- Tree-sitter handles JavaScript, TypeScript, JSX/TSX, CSS, shell, Python, Ruby, Lua, Swift, Rust, C/C++, Java, Kotlin, Go, TOML, JSON/JSONC, and other explicitly registered languages.
+- YAML concrete-syntax tokens distinguish comments from quoted and block scalars.
+- Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except article examples under `content/blogs/`, which preserve their original comments.
+- parse5 finds HTML/SVG/XML comments, embedded scripts/styles, JSON-LD, and generated code examples. HTML entities in code examples are decoded before scanning, except rendered article examples under `pages/blogs/`. Actual HTML comments and embedded scripts/styles remain checked everywhere.
+- Small syntax-aware lexers handle SQL comments and quoted/dollar-quoted strings, hash-comment configuration languages, and Mermaid comments.
+- Python docstrings count as documentation comments. All lint directives, coverage directives, documentation comments, and license comments count as comments. Third-party plain-text license files remain ordinary text.
+
+A shebang at byte zero is executable interpreter metadata and is accepted. Strings containing comment-like characters are not comments. Plain-text output, HTTP examples, and math fences have no code-comment interpretation, but still participate in the em-dash check.
+
+Unknown source types and unknown fence languages cause a failure requesting an explicit parser registration. This prevents newly added languages from silently bypassing checks. The scanner uses error-tolerant syntax trees for partial tutorial snippets; it is a policy check, not a compiler or proof that example code is runnable. Article code examples retain their original comments and formatting.
+
+## Knip
+
+[knip.json](../knip.json) declares the browser entry point, actual CLI programs, manual importer, and tests. It scans project JavaScript/TypeScript/JSX/MDX source, excluding ignored reference and disposable build trees. `includeEntryExports` also checks unnecessary public exports in entry points.
+
+`bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. The manual importer has a real `import:reference` package command and remains intentional tooling. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
+
+Knip is static analysis, not a guarantee about runtime reachability or a CSS/image/Markdown garbage collector. Dynamic use must be modeled with an explicit legitimate entry point. Do not add every source file as an entry to silence unused-file findings. The existing generated-page sync check independently rejects orphan HTML.
+
+## Commands
+
+```sh
+bun run check:comments
+bun run check:em-dashes
+bun run check:dead-code
+bun run ci
+```
+
+For fixes, edit the source Markdown or code, run `bun run format`, regenerate with `bun run generate`, and rerun CI. Never fix generated HTML independently of its source.
+
+## Regression coverage
+
+[check-comments.test.js](../scripts/check-comments.test.js) covers quotes, regex URLs, JavaScript template interpolation, JSX, Python docstrings and multiline strings, shell parameter expansion and heredocs, YAML block scalars, JSONC, nested SQL/Swift comments, Lua block comments, embedded HTML languages, Markdown fences, generated code blocks, unsupported languages, offsets, and em dashes.
+
+[policy-ci.test.js](../scripts/policy-ci.test.js) verifies read-only failures for force-tracked ignored files and demonstrates that Knip fails on unused files, exports, and dependencies, then passes after those problems are removed.

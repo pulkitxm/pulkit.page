@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn why big data processing exists, how distributed computing works, and why tools like Apache Spark handle the heavy lifting so you can focus on business logic."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/system-design/big-data-tools/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Introduction to Big Data Tools | Pulkit" />
+    <meta
+      property="og:description"
+      content="Learn why big data processing exists, how distributed computing works, and why tools like Apache Spark handle the heavy lifting so you can focus on business logic."
+    />
+    <meta property="og:url" content="https://new.pulkit.page/blogs/system-design/big-data-tools/" />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/system-design/big-data-tools/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/system-design/big-data-tools/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Introduction to Big Data Tools" />
+    <meta property="article:published_time" content="2026-01-24" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Introduction to Big Data Tools | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Learn why big data processing exists, how distributed computing works, and why tools like Apache Spark handle the heavy lifting so you can focus on business logic."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/system-design/big-data-tools/card.png"
+    />
+    <meta name="twitter:image:alt" content="Introduction to Big Data Tools" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#image","contentUrl":"https://new.pulkit.page/og/blogs/system-design/big-data-tools/card.png","width":1200,"height":630,"caption":"Introduction to Big Data Tools"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#article","headline":"Introduction to Big Data Tools","description":"Learn why big data processing exists, how distributed computing works, and why tools like Apache Spark handle the heavy lifting so you can focus on business logic.","datePublished":"2026-01-24","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#image"},"url":"https://new.pulkit.page/blogs/system-design/big-data-tools/","inLanguage":"en","keywords":["System Design","Big Data","Distributed Systems","Apache Spark","Data Engineering"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://new.pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"Introduction to Big Data Tools","item":"https://new.pulkit.page/blogs/system-design/big-data-tools/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#webpage","url":"https://new.pulkit.page/blogs/system-design/big-data-tools/","name":"Introduction to Big Data Tools","description":"Learn why big data processing exists, how distributed computing works, and why tools like Apache Spark handle the heavy lifting so you can focus on business logic.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/system-design/big-data-tools/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Introduction to Big Data Tools | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/system-design/">System Design</a></li>
+            <li aria-current="page">Introduction to Big Data Tools</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Introduction to Big Data Tools</h1>
+            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Big data processing is all about a set of tools that help you process data in a
+              distributed fashion. When one machine is not capable of processing a huge amount of
+              data, we do divide and conquer.
+            </p>
+            <p>That&#39;s it. That&#39;s big data processing.</p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong>Big data processing</strong>
+                = divide and conquer when one machine isn&#39;t enough
+              </li>
+              <li>
+                <strong>Commodity hardware</strong>: Regular general-purpose machines, not
+                specialized expensive hardware
+              </li>
+              <li>
+                <strong>The problem</strong>: Data too large to fit on one machine, or computation
+                too slow on a single machine
+              </li>
+              <li>
+                <strong>The solution</strong>: Distribute the workload across multiple machines
+              </li>
+              <li><strong>Coordinator pattern</strong>: One node coordinates, others execute</li>
+              <li>
+                <strong>Why tools exist</strong>: They handle failures, recovery, scaling,
+                completion, and cleanup
+              </li>
+              <li><strong>You focus on</strong>: Business logic only</li>
+              <li>
+                <strong>Start with</strong>: Apache Spark. It&#39;s the most essential big data tool
+              </li>
+            </ul>
+            <h2 id="the-problem">The Problem</h2>
+            <p>
+              Companies use big data tools to process massive amounts of data and extract insights.
+              Train machine learning models. Move data across databases. Feed data into sales
+              systems, advertisement platforms, and everything else.
+            </p>
+            <p>
+              Big data processing isn&#39;t just about sums, counts, mins, and maxes. It&#39;s about
+              copying data to other places, transforming data, enriching data. All of this on
+              commodity hardware.
+            </p>
+            <p>
+              <strong>Commodity hardware</strong>
+              means normal general-purpose computation machines you get on any cloud. Not
+              specialized hardware. Specialized hardware is expensive. Commodity hardware is
+              everywhere.
+            </p>
+            <h2 id="word-frequency-a-simple-example">Word Frequency: A Simple Example</h2>
+            <p>
+              Let&#39;s count word frequency. You have a 1 TB text dataset. For each word, you want
+              to know how many times it occurred.
+            </p>
+            <h3 id="approach-1-simple">Approach 1: Simple</h3>
+            <p>The simple approach:</p>
+            <ol>
+              <li>Load the entire 1 TB dataset on one machine</li>
+              <li>Read character by character</li>
+              <li>When you encounter a space, update an in-memory hash table</li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> wordFreq<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+
+<span class="k">function</span> <span class="f">processWord</span><span class="u">(</span>word<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  <span class="k">const</span> count <span class="o">=</span> wordFreq<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
+  wordFreq<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> count <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              This runs in O(n) time. You traverse the entire file exactly once. Build the hash map.
+              Done.
+            </p>
+            <p>But can you make it faster? Can you parallelize it?</p>
+            <h3 id="approach-2-threads">Approach 2: Threads</h3>
+            <p>You can easily parallelize this code. Each thread handles a chunk of the file.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processChunk</span><span class="u">(</span>start<span class="o">:</span> <span class="t">number</span><span class="u">,</span> end<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> localFreq<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> start<span class="u">;</span> i <span class="o">&lt;</span> end<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> word <span class="o">=</span> <span class="f">getWordAt</span><span class="u">(</span>i<span class="u">);</span>
+    <span class="k">const</span> count <span class="o">=</span> localFreq<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
+    localFreq<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> count <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> localFreq<span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">const</span> chunkSize <span class="o">=</span> fileSize <span class="o">/</span> threadCount<span class="u">;</span>
+<span class="k">const</span> results <span class="o">=</span> <span class="k">await</span> <span class="t">Promise</span><span class="u">.</span><span class="f">all</span><span class="u">(</span>
+  threads<span class="u">.</span><span class="f">map</span><span class="u">((</span>_<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">processChunk</span><span class="u">(</span>i <span class="o">*</span> chunkSize<span class="u">,</span> <span class="u">(</span>i <span class="o">+</span> <span class="n">1</span><span class="u">)</span> <span class="o">*</span> chunkSize<span class="u">)),</span>
+<span class="u">);</span>
+
+<span class="k">const</span> finalFreq <span class="o">=</span> <span class="f">mergeResults</span><span class="u">(</span>results<span class="u">);</span>
+</code></pre>
+            <p>If you have 10 threads, each handles 100 GB. You get roughly 10x speed benefit.</p>
+            <p>But what if data is 100 TB? Something that doesn&#39;t fit on one machine?</p>
+            <p>
+              Or what if the computation itself is slow, and you only have 2 CPUs? What will 100
+              threads do on 2 CPUs? Nothing useful.
+            </p>
+            <p>
+              But if you have 10 machines, each with 2 threads, you get 20 threads actually working
+              in parallel. Much faster.
+            </p>
+            <p>This is distributed computing.</p>
+            <h3 id="approach-3-distributed-computing">Approach 3: Distributed Computing</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/big-data-tools/distributed-computing.webp"
+                alt="Distributed computing splits data into partitions across multiple servers"
+                loading="lazy"
+              />
+            </p>
+            <p>The idea:</p>
+            <ol>
+              <li>Split the file into partitions (say 10 partitions of 100 GB each)</li>
+              <li>Distribute partitions across multiple servers</li>
+              <li>Each server computes word frequency independently</li>
+              <li>Send results to one coordinator machine</li>
+              <li>Coordinator merges results</li>
+              <li>Return final result</li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Partition</span> <span class="u">{</span>
+  id<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+  data<span class="o">:</span> <span class="t">Buffer</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">interface</span> <span class="t">WorkerResult</span> <span class="u">{</span>
+  workerId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  frequencies<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;;</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">distributeWork</span><span class="u">(</span>partitions<span class="o">:</span> <span class="t">Partition</span><span class="u">[],</span> workers<span class="o">:</span> <span class="t">Worker</span><span class="u">[])</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  partitions<span class="u">.</span><span class="f">forEach</span><span class="u">((</span>partition<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+    <span class="k">const</span> worker <span class="o">=</span> workers<span class="u">[</span>i <span class="o">%</span> workers<span class="u">.</span>length<span class="u">];</span>
+    worker<span class="u">.</span><span class="f">process</span><span class="u">(</span>partition<span class="u">);</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">mergeResults</span><span class="u">(</span>results<span class="o">:</span> <span class="t">WorkerResult</span><span class="u">[])</span><span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> final<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> result <span class="o">of</span> results<span class="u">)</span> <span class="u">{</span>
+    <span class="k">for</span> <span class="u">(</span><span class="k">const</span> <span class="u">[</span>word<span class="u">,</span> count<span class="u">]</span> <span class="o">of</span> result<span class="u">.</span><span class="p">frequencies</span><span class="u">)</span> <span class="u">{</span>
+      <span class="k">const</span> existing <span class="o">=</span> final<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
+      final<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> existing <span class="o">+</span> count<span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> final<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <h2 id="the-coordinator-pattern">The Coordinator Pattern</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/big-data-tools/coordinator-pattern.webp"
+                alt="User submits job to coordinator which distributes work to workers"
+                loading="lazy"
+              />
+            </p>
+            <p>The flow looks like this:</p>
+            <ol>
+              <li>You submit a job to the <strong>coordinator</strong></li>
+              <li>Coordinator splits the file into partitions</li>
+              <li>Coordinator assigns partitions to <strong>workers</strong></li>
+              <li>Workers process their chunks</li>
+              <li>Workers send results back to coordinator</li>
+              <li>Coordinator merges everything</li>
+              <li>Coordinator returns the final result</li>
+            </ol>
+            <p>
+              The coordinator orchestrates the entire execution across multiple machines, gathers
+              results, and sends them back to you.
+            </p>
+            <h2 id="why-we-need-big-data-tools">Why We Need Big Data Tools</h2>
+            <p>Now think about what can go wrong:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Challenge</th>
+                  <th>Question</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Failures</strong></td>
+                  <td>What if a worker crashes while processing its 100 GB partition?</td>
+                </tr>
+                <tr>
+                  <td><strong>Recovery</strong></td>
+                  <td>Who takes care of re-processing the failed chunk?</td>
+                </tr>
+                <tr>
+                  <td><strong>Completion</strong></td>
+                  <td>What if a worker partially computed but never sent a response?</td>
+                </tr>
+                <tr>
+                  <td><strong>Scaling</strong></td>
+                  <td>What if we need to add more workers?</td>
+                </tr>
+                <tr>
+                  <td><strong>Error Handling</strong></td>
+                  <td>Who reports what went wrong and where?</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Someone has to take ownership. The coordinator does.</p>
+            <p>
+              But do we have to write this coordinator every time? Can&#39;t a good open-source tool
+              handle this once and for all?
+            </p>
+            <p><strong>This is exactly what big data tools do.</strong></p>
+            <p>
+              <img
+                src="/assets/content/blogs/big-data-tools/tools-value.webp"
+                alt="Big data tools handle distribution, failures, recovery so you focus on business logic"
+                loading="lazy"
+              />
+            </p>
+            <p>You write the business logic. The tool handles:</p>
+            <ul>
+              <li>Distribution across machines</li>
+              <li>Failure detection and recovery</li>
+              <li>Ensuring completion</li>
+              <li>Scaling up and down</li>
+              <li>Error reporting and logging</li>
+              <li>Data transformation</li>
+              <li>Cleanup after job completion</li>
+            </ul>
+            <p>
+              When the job is complete, the tool cleans up temporary files, prepares for the next
+              job. You don&#39;t worry about any of it.
+            </p>
+            <h2 id="apache-spark">Apache Spark</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/big-data-tools/spark-architecture.webp"
+                alt="Spark master node coordinates worker nodes for distributed processing"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Spark is the most popular big data processing tool. It does large-scale data
+              processing on commodity hardware.
+            </p>
+            <p>
+              One Spark node is the <strong>master</strong>. Everyone else is a
+              <strong>worker</strong>. They do what you ask them to do.
+            </p>
+            <p>Spark handles:</p>
+            <ul>
+              <li>Distribution of work</li>
+              <li>Completion guarantees</li>
+              <li>Fault tolerance (if a worker goes down, reassign its chunk to another worker)</li>
+            </ul>
+            <h3 id="example-data-warehouse-etl">Example: Data Warehouse ETL</h3>
+            <p>Say you want to combine data from:</p>
+            <ul>
+              <li>Users database (MySQL)</li>
+              <li>Orders database (PostgreSQL)</li>
+              <li>Payments database (MongoDB)</li>
+              <li>Logistics database (something else)</li>
+            </ul>
+            <p>And put everything into a data warehouse like Amazon Redshift.</p>
+            <p>
+              One machine reading from all these databases, merging, transforming, and writing? Very
+              slow.
+            </p>
+            <p>Doing it in a distributed way? Fast.</p>
+            <p>
+              Spark has connectors for almost all popular databases. You don&#39;t have to know the
+              dialect of each database. You use simple DataFrames:
+            </p>
+            <pre
+            ><code class="language-python">users_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> mysql_url<span class="u">).</span>load<span class="u">()</span>
+orders_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> postgres_url<span class="u">).</span>load<span class="u">()</span>
+payments_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;mongodb&quot;</span><span class="u">).</span>load<span class="u">()</span>
+
+combined <span class="o">=</span> users_df<span class="u">.</span>join<span class="u">(</span>orders_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">).</span>join<span class="u">(</span>payments_df<span class="u">,</span> <span class="s">&quot;order_id&quot;</span><span class="u">)</span>
+
+combined<span class="u">.</span>write<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> redshift_url<span class="u">).</span>save<span class="u">()</span>
+</code></pre>
+            <p>Spark ensures no row or document is missed. That&#39;s its job.</p>
+            <h3 id="example-event-enrichment">Example: Event Enrichment</h3>
+            <p>
+              You&#39;re getting user events into Kafka. A blog is published. You want to enrich
+              those events with:
+            </p>
+            <ul>
+              <li>Who published the blog?</li>
+              <li>Is this a paid user?</li>
+            </ul>
+            <p>Then send enriched events to Elasticsearch for visualization.</p>
+            <p>
+              One machine making two database calls per event, enriching, and writing? Not scalable.
+            </p>
+            <p>
+              Multiple machines reading from Kafka, making calls, enriching, writing to
+              Elasticsearch? That scales.
+            </p>
+            <pre
+            ><code class="language-python">events <span class="o">=</span> spark<span class="u">.</span>readStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;kafka&quot;</span><span class="u">).</span>load<span class="u">()</span>
+
+enriched <span class="o">=</span> events<span class="u">.</span>join<span class="u">(</span>users_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">)</span>
+enriched <span class="o">=</span> enriched<span class="u">.</span>withColumn<span class="u">(</span><span class="s">&quot;is_paid&quot;</span><span class="u">,</span> users_df<span class="u">[</span><span class="s">&quot;subscription&quot;</span><span class="u">]</span> <span class="o">==</span> <span class="s">&quot;paid&quot;</span><span class="u">)</span>
+
+enriched<span class="u">.</span>writeStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;elasticsearch&quot;</span><span class="u">).</span>start<span class="u">()</span>
+</code></pre>
+            <p>
+              Big data processing isn&#39;t just about aggregations. It&#39;s about any computation
+              you want to do in a distributed fashion.
+            </p>
+            <h2 id="other-big-data-tools">Other Big Data Tools</h2>
+            <p>Spark is the most famous, but there are many others:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tool</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Apache Spark</td>
+                  <td>General-purpose batch/stream</td>
+                </tr>
+                <tr>
+                  <td>Apache Flink</td>
+                  <td>Stream processing</td>
+                </tr>
+                <tr>
+                  <td>Apache Kafka</td>
+                  <td>Event streaming</td>
+                </tr>
+                <tr>
+                  <td>Apache Airflow</td>
+                  <td>Workflow orchestration</td>
+                </tr>
+                <tr>
+                  <td>Airbyte</td>
+                  <td>Data integration</td>
+                </tr>
+                <tr>
+                  <td>Apache Hadoop</td>
+                  <td>Distributed storage + compute</td>
+                </tr>
+                <tr>
+                  <td>HDFS</td>
+                  <td>Distributed file system</td>
+                </tr>
+                <tr>
+                  <td>MapReduce</td>
+                  <td>Batch processing (legacy)</td>
+                </tr>
+                <tr>
+                  <td>Apache Pinot</td>
+                  <td>Real-time analytics</td>
+                </tr>
+                <tr>
+                  <td>Apache NiFi</td>
+                  <td>Data flow automation</td>
+                </tr>
+                <tr>
+                  <td>DuckDB</td>
+                  <td>In-process analytics</td>
+                </tr>
+                <tr>
+                  <td>Apache Presto</td>
+                  <td>Distributed SQL queries</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Each tool solves a specific niche. Spark is the essential one. Everything else is
+              optional but useful depending on your use case.
+            </p>
+            <h2 id="the-core-concept">The Core Concept</h2>
+            <p>No matter which tool you use, the concept remains the same:</p>
+            <ol>
+              <li><strong>One node can&#39;t do it</strong> → distribute the work</li>
+              <li><strong>Who handles distribution?</strong> → the tool</li>
+              <li><strong>Who handles completion?</strong> → the tool</li>
+              <li><strong>Who handles failures?</strong> → the tool</li>
+              <li><strong>Who handles recovery?</strong> → the tool</li>
+              <li><strong>What do you do?</strong> → write business logic</li>
+            </ol>
+            <p>
+              The tool takes care of all the mundane things. People implemented it once,
+              open-sourced it, and everyone uses it.
+            </p>
+            <h2 id="practice">Practice</h2>
+            <p>To understand Spark:</p>
+            <ol>
+              <li>
+                <p><strong>Set up Spark locally</strong></p>
+              </li>
+              <li>
+                <p>
+                  <strong>Process sample data</strong>: Take a sales dataset and write Spark jobs to
+                  generate insights
+                </p>
+              </li>
+            </ol>
+            <pre
+            ><code class="language-python">sales_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>csv<span class="u">(</span><span class="s">&quot;sales.csv&quot;</span><span class="u">,</span> header<span class="o">=</span><span class="k">True</span><span class="u">)</span>
+
+sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&quot;product&quot;</span><span class="u">).</span>agg<span class="u">({</span><span class="s">&quot;amount&quot;</span><span class="u">:</span> <span class="s">&quot;sum&quot;</span><span class="u">}).</span>show<span class="u">()</span>
+
+sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&quot;region&quot;</span><span class="u">).</span>count<span class="u">().</span>show<span class="u">()</span>
+</code></pre>
+            <ol start="3">
+              <li>
+                <strong>Learn Spark Streaming</strong>: Connect Spark with Kafka. Process events as
+                they arrive
+              </li>
+            </ol>
+            <pre
+            ><code class="language-python">events <span class="o">=</span> spark<span class="u">.</span>readStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;kafka&quot;</span><span class="u">)</span> <span class="u">\</span>
+    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;kafka.bootstrap.servers&quot;</span><span class="u">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="u">)</span> <span class="u">\</span>
+    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;subscribe&quot;</span><span class="u">,</span> <span class="s">&quot;blog_published&quot;</span><span class="u">)</span> <span class="u">\</span>
+    <span class="u">.</span>load<span class="u">()</span>
+
+enriched <span class="o">=</span> events<span class="u">.</span>join<span class="u">(</span>users_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">)</span>
+
+query <span class="o">=</span> enriched<span class="u">.</span>writeStream <span class="u">\</span>
+    <span class="u">.</span>format<span class="u">(</span><span class="s">&quot;json&quot;</span><span class="u">)</span> <span class="u">\</span>
+    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;path&quot;</span><span class="u">,</span> <span class="s">&quot;/output/enriched&quot;</span><span class="u">)</span> <span class="u">\</span>
+    <span class="u">.</span>start<span class="u">()</span>
+</code></pre>
+            <p>For each event, enrich it with user details and flush to disk.</p>
+            <p>
+              You don&#39;t need multiple machines to learn. Do it on your local machine to build
+              understanding.
+            </p>
+            <h2 id="key-takeaways">Key Takeaways</h2>
+            <ol>
+              <li>
+                <p>
+                  <strong>Big data = divide and conquer</strong>: When one machine isn&#39;t enough
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Commodity hardware</strong>: Regular machines, not specialized expensive
+                  ones
+                </p>
+              </li>
+              <li>
+                <p><strong>Coordinator pattern</strong>: One node coordinates, others execute</p>
+              </li>
+              <li>
+                <p>
+                  <strong>Tools handle the hard stuff</strong>: Distribution, failures, recovery,
+                  completion, cleanup
+                </p>
+              </li>
+              <li>
+                <p><strong>You focus on business logic</strong>: The tool does everything else</p>
+              </li>
+              <li>
+                <p>
+                  <strong>Start with Spark</strong>: It&#39;s the most essential big data tool.
+                  Spark Streaming for real-time processing
+                </p>
+              </li>
+            </ol>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              Big data processing exists because one machine can&#39;t handle everything. You
+              distribute the work across multiple machines. But managing that distribution, handling
+              failures, ensuring completion, that&#39;s complex.
+            </p>
+            <p>
+              Big data tools solve this. You write business logic. The tool handles distribution,
+              failures, recovery, and cleanup.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Without Big Data Tools</th>
+                  <th>With Big Data Tools</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Write coordinator from scratch</td>
+                  <td>Coordinator built-in</td>
+                </tr>
+                <tr>
+                  <td>Handle failures manually</td>
+                  <td>Automatic failure recovery</td>
+                </tr>
+                <tr>
+                  <td>Ensure completion yourself</td>
+                  <td>Guaranteed completion</td>
+                </tr>
+                <tr>
+                  <td>Clean up temporary files manually</td>
+                  <td>Automatic cleanup</td>
+                </tr>
+                <tr>
+                  <td>Write connectors for each DB</td>
+                  <td>Connectors for all major databases</td>
+                </tr>
+                <tr>
+                  <td>Reinvent the wheel every time</td>
+                  <td>Focus only on business logic</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Start with Apache Spark. Learn DataFrames. Learn Spark Streaming. That foundation will
+              serve you well across the entire big data ecosystem.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
+            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
+            <li><a href="/blogs/system-design/high-availability/">High Availability</a></li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

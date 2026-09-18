@@ -1,0 +1,1217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/system-design/high-availability/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="High Availability | Pulkit" />
+    <meta
+      property="og:description"
+      content="Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery."
+    />
+    <meta
+      property="og:url"
+      content="https://new.pulkit.page/blogs/system-design/high-availability/"
+    />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/system-design/high-availability/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/system-design/high-availability/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="High Availability" />
+    <meta property="article:published_time" content="2026-01-23" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="High Availability | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/system-design/high-availability/card.png"
+    />
+    <meta name="twitter:image:alt" content="High Availability" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/system-design/high-availability/#image","contentUrl":"https://new.pulkit.page/og/blogs/system-design/high-availability/card.png","width":1200,"height":630,"caption":"High Availability"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/system-design/high-availability/#article","headline":"High Availability","description":"Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery.","datePublished":"2026-01-23","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/high-availability/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/system-design/high-availability/#image"},"url":"https://new.pulkit.page/blogs/system-design/high-availability/","inLanguage":"en","keywords":["System Design","High Availability","Distributed Systems","Leader Election"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/system-design/high-availability/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://new.pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"High Availability","item":"https://new.pulkit.page/blogs/system-design/high-availability/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/system-design/high-availability/#webpage","url":"https://new.pulkit.page/blogs/system-design/high-availability/","name":"High Availability","description":"Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/high-availability/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/system-design/high-availability/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/system-design/high-availability/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>High Availability | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/system-design/">System Design</a></li>
+            <li aria-current="page">High Availability</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>High Availability</h1>
+            <p class="detail-meta"><time datetime="2026-01-23">2026-01-23</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Your server crashes. That&#39;s annoying, but manageable. Spin up another one, route
+              traffic there. API servers are typically stateless. Losing one is like losing a waiter
+              at a restaurant: inconvenient, but the kitchen keeps cooking.
+            </p>
+            <p>
+              Now imagine your database crashes. Not just &quot;process died and needs
+              restart.&quot; The disk failed. Corrupted. Unrecoverable. All your user data, orders,
+              transactions: gone. That&#39;s not inconvenience. That&#39;s a business-ending
+              catastrophe.
+            </p>
+            <p>
+              This is why redundancy matters. You can&#39;t prevent failures. You can survive them.
+            </p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <p><strong>Data Redundancy:</strong></p>
+            <ul>
+              <li>
+                <strong>Stateless vs stateful</strong>: API servers are replaceable. Databases hold
+                your business. Treat them differently
+              </li>
+              <li>
+                <strong>Redundancy is survival</strong>: When data loss happens, having copies is
+                the difference between recovery and shutdown
+              </li>
+              <li>
+                <strong>Multiple levels</strong>: Redundancy can be at row, table, or database
+                level. Choose based on criticality
+              </li>
+              <li>
+                <strong>Backup and restore</strong>: Daily incremental + weekly full backups.
+                Simple, effective, essential
+              </li>
+              <li>
+                <strong>Continuous redundancy</strong>: Real-time replication to a standby database.
+                Zero data loss on failure
+              </li>
+              <li>
+                <strong>Cross-region backups</strong>: One copy in another data center. Natural
+                disasters can&#39;t kill your business
+              </li>
+              <li>
+                <strong>Sync vs async replication</strong>: Sync is safer, async is faster. Pick
+                based on your tolerance for data loss
+              </li>
+              <li>
+                <strong>Standby replicas</strong>: Dedicated copy that doesn&#39;t serve traffic.
+                Just waits for disaster
+              </li>
+              <li>
+                <strong>Automatic failover</strong>: Detect failure, promote replica, redirect
+                traffic. Minimal downtime
+              </li>
+            </ul>
+            <p><strong>Leader Election:</strong></p>
+            <ul>
+              <li>
+                <strong>The monitoring problem</strong>: Someone needs to watch your servers. But
+                who watches the watcher?
+              </li>
+              <li>
+                <strong>Orchestrators</strong>: Components that monitor servers and spin up
+                replacements when needed
+              </li>
+              <li>
+                <strong>The recursion problem</strong>: Orchestrators need orchestrators. Where does
+                it stop?
+              </li>
+              <li>
+                <strong>Leader election as base case</strong>: The point where your system can
+                self-heal without external intervention
+              </li>
+              <li>
+                <strong>Leader-follower setup</strong>: One leader monitors workers, workers monitor
+                servers, workers elect new leader if needed
+              </li>
+              <li>
+                <strong>Zero human intervention</strong>: System recovers automatically from any
+                single point of failure
+              </li>
+            </ul>
+            <h2 id="why-databases-are-different">Why Databases Are Different</h2>
+            <p>
+              API servers sit behind a load balancer. Request comes in, any server can handle it. If
+              server 3 goes down, servers 1, 2, and 4 pick up the slack. The only impact? Requests
+              mid-flight on server 3 fail. Users retry, life goes on.
+            </p>
+            <pre><code class="language-text">Load Balancer
+     │
+     ├── API Server 1 ✓
+     ├── API Server 2 ✓
+     ├── API Server 3 ✗ (crashed)
+     └── API Server 4 ✓
+
+Traffic automatically routes to healthy servers.
+</code></pre>
+            <p>
+              This works because API servers don&#39;t remember anything. They&#39;re stateless.
+              Every request carries all the information needed. Server 1 handles your login, server
+              4 handles your next page load. Neither server cares.
+            </p>
+            <p>
+              Databases are the opposite. They hold your state. Your users. Your orders. Your
+              payment history. Your entire business.
+            </p>
+            <pre><code class="language-text">Single Database
+     │
+     └── 💾 All your data
+         (users, orders, payments, everything)
+
+If this fails catastrophically, you&#39;re done.
+</code></pre>
+            <p>
+              When your database disk fails, you can&#39;t just &quot;spin up another one.&quot;
+              There&#39;s no other copy. The data doesn&#39;t exist anywhere else. You&#39;re not
+              debugging a bug. You&#39;re explaining to customers why their accounts vanished.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/stateless-vs-stateful.webp"
+                alt="API servers are stateless and replaceable, databases are stateful and critical"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              This isn&#39;t theoretical.
+              <a href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31"
+                >GitLab famously lost 6 hours of production data in 2017</a
+              >. A combination of human error and incomplete backups. They had 5 different backup
+              mechanisms. None worked correctly when needed.
+            </p>
+            <p>
+              The lesson: redundancy isn&#39;t optional. It&#39;s how your business survives the
+              inevitable.
+            </p>
+            <h2 id="levels-of-redundancy">Levels of Redundancy</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/redundancy-levels.webp"
+                alt="Redundancy can be implemented at different granularities"
+                loading="lazy"
+              />
+            </p>
+            <p>When you think about making data redundant, the first question is: at what level?</p>
+            <h3 id="row-or-document-level">Row or Document Level</h3>
+            <p>
+              Replicate individual records across databases. Useful for specific high-value data.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createCriticalRecord</span><span class="u">(</span>data<span class="o">:</span> <span class="t">CriticalData</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> primaryDb<span class="u">.</span><span class="f">insert</span><span class="u">(</span><span class="s">&quot;critical_records&quot;</span><span class="u">,</span> data<span class="u">);</span>
+  <span class="k">await</span> secondaryDb<span class="u">.</span><span class="f">insert</span><span class="u">(</span><span class="s">&quot;critical_records&quot;</span><span class="u">,</span> data<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Financial transactions, user authentication data, audit logs. Things where losing a
+              single record is unacceptable.
+            </p>
+            <h3 id="table-level">Table Level</h3>
+            <p>
+              Dump entire tables and restore them elsewhere. Useful for periodic snapshots of
+              important data.
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">pg_dump</span> <span class="s">-t</span> <span class="s">users</span> <span class="s">-t</span> <span class="s">orders</span> <span class="s">mydb</span> <span class="o">&gt;</span> <span class="s">critical_tables.sql</span>
+</code></pre>
+            <h3 id="database-level">Database Level</h3>
+            <p>
+              Full database backup or real-time replication. The most common approach for complete
+              protection.
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">pg_basebackup</span> <span class="s">-D</span> <span class="s">/backup/postgres</span> <span class="s">-Fp</span> <span class="s">-Xs</span> <span class="s">-P</span>
+</code></pre>
+            <p>
+              The right level depends on what you&#39;re protecting and how much you can afford to
+              lose.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Protection</th>
+                  <th>Complexity</th>
+                  <th>Recovery Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Row</td>
+                  <td>Individual items</td>
+                  <td>High</td>
+                  <td>Instant</td>
+                </tr>
+                <tr>
+                  <td>Table</td>
+                  <td>Critical tables</td>
+                  <td>Medium</td>
+                  <td>Minutes</td>
+                </tr>
+                <tr>
+                  <td>Database</td>
+                  <td>Everything</td>
+                  <td>Low</td>
+                  <td>Minutes-Hours</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Most systems use database-level redundancy as the foundation, with additional
+              row-level protection for the most critical data.
+            </p>
+            <h2 id="backup-and-restore">Backup and Restore</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/backup-strategy.webp"
+                alt="Backup strategy with daily incremental and weekly full backups"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              The simplest form of redundancy. Take copies of your data regularly. Store them
+              somewhere safe. If disaster strikes, restore from the most recent backup.
+            </p>
+            <h3 id="the-basic-strategy">The Basic Strategy</h3>
+            <p>
+              <strong>Daily incremental backups</strong>: Capture what changed since the last
+              backup. Small, fast, low overhead.
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">pg_dump</span> <span class="s">--data-only</span> <span class="s">--inserts</span> <span class="s">mydb</span> <span class="o">&gt;</span> <span class="s">incremental_</span><span class="u">$(</span><span class="f">date</span> <span class="s">+%Y%m%d</span><span class="u">)</span><span class="s">.sql</span>
+</code></pre>
+            <p>
+              <strong>Weekly full backups</strong>: Complete snapshot of everything. Larger, slower,
+              but comprehensive.
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">pg_basebackup</span> <span class="s">-D</span> <span class="s">/backup/full_</span><span class="u">$(</span><span class="f">date</span> <span class="s">+%Y%m%d</span><span class="u">)</span> <span class="s">-Fp</span> <span class="s">-Xs</span> <span class="s">-P</span>
+</code></pre>
+            <p>
+              <strong>Cross-region copy</strong>: At least one copy in a different data center. Fire
+              floods the building? Your data survives in another continent.
+            </p>
+            <pre><code class="language-text">Primary DC (Mumbai)
+├── Daily incremental (local)
+├── Weekly full (local)
+└── Weekly full (replicated to Singapore)
+</code></pre>
+            <h3 id="the-recovery-point-objective">The Recovery Point Objective</h3>
+            <p>When disaster strikes at 3 PM on Wednesday, how much data do you lose?</p>
+            <p>
+              If your last backup was Tuesday night, you lose everything from Wednesday. Every order
+              placed. Every user registered. Every payment processed. Gone.
+            </p>
+            <p>
+              This is your <strong>Recovery Point Objective (RPO)</strong>: the maximum acceptable
+              data loss measured in time.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Backup Frequency</th>
+                  <th>Worst-case Data Loss</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Daily</td>
+                  <td>Up to 24 hours</td>
+                </tr>
+                <tr>
+                  <td>Hourly</td>
+                  <td>Up to 1 hour</td>
+                </tr>
+                <tr>
+                  <td>Every 15 minutes</td>
+                  <td>Up to 15 minutes</td>
+                </tr>
+                <tr>
+                  <td>Real-time</td>
+                  <td>Near zero</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              An e-commerce site doing ₹10 lakhs in daily sales can&#39;t afford to lose a day of
+              orders. A personal blog probably can. Your RPO determines your backup frequency.
+            </p>
+            <h3 id="the-recovery-time-objective">The Recovery Time Objective</h3>
+            <p>How long can you be down?</p>
+            <p>
+              Restoring a 500GB database from backup takes time. Hours, potentially. During that
+              time, your service is offline. Users see errors. Revenue stops.
+            </p>
+            <p>
+              This is your <strong>Recovery Time Objective (RTO)</strong>: the maximum acceptable
+              downtime.
+            </p>
+            <p>Backups alone have slow RTO. You need to:</p>
+            <ol>
+              <li>Detect the failure</li>
+              <li>Provision new hardware</li>
+              <li>Restore the backup</li>
+              <li>Verify data integrity</li>
+              <li>Switch traffic</li>
+            </ol>
+            <p>Each step takes time. For faster recovery, you need something more than backups.</p>
+            <h2 id="continuous-redundancy">Continuous Redundancy</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/continuous-redundancy.webp"
+                alt="Primary database with standby replica maintaining real-time sync"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Backups are point-in-time snapshots. Between backups, new data exists only in one
+              place. If that place fails, recent data is lost.
+            </p>
+            <p>
+              Continuous redundancy fixes this. You maintain a live copy of your database,
+              synchronized in real-time.
+            </p>
+            <h3 id="the-standby-replica">The Standby Replica</h3>
+            <p>
+              A standby replica is a second database that mirrors your primary. Every write to the
+              primary is replicated to the standby.
+            </p>
+            <pre><code class="language-text">Primary DB                      Standby DB
+├── users table     ──sync──→   ├── users table
+├── orders table    ──sync──→   ├── orders table
+└── payments table  ──sync──→   └── payments table
+</code></pre>
+            <p>
+              The standby doesn&#39;t serve any traffic. No reads, no writes. It just sits there,
+              maintaining an up-to-date copy of your data. Waiting for disaster.
+            </p>
+            <p>When the primary fails:</p>
+            <ol>
+              <li>Detect the failure</li>
+              <li>Promote the standby to primary</li>
+              <li>Redirect application traffic</li>
+              <li>Business continues</li>
+            </ol>
+            <p>
+              No restore from backup needed. The data is already there, current, ready to serve.
+            </p>
+            <h3 id="synchronous-vs-asynchronous-replication">
+              Synchronous vs Asynchronous Replication
+            </h3>
+            <p>
+              How does data get to the replica? The short version: asynchronous is faster but risks
+              small data loss windows, synchronous is slower but guarantees zero data loss.
+            </p>
+            <p>
+              I talked about replication modes in great detail here:
+              <a
+                href="/blogs/system-design/understanding-database-scaling-sharding/#replication-modes/"
+                >Replication Modes</a
+              >.
+            </p>
+            <p>
+              Most systems use asynchronous replication. The performance hit of synchronous
+              isn&#39;t worth it for non-critical data. Financial systems, where losing even one
+              transaction is unacceptable, pay the latency cost.
+            </p>
+            <h3 id="setting-up-replication">Setting Up Replication</h3>
+            <p>
+              Let&#39;s walk through setting up streaming replication in PostgreSQL. The concept
+              applies to other databases too, though the specific commands differ.
+            </p>
+            <p><strong>Step 1: Configure the Primary</strong></p>
+            <p>
+              First, tell PostgreSQL to generate enough information for replicas to follow along.
+              Edit <code>postgresql.conf</code>:
+            </p>
+            <pre><code class="language-text">wal_level = replica
+max_wal_senders = 3
+wal_keep_size = 1GB
+</code></pre>
+            <p>What these mean:</p>
+            <ul>
+              <li>
+                <code>wal_level = replica</code>: Write-Ahead Log (WAL) contains enough detail for
+                replicas to reconstruct changes. WAL is PostgreSQL&#39;s transaction log, every
+                change goes here before hitting the actual tables.
+              </li>
+              <li>
+                <code>max_wal_senders = 3</code>: Allow up to 3 replicas to connect simultaneously.
+                Each replica needs one &quot;sender&quot; process.
+              </li>
+              <li>
+                <code>wal_keep_size = 1GB</code>: Keep at least 1GB of WAL files around. If a
+                replica disconnects temporarily, it can catch up from these files instead of needing
+                a full resync.
+              </li>
+            </ul>
+            <p><strong>Step 2: Allow Replica Connections</strong></p>
+            <p>
+              PostgreSQL blocks replication connections by default. Add this to
+              <code>pg_hba.conf</code>:
+            </p>
+            <pre><code class="language-text">host replication replicator replica_ip/32 md5
+</code></pre>
+            <p>
+              This says: allow the user <code>replicator</code> to connect for replication purposes
+              from <code>replica_ip</code>, authenticated with password (<code>md5</code>). Create
+              this user if it doesn&#39;t exist:
+            </p>
+            <pre
+            ><code class="language-sql"><span class="k">CREATE</span> <span class="k">USER</span> <span class="f">replicator</span> <span class="k">WITH</span> REPLICATION <span class="k">ENCRYPTED</span> <span class="k">PASSWORD</span> <span class="s">&#39;secure_password&#39;</span>;
+</code></pre>
+            <p>Restart PostgreSQL for changes to take effect.</p>
+            <p><strong>Step 3: Initialize the Replica</strong></p>
+            <p>
+              The replica needs a copy of the primary&#39;s data before it can start following
+              changes. <code>pg_basebackup</code> handles this:
+            </p>
+            <pre
+            ><code class="language-bash"><span class="f">pg_basebackup</span> <span class="s">-h</span> <span class="s">primary_ip</span> <span class="s">-D</span> <span class="s">/var/lib/postgresql/data</span> <span class="s">-U</span> <span class="s">replicator</span> <span class="s">-P</span> <span class="s">-R</span>
+</code></pre>
+            <p>Breaking this down:</p>
+            <ul>
+              <li><code>-h primary_ip</code>: Connect to the primary server</li>
+              <li>
+                <code>-D /var/lib/postgresql/data</code>: Where to put the data on the replica
+              </li>
+              <li><code>-U replicator</code>: Connect as the replication user we created</li>
+              <li><code>-P</code>: Show progress (useful for large databases)</li>
+              <li>
+                <code>-R</code>: Auto-generate the configuration files the replica needs to follow
+                the primary
+              </li>
+            </ul>
+            <p>
+              This copies the entire database. For a 100GB database, expect this to take a while.
+            </p>
+            <p><strong>Step 4: Start the Replica</strong></p>
+            <pre
+            ><code class="language-bash"><span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">start</span> <span class="s">postgresql</span>
+</code></pre>
+            <p>
+              The replica automatically connects to the primary and starts receiving WAL stream.
+              Every transaction on the primary flows to the replica within milliseconds (for async)
+              or before commit (for sync).
+            </p>
+            <p><strong>Step 5: Verify It&#39;s Working</strong></p>
+            <p>On the primary, check connected replicas:</p>
+            <pre
+            ><code class="language-sql"><span class="k">SELECT</span> client_addr, <span class="k">state</span>, sent_lsn, replay_lsn
+<span class="k">FROM</span> pg_stat_replication;
+</code></pre>
+            <p>
+              You should see your replica listed with <code>state = streaming</code>. The
+              <code>sent_lsn</code>
+              and <code>replay_lsn</code> columns show how caught up the replica is. If they&#39;re
+              close together, replication is healthy.
+            </p>
+            <h2 id="disaster-recovery">Disaster Recovery</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/disaster-recovery.webp"
+                alt="Cross-region backup for disaster recovery"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              A standby replica protects against database crashes. But what if the entire data
+              center goes down?
+            </p>
+            <p>
+              Fire. Flood. Power grid failure. Natural disasters. Political unrest affecting
+              infrastructure. These aren&#39;t hypotheticals. AWS us-east-1 has had multiple
+              significant outages.
+              <a
+                href="https://www.datacenterdynamics.com/en/analysis/ovhcloud-fire-france-data-center/#:~:text=The%2030%2C000%20servers%20inside%20were,No%20one%20was%20hurt."
+                >OVH had a fire that destroyed two data centers</a
+              >.
+            </p>
+            <p>
+              If all your infrastructure is in one location, you&#39;re betting your business that
+              nothing bad will happen to that location. Ever.
+            </p>
+            <h3 id="cross-region-backups">Cross-Region Backups</h3>
+            <p>The minimum: store one copy of your backups in a different geographic region.</p>
+            <pre><code class="language-text">Primary DC (Mumbai)
+├── Production database
+├── Standby replica
+└── Local backups
+
+Secondary DC (Singapore)
+└── Weekly backup copy
+</code></pre>
+            <p>
+              If Mumbai is underwater, you have data in Singapore. Recovery takes longer (restore
+              from backup, not failover to replica), but you can recover.
+            </p>
+            <h3 id="cross-region-replication">Cross-Region Replication</h3>
+            <p>For faster recovery, run a replica in another region.</p>
+            <pre><code class="language-text">Mumbai DC                        Singapore DC
+├── Primary DB ──────async──────→ DR Replica
+├── Standby                       (24/7 sync)
+└── App Servers                   └── Cold standby app servers
+</code></pre>
+            <p>
+              Network latency makes synchronous replication impractical across regions. Async
+              replication with a small lag (seconds to minutes) is the standard.
+            </p>
+            <p>Recovery:</p>
+            <ol>
+              <li>Detect Mumbai outage</li>
+              <li>Promote Singapore replica</li>
+              <li>Start Singapore app servers</li>
+              <li>Update DNS or load balancer</li>
+              <li>Service restored</li>
+            </ol>
+            <p>
+              This is expensive. You&#39;re paying for infrastructure in two regions. But for
+              businesses where downtime costs more than the infrastructure, it&#39;s worth it.
+            </p>
+            <h3
+              id="rpo-recovery-point-objective-how-much-data-you-can-afford-to-lose-and-rto-recovery-time-objective-how-long-until-service-is-restored-for-different-strategies"
+            >
+              RPO (Recovery Point Objective - How much data you can afford to lose) and RTO
+              (Recovery Time Objective - How long until service is restored) for Different
+              Strategies
+            </h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Strategy</th>
+                  <th>RPO</th>
+                  <th>RTO</th>
+                  <th>Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Daily backups</td>
+                  <td>Up to 24 hours</td>
+                  <td>Hours</td>
+                  <td>Low</td>
+                </tr>
+                <tr>
+                  <td>Hourly backups</td>
+                  <td>Up to 1 hour</td>
+                  <td>Hours</td>
+                  <td>Low</td>
+                </tr>
+                <tr>
+                  <td>Local standby replica</td>
+                  <td>Seconds-minutes</td>
+                  <td>Minutes</td>
+                  <td>Medium</td>
+                </tr>
+                <tr>
+                  <td>Cross-region replica</td>
+                  <td>Seconds-minutes</td>
+                  <td>Minutes</td>
+                  <td>High</td>
+                </tr>
+                <tr>
+                  <td>Multi-region active</td>
+                  <td>Near zero</td>
+                  <td>Near zero</td>
+                  <td>Highest</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Choose based on what your business can afford to lose and how long it can be offline.
+            </p>
+            <h2 id="automatic-failover">Automatic Failover</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/automatic-failover.webp"
+                alt="Automatic failover detecting primary failure and promoting replica"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Having a replica is useless if nobody promotes it when the primary dies. Manual
+              failover means someone needs to wake up at 3 AM, assess the situation, and execute the
+              promotion. That&#39;s slow and error-prone.
+            </p>
+            <p>Automatic failover removes the human from the critical path.</p>
+            <h3 id="how-it-works">How It Works</h3>
+            <p>A monitoring system continuously checks the primary&#39;s health:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">HealthCheck</span> <span class="u">{</span>
+  endpoint<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  interval<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+  timeout<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+  failureThreshold<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">const</span> primaryHealthCheck<span class="o">:</span> <span class="t">HealthCheck</span> <span class="o">=</span> <span class="u">{</span>
+  <span class="p">endpoint:</span> <span class="s">&quot;tcp://primary:5432&quot;</span><span class="u">,</span>
+  <span class="p">interval:</span> <span class="n">5000</span><span class="u">,</span>
+  <span class="p">timeout:</span> <span class="n">2000</span><span class="u">,</span>
+  <span class="p">failureThreshold:</span> <span class="n">3</span><span class="u">,</span>
+<span class="u">};</span>
+</code></pre>
+            <p>If the primary fails consecutive health checks:</p>
+            <ol>
+              <li><strong>Confirm failure</strong>: Is it really down, or just a network blip?</li>
+              <li>
+                <strong>Fence the primary</strong>: Ensure it can&#39;t accept writes (prevent
+                split-brain)
+              </li>
+              <li><strong>Promote replica</strong>: Tell the replica it&#39;s now the primary</li>
+              <li><strong>Redirect traffic</strong>: Update connection strings or DNS</li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">handlePrimaryFailure</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> confirmed <span class="o">=</span> <span class="k">await</span> <span class="f">confirmFailure</span><span class="u">(</span>primary<span class="u">,</span> <span class="n">3</span><span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>confirmed<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+
+  <span class="k">await</span> <span class="f">fencePrimary</span><span class="u">(</span>primary<span class="u">);</span>
+  <span class="k">await</span> <span class="f">promoteReplica</span><span class="u">(</span>standby<span class="u">);</span>
+  <span class="k">await</span> <span class="f">updateDns</span><span class="u">(</span><span class="s">&quot;db.myapp.com&quot;</span><span class="u">,</span> standby<span class="u">.</span><span class="p">ip</span><span class="u">);</span>
+  <span class="k">await</span> <span class="f">alertOps</span><span class="u">(</span><span class="s">&quot;Primary failed. Standby promoted.&quot;</span><span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <h3 id="tools-for-automatic-failover">Tools for Automatic Failover</h3>
+            <p><strong>PostgreSQL:</strong></p>
+            <ul>
+              <li>
+                <strong>Patroni</strong>: Distributed consensus for HA PostgreSQL. Uses
+                etcd/Consul/ZooKeeper
+              </li>
+              <li><strong>repmgr</strong>: Replication manager with automatic failover</li>
+              <li><strong>pg_auto_failover</strong>: Simpler setup, fewer dependencies</li>
+            </ul>
+            <p><strong>MySQL:</strong></p>
+            <ul>
+              <li><strong>MySQL InnoDB Cluster</strong>: Built-in HA solution</li>
+              <li><strong>Orchestrator</strong>: Topology management and failover</li>
+            </ul>
+            <p><strong>Managed Services:</strong></p>
+            <ul>
+              <li><strong>AWS RDS</strong>: Multi-AZ deployment with automatic failover</li>
+              <li><strong>Google Cloud SQL</strong>: Regional instances with automatic failover</li>
+              <li><strong>Azure Database</strong>: Zone-redundant high availability</li>
+            </ul>
+            <p>
+              Managed services handle all of this for you. You pay more, but you don&#39;t need to
+              configure, monitor, or test failover yourself.
+            </p>
+            <h3 id="the-split-brain-problem">The Split-Brain Problem</h3>
+            <p>
+              What if the primary isn&#39;t actually dead? Maybe there was a network partition. The
+              monitoring system can&#39;t reach the primary, but the primary is still running, still
+              accepting writes.
+            </p>
+            <p>
+              Now you have two primaries. Two databases accepting writes independently. Data
+              diverges. When the network heals, you have conflicting data. This is split-brain, and
+              it&#39;s catastrophic.
+            </p>
+            <pre><code class="language-text">Network partition:
+
+Monitoring ──✗── Primary (still running, taking writes)
+     │
+     └── Promotes Replica (now also taking writes)
+
+Two primaries. Data diverging. Disaster.
+</code></pre>
+            <p>Prevention:</p>
+            <p>
+              <strong>Fencing</strong>: Before promoting the replica, ensure the primary can&#39;t
+              accept writes. STONITH (Shoot The Other Node In The Head) - literally power off the
+              old primary.
+            </p>
+            <p>
+              <strong>Quorum</strong>: Require majority agreement before failover. If monitoring
+              can&#39;t reach the primary but the replica can, don&#39;t failover.
+            </p>
+            <p>
+              <strong>Witness node</strong>: Third node that breaks ties. If monitoring and witness
+              both can&#39;t reach primary, it&#39;s probably really down.
+            </p>
+            <pre><code class="language-text">       Primary ───── Witness
+          │            │
+          └──── Monitoring
+               (needs 2/3 agreement)
+</code></pre>
+            <p>
+              Split-brain is rare but devastating. Any automatic failover system must address it.
+            </p>
+            <h2 id="putting-it-together">Putting It Together</h2>
+            <p>A production-ready setup combines multiple strategies:</p>
+            <pre><code class="language-text">┌─────────────────────────────────────────────────┐
+│                  Mumbai DC                       │
+│  ┌─────────┐      ┌─────────┐                   │
+│  │ Primary │──────│ Standby │                   │
+│  │   DB    │ sync │   DB    │                   │
+│  └────┬────┘      └─────────┘                   │
+│       │                                          │
+│       │ async replication                        │
+│       │                                          │
+└───────┼─────────────────────────────────────────┘
+        │
+        │ cross-region
+        │
+┌───────┼─────────────────────────────────────────┐
+│       ▼            Singapore DC                  │
+│  ┌─────────┐                                    │
+│  │   DR    │                                    │
+│  │ Replica │                                    │
+│  └─────────┘                                    │
+│                                                  │
+│  ┌─────────┐                                    │
+│  │ Weekly  │                                    │
+│  │ Backup  │                                    │
+│  └─────────┘                                    │
+└─────────────────────────────────────────────────┘
+</code></pre>
+            <p>
+              <strong>Normal operation</strong>: Primary serves all traffic. Standby receives
+              synchronous replication. DR replica receives async replication.
+            </p>
+            <p>
+              <strong>Primary disk failure</strong>: Automatic failover to standby. Near-zero
+              downtime, zero data loss.
+            </p>
+            <p>
+              <strong>Mumbai DC outage</strong>: Manual failover to Singapore DR replica. Possible
+              small data loss (async lag), but business continues.
+            </p>
+            <p>
+              <strong>Total catastrophe</strong>: Restore from Singapore backup. Hours of downtime,
+              up to a week of data loss, but you survive.
+            </p>
+            <p>
+              Each layer adds cost and complexity. But each layer also adds resilience. How much you
+              invest depends on what you&#39;re protecting.
+            </p>
+            <h2 id="hands-on-practice">Hands-on Practice</h2>
+            <p>
+              I&#39;ve created hands-on demos you can run locally in my
+              <a href="https://github.com/pulkitxm/systems">systems repo</a>:
+            </p>
+            <ul>
+              <li>
+                <a href="https://github.com/pulkitxm/systems/tree/main/databases/db-replica"
+                  >db-replica</a
+                >: PostgreSQL streaming replication with primary and standby. Includes scripts to
+                test replication and simulate failover.
+              </li>
+              <li>
+                <a
+                  href="https://github.com/pulkitxm/systems/tree/main/databases/scaling-db/read-replicas"
+                  >scaling-db/read-replicas</a
+                >: Read replica setup for scaling reads across multiple database instances.
+              </li>
+            </ul>
+            <p>
+              When you&#39;ve done this yourself, you&#39;ll understand not just how redundancy
+              works, but what happens when it&#39;s needed. That understanding is invaluable when
+              you&#39;re debugging a production issue at 3 AM.
+            </p>
+            <h2 id="leader-election-for-auto-recovery">Leader Election for Auto Recovery</h2>
+            <p>
+              We&#39;ve covered how to make your data redundant. But there&#39;s a deeper question:
+              who manages all this failover? When a server dies, something needs to detect it and
+              spin up a replacement. But what happens when that &quot;something&quot; dies?
+            </p>
+            <p>
+              This is where leader election becomes essential. It&#39;s the mechanism that lets your
+              system recover from failures automatically, with zero human intervention.
+            </p>
+            <h2 id="the-monitoring-problem">The Monitoring Problem</h2>
+            <p>You have three servers behind a load balancer, handling HTTP requests:</p>
+            <pre><code class="language-text">        User
+          │
+          ▼
+    Load Balancer
+          │
+    ┌─────┼─────┐
+    ▼     ▼     ▼
+Server  Server  Server
+   1       2       3
+</code></pre>
+            <p>
+              Server 2 crashes. What happens? Nothing automatic. Someone needs to detect the
+              failure, spin up a new server, and add it to the load balancer.
+            </p>
+            <p>
+              Enter the <strong>orchestrator</strong>: a component whose job is to monitor your
+              servers. When one goes down, it spins up a new one and puts it behind the load
+              balancer.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/orchestrator-problem.webp"
+                alt="Orchestrator monitoring servers and handling failures"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              The orchestrator continuously pings servers. If one stops responding, it marks it
+              unhealthy, removes it from the load balancer, provisions a new server, and adds it
+              back. No human intervention needed.
+            </p>
+            <p>But here&#39;s the question: <strong>who monitors the orchestrator?</strong></p>
+            <h2 id="the-recursion-problem">The Recursion Problem</h2>
+            <p>
+              If the orchestrator crashes, servers can fail without replacement. You need something
+              to monitor the orchestrator. But what monitors that? And what monitors the thing that
+              monitors the orchestrator?
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/recursion-problem.webp"
+                alt="The infinite recursion of orchestrators monitoring orchestrators"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              This is infinite recursion. Every monitoring layer needs its own monitor. You could
+              have orchestrators all the way down, but that&#39;s impractical and expensive.
+            </p>
+            <p>
+              You need a base case. A point where the system can recover without external
+              intervention.
+            </p>
+            <p><strong>That base case is leader election.</strong></p>
+            <h2 id="leader-election-the-base-case">Leader Election: The Base Case</h2>
+            <p>
+              Leader election is a distributed systems concept where nodes in a cluster can
+              automatically select one of themselves to be the leader. When the leader fails, the
+              remaining nodes elect a new one.
+            </p>
+            <p>
+              This breaks the infinite recursion because you don&#39;t need external monitoring at
+              the top level. The system monitors itself and self-heals.
+            </p>
+            <pre><code class="language-text">Traditional approach:
+  Component A monitors B
+  Component C monitors A
+  Component D monitors C
+  ... (infinite)
+
+With leader election:
+  Leader monitors workers
+  Workers monitor each other
+  If leader dies → workers elect new leader
+  System self-heals ✓
+</code></pre>
+            <h2 id="the-leader-follower-setup">The Leader-Follower Setup</h2>
+            <p>
+              Instead of a single orchestrator, you run multiple orchestrator nodes in a
+              leader-follower configuration.
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/leader-follower-setup.webp"
+                alt="Leader-follower orchestrator setup with workers monitoring servers"
+                loading="lazy"
+              />
+            </p>
+            <p>Here&#39;s how the responsibilities break down:</p>
+            <p><strong>Orchestrator Workers</strong>:</p>
+            <ul>
+              <li>Monitor the backend servers</li>
+              <li>If a server is unhealthy, spin up a new one</li>
+              <li>Report status to the leader</li>
+            </ul>
+            <p><strong>Orchestrator Leader</strong>:</p>
+            <ul>
+              <li>Monitor the workers</li>
+              <li>If a worker dies, spin up a new worker</li>
+              <li>Coordinate work distribution</li>
+            </ul>
+            <h2 id="failure-scenarios">Failure Scenarios</h2>
+            <p>Let&#39;s walk through each failure scenario:</p>
+            <h3 id="scenario-1-backend-server-dies">Scenario 1: Backend Server Dies</h3>
+            <pre><code class="language-text">Server 2 stops responding
+     ↓
+Worker detects failure
+     ↓
+Worker spins up Server 4
+     ↓
+Worker adds Server 4 to load balancer
+     ↓
+System recovered ✓
+</code></pre>
+            <p>No human intervention. The worker handles it.</p>
+            <h3 id="scenario-2-orchestrator-worker-dies">Scenario 2: Orchestrator Worker Dies</h3>
+            <pre><code class="language-text">Worker 1 stops responding
+     ↓
+Leader detects failure
+     ↓
+Leader spins up Worker 3
+     ↓
+Leader assigns servers to Worker 3
+     ↓
+System recovered ✓
+</code></pre>
+            <p>No human intervention. The leader handles it.</p>
+            <h3 id="scenario-3-orchestrator-leader-dies">Scenario 3: Orchestrator Leader Dies</h3>
+            <p>This is where leader election kicks in:</p>
+            <pre><code class="language-text">Leader stops responding
+     ↓
+Workers detect leader is gone
+     ↓
+Workers run leader election algorithm
+     ↓
+Worker 2 becomes new leader
+     ↓
+New leader takes over responsibilities
+     ↓
+System recovered ✓
+</code></pre>
+            <p>No human intervention. The system self-heals.</p>
+            <p>
+              <img
+                src="/assets/content/blogs/high-availability/failure-scenarios.webp"
+                alt="Failure scenarios and how they are handled with leader election"
+                loading="lazy"
+              />
+            </p>
+            <h2 id="leader-election-algorithms">Leader Election Algorithms</h2>
+            <p>
+              When workers detect the leader is dead, they need a way to agree on who becomes the
+              new leader. This is the job of leader election algorithms.
+            </p>
+            <p>The key challenges:</p>
+            <ol>
+              <li><strong>Agreement</strong>: All workers must agree on the same leader</li>
+              <li>
+                <strong>Availability</strong>: Election must complete even if some workers are down
+              </li>
+              <li>
+                <strong>No split-brain</strong>: Can&#39;t have two workers both thinking
+                they&#39;re the leader
+              </li>
+            </ol>
+            <p>Common algorithms:</p>
+            <p>
+              <strong>Bully Algorithm</strong>: The simplest. Node with highest ID wins. When a node
+              detects leader failure, it sends election messages to all higher-ID nodes. If none
+              respond, it becomes leader. If any respond, it waits for them to become leader.
+            </p>
+            <p>
+              <strong>Raft</strong>: More sophisticated. Uses terms (epochs) and voting. A candidate
+              requests votes from peers. If it gets majority, it becomes leader. Widely used in
+              production systems.
+            </p>
+            <p>
+              <strong>Paxos</strong>: Theoretically elegant but complex to implement. Forms the
+              basis for many consensus systems.
+            </p>
+            <p>
+              <strong>ZooKeeper/etcd</strong>: Often you don&#39;t implement leader election
+              yourself. Tools like ZooKeeper and etcd provide distributed coordination primitives
+              that handle leader election for you.
+            </p>
+            <h2 id="the-real-world-analogy">The Real-World Analogy</h2>
+            <p>Think about how your team works:</p>
+            <ul>
+              <li>You have a manager who runs standups</li>
+              <li>If the manager is sick one day, someone else steps up</li>
+              <li>The team doesn&#39;t stop functioning because the manager is absent</li>
+            </ul>
+            <pre><code class="language-text">Normal day:
+  Manager runs standup
+  Team members do their work
+  Manager handles coordination
+
+Manager is sick:
+  Team notices manager is absent
+  Senior developer volunteers to run standup
+  Team continues functioning
+
+Manager returns:
+  Manager takes back responsibilities
+  System returns to normal
+</code></pre>
+            <p>
+              This is exactly how leader election works in distributed systems. There&#39;s always
+              someone who can step up. The system never stops functioning because of a single
+              failure.
+            </p>
+            <h2 id="implementation-sketch">Implementation Sketch</h2>
+            <p>Here&#39;s a simplified view of how this might look:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">OrchestratorNode</span> <span class="u">{</span>
+  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  isLeader<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
+  peers<span class="o">:</span> <span class="t">string</span><span class="u">[];</span>
+<span class="u">}</span>
+
+<span class="k">class</span> <span class="t">Orchestrator</span> <span class="u">{</span>
+  <span class="k">private</span> node<span class="o">:</span> <span class="t">OrchestratorNode</span><span class="u">;</span>
+  <span class="k">private</span> leaderHeartbeatTimeout<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> <span class="n">5000</span><span class="u">;</span>
+
+  <span class="k">async</span> <span class="f">start</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+    <span class="k">if</span> <span class="u">(</span>this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span><span class="u">)</span> <span class="u">{</span>
+      this<span class="u">.</span><span class="f">runAsLeader</span><span class="u">();</span>
+    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
+      this<span class="u">.</span><span class="f">runAsWorker</span><span class="u">();</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">private</span> <span class="k">async</span> <span class="f">runAsLeader</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+    <span class="k">while</span> <span class="u">(</span>this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span><span class="u">)</span> <span class="u">{</span>
+      <span class="k">await</span> this<span class="u">.</span><span class="f">sendHeartbeatsToWorkers</span><span class="u">();</span>
+      <span class="k">await</span> this<span class="u">.</span><span class="f">checkWorkerHealth</span><span class="u">();</span>
+      <span class="k">await</span> this<span class="u">.</span><span class="f">replaceDeadWorkers</span><span class="u">();</span>
+      <span class="k">await</span> <span class="f">sleep</span><span class="u">(</span><span class="n">1000</span><span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">private</span> <span class="k">async</span> <span class="f">runAsWorker</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+    <span class="k">let</span> lastLeaderHeartbeat <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">();</span>
+
+    <span class="k">while</span> <span class="u">(</span><span class="o">!</span>this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span><span class="u">)</span> <span class="u">{</span>
+      <span class="k">await</span> this<span class="u">.</span><span class="f">checkServerHealth</span><span class="u">();</span>
+      <span class="k">await</span> this<span class="u">.</span><span class="f">replaceDeadServers</span><span class="u">();</span>
+
+      <span class="k">if</span> <span class="u">(</span>Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">-</span> lastLeaderHeartbeat <span class="o">&gt;</span> this<span class="u">.</span><span class="p">leaderHeartbeatTimeout</span><span class="u">)</span> <span class="u">{</span>
+        <span class="k">await</span> this<span class="u">.</span><span class="f">initiateLeaderElection</span><span class="u">();</span>
+      <span class="u">}</span>
+
+      <span class="k">await</span> <span class="f">sleep</span><span class="u">(</span><span class="n">1000</span><span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">private</span> <span class="k">async</span> <span class="f">initiateLeaderElection</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+    <span class="k">const</span> votes <span class="o">=</span> <span class="k">await</span> this<span class="u">.</span><span class="f">requestVotesFromPeers</span><span class="u">();</span>
+    <span class="k">const</span> majority <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">(</span>this<span class="u">.</span>node<span class="u">.</span>peers<span class="u">.</span>length <span class="o">/</span> <span class="n">2</span><span class="u">)</span> <span class="o">+</span> <span class="n">1</span><span class="u">;</span>
+
+    <span class="k">if</span> <span class="u">(</span>votes <span class="o">&gt;=</span> majority<span class="u">)</span> <span class="u">{</span>
+      this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span> <span class="o">=</span> <span class="k">true</span><span class="u">;</span>
+      <span class="k">await</span> this<span class="u">.</span><span class="f">announceLeadership</span><span class="u">();</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+</code></pre>
+            <h2 id="hands-on-simulate-leader-election">Hands-on: Simulate Leader Election</h2>
+            <p>
+              I&#39;ve created a leader election demo you can run locally in my
+              <a href="https://github.com/pulkitxm/systems">systems repo</a>:
+            </p>
+            <ul>
+              <li>
+                <a href="https://github.com/pulkitxm/systems/tree/main/coordination/leader-election"
+                  >leader-election</a
+                >: Simulates the Bully Algorithm using JavaScript timers. Kill the leader and watch
+                the remaining nodes elect a new one automatically.
+              </li>
+            </ul>
+            <p>
+              You don&#39;t need multiple machines. Each &quot;node&quot; is simulated using timers
+              to mimic independent processes. Run it, kill the leader, and watch the system recover
+              with zero human intervention.
+            </p>
+            <h2 id="tools-that-use-leader-election">Tools That Use Leader Election</h2>
+            <p>Many production systems rely on leader election:</p>
+            <ul>
+              <li>
+                <strong>Kubernetes</strong>: etcd uses Raft for leader election. The control plane
+                is highly available because of this.
+              </li>
+              <li>
+                <strong>Kafka</strong>: Uses ZooKeeper (or KRaft now) for controller election.
+              </li>
+              <li>
+                <strong>PostgreSQL with Patroni</strong>: Uses consensus for automatic failover.
+              </li>
+              <li><strong>Redis Sentinel</strong>: Elects a leader to coordinate failover.</li>
+              <li><strong>Consul</strong>: Uses Raft for leader election among servers.</li>
+            </ul>
+            <p>
+              You&#39;re likely already using systems built on leader election, even if you
+              didn&#39;t realize it.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>High availability requires two things: redundant data and automatic recovery.</p>
+            <p>
+              Redundancy gives you copies of your data. Backups, replicas, cross-region storage.
+              When hardware fails, you have something to fall back to.
+            </p>
+            <p>
+              Leader election gives you automatic recovery. Instead of humans waking up at 3 AM to
+              failover a database, the system does it itself. The orchestrator monitors servers,
+              workers monitor each other, and when the leader dies, a new one is elected.
+            </p>
+            <p>
+              The key insight:
+              <strong>leader election is the base condition of your recursion</strong>. You can have
+              components monitoring other components, but at some point you need a self-healing
+              mechanism. Leader election provides that.
+            </p>
+            <p>
+              When you configure systems where the orchestration layer can automatically recover
+              from node failures, you&#39;ve reached the base case. Your entire system becomes
+              auto-recoverable with zero human intervention.
+            </p>
+            <p>
+              Your API servers are cattle. Your database is a pet. And your orchestration layer?
+              It&#39;s a self-healing organism.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li>
+              <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
+            </li>
+            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
+            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Build a React virtualized list from scratch with the simple scroll math that renders only visible rows to keep huge lists smooth."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/virtualized-list/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="React Virtualized List from Scratch | Pulkit" />
+    <meta
+      property="og:description"
+      content="Build a React virtualized list from scratch with the simple scroll math that renders only visible rows to keep huge lists smooth."
+    />
+    <meta property="og:url" content="https://new.pulkit.page/blogs/virtualized-list/" />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/virtualized-list/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/virtualized-list/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="React Virtualized List from Scratch" />
+    <meta property="article:published_time" content="2026-01-04" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="React Virtualized List from Scratch | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Build a React virtualized list from scratch with the simple scroll math that renders only visible rows to keep huge lists smooth."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/virtualized-list/card.png"
+    />
+    <meta name="twitter:image:alt" content="React Virtualized List from Scratch" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/virtualized-list/#image","contentUrl":"https://new.pulkit.page/og/blogs/virtualized-list/card.png","width":1200,"height":630,"caption":"React Virtualized List from Scratch"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/virtualized-list/#article","headline":"React Virtualized List from Scratch","description":"Build a React virtualized list from scratch with the simple scroll math that renders only visible rows to keep huge lists smooth.","datePublished":"2026-01-04","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/virtualized-list/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/virtualized-list/#image"},"url":"https://new.pulkit.page/blogs/virtualized-list/","inLanguage":"en","keywords":["React","Virtualized List","List Virtualization","Virtualization","Frontend","Performance","Web Development","DOM"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/virtualized-list/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"React Virtualized List from Scratch","item":"https://new.pulkit.page/blogs/virtualized-list/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/virtualized-list/#webpage","url":"https://new.pulkit.page/blogs/virtualized-list/","name":"React Virtualized List from Scratch","description":"Build a React virtualized list from scratch with the simple scroll math that renders only visible rows to keep huge lists smooth.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/virtualized-list/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/virtualized-list/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/virtualized-list/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>React Virtualized List from Scratch | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li aria-current="page">React Virtualized List from Scratch</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>React Virtualized List from Scratch</h1>
+            <p class="detail-meta"><time datetime="2026-01-04">2026-01-04</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              When building modern web applications, rendering large lists is a very common
+              requirement. Think of activity feeds, logs, search results, tables, or infinite
+              scrolling views. Rendering hundreds or thousands of DOM nodes at once might look fine
+              initially, but as the list grows, performance quickly takes a hit.
+            </p>
+            <p>
+              This is where <strong>virtualized lists</strong> come in, a performance optimization
+              technique that can make your app feel buttery smooth even with massive datasets.
+            </p>
+            <p>
+              In this post, I&#39;ll walk you through what virtualized lists are, why they matter,
+              and how you can implement a basic version in React using simple math and browser
+              primitives. Let&#39;s dive in!
+            </p>
+            <h2 id="the-problem-with-large-lists">The Problem With Large Lists</h2>
+            <p>
+              By default, React renders every item in a list. And that&#39;s usually fine for small
+              datasets.
+            </p>
+            <p>But here&#39;s what happens as your list grows:</p>
+            <ul>
+              <li><strong>10 items</strong> → Everything is smooth</li>
+              <li><strong>100 items</strong> → Still acceptable</li>
+              <li><strong>10,000 items</strong> → Scrolling becomes janky</li>
+              <li><strong>100,000 items</strong> → The browser struggles badly</li>
+            </ul>
+            <p>
+              The issue isn&#39;t React itself. The real bottleneck is the browser handling a
+              massive DOM tree. Layout, paint, and memory usage increase dramatically.
+            </p>
+            <p>Yet, on the screen, the user can only see maybe 10 to 20 items at a time.</p>
+            <p><strong>Rendering the rest is pure waste.</strong></p>
+            <h2 id="what-is-a-virtualized-list">What Is a Virtualized List?</h2>
+            <p>
+              A virtualized list renders
+              <strong>only the items that are visible in the viewport</strong>, plus a small buffer.
+              The rest of the list isn&#39;t rendered at all.
+            </p>
+            <p>The illusion of a full list is created by:</p>
+            <ol>
+              <li>A scroll container with fixed height</li>
+              <li>A spacer element that represents the full height of the list</li>
+              <li>Only rendering visible rows and positioning them correctly</li>
+            </ol>
+            <p>As you scroll, old rows are removed and new ones are rendered in their place.</p>
+            <p>
+              To the user, it feels like a normal list. To the browser, it&#39;s extremely
+              lightweight.
+            </p>
+            <h2 id="core-idea-behind-virtualization">Core Idea Behind Virtualization</h2>
+            <p>At any scroll position, we calculate:</p>
+            <ul>
+              <li>Which item index should appear at the top</li>
+              <li>How many items fit in the viewport</li>
+              <li>Which subset of items should be rendered</li>
+            </ul>
+            <p>Everything else is skipped.</p>
+            <p>The key inputs we need are:</p>
+            <ul>
+              <li>Total number of items</li>
+              <li>Fixed height of each item</li>
+              <li>Height of the scroll container</li>
+              <li>Current scroll position</li>
+            </ul>
+            <p>
+              <img
+                src="/assets/content/blogs/virtualized-list/example.gif"
+                alt="Virtualized list example"
+                loading="lazy"
+              />
+            </p>
+            <h2 id="the-math-that-powers-virtualization">The Math That Powers Virtualization</h2>
+            <p>Here&#39;s the simple math that makes virtualization work:</p>
+            <p><strong>1. Find the first visible item:</strong></p>
+            <pre><code class="language-text">startIndex = floor(scrollTop / itemHeight)
+</code></pre>
+            <p>
+              If you&#39;ve scrolled 500px down and each item is 50px tall, the first visible item
+              is at index 10 (500 ÷ 50).
+            </p>
+            <p><strong>2. Calculate how many items fit in the viewport:</strong></p>
+            <pre><code class="language-text">visibleCount = ceil(containerHeight / itemHeight)
+</code></pre>
+            <p>
+              If your container is 400px tall and each item is 50px, you can see 8 items at once
+              (400 ÷ 50).
+            </p>
+            <p><strong>3. Find the last item to render:</strong></p>
+            <pre><code class="language-text">endIndex = startIndex + visibleCount + overscan
+</code></pre>
+            <p>
+              We add a buffer (overscan) of extra items above and below the viewport for smoother
+              scrolling.
+            </p>
+            <p>
+              With these three calculations, we know exactly which items should exist in the DOM at
+              any moment.
+            </p>
+            <h2 id="implementation-building-the-virtuallist-component">
+              Implementation: Building the VirtualList Component
+            </h2>
+            <p>Now let&#39;s build the virtualized list step by step.</p>
+            <h3 id="step-1-set-up-component-props-and-state">
+              Step 1: Set Up Component Props and State
+            </h3>
+            <p>First, we define the TypeScript interface and set up our component with state:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> useRef<span class="u">,</span> useState <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
+
+<span class="k">interface</span> <span class="t">VirtualListProps</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;</span> <span class="u">{</span>
+  items<span class="o">:</span> <span class="t">T</span><span class="u">[];</span>
+  height<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+  itemHeight<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+  overscan<span class="o">?:</span> <span class="t">number</span><span class="u">;</span>
+  <span class="f">renderItem</span><span class="o">:</span> <span class="u">(</span>item<span class="o">:</span> <span class="t">T</span><span class="u">,</span> index<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">export</span> <span class="k">function</span> <span class="f">VirtualList</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;({</span>
+  items<span class="u">,</span>
+  height<span class="u">,</span>
+  itemHeight<span class="u">,</span>
+  overscan <span class="o">=</span> <span class="n">5</span><span class="u">,</span>
+  renderItem<span class="u">,</span>
+<span class="u">}</span><span class="o">:</span> <span class="t">VirtualListProps</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;)</span> <span class="u">{</span>
+  <span class="k">const</span> <span class="u">[</span>scrollTop<span class="u">,</span> setScrollTop<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">&lt;</span><span class="t">number</span><span class="u">&gt;(</span><span class="n">0</span><span class="u">);</span>
+  <span class="k">const</span> containerRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+
+<span class="c">  // ... rest of the implementation</span>
+<span class="u">}</span>
+</code></pre>
+            <p>We accept:</p>
+            <ul>
+              <li><code>items</code>: The full array of data (generic type <code>T</code>)</li>
+              <li><code>height</code>: Container height in pixels</li>
+              <li><code>itemHeight</code>: Fixed height for each item</li>
+              <li><code>overscan</code>: Buffer items to render (default 5)</li>
+              <li><code>renderItem</code>: Function to render each item</li>
+            </ul>
+            <p>We track <code>scrollTop</code> in state to recalculate visible items on scroll.</p>
+            <h3 id="step-2-calculate-which-items-to-render">
+              Step 2: Calculate Which Items to Render
+            </h3>
+            <p>Inside the component, we calculate which items should be visible:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> totalHeight<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> items<span class="u">.</span>length <span class="o">*</span> itemHeight<span class="u">;</span>
+<span class="k">const</span> startIndex<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">(</span>scrollTop <span class="o">/</span> itemHeight<span class="u">);</span>
+<span class="k">const</span> visibleCount<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>height <span class="o">/</span> itemHeight<span class="u">);</span>
+<span class="k">const</span> endIndex<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> Math<span class="u">.</span><span class="f">min</span><span class="u">(</span>items<span class="u">.</span>length <span class="o">-</span> <span class="n">1</span><span class="u">,</span> startIndex <span class="o">+</span> visibleCount <span class="o">+</span> overscan<span class="u">);</span>
+
+<span class="k">const</span> visibleItems<span class="o">:</span> <span class="t">T</span><span class="u">[]</span> <span class="o">=</span> items<span class="u">.</span><span class="f">slice</span><span class="u">(</span>startIndex<span class="u">,</span> endIndex <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
+</code></pre>
+            <p>Here we:</p>
+            <ol>
+              <li>Calculate the total height needed for all items</li>
+              <li>Find the first visible item index based on scroll position</li>
+              <li>Calculate how many items fit in the viewport</li>
+              <li>Find the last item to render (with overscan buffer)</li>
+              <li>Slice the array to get only visible items</li>
+            </ol>
+            <h3 id="step-3-render-the-component">Step 3: Render the Component</h3>
+            <p>
+              Now we return the JSX with a scrollable container and absolutely positioned items:
+            </p>
+            <pre><code class="language-typescript"><span class="o">&lt;</span>div
+  ref<span class="o">=</span><span class="u">{</span>containerRef<span class="u">}</span>
+  style<span class="o">=</span><span class="u">{{</span> height<span class="u">,</span> overflow<span class="u">:</span> <span class="s">&quot;auto&quot;</span> <span class="u">}}</span>
+  onScroll<span class="o">=</span><span class="u">{</span>(<span class="p">e:</span> React<span class="u">.</span><span class="p">UIEvent</span><span class="o">&lt;</span>HTMLDivElement<span class="o">&gt;</span>) <span class="k">=&gt;</span> <span class="f">setScrollTop</span><span class="u">(</span>e<span class="u">.</span>currentTarget<span class="u">.</span><span class="p">scrollTop</span><span class="u">)}</span>
+<span class="o">&gt;</span>
+  <span class="o">&lt;</span>div style<span class="o">=</span><span class="u">{{</span> height<span class="u">:</span> totalHeight<span class="u">,</span> position<span class="u">:</span> <span class="s">&quot;relative&quot;</span> <span class="u">}}</span><span class="o">&gt;</span>
+    <span class="u">{</span>visibleItems<span class="u">.</span><span class="f">map</span><span class="u">((</span>item<span class="o">:</span> <span class="t">T</span><span class="u">,</span> i<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+      <span class="k">const</span> index<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> startIndex <span class="o">+</span> i
+      <span class="k">return</span> <span class="u">(</span>
+        <span class="o">&lt;</span>div
+          key<span class="o">=</span><span class="u">{</span>index<span class="u">}</span>
+          style<span class="o">=</span><span class="u">{{</span>
+            position<span class="u">:</span> <span class="s">&quot;absolute&quot;</span><span class="u">,</span>
+            top<span class="u">:</span> index <span class="o">*</span> itemHeight<span class="u">,</span>
+            height<span class="u">:</span> itemHeight<span class="u">,</span>
+            width<span class="u">:</span> <span class="s">&quot;100%&quot;</span>
+          <span class="u">}}</span>
+        <span class="o">&gt;</span>
+          <span class="u">{</span>renderItem(item<span class="u">,</span> index)<span class="u">}</span>
+        <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+      <span class="u">)</span>
+    <span class="u">})}</span>
+  <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+<span class="o">&lt;/</span>div<span class="o">&gt;</span>
+</code></pre>
+            <p><strong>Key points:</strong></p>
+            <ul>
+              <li>
+                The outer div is our scroll container that updates <code>scrollTop</code> on scroll
+              </li>
+              <li>
+                The inner div with <code>totalHeight</code> creates the illusion of a full list
+              </li>
+              <li>
+                Each visible item is positioned absolutely at its correct location using
+                <code>top: index * itemHeight</code>
+              </li>
+            </ul>
+            <p><strong>Complete VirtualList Component Code</strong></p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> useRef<span class="u">,</span> useState <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span>
+
+<span class="k">interface</span> <span class="t">VirtualListProps</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;</span> <span class="u">{</span>
+  items<span class="o">:</span> <span class="t">T</span><span class="u">[]</span>
+  height<span class="o">:</span> <span class="t">number</span>
+  itemHeight<span class="o">:</span> <span class="t">number</span>
+  overscan<span class="o">?:</span> <span class="t">number</span>
+  <span class="f">renderItem</span><span class="o">:</span> <span class="u">(</span>item<span class="o">:</span> <span class="t">T</span><span class="u">,</span> index<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span>
+<span class="u">}</span>
+
+<span class="k">export</span> <span class="k">function</span> <span class="f">VirtualList</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;({</span>
+  items<span class="u">,</span>
+  height<span class="u">,</span>
+  itemHeight<span class="u">,</span>
+  overscan <span class="o">=</span> <span class="n">5</span><span class="u">,</span>
+  renderItem
+<span class="u">}</span><span class="o">:</span> <span class="t">VirtualListProps</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;)</span> <span class="u">{</span>
+  <span class="k">const</span> <span class="u">[</span>scrollTop<span class="u">,</span> setScrollTop<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">&lt;</span><span class="t">number</span><span class="u">&gt;(</span><span class="n">0</span><span class="u">)</span>
+  <span class="k">const</span> containerRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">)</span>
+
+  <span class="k">const</span> totalHeight<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> items<span class="u">.</span>length <span class="o">*</span> itemHeight
+  <span class="k">const</span> startIndex<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">(</span>scrollTop <span class="o">/</span> itemHeight<span class="u">)</span>
+  <span class="k">const</span> visibleCount<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>height <span class="o">/</span> itemHeight<span class="u">)</span>
+  <span class="k">const</span> endIndex<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> Math<span class="u">.</span><span class="f">min</span><span class="u">(</span>
+    items<span class="u">.</span>length <span class="o">-</span> <span class="n">1</span><span class="u">,</span>
+    startIndex <span class="o">+</span> visibleCount <span class="o">+</span> overscan
+  <span class="u">)</span>
+
+  <span class="k">const</span> visibleItems<span class="o">:</span> <span class="t">T</span><span class="u">[]</span> <span class="o">=</span> items<span class="u">.</span><span class="f">slice</span><span class="u">(</span>startIndex<span class="u">,</span> endIndex <span class="o">+</span> <span class="n">1</span><span class="u">)</span>
+
+  <span class="k">return</span> <span class="u">(</span>
+    <span class="o">&lt;</span>div
+      ref<span class="o">=</span><span class="u">{</span>containerRef<span class="u">}</span>
+      style<span class="o">=</span><span class="u">{{</span> height<span class="u">,</span> overflow<span class="u">:</span> <span class="s">&quot;auto&quot;</span> <span class="u">}}</span>
+      onScroll<span class="o">=</span><span class="u">{</span>(<span class="p">e:</span> React<span class="u">.</span><span class="p">UIEvent</span><span class="o">&lt;</span>HTMLDivElement<span class="o">&gt;</span>) <span class="k">=&gt;</span> <span class="f">setScrollTop</span><span class="u">(</span>e<span class="u">.</span>currentTarget<span class="u">.</span><span class="p">scrollTop</span><span class="u">)}</span>
+    <span class="o">&gt;</span>
+      <span class="o">&lt;</span>div style<span class="o">=</span><span class="u">{{</span> height<span class="u">:</span> totalHeight<span class="u">,</span> position<span class="u">:</span> <span class="s">&quot;relative&quot;</span> <span class="u">}}</span><span class="o">&gt;</span>
+        <span class="u">{</span>visibleItems.map((item<span class="u">:</span> T<span class="u">,</span> i<span class="u">:</span> number) <span class="o">=&gt;</span> <span class="u">{</span>
+          const <span class="p">index:</span> number <span class="o">=</span> startIndex <span class="o">+</span> i
+          <span class="f">return</span> <span class="u">(</span>
+            <span class="o">&lt;</span>div
+              key<span class="o">=</span><span class="u">{</span>index<span class="u">}</span>
+              style<span class="o">=</span><span class="u">{{</span>
+                position<span class="u">:</span> <span class="s">&quot;absolute&quot;</span><span class="u">,</span>
+                top<span class="u">:</span> index <span class="o">*</span> itemHeight<span class="u">,</span>
+                height<span class="u">:</span> itemHeight<span class="u">,</span>
+                width<span class="u">:</span> <span class="s">&quot;100%&quot;</span>
+              <span class="u">}}</span>
+            <span class="o">&gt;</span>
+              <span class="u">{</span><span class="f">renderItem</span><span class="u">(</span>item<span class="u">,</span> index<span class="u">)}</span>
+            <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+          <span class="u">)</span>
+        <span class="u">}</span>)<span class="u">}</span>
+      <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+    <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+  <span class="u">)</span>
+<span class="u">}</span>
+</code></pre>
+            <h2 id="using-the-virtualized-list">Using the Virtualized List</h2>
+            <p>Here&#39;s how you can use this component in your app:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> items<span class="o">:</span> <span class="t">string</span><span class="u">[]</span> <span class="o">=</span> Array<span class="u">.</span><span class="f">from</span><span class="u">({</span> <span class="p">length:</span> <span class="n">100000</span> <span class="u">},</span> <span class="u">(</span>_<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`Row ${i}`</span><span class="u">)</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
+  <span class="k">return</span> <span class="u">(</span>
+    <span class="o">&lt;</span>VirtualList<span class="o">&lt;</span>string<span class="o">&gt;</span>
+      items<span class="o">=</span><span class="u">{</span>items<span class="u">}</span>
+      height<span class="o">=</span><span class="u">{</span><span class="p">400</span><span class="u">}</span>
+      itemHeight<span class="o">=</span><span class="u">{</span><span class="p">40</span><span class="u">}</span>
+      renderItem<span class="o">=</span><span class="u">{</span>(<span class="p">item:</span> string<span class="u">,</span> <span class="p">index:</span> number) <span class="k">=&gt;</span> <span class="u">(</span>
+        <span class="o">&lt;</span>div style<span class="o">=</span><span class="u">{{</span> padding<span class="u">:</span> <span class="s">&quot;0 12px&quot;</span> <span class="u">}}</span><span class="o">&gt;</span>
+          <span class="u">{</span>index<span class="u">}</span><span class="o">:</span> <span class="u">{</span>item<span class="u">}</span>
+        <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+      <span class="u">)}</span>
+    <span class="o">/&gt;</span>
+  <span class="u">)</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Even with <strong>100,000 items</strong>, only a handful of rows are rendered at any
+              time. Scrolling stays smooth and memory usage remains low.
+            </p>
+            <h2 id="live-demo-virtualized-vs-normal-lists">
+              Live Demo: Virtualized vs Normal Lists
+            </h2>
+            <p>
+              Here&#39;s a live comparison showing the performance difference between virtualized
+              and normal lists. Try scrolling through both to see how virtualization keeps
+              everything smooth even with thousands of items:
+            </p>
+            <p>
+              <a href="https://codesandbox.io/embed/hr8wwf?view=preview&amp;module=%2Fsrc%2FApp.tsx"
+                >Virtualized list demo comparing performance with normal lists</a
+              >
+            </p>
+            <h2 id="when-should-you-use-virtualized-lists">
+              When Should You Use Virtualized Lists?
+            </h2>
+            <p>Not every list needs virtualization. Here&#39;s a quick guide:</p>
+            <p><strong>Use virtualization when:</strong></p>
+            <ul>
+              <li>You&#39;re rendering 500+ items</li>
+              <li>Each item has a fixed or predictable height</li>
+              <li>Performance is noticeably degraded</li>
+              <li>You&#39;re building infinite scroll features</li>
+              <li>You&#39;re working with data-heavy dashboards</li>
+            </ul>
+            <p><strong>Skip virtualization when:</strong></p>
+            <ul>
+              <li>You have fewer than 100 items</li>
+              <li>Item heights vary significantly</li>
+              <li>The list is rarely scrolled</li>
+              <li>You need complex interactions between items</li>
+            </ul>
+            <h2 id="taking-it-further">Taking It Further</h2>
+            <p>This implementation covers the basics, but there&#39;s a lot more you can add:</p>
+            <ol>
+              <li>
+                <strong>Variable Heights</strong>: Support items with different heights (more
+                complex math involved)
+              </li>
+              <li>
+                <strong>Horizontal Virtualization</strong>: Apply the same concept horizontally
+              </li>
+              <li><strong>Sticky Headers</strong>: Keep section headers visible while scrolling</li>
+              <li>
+                <strong>Keyboard Navigation</strong>: Ensure accessibility with proper focus
+                management
+              </li>
+              <li>
+                <strong>Loading States</strong>: Add skeleton screens or spinners for async data
+              </li>
+            </ol>
+            <p>
+              If you want to skip building this yourself, check out libraries like
+              <a href="https://github.com/bvaughn/react-window">react-window</a>
+              or
+              <a href="https://github.com/bvaughn/react-virtualized">react-virtualized</a>.
+              They&#39;re battle-tested and handle edge cases you might not think of.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              Virtualized lists are a powerful performance optimization technique that can
+              dramatically improve your app&#39;s responsiveness when dealing with large datasets.
+              By rendering only what&#39;s visible, you keep the DOM lean and your app snappy.
+            </p>
+            <p>
+              The math behind it is surprisingly simple, just a few calculations based on scroll
+              position and item height. And the best part? Your users will notice the difference
+              immediately.
+            </p>
+            <p>
+              So next time you&#39;re building a feature that involves rendering a large list,
+              remember: don&#39;t render what you can&#39;t see! Your browser (and your users) will
+              thank you.
+            </p>
+            <p>Happy coding, and may your lists always scroll smoothly!</p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li>
+              <a href="/blogs/context-menu-in-react/">React Context Menu with react-contexify</a>
+            </li>
+            <li><a href="/blogs/cookie-sync-pattern/">The Cookie Sync Pattern</a></li>
+            <li>
+              <a href="/blogs/image-gallery-with-photoswipe/"
+                >React Image Gallery with PhotoSwipe</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

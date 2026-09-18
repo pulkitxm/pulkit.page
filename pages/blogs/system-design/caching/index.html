@@ -1,0 +1,1366 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Understand caching fundamentals: what it is, why it matters, and how to use it. Learn about cache architecture, key-value access patterns, and real-world examples with Redis and Memcached."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/system-design/caching/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Caching | Pulkit" />
+    <meta
+      property="og:description"
+      content="Understand caching fundamentals: what it is, why it matters, and how to use it. Learn about cache architecture, key-value access patterns, and real-world examples with Redis and Memcached."
+    />
+    <meta property="og:url" content="https://new.pulkit.page/blogs/system-design/caching/" />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/system-design/caching/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/system-design/caching/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Caching" />
+    <meta property="article:published_time" content="2026-01-08" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Caching | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Understand caching fundamentals: what it is, why it matters, and how to use it. Learn about cache architecture, key-value access patterns, and real-world examples with Redis and Memcached."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/system-design/caching/card.png"
+    />
+    <meta name="twitter:image:alt" content="Caching" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/system-design/caching/#image","contentUrl":"https://new.pulkit.page/og/blogs/system-design/caching/card.png","width":1200,"height":630,"caption":"Caching"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/system-design/caching/#article","headline":"Caching","description":"Understand caching fundamentals: what it is, why it matters, and how to use it. Learn about cache architecture, key-value access patterns, and real-world examples with Redis and Memcached.","datePublished":"2026-01-08","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/caching/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/system-design/caching/#image"},"url":"https://new.pulkit.page/blogs/system-design/caching/","inLanguage":"en","keywords":["System Design","Caching","Redis","Memcached","CDN"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/system-design/caching/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://new.pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"Caching","item":"https://new.pulkit.page/blogs/system-design/caching/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/system-design/caching/#webpage","url":"https://new.pulkit.page/blogs/system-design/caching/","name":"Caching","description":"Understand caching fundamentals: what it is, why it matters, and how to use it. Learn about cache architecture, key-value access patterns, and real-world examples with Redis and Memcached.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/caching/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/system-design/caching/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/system-design/caching/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Caching | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/system-design/">System Design</a></li>
+            <li aria-current="page">Caching</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Caching</h1>
+            <p class="detail-meta"><time datetime="2026-01-08">2026-01-08</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Caching is one of the most effective ways to get performance out of your system. The
+              idea is simple: store frequently accessed data in a place that&#39;s faster to access.
+              That&#39;s it. But understanding when to cache, what to cache, and how caching
+              actually works under the hood can make the difference between a sluggish application
+              and one that flies.
+            </p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong>Caching</strong>
+                is a technique to avoid expensive operations by storing frequently accessed data in
+                faster storage
+              </li>
+              <li>
+                <strong>Cache</strong>
+                is the place where you store that data. It&#39;s anything that helps you save
+                expensive network I/O, disk I/O, or CPU computation
+              </li>
+              <li>
+                <strong>Caches are temporary storage</strong>. If your cache goes down, your system
+                still works (just slower)
+              </li>
+              <li>
+                <strong>Don&#39;t cache everything</strong>. Caches are expensive (RAM-based), so
+                only cache data that&#39;s likely to be accessed again soon
+              </li>
+              <li>
+                <strong>Key-value access pattern</strong>: Caches are essentially glorified hash
+                tables. You put data in with a key, you get data out with a key
+              </li>
+              <li>
+                <strong>Popular caches</strong>: Redis and Memcached are the most widely used
+                caching solutions
+              </li>
+              <li>
+                <strong>Caches aren&#39;t just RAM</strong>. Any storage that&#39;s
+                &quot;nearer&quot; to you and helps avoid expensive operations is a cache
+              </li>
+              <li>
+                <strong>Lazy population</strong>: Populate cache on miss. Most common approach.
+                Always set an expiry
+              </li>
+              <li>
+                <strong>Eager population</strong>: Proactively push data to cache when you know it
+                will be accessed (live scores, viral content)
+              </li>
+              <li>
+                <strong>Scaling caches</strong>: Same as databases. Vertical scaling → read replicas
+                → sharding
+              </li>
+              <li>
+                <strong>Cache at different levels</strong>: Client-side, CDN, remote cache (Redis),
+                even database itself
+              </li>
+              <li>
+                <strong>Don&#39;t over-cache</strong>: Every cache layer adds staleness. More layers
+                = more invalidation headaches
+              </li>
+            </ul>
+            <h2 id="what-is-caching">What is Caching?</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/cache-db.webp"
+                alt="Caching is a technique to avoid expensive operations by storing frequently accessed data in faster storage"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              A cache is anything that helps you avoid an expensive network I/O, disk I/O, or
+              computation. In any computer system, there are only three things that can be
+              expensive:
+            </p>
+            <ol>
+              <li>
+                <strong>Network I/O</strong>: Making API calls, database queries over the network
+              </li>
+              <li><strong>Disk I/O</strong>: Reading from or writing to disk</li>
+              <li><strong>CPU computation</strong>: Complex calculations, data transformations</li>
+            </ol>
+            <p>
+              When you cache, you&#39;re storing results from these expensive operations somewhere
+              faster so you don&#39;t have to repeat them.
+            </p>
+            <h3 id="a-practical-example">A Practical Example</h3>
+            <p>
+              Let&#39;s say you want to get a user&#39;s profile information. The typical flow looks
+              like this:
+            </p>
+            <ol>
+              <li>Request comes to your API server</li>
+              <li>API server talks to the database</li>
+              <li>Database joins five or six different tables to compute the profile</li>
+              <li>Response is sent back to the user</li>
+            </ol>
+            <p>
+              Joining five or six tables is expensive. Every single request triggers this expensive
+              operation. Now imagine this:
+            </p>
+            <ol>
+              <li>Request comes to your API server</li>
+              <li>API server checks Redis (the cache)</li>
+              <li>Redis has the data → return immediately</li>
+              <li>No database query needed</li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`profile:${userId}`</span><span class="u">;</span>
+
+  <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">const</span> profile <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span>
+    <span class="s">`</span>
+<span class="s">    SELECT u.*, p.*, s.*</span>
+<span class="s">    FROM users u</span>
+<span class="s">    JOIN preferences p ON u.id = p.user_id</span>
+<span class="s">    JOIN settings s ON u.id = s.user_id</span>
+<span class="s">    WHERE u.id = $1</span>
+<span class="s">  `</span><span class="u">,</span>
+    <span class="u">[</span>userId<span class="u">],</span>
+  <span class="u">);</span>
+
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>profile<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+
+  <span class="k">return</span> profile<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The first request still hits the database. But every subsequent request for the same
+              profile goes to Redis. No expensive joins, no database load.
+            </p>
+            <h2 id="how-caching-works">How Caching Works</h2>
+            <p>The typical caching architecture looks like this:</p>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/request-flow.webp"
+                alt="The typical caching architecture looks like this"
+                loading="lazy"
+              />
+            </p>
+            <p>Here&#39;s the flow:</p>
+            <ol>
+              <li><strong>Request arrives</strong> at the API server</li>
+              <li><strong>Check the cache</strong> first. Does it have the data?</li>
+              <li><strong>Cache hit</strong>: Data exists in cache → return it immediately</li>
+              <li><strong>Cache miss</strong>: Data not in cache → query the database</li>
+              <li>
+                <strong>Populate cache</strong>: Store the result in cache for future requests
+              </li>
+              <li><strong>Return response</strong> to the user</li>
+            </ol>
+            <p>
+              This pattern is called <strong>cache-aside</strong> or <strong>lazy loading</strong>.
+              The cache is always checked first, and populated on misses.
+            </p>
+            <h3 id="what-happens-if-the-cache-goes-down">What Happens if the Cache Goes Down?</h3>
+            <p>This is the beauty of caching: it&#39;s a supplement, not a dependency.</p>
+            <p>If your cache goes down:</p>
+            <ul>
+              <li>Requests still work</li>
+              <li>They just go directly to the database</li>
+              <li>Performance degrades, but the system keeps functioning</li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`profile:${userId}`</span><span class="u">;</span>
+
+  <span class="k">try</span> <span class="u">{</span>
+    <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
+      <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
+    <span class="u">}</span>
+  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
+<span class="c">    // Cache is down - fall through to database</span>
+  <span class="u">}</span>
+
+  <span class="k">const</span> profile <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getProfile</span><span class="u">(</span>userId<span class="u">);</span>
+
+  <span class="k">try</span> <span class="u">{</span>
+    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>profile<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
+<span class="c">    // Cache write failed - that&#39;s okay, we have the data</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> profile<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The cache makes things faster. The database is the source of truth. If the cache
+              fails, you&#39;re back to where you started (without caching), not in a broken state.
+            </p>
+            <h2 id="why-not-cache-everything">Why Not Cache Everything?</h2>
+            <p>
+              Caches are typically RAM-based. Redis stores data in memory. RAM is expensive. Much
+              more expensive than disk.
+            </p>
+            <p>
+              If you decide to cache your entire database in Redis, you&#39;d need massive amounts
+              of RAM. For a 1TB database, you&#39;d need 1TB of RAM. That&#39;s not practical.
+            </p>
+            <p>Instead, you cache strategically:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Cache This</th>
+                  <th>Don&#39;t Cache This</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Frequently accessed data</td>
+                  <td>Rarely accessed data</td>
+                </tr>
+                <tr>
+                  <td>Expensive to compute</td>
+                  <td>Cheap to compute</td>
+                </tr>
+                <tr>
+                  <td>Data that doesn&#39;t change often</td>
+                  <td>Highly volatile data</td>
+                </tr>
+                <tr>
+                  <td>Hot data (recent items)</td>
+                  <td>Cold data (old items)</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              The key insight:
+              <strong
+                >cache the subset of data that&#39;s most likely to be accessed in the near
+                future.</strong
+              >
+            </p>
+            <h3 id="how-do-you-know-what-to-cache">How Do You Know What to Cache?</h3>
+            <p>Look at your access patterns:</p>
+            <ul>
+              <li>
+                <strong>Recently published content</strong>
+                is more likely to be accessed (tweets, news articles)
+              </li>
+              <li><strong>Active user sessions</strong> are accessed on every request</li>
+              <li><strong>Popular items</strong> get more traffic than unpopular ones</li>
+              <li>
+                <strong>Computed aggregations</strong>
+                are expensive but don&#39;t change often
+              </li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> CACHE_TTL <span class="o">=</span> <span class="u">{</span>
+  <span class="p">USER_SESSION:</span> <span class="n">3600</span><span class="u">,</span>
+  <span class="p">RECENT_TWEETS:</span> <span class="n">300</span><span class="u">,</span>
+  <span class="p">TRENDING_TOPICS:</span> <span class="n">60</span><span class="u">,</span>
+  <span class="p">USER_PROFILE:</span> <span class="n">1800</span><span class="u">,</span>
+<span class="u">};</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">cacheTweet</span><span class="u">(</span>tweet<span class="o">:</span> <span class="t">Tweet</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> isRecent <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">-</span> tweet<span class="u">.</span><span class="p">createdAt</span> <span class="o">&lt;</span> <span class="n">24</span> <span class="o">*</span> <span class="n">60</span> <span class="o">*</span> <span class="n">60</span> <span class="o">*</span> <span class="n">1000</span><span class="u">;</span>
+
+  <span class="k">if</span> <span class="u">(</span>isRecent<span class="u">)</span> <span class="u">{</span>
+    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`tweet:${tweet.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>tweet<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> CACHE_TTL<span class="u">.</span>RECENT_TWEETS<span class="u">);</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+</code></pre>
+            <h2 id="caches-are-glorified-hash-tables">Caches Are Glorified Hash Tables</h2>
+            <p>At their core, caches have a simple access pattern: <strong>key-value</strong>.</p>
+            <pre><code class="language-text">PUT(key, value)  → stores data
+GET(key)         → retrieves data
+DEL(key)         → removes data
+</code></pre>
+            <p>That&#39;s it. No complex queries. No joins. No aggregations. Just:</p>
+            <ul>
+              <li>Put something in with a key</li>
+              <li>Get it out with that same key</li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Cache</span> <span class="u">{</span>
+  <span class="f">get</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;;</span>
+  <span class="f">set</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> value<span class="o">:</span> <span class="t">string</span><span class="u">,</span> ttl<span class="o">?:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;;</span>
+  <span class="f">del</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;;</span>
+<span class="u">}</span>
+
+<span class="k">const</span> <span class="f">profileKey</span> <span class="o">=</span> <span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`profile:${userId}`</span><span class="u">;</span>
+<span class="k">const</span> <span class="f">sessionKey</span> <span class="o">=</span> <span class="u">(</span>token<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`session:${token}`</span><span class="u">;</span>
+<span class="k">const</span> <span class="f">tweetKey</span> <span class="o">=</span> <span class="u">(</span>tweetId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`tweet:${tweetId}`</span><span class="u">;</span>
+</code></pre>
+            <p>
+              When you&#39;re checking the cache, you check if a specific key exists. If it does,
+              you get the value. If not, you compute it and store it with that key for next time.
+            </p>
+            <h2 id="caches-are-not-just-ram">Caches Are Not Just RAM</h2>
+            <p>A common misconception: &quot;Caches store data in RAM.&quot;</p>
+            <p>
+              Redis stores data in RAM. But that doesn&#39;t mean all caches are RAM-based. The
+              definition of a cache is broader:
+            </p>
+            <p>
+              <strong
+                >A cache is any storage that&#39;s &quot;nearer&quot; to you, so that you avoid an
+                expensive operation.</strong
+              >
+            </p>
+            <p>&quot;Near&quot; is relative:</p>
+            <ul>
+              <li>RAM is nearer than disk</li>
+              <li>Local disk is nearer than network storage</li>
+              <li>CDN edge server is nearer than origin server</li>
+              <li>API server memory is nearer than Redis</li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">class</span> <span class="t">MultiLevelCache</span> <span class="u">{</span>
+  <span class="k">private</span> localCache <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="u">{</span> value<span class="o">:</span> <span class="t">string</span><span class="u">;</span> expiry<span class="o">:</span> <span class="t">number</span> <span class="u">}&gt;();</span>
+
+  <span class="k">async</span> <span class="f">get</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
+    <span class="k">const</span> local <span class="o">=</span> this<span class="u">.</span>localCache<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span>local <span class="o">&amp;&amp;</span> local<span class="u">.</span><span class="p">expiry</span> <span class="o">&gt;</span> Date<span class="u">.</span><span class="f">now</span><span class="u">())</span> <span class="u">{</span>
+      <span class="k">return</span> local<span class="u">.</span><span class="p">value</span><span class="u">;</span>
+    <span class="u">}</span>
+
+    <span class="k">const</span> remote <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span>remote<span class="u">)</span> <span class="u">{</span>
+      this<span class="u">.</span>localCache<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> <span class="u">{</span>
+        <span class="p">value:</span> remote<span class="u">,</span>
+        <span class="p">expiry:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">+</span> <span class="n">60000</span><span class="u">,</span>
+      <span class="u">});</span>
+      <span class="k">return</span> remote<span class="u">;</span>
+    <span class="u">}</span>
+
+    <span class="k">return</span> <span class="k">null</span><span class="u">;</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              In this example, the API server&#39;s memory acts as a first-level cache before Redis.
+              Both are caches. Both help avoid expensive operations.
+            </p>
+            <h2 id="real-world-caching-examples">Real-World Caching Examples</h2>
+            <h3 id="section-1-google-news">1. Google News</h3>
+            <p>
+              News articles have a clear access pattern: recent articles are accessed far more than
+              old ones. An article published a week ago? Barely anyone reads it. An article
+              published 10 minutes ago? Everyone&#39;s reading it.
+            </p>
+            <p>
+              Google News caches recently published articles. When millions of users try to read the
+              same breaking news story, it&#39;s served from cache. No database query for each
+              request.
+            </p>
+            <h3 id="section-2-authentication-tokens">2. Authentication Tokens</h3>
+            <p>
+              Every request to your backend needs authentication. The token is checked on every
+              single request. If you hit the database for every token validation:
+            </p>
+            <pre
+            ><code class="language-text">1000 requests/second × 1 DB query each = 1000 DB queries/second
+</code></pre>
+            <p>
+              That&#39;s unnecessary load on your database. Instead, cache authentication tokens:
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">validateToken</span><span class="u">(</span>token<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">User</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`auth:${token}`</span><span class="u">;</span>
+
+  <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getUserByToken</span><span class="u">(</span>token<span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span>user<span class="u">)</span> <span class="u">{</span>
+    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>user<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">900</span><span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> user<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              When a user is online, they&#39;re making requests constantly. Their token is accessed
+              repeatedly. Caching it reduces database load dramatically.
+            </p>
+            <h3 id="section-3-live-streaming">3. Live Streaming</h3>
+            <p>
+              When streaming a cricket match or football game, users are watching the most recent
+              part of the stream. Maybe they rewind 10 minutes to see a replay. Nobody&#39;s going
+              back 2 hours.
+            </p>
+            <p>
+              The last 10-15 minutes of the stream is cached on CDN edge servers. When millions of
+              viewers request the same segment, it&#39;s served from the nearest CDN node, not the
+              origin server.
+            </p>
+            <pre><code class="language-text">Origin Server (far) → CDN Edge (near) → User
+
+* Most recent segments cached at edge
+* Older segments fetched from origin on demand
+</code></pre>
+            <h2 id="popular-caching-solutions">Popular Caching Solutions</h2>
+            <h3 id="redis">Redis</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/redis.webp"
+                alt="Redis is the most popular caching solution today"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Redis is the most popular caching solution today. It&#39;s an in-memory data store
+              that supports:
+            </p>
+            <ul>
+              <li>Key-value storage</li>
+              <li>Data structures (lists, sets, sorted sets, hashes)</li>
+              <li>TTL (time-to-live) for automatic expiration</li>
+              <li>Pub/sub messaging</li>
+              <li>Atomic operations</li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+
+<span class="k">const</span> redis <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">({</span>
+  <span class="p">host:</span> <span class="s">&quot;localhost&quot;</span><span class="u">,</span>
+  <span class="p">port:</span> <span class="n">6379</span><span class="u">,</span>
+<span class="u">});</span>
+
+<span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">&quot;user:abc&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>user<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+
+<span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">&quot;user:abc&quot;</span><span class="u">);</span>
+
+<span class="k">await</span> redis<span class="u">.</span><span class="f">del</span><span class="u">(</span><span class="s">&quot;user:abc&quot;</span><span class="u">);</span>
+
+<span class="k">await</span> redis<span class="u">.</span><span class="f">hset</span><span class="u">(</span><span class="s">&quot;profile:abc&quot;</span><span class="u">,</span> <span class="u">{</span>
+  <span class="p">name:</span> <span class="s">&quot;Alex&quot;</span><span class="u">,</span>
+  <span class="p">email:</span> <span class="s">&quot;alex@example.com&quot;</span><span class="u">,</span>
+<span class="u">});</span>
+
+<span class="k">await</span> redis<span class="u">.</span><span class="f">lpush</span><span class="u">(</span><span class="s">&quot;notifications:abc&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>notification<span class="u">));</span>
+</code></pre>
+            <h3 id="memcached">Memcached</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/memcached.webp"
+                alt="Memcached is simpler than Redis. It&#39;s a pure key-value store without the advanced data structures. It&#39;s lightweight and fast, good for simple caching needs"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Memcached is simpler than Redis. It&#39;s a pure key-value store without the advanced
+              data structures. It&#39;s lightweight and fast, good for simple caching needs.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Redis</th>
+                  <th>Memcached</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Data structures</td>
+                  <td>Lists, sets, hashes, sorted sets</td>
+                  <td>Key-value only</td>
+                </tr>
+                <tr>
+                  <td>Persistence</td>
+                  <td>Optional disk persistence</td>
+                  <td>Memory only</td>
+                </tr>
+                <tr>
+                  <td>Replication</td>
+                  <td>Built-in</td>
+                  <td>External solutions</td>
+                </tr>
+                <tr>
+                  <td>Complexity</td>
+                  <td>More features</td>
+                  <td>Simpler</td>
+                </tr>
+                <tr>
+                  <td>Use case</td>
+                  <td>General caching, sessions, queues</td>
+                  <td>Simple caching</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 id="when-should-you-use-caching">When Should You Use Caching?</h2>
+            <p>Cache when you see a pattern of frequent access to the same data:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Cache?</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>User profiles</td>
+                  <td>✅</td>
+                  <td>Accessed on every page load</td>
+                </tr>
+                <tr>
+                  <td>Authentication tokens</td>
+                  <td>✅</td>
+                  <td>Checked on every request</td>
+                </tr>
+                <tr>
+                  <td>Recent posts/tweets</td>
+                  <td>✅</td>
+                  <td>Hot content, many reads</td>
+                </tr>
+                <tr>
+                  <td>Search results</td>
+                  <td>✅</td>
+                  <td>Same searches repeat</td>
+                </tr>
+                <tr>
+                  <td>Database aggregations</td>
+                  <td>✅</td>
+                  <td>Expensive to compute</td>
+                </tr>
+                <tr>
+                  <td>One-time reports</td>
+                  <td>❌</td>
+                  <td>Accessed once, then never</td>
+                </tr>
+                <tr>
+                  <td>Real-time sensor data</td>
+                  <td>❌</td>
+                  <td>Changes constantly</td>
+                </tr>
+                <tr>
+                  <td>User-specific, rarely accessed</td>
+                  <td>❌</td>
+                  <td>Low hit rate</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Don&#39;t add a cache just because you can. Caching adds complexity:</p>
+            <ul>
+              <li>Cache invalidation (when to update/delete cached data)</li>
+              <li>Cache consistency (cache vs database can get out of sync)</li>
+              <li>Additional infrastructure to maintain</li>
+            </ul>
+            <p>
+              Add caching when you&#39;ve identified a clear pattern of repeated expensive
+              operations.
+            </p>
+            <h2 id="populating-the-cache">Populating the Cache</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/populating-cache.webp"
+                alt="Populating the cache"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Cache typically sits between your API server and your database. Logically, that&#39;s
+              where it belongs. When a request comes in, the API server checks the cache first. If
+              the data exists, return it. If not, query the database, store the result in cache,
+              then return to the user.
+            </p>
+            <p>
+              But how does data get into the cache in the first place? There are two main
+              approaches: <strong>lazy population</strong> and <strong>eager population</strong>.
+            </p>
+            <h3 id="lazy-population-most-common">Lazy Population (Most Common)</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/lazy-update.webp"
+                alt="Lazy population means you don&#39;t proactively push data into the cache. Instead, you let requests come in, experience cache misses, and then populate the cache."
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Lazy population means you don&#39;t proactively push data into the cache. Instead, you
+              let requests come in, experience cache misses, and then populate the cache.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getBlog</span><span class="u">(</span>blogId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Blog</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`blog:${blogId}`</span><span class="u">;</span>
+
+  <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">const</span> blog <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span>
+    <span class="s">`</span>
+<span class="s">    SELECT b.*, a.name as author_name, array_agg(t.name) as tags</span>
+<span class="s">    FROM blogs b</span>
+<span class="s">    JOIN authors a ON b.author_id = a.id</span>
+<span class="s">    JOIN blog_tags bt ON b.id = bt.blog_id</span>
+<span class="s">    JOIN tags t ON bt.tag_id = t.id</span>
+<span class="s">    WHERE b.id = $1</span>
+<span class="s">    GROUP BY b.id, a.name</span>
+<span class="s">  `</span><span class="u">,</span>
+    <span class="u">[</span>blogId<span class="u">],</span>
+  <span class="u">);</span>
+
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>blog<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">1800</span><span class="u">);</span>
+
+  <span class="k">return</span> blog<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The first request for a blog hits the database (cache miss). Subsequent requests get
+              served from cache (cache hit). Simple.
+            </p>
+            <p>
+              <strong>Why &quot;lazy&quot;?</strong>
+              Because you&#39;re not proactively pushing data. Your cache only contains data for
+              which a request actually came in.
+            </p>
+            <p>
+              <strong>Always set an expiry.</strong>
+              This is critical. When you set something in the cache, always set a TTL
+              (time-to-live). If you don&#39;t:
+            </p>
+            <ul>
+              <li>Keys stay forever</li>
+              <li>Your cache fills up</li>
+              <li>Classic memory leak</li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> value<span class="u">,</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">300</span><span class="u">);</span>
+
+<span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> value<span class="u">);</span>
+</code></pre>
+            <p>
+              Once the TTL expires, the key is automatically deleted. This ensures your cache only
+              contains relevant, recently-accessed data.
+            </p>
+            <h3 id="eager-population">Eager Population</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/eager-update.webp"
+                alt="Eager population"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Sometimes lazy population isn&#39;t enough. You know certain data will be accessed
+              heavily, so you proactively push it to the cache. This is eager population.
+            </p>
+            <p>There are two approaches:</p>
+            <h4 id="section-1-write-to-both-database-and-cache">
+              1. Write to Both Database and Cache
+            </h4>
+            <p>
+              When you write to your database, you also write to your cache in the same request.
+            </p>
+            <p><strong>Example: Live Cricket Scores</strong></p>
+            <p>
+              Imagine you&#39;re building Cricinfo or Cricbuzz. During a live match, thousands of
+              users are reading the score. With lazy population:
+            </p>
+            <ol>
+              <li>Score gets updated in MySQL</li>
+              <li>Cache still has old score (hasn&#39;t expired yet)</li>
+              <li>Users see stale data until cache expires</li>
+              <li>Then cache miss → fetch new score → update cache</li>
+            </ol>
+            <p>
+              That&#39;s a poor experience. The score changed, but users are waiting for cache
+              expiry.
+            </p>
+            <p>With eager population:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">updateScore</span><span class="u">(</span>matchId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> newScore<span class="o">:</span> <span class="t">Score</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;UPDATE matches SET score = $1 WHERE id = $2&quot;</span><span class="u">,</span> <span class="u">[</span>newScore<span class="u">,</span> matchId<span class="u">]);</span>
+
+  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`match:${matchId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>newScore<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              When the commentator updates the score, it goes to both database and cache
+              simultaneously. The next read request gets the updated score immediately. No waiting
+              for expiry.
+            </p>
+            <pre><code class="language-text">Commentator updates score
+         │
+         ▼
+    ┌─────────┐
+    │   API   │
+    └────┬────┘
+         │
+    ┌────┴────┐
+    │         │
+    ▼         ▼
+┌───────┐ ┌───────┐
+│ MySQL │ │ Redis │
+└───────┘ └───────┘
+
+* Both updated in the same request
+* Next read gets fresh data from cache
+</code></pre>
+            <h4 id="section-2-proactively-push-anticipated-data">
+              2. Proactively Push Anticipated Data
+            </h4>
+            <p>
+              Sometimes you know data will be accessed before anyone requests it. You proactively
+              cache it.
+            </p>
+            <p><strong>Example: Celebrity Tweets</strong></p>
+            <p>
+              When someone with 100,000 followers posts a tweet, that tweet is going to be read by a
+              lot of people very soon. Instead of waiting for the first request (which would be a
+              cache miss), you proactively push it to cache.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createTweet</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> content<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Tweet</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> tweet <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">createTweet</span><span class="u">(</span>userId<span class="u">,</span> content<span class="u">);</span>
+
+  <span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getUser</span><span class="u">(</span>userId<span class="u">);</span>
+
+  <span class="k">if</span> <span class="u">(</span>user<span class="u">.</span><span class="p">followerCount</span> <span class="o">&gt;</span> <span class="n">50000</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`tweet:${tweet.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>tweet<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> tweet<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The tweet is in the cache before anyone even requests it. First request? Cache hit. No
+              miss penalty for viral content.
+            </p>
+            <p><strong>Example: YouTube Recommendations</strong></p>
+            <p>
+              YouTube&#39;s recommendation engine decides which videos to show on users&#39; home
+              feeds. These videos are about to get a surge of traffic. Even if the video is two
+              years old, if the recommendation engine is pushing it to millions of users, YouTube
+              can proactively cache that video&#39;s metadata.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">addToRecommendationFeed</span><span class="u">(</span>videoId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> userIds<span class="o">:</span> <span class="t">string</span><span class="u">[])</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">if</span> <span class="u">(</span>userIds<span class="u">.</span>length <span class="o">&gt;</span> <span class="n">10000</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> videoMetadata <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getVideoMetadata</span><span class="u">(</span>videoId<span class="u">);</span>
+    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`video:${videoId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>videoMetadata<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">7200</span><span class="u">);</span>
+  <span class="u">}</span>
+
+  <span class="k">await</span> recommendationService<span class="u">.</span><span class="f">pushToFeeds</span><span class="u">(</span>videoId<span class="u">,</span> userIds<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The video was published years ago (cold data), but it&#39;s about to become hot.
+              Proactive caching saves thousands of cache misses.
+            </p>
+            <h3 id="lazy-vs-eager-when-to-use-which">Lazy vs Eager: When to Use Which</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Approach</th>
+                  <th>When to Use</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Lazy population</td>
+                  <td>General case, unpredictable access patterns</td>
+                  <td>Blog posts, user profiles</td>
+                </tr>
+                <tr>
+                  <td>Eager (write-through)</td>
+                  <td>Data changes frequently and must be fresh</td>
+                  <td>Live scores, stock prices</td>
+                </tr>
+                <tr>
+                  <td>Eager (proactive push)</td>
+                  <td>You can predict what will be accessed</td>
+                  <td>Viral content, recommendations</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Most applications use lazy population for 90% of their caching. Eager population is
+              for specific high-traffic, time-sensitive scenarios.
+            </p>
+            <h2 id="scaling-the-cache">Scaling the Cache</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/scaling.webp"
+                alt="Scaling the cache"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Cache is just a faster database. The scaling techniques are identical to how you&#39;d
+              scale any database. I wrote about scaling databases in depth here as well -&gt; &quot;<a
+                href="/blogs/system-design/understanding-database-scaling-sharding/#before-you-scale/"
+                >Before You Scale</a
+              >&quot;.
+            </p>
+            <h3 id="vertical-scaling">Vertical Scaling</h3>
+            <p>The simplest approach: make your cache server bigger.</p>
+            <ul>
+              <li>More RAM → cache more data</li>
+              <li>More CPU → handle more operations</li>
+              <li>Faster network → lower latency</li>
+            </ul>
+            <p>
+              This works until you hit hardware limits. A single Redis instance can handle a lot,
+              but eventually you need more.
+            </p>
+            <h3 id="horizontal-scaling-read-replicas">Horizontal Scaling: Read Replicas</h3>
+            <p>When your cache is read-heavy (most caches are), add read replicas.</p>
+            <pre><code class="language-text">              ┌─────────────┐
+              │   Master    │ ← All writes
+              └──────┬──────┘
+                     │
+           ┌─────────┼─────────┐
+           │         │         │
+           ▼         ▼         ▼
+      ┌─────────┐┌─────────┐┌─────────┐
+      │ Replica ││ Replica ││ Replica │ ← Reads distributed
+      └─────────┘└─────────┘└─────────┘
+</code></pre>
+            <ul>
+              <li>Writes go to master</li>
+              <li>Reads are distributed across replicas</li>
+              <li>Same data replicated across all nodes</li>
+              <li>API server knows addresses of all nodes and routes accordingly</li>
+            </ul>
+            <p>
+              This scales reads. If one replica can handle 100k reads/second, three replicas can
+              handle 300k reads/second.
+            </p>
+            <h3 id="horizontal-scaling-sharding">Horizontal Scaling: Sharding</h3>
+            <p>When you have too much data for a single node, shard your cache.</p>
+            <pre><code class="language-text">                    ┌─────────┐
+                    │   API   │
+                    └────┬────┘
+                         │
+           ┌─────────────┼─────────────┐
+           │             │             │
+           ▼             ▼             ▼
+      ┌─────────┐   ┌─────────┐   ┌─────────┐
+      │ Shard 1 │   │ Shard 2 │   │ Shard 3 │
+      │  (A-I)  │   │  (J-R)  │   │  (S-Z)  │
+      └─────────┘   └─────────┘   └─────────┘
+</code></pre>
+            <ul>
+              <li>Data is partitioned across multiple cache nodes</li>
+              <li>Each shard holds a mutually exclusive subset of data</li>
+              <li>API server routes requests to the correct shard (hash-based or range-based)</li>
+              <li>Each shard can have its own replicas</li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">getShardForKey</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Redis</span> <span class="u">{</span>
+  <span class="k">const</span> hash <span class="o">=</span> <span class="f">hashFunction</span><span class="u">(</span>key<span class="u">);</span>
+  <span class="k">const</span> shardIndex <span class="o">=</span> hash <span class="o">%</span> shards<span class="u">.</span>length<span class="u">;</span>
+  <span class="k">return</span> shards<span class="u">[</span>shardIndex<span class="u">];</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">get</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> shard <span class="o">=</span> <span class="f">getShardForKey</span><span class="u">(</span>key<span class="u">);</span>
+  <span class="k">return</span> shard<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
+<span class="u">}</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">set</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> value<span class="o">:</span> <span class="t">string</span><span class="u">,</span> ttl<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> shard <span class="o">=</span> <span class="f">getShardForKey</span><span class="u">(</span>key<span class="u">);</span>
+  <span class="k">await</span> shard<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> value<span class="u">,</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> ttl<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <h3 id="scaling-summary">Scaling Summary</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Technique</th>
+                  <th>When to Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Start</td>
+                  <td>Single node</td>
+                  <td>Low traffic, small dataset</td>
+                </tr>
+                <tr>
+                  <td>More reads</td>
+                  <td>Read replicas</td>
+                  <td>Read-heavy workload</td>
+                </tr>
+                <tr>
+                  <td>More data</td>
+                  <td>Sharding</td>
+                  <td>Dataset doesn&#39;t fit in single node</td>
+                </tr>
+                <tr>
+                  <td>Maximum scale</td>
+                  <td>Sharding + replicas</td>
+                  <td>High traffic + large dataset</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              The scaling techniques for caches are identical to databases because caches are just
+              faster databases. Everything you learned about database scaling applies here.
+            </p>
+            <h2 id="caching-at-different-levels">Caching at Different Levels</h2>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/caching-at-different-levels.webp"
+                alt="Caching at different levels"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              Redis is the most common cache, but it&#39;s not the only place where you can cache.
+              Literally every component in your infrastructure can cache something. The question is:
+              should it?
+            </p>
+            <h3 id="the-staleness-and-invalidation-problem">
+              The Staleness and Invalidation Problem
+            </h3>
+            <p>
+              Before we dive into different caching layers, a warning:
+              <strong>caching comes with staleness</strong>.
+            </p>
+            <p>
+              When you cache something, until that key expires, you&#39;re serving potentially stale
+              data. The actual value in your database might have changed, but you&#39;re still
+              returning the cached version.
+            </p>
+            <p>Some data cannot be cached:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getAccountBalance</span><span class="u">(</span>accountId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">number</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">return</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT balance FROM accounts WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>accountId<span class="u">]);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Bank account balances, financial summaries, real-time inventory - these need the most
+              recent, consistent data. Your friend sends you money, you open your banking app, and
+              if it shows the old balance from cache? That&#39;s a terrible experience.
+            </p>
+            <p>
+              <strong>Invalidation</strong>
+              is the other challenge. When data changes, you need to update or delete the cached
+              version. If you cache at multiple layers, you need to invalidate at multiple layers.
+              That&#39;s a lot of coordination.
+            </p>
+            <h3 id="client-side-caching">Client-Side Caching</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/client-side-cache.webp"
+                alt="Client-side caching"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              The closest cache to the user is on the user&#39;s device itself: browser storage,
+              mobile app storage.
+            </p>
+            <p><strong>What to cache on the client:</strong></p>
+            <ul>
+              <li>
+                <strong>Images</strong>: Your browser automatically caches images. Website logos,
+                icons, photos - once loaded, they&#39;re served from local cache
+              </li>
+              <li>
+                <strong>JavaScript bundles</strong>: Why fetch the same JS files on every page load?
+                Cache them locally
+              </li>
+              <li>
+                <strong>User preferences</strong>: Theme settings, language preferences, basic
+                profile info
+              </li>
+              <li>
+                <strong>Recent activity</strong>: Amazon Prime Video caches your watch progress in
+                the browser. When you reopen the app, it shows where you left off
+              </li>
+            </ul>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> CACHE_KEY <span class="o">=</span> <span class="s">&quot;user_preferences&quot;</span><span class="u">;</span>
+
+<span class="k">function</span> <span class="f">getUserPreferences</span><span class="u">()</span><span class="o">:</span> <span class="t">UserPreferences</span> <span class="u">{</span>
+  <span class="k">const</span> cached <span class="o">=</span> localStorage<span class="u">.</span><span class="f">getItem</span><span class="u">(</span>CACHE_KEY<span class="u">);</span>
+  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
+  <span class="u">}</span>
+  <span class="k">return</span> DEFAULT_PREFERENCES<span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">saveUserPreferences</span><span class="u">(</span>prefs<span class="o">:</span> <span class="t">UserPreferences</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  localStorage<span class="u">.</span><span class="f">setItem</span><span class="u">(</span>CACHE_KEY<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>prefs<span class="u">));</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              <strong>The massive benefit</strong>: No network request at all. Data is served
+              instantly from the device. This is the fastest possible cache.
+            </p>
+            <p>
+              <strong>The tradeoff</strong>: If you&#39;re watching a video on your phone and switch
+              to your laptop, the laptop shows different watch progress. Client-side caches
+              aren&#39;t synced across devices.
+            </p>
+            <h3 id="content-delivery-networks-cdn">Content Delivery Networks (CDN)</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/cdn.webp"
+                alt="Content Delivery Networks"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              CDNs are geographically distributed caching servers. They&#39;re designed to serve
+              static content (images, videos, JS bundles) from a location close to the user.
+            </p>
+            <p><strong>The problem CDNs solve:</strong></p>
+            <p>Let&#39;s say your servers are in India. A user in the US makes a request:</p>
+            <pre
+            ><code class="language-text">US User → Atlantic Ocean → India Server → Atlantic Ocean → US User
+</code></pre>
+            <p>That&#39;s a round trip across the globe. Latency is high.</p>
+            <p>With a CDN:</p>
+            <pre><code class="language-text">US User → US CDN Server → Response
+</code></pre>
+            <p>The CDN server in the US has a cached copy. No trans-Atlantic trip needed.</p>
+            <p><strong>How CDNs work:</strong></p>
+            <pre
+            ><code class="language-text">User (India) ──→ Mumbai CDN ──→ (if miss) ──→ Origin Server (Sydney)
+                     │                              │
+                     │◄─────── cache response ──────┘
+                     │
+                     └──→ Return to user
+</code></pre>
+            <ol>
+              <li>
+                User&#39;s request goes to the <strong>nearest CDN server</strong> (automatic,
+                that&#39;s the magic of CDNs)
+              </li>
+              <li>If CDN has the data → serve immediately</li>
+              <li>
+                If CDN doesn&#39;t have the data → request from <strong>origin server</strong>
+              </li>
+              <li>Origin server responds, CDN caches it, then returns to user</li>
+              <li>Subsequent requests from that region are served from CDN</li>
+            </ol>
+            <p>
+              <strong>CDNs use lazy population.</strong>
+              You don&#39;t proactively push to every CDN node worldwide. The first request from a
+              region populates that region&#39;s cache.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> CDN_BASE <span class="o">=</span> <span class="s">&quot;https://cdn.example.com&quot;</span><span class="u">;</span>
+
+<span class="k">function</span> <span class="f">getImageUrl</span><span class="u">(</span>imagePath<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
+  <span class="k">return</span> <span class="s">`${CDN_BASE}/images/${imagePath}`</span><span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p><strong>Popular CDNs</strong>: Cloudflare, Akamai, AWS CloudFront, Fastly</p>
+            <p>
+              Like any cache, CDN entries have TTL. After expiration, the next request goes to
+              origin, refreshing the cache.
+            </p>
+            <h3 id="remote-cache-redis">Remote Cache (Redis)</h3>
+            <p>
+              <img
+                src="/assets/content/blogs/caching/remote-cache.webp"
+                alt="Remote cache"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              This is what we&#39;ve been discussing throughout this article. A centralized cache
+              accessible by all your API servers over the network.
+            </p>
+            <p><strong>Characteristics:</strong></p>
+            <ul>
+              <li>Centralized (one cluster, multiple servers connect to it)</li>
+              <li>Accessible over network (not local to any single server)</li>
+              <li>Stores data in memory (fast)</li>
+              <li>Shared across your entire infrastructure</li>
+            </ul>
+            <pre><code class="language-text">┌──────────┐     ┌──────────┐     ┌──────────┐
+│ API 1    │     │ API 2    │     │ API 3    │
+└────┬─────┘     └────┬─────┘     └────┬─────┘
+     │                │                │
+     └────────────────┼────────────────┘
+                      │
+                      ▼
+               ┌─────────────┐
+               │    Redis    │
+               │   (Cache)   │
+               └─────────────┘
+                      │
+                      ▼
+               ┌─────────────┐
+               │  Database   │
+               └─────────────┘
+</code></pre>
+            <p>
+              All API servers share the same cache. User hits API Server 1, data gets cached. Next
+              request hits API Server 2, cache hit - same data served.
+            </p>
+            <p><strong>Remember:</strong></p>
+            <ul>
+              <li>Always set TTL on keys (memory leak otherwise)</li>
+              <li>Cache size is tiny compared to database (be selective about what you cache)</li>
+            </ul>
+            <h3 id="database-as-cache">Database as Cache</h3>
+            <p>
+              Here&#39;s a less obvious form of caching:
+              <strong>storing pre-computed values in your database</strong>.
+            </p>
+            <p><strong>Example: Total posts count</strong></p>
+            <p>
+              In a blogging app, you want to show how many posts a user has written on their
+              profile. The straightforward approach:
+            </p>
+            <pre
+            ><code class="language-sql"><span class="k">SELECT</span> <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">FROM</span> posts <span class="k">WHERE</span> user_id <span class="o">=</span> abc;
+</code></pre>
+            <p>
+              This query runs every time someone views the profile. If the user has 10,000 posts,
+              that&#39;s an expensive count operation every time.
+            </p>
+            <p><strong>The caching approach:</strong></p>
+            <p>Add a <code>total_posts</code> column to the users table:</p>
+            <pre
+            ><code class="language-sql"><span class="k">ALTER</span> <span class="k">TABLE</span> users <span class="k">ADD</span> COLUMN total_posts <span class="k">INT</span> <span class="k">DEFAULT</span> <span class="n">0</span>;
+</code></pre>
+            <p>Now, whenever a post is published:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createPost</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> content<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Post</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">return</span> db<span class="u">.</span><span class="f">transaction</span><span class="u">(</span><span class="k">async</span> <span class="u">(</span>trx<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
+    <span class="k">const</span> post <span class="o">=</span> <span class="k">await</span> <span class="f">trx</span><span class="u">(</span><span class="s">&quot;posts&quot;</span><span class="u">).</span><span class="f">insert</span><span class="u">({</span> <span class="p">user_id:</span> userId<span class="u">,</span> content <span class="u">}).</span><span class="f">returning</span><span class="u">(</span><span class="s">&quot;*&quot;</span><span class="u">);</span>
+
+    <span class="k">await</span> <span class="f">trx</span><span class="u">(</span><span class="s">&quot;users&quot;</span><span class="u">).</span><span class="f">where</span><span class="u">(</span><span class="s">&quot;id&quot;</span><span class="u">,</span> userId<span class="u">).</span><span class="f">increment</span><span class="u">(</span><span class="s">&quot;total_posts&quot;</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
+
+    <span class="k">return</span> post<span class="u">[</span><span class="n">0</span><span class="u">];</span>
+  <span class="u">});</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Both operations happen in the same transaction. The count is always accurate, and you
+              never run that expensive <code>COUNT(*)</code> query.
+            </p>
+            <pre><code class="language-sql"><span class="c">-- Before: expensive</span>
+<span class="k">SELECT</span> <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">FROM</span> posts <span class="k">WHERE</span> user_id <span class="o">=</span> abc;
+
+<span class="c">-- After: instant</span>
+<span class="k">SELECT</span> total_posts <span class="k">FROM</span> users <span class="k">WHERE</span> id <span class="o">=</span> abc;
+</code></pre>
+            <p>
+              This is caching. You&#39;re storing a pre-computed value to avoid an expensive
+              computation. The &quot;cache&quot; just happens to be in your database.
+            </p>
+            <h3 id="the-over-caching-trap">The Over-Caching Trap</h3>
+            <p>Just because you can cache at every layer doesn&#39;t mean you should.</p>
+            <p>Imagine you cache data at:</p>
+            <ol>
+              <li>Client-side (browser)</li>
+              <li>CDN</li>
+              <li>Load balancer</li>
+              <li>API server memory</li>
+              <li>Redis</li>
+              <li>Database (pre-computed columns)</li>
+            </ol>
+            <p>Now the underlying data changes. To show fresh data, you need to invalidate:</p>
+            <ol>
+              <li>Redis cache</li>
+              <li>Load balancer cache</li>
+              <li>CDN cache (every edge node worldwide)</li>
+              <li>API server local cache</li>
+              <li>Client-side cache (good luck with that)</li>
+            </ol>
+            <p>That&#39;s a nightmare. Each layer adds:</p>
+            <ul>
+              <li>More staleness (data is older by the time it reaches the user)</li>
+              <li>More invalidation complexity (more places to update/delete)</li>
+              <li>More debugging difficulty (which layer has the stale data?)</li>
+            </ul>
+            <p>
+              <strong>Pick your battles.</strong>
+              One or two well-chosen caching layers is usually enough. Don&#39;t cache at every
+              layer just because you can.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Best For</th>
+                  <th>Invalidation Difficulty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Client-side</td>
+                  <td>Static assets, user preferences</td>
+                  <td>Hard (user controls it)</td>
+                </tr>
+                <tr>
+                  <td>CDN</td>
+                  <td>Static files, images, videos</td>
+                  <td>Medium (API available)</td>
+                </tr>
+                <tr>
+                  <td>Remote cache</td>
+                  <td>Dynamic data, sessions, hot paths</td>
+                  <td>Easy (you control it)</td>
+                </tr>
+                <tr>
+                  <td>Database</td>
+                  <td>Expensive aggregations</td>
+                  <td>Easy (same transaction)</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              Caching is about avoiding expensive operations by storing frequently accessed data
+              somewhere faster. The key principles:
+            </p>
+            <ol>
+              <li><strong>Cache is a supplement</strong>, not a replacement for your database</li>
+              <li>
+                <strong>Cache strategically</strong>
+                - only data that&#39;s likely to be accessed again
+              </li>
+              <li><strong>Key-value access</strong> - caches are simple hash tables</li>
+              <li>
+                <strong>&quot;Near&quot; is relative</strong>
+                - anything that helps avoid expensive operations is a cache
+              </li>
+              <li>
+                <strong>Lazy population</strong>
+                works for most cases. Use eager population when you can predict access patterns
+              </li>
+              <li><strong>Always set TTL</strong> - keys without expiry are memory leaks</li>
+              <li>
+                <strong>Scale like a database</strong>
+                - vertical scaling, then replicas, then sharding
+              </li>
+              <li>
+                <strong>Cache at the right level</strong>
+                - client, CDN, remote cache, or database depending on your use case
+              </li>
+              <li>
+                <strong>Don&#39;t over-cache</strong>
+                - every layer adds staleness and invalidation complexity
+              </li>
+            </ol>
+            <p>
+              When you see the same data being requested over and over, when you&#39;re making the
+              same expensive database query repeatedly, when you&#39;re computing the same result
+              multiple times - that&#39;s when caching shines. But remember: if you need consistent,
+              real-time data, caching isn&#39;t the answer. Pick your battles, cache strategically,
+              and your system will fly.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
+            <li><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
+            <li>
+              <a href="/blogs/system-design/async-processing/"
+                >Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Discover why some animations feel natural while others feel off. Explore the brain&#39;s wiring for movement, the uncanny valley of UI, and when animation becomes harmful."
+    />
+    <link
+      rel="canonical"
+      href="https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="The Psychology of Motion in UI | Pulkit" />
+    <meta
+      property="og:description"
+      content="Discover why some animations feel natural while others feel off. Explore the brain&#39;s wiring for movement, the uncanny valley of UI, and when animation becomes harmful."
+    />
+    <meta
+      property="og:url"
+      content="https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/"
+    />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/design-engineering/psychology-of-motion/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/design-engineering/psychology-of-motion/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Psychology of Motion in UI" />
+    <meta property="article:published_time" content="2026-01-25" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Psychology of Motion in UI | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Discover why some animations feel natural while others feel off. Explore the brain&#39;s wiring for movement, the uncanny valley of UI, and when animation becomes harmful."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/design-engineering/psychology-of-motion/card.png"
+    />
+    <meta name="twitter:image:alt" content="The Psychology of Motion in UI" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#image","contentUrl":"https://new.pulkit.page/og/blogs/design-engineering/psychology-of-motion/card.png","width":1200,"height":630,"caption":"The Psychology of Motion in UI"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#article","headline":"The Psychology of Motion in UI","description":"Discover why some animations feel natural while others feel off. Explore the brain's wiring for movement, the uncanny valley of UI, and when animation becomes harmful.","datePublished":"2026-01-25","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#image"},"url":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/","inLanguage":"en","keywords":["Animation","UX","Psychology"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://new.pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"The Psychology of Motion in UI","item":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#webpage","url":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/","name":"The Psychology of Motion in UI","description":"Discover why some animations feel natural while others feel off. Explore the brain's wiring for movement, the uncanny valley of UI, and when animation becomes harmful.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/design-engineering/psychology-of-motion/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>The Psychology of Motion in UI | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
+            <li aria-current="page">The Psychology of Motion in UI</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>The Psychology of Motion in UI</h1>
+            <p class="detail-meta"><time datetime="2026-01-25">2026-01-25</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              You&#39;ve seen it before. A modal slides in and something feels wrong. Not broken,
+              just... off. Maybe it&#39;s too slow. Maybe it&#39;s too fast. Maybe it moves in a way
+              that doesn&#39;t match the action. You can&#39;t pinpoint it, but your brain notices.
+            </p>
+            <p>
+              This is the uncanny valley of UI animation. And understanding why some animations feel
+              right while others feel wrong is the foundation of everything else in motion design.
+            </p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong>Our brains are wired to notice movement</strong>
+                - it&#39;s an evolutionary survival mechanism
+              </li>
+              <li>
+                <strong>Animation is communication</strong>
+                - it tells users what&#39;s happening, where things are, and what they can do
+              </li>
+              <li>
+                <strong>The uncanny valley exists in UI</strong>
+                - animations that are almost right feel worse than no animation
+              </li>
+              <li>
+                <strong>Physics matters</strong>
+                - things should move like real objects (acceleration, deceleration, momentum)
+              </li>
+              <li>
+                <strong>Context determines appropriateness</strong>
+                - what works for a game doesn&#39;t work for a banking app
+              </li>
+              <li>
+                <strong>When in doubt, don&#39;t animate</strong>
+                - bad animation is worse than no animation
+              </li>
+            </ul>
+            <h2 id="why-we-notice-movement">Why We Notice Movement</h2>
+            <p>
+              Humans are motion-detection machines. It&#39;s not a choice. Your brain is constantly
+              scanning for movement in your peripheral vision. This is evolution. In the wild,
+              movement meant predator or prey. Noticing it fast meant survival.
+            </p>
+            <p>
+              This wiring doesn&#39;t turn off when you&#39;re using a computer. Every animation,
+              every transition, every moving element triggers this ancient pattern-matching system.
+              Your brain is asking: what moved? why? should I pay attention?
+            </p>
+            <p>
+              This is why animation is so powerful. It hijacks a system that&#39;s been optimized
+              over millions of years.
+            </p>
+            <p>
+              But it&#39;s also why bad animation is so jarring. When something moves in an
+              unexpected way, your brain flags it as wrong. Not consciously. You just feel
+              uncomfortable.
+            </p>
+            <h2 id="animation-as-communication">Animation as Communication</h2>
+            <p>
+              Animation isn&#39;t decoration. It&#39;s a language. Every movement communicates
+              something:
+            </p>
+            <p>
+              <strong>Spatial relationships</strong>: When a modal slides in from the right, your
+              brain understands it came from &quot;somewhere&quot; to the right. When you dismiss
+              it, it should go back there. This creates a mental model of space in your interface.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/psychology-of-motion"
+                >Interactive example: Spatial Relationship</a
+              >
+            </p>
+            <p>
+              <strong>State changes</strong>: When a button shrinks slightly on press, it
+              communicates &quot;I received your input.&quot; When it bounces back, it communicates
+              &quot;action complete.&quot; No text needed.
+            </p>
+            <p>
+              <strong>Hierarchy and focus</strong>: When everything else dims and blurs while a
+              modal appears, animation is saying &quot;this is what matters now.&quot;
+            </p>
+            <p>
+              <strong>Continuity</strong>: When an item in a list expands into a detail view, the
+              animation shows that they&#39;re the same thing. Without it, users have to work harder
+              to understand the relationship.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/psychology-of-motion"
+                >Interactive example: List Expansion</a
+              >
+            </p>
+            <h2 id="the-uncanny-valley">The Uncanny Valley</h2>
+            <p>
+              The <a href="https://en.wikipedia.org/wiki/Uncanny_valley">uncanny valley</a> was
+              originally about robots and CGI humans. When something is clearly artificial, we
+              accept it (think cartoon characters or stylized robots). When it&#39;s perfectly
+              realistic, we accept it. But when it&#39;s <em>almost</em> realistic, when it mimics
+              reality but gets the details slightly wrong, we&#39;re disturbed. It feels off in a
+              way that triggers discomfort.
+            </p>
+            <p>
+              UI animation has its own uncanny valley. And it&#39;s one of the most important
+              concepts to understand about motion design.
+            </p>
+            <h3 id="why-it-happens">Why It Happens</h3>
+            <p>
+              Your brain is constantly trying to predict the physical world. When you see something
+              move, your ancient pattern-matching system expects it to follow certain laws:
+            </p>
+            <ul>
+              <li>
+                <strong>Objects accelerate and decelerate</strong>
+                - nothing jumps from 0 to full speed
+              </li>
+              <li>
+                <strong>Momentum matters</strong>
+                - if something is moving fast and suddenly stops, your brain questions it
+              </li>
+              <li>
+                <strong>Weight implies inertia</strong>
+                - a heavy button shouldn&#39;t feel as zippy as a light one
+              </li>
+              <li>
+                <strong>Distance takes time</strong>
+                - moving 500 pixels should feel different from moving 10 pixels
+              </li>
+            </ul>
+            <p>
+              When an animation violates these expectations just enough to be noticeable, but not so
+              much that you accept it as &quot;computer behavior,&quot; your brain flags it as
+              wrong. This is the uncanny valley.
+            </p>
+            <h3 id="the-three-zones">The Three Zones</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th><strong>Too Little (Accepted)</strong></th>
+                  <th><strong>Uncanny Valley (Disturbing)</strong></th>
+                  <th><strong>Just Right (Accepted)</strong></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Instant state change</td>
+                  <td>Almost-natural movement</td>
+                  <td>Natural, physics-based motion</td>
+                </tr>
+                <tr>
+                  <td>No animation at all</td>
+                  <td>Feels like &quot;something&quot; tried to move naturally but failed</td>
+                  <td>Clearly follows physics laws</td>
+                </tr>
+                <tr>
+                  <td>Brain thinks: &quot;Computer behavior&quot;</td>
+                  <td>Brain thinks: &quot;Wait, that&#39;s weird...&quot;</td>
+                  <td>Brain thinks: &quot;That feels right&quot;</td>
+                </tr>
+                <tr>
+                  <td>Feels quick and responsive</td>
+                  <td>Feels sluggish or robotic</td>
+                  <td>Feels alive and responsive</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Think of it this way:</p>
+            <ul>
+              <li>
+                <strong>A button that instantly changes color?</strong>
+                Fine. Your brain accepts this as computer behavior. No issue.
+              </li>
+              <li>
+                <strong
+                  >A button that smoothly animates with proper easing and spring physics?</strong
+                >
+                Great. Your brain believes it&#39;s following real-world physics.
+              </li>
+              <li>
+                <strong>A button that animates linearly with a fixed speed?</strong>
+                Uncomfortable. It looks like it&#39;s <em>trying</em> to be natural but is failing.
+                Your brain knows something&#39;s wrong, even if it can&#39;t explain why.
+              </li>
+            </ul>
+            <p>
+              Try hovering over the buttons below to feel the difference between each zone. Pay
+              attention to how each one moves, or doesn&#39;t move:
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/psychology-of-motion"
+                >Interactive example: Uncanny Valley</a
+              >
+            </p>
+            <h3 id="why-linear-animation-feels-wrong">Why Linear Animation Feels Wrong</h3>
+            <p>
+              This is the classic example. A linear animation moves at a constant speed from start
+              to end:
+            </p>
+            <pre
+            ><code class="language-text">Linear motion:  [============================] Constant speed
+Speed:           ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+</code></pre>
+            <p>
+              This <em>never</em> happens in the real world. When you lift something, you don&#39;t
+              accelerate instantly to full speed. When you put it down, you don&#39;t stop
+              instantly. Real motion looks like this:
+            </p>
+            <pre
+            ><code class="language-text">Ease-out motion: [════════════════════     ] Accelerates, then decelerates
+Speed:            ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▘▘▘▘▘
+                 Fast at start, slowing down
+</code></pre>
+            <p>
+              Your brain evolved to understand the second pattern. When it sees the first pattern,
+              it doesn&#39;t consciously think &quot;that&#39;s linear.&quot; It just feels robotic
+              and off.
+            </p>
+            <h3 id="the-core-problem">The Core Problem</h3>
+            <p>The uncanny valley is worse than either extreme because:</p>
+            <ol>
+              <li>
+                <strong>No animation</strong>
+                = Your brain has never expected natural motion, so there&#39;s no violation
+              </li>
+              <li>
+                <strong>Almost-natural animation</strong>
+                = Your brain expects it to follow physics, but it doesn&#39;t quite, so it feels
+                wrong
+              </li>
+              <li>
+                <strong>Perfectly natural animation</strong>
+                = Your brain&#39;s expectations are met, so it feels right
+              </li>
+            </ol>
+            <p>
+              <strong
+                >This means: if you&#39;re going to animate, you must get it right. A bad animation
+                is worse than no animation.</strong
+              >
+            </p>
+            <p>
+              A perfectly instant button click? Users don&#39;t mind. A perfectly smooth,
+              physics-based animation? Users love it. A button that tries to animate but moves
+              linearly with the wrong timing? Users feel uncomfortable, even if they can&#39;t
+              articulate why.
+            </p>
+            <h2 id="physics-make-things-feel-real">Physics Make Things Feel Real</h2>
+            <p>
+              Real objects don&#39;t move linearly. They accelerate and decelerate. They have
+              momentum. They overshoot and settle.
+            </p>
+            <p>
+              When you throw a ball, it doesn&#39;t move at constant speed. It accelerates as it
+              leaves your hand, decelerates as gravity and air resistance act on it, and bounces
+              when it lands.
+            </p>
+            <p>Digital objects should behave the same way:</p>
+            <ul>
+              <li>
+                <p>
+                  <strong>Acceleration</strong>: Objects should ease out of rest. A panel opening
+                  should start slow and speed up.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Deceleration</strong>: Objects should ease into their final position. A
+                  panel closing should slow down as it reaches its destination.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Momentum</strong>: If you flick a list, it should continue moving and
+                  gradually slow down, not stop instantly.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Overshoot</strong>: When something snaps into place, a slight overshoot
+                  and settle makes it feel physical.
+                </p>
+              </li>
+            </ul>
+            <pre
+            ><code class="language-css"><span class="c">/* Bad: Linear motion feels robotic */</span>
+<span class="p">.modal</span> <span class="u">{</span>
+  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">linear</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="c">/* Good: Ease-out feels like natural deceleration */</span>
+<span class="p">.modal</span> <span class="u">{</span>
+  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="c">/* Better: Custom curve for personality */</span>
+<span class="p">.modal</span> <span class="u">{</span>
+  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/psychology-of-motion"
+                >Interactive example: Physics Comparison</a
+              >
+            </p>
+            <h2 id="context-matters">Context Matters</h2>
+            <p>The &quot;right&quot; animation depends entirely on context:</p>
+            <p>
+              <strong>Banking app</strong>: Users want to feel secure and in control. Animations
+              should be subtle, quick, professional. A playful bounce on a &quot;Transfer
+              $10,000&quot; button would feel wrong.
+            </p>
+            <p>
+              <strong>Gaming app</strong>: Users expect energy and personality. Playful bounces,
+              particles, and elaborate transitions fit the context.
+            </p>
+            <p>
+              <strong>Productivity tool</strong>: Users want efficiency. Animations should be fast
+              and purposeful. Anything that slows them down will frustrate.
+            </p>
+            <p>
+              <strong>Marketing site</strong>: First impressions matter. More elaborate animations
+              can create wow moments. Users aren&#39;t trying to accomplish tasks, they&#39;re
+              exploring.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> ANIMATION_TIMING <span class="o">=</span> <span class="u">{</span>
+  <span class="p">banking:</span> <span class="u">{</span>
+    <span class="p">duration:</span> <span class="n">150</span><span class="u">,</span>
+    <span class="p">easing:</span> <span class="s">&quot;ease-out&quot;</span><span class="u">,</span>
+  <span class="u">},</span>
+  <span class="p">gaming:</span> <span class="u">{</span>
+    <span class="p">duration:</span> <span class="n">400</span><span class="u">,</span>
+    <span class="p">easing:</span> <span class="s">&quot;spring&quot;</span><span class="u">,</span>
+    <span class="p">bounce:</span> <span class="n">0.3</span><span class="u">,</span>
+  <span class="u">},</span>
+  <span class="p">productivity:</span> <span class="u">{</span>
+    <span class="p">duration:</span> <span class="n">100</span><span class="u">,</span>
+    <span class="p">easing:</span> <span class="s">&quot;ease-out&quot;</span><span class="u">,</span>
+  <span class="u">},</span>
+  <span class="p">marketing:</span> <span class="u">{</span>
+    <span class="p">duration:</span> <span class="n">600</span><span class="u">,</span>
+    <span class="p">easing:</span> <span class="s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="u">,</span>
+  <span class="u">},</span>
+<span class="u">};</span>
+</code></pre>
+            <p>
+              There&#39;s no universal &quot;correct&quot; animation. There&#39;s only what&#39;s
+              correct for your users and your context.
+            </p>
+            <h2 id="when-not-to-animate">When NOT to Animate</h2>
+            <p>Animation has costs:</p>
+            <ol>
+              <li><strong>Time</strong>: Every animation adds duration to an interaction</li>
+              <li><strong>Cognitive load</strong>: Movement demands attention</li>
+              <li><strong>Battery</strong>: Animations consume power, especially on mobile</li>
+              <li><strong>Accessibility</strong>: Some users experience motion sickness</li>
+              <li>
+                <strong>Development time</strong>: Good animation takes effort to implement
+                correctly
+              </li>
+            </ol>
+            <p>Ask these questions before adding animation:</p>
+            <p>
+              <strong>Does this animation communicate something?</strong>
+              If it&#39;s purely decorative, reconsider.
+            </p>
+            <p>
+              <strong>Is the user trying to accomplish a task?</strong>
+              If yes, keep animations short and purposeful. Don&#39;t make them wait for your fancy
+              transition.
+            </p>
+            <p>
+              <strong>Will users see this repeatedly?</strong>
+              An elaborate animation is delightful the first time. By the hundredth time, it&#39;s
+              annoying.
+            </p>
+            <p>
+              <strong>Does this animation respect the user&#39;s preferences?</strong>
+              Users who&#39;ve enabled &quot;reduce motion&quot; are telling you something.
+            </p>
+            <pre
+            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
+  <span class="g">*</span> <span class="u">{</span>
+    <span class="p">animation-duration</span><span class="u">:</span> <span class="n">0.01ms</span> <span class="k">!important</span><span class="u">;</span>
+    <span class="p">transition-duration</span><span class="u">:</span> <span class="n">0.01ms</span> <span class="k">!important</span><span class="u">;</span>
+  <span class="u">}</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              <strong>Is this animation covering up a performance problem?</strong>
+              Loading spinners and skeleton screens are sometimes necessary. But if you&#39;re
+              adding animation to distract from slow performance, fix the performance instead.
+            </p>
+            <h2 id="training-your-eye">Training Your Eye</h2>
+            <p>Noticing good animation is a skill. Here&#39;s how to develop it:</p>
+            <p>
+              <strong>Slow things down</strong>: Record your screen and play back at 0.25x speed.
+              You&#39;ll see details you missed at normal speed.
+            </p>
+            <p>
+              <strong>Study the masters</strong>: Linear, Stripe, Vercel, Arc Browser, Raycast.
+              These companies invest heavily in motion design. Notice what they do.
+            </p>
+            <p>
+              <strong>Question everything</strong>: When something feels good, ask why. When
+              something feels off, ask why. Break it down.
+            </p>
+            <p>
+              <strong>Build and compare</strong>: Implement the same interaction with different
+              timing, easing, and properties. Feel the difference.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              Animation that feels right isn&#39;t magic. It&#39;s physics, psychology, and context
+              working together. Your brain evolved to notice movement and interpret it. Good
+              animation works with this system. Bad animation fights against it.
+            </p>
+            <p>
+              Before you add any animation, ask: what is this communicating? Is it making the
+              experience better or just different? Does it respect the user&#39;s time and
+              preferences?
+            </p>
+            <p>
+              Start with no animation. Add it only when it serves a purpose. And when you do add it,
+              make sure it follows the physics your brain expects. That&#39;s how animation goes
+              from decorative to essential.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li>
+              <a href="/blogs/design-engineering/training-your-eye-for-motion/"
+                >Training Your Eye for Motion</a
+              >
+            </li>
+            <li>
+              <a href="/blogs/design-engineering/when-to-animate-and-when-to-skip/"
+                >When to Animate and When to Skip</a
+              >
+            </li>
+            <li>
+              <a href="/blogs/design-engineering/moving-things-without-moving-them/"
+                >Moving Things Without Moving Them</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

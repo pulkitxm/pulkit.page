@@ -1,0 +1,15 @@
+---
+title: Work with me
+description: Websites, full-stack products, mobile apps, and performance improvements.
+---
+
+I help turn ideas into useful web and mobile products.
+
+- **Websites and landing pages** - clear design, fast loading, and accessible interfaces.
+- **Full-stack products** - applications built with React, Next.js, TypeScript, Node.js, and Python.
+- **Mobile apps** - cross-platform experiences with React Native.
+- **Performance and design** - improve an existing product's speed and usability.
+
+We start with a conversation, agree on a small scope, then design, build, and iterate.
+
+[Explore my experience](/experience/) or [tell me what you're building](/contact/).

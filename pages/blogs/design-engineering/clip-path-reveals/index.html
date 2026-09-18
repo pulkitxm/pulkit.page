@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="clip-path trims elements into circles and polygons, but it is also a powerful animation tool. Learn how inset clipping works, build before and after sliders without extra wrappers, reveal images without layout shift, and fire reveals with Intersection Observer."
+    />
+    <link
+      rel="canonical"
+      href="https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Invisible Scissors | Pulkit" />
+    <meta
+      property="og:description"
+      content="clip-path trims elements into circles and polygons, but it is also a powerful animation tool. Learn how inset clipping works, build before and after sliders without extra wrappers, reveal images without layout shift, and fire reveals with Intersection Observer."
+    />
+    <meta
+      property="og:url"
+      content="https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/"
+    />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/design-engineering/clip-path-reveals/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/design-engineering/clip-path-reveals/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Invisible Scissors" />
+    <meta property="article:published_time" content="2026-03-25" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Invisible Scissors | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="clip-path trims elements into circles and polygons, but it is also a powerful animation tool. Learn how inset clipping works, build before and after sliders without extra wrappers, reveal images without layout shift, and fire reveals with Intersection Observer."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/design-engineering/clip-path-reveals/card.png"
+    />
+    <meta name="twitter:image:alt" content="Invisible Scissors" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#image","contentUrl":"https://new.pulkit.page/og/blogs/design-engineering/clip-path-reveals/card.png","width":1200,"height":630,"caption":"Invisible Scissors"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#article","headline":"Invisible Scissors","description":"clip-path trims elements into circles and polygons, but it is also a powerful animation tool. Learn how inset clipping works, build before and after sliders without extra wrappers, reveal images without layout shift, and fire reveals with Intersection Observer.","datePublished":"2026-03-25","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#image"},"url":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/","inLanguage":"en","keywords":["CSS","clip-path","Reveals","Motion Design"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://new.pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"Invisible Scissors","item":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#webpage","url":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/","name":"Invisible Scissors","description":"clip-path trims elements into circles and polygons, but it is also a powerful animation tool. Learn how inset clipping works, build before and after sliders without extra wrappers, reveal images without layout shift, and fire reveals with Intersection Observer.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/design-engineering/clip-path-reveals/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Invisible Scissors | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
+            <li aria-current="page">Invisible Scissors</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Invisible Scissors</h1>
+            <p class="detail-meta"><time datetime="2026-03-25">2026-03-25</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              You have probably seen <code>clip-path</code> used to turn a box into a triangle or a
+              circle. It is a layout neutral way to change what gets painted. That same idea is what
+              makes <code>clip-path</code> so good for motion. Once you start animating the shape of
+              the clip, you get wipes, reveals, and masks that stay on the compositor friendly path.
+            </p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong><code>clip-path</code> hides pixels, not layout.</strong>
+                The element still occupies the same box as before, similar to <code>transform</code>
+              </li>
+              <li>
+                <strong>Basic shapes</strong>
+                include <code>circle</code>, <code>ellipse</code>, <code>polygon</code>,
+                <code>inset</code>, and <code>url()</code> for SVG paths
+              </li>
+              <li>
+                <strong><code>inset(top right bottom left)</code></strong>
+                is the workhorse for wipes and sliders because every value maps to a straight edge
+                you can drive with a pointer or a timeline
+              </li>
+              <li>
+                <strong>Before and after comparisons</strong>
+                can clip the top layer with <code>inset(0 var(--r) 0 0)</code> instead of juggling
+                extra overflow wrappers
+              </li>
+              <li>
+                <strong>Image reveals</strong>
+                can animate from <code>inset(100%)</code> to <code>inset(0)</code> so the asset is
+                already sized and no height animation causes reflow
+              </li>
+              <li>
+                <strong>Scroll triggers</strong>
+                pair naturally with the
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API"
+                  >Intersection Observer API</a
+                >
+                so the reveal starts when the user can actually see it
+              </li>
+            </ul>
+            <h2 id="what-gets-clipped">What gets clipped</h2>
+            <p>
+              <code>clip-path</code>
+              defines a region. Pixels outside that region are not drawn. Pixels inside stay
+              visible. It is a visual cut, not a change to width, height, or document flow.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/clip-path-reveals"
+                >Interactive example: Clip Path Basics</a
+              >
+            </p>
+            <p>
+              Because layout is unchanged, you can stack two full size layers, clip only the top
+              one, and get a perfect split without resizing either child.
+            </p>
+            <h2 id="why-inset-shows-up-in-so-many-animations">
+              Why inset shows up in so many animations
+            </h2>
+            <p>
+              <code>circle(50% at 50% 50%)</code>
+              is intuitive. The radius is <code>50%</code> and the position is the center of the
+              element. Other keywords like <code>ellipse</code>, <code>polygon</code>, and
+              <code>url(&quot;...&quot;)</code>
+              (an SVG clip source) cover more exotic shapes.
+            </p>
+            <p>
+              For interactive wipes and scroll reveals, <code>inset</code> is usually the right
+              default. It takes up to four offsets, top, right, bottom, and left, measured from each
+              edge toward the center. A value of <code>100%</code> on every side (<code
+                >inset(100%)</code
+              >) clips the whole element away. <code>inset(0)</code> shows everything.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/clip-path-reveals"
+                >Interactive example: Inset</a
+              >
+            </p>
+            <p>
+              <code>inset(0 50% 0 0)</code>
+              pulls the clip inward from the right by half the width, so only the left half of the
+              layer stays visible. Swap which edge you inset and you change the direction of the
+              wipe.
+            </p>
+            <h2 id="before-and-after-sliders">Before and after sliders</h2>
+            <p>
+              A classic pattern is two images aligned in the same box. The top image gets a clip
+              that follows the handle. As the user drags, you update one inset value from
+              <code>0%</code>
+              to <code>100%</code>.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/clip-path-reveals"
+                >Interactive example: Comparison Slider</a
+              >
+            </p>
+            <p>
+              You could solve the same problem with two elements and
+              <code>overflow: hidden</code>
+              plus animated widths, but <code>clip-path</code> keeps both layers full size and often
+              stays cheaper to paint during the drag because you are not thrashing layout.
+            </p>
+            <h2 id="a-vertical-split-on-type">A vertical split on type</h2>
+            <p>
+              The same stacking trick works for typography. Layer a stroked outline and a solid
+              fill, then clip each layer with complementary insets. Moving the split line reads as a
+              single treatment instead of a literal slider.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/clip-path-reveals"
+                >Interactive example: Text Mask</a
+              >
+            </p>
+            <p>
+              Here the outline uses something like
+              <code>inset(0 0 calc(100% - var(--y)) 0)</code>
+              while the fill uses
+              <code>inset(var(--y) 0 0 0)</code>, both driven from the same pointer position.
+            </p>
+            <h2 id="reveals-without-reflow">Reveals without reflow</h2>
+            <p>
+              Animating <code>height</code> from <code>0</code> to <code>auto</code> is still
+              awkward on the web. Animating <code>clip-path</code> from fully clipped to
+              <code>inset(0)</code>
+              gives a similar feeling with a fixed box. The content is already there, you are only
+              changing what is visible, so surrounding layout does not jump when the reveal
+              finishes.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/clip-path-reveals"
+                >Interactive example: Image Reveal</a
+              >
+            </p>
+            <p>
+              That difference matters for images and hero media where you do not want the page to
+              reflow as the file appears.
+            </p>
+            <h2 id="triggering-when-the-element-is-on-screen">
+              Triggering when the element is on screen
+            </h2>
+            <p>
+              A reveal that runs while the element is below the fold might finish before the user
+              scrolls to it. You want the animation tied to visibility.
+            </p>
+            <p>
+              The Intersection Observer API is the lightweight choice. Create an observer with a
+              sensible <code>threshold</code>, toggle a class or state when
+              <code>isIntersecting</code>
+              is true, and run the <code>clip-path</code> transition in CSS or inline styles. If you
+              already ship
+              <a href="https://www.framer.com/motion/">Framer Motion</a>, its
+              <code>useInView</code>
+              hook wraps the same idea with a React friendly API, at the cost of pulling the library
+              into that bundle.
+            </p>
+            <p>
+              <a href="https://www.pulkit.blog/series/design-engineering/clip-path-reveals"
+                >Interactive example: Scroll Reveal</a
+              >
+            </p>
+            <p>
+              Pass the scrollable container as the <code>root</code> option when the reveal lives
+              inside an overflow element so thresholds are measured against the right viewport.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+              <code>clip-path</code>
+              is a mask you can animate. <code>inset</code> gives you predictable edges for sliders,
+              scroll reveals, and progressive disclosure without resizing the DOM, and it lands on
+              the compositor in modern browsers so it stays cheap to paint. When you need diagonals
+              or organic cuts, <code>polygon()</code> can morph between shapes as long as both
+              states share the same number of points, though it is easier to get wrong than four
+              straight edges.
+            </p>
+            <p>
+              Pair reveals with Intersection Observer so they fire when the user can see them,
+              profile on real devices when using complex <code>path()</code> or
+              <code>url(#svg)</code>
+              clips, and once you know what to look for you will notice this pattern on every
+              polished production site you visit.
+            </p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
+            <li>
+              <a href="/blogs/design-engineering/easing-curves-that-feel-natural/"
+                >Easing Curves That Feel Natural</a
+              >
+            </li>
+            <li>
+              <a href="/blogs/design-engineering/keyframe-animations/"
+                >Choreographing Multi-Step Motion</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

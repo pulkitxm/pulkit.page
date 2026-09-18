@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn how consistent hashing solves the data ownership problem in distributed systems. Understand hash-based routing, the ring abstraction, and how to scale up and down with minimal data movement."
+    />
+    <link rel="canonical" href="https://new.pulkit.page/blogs/system-design/consistent-hashing/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Pulkit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Consistent Hashing | Pulkit" />
+    <meta
+      property="og:description"
+      content="Learn how consistent hashing solves the data ownership problem in distributed systems. Understand hash-based routing, the ring abstraction, and how to scale up and down with minimal data movement."
+    />
+    <meta
+      property="og:url"
+      content="https://new.pulkit.page/blogs/system-design/consistent-hashing/"
+    />
+    <meta
+      property="og:image"
+      content="https://new.pulkit.page/og/blogs/system-design/consistent-hashing/card.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://new.pulkit.page/og/blogs/system-design/consistent-hashing/card.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Consistent Hashing" />
+    <meta property="article:published_time" content="2026-01-24" />
+    <meta property="article:author" content="https://new.pulkit.page/about/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Consistent Hashing | Pulkit" />
+    <meta
+      name="twitter:description"
+      content="Learn how consistent hashing solves the data ownership problem in distributed systems. Understand hash-based routing, the ring abstraction, and how to scale up and down with minimal data movement."
+    />
+    <meta
+      name="twitter:image"
+      content="https://new.pulkit.page/og/blogs/system-design/consistent-hashing/card.png"
+    />
+    <meta name="twitter:image:alt" content="Consistent Hashing" />
+    <script
+      type="application/ld+json"
+    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#image","contentUrl":"https://new.pulkit.page/og/blogs/system-design/consistent-hashing/card.png","width":1200,"height":630,"caption":"Consistent Hashing"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#article","headline":"Consistent Hashing","description":"Learn how consistent hashing solves the data ownership problem in distributed systems. Understand hash-based routing, the ring abstraction, and how to scale up and down with minimal data movement.","datePublished":"2026-01-24","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#image"},"url":"https://new.pulkit.page/blogs/system-design/consistent-hashing/","inLanguage":"en","keywords":["System Design","Distributed Systems","Consistent Hashing","Load Balancing"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://new.pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"Consistent Hashing","item":"https://new.pulkit.page/blogs/system-design/consistent-hashing/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#webpage","url":"https://new.pulkit.page/blogs/system-design/consistent-hashing/","name":"Consistent Hashing","description":"Learn how consistent hashing solves the data ownership problem in distributed systems. Understand hash-based routing, the ring abstraction, and how to scale up and down with minimal data movement.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/system-design/consistent-hashing/#breadcrumbs"}}]}</script>
+    <meta name="theme-color" content="#000000" />
+    <script src="/theme.js"></script>
+    <title>Consistent Hashing | Pulkit</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Pulkit</a>
+        <nav aria-label="Main navigation">
+          <a href="/blogs/">Writing</a>
+          <a href="/experience/">Experience</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main" class="article">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blogs/">Writing</a></li>
+            <li><a href="/blogs/system-design/">System Design</a></li>
+            <li aria-current="page">Consistent Hashing</li>
+          </ol>
+        </nav>
+        <article>
+          <header class="page-heading">
+            <h1>Consistent Hashing</h1>
+            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          </header>
+          <div class="prose">
+            <p>
+              Consistent hashing is one of the most popular algorithms in distributed systems. It
+              helps you answer one question: <strong>Who owns this data?</strong>
+            </p>
+            <p>That&#39;s it. Data ownership. Nothing else.</p>
+            <h2 id="tl-dr">TL;DR</h2>
+            <ul>
+              <li>
+                <strong>Consistent hashing</strong>
+                solves the data ownership problem: which node owns which key?
+              </li>
+              <li>
+                <strong>Hash-based routing</strong>
+                works fine for stateless backends (load balancer + API servers)
+              </li>
+              <li>
+                <strong>The problem</strong>: When nodes change in a stateful system, hash-based
+                routing causes massive data movement
+              </li>
+              <li>
+                <strong>Consistent hashing solution</strong>: Minimize data movement when nodes are
+                added or removed
+              </li>
+              <li>
+                <strong>The k/n rule</strong>: On average, only k/n keys migrate during scaling (k =
+                total keys, n = nodes)
+              </li>
+              <li>
+                <strong>Ring abstraction</strong>: Visually a ring, but implemented as a simple
+                sorted array with binary search
+              </li>
+              <li>
+                <strong>Scale up</strong>: Only keys between the new node and its left neighbor need
+                to move
+              </li>
+              <li>
+                <strong>Scale down</strong>: Only keys from the removed node move to its right
+                neighbor
+              </li>
+              <li><strong>Simple implementation</strong>: A sorted array and binary search</li>
+              <li>
+                <strong>Real-world use</strong>: DynamoDB, Cassandra, BitTorrent, Akamai,
+                distributed caches
+              </li>
+            </ul>
+            <h2 id="hash-based-routing">Hash-Based Routing</h2>
+            <p>Before we understand consistent hashing, let&#39;s see why we need it.</p>
+            <p>
+              Say we have a load balancer with three backend servers. When a user request comes in,
+              how does the load balancer decide which server to forward it to?
+            </p>
+            <p>One popular approach: <strong>hash-based routing</strong>.</p>
+            <p>
+              <img
+                src="/assets/content/blogs/consistent-hashing/hash-based-routing.webp"
+                alt="Hash-based routing uses a hash function to determine which server handles each request"
+                loading="lazy"
+              />
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">routeRequest</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> serverCount<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
+  <span class="k">const</span> hash <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>userId<span class="u">);</span>
+  <span class="k">const</span> serverIndex <span class="o">=</span> hash <span class="o">%</span> serverCount<span class="u">;</span>
+  <span class="k">return</span> serverIndex<span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">const</span> server <span class="o">=</span> <span class="f">routeRequest</span><span class="u">(</span><span class="s">&quot;user_123&quot;</span><span class="u">,</span> <span class="n">3</span><span class="u">);</span>
+</code></pre>
+            <p>
+              You take the user ID (or request ID, or IP address), pass it through a hash function
+              like SHA-256 or SHA-128, take the modulo by the number of servers, and you get a
+              server index: 0, 1, or 2.
+            </p>
+            <p>
+              When a request comes in, the load balancer extracts the user information, passes it
+              through the hash function, gets the value, does the mod, and forwards the request.
+            </p>
+            <h3 id="server-failure">Server Failure</h3>
+            <p>
+              Let&#39;s say you&#39;re overprovisioned. Traffic dropped, so you want to remove one
+              server. What happens?
+            </p>
+            <p>The hash function changes from <code>mod 3</code> to <code>mod 2</code>.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> server <span class="o">=</span> <span class="f">routeRequest</span><span class="u">(</span><span class="s">&quot;user_123&quot;</span><span class="u">,</span> <span class="n">2</span><span class="u">);</span>
+</code></pre>
+            <p>The next request that comes in gets routed correctly. No problem.</p>
+            <p>
+              Why? Because the <strong>backend servers are stateless</strong>. Every server is
+              equally capable of handling any request. It doesn&#39;t matter which server the
+              request goes to, they all can handle it.
+            </p>
+            <p>
+              This is why hash-based routing is one of the most common ways of routing for stateless
+              backends. Load balancer + API servers. Round robin works too, but hash-based is more
+              common.
+            </p>
+            <h2 id="stateful-backends">Stateful Backends</h2>
+            <p>Now, what happens when we have something stateful? Like distributed storage?</p>
+            <p>
+              Instead of stateless API servers, let&#39;s say you have storage nodes. A distributed
+              key-value store. Given a key, store the value. Given a key, get the value.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">getStorageNode</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> nodeCount<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
+  <span class="k">const</span> hash <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>key<span class="u">);</span>
+  <span class="k">return</span> hash <span class="o">%</span> nodeCount<span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">await</span> <span class="f">storeKey</span><span class="u">(</span><span class="s">&quot;k1&quot;</span><span class="u">,</span> <span class="s">&quot;value1&quot;</span><span class="u">,</span> <span class="f">getStorageNode</span><span class="u">(</span><span class="s">&quot;k1&quot;</span><span class="u">,</span> <span class="n">3</span><span class="u">));</span>
+</code></pre>
+            <p>
+              The proxy uses hash-based routing to route requests to the corresponding storage node.
+            </p>
+            <p>Let&#39;s say we have 6 keys distributed across 3 nodes:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Hash % 3</th>
+                  <th>Node</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>k1</td>
+                  <td>2</td>
+                  <td>node 2</td>
+                </tr>
+                <tr>
+                  <td>k2</td>
+                  <td>0</td>
+                  <td>node 0</td>
+                </tr>
+                <tr>
+                  <td>k3</td>
+                  <td>1</td>
+                  <td>node 1</td>
+                </tr>
+                <tr>
+                  <td>k4</td>
+                  <td>2</td>
+                  <td>node 2</td>
+                </tr>
+                <tr>
+                  <td>k5</td>
+                  <td>1</td>
+                  <td>node 1</td>
+                </tr>
+                <tr>
+                  <td>k6</td>
+                  <td>0</td>
+                  <td>node 0</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Now node 0 owns k2 and k6. Node 1 owns k3 and k5. Node 2 owns k1 and k4.</p>
+            <p>
+              The proxy knows: all requests for k3 and k5 always go to node 1. All requests for k1
+              and k4 always go to node 2. <strong>Statefulness maintained.</strong>
+            </p>
+            <p>But what if you need to remove node 2?</p>
+            <h3 id="rehashing-problem">Rehashing Problem</h3>
+            <p>
+              When you remove a node, your hash function changes from <code>mod 3</code> to
+              <code>mod 2</code>. Suddenly, the mapping changes dramatically.
+            </p>
+            <p>Let&#39;s recalculate:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Old (% 3)</th>
+                  <th>New (% 2)</th>
+                  <th>Moved?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>k1</td>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>k2</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>k3</td>
+                  <td>1</td>
+                  <td>1</td>
+                  <td>No</td>
+                </tr>
+                <tr>
+                  <td>k4</td>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>k5</td>
+                  <td>1</td>
+                  <td>0</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>k6</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>No</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Four out of six keys need to move.</strong> That&#39;s 67% data movement!</p>
+            <p>
+              <img
+                src="/assets/content/blogs/consistent-hashing/rehashing-problem.webp"
+                alt="The rehashing problem causes massive data movement when nodes change"
+                loading="lazy"
+              />
+            </p>
+            <p>
+              With millions or billions of keys, this is a massive amount of data transfer. Before
+              you can serve requests from the new configuration, you have to:
+            </p>
+            <ol>
+              <li>Calculate new ownership for every key</li>
+              <li>Move data between nodes</li>
+              <li>Wait for the entire rebalancing to complete</li>
+            </ol>
+            <p>
+              This is the fundamental limitation of hash-based routing. You&#39;ve given your power
+              to a hash function. When the hash function changes (because node count changes), your
+              entire mapping changes.
+            </p>
+            <p><strong>Can we minimize data movement?</strong></p>
+            <p>This is where consistent hashing comes in.</p>
+            <h2 id="consistent-hashing">Consistent Hashing</h2>
+            <p>
+              Just like hash-based routing helps determine ownership (which node owns which key),
+              consistent hashing also answers the same question. But it does so in a way that
+              <strong>minimizes data movement</strong>
+              when nodes are added or removed.
+            </p>
+            <p>
+              The core concept was introduced in a 1997 MIT paper
+              <a href="https://www.cs.princeton.edu/courses/archive/fall09/cos518/papers/chash.pdf"
+                >Consistent Hashing and Random Trees</a
+              >, but it gained mainstream popularity after Amazon&#39;s famous
+              <a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+                >DynamoDB paper</a
+              >
+              in 2007. Since then, consistent hashing has become foundational in distributed
+              systems. <a href="https://www.bittorrent.com"><strong>BitTorrent</strong></a> uses it
+              for peer-to-peer networks,
+              <a href="https://www.akamai.com"><strong>Akamai</strong></a>
+              uses it for web caches, and countless databases use it for data partitioning.
+            </p>
+            <h3 id="ring-abstraction">Ring Abstraction</h3>
+            <p>
+              A popular way to visualize consistent hashing is as a ring. Let&#39;s use SHA-128 as
+              our hash function. It generates a 128-bit number, so our range is 0 to
+              <code>2^ { 128} - 1</code>.
+            </p>
+            <p>
+              For simplicity, let&#39;s use a smaller range: 0 to 15 (0 to <code>2^4 - 1</code>).
+            </p>
+            <p>
+              <img
+                src="/assets/content/blogs/consistent-hashing/ring.webp"
+                alt="Consistent hashing ring with nodes placed at hash positions, keys owned by next clockwise node"
+                loading="lazy"
+              />
+            </p>
+            <p><strong>Step 1: Place nodes on the ring</strong></p>
+            <p>
+              Each storage node occupies a slot in the ring. How? Pass the node&#39;s identifier (IP
+              address, hostname, etc.) through the hash function.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> node0Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node0_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+<span class="k">const</span> node1Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node1_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+<span class="k">const</span> node2Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node2_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+</code></pre>
+            <p>Let&#39;s say:</p>
+            <ul>
+              <li>node 0 hashes to slot 3</li>
+              <li>node 1 hashes to slot 12</li>
+              <li>node 2 hashes to slot 8</li>
+            </ul>
+            <pre
+            ><code class="language-text">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
+                    ↑                   ↑               ↑
+                  node0               node2           node1
+</code></pre>
+            <p><strong>Step 2: Determine key ownership</strong></p>
+            <p>To find which node owns a key:</p>
+            <ol>
+              <li>Hash the key</li>
+              <li>Find the first node clockwise from that position</li>
+            </ol>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">getOwner</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Node</span> <span class="u">{</span>
+  <span class="k">const</span> slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+  <span class="k">return</span> <span class="f">findNextNodeClockwise</span><span class="u">(</span>slot<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              Let&#39;s say key k1 hashes to slot 0. The first node clockwise is node 0 at slot 3.
+              So <strong>node 0 owns k1</strong>.
+            </p>
+            <p>
+              Let&#39;s say key k2 hashes to slot 10. The first node clockwise is node 1 at slot 12.
+              So <strong>node 1 owns k2</strong>.
+            </p>
+            <p>This beautifully answers the question: who owns a particular key?</p>
+            <p>
+              The key insight: <strong>the hash space is huge and constant</strong> (typically
+              <code>2^ { 128}</code>
+              or <code>2^ { 256}</code>). Both nodes and keys map to this same space. The hash
+              function no longer depends on the number of nodes, it&#39;s always
+              <code>hash(key) % HUGE_CONSTANT</code>. Only the association logic (find next
+              clockwise node) changes when nodes are added or removed.
+            </p>
+            <blockquote>
+              <p>
+                <strong>The k/n Rule</strong>: On average, consistent hashing requires only
+                <strong>k/n</strong>
+                keys to be migrated during scale-up or scale-down, where k is the total number of
+                keys and n is the number of nodes. Compare this to traditional hashing where nearly
+                all keys might need to move.
+              </p>
+            </blockquote>
+            <h3 id="array-implementation">Array Implementation</h3>
+            <p>
+              The ring looks like a ring, but you don&#39;t implement a circular linked list. That
+              would be inefficient.
+            </p>
+            <p>
+              In reality, it&#39;s a <strong>sorted array</strong> with
+              <strong>binary search</strong>.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Node</span> <span class="u">{</span>
+  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
+  slot<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">const</span> ring<span class="o">:</span> <span class="t">Node</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[</span>
+  <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;node0&quot;</span><span class="u">,</span> <span class="p">slot:</span> <span class="n">3</span> <span class="u">},</span>
+  <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;node2&quot;</span><span class="u">,</span> <span class="p">slot:</span> <span class="n">8</span> <span class="u">},</span>
+  <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;node1&quot;</span><span class="u">,</span> <span class="p">slot:</span> <span class="n">12</span> <span class="u">},</span>
+<span class="u">];</span>
+
+<span class="k">function</span> <span class="f">getOwner</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Node</span> <span class="u">{</span>
+  <span class="k">const</span> slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+
+  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> ring<span class="u">.</span>length<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">if</span> <span class="u">(</span>ring<span class="u">[</span>i<span class="u">].</span><span class="p">slot</span> <span class="o">&gt;=</span> slot<span class="u">)</span> <span class="u">{</span>
+      <span class="k">return</span> ring<span class="u">[</span>i<span class="u">];</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> ring<span class="u">[</span><span class="n">0</span><span class="u">];</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              With binary search, finding the owner is O(log n) where n is the number of nodes. For
+              1000 nodes, that&#39;s about 10 comparisons.
+            </p>
+            <p>The array stays sorted by slot position. One array. Binary search.</p>
+            <h2 id="scaling-up">Scaling Up</h2>
+            <p>Now let&#39;s see how consistent hashing minimizes data movement.</p>
+            <p>
+              <img
+                src="/assets/content/blogs/consistent-hashing/scale-up.webp"
+                alt="Adding a node only affects keys in a small range between the new node and its left neighbor"
+                loading="lazy"
+              />
+            </p>
+            <p>We have three nodes at slots 3, 8, and 12. Let&#39;s add a fourth node.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> node3Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node3_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+</code></pre>
+            <p>Let&#39;s say node 3 hashes to slot 1.</p>
+            <pre><code class="language-text">Before:
+        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
+
+After:
+        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Ring:  [ ] [3] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
+            ↑
+         new node
+</code></pre>
+            <p><strong>Which keys are affected?</strong></p>
+            <p>Only keys in the range (12, 1] , keys that hash to slots 13, 14, 15, 0, or 1.</p>
+            <p>
+              Before node 3: These keys were owned by node 0 (the next clockwise node from their
+              position).
+            </p>
+            <p>After node 3: These keys are now owned by node 3.</p>
+            <p>
+              <strong>Everything else stays the same.</strong>
+              Keys owned by node 1 and node 2 don&#39;t move at all.
+            </p>
+            <h3 id="operations">Operations</h3>
+            <p>How do you actually do this operationally?</p>
+            <ol>
+              <li>You know node 3 is slotted at position 1</li>
+              <li>Find the node immediately to the right (clockwise): node 0 at slot 3</li>
+              <li>Keys that were going to node 0 (from the slot range 13-1) now go to node 3</li>
+              <li>Take a snapshot of node 0</li>
+              <li>Create node 3 using that snapshot</li>
+              <li>Add node 3 to the ring, start serving requests</li>
+              <li>Delete the keys from node 0 that now belong to node 3</li>
+            </ol>
+            <p>
+              You&#39;re not touching keys in other nodes. Just the node immediately to the right.
+            </p>
+            <h2 id="scaling-down">Scaling Down</h2>
+            <p>Similar process for removing a node.</p>
+            <p>Let&#39;s remove node 0 (at slot 3).</p>
+            <pre><code class="language-text">Before:
+        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Ring:  [ ] [3] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
+
+After:
+        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Ring:  [ ] [3] [ ] [ ] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
+                    ↑
+               removed
+</code></pre>
+            <p><strong>Which keys are affected?</strong></p>
+            <p>
+              Keys that were owned by node 0 (slots 2-3). They now go to the next clockwise node:
+              node 2 at slot 8.
+            </p>
+            <p><strong>How to do it operationally:</strong></p>
+            <ol>
+              <li>Copy all keys from node 0 to node 2</li>
+              <li>Remove node 0 from the ring</li>
+              <li>Done</li>
+            </ol>
+            <p>
+              You&#39;re literally copy-pasting everything from node 0 to node 2. No complex routing
+              decisions. No partial key movement. Just dump and load.
+            </p>
+            <p>
+              This is why consistent hashing is so popular. It&#39;s
+              <strong>operationally simple</strong>.
+            </p>
+            <h2 id="hash-function">Hash Function</h2>
+            <p>A good hash function for consistent hashing has two properties:</p>
+            <ol>
+              <li>
+                <strong>Computationally efficient</strong>: Fast to compute, as it&#39;s called on
+                every read and write
+              </li>
+              <li>
+                <strong>Uniform distribution</strong>: Spreads data evenly without noticeable
+                correlation
+              </li>
+            </ol>
+            <p>SHA-256 is commonly used:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> createHash <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;crypto&quot;</span><span class="u">;</span>
+
+<span class="k">function</span> <span class="f">hash</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> totalSlots<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
+  <span class="k">const</span> hsh <span class="o">=</span> <span class="f">createHash</span><span class="u">(</span><span class="s">&quot;sha256&quot;</span><span class="u">);</span>
+  hsh<span class="u">.</span><span class="f">update</span><span class="u">(</span>key<span class="u">);</span>
+  <span class="k">const</span> hexDigest <span class="o">=</span> hsh<span class="u">.</span><span class="f">digest</span><span class="u">(</span><span class="s">&quot;hex&quot;</span><span class="u">);</span>
+  <span class="k">return</span> <span class="f">parseInt</span><span class="u">(</span>hexDigest<span class="u">,</span> <span class="n">16</span><span class="u">)</span> <span class="o">%</span> totalSlots<span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              The hash function converts any string to a position in the hash space. Since
+              <code>totalSlots</code>
+              is huge and constant (like <code>2^ { 128}</code>), this function is completely
+              independent of the number of nodes in your system.
+            </p>
+            <h2 id="virtual-nodes">Virtual Nodes</h2>
+            <p>There&#39;s one problem with basic consistent hashing: uneven distribution.</p>
+            <p>
+              If nodes hash to unevenly spaced slots, some nodes own much larger key ranges than
+              others.
+            </p>
+            <pre
+            ><code class="language-text">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
+                    ↑   ↑                                           ↑
+</code></pre>
+            <p>
+              Node 0 owns slots 16, 0, 1, 2, 3 (5 slots). Node 1 owns slots 4, 5 (2 slots). Node 2
+              owns slots 6-15 (10 slots).
+            </p>
+            <p>Node 2 handles 5x more keys than node 1!</p>
+            <p>The solution: <strong>virtual nodes</strong>.</p>
+            <p>Instead of placing each physical node once on the ring, place it multiple times.</p>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">addNodeToRing</span><span class="u">(</span>nodeId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> virtualNodes<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> virtualNodes<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> virtualId <span class="o">=</span> <span class="s">`${nodeId}_${i}`</span><span class="u">;</span>
+    <span class="k">const</span> slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span>virtualId<span class="u">)</span> <span class="o">%</span> RING_SIZE<span class="u">;</span>
+    ring<span class="u">.</span><span class="f">push</span><span class="u">({</span> <span class="p">id:</span> nodeId<span class="u">,</span> slot <span class="u">});</span>
+  <span class="u">}</span>
+  ring<span class="u">.</span><span class="f">sort</span><span class="u">((</span>a<span class="u">,</span> b<span class="u">)</span> <span class="k">=&gt;</span> a<span class="u">.</span><span class="p">slot</span> <span class="o">-</span> b<span class="u">.</span><span class="p">slot</span><span class="u">);</span>
+<span class="u">}</span>
+
+<span class="f">addNodeToRing</span><span class="u">(</span><span class="s">&quot;node0&quot;</span><span class="u">,</span> <span class="n">100</span><span class="u">);</span>
+<span class="f">addNodeToRing</span><span class="u">(</span><span class="s">&quot;node1&quot;</span><span class="u">,</span> <span class="n">100</span><span class="u">);</span>
+<span class="f">addNodeToRing</span><span class="u">(</span><span class="s">&quot;node2&quot;</span><span class="u">,</span> <span class="n">100</span><span class="u">);</span>
+</code></pre>
+            <p>
+              With 100 virtual nodes per physical node, the distribution becomes much more even.
+              Each physical node owns roughly 1/3 of the key space.
+            </p>
+            <h2 id="implementation">Implementation</h2>
+            <p>Here&#39;s a complete, minimal implementation:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ConsistentHash</span> <span class="u">{</span>
+  ring<span class="o">:</span> <span class="u">{</span> slot<span class="o">:</span> <span class="t">number</span><span class="u">;</span> nodeId<span class="o">:</span> <span class="t">string</span> <span class="u">}[];</span>
+  ringSize<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">createRing</span><span class="u">(</span>ringSize<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">ConsistentHash</span> <span class="u">{</span>
+  <span class="k">return</span> <span class="u">{</span> <span class="p">ring:</span> <span class="u">[],</span> ringSize <span class="u">};</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">addNode</span><span class="u">(</span>ch<span class="o">:</span> <span class="t">ConsistentHash</span><span class="u">,</span> nodeId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> virtualNodes<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> <span class="n">100</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> virtualNodes<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> slot <span class="o">=</span> <span class="f">hash</span><span class="u">(</span><span class="s">`${nodeId}_${i}`</span><span class="u">)</span> <span class="o">%</span> ch<span class="u">.</span><span class="p">ringSize</span><span class="u">;</span>
+    ch<span class="u">.</span>ring<span class="u">.</span><span class="f">push</span><span class="u">({</span> slot<span class="u">,</span> nodeId <span class="u">});</span>
+  <span class="u">}</span>
+  ch<span class="u">.</span>ring<span class="u">.</span><span class="f">sort</span><span class="u">((</span>a<span class="u">,</span> b<span class="u">)</span> <span class="k">=&gt;</span> a<span class="u">.</span><span class="p">slot</span> <span class="o">-</span> b<span class="u">.</span><span class="p">slot</span><span class="u">);</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">removeNode</span><span class="u">(</span>ch<span class="o">:</span> <span class="t">ConsistentHash</span><span class="u">,</span> nodeId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
+  ch<span class="u">.</span><span class="p">ring</span> <span class="o">=</span> ch<span class="u">.</span>ring<span class="u">.</span><span class="f">filter</span><span class="u">((</span>n<span class="u">)</span> <span class="k">=&gt;</span> n<span class="u">.</span><span class="p">nodeId</span> <span class="o">!==</span> nodeId<span class="u">);</span>
+<span class="u">}</span>
+
+<span class="k">function</span> <span class="f">getNode</span><span class="u">(</span>ch<span class="o">:</span> <span class="t">ConsistentHash</span><span class="u">,</span> key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
+  <span class="k">const</span> slot <span class="o">=</span> <span class="f">hash</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> ch<span class="u">.</span><span class="p">ringSize</span><span class="u">;</span>
+
+  <span class="k">let</span> left <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
+  <span class="k">let</span> right <span class="o">=</span> ch<span class="u">.</span>ring<span class="u">.</span>length <span class="o">-</span> <span class="n">1</span><span class="u">;</span>
+
+  <span class="k">while</span> <span class="u">(</span>left <span class="o">&lt;</span> right<span class="u">)</span> <span class="u">{</span>
+    <span class="k">const</span> mid <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">((</span>left <span class="o">+</span> right<span class="u">)</span> <span class="o">/</span> <span class="n">2</span><span class="u">);</span>
+    <span class="k">if</span> <span class="u">(</span>ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span>mid<span class="u">].</span><span class="p">slot</span> <span class="o">&lt;</span> slot<span class="u">)</span> <span class="u">{</span>
+      left <span class="o">=</span> mid <span class="o">+</span> <span class="n">1</span><span class="u">;</span>
+    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
+      right <span class="o">=</span> mid<span class="u">;</span>
+    <span class="u">}</span>
+  <span class="u">}</span>
+
+  <span class="k">if</span> <span class="u">(</span>ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span>left<span class="u">].</span><span class="p">slot</span> <span class="o">&gt;=</span> slot<span class="u">)</span> <span class="u">{</span>
+    <span class="k">return</span> ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span>left<span class="u">].</span><span class="p">nodeId</span><span class="u">;</span>
+  <span class="u">}</span>
+
+  <span class="k">return</span> ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span><span class="n">0</span><span class="u">].</span><span class="p">nodeId</span><span class="u">;</span>
+<span class="u">}</span>
+</code></pre>
+            <p>Usage:</p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> ch <span class="o">=</span> <span class="f">createRing</span><span class="u">(</span><span class="n">1_000_000</span><span class="u">);</span>
+
+<span class="f">addNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;192.168.1.1&quot;</span><span class="u">);</span>
+<span class="f">addNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;192.168.1.2&quot;</span><span class="u">);</span>
+<span class="f">addNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;192.168.1.3&quot;</span><span class="u">);</span>
+
+<span class="k">const</span> owner <span class="o">=</span> <span class="f">getNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;user_123&quot;</span><span class="u">);</span>
+</code></pre>
+            <p>One array. Binary search. That&#39;s it.</p>
+            <h2 id="use-cases">Use Cases</h2>
+            <h3 id="distributed-databases">Distributed Databases</h3>
+            <p>
+              <strong>DynamoDB</strong>, <strong>Cassandra</strong>, and <strong>Riak</strong> all
+              use consistent hashing to determine which node stores which data.
+            </p>
+            <p>When you write a key to DynamoDB, it:</p>
+            <ol>
+              <li>Hashes the partition key</li>
+              <li>Uses consistent hashing to find the owning node</li>
+              <li>Writes to that node (and replicas)</li>
+            </ol>
+            <h3 id="distributed-caches">Distributed Caches</h3>
+            <p>
+              <strong>Memcached</strong>
+              clients use consistent hashing to distribute keys across cache servers.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">const</span> cacheNodes <span class="o">=</span> <span class="u">[</span><span class="s">&quot;cache1:11211&quot;</span><span class="u">,</span> <span class="s">&quot;cache2:11211&quot;</span><span class="u">,</span> <span class="s">&quot;cache3:11211&quot;</span><span class="u">];</span>
+
+<span class="k">async</span> <span class="k">function</span> <span class="f">getFromCache</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
+  <span class="k">const</span> node <span class="o">=</span> <span class="f">getNode</span><span class="u">(</span>consistentHash<span class="u">,</span> key<span class="u">);</span>
+  <span class="k">const</span> client <span class="o">=</span> <span class="f">getMemcachedClient</span><span class="u">(</span>node<span class="u">);</span>
+  <span class="k">return</span> <span class="k">await</span> client<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              When a cache node fails, only keys owned by that node become cache misses. Other nodes
+              continue serving their keys.
+            </p>
+            <h3 id="load-balancers">Load Balancers</h3>
+            <p>
+              Consistent hashing enables <strong>sticky sessions</strong> with minimal disruption
+              during scaling.
+            </p>
+            <pre
+            ><code class="language-typescript"><span class="k">function</span> <span class="f">routeRequest</span><span class="u">(</span>sessionId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Server</span> <span class="u">{</span>
+  <span class="k">return</span> <span class="f">getNode</span><span class="u">(</span>consistentHash<span class="u">,</span> sessionId<span class="u">);</span>
+<span class="u">}</span>
+</code></pre>
+            <p>
+              All requests for a session go to the same server. When you add or remove servers, most
+              sessions stay on their original server.
+            </p>
+            <h3 id="content-delivery-networks">Content Delivery Networks</h3>
+            <p>
+              <strong>Akamai</strong>
+              and other CDNs use consistent hashing to route requests to edge servers. This ensures
+              content is cached efficiently across the network.
+            </p>
+            <h2 id="when-to-use">When to Use</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Use Case</th>
+                  <th>Consistent Hashing?</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Distributed storage</td>
+                  <td>✅</td>
+                  <td>Minimize data movement during scaling</td>
+                </tr>
+                <tr>
+                  <td>Distributed cache</td>
+                  <td>✅</td>
+                  <td>Minimize cache invalidation during node churn</td>
+                </tr>
+                <tr>
+                  <td>Sticky sessions</td>
+                  <td>✅</td>
+                  <td>Maintain session affinity with graceful change</td>
+                </tr>
+                <tr>
+                  <td>Stateless API load balancing</td>
+                  <td>❌</td>
+                  <td>Simple mod works fine</td>
+                </tr>
+                <tr>
+                  <td>Small, fixed cluster</td>
+                  <td>❌</td>
+                  <td>Overhead not worth it</td>
+                </tr>
+                <tr>
+                  <td>Needs exact even distribution</td>
+                  <td>❌</td>
+                  <td>Use explicit partitioning instead</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 id="key-takeaways">Key Takeaways</h2>
+            <ol>
+              <li>
+                <p><strong>Consistent hashing solves one problem</strong>: Who owns this data?</p>
+              </li>
+              <li>
+                <p>
+                  <strong>Minimal data movement</strong>: When nodes change, only a fraction of keys
+                  move.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Operationally simple</strong>: Adding a node? Snapshot the right neighbor.
+                  Removing a node? Copy to the right neighbor.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Virtual nodes</strong>: Solve the uneven distribution problem by placing
+                  each physical node multiple times on the ring.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Use it for stateful systems</strong>: Distributed databases, caches,
+                  anything where data movement is expensive.
+                </p>
+              </li>
+            </ol>
+            <h2 id="practice">Practice</h2>
+            <p>
+              I&#39;ve created hands-on demos you can run locally:
+              <a
+                href="https://github.com/pulkitxm/systems/tree/main/data-structures/consistent-hashing"
+                >consistent-hashing</a
+              >. TypeScript implementation with demos for basic usage, scaling comparison (simple
+              hash vs consistent hash), and virtual nodes.
+            </p>
+            <h2 id="conclusion">Conclusion</h2>
+            <p>Consistent hashing answers one question: <strong>Who owns this key?</strong></p>
+            <p>It answers it in a way that minimizes disruption when your cluster changes.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Hash-Based Routing</th>
+                  <th>Consistent Hashing</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Data movement</td>
+                  <td>O(n) keys move</td>
+                  <td>O(n/m) keys move</td>
+                </tr>
+                <tr>
+                  <td>Implementation</td>
+                  <td>Simple mod</td>
+                  <td>Sorted array + bsearch</td>
+                </tr>
+                <tr>
+                  <td>Node addition</td>
+                  <td>Rehash everything</td>
+                  <td>Only affected range</td>
+                </tr>
+                <tr>
+                  <td>Node removal</td>
+                  <td>Rehash everything</td>
+                  <td>Only affected range</td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td>Stateless backends</td>
+                  <td>Stateful backends</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Where n = total keys and m = number of nodes.</p>
+            <p>Implement it yourself. You&#39;ll have fun.</p>
+          </div>
+        </article>
+        <nav class="related" aria-label="Related writing">
+          <h2>Related writing</h2>
+          <ul>
+            <li>
+              <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
+            </li>
+            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
+            <li><a href="/blogs/system-design/high-availability/">High Availability</a></li>
+          </ul>
+        </nav>
+      </main>
+      <footer class="site-footer">
+        <div>
+          <a href="https://github.com/Pulkitxm">GitHub</a>
+          · <a href="https://x.com/_pulkitxm">X</a> ·
+          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+        </div>
+        <div class="footer-bottom">
+          <small>© 2026 Pulkit</small
+          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

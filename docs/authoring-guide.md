@@ -62,6 +62,20 @@ The renderer promotes body headings to at least H2 and assigns IDs from lowercas
 
 Place one directive in its own paragraph. The limit must be a positive integer; omission means all items. Selection is recursive by route prefix, excludes indexes and the current page, sorts newest date first then title, and displays period or year. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
 
+Group two or more related images into a sliding carousel with Previous and Next buttons:
+
+```md
+:::carousel
+
+![Traces main view](/assets/content/exp/magicapi/noveum.ai/traces/main-view.webp)
+
+![Trace flow visualization](/assets/content/exp/magicapi/noveum.ai/traces/flow-chart.webp)
+
+:::
+```
+
+The block may contain only images, each with alt text. Each slide links to its full-size image, which also makes the scrolling region reachable by keyboard. Without JavaScript it still scrolls horizontally with snap points; [theme.js](../theme.js) wires the buttons and the position counter.
+
 ## Layout semantics and appearance
 
 [home.html](../layouts/home.html), [simple.html](../layouts/simple.html), and [article.html](../layouts/article.html) share the same semantic structure: English HTML document, skip link to `main`, site header/nav, main containing an article, one page H1, prose container, and footer. Home's main element adds utilities for smaller H2 headings; article/simple currently share most styling. Changing a template never creates a route.

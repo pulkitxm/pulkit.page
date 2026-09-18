@@ -159,8 +159,9 @@ the source mapping, code-block counts, copied assets, and converted components.
 CI. It parses MDX as an AST, preserves fenced code, and refuses to overwrite
 existing Markdown. Complex widgets become standard images, quotes, or links.
 Interactive examples and embedded videos link to their original pages; they are
-not interactive in this static version. Experience details, landing, About, Contact, résumé, tools,
-and services pages are deliberately short. Backend features such as the guestbook
+not interactive in this static version. Experience details keep the full original write-ups,
+screenshots, and document links. Landing, About, Contact, résumé, tools, and services pages are
+deliberately short. Backend features such as the guestbook
 are outside this static portfolio.
 
 The ignored reference directory is unnecessary for normal editing, generation,

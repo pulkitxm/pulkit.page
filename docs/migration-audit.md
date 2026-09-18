@@ -6,13 +6,13 @@
 
 [content-migration.json](content-migration.json) is a historical migration audit. It records the conversion of the old site's MDX into ordinary Markdown. It is not a runtime manifest, route registry, asset bundler input, or current synchronization source of truth.
 
-| Field                 | Meaning                                                                                                   | Snapshot evidence                                                                   |
-| --------------------- | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `pages`               | Old source relative to `extras/pulkitxm.com/content`, new repository output, and original code-node count | 58 mappings: 51 articles, two series indexes, five experience pages                 |
-| `pages[].codeBlocks`  | Number of original Markdown code AST nodes before component conversion                                    | 628 across the original sources; not a count recomputed during build                |
-| `assets`              | Sorted unique destination paths copied while converting local images                                      | 197 paths; repeated uses count once                                                 |
-| `components`          | Occurrences of each encountered MDX JSX element name                                                      | 99 names, 249 occurrences, including ordinary HTML tags                             |
-| `experienceTreatment` | Editorial note about later treatment of experience content                                                | Concise role summaries and selected contributions; article prose and code preserved |
+| Field                 | Meaning                                                                                                   | Snapshot evidence                                                    |
+| --------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `pages`               | Old source relative to `extras/pulkitxm.com/content`, new repository output, and original code-node count | 58 mappings: 51 articles, two series indexes, five experience pages  |
+| `pages[].codeBlocks`  | Number of original Markdown code AST nodes before component conversion                                    | 628 across the original sources; not a count recomputed during build |
+| `assets`              | Sorted unique destination paths copied while converting local images                                      | 197 paths; repeated uses count once                                  |
+| `components`          | Occurrences of each encountered MDX JSX element name                                                      | 99 names, 249 occurrences, including ordinary HTML tags              |
+| `experienceTreatment` | Editorial note about later treatment of experience content                                                | Full original write-ups; article prose and code preserved            |
 
 For example, `blogs/system-design/caching.mdx` maps to [content/blogs/system-design/caching.md](../content/blogs/system-design/caching.md), with 30 original code blocks. `experiences/magicapi.mdx` maps to [content/experience/magicapi.md](../content/experience/magicapi.md): the plural directory becomes singular. The source field is not relative to `docs/` or the repository root.
 

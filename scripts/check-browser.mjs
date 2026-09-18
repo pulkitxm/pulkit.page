@@ -51,11 +51,16 @@ try {
       assert.equal(response.status(), 200, `Page must load: ${path}`);
       assert.equal(await page.locator("main").count(), 1);
       assert.equal(await page.locator("h1").count(), 1);
-      const brokenImages = await page.locator("img").evaluateAll(async (images) => {
-        await Promise.all(images.map((image) => image.decode().catch(() => {})));
-        return images.filter((image) => image.naturalWidth === 0).length;
+      await page.locator("img").evaluateAll((images) => {
+        for (const image of images) {
+          image.loading = "eager";
+        }
       });
-      assert.equal(brokenImages, 0, `Images must load: ${path}`);
+      await page.waitForFunction(
+        () => [...document.images].every((image) => image.complete && image.naturalWidth > 0),
+        undefined,
+        { timeout: 15000 },
+      );
     }
     await page.goto(origin);
     await page.locator("[data-theme-toggle]").click();

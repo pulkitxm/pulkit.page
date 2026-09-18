@@ -184,7 +184,7 @@ export async function renderPage(
       : "";
   return formatHtml(
     applyLayout(layouts, layout, {
-      title: escapeHtml(pageTitle(metadata, site)),
+      title: escapeHtml(pageTitle(metadata, site, route)),
       seo: site.url ? seoHead(route, metadata, site, pages) : "",
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages),
@@ -246,7 +246,7 @@ ${[
   ["og:type", article ? "article" : "website"],
   ["og:site_name", site.brand],
   ["og:locale", "en_US"],
-  ["og:title", pageTitle(metadata, site)],
+  ["og:title", pageTitle(metadata, site, route)],
   ["og:description", metadata.description],
   ["og:url", url],
   ["og:image", image],
@@ -261,7 +261,7 @@ ${[
 ${article && metadata.date ? meta("article:published_time", metadata.date, true) + meta("article:author", `${site.url}/about/`, true) : ""}
 ${[
   ["twitter:card", "summary_large_image"],
-  ["twitter:title", pageTitle(metadata, site)],
+  ["twitter:title", pageTitle(metadata, site, route)],
   ["twitter:description", metadata.description],
   ["twitter:image", image],
   ["twitter:image:alt", metadata.title],

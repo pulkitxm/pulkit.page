@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,100 +39,184 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="simple">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li aria-current="page">Tools I use</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Tools I use</h1>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              Tools I use
+            </h1>
           </header>
-          <div class="prose">
-            <p>My everyday setup, kept simple.</p>
-            <h2 id="desk-setup">Desk Setup</h2>
-            <ul>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">My everyday setup, kept simple.</p>
+            <h2 id="desk-setup" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Desk Setup
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                   href="https://www.apple.com/in/shop/buy-mac/macbook-pro/16-inch-space-black-standard-display-apple-m4-pro-with-14-core-cpu-and-20-core-gpu-24gb-memory-512gb"
                   >MacBook Pro 16&quot; M4 Pro</a
                 >
               </li>
               <li>
-                <a href="https://www.benq.com/en-in/monitor/home/gw2790qt/buy.html"
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://www.benq.com/en-in/monitor/home/gw2790qt/buy.html"
                   >BenQ GW2790QT</a
                 >
               </li>
             </ul>
-            <h2 id="everyday-carry">Everyday Carry</h2>
-            <ul>
+            <h2
+              id="everyday-carry"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Everyday Carry
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                   href="https://www.apple.com/in/shop/buy-iphone/iphone-17-pro/6.9%22-display-256gb-deep-blue"
                   >iPhone 17 Pro Max</a
                 >
               </li>
               <li>
-                <a href="https://www.michaelkors.com/oversized-hutton-gunmetal-watch/MKO1164.html"
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://www.michaelkors.com/oversized-hutton-gunmetal-watch/MKO1164.html"
                   >Michael Kors Oversized Hutton Gunmetal Watch</a
                 >
               </li>
               <li>
-                <a href="https://www.oneplus.in/product/oneplus-nord-buds-3-pro"
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://www.oneplus.in/product/oneplus-nord-buds-3-pro"
                   >One Plus Nord Buds 3 Pro</a
                 >
               </li>
             </ul>
-            <h2 id="peripherals">Peripherals</h2>
-            <ul>
+            <h2 id="peripherals" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Peripherals
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                   href="https://www.apple.com/in/shop/product/mxck3hn/a/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-usb-c-us-english"
                   >Magic Keyboard</a
                 >
               </li>
               <li>
                 <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                   href="https://www.apple.com/in/shop/product/mxk63zm/a/magic-mouse-usb%E2%80%91c-black-multi-touch-surface"
                   >Magic Mouse</a
                 >
               </li>
             </ul>
-            <h2 id="software">Software</h2>
-            <ul>
-              <li><a href="https://cursor.com">Cursor</a></li>
-              <li><a href="https://raycast.com">Raycast</a></li>
-              <li><a href="https://chatgpt.com">ChatGPT</a></li>
-              <li><a href="https://www.notion.so">Notion</a></li>
-              <li><a href="https://wisprflow.com">WisprFlow</a></li>
+            <h2 id="software" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Software
+            </h2>
+            <ul class="mt-0 mb-6">
+              <li>
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://cursor.com"
+                  >Cursor</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://raycast.com"
+                  >Raycast</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://chatgpt.com"
+                  >ChatGPT</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://www.notion.so"
+                  >Notion</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://wisprflow.com"
+                  >WisprFlow</a
+                >
+              </li>
             </ul>
           </div>
         </article>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,22 +58,41 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -78,19 +100,28 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Introduction to Big Data Tools</h1>
-            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              Introduction to Big Data Tools
+            </h1>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2026-01-24">2026-01-24</time>
+            </p>
           </header>
-          <div class="prose">
-            <p>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
               Big data processing is all about a set of tools that help you process data in a
               distributed fashion. When one machine is not capable of processing a huge amount of
               data, we do divide and conquer.
             </p>
-            <p>That&#39;s it. That&#39;s big data processing.</p>
-            <h2 id="tl-dr">TL;DR</h2>
-            <ul>
+            <p class="mt-0 mb-6">That&#39;s it. That&#39;s big data processing.</p>
+            <h2 id="tl-dr" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              TL;DR
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Big data processing</strong>
                 = divide and conquer when one machine isn&#39;t enough
@@ -116,91 +147,116 @@
                 <strong>Start with</strong>: Apache Spark. It&#39;s the most essential big data tool
               </li>
             </ul>
-            <h2 id="the-problem">The Problem</h2>
-            <p>
+            <h2 id="the-problem" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              The Problem
+            </h2>
+            <p class="mt-0 mb-6">
               Companies use big data tools to process massive amounts of data and extract insights.
               Train machine learning models. Move data across databases. Feed data into sales
               systems, advertisement platforms, and everything else.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Big data processing isn&#39;t just about sums, counts, mins, and maxes. It&#39;s about
               copying data to other places, transforming data, enriching data. All of this on
               commodity hardware.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Commodity hardware</strong>
               means normal general-purpose computation machines you get on any cloud. Not
               specialized hardware. Specialized hardware is expensive. Commodity hardware is
               everywhere.
             </p>
-            <h2 id="word-frequency-a-simple-example">Word Frequency: A Simple Example</h2>
-            <p>
+            <h2
+              id="word-frequency-a-simple-example"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Word Frequency: A Simple Example
+            </h2>
+            <p class="mt-0 mb-6">
               Let&#39;s count word frequency. You have a 1 TB text dataset. For each word, you want
               to know how many times it occurred.
             </p>
-            <h3 id="approach-1-simple">Approach 1: Simple</h3>
-            <p>The simple approach:</p>
-            <ol>
+            <h3 id="approach-1-simple" class="mt-8 text-lg leading-tight tracking-tight">
+              Approach 1: Simple
+            </h3>
+            <p class="mt-0 mb-6">The simple approach:</p>
+            <ol class="mt-0 mb-6">
               <li>Load the entire 1 TB dataset on one machine</li>
               <li>Read character by character</li>
               <li>When you encounter a space, update an in-memory hash table</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> wordFreq<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> wordFreq<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-<span class="k">function</span> <span class="f">processWord</span><span class="u">(</span>word<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  <span class="k">const</span> count <span class="o">=</span> wordFreq<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
-  wordFreq<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> count <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">processWord</span><span class="text-syn-u">(</span>word<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> wordFreq<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>word<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  wordFreq<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>word<span class="text-syn-u">,</span> count <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               This runs in O(n) time. You traverse the entire file exactly once. Build the hash map.
               Done.
             </p>
-            <p>But can you make it faster? Can you parallelize it?</p>
-            <h3 id="approach-2-threads">Approach 2: Threads</h3>
-            <p>You can easily parallelize this code. Each thread handles a chunk of the file.</p>
+            <p class="mt-0 mb-6">But can you make it faster? Can you parallelize it?</p>
+            <h3 id="approach-2-threads" class="mt-8 text-lg leading-tight tracking-tight">
+              Approach 2: Threads
+            </h3>
+            <p class="mt-0 mb-6">
+              You can easily parallelize this code. Each thread handles a chunk of the file.
+            </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processChunk</span><span class="u">(</span>start<span class="o">:</span> <span class="t">number</span><span class="u">,</span> end<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> localFreq<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processChunk</span><span class="text-syn-u">(</span>start<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> end<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> localFreq<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> start<span class="u">;</span> i <span class="o">&lt;</span> end<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> word <span class="o">=</span> <span class="f">getWordAt</span><span class="u">(</span>i<span class="u">);</span>
-    <span class="k">const</span> count <span class="o">=</span> localFreq<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
-    localFreq<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> count <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> start<span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> end<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> word <span class="text-syn-o">=</span> <span class="text-syn-f">getWordAt</span><span class="text-syn-u">(</span>i<span class="text-syn-u">);</span>
+    <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> localFreq<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>word<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+    localFreq<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>word<span class="text-syn-u">,</span> count <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> localFreq<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> localFreq<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> chunkSize <span class="o">=</span> fileSize <span class="o">/</span> threadCount<span class="u">;</span>
-<span class="k">const</span> results <span class="o">=</span> <span class="k">await</span> <span class="t">Promise</span><span class="u">.</span><span class="f">all</span><span class="u">(</span>
-  threads<span class="u">.</span><span class="f">map</span><span class="u">((</span>_<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">processChunk</span><span class="u">(</span>i <span class="o">*</span> chunkSize<span class="u">,</span> <span class="u">(</span>i <span class="o">+</span> <span class="n">1</span><span class="u">)</span> <span class="o">*</span> chunkSize<span class="u">)),</span>
-<span class="u">);</span>
+<span class="text-syn-k">const</span> chunkSize <span class="text-syn-o">=</span> fileSize <span class="text-syn-o">/</span> threadCount<span class="text-syn-u">;</span>
+<span class="text-syn-k">const</span> results <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">.</span><span class="text-syn-f">all</span><span class="text-syn-u">(</span>
+  threads<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>_<span class="text-syn-u">,</span> i<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">processChunk</span><span class="text-syn-u">(</span>i <span class="text-syn-o">*</span> chunkSize<span class="text-syn-u">,</span> <span class="text-syn-u">(</span>i <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-o">*</span> chunkSize<span class="text-syn-u">)),</span>
+<span class="text-syn-u">);</span>
 
-<span class="k">const</span> finalFreq <span class="o">=</span> <span class="f">mergeResults</span><span class="u">(</span>results<span class="u">);</span>
+<span class="text-syn-k">const</span> finalFreq <span class="text-syn-o">=</span> <span class="text-syn-f">mergeResults</span><span class="text-syn-u">(</span>results<span class="text-syn-u">);</span>
 </code></pre>
-            <p>If you have 10 threads, each handles 100 GB. You get roughly 10x speed benefit.</p>
-            <p>But what if data is 100 TB? Something that doesn&#39;t fit on one machine?</p>
-            <p>
+            <p class="mt-0 mb-6">
+              If you have 10 threads, each handles 100 GB. You get roughly 10x speed benefit.
+            </p>
+            <p class="mt-0 mb-6">
+              But what if data is 100 TB? Something that doesn&#39;t fit on one machine?
+            </p>
+            <p class="mt-0 mb-6">
               Or what if the computation itself is slow, and you only have 2 CPUs? What will 100
               threads do on 2 CPUs? Nothing useful.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               But if you have 10 machines, each with 2 threads, you get 20 threads actually working
               in parallel. Much faster.
             </p>
-            <p>This is distributed computing.</p>
-            <h3 id="approach-3-distributed-computing">Approach 3: Distributed Computing</h3>
-            <p>
+            <p class="mt-0 mb-6">This is distributed computing.</p>
+            <h3
+              id="approach-3-distributed-computing"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Approach 3: Distributed Computing
+            </h3>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/big-data-tools/distributed-computing.webp"
                 alt="Distributed computing splits data into partitions across multiple servers"
                 loading="lazy"
               />
             </p>
-            <p>The idea:</p>
-            <ol>
+            <p class="mt-0 mb-6">The idea:</p>
+            <ol class="mt-0 mb-6">
               <li>Split the file into partitions (say 10 partitions of 100 GB each)</li>
               <li>Distribute partitions across multiple servers</li>
               <li>Each server computes word frequency independently</li>
@@ -209,46 +265,53 @@
               <li>Return final result</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Partition</span> <span class="u">{</span>
-  id<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  data<span class="o">:</span> <span class="t">Buffer</span><span class="u">;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Partition</span> <span class="text-syn-u">{</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  data<span class="text-syn-o">:</span> <span class="text-syn-t">Buffer</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">interface</span> <span class="t">WorkerResult</span> <span class="u">{</span>
-  workerId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  frequencies<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+<span class="text-syn-k">interface</span> <span class="text-syn-t">WorkerResult</span> <span class="text-syn-u">{</span>
+  workerId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  frequencies<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">distributeWork</span><span class="u">(</span>partitions<span class="o">:</span> <span class="t">Partition</span><span class="u">[],</span> workers<span class="o">:</span> <span class="t">Worker</span><span class="u">[])</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  partitions<span class="u">.</span><span class="f">forEach</span><span class="u">((</span>partition<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> worker <span class="o">=</span> workers<span class="u">[</span>i <span class="o">%</span> workers<span class="u">.</span>length<span class="u">];</span>
-    worker<span class="u">.</span><span class="f">process</span><span class="u">(</span>partition<span class="u">);</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">distributeWork</span><span class="text-syn-u">(</span>partitions<span class="text-syn-o">:</span> <span class="text-syn-t">Partition</span><span class="text-syn-u">[],</span> workers<span class="text-syn-o">:</span> <span class="text-syn-t">Worker</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  partitions<span class="text-syn-u">.</span><span class="text-syn-f">forEach</span><span class="text-syn-u">((</span>partition<span class="text-syn-u">,</span> i<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> worker <span class="text-syn-o">=</span> workers<span class="text-syn-u">[</span>i <span class="text-syn-o">%</span> workers<span class="text-syn-u">.</span>length<span class="text-syn-u">];</span>
+    worker<span class="text-syn-u">.</span><span class="text-syn-f">process</span><span class="text-syn-u">(</span>partition<span class="text-syn-u">);</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">mergeResults</span><span class="u">(</span>results<span class="o">:</span> <span class="t">WorkerResult</span><span class="u">[])</span><span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> final<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">mergeResults</span><span class="text-syn-u">(</span>results<span class="text-syn-o">:</span> <span class="text-syn-t">WorkerResult</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> final<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> result <span class="o">of</span> results<span class="u">)</span> <span class="u">{</span>
-    <span class="k">for</span> <span class="u">(</span><span class="k">const</span> <span class="u">[</span>word<span class="u">,</span> count<span class="u">]</span> <span class="o">of</span> result<span class="u">.</span><span class="p">frequencies</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">const</span> existing <span class="o">=</span> final<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
-      final<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> existing <span class="o">+</span> count<span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> result <span class="text-syn-o">of</span> results<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>word<span class="text-syn-u">,</span> count<span class="text-syn-u">]</span> <span class="text-syn-o">of</span> result<span class="text-syn-u">.</span><span class="text-syn-p">frequencies</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> existing <span class="text-syn-o">=</span> final<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>word<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+      final<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>word<span class="text-syn-u">,</span> existing <span class="text-syn-o">+</span> count<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> final<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> final<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <h2 id="the-coordinator-pattern">The Coordinator Pattern</h2>
-            <p>
+            <h2
+              id="the-coordinator-pattern"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The Coordinator Pattern
+            </h2>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/big-data-tools/coordinator-pattern.webp"
                 alt="User submits job to coordinator which distributes work to workers"
                 loading="lazy"
               />
             </p>
-            <p>The flow looks like this:</p>
-            <ol>
+            <p class="mt-0 mb-6">The flow looks like this:</p>
+            <ol class="mt-0 mb-6">
               <li>You submit a job to the <strong>coordinator</strong></li>
               <li>Coordinator splits the file into partitions</li>
               <li>Coordinator assigns partitions to <strong>workers</strong></li>
@@ -257,57 +320,83 @@
               <li>Coordinator merges everything</li>
               <li>Coordinator returns the final result</li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               The coordinator orchestrates the entire execution across multiple machines, gathers
               results, and sends them back to you.
             </p>
-            <h2 id="why-we-need-big-data-tools">Why We Need Big Data Tools</h2>
-            <p>Now think about what can go wrong:</p>
-            <table>
+            <h2
+              id="why-we-need-big-data-tools"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Why We Need Big Data Tools
+            </h2>
+            <p class="mt-0 mb-6">Now think about what can go wrong:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Challenge</th>
-                  <th>Question</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Challenge</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Question</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Failures</strong></td>
-                  <td>What if a worker crashes while processing its 100 GB partition?</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Failures</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    What if a worker crashes while processing its 100 GB partition?
+                  </td>
                 </tr>
                 <tr>
-                  <td><strong>Recovery</strong></td>
-                  <td>Who takes care of re-processing the failed chunk?</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Recovery</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Who takes care of re-processing the failed chunk?
+                  </td>
                 </tr>
                 <tr>
-                  <td><strong>Completion</strong></td>
-                  <td>What if a worker partially computed but never sent a response?</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Completion</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    What if a worker partially computed but never sent a response?
+                  </td>
                 </tr>
                 <tr>
-                  <td><strong>Scaling</strong></td>
-                  <td>What if we need to add more workers?</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Scaling</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    What if we need to add more workers?
+                  </td>
                 </tr>
                 <tr>
-                  <td><strong>Error Handling</strong></td>
-                  <td>Who reports what went wrong and where?</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Error Handling</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Who reports what went wrong and where?
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <p>Someone has to take ownership. The coordinator does.</p>
-            <p>
+            <p class="mt-0 mb-6">Someone has to take ownership. The coordinator does.</p>
+            <p class="mt-0 mb-6">
               But do we have to write this coordinator every time? Can&#39;t a good open-source tool
               handle this once and for all?
             </p>
-            <p><strong>This is exactly what big data tools do.</strong></p>
-            <p>
+            <p class="mt-0 mb-6"><strong>This is exactly what big data tools do.</strong></p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/big-data-tools/tools-value.webp"
                 alt="Big data tools handle distribution, failures, recovery so you focus on business logic"
                 loading="lazy"
               />
             </p>
-            <p>You write the business logic. The tool handles:</p>
-            <ul>
+            <p class="mt-0 mb-6">You write the business logic. The tool handles:</p>
+            <ul class="mt-0 mb-6">
               <li>Distribution across machines</li>
               <li>Failure detection and recovery</li>
               <li>Ensuring completion</li>
@@ -316,156 +405,187 @@
               <li>Data transformation</li>
               <li>Cleanup after job completion</li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               When the job is complete, the tool cleans up temporary files, prepares for the next
               job. You don&#39;t worry about any of it.
             </p>
-            <h2 id="apache-spark">Apache Spark</h2>
-            <p>
+            <h2 id="apache-spark" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Apache Spark
+            </h2>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/big-data-tools/spark-architecture.webp"
                 alt="Spark master node coordinates worker nodes for distributed processing"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Spark is the most popular big data processing tool. It does large-scale data
               processing on commodity hardware.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               One Spark node is the <strong>master</strong>. Everyone else is a
               <strong>worker</strong>. They do what you ask them to do.
             </p>
-            <p>Spark handles:</p>
-            <ul>
+            <p class="mt-0 mb-6">Spark handles:</p>
+            <ul class="mt-0 mb-6">
               <li>Distribution of work</li>
               <li>Completion guarantees</li>
               <li>Fault tolerance (if a worker goes down, reassign its chunk to another worker)</li>
             </ul>
-            <h3 id="example-data-warehouse-etl">Example: Data Warehouse ETL</h3>
-            <p>Say you want to combine data from:</p>
-            <ul>
+            <h3 id="example-data-warehouse-etl" class="mt-8 text-lg leading-tight tracking-tight">
+              Example: Data Warehouse ETL
+            </h3>
+            <p class="mt-0 mb-6">Say you want to combine data from:</p>
+            <ul class="mt-0 mb-6">
               <li>Users database (MySQL)</li>
               <li>Orders database (PostgreSQL)</li>
               <li>Payments database (MongoDB)</li>
               <li>Logistics database (something else)</li>
             </ul>
-            <p>And put everything into a data warehouse like Amazon Redshift.</p>
-            <p>
+            <p class="mt-0 mb-6">And put everything into a data warehouse like Amazon Redshift.</p>
+            <p class="mt-0 mb-6">
               One machine reading from all these databases, merging, transforming, and writing? Very
               slow.
             </p>
-            <p>Doing it in a distributed way? Fast.</p>
-            <p>
+            <p class="mt-0 mb-6">Doing it in a distributed way? Fast.</p>
+            <p class="mt-0 mb-6">
               Spark has connectors for almost all popular databases. You don&#39;t have to know the
               dialect of each database. You use simple DataFrames:
             </p>
             <pre
-            ><code class="language-python">users_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> mysql_url<span class="u">).</span>load<span class="u">()</span>
-orders_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> postgres_url<span class="u">).</span>load<span class="u">()</span>
-payments_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;mongodb&quot;</span><span class="u">).</span>load<span class="u">()</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">users_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> mysql_url<span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
+orders_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> postgres_url<span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
+payments_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;mongodb&quot;</span><span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
 
-combined <span class="o">=</span> users_df<span class="u">.</span>join<span class="u">(</span>orders_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">).</span>join<span class="u">(</span>payments_df<span class="u">,</span> <span class="s">&quot;order_id&quot;</span><span class="u">)</span>
+combined <span class="text-syn-o">=</span> users_df<span class="text-syn-u">.</span>join<span class="text-syn-u">(</span>orders_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_id&quot;</span><span class="text-syn-u">).</span>join<span class="text-syn-u">(</span>payments_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;order_id&quot;</span><span class="text-syn-u">)</span>
 
-combined<span class="u">.</span>write<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> redshift_url<span class="u">).</span>save<span class="u">()</span>
+combined<span class="text-syn-u">.</span>write<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> redshift_url<span class="text-syn-u">).</span>save<span class="text-syn-u">()</span>
 </code></pre>
-            <p>Spark ensures no row or document is missed. That&#39;s its job.</p>
-            <h3 id="example-event-enrichment">Example: Event Enrichment</h3>
-            <p>
+            <p class="mt-0 mb-6">Spark ensures no row or document is missed. That&#39;s its job.</p>
+            <h3 id="example-event-enrichment" class="mt-8 text-lg leading-tight tracking-tight">
+              Example: Event Enrichment
+            </h3>
+            <p class="mt-0 mb-6">
               You&#39;re getting user events into Kafka. A blog is published. You want to enrich
               those events with:
             </p>
-            <ul>
+            <ul class="mt-0 mb-6">
               <li>Who published the blog?</li>
               <li>Is this a paid user?</li>
             </ul>
-            <p>Then send enriched events to Elasticsearch for visualization.</p>
-            <p>
+            <p class="mt-0 mb-6">Then send enriched events to Elasticsearch for visualization.</p>
+            <p class="mt-0 mb-6">
               One machine making two database calls per event, enriching, and writing? Not scalable.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Multiple machines reading from Kafka, making calls, enriching, writing to
               Elasticsearch? That scales.
             </p>
             <pre
-            ><code class="language-python">events <span class="o">=</span> spark<span class="u">.</span>readStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;kafka&quot;</span><span class="u">).</span>load<span class="u">()</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">events <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>readStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka&quot;</span><span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
 
-enriched <span class="o">=</span> events<span class="u">.</span>join<span class="u">(</span>users_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">)</span>
-enriched <span class="o">=</span> enriched<span class="u">.</span>withColumn<span class="u">(</span><span class="s">&quot;is_paid&quot;</span><span class="u">,</span> users_df<span class="u">[</span><span class="s">&quot;subscription&quot;</span><span class="u">]</span> <span class="o">==</span> <span class="s">&quot;paid&quot;</span><span class="u">)</span>
+enriched <span class="text-syn-o">=</span> events<span class="text-syn-u">.</span>join<span class="text-syn-u">(</span>users_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_id&quot;</span><span class="text-syn-u">)</span>
+enriched <span class="text-syn-o">=</span> enriched<span class="text-syn-u">.</span>withColumn<span class="text-syn-u">(</span><span class="text-syn-s">&quot;is_paid&quot;</span><span class="text-syn-u">,</span> users_df<span class="text-syn-u">[</span><span class="text-syn-s">&quot;subscription&quot;</span><span class="text-syn-u">]</span> <span class="text-syn-o">==</span> <span class="text-syn-s">&quot;paid&quot;</span><span class="text-syn-u">)</span>
 
-enriched<span class="u">.</span>writeStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;elasticsearch&quot;</span><span class="u">).</span>start<span class="u">()</span>
+enriched<span class="text-syn-u">.</span>writeStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;elasticsearch&quot;</span><span class="text-syn-u">).</span>start<span class="text-syn-u">()</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Big data processing isn&#39;t just about aggregations. It&#39;s about any computation
               you want to do in a distributed fashion.
             </p>
-            <h2 id="other-big-data-tools">Other Big Data Tools</h2>
-            <p>Spark is the most famous, but there are many others:</p>
-            <table>
+            <h2
+              id="other-big-data-tools"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Other Big Data Tools
+            </h2>
+            <p class="mt-0 mb-6">Spark is the most famous, but there are many others:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Tool</th>
-                  <th>Use Case</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Tool</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Use Case</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Apache Spark</td>
-                  <td>General-purpose batch/stream</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Spark</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    General-purpose batch/stream
+                  </td>
                 </tr>
                 <tr>
-                  <td>Apache Flink</td>
-                  <td>Stream processing</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Flink</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Stream processing</td>
                 </tr>
                 <tr>
-                  <td>Apache Kafka</td>
-                  <td>Event streaming</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Kafka</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Event streaming</td>
                 </tr>
                 <tr>
-                  <td>Apache Airflow</td>
-                  <td>Workflow orchestration</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Airflow</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Workflow orchestration
+                  </td>
                 </tr>
                 <tr>
-                  <td>Airbyte</td>
-                  <td>Data integration</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Airbyte</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Data integration</td>
                 </tr>
                 <tr>
-                  <td>Apache Hadoop</td>
-                  <td>Distributed storage + compute</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Hadoop</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Distributed storage + compute
+                  </td>
                 </tr>
                 <tr>
-                  <td>HDFS</td>
-                  <td>Distributed file system</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">HDFS</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Distributed file system
+                  </td>
                 </tr>
                 <tr>
-                  <td>MapReduce</td>
-                  <td>Batch processing (legacy)</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">MapReduce</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Batch processing (legacy)
+                  </td>
                 </tr>
                 <tr>
-                  <td>Apache Pinot</td>
-                  <td>Real-time analytics</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Pinot</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Real-time analytics</td>
                 </tr>
                 <tr>
-                  <td>Apache NiFi</td>
-                  <td>Data flow automation</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache NiFi</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Data flow automation</td>
                 </tr>
                 <tr>
-                  <td>DuckDB</td>
-                  <td>In-process analytics</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">DuckDB</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">In-process analytics</td>
                 </tr>
                 <tr>
-                  <td>Apache Presto</td>
-                  <td>Distributed SQL queries</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Apache Presto</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Distributed SQL queries
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <p>
+            <p class="mt-0 mb-6">
               Each tool solves a specific niche. Spark is the essential one. Everything else is
               optional but useful depending on your use case.
             </p>
-            <h2 id="the-core-concept">The Core Concept</h2>
-            <p>No matter which tool you use, the concept remains the same:</p>
-            <ol>
+            <h2
+              id="the-core-concept"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The Core Concept
+            </h2>
+            <p class="mt-0 mb-6">No matter which tool you use, the concept remains the same:</p>
+            <ol class="mt-0 mb-6">
               <li><strong>One node can&#39;t do it</strong> → distribute the work</li>
               <li><strong>Who handles distribution?</strong> → the tool</li>
               <li><strong>Who handles completion?</strong> → the tool</li>
@@ -473,154 +593,217 @@ enriched<span class="u">.</span>writeStream<span class="u">.</span>format<span c
               <li><strong>Who handles recovery?</strong> → the tool</li>
               <li><strong>What do you do?</strong> → write business logic</li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               The tool takes care of all the mundane things. People implemented it once,
               open-sourced it, and everyone uses it.
             </p>
-            <h2 id="practice">Practice</h2>
-            <p>To understand Spark:</p>
-            <ol>
-              <li>
-                <p><strong>Set up Spark locally</strong></p>
+            <h2 id="practice" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Practice
+            </h2>
+            <p class="mt-0 mb-6">To understand Spark:</p>
+            <ol class="mt-0 mb-6">
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6"><strong>Set up Spark locally</strong></p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Process sample data</strong>: Take a sales dataset and write Spark jobs to
                   generate insights
                 </p>
               </li>
             </ol>
             <pre
-            ><code class="language-python">sales_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>csv<span class="u">(</span><span class="s">&quot;sales.csv&quot;</span><span class="u">,</span> header<span class="o">=</span><span class="k">True</span><span class="u">)</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">sales_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>csv<span class="text-syn-u">(</span><span class="text-syn-s">&quot;sales.csv&quot;</span><span class="text-syn-u">,</span> header<span class="text-syn-o">=</span><span class="text-syn-k">True</span><span class="text-syn-u">)</span>
 
-sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&quot;product&quot;</span><span class="u">).</span>agg<span class="u">({</span><span class="s">&quot;amount&quot;</span><span class="u">:</span> <span class="s">&quot;sum&quot;</span><span class="u">}).</span>show<span class="u">()</span>
+sales_df<span class="text-syn-u">.</span>groupBy<span class="text-syn-u">(</span><span class="text-syn-s">&quot;product&quot;</span><span class="text-syn-u">).</span>agg<span class="text-syn-u">({</span><span class="text-syn-s">&quot;amount&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;sum&quot;</span><span class="text-syn-u">}).</span>show<span class="text-syn-u">()</span>
 
-sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&quot;region&quot;</span><span class="u">).</span>count<span class="u">().</span>show<span class="u">()</span>
+sales_df<span class="text-syn-u">.</span>groupBy<span class="text-syn-u">(</span><span class="text-syn-s">&quot;region&quot;</span><span class="text-syn-u">).</span>count<span class="text-syn-u">().</span>show<span class="text-syn-u">()</span>
 </code></pre>
-            <ol start="3">
+            <ol class="mt-0 mb-6" start="3">
               <li>
                 <strong>Learn Spark Streaming</strong>: Connect Spark with Kafka. Process events as
                 they arrive
               </li>
             </ol>
             <pre
-            ><code class="language-python">events <span class="o">=</span> spark<span class="u">.</span>readStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;kafka&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;kafka.bootstrap.servers&quot;</span><span class="u">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;subscribe&quot;</span><span class="u">,</span> <span class="s">&quot;blog_published&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>load<span class="u">()</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">events <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>readStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka.bootstrap.servers&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;localhost:9092&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;subscribe&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;blog_published&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>load<span class="text-syn-u">()</span>
 
-enriched <span class="o">=</span> events<span class="u">.</span>join<span class="u">(</span>users_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">)</span>
+enriched <span class="text-syn-o">=</span> events<span class="text-syn-u">.</span>join<span class="text-syn-u">(</span>users_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_id&quot;</span><span class="text-syn-u">)</span>
 
-query <span class="o">=</span> enriched<span class="u">.</span>writeStream <span class="u">\</span>
-    <span class="u">.</span>format<span class="u">(</span><span class="s">&quot;json&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;path&quot;</span><span class="u">,</span> <span class="s">&quot;/output/enriched&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>start<span class="u">()</span>
+query <span class="text-syn-o">=</span> enriched<span class="text-syn-u">.</span>writeStream <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;json&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;path&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;/output/enriched&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>start<span class="text-syn-u">()</span>
 </code></pre>
-            <p>For each event, enrich it with user details and flush to disk.</p>
-            <p>
+            <p class="mt-0 mb-6">For each event, enrich it with user details and flush to disk.</p>
+            <p class="mt-0 mb-6">
               You don&#39;t need multiple machines to learn. Do it on your local machine to build
               understanding.
             </p>
-            <h2 id="key-takeaways">Key Takeaways</h2>
-            <ol>
-              <li>
-                <p>
+            <h2 id="key-takeaways" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Key Takeaways
+            </h2>
+            <ol class="mt-0 mb-6">
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Big data = divide and conquer</strong>: When one machine isn&#39;t enough
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Commodity hardware</strong>: Regular machines, not specialized expensive
                   ones
                 </p>
               </li>
-              <li>
-                <p><strong>Coordinator pattern</strong>: One node coordinates, others execute</p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
+                  <strong>Coordinator pattern</strong>: One node coordinates, others execute
+                </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Tools handle the hard stuff</strong>: Distribution, failures, recovery,
                   completion, cleanup
                 </p>
               </li>
-              <li>
-                <p><strong>You focus on business logic</strong>: The tool does everything else</p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
+                  <strong>You focus on business logic</strong>: The tool does everything else
+                </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Start with Spark</strong>: It&#39;s the most essential big data tool.
                   Spark Streaming for real-time processing
                 </p>
               </li>
             </ol>
-            <h2 id="conclusion">Conclusion</h2>
-            <p>
+            <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Conclusion
+            </h2>
+            <p class="mt-0 mb-6">
               Big data processing exists because one machine can&#39;t handle everything. You
               distribute the work across multiple machines. But managing that distribution, handling
               failures, ensuring completion, that&#39;s complex.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Big data tools solve this. You write business logic. The tool handles distribution,
               failures, recovery, and cleanup.
             </p>
-            <table>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Without Big Data Tools</th>
-                  <th>With Big Data Tools</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">
+                    Without Big Data Tools
+                  </th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">With Big Data Tools</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Write coordinator from scratch</td>
-                  <td>Coordinator built-in</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Write coordinator from scratch
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Coordinator built-in</td>
                 </tr>
                 <tr>
-                  <td>Handle failures manually</td>
-                  <td>Automatic failure recovery</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Handle failures manually
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Automatic failure recovery
+                  </td>
                 </tr>
                 <tr>
-                  <td>Ensure completion yourself</td>
-                  <td>Guaranteed completion</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Ensure completion yourself
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Guaranteed completion
+                  </td>
                 </tr>
                 <tr>
-                  <td>Clean up temporary files manually</td>
-                  <td>Automatic cleanup</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Clean up temporary files manually
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Automatic cleanup</td>
                 </tr>
                 <tr>
-                  <td>Write connectors for each DB</td>
-                  <td>Connectors for all major databases</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Write connectors for each DB
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Connectors for all major databases
+                  </td>
                 </tr>
                 <tr>
-                  <td>Reinvent the wheel every time</td>
-                  <td>Focus only on business logic</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Reinvent the wheel every time
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Focus only on business logic
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <p>
+            <p class="mt-0 mb-6">
               Start with Apache Spark. Learn DataFrames. Learn Spark Streaming. That foundation will
               serve you well across the entire big data ecosystem.
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
-          <ul>
-            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
-            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
-            <li><a href="/blogs/system-design/high-availability/">High Availability</a></li>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/circuit-breakers/"
+                >Circuit Breakers</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/consistent-hashing/"
+                >Consistent Hashing</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/high-availability/"
+                >High Availability</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

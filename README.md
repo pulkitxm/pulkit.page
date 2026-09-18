@@ -1,7 +1,8 @@
 # pulkit.page
 
 A small, static portfolio. Edit Markdown in `content/`; HTML is generated into
-`pages/`. The site uses plain CSS and a small theme toggle, without a framework.
+`pages/`. The site uses Tailwind CSS compiled at build time and a small theme toggle,
+without a client framework.
 
 For a detailed walkthrough, start with the [documentation index](docs/index.md).
 
@@ -85,7 +86,9 @@ updates its archive and the homepage when regenerated.
 The homepage uses `home`; blog detail pages default to `article`; other pages
 use `simple`. Set `layout` to override. Templates live in `layouts/`, with shared
 head, header, and footer partials. Their placeholder names are checked. Adding a
-layout never adds content. CSS lives in `styles.css`; theme behavior in `theme.js`.
+layout never adds content. Markup uses Tailwind utility classes; `styles.css` holds the
+theme tokens, the dark palette, and view transitions. The renderer adds utility classes to
+every Markdown element. Theme behavior lives in `theme.js`.
 
 ## Sync and CI
 
@@ -115,7 +118,8 @@ GitHub Actions runs the same checks: strict Biome, HTML validation, formatting,
 repository checks, renderer/sync tests, build, local links, and shell syntax.
 
 `bun run build` first requires production sync, then renders `dist/` for the selected
-environment and copies shared assets.
+environment, copies shared assets, and compiles `styles.css` with the Tailwind CLI into a
+minified `dist/styles.css` that contains only the utilities used by layouts and the renderer.
 GitHub Pages deploys `dist/`. Markdown, templates, and reference files are not
 published. Source files are capped at 2 MiB; migrated media at 5 MiB.
 

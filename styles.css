@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Comic Relief";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/comic-relief-regular-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Comic Relief";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/comic-relief-bold-latin.woff2") format("woff2");
+}
 :root {
   color-scheme: light dark;
   --bg: #faebd7;
@@ -73,7 +87,8 @@ body {
   background: var(--bg);
   color: var(--fg);
   font:
-    16px / 1.75 -apple-system,
+    16px / 1.75 "Comic Relief",
+    -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;

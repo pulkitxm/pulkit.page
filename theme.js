@@ -19,3 +19,43 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch {}
   });
 });
+
+function entryTransition(event, otherUrl) {
+  const transition = event.viewTransition;
+  if (!transition) {
+    return;
+  }
+  if (!otherUrl || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    transition.skipTransition();
+    return;
+  }
+  const current = new URL(window.location.href);
+  const other = new URL(otherUrl);
+  const collection = /^\/(blogs|experience)\//.exec(current.pathname)?.[0];
+  const entry = [...document.querySelectorAll(".entry-link")].find(
+    (link) => link.href === other.href,
+  );
+  const title = entry
+    ? entry.querySelector(".entry-title")
+    : collection &&
+        current.pathname !== collection &&
+        (other.pathname === "/" ||
+          (other.pathname.startsWith(collection) && current.pathname.startsWith(other.pathname)))
+      ? document.querySelector(".page-heading h1")
+      : null;
+  if (current.origin !== other.origin || current.pathname === other.pathname || !title) {
+    transition.skipTransition();
+    return;
+  }
+  title.style.viewTransitionName = "entry-title";
+  const clear = () => title.style.removeProperty("view-transition-name");
+  const captured = event.type === "pageswap" ? transition.finished : transition.ready;
+  captured.then(clear, clear);
+}
+
+window.addEventListener("pageswap", (event) => {
+  entryTransition(event, event.activation?.entry?.url);
+});
+window.addEventListener("pagereveal", (event) => {
+  entryTransition(event, window.navigation?.activation?.from?.url);
+});

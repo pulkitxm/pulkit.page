@@ -1,6 +1,6 @@
 :root {
   color-scheme: light dark;
-  --bg: #f8f7f3;
+  --bg: #faebd7;
   --fg: #292720;
   --muted: #777166;
   --line: #e4e1d9;
@@ -35,7 +35,7 @@
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #f8f7f3;
+  --bg: #faebd7;
   --fg: #292720;
   --muted: #777166;
   --line: #e4e1d9;
@@ -359,4 +359,33 @@ button {
 }
 .related li {
   margin-block: 0.5rem;
+}
+
+@view-transition {
+  navigation: auto;
+}
+.page-heading h1 {
+  width: fit-content;
+}
+::view-transition-group(entry-title) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(entry-title),
+::view-transition-new(entry-title) {
+  width: auto;
+  height: auto;
+  object-fit: none;
+  object-position: left top;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 150ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
 }

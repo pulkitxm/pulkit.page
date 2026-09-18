@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Easing Curves That Feel Natural</h1>
-            <p class="detail-meta"><time datetime="2026-01-27">2026-01-27</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Easing Curves That Feel Natural
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-27">2026-01-27</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>Linear animation is the default. It&#39;s also almost always wrong.</p>
             <p>
               When something moves at constant speed from start to finish, it feels robotic.
@@ -160,10 +169,11 @@
               screen violates those expectations, it registers as wrong. Not consciously. You just
               feel it.
             </p>
-            <pre><code class="language-css"><span class="c">/* This feels robotic */</span>
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">linear</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-c italic">/* This feels robotic */</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">linear</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The element moves at exactly the same speed from start to finish. No acceleration at
@@ -173,9 +183,10 @@
             <p>CSS gives you four built-in easing functions. Each serves a different purpose.</p>
             <h3 id="ease-out-as-your-default">Ease Out as Your Default</h3>
             <p>The element starts fast and slows down as it reaches its destination.</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -202,13 +213,14 @@
               <code>ease-out</code>
               makes buttons feel tactile:
             </p>
-            <pre><code class="language-css"><span class="p">.button</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">150ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.button</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.button:active</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.97</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.button:active</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.97</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This tiny detail makes the difference between &quot;I clicked&quot; and &quot;the
@@ -222,9 +234,10 @@
             </p>
             <h3 id="ease-in">Ease In</h3>
             <p>The element starts slow and speeds up.</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease-in</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-in</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -248,9 +261,10 @@
             </p>
             <h3 id="ease-in-out">Ease In Out</h3>
             <p>Slow start, fast middle, slow end.</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease-in-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-in-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -282,9 +296,10 @@
               CSS&#39;s default. Similar to ease-in-out but asymmetrical: it starts faster and ends
               slower.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -321,11 +336,11 @@
               are just presets:
             </p>
             <pre
-            ><code class="language-css">ease        = cubic-bezier(0<span class="p">.25</span><span class="u">,</span> 0<span class="p">.1</span><span class="u">,</span> 0<span class="p">.25</span><span class="u">,</span> 1<span class="p">.0</span>)
-<span class="g">ease-in</span>     = cubic-bezier(0<span class="p">.42</span><span class="u">,</span> 0<span class="u">,</span> 1<span class="p">.0</span><span class="u">,</span> 1<span class="p">.0</span>)
-<span class="g">ease-out</span>    = cubic-bezier(0<span class="u">,</span> 0<span class="u">,</span> 0<span class="p">.58</span><span class="u">,</span> 1<span class="p">.0</span>)
-<span class="g">ease-in-out</span> = cubic-bezier(0<span class="p">.42</span><span class="u">,</span> 0<span class="u">,</span> 0<span class="p">.58</span><span class="u">,</span> 1<span class="p">.0</span>)
-linear      = cubic-bezier(0<span class="u">,</span> 0<span class="u">,</span> 1<span class="u">,</span> 1)
+            ><code class="language-css">ease        = cubic-bezier(0<span class="text-syn-p">.25</span><span class="text-syn-u">,</span> 0<span class="text-syn-p">.1</span><span class="text-syn-u">,</span> 0<span class="text-syn-p">.25</span><span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span>)
+<span class="text-syn-g">ease-in</span>     = cubic-bezier(0<span class="text-syn-p">.42</span><span class="text-syn-u">,</span> 0<span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span><span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span>)
+<span class="text-syn-g">ease-out</span>    = cubic-bezier(0<span class="text-syn-u">,</span> 0<span class="text-syn-u">,</span> 0<span class="text-syn-p">.58</span><span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span>)
+<span class="text-syn-g">ease-in-out</span> = cubic-bezier(0<span class="text-syn-p">.42</span><span class="text-syn-u">,</span> 0<span class="text-syn-u">,</span> 0<span class="text-syn-p">.58</span><span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span>)
+linear      = cubic-bezier(0<span class="text-syn-u">,</span> 0<span class="text-syn-u">,</span> 1<span class="text-syn-u">,</span> 1)
 </code></pre>
             <p>The four numbers define two control points on a curve:</p>
             <pre><code class="language-text">cubic-bezier(x1, y1, x2, y2)
@@ -350,18 +365,20 @@ x2, y2 = second control point
             </p>
             <h3 id="creating-custom-curves">Creating Custom Curves</h3>
             <p><strong>Snappy ease-out</strong> (faster deceleration):</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This is more aggressive than standard ease-out. The element reaches near its final
               position quickly, then slowly settles. Great for UI that needs to feel responsive.
             </p>
             <p><strong>Overshoot</strong> (bounce past target and settle):</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">400ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.34</span><span class="u">,</span> <span class="n">1.56</span><span class="u">,</span> <span class="n">0.64</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">400ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.34</span><span class="text-syn-u">,</span> <span class="text-syn-n">1.56</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.64</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The y2 value (1.56) exceeds 1, so the element overshoots its target before settling
@@ -374,9 +391,10 @@ x2, y2 = second control point
               >
             </p>
             <p><strong>Undershoot first</strong> (pull back before moving):</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">400ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.68</span><span class="u">,</span> <span class="n">-0.6</span><span class="u">,</span> <span class="n">0.32</span><span class="u">,</span> <span class="n">1.6</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">400ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.68</span><span class="text-syn-u">,</span> <span class="text-syn-n">-0.6</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.32</span><span class="text-syn-u">,</span> <span class="text-syn-n">1.6</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Negative y1 makes the element move backward first, then forward with overshoot. Use
@@ -446,12 +464,12 @@ x2, y2 = second control point
               </tbody>
             </table>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> EASING <span class="o">=</span> <span class="u">{</span>
-  <span class="p">enter:</span> <span class="s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="u">,</span>
-  <span class="p">exit:</span> <span class="s">&quot;cubic-bezier(0.4, 0, 1, 1)&quot;</span><span class="u">,</span>
-  <span class="p">move:</span> <span class="s">&quot;cubic-bezier(0.4, 0, 0.2, 1)&quot;</span><span class="u">,</span>
-  <span class="p">bounce:</span> <span class="s">&quot;cubic-bezier(0.34, 1.56, 0.64, 1)&quot;</span><span class="u">,</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> EASING <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">enter:</span> <span class="text-syn-s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">exit:</span> <span class="text-syn-s">&quot;cubic-bezier(0.4, 0, 1, 1)&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">move:</span> <span class="text-syn-s">&quot;cubic-bezier(0.4, 0, 0.2, 1)&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">bounce:</span> <span class="text-syn-s">&quot;cubic-bezier(0.34, 1.56, 0.64, 1)&quot;</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h2 id="duration-and-easing-work-together">Duration and Easing Work Together</h2>
             <p>
@@ -468,15 +486,15 @@ x2, y2 = second control point
               (300-500ms): Subtler easing works. Too aggressive and it feels cartoonish.
             </p>
             <pre
-            ><code class="language-css"><span class="c">/* Short duration, aggressive easing */</span>
-<span class="p">.tooltip</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> opacity <span class="n">150ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-c italic">/* Short duration, aggressive easing */</span>
+<span class="text-syn-p">.tooltip</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> opacity <span class="text-syn-n">150ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="c">/* Longer duration, gentler easing */</span>
-<span class="p">.modal</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">350ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.4</span><span class="u">,</span> <span class="n">0</span><span class="u">,</span> <span class="n">0.2</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">/* Longer duration, gentler easing */</span>
+<span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">350ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.4</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.2</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               As a rule: if you increase duration, consider softening the easing. If you decrease
@@ -513,19 +531,19 @@ x2, y2 = second control point
               </li>
             </ul>
             <pre
-            ><code class="language-css"><span class="c">/* Linear is correct for continuous rotation */</span>
-<span class="p">.spinner</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> spin <span class="n">1s</span> <span class="k">linear</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-c italic">/* Linear is correct for continuous rotation */</span>
+<span class="text-syn-p">.spinner</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> spin <span class="text-syn-n">1s</span> <span class="text-syn-k">linear</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">@keyframes</span> spin <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">0deg</span><span class="u">);</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">360deg</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+<span class="text-syn-k">@keyframes</span> spin <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">0deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">360deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               For a &quot;hold to delete&quot; button, you want the progress to fill linearly. Why?
@@ -533,14 +551,14 @@ x2, y2 = second control point
               the animation should too. Any easing would make the remaining time feel unpredictable.
             </p>
             <pre
-            ><code class="language-css"><span class="c">/* Linear is correct for time-based progress */</span>
-<span class="p">.hold-progress</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> width <span class="n">2s</span> <span class="k">linear</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-c italic">/* Linear is correct for time-based progress */</span>
+<span class="text-syn-p">.hold-progress</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> width <span class="text-syn-n">2s</span> <span class="text-syn-k">linear</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.button:active</span> <span class="p">.hold-progress</span> <span class="u">{</span>
-  <span class="p">width</span><span class="u">:</span> <span class="n">100%</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.button:active</span> <span class="text-syn-p">.hold-progress</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -571,15 +589,16 @@ x2, y2 = second control point
               accelerations are often too subtle for energetic UI.
             </p>
             <p>Compare the built-in <code>ease-out</code> to a custom curve:</p>
-            <pre><code class="language-css"><span class="c">/* Built-in: subtle, safe */</span>
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-c italic">/* Built-in: subtle, safe */</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="c">/* Custom: snappier, more energetic */</span>
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">/* Custom: snappier, more energetic */</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The custom curve has a stronger initial acceleration. The element &quot;pops&quot;
@@ -588,12 +607,12 @@ x2, y2 = second control point
             </p>
             <p>Build a collection of custom curves for different intensities:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> EASING <span class="o">=</span> <span class="u">{</span>
-  <span class="p">subtle:</span> <span class="s">&quot;cubic-bezier(0.4, 0, 0.2, 1)&quot;</span><span class="u">,</span>
-  <span class="p">standard:</span> <span class="s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="u">,</span>
-  <span class="p">energetic:</span> <span class="s">&quot;cubic-bezier(0.34, 1.56, 0.64, 1)&quot;</span><span class="u">,</span>
-  <span class="p">dramatic:</span> <span class="s">&quot;cubic-bezier(0.68, -0.6, 0.32, 1.6)&quot;</span><span class="u">,</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> EASING <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">subtle:</span> <span class="text-syn-s">&quot;cubic-bezier(0.4, 0, 0.2, 1)&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">standard:</span> <span class="text-syn-s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">energetic:</span> <span class="text-syn-s">&quot;cubic-bezier(0.34, 1.56, 0.64, 1)&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">dramatic:</span> <span class="text-syn-s">&quot;cubic-bezier(0.68, -0.6, 0.32, 1.6)&quot;</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <p>
               Many open-source libraries ship with carefully tuned curves. Vaul (the drawer
@@ -615,12 +634,12 @@ x2, y2 = second control point
             </p>
             <h3 id="the-media-query">The Media Query</h3>
             <pre
-            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.element</span> <span class="u">{</span>
-    <span class="p">transition</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-    <span class="p">animation</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               But &quot;reduce&quot; doesn&#39;t mean &quot;remove entirely.&quot; The goal is to
@@ -635,69 +654,71 @@ x2, y2 = second control point
               <strong>Keep but simplify</strong>: Opacity fades, color transitions, small-scale
               position changes. These rarely cause issues and help users understand state changes.
             </p>
-            <pre><code class="language-css"><span class="p">.modal</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span>
-    opacity <span class="n">200ms</span> <span class="k">ease-out</span><span class="u">,</span>
-    transform <span class="n">200ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span>
+    opacity <span class="text-syn-n">200ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">,</span>
+    transform <span class="text-syn-n">200ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.modal</span> <span class="u">{</span>
-    <span class="c">/* Keep opacity, remove transform */</span>
-    <span class="p">transition</span><span class="u">:</span> opacity <span class="n">150ms</span> <span class="k">ease-out</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="k">none</span> <span class="k">!important</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+<span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-c italic">/* Keep opacity, remove transform */</span>
+    <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> opacity <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span> <span class="text-syn-k">!important</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="implementation-patterns">Implementation Patterns</h3>
             <p><strong>CSS approach</strong> (best for simple cases):</p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.element</span> <span class="u">{</span>
-    <span class="p">transition</span><span class="u">:</span> opacity <span class="n">150ms</span> <span class="k">ease-out</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+<span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> opacity <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p><strong>JavaScript approach</strong> (for complex animations):</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> prefersReducedMotion <span class="o">=</span> window<span class="u">.</span><span class="f">matchMedia</span><span class="u">(</span><span class="s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="u">).</span><span class="p">matches</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> prefersReducedMotion <span class="text-syn-o">=</span> window<span class="text-syn-u">.</span><span class="text-syn-f">matchMedia</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="text-syn-u">).</span><span class="text-syn-p">matches</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> animationConfig <span class="o">=</span> prefersReducedMotion
-  <span class="o">?</span> <span class="u">{</span> <span class="p">opacity:</span> <span class="u">[</span><span class="n">0</span><span class="u">,</span> <span class="n">1</span><span class="u">],</span> <span class="p">duration:</span> <span class="n">150</span><span class="u">,</span> <span class="p">easing:</span> <span class="s">&quot;ease-out&quot;</span> <span class="u">}</span>
-  <span class="o">:</span> <span class="u">{</span>
-      <span class="p">opacity:</span> <span class="u">[</span><span class="n">0</span><span class="u">,</span> <span class="n">1</span><span class="u">],</span>
-      <span class="p">transform:</span> <span class="u">[</span><span class="s">&quot;translateY(-8px) scale(0.95)&quot;</span><span class="u">,</span> <span class="s">&quot;translateY(0) scale(1)&quot;</span><span class="u">],</span>
-      <span class="p">duration:</span> <span class="n">200</span><span class="u">,</span>
-      <span class="p">easing:</span> <span class="s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="u">,</span>
-    <span class="u">};</span>
+<span class="text-syn-k">const</span> animationConfig <span class="text-syn-o">=</span> prefersReducedMotion
+  <span class="text-syn-o">?</span> <span class="text-syn-u">{</span> <span class="text-syn-p">opacity:</span> <span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">],</span> <span class="text-syn-p">duration:</span> <span class="text-syn-n">150</span><span class="text-syn-u">,</span> <span class="text-syn-p">easing:</span> <span class="text-syn-s">&quot;ease-out&quot;</span> <span class="text-syn-u">}</span>
+  <span class="text-syn-o">:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">opacity:</span> <span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">],</span>
+      <span class="text-syn-p">transform:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;translateY(-8px) scale(0.95)&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;translateY(0) scale(1)&quot;</span><span class="text-syn-u">],</span>
+      <span class="text-syn-p">duration:</span> <span class="text-syn-n">200</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">easing:</span> <span class="text-syn-s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">};</span>
 </code></pre>
             <p><strong>Framer Motion approach</strong>:</p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="u">{</span> useReducedMotion <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;framer-motion&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useReducedMotion <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">Modal</span><span class="u">({</span> isOpen<span class="u">,</span> children <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> shouldReduceMotion <span class="o">=</span> <span class="f">useReducedMotion</span><span class="u">();</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">Modal</span><span class="text-syn-u">({</span> isOpen<span class="text-syn-u">,</span> children <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> shouldReduceMotion <span class="text-syn-o">=</span> <span class="text-syn-f">useReducedMotion</span><span class="text-syn-u">();</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">motion.div</span>
-      <span class="p">animate</span><span class="o">=</span><span class="u">{{</span>
-        <span class="p">opacity:</span> isOpen <span class="o">?</span> <span class="n">1</span> <span class="o">:</span> <span class="n">0</span><span class="u">,</span>
-        <span class="p">scale:</span> shouldReduceMotion <span class="o">?</span> <span class="n">1</span> <span class="o">:</span> isOpen <span class="o">?</span> <span class="n">1</span> <span class="o">:</span> <span class="n">0.95</span><span class="u">,</span>
-        <span class="p">y:</span> shouldReduceMotion <span class="o">?</span> <span class="n">0</span> <span class="o">:</span> isOpen <span class="o">?</span> <span class="n">0</span> <span class="o">:</span> <span class="o">-</span><span class="n">8</span><span class="u">,</span>
-      <span class="u">}}</span>
-      <span class="p">transition</span><span class="o">=</span><span class="u">{{</span>
-        <span class="p">duration:</span> shouldReduceMotion <span class="o">?</span> <span class="n">0.15</span> <span class="o">:</span> <span class="n">0.2</span><span class="u">,</span>
-        <span class="p">ease:</span> shouldReduceMotion <span class="o">?</span> <span class="s">&quot;easeOut&quot;</span> <span class="o">:</span> <span class="u">[</span><span class="n">0.16</span><span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="n">0.3</span><span class="u">,</span> <span class="n">1</span><span class="u">],</span>
-      <span class="u">}}</span>
-    <span class="u">&gt;</span>
-      <span class="u">{</span>children<span class="u">}</span>
-    <span class="u">&lt;/</span><span class="g">motion.div</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">motion.div</span>
+      <span class="text-syn-p">animate</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+        <span class="text-syn-p">opacity:</span> isOpen <span class="text-syn-o">?</span> <span class="text-syn-n">1</span> <span class="text-syn-o">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">scale:</span> shouldReduceMotion <span class="text-syn-o">?</span> <span class="text-syn-n">1</span> <span class="text-syn-o">:</span> isOpen <span class="text-syn-o">?</span> <span class="text-syn-n">1</span> <span class="text-syn-o">:</span> <span class="text-syn-n">0.95</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">y:</span> shouldReduceMotion <span class="text-syn-o">?</span> <span class="text-syn-n">0</span> <span class="text-syn-o">:</span> isOpen <span class="text-syn-o">?</span> <span class="text-syn-n">0</span> <span class="text-syn-o">:</span> <span class="text-syn-o">-</span><span class="text-syn-n">8</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">}}</span>
+      <span class="text-syn-p">transition</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+        <span class="text-syn-p">duration:</span> shouldReduceMotion <span class="text-syn-o">?</span> <span class="text-syn-n">0.15</span> <span class="text-syn-o">:</span> <span class="text-syn-n">0.2</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">ease:</span> shouldReduceMotion <span class="text-syn-o">?</span> <span class="text-syn-s">&quot;easeOut&quot;</span> <span class="text-syn-o">:</span> <span class="text-syn-u">[</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">],</span>
+      <span class="text-syn-u">}}</span>
+    <span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">{</span>children<span class="text-syn-u">}</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">motion.div</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="testing-reduced-motion">Testing Reduced Motion</h3>
             <p>
@@ -749,28 +770,39 @@ x2, y2 = second control point
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/the-physics-behind-natural-motion/"
                 >The Physics Behind Natural Motion</a
               >
             </li>
-            <li><a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a></li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

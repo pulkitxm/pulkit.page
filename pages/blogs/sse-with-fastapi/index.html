@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">FastAPI SSE: Server-Sent Events in Python</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>FastAPI SSE: Server-Sent Events in Python</h1>
-            <p class="detail-meta"><time datetime="2024-07-26">2024-07-26</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              FastAPI SSE: Server-Sent Events in Python
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-07-26">2024-07-26</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               During my recent internship, I faced a task where the server needed to run a
               long-running process. This couldn&#39;t be done with just a POST request because the
@@ -146,8 +155,8 @@
               the client with lightning speed and efficiency!
             </p>
             <pre
-            ><code class="language-bash"><span class="f">python3</span> <span class="s">-m</span> <span class="s">venv</span> <span class="s">venv</span>
-<span class="f">source</span> <span class="s">venv/bin/activate</span>
+            ><code class="language-bash"><span class="text-syn-f">python3</span> <span class="text-syn-s">-m</span> <span class="text-syn-s">venv</span> <span class="text-syn-s">venv</span>
+<span class="text-syn-f">source</span> <span class="text-syn-s">venv/bin/activate</span>
 </code></pre>
             <p>
               <img
@@ -157,7 +166,7 @@
               />
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pip</span> <span class="s">install</span> <span class="s">fastapi</span> <span class="s">sse-starlette</span> <span class="s">uvicorn</span> <span class="s">asyncio</span>
+            ><code class="language-bash"><span class="text-syn-f">pip</span> <span class="text-syn-s">install</span> <span class="text-syn-s">fastapi</span> <span class="text-syn-s">sse-starlette</span> <span class="text-syn-s">uvicorn</span> <span class="text-syn-s">asyncio</span>
 </code></pre>
             <p>
               <img
@@ -168,13 +177,13 @@
             </p>
             <p>Let&#39;s set up a basic FastAPI server.</p>
             <pre
-            ><code class="language-python"><span class="k">from</span> fastapi <span class="k">import</span> FastAPI<span class="u">,</span> Response
+            ><code class="language-python"><span class="text-syn-k">from</span> fastapi <span class="text-syn-k">import</span> FastAPI<span class="text-syn-u">,</span> Response
 
-app<span class="o">=</span> FastAPI<span class="u">()</span>
+app<span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
 
-<span class="f">@app.get</span><span class="u">(</span><span class="s">&quot;/&quot;</span><span class="u">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="f">root</span><span class="u">():</span>
-    <span class="k">return</span> <span class="u">{</span><span class="s">&quot;message&quot;</span><span class="u">:</span> <span class="s">&quot;Hello World&quot;</span><span class="u">}</span>
+<span class="text-syn-f">@app.get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">root</span><span class="text-syn-u">():</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;message&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hello World&quot;</span><span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <img
@@ -184,12 +193,12 @@ app<span class="o">=</span> FastAPI<span class="u">()</span>
               />
             </p>
             <pre
-            ><code class="language-bash"><span class="f">uvicorn</span> <span class="s">main:app</span> <span class="s">--reload</span>
+            ><code class="language-bash"><span class="text-syn-f">uvicorn</span> <span class="text-syn-s">main:app</span> <span class="text-syn-s">--reload</span>
 </code></pre>
             <p>And the server runs as expected.</p>
             <h3 id="adding-the-sse-server-sent-events">Adding the SSE (Server-Sent Events)</h3>
             <pre
-            ><code class="language-python"><span class="k">from</span> sse_starlette<span class="u">.</span>sse <span class="k">import</span> EventSourceResponse
+            ><code class="language-python"><span class="text-syn-k">from</span> sse_starlette<span class="text-syn-u">.</span>sse <span class="text-syn-k">import</span> EventSourceResponse
 </code></pre>
             <p>
               Import the <code>EventSourceResponse</code> from <code>sse_starlette</code>. The
@@ -203,12 +212,12 @@ app<span class="o">=</span> FastAPI<span class="u">()</span>
               long-running task.
             </p>
             <pre
-            ><code class="language-python"><span class="k">async</span> <span class="k">def</span> <span class="f">event_generator</span><span class="u">():</span>
-    i<span class="o">=</span> <span class="n">1</span>
-    <span class="k">while</span> i<span class="o">&lt;=</span><span class="n">5</span><span class="u">:</span>
-        <span class="k">await</span> asyncio<span class="u">.</span>sleep<span class="u">(</span><span class="n">1</span><span class="u">)</span>
-        i<span class="o">+=</span><span class="n">1</span>
-        <span class="k">yield</span> <span class="u">{</span><span class="s">&quot;data&quot;</span><span class="u">:</span> <span class="s">&quot;New update&quot;</span><span class="u">}</span>
+            ><code class="language-python"><span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">event_generator</span><span class="text-syn-u">():</span>
+    i<span class="text-syn-o">=</span> <span class="text-syn-n">1</span>
+    <span class="text-syn-k">while</span> i<span class="text-syn-o">&lt;=</span><span class="text-syn-n">5</span><span class="text-syn-u">:</span>
+        <span class="text-syn-k">await</span> asyncio<span class="text-syn-u">.</span>sleep<span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">)</span>
+        i<span class="text-syn-o">+=</span><span class="text-syn-n">1</span>
+        <span class="text-syn-k">yield</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;data&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;New update&quot;</span><span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Just like we return a response with
@@ -219,30 +228,30 @@ app<span class="o">=</span> FastAPI<span class="u">()</span>
             </p>
             <p>So the final code looks like</p>
             <pre
-            ><code class="language-python"><span class="k">from</span> fastapi <span class="k">import</span> FastAPI<span class="u">,</span> Response
-<span class="k">from</span> sse_starlette<span class="u">.</span>sse <span class="k">import</span> EventSourceResponse
-<span class="k">import</span> asyncio
+            ><code class="language-python"><span class="text-syn-k">from</span> fastapi <span class="text-syn-k">import</span> FastAPI<span class="text-syn-u">,</span> Response
+<span class="text-syn-k">from</span> sse_starlette<span class="text-syn-u">.</span>sse <span class="text-syn-k">import</span> EventSourceResponse
+<span class="text-syn-k">import</span> asyncio
 
-app <span class="o">=</span> FastAPI<span class="u">()</span>
+app <span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
 
-<span class="f">@app.get</span><span class="u">(</span><span class="s">&quot;/&quot;</span><span class="u">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="f">root</span><span class="u">():</span>
-    <span class="k">return</span> <span class="u">{</span><span class="s">&quot;message&quot;</span><span class="u">:</span> <span class="s">&quot;Hello World&quot;</span><span class="u">}</span>
+<span class="text-syn-f">@app.get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">root</span><span class="text-syn-u">():</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;message&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hello World&quot;</span><span class="text-syn-u">}</span>
 
-<span class="f">@app.get</span><span class="u">(</span><span class="s">&quot;/sse&quot;</span><span class="u">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="f">sse_endpoint</span><span class="u">():</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="f">event_generator</span><span class="u">():</span>
-        i<span class="o">=</span> <span class="n">1</span>
-        <span class="k">while</span> i<span class="o">&lt;=</span><span class="n">5</span><span class="u">:</span>
-            <span class="k">await</span> asyncio<span class="u">.</span>sleep<span class="u">(</span><span class="n">1</span><span class="u">)</span>
-            i<span class="o">+=</span><span class="n">1</span>
-            <span class="k">yield</span> <span class="u">{</span><span class="s">&quot;data&quot;</span><span class="u">:</span> <span class="s">&quot;New update&quot;</span><span class="u">}</span>
+<span class="text-syn-f">@app.get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/sse&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">sse_endpoint</span><span class="text-syn-u">():</span>
+    <span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">event_generator</span><span class="text-syn-u">():</span>
+        i<span class="text-syn-o">=</span> <span class="text-syn-n">1</span>
+        <span class="text-syn-k">while</span> i<span class="text-syn-o">&lt;=</span><span class="text-syn-n">5</span><span class="text-syn-u">:</span>
+            <span class="text-syn-k">await</span> asyncio<span class="text-syn-u">.</span>sleep<span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">)</span>
+            i<span class="text-syn-o">+=</span><span class="text-syn-n">1</span>
+            <span class="text-syn-k">yield</span> <span class="text-syn-u">{</span><span class="text-syn-s">&quot;data&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;New update&quot;</span><span class="text-syn-u">}</span>
 
-    <span class="k">return</span> EventSourceResponse<span class="u">(</span>event_generator<span class="u">())</span>
+    <span class="text-syn-k">return</span> EventSourceResponse<span class="text-syn-u">(</span>event_generator<span class="text-syn-u">())</span>
 
-<span class="k">if</span> __name__ <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="u">:</span>
-    <span class="k">import</span> uvicorn
-    uvicorn<span class="u">.</span>run<span class="u">(</span>app<span class="u">,</span> host<span class="o">=</span><span class="s">&quot;0.0.0.0&quot;</span><span class="u">,</span> port<span class="o">=</span><span class="n">8000</span><span class="u">,</span> reload<span class="o">=</span><span class="k">True</span><span class="u">)</span>
+<span class="text-syn-k">if</span> __name__ <span class="text-syn-o">==</span> <span class="text-syn-s">&quot;__main__&quot;</span><span class="text-syn-u">:</span>
+    <span class="text-syn-k">import</span> uvicorn
+    uvicorn<span class="text-syn-u">.</span>run<span class="text-syn-u">(</span>app<span class="text-syn-u">,</span> host<span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.0.0.0&quot;</span><span class="text-syn-u">,</span> port<span class="text-syn-o">=</span><span class="text-syn-n">8000</span><span class="text-syn-u">,</span> reload<span class="text-syn-o">=</span><span class="text-syn-k">True</span><span class="text-syn-u">)</span>
 </code></pre>
             <p>Now if we send a GET request to <code>http://127.0.0.1:8000/sse</code></p>
             <p>
@@ -273,28 +282,37 @@ app <span class="o">=</span> FastAPI<span class="u">()</span>
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/python-poetry-guide/">Python Dependency Management with Poetry</a>
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
             </li>
-            <li><a href="/blogs/creating-npx-command/">Creating Your Own npx Command</a></li>
+            <li class="my-2">
+              <a href="/blogs/creating-npx-command/">Creating Your Own npx Command</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

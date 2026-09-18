@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">AWS S3 with Node.js: Upload Files with SDK v3</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>AWS S3 with Node.js: Upload Files with SDK v3</h1>
-            <p class="detail-meta"><time datetime="2024-08-08">2024-08-08</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              AWS S3 with Node.js: Upload Files with SDK v3
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-08-08">2024-08-08</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               I was recently working on a project(<a
                 href="https://github.com/Pulkitxm/image-tweaker"
@@ -167,33 +176,35 @@
             </p>
             <h2 id="initialize-a-new-node-js-project">Initialize a new Node.js Project</h2>
             <p>So let&#39;s kick things off by initializing a new Node.js project!</p>
-            <pre><code class="language-bash"><span class="f">pnpm</span> <span class="s">init</span>
+            <pre
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
             <p>
               Next up, add <code>@aws-sdk/client-s3</code> and <code>dotenv</code> as dependencies
               in your project!
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">@aws-sdk/client-s3</span> <span class="s">dotenv</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">@aws-sdk/client-s3</span> <span class="text-syn-s">dotenv</span>
 </code></pre>
             <h2 id="starting-with-the-s3-client">Starting with the S3 client</h2>
             <p>
               Starting with the S3 client is super exciting! Let&#39;s dive right in and get our
               hands dirty with some code!
             </p>
-            <pre><code class="language-javascript"><span class="c">// client.js</span>
+            <pre
+            ><code class="language-javascript"><span class="text-syn-c italic">// client.js</span>
 
-<span class="k">const</span> <span class="u">{</span> S3Client <span class="u">}</span> <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;@aws-sdk/client-s3&quot;</span><span class="u">);</span>
+<span class="text-syn-k">const</span> <span class="text-syn-u">{</span> S3Client <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> s3 <span class="o">=</span> <span class="o">new</span> <span class="f">S3Client</span><span class="u">({</span>
-  <span class="p">region:</span> <span class="s">&quot;us-east-1&quot;</span><span class="u">,</span>
-  <span class="p">credentials:</span> <span class="u">{</span>
-    <span class="p">accessKeyId:</span> process<span class="u">.</span>env<span class="u">.</span>AWS_ACCESS_KEY_ID<span class="u">,</span>
-    <span class="p">secretAccessKey:</span> process<span class="u">.</span>env<span class="u">.</span>AWS_SECRET_ACCESS_KEY<span class="u">,</span>
-  <span class="u">},</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> s3 <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">S3Client</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">region:</span> <span class="text-syn-s">&quot;us-east-1&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">credentials:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">accessKeyId:</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>AWS_ACCESS_KEY_ID<span class="text-syn-u">,</span>
+    <span class="text-syn-p">secretAccessKey:</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>AWS_SECRET_ACCESS_KEY<span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">});</span>
 
-<span class="t">module</span><span class="u">.</span><span class="t">exports</span> <span class="o">=</span> s3<span class="u">;</span>
+<span class="text-syn-t">module</span><span class="text-syn-u">.</span><span class="text-syn-t">exports</span> <span class="text-syn-o">=</span> s3<span class="text-syn-u">;</span>
 </code></pre>
             <p>Make sure to save both the AWS keys in the .env file in the following format</p>
             <pre><code class="language-plaintext">AWS_ACCESS_KEY_ID=
@@ -204,18 +215,19 @@ AWS_SECRET_ACCESS_KEY=
               Listing S3 buckets is a great way to verify that our setup is working correctly.
               Let&#39;s write some code to list all the S3 buckets in our account.
             </p>
-            <pre><code class="language-javascript"><span class="c">// index.js</span>
+            <pre
+            ><code class="language-javascript"><span class="text-syn-c italic">// index.js</span>
 
-<span class="f">require</span><span class="u">(</span><span class="s">&quot;dotenv&quot;</span><span class="u">).</span><span class="f">config</span><span class="u">();</span>
-<span class="k">const</span> s3 <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;./client.js&quot;</span><span class="u">);</span>
-<span class="k">const</span> <span class="u">{</span> ListBucketsCommand <span class="u">}</span> <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;@aws-sdk/client-s3&quot;</span><span class="u">);</span>
+<span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;dotenv&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">config</span><span class="text-syn-u">();</span>
+<span class="text-syn-k">const</span> s3 <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;./client.js&quot;</span><span class="text-syn-u">);</span>
+<span class="text-syn-k">const</span> <span class="text-syn-u">{</span> ListBucketsCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> <span class="f">listBuckets</span> <span class="o">=</span> <span class="k">async</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> s3<span class="u">.</span><span class="f">send</span><span class="u">(</span><span class="o">new</span> <span class="f">ListBucketsCommand</span><span class="u">({}));</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Success&quot;</span><span class="u">,</span> data<span class="u">.</span><span class="p">Buckets</span><span class="u">);</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> <span class="text-syn-f">listBuckets</span> <span class="text-syn-o">=</span> <span class="text-syn-k">async</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span><span class="text-syn-o">new</span> <span class="text-syn-f">ListBucketsCommand</span><span class="text-syn-u">({}));</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Success&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">.</span><span class="text-syn-p">Buckets</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">};</span>
 
-<span class="f">listBuckets</span><span class="u">();</span>
+<span class="text-syn-f">listBuckets</span><span class="text-syn-u">();</span>
 </code></pre>
             <p>
               And guess what? We get an empty array because I don&#39;t have any S3 buckets in my
@@ -230,14 +242,14 @@ AWS_SECRET_ACCESS_KEY=
             </p>
             <p>Let&#39;s create a new method to add a bucket.</p>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> <span class="u">{</span> CreateBucketCommand <span class="u">}</span> <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;@aws-sdk/client-s3&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> CreateBucketCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> <span class="f">createBucket</span> <span class="o">=</span> <span class="k">async</span> <span class="u">(</span>bucketName<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> s3<span class="u">.</span><span class="f">send</span><span class="u">(</span><span class="o">new</span> <span class="f">CreateBucketCommand</span><span class="u">({</span> <span class="p">Bucket:</span> bucketName <span class="u">}));</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Bucket created successfully&quot;</span><span class="u">,</span> data<span class="u">);</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> <span class="text-syn-f">createBucket</span> <span class="text-syn-o">=</span> <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>bucketName<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span><span class="text-syn-o">new</span> <span class="text-syn-f">CreateBucketCommand</span><span class="text-syn-u">({</span> <span class="text-syn-p">Bucket:</span> bucketName <span class="text-syn-u">}));</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Bucket created successfully&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
+<span class="text-syn-u">};</span>
 
-<span class="f">createBucket</span><span class="u">(</span><span class="s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="u">);</span>
+<span class="text-syn-f">createBucket</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
             <p>
               <img
@@ -260,14 +272,14 @@ AWS_SECRET_ACCESS_KEY=
               method too?
             </p>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> <span class="u">{</span> DeleteBucketCommand <span class="u">}</span> <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;@aws-sdk/client-s3&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> DeleteBucketCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> <span class="f">deleteBucket</span> <span class="o">=</span> <span class="k">async</span> <span class="u">(</span>bucketName<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> s3<span class="u">.</span><span class="f">send</span><span class="u">(</span><span class="o">new</span> <span class="f">DeleteBucketCommand</span><span class="u">({</span> <span class="p">Bucket:</span> bucketName <span class="u">}));</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Bucket deleted successfully&quot;</span><span class="u">,</span> data<span class="u">);</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> <span class="text-syn-f">deleteBucket</span> <span class="text-syn-o">=</span> <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>bucketName<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span><span class="text-syn-o">new</span> <span class="text-syn-f">DeleteBucketCommand</span><span class="text-syn-u">({</span> <span class="text-syn-p">Bucket:</span> bucketName <span class="text-syn-u">}));</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Bucket deleted successfully&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
+<span class="text-syn-u">};</span>
 
-<span class="f">deleteBucket</span><span class="u">(</span><span class="s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="u">);</span>
+<span class="text-syn-f">deleteBucket</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
             <p>
               <img
@@ -289,30 +301,30 @@ AWS_SECRET_ACCESS_KEY=
               the AWS SDK. Here&#39;s how you can use it:
             </p>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> <span class="u">{</span> PutObjectCommand <span class="u">}</span> <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;@aws-sdk/client-s3&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> PutObjectCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
             <p>
               To read the object in JavaScript for uploading, we need the <code>fs</code> module.
               Here&#39;s how you can use it:
             </p>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> fs <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;fs&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> fs <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
             <p>finally the <code>uploadObject</code> method would look like</p>
             <pre
-            ><code class="language-javascript"><span class="k">async</span> <span class="k">function</span> <span class="f">uploadObject</span><span class="u">(</span>pathToFile<span class="u">,</span> key<span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> uploadParams <span class="o">=</span> <span class="u">{</span>
-    <span class="p">Bucket:</span> <span class="s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="u">,</span>
-    <span class="p">Key:</span> key<span class="u">,</span>
-    <span class="p">Body:</span> fs<span class="u">.</span><span class="f">createReadStream</span><span class="u">(</span>pathToFile<span class="u">),</span>
-  <span class="u">};</span>
+            ><code class="language-javascript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">uploadObject</span><span class="text-syn-u">(</span>pathToFile<span class="text-syn-u">,</span> key<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> uploadParams <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">Bucket:</span> <span class="text-syn-s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">Key:</span> key<span class="text-syn-u">,</span>
+    <span class="text-syn-p">Body:</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">createReadStream</span><span class="text-syn-u">(</span>pathToFile<span class="text-syn-u">),</span>
+  <span class="text-syn-u">};</span>
 
-  <span class="k">const</span> command <span class="o">=</span> <span class="o">new</span> <span class="f">PutObjectCommand</span><span class="u">(</span>uploadParams<span class="u">);</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> s3<span class="u">.</span><span class="f">send</span><span class="u">(</span>command<span class="u">);</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span>response<span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">const</span> command <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">PutObjectCommand</span><span class="text-syn-u">(</span>uploadParams<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>command<span class="text-syn-u">);</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>response<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="f">uploadObject</span><span class="u">(</span><span class="s">&quot;./test.txt&quot;</span><span class="u">,</span> <span class="s">&quot;test.txt&quot;</span><span class="u">);</span>
+<span class="text-syn-f">uploadObject</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;./test.txt&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;test.txt&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
             <p>
               <img
@@ -341,18 +353,18 @@ AWS_SECRET_ACCESS_KEY=
               />
             </p>
             <pre
-            ><code class="language-javascript"><span class="k">async</span> <span class="k">function</span> <span class="f">deleteObject</span><span class="u">(</span>key<span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> deleteParams <span class="o">=</span> <span class="u">{</span>
-    <span class="p">Bucket:</span> <span class="s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="u">,</span>
-    <span class="p">Key:</span> key<span class="u">,</span>
-  <span class="u">};</span>
+            ><code class="language-javascript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">deleteObject</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> deleteParams <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">Bucket:</span> <span class="text-syn-s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">Key:</span> key<span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
 
-  <span class="k">const</span> command <span class="o">=</span> <span class="o">new</span> <span class="f">DeleteObjectCommand</span><span class="u">(</span>deleteParams<span class="u">);</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> s3<span class="u">.</span><span class="f">send</span><span class="u">(</span>command<span class="u">);</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span>response<span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">const</span> command <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">DeleteObjectCommand</span><span class="text-syn-u">(</span>deleteParams<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>command<span class="text-syn-u">);</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>response<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="f">deleteObject</span><span class="u">(</span><span class="s">&quot;test.txt&quot;</span><span class="u">);</span>
+<span class="text-syn-f">deleteObject</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;test.txt&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
             <h2 id="upload-objects-in-a-s3-bucket">Upload Objects in a S3 bucket</h2>
             <p>
@@ -360,19 +372,19 @@ AWS_SECRET_ACCESS_KEY=
               provided by the AWS SDK. Here&#39;s how you can use it:
             </p>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> <span class="u">{</span> ListObjectsCommand <span class="u">}</span> <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;@aws-sdk/client-s3&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> ListObjectsCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">listObjects</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> listParams <span class="o">=</span> <span class="u">{</span>
-    <span class="p">Bucket:</span> <span class="s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="u">,</span>
-  <span class="u">};</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">listObjects</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> listParams <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">Bucket:</span> <span class="text-syn-s">&quot;pulkit-walkthrouh-s3&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
 
-  <span class="k">const</span> command <span class="o">=</span> <span class="o">new</span> <span class="f">ListObjectsCommand</span><span class="u">(</span>listParams<span class="u">);</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> s3<span class="u">.</span><span class="f">send</span><span class="u">(</span>command<span class="u">);</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span>response<span class="u">.</span><span class="p">Contents</span><span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">const</span> command <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">ListObjectsCommand</span><span class="text-syn-u">(</span>listParams<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>command<span class="text-syn-u">);</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>response<span class="text-syn-u">.</span><span class="text-syn-p">Contents</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="f">listObjects</span><span class="u">();</span>
+<span class="text-syn-f">listObjects</span><span class="text-syn-u">();</span>
 </code></pre>
             <p>
               <img
@@ -387,26 +399,37 @@ AWS_SECRET_ACCESS_KEY=
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/creating-npx-command/">Creating Your Own npx Command</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/creating-npx-command/">Creating Your Own npx Command</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/cron-jobs-with-bullmq/">BullMQ Cron Jobs with Redis in Node.js</a>
             </li>
-            <li><a href="/blogs/nodejs-on-ec2/">Node.js on EC2 with PM2 and NGINX</a></li>
+            <li class="my-2">
+              <a href="/blogs/nodejs-on-ec2/">Node.js on EC2 with PM2 and NGINX</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

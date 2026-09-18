@@ -58,12 +58,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -71,9 +76,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -81,11 +88,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Circuit Breakers</h1>
-            <p class="detail-meta"><time datetime="2026-01-13">2026-01-13</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Circuit Breakers
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-13">2026-01-13</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Your database gets overwhelmed. Response times spike. Connections pile up. Timeouts
               start. One slow service drags down another. Then another. Within minutes, your entire
@@ -308,20 +317,20 @@
               not, don&#39;t make the call.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getSurgePricing</span><span class="u">(</span>zoneId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">SurgeMultiplier</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> isHealthy <span class="o">=</span> <span class="k">await</span> <span class="f">checkServiceHealth</span><span class="u">(</span><span class="s">&quot;surge-pricing&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getSurgePricing</span><span class="text-syn-u">(</span>zoneId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">SurgeMultiplier</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> isHealthy <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">checkServiceHealth</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;surge-pricing&quot;</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>isHealthy<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="u">{</span> <span class="p">multiplier:</span> <span class="n">1.0</span><span class="u">,</span> <span class="p">reason:</span> <span class="s">&quot;default&quot;</span> <span class="u">};</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>isHealthy<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">multiplier:</span> <span class="text-syn-n">1.0</span><span class="text-syn-u">,</span> <span class="text-syn-p">reason:</span> <span class="text-syn-s">&quot;default&quot;</span> <span class="text-syn-u">};</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">await</span> surgePricingService<span class="u">.</span><span class="f">getMultiplier</span><span class="u">(</span>zoneId<span class="u">);</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> <span class="f">markServiceUnhealthy</span><span class="u">(</span><span class="s">&quot;surge-pricing&quot;</span><span class="u">);</span>
-    <span class="k">return</span> <span class="u">{</span> <span class="p">multiplier:</span> <span class="n">1.0</span><span class="u">,</span> <span class="p">reason:</span> <span class="s">&quot;default&quot;</span> <span class="u">};</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> surgePricingService<span class="text-syn-u">.</span><span class="text-syn-f">getMultiplier</span><span class="text-syn-u">(</span>zoneId<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-f">markServiceUnhealthy</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;surge-pricing&quot;</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">multiplier:</span> <span class="text-syn-n">1.0</span><span class="text-syn-u">,</span> <span class="text-syn-p">reason:</span> <span class="text-syn-s">&quot;default&quot;</span> <span class="text-syn-u">};</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>That&#39;s the essence. Everything else is optimization.</p>
             <h3 id="storing-circuit-state">Storing Circuit State</h3>
@@ -330,113 +339,113 @@
               key-value store works:
             </p>
             <pre
-            ><code class="language-sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="f">circuit_breaker</span> (
-  <span class="k">service_name</span> <span class="k">VARCHAR</span>(<span class="n">255</span>) <span class="k">PRIMARY KEY</span>,
-  is_healthy <span class="k">BOOLEAN</span> <span class="k">DEFAULT</span> true,
-  failure_count <span class="k">INT</span> <span class="k">DEFAULT</span> <span class="n">0</span>,
-  last_failure_time <span class="k">TIMESTAMP</span>,
-  updated_at <span class="k">TIMESTAMP</span> <span class="k">DEFAULT</span> CURRENT_TIMESTAMP
+            ><code class="language-sql"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">circuit_breaker</span> (
+  <span class="text-syn-k">service_name</span> <span class="text-syn-k">VARCHAR</span>(<span class="text-syn-n">255</span>) <span class="text-syn-k">PRIMARY KEY</span>,
+  is_healthy <span class="text-syn-k">BOOLEAN</span> <span class="text-syn-k">DEFAULT</span> true,
+  failure_count <span class="text-syn-k">INT</span> <span class="text-syn-k">DEFAULT</span> <span class="text-syn-n">0</span>,
+  last_failure_time <span class="text-syn-k">TIMESTAMP</span>,
+  updated_at <span class="text-syn-k">TIMESTAMP</span> <span class="text-syn-k">DEFAULT</span> CURRENT_TIMESTAMP
 );
 </code></pre>
             <p>Or in Redis:</p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">CircuitState</span> <span class="u">{</span>
-  isHealthy<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
-  failureCount<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  lastFailureTime<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  lastSuccessTime<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">CircuitState</span> <span class="text-syn-u">{</span>
+  isHealthy<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
+  failureCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  lastFailureTime<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  lastSuccessTime<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getCircuitState</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">CircuitState</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> state <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">hgetall</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">);</span>
-  <span class="k">return</span> <span class="u">{</span>
-    <span class="p">isHealthy:</span> state<span class="u">.</span><span class="p">isHealthy</span> <span class="o">===</span> <span class="s">&quot;true&quot;</span><span class="u">,</span>
-    <span class="p">failureCount:</span> <span class="f">parseInt</span><span class="u">(</span>state<span class="u">.</span><span class="p">failureCount</span> <span class="o">??</span> <span class="s">&quot;0&quot;</span><span class="u">),</span>
-    <span class="p">lastFailureTime:</span> <span class="f">parseInt</span><span class="u">(</span>state<span class="u">.</span><span class="p">lastFailureTime</span> <span class="o">??</span> <span class="s">&quot;0&quot;</span><span class="u">),</span>
-    <span class="p">lastSuccessTime:</span> <span class="f">parseInt</span><span class="u">(</span>state<span class="u">.</span><span class="p">lastSuccessTime</span> <span class="o">??</span> <span class="s">&quot;0&quot;</span><span class="u">),</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">CircuitState</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> state <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hgetall</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">isHealthy:</span> state<span class="text-syn-u">.</span><span class="text-syn-p">isHealthy</span> <span class="text-syn-o">===</span> <span class="text-syn-s">&quot;true&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">failureCount:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>state<span class="text-syn-u">.</span><span class="text-syn-p">failureCount</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;0&quot;</span><span class="text-syn-u">),</span>
+    <span class="text-syn-p">lastFailureTime:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>state<span class="text-syn-u">.</span><span class="text-syn-p">lastFailureTime</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;0&quot;</span><span class="text-syn-u">),</span>
+    <span class="text-syn-p">lastSuccessTime:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>state<span class="text-syn-u">.</span><span class="text-syn-p">lastSuccessTime</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;0&quot;</span><span class="text-syn-u">),</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="the-check-before-call-pattern">The Check-Before-Call Pattern</h3>
             <p>Every service that calls another service checks the circuit breaker first:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">callWithCircuitBreaker</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;(</span>
-  serviceName<span class="o">:</span> <span class="t">string</span><span class="u">,</span>
-  <span class="f">fn</span><span class="o">:</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;,</span>
-  <span class="f">fallback</span><span class="o">:</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="t">T</span><span class="u">,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">T</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> circuit <span class="o">=</span> <span class="k">await</span> <span class="f">getCircuitState</span><span class="u">(</span>serviceName<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">callWithCircuitBreaker</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">T</span><span class="text-syn-u">&gt;(</span>
+  serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+  <span class="text-syn-f">fn</span><span class="text-syn-o">:</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">T</span><span class="text-syn-u">&gt;,</span>
+  <span class="text-syn-f">fallback</span><span class="text-syn-o">:</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-t">T</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">T</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> circuit <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>circuit<span class="u">.</span><span class="p">isHealthy</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> timeSinceFailure <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">-</span> circuit<span class="u">.</span><span class="p">lastFailureTime</span><span class="u">;</span>
-    <span class="k">const</span> recoveryWindow <span class="o">=</span> <span class="n">30000</span><span class="u">;</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>circuit<span class="text-syn-u">.</span><span class="text-syn-p">isHealthy</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> timeSinceFailure <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">-</span> circuit<span class="text-syn-u">.</span><span class="text-syn-p">lastFailureTime</span><span class="text-syn-u">;</span>
+    <span class="text-syn-k">const</span> recoveryWindow <span class="text-syn-o">=</span> <span class="text-syn-n">30000</span><span class="text-syn-u">;</span>
 
-    <span class="k">if</span> <span class="u">(</span>timeSinceFailure <span class="o">&lt;</span> recoveryWindow<span class="u">)</span> <span class="u">{</span>
-      <span class="k">return</span> <span class="f">fallback</span><span class="u">();</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>timeSinceFailure <span class="text-syn-o">&lt;</span> recoveryWindow<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> <span class="text-syn-f">fallback</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> <span class="f">fn</span><span class="u">();</span>
-    <span class="k">await</span> <span class="f">recordSuccess</span><span class="u">(</span>serviceName<span class="u">);</span>
-    <span class="k">return</span> result<span class="u">;</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> <span class="f">recordFailure</span><span class="u">(</span>serviceName<span class="u">);</span>
-    <span class="k">return</span> <span class="f">fallback</span><span class="u">();</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fn</span><span class="text-syn-u">();</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-f">recordSuccess</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span> result<span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-f">recordFailure</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-f">fallback</span><span class="text-syn-u">();</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">recordFailure</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> circuit <span class="o">=</span> <span class="k">await</span> <span class="f">getCircuitState</span><span class="u">(</span>serviceName<span class="u">);</span>
-  <span class="k">const</span> newFailureCount <span class="o">=</span> circuit<span class="u">.</span><span class="p">failureCount</span> <span class="o">+</span> <span class="n">1</span><span class="u">;</span>
-  <span class="k">const</span> threshold <span class="o">=</span> <span class="n">5</span><span class="u">;</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">recordFailure</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> circuit <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> newFailureCount <span class="text-syn-o">=</span> circuit<span class="text-syn-u">.</span><span class="text-syn-p">failureCount</span> <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> threshold <span class="text-syn-o">=</span> <span class="text-syn-n">5</span><span class="text-syn-u">;</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">failureCount:</span> newFailureCount<span class="u">,</span>
-    <span class="p">lastFailureTime:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">(),</span>
-    <span class="p">isHealthy:</span> newFailureCount <span class="o">&lt;</span> threshold <span class="o">?</span> <span class="s">&quot;true&quot;</span> <span class="o">:</span> <span class="s">&quot;false&quot;</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">failureCount:</span> newFailureCount<span class="text-syn-u">,</span>
+    <span class="text-syn-p">lastFailureTime:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">(),</span>
+    <span class="text-syn-p">isHealthy:</span> newFailureCount <span class="text-syn-o">&lt;</span> threshold <span class="text-syn-o">?</span> <span class="text-syn-s">&quot;true&quot;</span> <span class="text-syn-o">:</span> <span class="text-syn-s">&quot;false&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">recordSuccess</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">failureCount:</span> <span class="n">0</span><span class="u">,</span>
-    <span class="p">lastSuccessTime:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">(),</span>
-    <span class="p">isHealthy:</span> <span class="s">&quot;true&quot;</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">recordSuccess</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">failureCount:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">lastSuccessTime:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">(),</span>
+    <span class="text-syn-p">isHealthy:</span> <span class="text-syn-s">&quot;true&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="using-it-in-practice">Using It in Practice</h3>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">calculateRideFare</span><span class="u">(</span>rideRequest<span class="o">:</span> <span class="t">RideRequest</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">FareDetails</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> baseDistance <span class="o">=</span> <span class="k">await</span> mapsService<span class="u">.</span><span class="f">getDistance</span><span class="u">(</span>rideRequest<span class="u">.</span><span class="p">pickup</span><span class="u">,</span> rideRequest<span class="u">.</span><span class="p">dropoff</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">calculateRideFare</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-o">:</span> <span class="text-syn-t">RideRequest</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">FareDetails</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> baseDistance <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> mapsService<span class="text-syn-u">.</span><span class="text-syn-f">getDistance</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">pickup</span><span class="text-syn-u">,</span> rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">dropoff</span><span class="text-syn-u">);</span>
 
-  <span class="k">const</span> drivers <span class="o">=</span> <span class="k">await</span> <span class="f">callWithCircuitBreaker</span><span class="u">(</span>
-    <span class="s">&quot;driver-service&quot;</span><span class="u">,</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> driverService<span class="u">.</span><span class="f">findNearby</span><span class="u">(</span>rideRequest<span class="u">.</span><span class="p">pickup</span><span class="u">),</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">[],</span>
-  <span class="u">);</span>
+  <span class="text-syn-k">const</span> drivers <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">callWithCircuitBreaker</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">&quot;driver-service&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> driverService<span class="text-syn-u">.</span><span class="text-syn-f">findNearby</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">pickup</span><span class="text-syn-u">),</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">[],</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">const</span> surge <span class="o">=</span> <span class="k">await</span> <span class="f">callWithCircuitBreaker</span><span class="u">(</span>
-    <span class="s">&quot;surge-pricing&quot;</span><span class="u">,</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> surgePricingService<span class="u">.</span><span class="f">getMultiplier</span><span class="u">(</span>rideRequest<span class="u">.</span><span class="p">zoneId</span><span class="u">),</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">({</span> <span class="p">multiplier:</span> <span class="n">1.0</span><span class="u">,</span> <span class="p">reason:</span> <span class="s">&quot;default&quot;</span> <span class="u">}),</span>
-  <span class="u">);</span>
+  <span class="text-syn-k">const</span> surge <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">callWithCircuitBreaker</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">&quot;surge-pricing&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> surgePricingService<span class="text-syn-u">.</span><span class="text-syn-f">getMultiplier</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">zoneId</span><span class="text-syn-u">),</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span> <span class="text-syn-p">multiplier:</span> <span class="text-syn-n">1.0</span><span class="text-syn-u">,</span> <span class="text-syn-p">reason:</span> <span class="text-syn-s">&quot;default&quot;</span> <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">const</span> walletBalance <span class="o">=</span> <span class="k">await</span> <span class="f">callWithCircuitBreaker</span><span class="u">(</span>
-    <span class="s">&quot;wallet-service&quot;</span><span class="u">,</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> walletService<span class="u">.</span><span class="f">getBalance</span><span class="u">(</span>rideRequest<span class="u">.</span><span class="p">userId</span><span class="u">),</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">({</span> <span class="p">balance:</span> <span class="k">null</span><span class="u">,</span> <span class="p">canPay:</span> <span class="k">true</span> <span class="u">}),</span>
-  <span class="u">);</span>
+  <span class="text-syn-k">const</span> walletBalance <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">callWithCircuitBreaker</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">&quot;wallet-service&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> walletService<span class="text-syn-u">.</span><span class="text-syn-f">getBalance</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">userId</span><span class="text-syn-u">),</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span> <span class="text-syn-p">balance:</span> <span class="text-syn-k">null</span><span class="text-syn-u">,</span> <span class="text-syn-p">canPay:</span> <span class="text-syn-k">true</span> <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    <span class="p">baseFare:</span> baseDistance<span class="u">.</span><span class="p">km</span> <span class="o">*</span> RATE_PER_KM<span class="u">,</span>
-    <span class="p">surgeMultiplier:</span> surge<span class="u">.</span><span class="p">multiplier</span><span class="u">,</span>
-    <span class="p">totalFare:</span> baseDistance<span class="u">.</span><span class="p">km</span> <span class="o">*</span> RATE_PER_KM <span class="o">*</span> surge<span class="u">.</span><span class="p">multiplier</span><span class="u">,</span>
-    <span class="p">driversAvailable:</span> drivers<span class="u">.</span>length<span class="u">,</span>
-    <span class="p">walletBalance:</span> walletBalance<span class="u">.</span><span class="p">balance</span><span class="u">,</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">baseFare:</span> baseDistance<span class="text-syn-u">.</span><span class="text-syn-p">km</span> <span class="text-syn-o">*</span> RATE_PER_KM<span class="text-syn-u">,</span>
+    <span class="text-syn-p">surgeMultiplier:</span> surge<span class="text-syn-u">.</span><span class="text-syn-p">multiplier</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">totalFare:</span> baseDistance<span class="text-syn-u">.</span><span class="text-syn-p">km</span> <span class="text-syn-o">*</span> RATE_PER_KM <span class="text-syn-o">*</span> surge<span class="text-syn-u">.</span><span class="text-syn-p">multiplier</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">driversAvailable:</span> drivers<span class="text-syn-u">.</span>length<span class="text-syn-u">,</span>
+    <span class="text-syn-p">walletBalance:</span> walletBalance<span class="text-syn-u">.</span><span class="text-syn-p">balance</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Each downstream call is wrapped. If a service is struggling, we get fallback values
@@ -451,89 +460,89 @@
             <h3 id="section-1-cached-data">1. Cached Data</h3>
             <p>If you have recent data cached, return that:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getDriverLocations</span><span class="u">(</span>zoneId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">DriverLocation</span><span class="u">[]&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`drivers:${zoneId}`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getDriverLocations</span><span class="text-syn-u">(</span>zoneId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">DriverLocation</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`drivers:${zoneId}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> circuit <span class="o">=</span> <span class="k">await</span> <span class="f">getCircuitState</span><span class="u">(</span><span class="s">&quot;driver-service&quot;</span><span class="u">);</span>
+  <span class="text-syn-k">const</span> circuit <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;driver-service&quot;</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>circuit<span class="u">.</span><span class="p">isHealthy</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-      <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
-    <span class="u">}</span>
-    <span class="k">return</span> <span class="u">[];</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>circuit<span class="text-syn-u">.</span><span class="text-syn-p">isHealthy</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>cached<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">[];</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> drivers <span class="o">=</span> <span class="k">await</span> driverService<span class="u">.</span><span class="f">findInZone</span><span class="u">(</span>zoneId<span class="u">);</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>drivers<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">30</span><span class="u">);</span>
-  <span class="k">return</span> drivers<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">const</span> drivers <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> driverService<span class="text-syn-u">.</span><span class="text-syn-f">findInZone</span><span class="text-syn-u">(</span>zoneId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>drivers<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">30</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> drivers<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="section-2-default-values">2. Default Values</h3>
             <p>Return sensible defaults:</p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getDefaultSurge</span><span class="u">()</span><span class="o">:</span> <span class="t">SurgeInfo</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">{</span>
-    <span class="p">multiplier:</span> <span class="n">1.0</span><span class="u">,</span>
-    <span class="p">reason:</span> <span class="s">&quot;pricing_unavailable&quot;</span><span class="u">,</span>
-    <span class="p">message:</span> <span class="s">&quot;Standard pricing applied&quot;</span><span class="u">,</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getDefaultSurge</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">SurgeInfo</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">multiplier:</span> <span class="text-syn-n">1.0</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">reason:</span> <span class="text-syn-s">&quot;pricing_unavailable&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">message:</span> <span class="text-syn-s">&quot;Standard pricing applied&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="section-3-partial-response">3. Partial Response</h3>
             <p>Return what you have, mark what&#39;s missing:</p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">RideEstimateResponse</span> <span class="u">{</span>
-  estimate<span class="o">:</span> <span class="t">RideEstimate</span><span class="u">;</span>
-  eta<span class="o">?:</span> <span class="t">number</span><span class="u">;</span>
-  surge<span class="o">?:</span> <span class="t">SurgeInfo</span><span class="u">;</span>
-  degraded<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
-  unavailableServices<span class="o">:</span> <span class="t">string</span><span class="u">[];</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">RideEstimateResponse</span> <span class="text-syn-u">{</span>
+  estimate<span class="text-syn-o">:</span> <span class="text-syn-t">RideEstimate</span><span class="text-syn-u">;</span>
+  eta<span class="text-syn-o">?:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  surge<span class="text-syn-o">?:</span> <span class="text-syn-t">SurgeInfo</span><span class="text-syn-u">;</span>
+  degraded<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
+  unavailableServices<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[];</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getRideEstimate</span><span class="u">(</span>request<span class="o">:</span> <span class="t">RideRequest</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">RideEstimateResponse</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> estimate <span class="o">=</span> <span class="k">await</span> mapsService<span class="u">.</span><span class="f">calculateRoute</span><span class="u">(</span>request<span class="u">.</span><span class="p">pickup</span><span class="u">,</span> request<span class="u">.</span><span class="p">dropoff</span><span class="u">);</span>
-  <span class="k">const</span> unavailableServices<span class="o">:</span> <span class="t">string</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[];</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getRideEstimate</span><span class="text-syn-u">(</span>request<span class="text-syn-o">:</span> <span class="text-syn-t">RideRequest</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">RideEstimateResponse</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> estimate <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> mapsService<span class="text-syn-u">.</span><span class="text-syn-f">calculateRoute</span><span class="text-syn-u">(</span>request<span class="text-syn-u">.</span><span class="text-syn-p">pickup</span><span class="text-syn-u">,</span> request<span class="text-syn-u">.</span><span class="text-syn-p">dropoff</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> unavailableServices<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[]</span> <span class="text-syn-o">=</span> <span class="text-syn-u">[];</span>
 
-  <span class="k">let</span> eta<span class="o">:</span> <span class="t">number</span> <span class="o">|</span> <span class="t">undefined</span><span class="u">;</span>
-  <span class="k">try</span> <span class="u">{</span>
-    eta <span class="o">=</span> <span class="k">await</span> <span class="f">callWithCircuitBreaker</span><span class="u">(</span>
-      <span class="s">&quot;driver-service&quot;</span><span class="u">,</span>
-      <span class="u">()</span> <span class="k">=&gt;</span> driverService<span class="u">.</span><span class="f">getNearestETA</span><span class="u">(</span>request<span class="u">.</span><span class="p">pickup</span><span class="u">),</span>
-      <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-        unavailableServices<span class="u">.</span><span class="f">push</span><span class="u">(</span><span class="s">&quot;driver-eta&quot;</span><span class="u">);</span>
-        <span class="k">return</span> <span class="k">undefined</span><span class="u">;</span>
-      <span class="u">},</span>
-    <span class="u">);</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">{</span>
-    unavailableServices<span class="u">.</span><span class="f">push</span><span class="u">(</span><span class="s">&quot;driver-eta&quot;</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">let</span> eta<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-o">|</span> <span class="text-syn-t">undefined</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    eta <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">callWithCircuitBreaker</span><span class="text-syn-u">(</span>
+      <span class="text-syn-s">&quot;driver-service&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> driverService<span class="text-syn-u">.</span><span class="text-syn-f">getNearestETA</span><span class="text-syn-u">(</span>request<span class="text-syn-u">.</span><span class="text-syn-p">pickup</span><span class="text-syn-u">),</span>
+      <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+        unavailableServices<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;driver-eta&quot;</span><span class="text-syn-u">);</span>
+        <span class="text-syn-k">return</span> <span class="text-syn-k">undefined</span><span class="text-syn-u">;</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">{</span>
+    unavailableServices<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;driver-eta&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    estimate<span class="u">,</span>
-    eta<span class="u">,</span>
-    <span class="p">degraded:</span> unavailableServices<span class="u">.</span>length <span class="o">&gt;</span> <span class="n">0</span><span class="u">,</span>
-    unavailableServices<span class="u">,</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    estimate<span class="text-syn-u">,</span>
+    eta<span class="text-syn-u">,</span>
+    <span class="text-syn-p">degraded:</span> unavailableServices<span class="text-syn-u">.</span>length <span class="text-syn-o">&gt;</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+    unavailableServices<span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="section-4-queue-for-later">4. Queue for Later</h3>
             <p>For non-critical operations, queue the work for when the service recovers:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">sendRideReceipt</span><span class="u">(</span>ride<span class="o">:</span> <span class="t">CompletedRide</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> circuit <span class="o">=</span> <span class="k">await</span> <span class="f">getCircuitState</span><span class="u">(</span><span class="s">&quot;notification-service&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendRideReceipt</span><span class="text-syn-u">(</span>ride<span class="text-syn-o">:</span> <span class="text-syn-t">CompletedRide</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> circuit <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;notification-service&quot;</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>circuit<span class="u">.</span><span class="p">isHealthy</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> queue<span class="u">.</span><span class="f">push</span><span class="u">(</span><span class="s">&quot;pending-receipts&quot;</span><span class="u">,</span> <span class="u">{</span>
-      <span class="p">type:</span> <span class="s">&quot;ride_receipt&quot;</span><span class="u">,</span>
-      <span class="p">rideId:</span> ride<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-      <span class="p">scheduledAt:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">(),</span>
-    <span class="u">});</span>
-    <span class="k">return</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>circuit<span class="text-syn-u">.</span><span class="text-syn-p">isHealthy</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;pending-receipts&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;ride_receipt&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">rideId:</span> ride<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">scheduledAt:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">(),</span>
+    <span class="text-syn-u">});</span>
+    <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> notificationService<span class="u">.</span><span class="f">sendReceipt</span><span class="u">(</span>ride<span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> notificationService<span class="text-syn-u">.</span><span class="text-syn-f">sendReceipt</span><span class="text-syn-u">(</span>ride<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="tripping-the-circuit">Tripping the Circuit</h2>
             <p>When should the circuit open? There are two approaches.</p>
@@ -543,36 +552,36 @@
               above X%, it opens:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">CircuitConfig</span> <span class="u">{</span>
-  failureThreshold<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  failureRateThreshold<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  sampleWindow<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  recoveryTimeout<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">CircuitConfig</span> <span class="text-syn-u">{</span>
+  failureThreshold<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  failureRateThreshold<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  sampleWindow<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  recoveryTimeout<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> defaultConfig<span class="o">:</span> <span class="t">CircuitConfig</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="p">failureThreshold:</span> <span class="n">5</span><span class="u">,</span>
-  <span class="p">failureRateThreshold:</span> <span class="n">0.5</span><span class="u">,</span>
-  <span class="p">sampleWindow:</span> <span class="n">60000</span><span class="u">,</span>
-  <span class="p">recoveryTimeout:</span> <span class="n">30000</span><span class="u">,</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> defaultConfig<span class="text-syn-o">:</span> <span class="text-syn-t">CircuitConfig</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">failureThreshold:</span> <span class="text-syn-n">5</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">failureRateThreshold:</span> <span class="text-syn-n">0.5</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">sampleWindow:</span> <span class="text-syn-n">60000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">recoveryTimeout:</span> <span class="text-syn-n">30000</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">shouldOpenCircuit</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> stats <span class="o">=</span> <span class="k">await</span> <span class="f">getRecentStats</span><span class="u">(</span>serviceName<span class="u">,</span> defaultConfig<span class="u">.</span><span class="p">sampleWindow</span><span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">shouldOpenCircuit</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> stats <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getRecentStats</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">,</span> defaultConfig<span class="text-syn-u">.</span><span class="text-syn-p">sampleWindow</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>stats<span class="u">.</span><span class="p">consecutiveFailures</span> <span class="o">&gt;=</span> defaultConfig<span class="u">.</span><span class="p">failureThreshold</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>stats<span class="text-syn-u">.</span><span class="text-syn-p">consecutiveFailures</span> <span class="text-syn-o">&gt;=</span> defaultConfig<span class="text-syn-u">.</span><span class="text-syn-p">failureThreshold</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">if</span> <span class="u">(</span>stats<span class="u">.</span><span class="p">totalCalls</span> <span class="o">&gt;</span> <span class="n">10</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> failureRate <span class="o">=</span> stats<span class="u">.</span><span class="p">failures</span> <span class="o">/</span> stats<span class="u">.</span><span class="p">totalCalls</span><span class="u">;</span>
-    <span class="k">if</span> <span class="u">(</span>failureRate <span class="o">&gt;=</span> defaultConfig<span class="u">.</span><span class="p">failureRateThreshold</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>stats<span class="text-syn-u">.</span><span class="text-syn-p">totalCalls</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-n">10</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> failureRate <span class="text-syn-o">=</span> stats<span class="text-syn-u">.</span><span class="text-syn-p">failures</span> <span class="text-syn-o">/</span> stats<span class="text-syn-u">.</span><span class="text-syn-p">totalCalls</span><span class="text-syn-u">;</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>failureRate <span class="text-syn-o">&gt;=</span> defaultConfig<span class="text-syn-u">.</span><span class="text-syn-p">failureRateThreshold</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="manual-operator-override">Manual: Operator Override</h3>
             <p>
@@ -580,22 +589,22 @@
               maintenance. Maybe you saw alerts. Manual control lets you trip circuits preemptively:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">tripCircuit</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">,</span> reason<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">isHealthy:</span> <span class="s">&quot;false&quot;</span><span class="u">,</span>
-    <span class="p">manualOverride:</span> <span class="s">&quot;true&quot;</span><span class="u">,</span>
-    <span class="p">overrideReason:</span> reason<span class="u">,</span>
-    <span class="p">overrideTime:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">(),</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">tripCircuit</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> reason<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">isHealthy:</span> <span class="text-syn-s">&quot;false&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">manualOverride:</span> <span class="text-syn-s">&quot;true&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">overrideReason:</span> reason<span class="text-syn-u">,</span>
+    <span class="text-syn-p">overrideTime:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">(),</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">resetCircuit</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">isHealthy:</span> <span class="s">&quot;true&quot;</span><span class="u">,</span>
-    <span class="p">manualOverride:</span> <span class="s">&quot;false&quot;</span><span class="u">,</span>
-    <span class="p">failureCount:</span> <span class="n">0</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">resetCircuit</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">isHealthy:</span> <span class="text-syn-s">&quot;true&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">manualOverride:</span> <span class="text-syn-s">&quot;false&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">failureCount:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This is often the most practical approach when starting out. Fully automated circuit
@@ -625,29 +634,29 @@ Request 3 → Check circuit → Query DB → Make call
             <h3 id="solution-local-caching">Solution: Local Caching</h3>
             <p>Cache the circuit state in each API server&#39;s memory:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> circuitCache <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="u">{</span> state<span class="o">:</span> <span class="t">CircuitState</span><span class="u">;</span> expiresAt<span class="o">:</span> <span class="t">number</span> <span class="u">}&gt;();</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> circuitCache <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> state<span class="text-syn-o">:</span> <span class="text-syn-t">CircuitState</span><span class="text-syn-u">;</span> expiresAt<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">}&gt;();</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getCircuitState</span><span class="u">(</span>serviceName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">CircuitState</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> cached <span class="o">=</span> circuitCache<span class="u">.</span><span class="f">get</span><span class="u">(</span>serviceName<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>cached <span class="o">&amp;&amp;</span> cached<span class="u">.</span><span class="p">expiresAt</span> <span class="o">&gt;</span> Date<span class="u">.</span><span class="f">now</span><span class="u">())</span> <span class="u">{</span>
-    <span class="k">return</span> cached<span class="u">.</span><span class="p">state</span><span class="u">;</span>
-  <span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">CircuitState</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> circuitCache<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached <span class="text-syn-o">&amp;&amp;</span> cached<span class="text-syn-u">.</span><span class="text-syn-p">expiresAt</span> <span class="text-syn-o">&gt;</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">())</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> cached<span class="text-syn-u">.</span><span class="text-syn-p">state</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> state <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">hgetall</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">);</span>
-  <span class="k">const</span> parsed<span class="o">:</span> <span class="t">CircuitState</span> <span class="o">=</span> <span class="u">{</span>
-    <span class="p">isHealthy:</span> state<span class="u">.</span><span class="p">isHealthy</span> <span class="o">===</span> <span class="s">&quot;true&quot;</span><span class="u">,</span>
-    <span class="p">failureCount:</span> <span class="f">parseInt</span><span class="u">(</span>state<span class="u">.</span><span class="p">failureCount</span> <span class="o">??</span> <span class="s">&quot;0&quot;</span><span class="u">),</span>
-    <span class="p">lastFailureTime:</span> <span class="f">parseInt</span><span class="u">(</span>state<span class="u">.</span><span class="p">lastFailureTime</span> <span class="o">??</span> <span class="s">&quot;0&quot;</span><span class="u">),</span>
-    <span class="p">lastSuccessTime:</span> <span class="f">parseInt</span><span class="u">(</span>state<span class="u">.</span><span class="p">lastSuccessTime</span> <span class="o">??</span> <span class="s">&quot;0&quot;</span><span class="u">),</span>
-  <span class="u">};</span>
+  <span class="text-syn-k">const</span> state <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hgetall</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> parsed<span class="text-syn-o">:</span> <span class="text-syn-t">CircuitState</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">isHealthy:</span> state<span class="text-syn-u">.</span><span class="text-syn-p">isHealthy</span> <span class="text-syn-o">===</span> <span class="text-syn-s">&quot;true&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">failureCount:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>state<span class="text-syn-u">.</span><span class="text-syn-p">failureCount</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;0&quot;</span><span class="text-syn-u">),</span>
+    <span class="text-syn-p">lastFailureTime:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>state<span class="text-syn-u">.</span><span class="text-syn-p">lastFailureTime</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;0&quot;</span><span class="text-syn-u">),</span>
+    <span class="text-syn-p">lastSuccessTime:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>state<span class="text-syn-u">.</span><span class="text-syn-p">lastSuccessTime</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;0&quot;</span><span class="text-syn-u">),</span>
+  <span class="text-syn-u">};</span>
 
-  circuitCache<span class="u">.</span><span class="f">set</span><span class="u">(</span>serviceName<span class="u">,</span> <span class="u">{</span>
-    <span class="p">state:</span> parsed<span class="u">,</span>
-    <span class="p">expiresAt:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">+</span> <span class="n">5000</span><span class="u">,</span>
-  <span class="u">});</span>
+  circuitCache<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">state:</span> parsed<span class="text-syn-u">,</span>
+    <span class="text-syn-p">expiresAt:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">+</span> <span class="text-syn-n">5000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> parsed<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> parsed<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Now each server queries the database at most once every 5 seconds per service. Much
@@ -673,35 +682,35 @@ Request 3 → Check circuit → Query DB → Make call
             </p>
             <p>Use Redis Pub/Sub to push circuit state changes to all servers immediately:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> subscriber <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
-subscriber<span class="u">.</span><span class="f">subscribe</span><span class="u">(</span><span class="s">&quot;circuit-updates&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> subscriber <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">();</span>
+subscriber<span class="text-syn-u">.</span><span class="text-syn-f">subscribe</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;circuit-updates&quot;</span><span class="text-syn-u">);</span>
 
-subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;message&quot;</span><span class="u">,</span> <span class="u">(</span>channel<span class="u">,</span> message<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> update <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">);</span>
-  <span class="k">const</span> cached <span class="o">=</span> circuitCache<span class="u">.</span><span class="f">get</span><span class="u">(</span>update<span class="u">.</span><span class="p">serviceName</span><span class="u">);</span>
+subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;message&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>channel<span class="text-syn-u">,</span> message<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> update <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> circuitCache<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>update<span class="text-syn-u">.</span><span class="text-syn-p">serviceName</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-    cached<span class="u">.</span><span class="p">state</span> <span class="o">=</span> update<span class="u">.</span><span class="p">state</span><span class="u">;</span>
-    cached<span class="u">.</span><span class="p">expiresAt</span> <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">+</span> <span class="n">60000</span><span class="u">;</span>
-  <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
-    circuitCache<span class="u">.</span><span class="f">set</span><span class="u">(</span>update<span class="u">.</span><span class="p">serviceName</span><span class="u">,</span> <span class="u">{</span>
-      <span class="p">state:</span> update<span class="u">.</span><span class="p">state</span><span class="u">,</span>
-      <span class="p">expiresAt:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">+</span> <span class="n">60000</span><span class="u">,</span>
-    <span class="u">});</span>
-  <span class="u">}</span>
-<span class="u">});</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    cached<span class="text-syn-u">.</span><span class="text-syn-p">state</span> <span class="text-syn-o">=</span> update<span class="text-syn-u">.</span><span class="text-syn-p">state</span><span class="text-syn-u">;</span>
+    cached<span class="text-syn-u">.</span><span class="text-syn-p">expiresAt</span> <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">+</span> <span class="text-syn-n">60000</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">else</span> <span class="text-syn-u">{</span>
+    circuitCache<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>update<span class="text-syn-u">.</span><span class="text-syn-p">serviceName</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">state:</span> update<span class="text-syn-u">.</span><span class="text-syn-p">state</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">expiresAt:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">+</span> <span class="text-syn-n">60000</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">updateCircuitState</span><span class="u">(</span>
-  serviceName<span class="o">:</span> <span class="t">string</span><span class="u">,</span>
-  state<span class="o">:</span> <span class="t">Partial</span><span class="u">&lt;</span><span class="t">CircuitState</span><span class="u">&gt;,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> current <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">hgetall</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">);</span>
-  <span class="k">const</span> updated <span class="o">=</span> <span class="u">{</span> <span class="o">...</span>current<span class="u">,</span> <span class="o">...</span>state <span class="u">};</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">updateCircuitState</span><span class="text-syn-u">(</span>
+  serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+  state<span class="text-syn-o">:</span> <span class="text-syn-t">Partial</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">CircuitState</span><span class="text-syn-u">&gt;,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> current <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hgetall</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> updated <span class="text-syn-o">=</span> <span class="text-syn-u">{</span> <span class="text-syn-o">...</span>current<span class="text-syn-u">,</span> <span class="text-syn-o">...</span>state <span class="text-syn-u">};</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`circuit:${serviceName}`</span><span class="u">,</span> updated<span class="u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">,</span> updated<span class="text-syn-u">);</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span><span class="s">&quot;circuit-updates&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span> serviceName<span class="u">,</span> <span class="p">state:</span> updated <span class="u">}));</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">publish</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;circuit-updates&quot;</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span> serviceName<span class="text-syn-u">,</span> <span class="text-syn-p">state:</span> updated <span class="text-syn-u">}));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Now when you trip a circuit:</p>
             <ol>
@@ -718,33 +727,33 @@ subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</sp
             </p>
             <h3 id="key-metrics">Key Metrics</h3>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">CircuitMetrics</span> <span class="u">{</span>
-  serviceName<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  state<span class="o">:</span> <span class="s">&quot;closed&quot;</span> <span class="o">|</span> <span class="s">&quot;open&quot;</span> <span class="o">|</span> <span class="s">&quot;half-open&quot;</span><span class="u">;</span>
-  failureCount<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  successCount<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  fallbackCount<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  lastStateChange<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  avgResponseTime<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">CircuitMetrics</span> <span class="text-syn-u">{</span>
+  serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  state<span class="text-syn-o">:</span> <span class="text-syn-s">&quot;closed&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;open&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;half-open&quot;</span><span class="text-syn-u">;</span>
+  failureCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  successCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  fallbackCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  lastStateChange<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  avgResponseTime<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">recordMetrics</span><span class="u">(</span>
-  serviceName<span class="o">:</span> <span class="t">string</span><span class="u">,</span>
-  success<span class="o">:</span> <span class="t">boolean</span><span class="u">,</span>
-  responseTime<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> key <span class="o">=</span> <span class="s">`metrics:circuit:${serviceName}`</span><span class="u">;</span>
-  <span class="k">const</span> now <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">();</span>
-  <span class="k">const</span> bucket <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">(</span>now <span class="o">/</span> <span class="n">60000</span><span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">recordMetrics</span><span class="text-syn-u">(</span>
+  serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+  success<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">,</span>
+  responseTime<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> key <span class="text-syn-o">=</span> <span class="text-syn-s">`metrics:circuit:${serviceName}`</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> bucket <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">floor</span><span class="text-syn-u">(</span>now <span class="text-syn-o">/</span> <span class="text-syn-n">60000</span><span class="text-syn-u">);</span>
 
-  <span class="k">await</span> redis
-    <span class="u">.</span><span class="f">multi</span><span class="u">()</span>
-    <span class="u">.</span><span class="f">hincrby</span><span class="u">(</span><span class="s">`${key}:${bucket}`</span><span class="u">,</span> success <span class="o">?</span> <span class="s">&quot;success&quot;</span> <span class="o">:</span> <span class="s">&quot;failure&quot;</span><span class="u">,</span> <span class="n">1</span><span class="u">)</span>
-    <span class="u">.</span><span class="f">hincrby</span><span class="u">(</span><span class="s">`${key}:${bucket}`</span><span class="u">,</span> <span class="s">&quot;responseTime&quot;</span><span class="u">,</span> responseTime<span class="u">)</span>
-    <span class="u">.</span><span class="f">hincrby</span><span class="u">(</span><span class="s">`${key}:${bucket}`</span><span class="u">,</span> <span class="s">&quot;count&quot;</span><span class="u">,</span> <span class="n">1</span><span class="u">)</span>
-    <span class="u">.</span><span class="f">expire</span><span class="u">(</span><span class="s">`${key}:${bucket}`</span><span class="u">,</span> <span class="n">3600</span><span class="u">)</span>
-    <span class="u">.</span><span class="f">exec</span><span class="u">();</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis
+    <span class="text-syn-u">.</span><span class="text-syn-f">multi</span><span class="text-syn-u">()</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">hincrby</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${bucket}`</span><span class="text-syn-u">,</span> success <span class="text-syn-o">?</span> <span class="text-syn-s">&quot;success&quot;</span> <span class="text-syn-o">:</span> <span class="text-syn-s">&quot;failure&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">hincrby</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${bucket}`</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;responseTime&quot;</span><span class="text-syn-u">,</span> responseTime<span class="text-syn-u">)</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">hincrby</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${bucket}`</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;count&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${bucket}`</span><span class="text-syn-u">,</span> <span class="text-syn-n">3600</span><span class="text-syn-u">)</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">exec</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="alerting">Alerting</h3>
             <p>Set up alerts for:</p>
@@ -755,22 +764,22 @@ subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</sp
               <li>Circuit flapping (opening and closing repeatedly)</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">checkCircuitHealth</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> circuits <span class="o">=</span> <span class="k">await</span> <span class="f">getAllCircuits</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">checkCircuitHealth</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> circuits <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getAllCircuits</span><span class="text-syn-u">();</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> circuit <span class="o">of</span> circuits<span class="u">)</span> <span class="u">{</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>circuit<span class="u">.</span><span class="p">isHealthy</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">const</span> openDuration <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">-</span> circuit<span class="u">.</span><span class="p">lastFailureTime</span><span class="u">;</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> circuit <span class="text-syn-o">of</span> circuits<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>circuit<span class="text-syn-u">.</span><span class="text-syn-p">isHealthy</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> openDuration <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">-</span> circuit<span class="text-syn-u">.</span><span class="text-syn-p">lastFailureTime</span><span class="text-syn-u">;</span>
 
-      <span class="k">if</span> <span class="u">(</span>openDuration <span class="o">&gt;</span> <span class="n">300000</span><span class="u">)</span> <span class="u">{</span>
-        <span class="k">await</span> alerting<span class="u">.</span><span class="f">send</span><span class="u">({</span>
-          <span class="p">severity:</span> <span class="s">&quot;critical&quot;</span><span class="u">,</span>
-          <span class="p">message:</span> <span class="s">`Circuit for ${circuit.</span><span class="p">serviceName</span><span class="s">} has been open for ${Math.round(openDuration / 60000)} minutes`</span><span class="u">,</span>
-        <span class="u">});</span>
-      <span class="u">}</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+      <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>openDuration <span class="text-syn-o">&gt;</span> <span class="text-syn-n">300000</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">await</span> alerting<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
+          <span class="text-syn-p">severity:</span> <span class="text-syn-s">&quot;critical&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">message:</span> <span class="text-syn-s">`Circuit for ${circuit.</span><span class="text-syn-p">serviceName</span><span class="text-syn-s">} has been open for ${Math.round(openDuration / 60000)} minutes`</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">});</span>
+      <span class="text-syn-u">}</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="when-not-to-use-circuit-breakers">When Not to Use Circuit Breakers</h2>
             <p>Circuit breakers add complexity. Don&#39;t use them everywhere:</p>
@@ -816,26 +825,37 @@ subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</sp
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
             </li>
-            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
-            <li><a href="/blogs/system-design/high-availability/">High Availability</a></li>
+            <li class="my-2">
+              <a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/system-design/high-availability/">High Availability</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

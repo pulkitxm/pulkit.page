@@ -78,16 +78,19 @@ function experiencePeriod(metadata) {
     timeZone: "UTC",
   });
   const date = (value) =>
-    `<time datetime="${escapeHtml(value)}" title="${exact.format(new Date(value))}">${month.format(new Date(value))}</time>`;
+    `<time class="cursor-help underline decoration-line decoration-dotted underline-offset-4" datetime="${escapeHtml(value)}" title="${exact.format(new Date(value))}">${month.format(new Date(value))}</time>`;
   return `${date(metadata.date)} – ${metadata.endDate ? date(metadata.endDate) : "present"}`;
 }
 function experienceEntry(page) {
   const { metadata } = page;
   const icons = [metadata.icon, metadata.secondaryIcon]
     .filter(Boolean)
-    .map((icon) => `<img src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`)
+    .map(
+      (icon, index) =>
+        `<img class="${index ? "m-0 -ml-6 translate-y-2.5" : "m-0"} size-9 rounded-[10px] border-2 border-bg bg-icon object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`,
+    )
     .join("");
-  return `<li><a class="entry-link experience-link" href="${safeUrl(page.route)}"><span class="experience-icons">${icons}</span><span class="experience-info"><span class="entry-title">${escapeHtml(metadata.title)}</span><span class="experience-role">${escapeHtml(metadata.role)}</span></span><span class="entry-meta experience-period">${experiencePeriod(metadata)}</span></a></li>`;
+  return `<li class="border-b border-line"><a class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-[1.5] no-underline max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3" href="${safeUrl(page.route)}"><span class="flex w-12 items-center max-sm:row-span-2">${icons}</span><span class="grid gap-0.75"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="text-xs text-muted">${escapeHtml(metadata.role)}</span></span><span class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs">${experiencePeriod(metadata)}</span></a></li>`;
 }
 export async function renderPage(
   source,
@@ -168,11 +171,11 @@ export async function renderPage(
           }
           const grouped = route === "/blogs/" && token.collection === "blogs";
           const list = (entries) =>
-            `<ul class="entry-list">${entries
+            `<ul class="list-none p-0">${entries
               .map((page) =>
                 page.metadata.icon
                   ? experienceEntry(page)
-                  : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
+                  : `<li class="border-b border-line"><a class="group flex items-baseline justify-between gap-5 py-3.75 leading-[1.5] no-underline max-sm:gap-3" href="${safeUrl(page.route)}"><span class="group-hover:underline" data-title>${escapeHtml(page.metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
               )
               .join("")}</ul>`;
           if (!grouped) {
@@ -189,7 +192,7 @@ export async function renderPage(
           return [...years]
             .map(
               ([year, entries]) =>
-                `<h2 class="writing-year">${escapeHtml(year)}</h2>${list(entries)}`,
+                `<h2 class="mt-10 mb-2 flex items-center gap-4 text-md font-[500] tracking-normal text-muted after:h-px after:flex-1 after:bg-line">${escapeHtml(year)}</h2>${list(entries)}`,
             )
             .join("");
         },
@@ -229,7 +232,7 @@ export async function renderPage(
       heading: escapeHtml(metadata.title),
       date:
         detail || metadata.role
-          ? `<p class="detail-meta">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
+          ? `<p class="text-sm text-muted">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
           : "",
       content: await markdown.parse(body),
     }),
@@ -239,7 +242,7 @@ export async function renderPage(
 function breadcrumbs(route, pages) {
   const parents = ancestors(route, pages);
   return parents.length
-    ? `<nav class="breadcrumbs" aria-label="Breadcrumb"><ol>${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
+    ? `<nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb"><ol class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']">${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
     : "";
 }
 function relatedNavigation(route, metadata, pages) {
@@ -262,10 +265,10 @@ function relatedNavigation(route, metadata, pages) {
     entries
       .map(
         (page) =>
-          `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.metadata.title)}</a></li>`,
+          `<li class="my-2"><a href="${escapeHtml(page.route)}">${escapeHtml(page.metadata.title)}</a></li>`,
       )
       .join("");
-  return `${collections.length && route !== "/" ? `<nav class="related" aria-label="Collections"><h2>Explore collections</h2><ul>${links(collections)}</ul></nav>` : ""}${related.length ? `<nav class="related" aria-label="Related writing"><h2>Related writing</h2><ul>${links(related)}</ul></nav>` : ""}`;
+  return `${collections.length && route !== "/" ? `<nav class="mt-12 text-[0.9rem]" aria-label="Collections"><h2 class="text-[1rem]">Explore collections</h2><ul>${links(collections)}</ul></nav>` : ""}${related.length ? `<nav class="mt-12 text-[0.9rem]" aria-label="Related writing"><h2 class="text-[1rem]">Related writing</h2><ul>${links(related)}</ul></nav>` : ""}`;
 }
 function seoHead(route, metadata, site, pages) {
   const url = site.url + route;

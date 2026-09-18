@@ -70,12 +70,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -83,9 +88,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -93,11 +100,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</h1>
-            <p class="detail-meta"><time datetime="2026-01-10">2026-01-10</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-10">2026-01-10</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Most web interactions are synchronous. You click, the server processes, you get a
               response. Loading your feed, logging in, making a payment. All synchronous. Request
@@ -288,22 +297,22 @@
               &quot;Order Confirmed&quot; text eventually.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">OrderPlaced</span> <span class="u">{</span>
-  orderId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  customerPhone<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  restaurantName<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrderPlaced</span> <span class="text-syn-u">{</span>
+  orderId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  customerPhone<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  restaurantName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">onOrderPlaced</span><span class="u">(</span>order<span class="o">:</span> <span class="t">Order</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> sqs<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span>
-    <span class="p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="u">,</span>
-    <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
-      <span class="p">orderId:</span> order<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-      <span class="p">customerPhone:</span> order<span class="u">.</span><span class="p">phone</span><span class="u">,</span>
-      <span class="p">restaurantName:</span> order<span class="u">.</span>restaurant<span class="u">.</span><span class="p">name</span><span class="u">,</span>
-    <span class="u">}</span> <span class="k">satisfies</span> <span class="t">OrderPlaced</span><span class="u">),</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">onOrderPlaced</span><span class="text-syn-u">(</span>order<span class="text-syn-o">:</span> <span class="text-syn-t">Order</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">sendMessage</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="text-syn-u">,</span>
+    <span class="text-syn-p">MessageBody:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">orderId:</span> order<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">customerPhone:</span> order<span class="text-syn-u">.</span><span class="text-syn-p">phone</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">restaurantName:</span> order<span class="text-syn-u">.</span>restaurant<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">satisfies</span> <span class="text-syn-t">OrderPlaced</span><span class="text-syn-u">),</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Order service fires the message and moves on. SMS worker picks it up whenever it can.
@@ -338,34 +347,34 @@
               timeout, it reappears. Another consumer picks it up.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processSmsNotifications</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">while</span> <span class="u">(</span><span class="k">true</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">receiveMessage</span><span class="u">({</span>
-      <span class="p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="u">,</span>
-      <span class="p">MaxNumberOfMessages:</span> <span class="n">1</span><span class="u">,</span>
-      <span class="p">WaitTimeSeconds:</span> <span class="n">20</span><span class="u">,</span>
-    <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processSmsNotifications</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">while</span> <span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">receiveMessage</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="text-syn-u">,</span>
+      <span class="text-syn-p">MaxNumberOfMessages:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">WaitTimeSeconds:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
 
-    <span class="k">const</span> message <span class="o">=</span> response<span class="u">.</span><span class="p">Messages</span><span class="u">?.[</span><span class="n">0</span><span class="u">];</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>message<span class="u">)</span> <span class="k">continue</span><span class="u">;</span>
+    <span class="text-syn-k">const</span> message <span class="text-syn-o">=</span> response<span class="text-syn-u">.</span><span class="text-syn-p">Messages</span><span class="text-syn-u">?.[</span><span class="text-syn-n">0</span><span class="text-syn-u">];</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>message<span class="text-syn-u">)</span> <span class="text-syn-k">continue</span><span class="text-syn-u">;</span>
 
-    <span class="k">try</span> <span class="u">{</span>
-      <span class="k">const</span> notification<span class="o">:</span> <span class="t">OrderPlaced</span> <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">.</span><span class="p">Body</span> <span class="o">??</span> <span class="s">&quot;{}&quot;</span><span class="u">);</span>
+    <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> notification<span class="text-syn-o">:</span> <span class="text-syn-t">OrderPlaced</span> <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>message<span class="text-syn-u">.</span><span class="text-syn-p">Body</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;{}&quot;</span><span class="text-syn-u">);</span>
 
-      <span class="k">await</span> smsGateway<span class="u">.</span><span class="f">send</span><span class="u">({</span>
-        <span class="p">to:</span> notification<span class="u">.</span><span class="p">customerPhone</span><span class="u">,</span>
-        <span class="p">text:</span> <span class="s">`Order confirmed! ${notification.</span><span class="p">restaurantName</span><span class="s">} is preparing your food.`</span><span class="u">,</span>
-      <span class="u">});</span>
+      <span class="text-syn-k">await</span> smsGateway<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
+        <span class="text-syn-p">to:</span> notification<span class="text-syn-u">.</span><span class="text-syn-p">customerPhone</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">text:</span> <span class="text-syn-s">`Order confirmed! ${notification.</span><span class="text-syn-p">restaurantName</span><span class="text-syn-s">} is preparing your food.`</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">});</span>
 
-      <span class="k">await</span> sqs<span class="u">.</span><span class="f">deleteMessage</span><span class="u">({</span>
-        <span class="p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="u">,</span>
-        <span class="p">ReceiptHandle:</span> message<span class="u">.</span><span class="p">ReceiptHandle</span><span class="u">,</span>
-      <span class="u">});</span>
-    <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-      console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Failed to send SMS:&quot;</span><span class="u">,</span> error<span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+      <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">deleteMessage</span><span class="text-syn-u">({</span>
+        <span class="text-syn-p">QueueUrl:</span> NOTIFICATION_QUEUE_URL<span class="text-syn-u">,</span>
+        <span class="text-syn-p">ReceiptHandle:</span> message<span class="text-syn-u">.</span><span class="text-syn-p">ReceiptHandle</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">});</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      console<span class="text-syn-u">.</span><span class="text-syn-f">error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Failed to send SMS:&quot;</span><span class="text-syn-u">,</span> error<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Delete happens only after success. Crash mid-way? Message retries automatically.</p>
             <h3 id="handling-duplicates">Handling Duplicates</h3>
@@ -384,20 +393,20 @@
               operations, make consumers <strong>idempotent</strong>:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processSmsNotification</span><span class="u">(</span>notification<span class="o">:</span> <span class="t">OrderPlaced</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> alreadySent <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">`sms_sent:${notification.</span><span class="p">orderId</span><span class="s">}`</span><span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>alreadySent<span class="u">)</span> <span class="u">{</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`SMS already sent for ${notification.</span><span class="p">orderId</span><span class="s">}, skipping`</span><span class="u">);</span>
-    <span class="k">return</span><span class="u">;</span>
-  <span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processSmsNotification</span><span class="text-syn-u">(</span>notification<span class="text-syn-o">:</span> <span class="text-syn-t">OrderPlaced</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> alreadySent <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`sms_sent:${notification.</span><span class="text-syn-p">orderId</span><span class="text-syn-s">}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>alreadySent<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">`SMS already sent for ${notification.</span><span class="text-syn-p">orderId</span><span class="text-syn-s">}, skipping`</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> smsGateway<span class="u">.</span><span class="f">send</span><span class="u">({</span>
-    <span class="p">to:</span> notification<span class="u">.</span><span class="p">customerPhone</span><span class="u">,</span>
-    <span class="p">text:</span> <span class="s">`Order confirmed! ${notification.</span><span class="p">restaurantName</span><span class="s">} is preparing your food.`</span><span class="u">,</span>
-  <span class="u">});</span>
+  <span class="text-syn-k">await</span> smsGateway<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">to:</span> notification<span class="text-syn-u">.</span><span class="text-syn-p">customerPhone</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">text:</span> <span class="text-syn-s">`Order confirmed! ${notification.</span><span class="text-syn-p">restaurantName</span><span class="text-syn-s">} is preparing your food.`</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`sms_sent:${notification.</span><span class="p">orderId</span><span class="s">}`</span><span class="u">,</span> <span class="s">&quot;true&quot;</span><span class="u">,</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">86400</span><span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`sms_sent:${notification.</span><span class="text-syn-p">orderId</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;true&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">86400</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Track what you&#39;ve processed. Skip duplicates.</p>
             <h3 id="dead-letter-queues">Dead Letter Queues</h3>
@@ -420,15 +429,15 @@
 </code></pre>
             <p>SQS configuration:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> mainQueue <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">createQueue</span><span class="u">({</span>
-  <span class="p">QueueName:</span> <span class="s">&quot;image-processing&quot;</span><span class="u">,</span>
-  <span class="p">Attributes:</span> <span class="u">{</span>
-    <span class="p">RedrivePolicy:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
-      <span class="p">deadLetterTargetArn:</span> dlqArn<span class="u">,</span>
-      <span class="p">maxReceiveCount:</span> <span class="s">&quot;3&quot;</span><span class="u">,</span>
-    <span class="u">}),</span>
-  <span class="u">},</span>
-<span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> mainQueue <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">createQueue</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">QueueName:</span> <span class="text-syn-s">&quot;image-processing&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">Attributes:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">RedrivePolicy:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">deadLetterTargetArn:</span> dlqArn<span class="text-syn-u">,</span>
+      <span class="text-syn-p">maxReceiveCount:</span> <span class="text-syn-s">&quot;3&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>After 3 failures, message goes to DLQ. You can:</p>
             <ul>
@@ -450,17 +459,17 @@
               Fast, but you might lose messages.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">await</span> queue<span class="u">.</span><span class="f">send</span><span class="u">(</span>message<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
 </code></pre>
             <p>
               <strong>At-least-once</strong>: Message delivered one or more times. Most common.
               Safe, but you might get duplicates.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">while</span> <span class="u">(</span><span class="o">!</span>acknowledged<span class="u">)</span> <span class="u">{</span>
-  <span class="k">await</span> queue<span class="u">.</span><span class="f">send</span><span class="u">(</span>message<span class="u">);</span>
-  <span class="k">await</span> <span class="f">waitForAck</span><span class="u">();</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">while</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>acknowledged<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> <span class="text-syn-f">waitForAck</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Exactly-once</strong>: Message delivered exactly one time. Ideal, but
@@ -522,37 +531,37 @@
             <p>Should the upload API wait 15 seconds? No.</p>
             <p><strong>Step 1: Upload</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">uploadProfilePic</span><span class="u">(</span>file<span class="o">:</span> <span class="t">File</span><span class="u">,</span> userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Image</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> imageId <span class="o">=</span> <span class="f">generateId</span><span class="u">();</span>
-  <span class="k">const</span> s3Key <span class="o">=</span> <span class="s">`uploads/${userId}/${imageId}/original.jpg`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">uploadProfilePic</span><span class="text-syn-u">(</span>file<span class="text-syn-o">:</span> <span class="text-syn-t">File</span><span class="text-syn-u">,</span> userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Image</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> imageId <span class="text-syn-o">=</span> <span class="text-syn-f">generateId</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> s3Key <span class="text-syn-o">=</span> <span class="text-syn-s">`uploads/${userId}/${imageId}/original.jpg`</span><span class="text-syn-u">;</span>
 
-  <span class="k">await</span> s3<span class="u">.</span><span class="f">upload</span><span class="u">({</span>
-    <span class="p">Bucket:</span> IMAGE_BUCKET<span class="u">,</span>
-    <span class="p">Key:</span> s3Key<span class="u">,</span>
-    <span class="p">Body:</span> file<span class="u">,</span>
-  <span class="u">});</span>
+  <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">upload</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">Bucket:</span> IMAGE_BUCKET<span class="text-syn-u">,</span>
+    <span class="text-syn-p">Key:</span> s3Key<span class="text-syn-u">,</span>
+    <span class="text-syn-p">Body:</span> file<span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">const</span> image <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>image<span class="u">.</span><span class="f">create</span><span class="u">({</span>
-    <span class="p">data:</span> <span class="u">{</span>
-      <span class="p">id:</span> imageId<span class="u">,</span>
-      userId<span class="u">,</span>
-      <span class="p">status:</span> <span class="s">&quot;processing&quot;</span><span class="u">,</span>
-      <span class="p">originalKey:</span> s3Key<span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">});</span>
+  <span class="text-syn-k">const</span> image <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>image<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">data:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">id:</span> imageId<span class="text-syn-u">,</span>
+      userId<span class="text-syn-u">,</span>
+      <span class="text-syn-p">status:</span> <span class="text-syn-s">&quot;processing&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">originalKey:</span> s3Key<span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> sqs<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span>
-    <span class="p">QueueUrl:</span> IMAGE_PROCESSING_QUEUE<span class="u">,</span>
-    <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
-      imageId<span class="u">,</span>
-      userId<span class="u">,</span>
-      s3Key<span class="u">,</span>
-      <span class="p">sizes:</span> <span class="u">[</span><span class="s">&quot;thumbnail&quot;</span><span class="u">,</span> <span class="s">&quot;medium&quot;</span><span class="u">,</span> <span class="s">&quot;large&quot;</span><span class="u">],</span>
-    <span class="u">}),</span>
-  <span class="u">});</span>
+  <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">sendMessage</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">QueueUrl:</span> IMAGE_PROCESSING_QUEUE<span class="text-syn-u">,</span>
+    <span class="text-syn-p">MessageBody:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span>
+      imageId<span class="text-syn-u">,</span>
+      userId<span class="text-syn-u">,</span>
+      s3Key<span class="text-syn-u">,</span>
+      <span class="text-syn-p">sizes:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;thumbnail&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;medium&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;large&quot;</span><span class="text-syn-u">],</span>
+    <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> image<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> image<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Upload original to S3, create DB record with <code>status: processing</code>, push
@@ -560,41 +569,41 @@
             </p>
             <p><strong>Step 2: Processing</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ImageTask</span> <span class="u">{</span>
-  imageId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  userId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  s3Key<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  sizes<span class="o">:</span> <span class="t">string</span><span class="u">[];</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">ImageTask</span> <span class="text-syn-u">{</span>
+  imageId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  s3Key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  sizes<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[];</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> SIZE_MAP <span class="o">=</span> <span class="u">{</span>
-  <span class="p">thumbnail:</span> <span class="u">{</span> <span class="p">width:</span> <span class="n">50</span><span class="u">,</span> <span class="p">height:</span> <span class="n">50</span> <span class="u">},</span>
-  <span class="p">medium:</span> <span class="u">{</span> <span class="p">width:</span> <span class="n">200</span><span class="u">,</span> <span class="p">height:</span> <span class="n">200</span> <span class="u">},</span>
-  <span class="p">large:</span> <span class="u">{</span> <span class="p">width:</span> <span class="n">800</span><span class="u">,</span> <span class="p">height:</span> <span class="n">800</span> <span class="u">},</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> SIZE_MAP <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">thumbnail:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">width:</span> <span class="text-syn-n">50</span><span class="text-syn-u">,</span> <span class="text-syn-p">height:</span> <span class="text-syn-n">50</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">medium:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">width:</span> <span class="text-syn-n">200</span><span class="text-syn-u">,</span> <span class="text-syn-p">height:</span> <span class="text-syn-n">200</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">large:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">width:</span> <span class="text-syn-n">800</span><span class="text-syn-u">,</span> <span class="text-syn-p">height:</span> <span class="text-syn-n">800</span> <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">processImage</span><span class="u">(</span>task<span class="o">:</span> <span class="t">ImageTask</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> originalBuffer <span class="o">=</span> <span class="k">await</span> <span class="f">downloadFromS3</span><span class="u">(</span>task<span class="u">.</span><span class="p">s3Key</span><span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processImage</span><span class="text-syn-u">(</span>task<span class="text-syn-o">:</span> <span class="text-syn-t">ImageTask</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> originalBuffer <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">downloadFromS3</span><span class="text-syn-u">(</span>task<span class="text-syn-u">.</span><span class="text-syn-p">s3Key</span><span class="text-syn-u">);</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> size <span class="o">of</span> task<span class="u">.</span><span class="p">sizes</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> dimensions <span class="o">=</span> SIZE_MAP<span class="u">[</span>size<span class="u">];</span>
-    <span class="k">const</span> resized <span class="o">=</span> <span class="k">await</span> <span class="f">sharp</span><span class="u">(</span>originalBuffer<span class="u">)</span>
-      <span class="u">.</span><span class="f">resize</span><span class="u">(</span>dimensions<span class="u">.</span><span class="p">width</span><span class="u">,</span> dimensions<span class="u">.</span><span class="p">height</span><span class="u">)</span>
-      <span class="u">.</span><span class="f">jpeg</span><span class="u">({</span> <span class="p">quality:</span> <span class="n">80</span> <span class="u">})</span>
-      <span class="u">.</span><span class="f">toBuffer</span><span class="u">();</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> size <span class="text-syn-o">of</span> task<span class="text-syn-u">.</span><span class="text-syn-p">sizes</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> dimensions <span class="text-syn-o">=</span> SIZE_MAP<span class="text-syn-u">[</span>size<span class="text-syn-u">];</span>
+    <span class="text-syn-k">const</span> resized <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">sharp</span><span class="text-syn-u">(</span>originalBuffer<span class="text-syn-u">)</span>
+      <span class="text-syn-u">.</span><span class="text-syn-f">resize</span><span class="text-syn-u">(</span>dimensions<span class="text-syn-u">.</span><span class="text-syn-p">width</span><span class="text-syn-u">,</span> dimensions<span class="text-syn-u">.</span><span class="text-syn-p">height</span><span class="text-syn-u">)</span>
+      <span class="text-syn-u">.</span><span class="text-syn-f">jpeg</span><span class="text-syn-u">({</span> <span class="text-syn-p">quality:</span> <span class="text-syn-n">80</span> <span class="text-syn-u">})</span>
+      <span class="text-syn-u">.</span><span class="text-syn-f">toBuffer</span><span class="text-syn-u">();</span>
 
-    <span class="k">await</span> s3<span class="u">.</span><span class="f">upload</span><span class="u">({</span>
-      <span class="p">Bucket:</span> IMAGE_BUCKET<span class="u">,</span>
-      <span class="p">Key:</span> <span class="s">`processed/${task.</span><span class="p">userId</span><span class="s">}/${task.</span><span class="p">imageId</span><span class="s">}/${size}.jpg`</span><span class="u">,</span>
-      <span class="p">Body:</span> resized<span class="u">,</span>
-    <span class="u">});</span>
-  <span class="u">}</span>
+    <span class="text-syn-k">await</span> s3<span class="text-syn-u">.</span><span class="text-syn-f">upload</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">Bucket:</span> IMAGE_BUCKET<span class="text-syn-u">,</span>
+      <span class="text-syn-p">Key:</span> <span class="text-syn-s">`processed/${task.</span><span class="text-syn-p">userId</span><span class="text-syn-s">}/${task.</span><span class="text-syn-p">imageId</span><span class="text-syn-s">}/${size}.jpg`</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">Body:</span> resized<span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> db<span class="u">.</span>image<span class="u">.</span><span class="f">update</span><span class="u">({</span>
-    <span class="p">where:</span> <span class="u">{</span> <span class="p">id:</span> task<span class="u">.</span><span class="p">imageId</span> <span class="u">},</span>
-    <span class="p">data:</span> <span class="u">{</span> <span class="p">status:</span> <span class="s">&quot;ready&quot;</span> <span class="u">},</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>image<span class="text-syn-u">.</span><span class="text-syn-f">update</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">where:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> task<span class="text-syn-u">.</span><span class="text-syn-p">imageId</span> <span class="text-syn-u">},</span>
+    <span class="text-syn-p">data:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">status:</span> <span class="text-syn-s">&quot;ready&quot;</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Worker downloads original, creates resized versions, uploads them, updates status.
@@ -611,50 +620,50 @@
             </p>
             <p>Managed queue. No servers. Auto-scales. Pay per request.</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span>
-  SQSClient<span class="u">,</span>
-  SendMessageCommand<span class="u">,</span>
-  ReceiveMessageCommand<span class="u">,</span>
-  DeleteMessageCommand<span class="u">,</span>
-<span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@aws-sdk/client-sqs&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span>
+  SQSClient<span class="text-syn-u">,</span>
+  SendMessageCommand<span class="text-syn-u">,</span>
+  ReceiveMessageCommand<span class="text-syn-u">,</span>
+  DeleteMessageCommand<span class="text-syn-u">,</span>
+<span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@aws-sdk/client-sqs&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> sqs <span class="o">=</span> <span class="o">new</span> <span class="f">SQSClient</span><span class="u">({</span> <span class="p">region:</span> <span class="s">&quot;us-east-1&quot;</span> <span class="u">});</span>
+<span class="text-syn-k">const</span> sqs <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">SQSClient</span><span class="text-syn-u">({</span> <span class="text-syn-p">region:</span> <span class="text-syn-s">&quot;us-east-1&quot;</span> <span class="text-syn-u">});</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">sendTask</span><span class="u">(</span>task<span class="o">:</span> <span class="t">ImageTask</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> sqs<span class="u">.</span><span class="f">send</span><span class="u">(</span>
-    <span class="o">new</span> <span class="f">SendMessageCommand</span><span class="u">({</span>
-      <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
-      <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>task<span class="u">),</span>
-    <span class="u">}),</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendTask</span><span class="text-syn-u">(</span>task<span class="text-syn-o">:</span> <span class="text-syn-t">ImageTask</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>
+    <span class="text-syn-o">new</span> <span class="text-syn-f">SendMessageCommand</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">QueueUrl:</span> QUEUE_URL<span class="text-syn-u">,</span>
+      <span class="text-syn-p">MessageBody:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>task<span class="text-syn-u">),</span>
+    <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">receiveTask</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">ImageTask</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">send</span><span class="u">(</span>
-    <span class="o">new</span> <span class="f">ReceiveMessageCommand</span><span class="u">({</span>
-      <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
-      <span class="p">MaxNumberOfMessages:</span> <span class="n">1</span><span class="u">,</span>
-      <span class="p">WaitTimeSeconds:</span> <span class="n">20</span><span class="u">,</span>
-    <span class="u">}),</span>
-  <span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">receiveTask</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">ImageTask</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>
+    <span class="text-syn-o">new</span> <span class="text-syn-f">ReceiveMessageCommand</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">QueueUrl:</span> QUEUE_URL<span class="text-syn-u">,</span>
+      <span class="text-syn-p">MaxNumberOfMessages:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">WaitTimeSeconds:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">const</span> message <span class="o">=</span> response<span class="u">.</span><span class="p">Messages</span><span class="u">?.[</span><span class="n">0</span><span class="u">];</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>message<span class="u">)</span> <span class="k">return</span> <span class="k">null</span><span class="u">;</span>
+  <span class="text-syn-k">const</span> message <span class="text-syn-o">=</span> response<span class="text-syn-u">.</span><span class="text-syn-p">Messages</span><span class="text-syn-u">?.[</span><span class="text-syn-n">0</span><span class="text-syn-u">];</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>message<span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    <span class="o">...</span>JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">.</span><span class="p">Body</span> <span class="o">??</span> <span class="s">&quot;{}&quot;</span><span class="u">),</span>
-    <span class="p">receiptHandle:</span> message<span class="u">.</span><span class="p">ReceiptHandle</span><span class="u">,</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-o">...</span>JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>message<span class="text-syn-u">.</span><span class="text-syn-p">Body</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;{}&quot;</span><span class="text-syn-u">),</span>
+    <span class="text-syn-p">receiptHandle:</span> message<span class="text-syn-u">.</span><span class="text-syn-p">ReceiptHandle</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">deleteTask</span><span class="u">(</span>receiptHandle<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> sqs<span class="u">.</span><span class="f">send</span><span class="u">(</span>
-    <span class="o">new</span> <span class="f">DeleteMessageCommand</span><span class="u">({</span>
-      <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
-      <span class="p">ReceiptHandle:</span> receiptHandle<span class="u">,</span>
-    <span class="u">}),</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">deleteTask</span><span class="text-syn-u">(</span>receiptHandle<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>
+    <span class="text-syn-o">new</span> <span class="text-syn-f">DeleteMessageCommand</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">QueueUrl:</span> QUEUE_URL<span class="text-syn-u">,</span>
+      <span class="text-syn-p">ReceiptHandle:</span> receiptHandle<span class="text-syn-u">,</span>
+    <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Key features:</p>
             <ul>
@@ -675,35 +684,35 @@
               Open-source. Self-hosted or managed. More features, more control, more ops overhead.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> amqp <span class="k">from</span> <span class="s">&quot;amqplib&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> amqp <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;amqplib&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">setupRabbitMQ</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">amqp</span><span class="u">.</span><span class="t">Channel</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> connection <span class="o">=</span> <span class="k">await</span> amqp<span class="u">.</span><span class="f">connect</span><span class="u">(</span><span class="s">&quot;amqp://localhost&quot;</span><span class="u">);</span>
-  <span class="k">const</span> channel <span class="o">=</span> <span class="k">await</span> connection<span class="u">.</span><span class="f">createChannel</span><span class="u">();</span>
-  <span class="k">await</span> channel<span class="u">.</span><span class="f">assertQueue</span><span class="u">(</span><span class="s">&quot;image_processing&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">durable:</span> <span class="k">true</span> <span class="u">});</span>
-  <span class="k">return</span> channel<span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">setupRabbitMQ</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">amqp</span><span class="text-syn-u">.</span><span class="text-syn-t">Channel</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> connection <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> amqp<span class="text-syn-u">.</span><span class="text-syn-f">connect</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;amqp://localhost&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> channel <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> connection<span class="text-syn-u">.</span><span class="text-syn-f">createChannel</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">await</span> channel<span class="text-syn-u">.</span><span class="text-syn-f">assertQueue</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;image_processing&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">durable:</span> <span class="text-syn-k">true</span> <span class="text-syn-u">});</span>
+  <span class="text-syn-k">return</span> channel<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">sendTask</span><span class="u">(</span>channel<span class="o">:</span> <span class="t">amqp</span><span class="u">.</span><span class="t">Channel</span><span class="u">,</span> task<span class="o">:</span> <span class="t">ImageTask</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  channel<span class="u">.</span><span class="f">sendToQueue</span><span class="u">(</span><span class="s">&quot;image_processing&quot;</span><span class="u">,</span> Buffer<span class="u">.</span><span class="f">from</span><span class="u">(</span>JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>task<span class="u">)),</span> <span class="u">{</span>
-    <span class="p">persistent:</span> <span class="k">true</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendTask</span><span class="text-syn-u">(</span>channel<span class="text-syn-o">:</span> <span class="text-syn-t">amqp</span><span class="text-syn-u">.</span><span class="text-syn-t">Channel</span><span class="text-syn-u">,</span> task<span class="text-syn-o">:</span> <span class="text-syn-t">ImageTask</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  channel<span class="text-syn-u">.</span><span class="text-syn-f">sendToQueue</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;image_processing&quot;</span><span class="text-syn-u">,</span> Buffer<span class="text-syn-u">.</span><span class="text-syn-f">from</span><span class="text-syn-u">(</span>JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>task<span class="text-syn-u">)),</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">persistent:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">consumeTasks</span><span class="u">(</span>channel<span class="o">:</span> <span class="t">amqp</span><span class="u">.</span><span class="t">Channel</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  channel<span class="u">.</span><span class="f">consume</span><span class="u">(</span><span class="s">&quot;image_processing&quot;</span><span class="u">,</span> <span class="k">async</span> <span class="u">(</span>msg<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>msg<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">consumeTasks</span><span class="text-syn-u">(</span>channel<span class="text-syn-o">:</span> <span class="text-syn-t">amqp</span><span class="text-syn-u">.</span><span class="text-syn-t">Channel</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  channel<span class="text-syn-u">.</span><span class="text-syn-f">consume</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;image_processing&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>msg<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>msg<span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
-    <span class="k">const</span> task<span class="o">:</span> <span class="t">ImageTask</span> <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>msg<span class="u">.</span>content<span class="u">.</span><span class="f">toString</span><span class="u">());</span>
+    <span class="text-syn-k">const</span> task<span class="text-syn-o">:</span> <span class="text-syn-t">ImageTask</span> <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>msg<span class="text-syn-u">.</span>content<span class="text-syn-u">.</span><span class="text-syn-f">toString</span><span class="text-syn-u">());</span>
 
-    <span class="k">try</span> <span class="u">{</span>
-      <span class="k">await</span> <span class="f">processImage</span><span class="u">(</span>task<span class="u">);</span>
-      channel<span class="u">.</span><span class="f">ack</span><span class="u">(</span>msg<span class="u">);</span>
-    <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-      channel<span class="u">.</span><span class="f">nack</span><span class="u">(</span>msg<span class="u">,</span> <span class="k">false</span><span class="u">,</span> <span class="k">true</span><span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+    <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> <span class="text-syn-f">processImage</span><span class="text-syn-u">(</span>task<span class="text-syn-u">);</span>
+      channel<span class="text-syn-u">.</span><span class="text-syn-f">ack</span><span class="text-syn-u">(</span>msg<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      channel<span class="text-syn-u">.</span><span class="text-syn-f">nack</span><span class="text-syn-u">(</span>msg<span class="text-syn-u">,</span> <span class="text-syn-k">false</span><span class="text-syn-u">,</span> <span class="text-syn-k">true</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Key features:</p>
             <ul>
@@ -776,24 +785,24 @@
             <p>Don&#39;t run 10 workers at 3 AM when the queue is empty. Scale based on demand.</p>
             <p>AWS example with CloudWatch:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> scalingPolicy <span class="o">=</span> <span class="u">{</span>
-  <span class="p">PolicyName:</span> <span class="s">&quot;scale-on-queue-depth&quot;</span><span class="u">,</span>
-  <span class="p">ServiceNamespace:</span> <span class="s">&quot;ecs&quot;</span><span class="u">,</span>
-  <span class="p">ResourceId:</span> <span class="s">&quot;service/cluster/image-processor&quot;</span><span class="u">,</span>
-  <span class="p">ScalableDimension:</span> <span class="s">&quot;ecs:service:DesiredCount&quot;</span><span class="u">,</span>
-  <span class="p">PolicyType:</span> <span class="s">&quot;TargetTrackingScaling&quot;</span><span class="u">,</span>
-  <span class="p">TargetTrackingScalingPolicyConfiguration:</span> <span class="u">{</span>
-    <span class="p">TargetValue:</span> <span class="n">100</span><span class="u">,</span>
-    <span class="p">CustomizedMetricSpecification:</span> <span class="u">{</span>
-      <span class="p">MetricName:</span> <span class="s">&quot;ApproximateNumberOfMessagesVisible&quot;</span><span class="u">,</span>
-      <span class="p">Namespace:</span> <span class="s">&quot;AWS/SQS&quot;</span><span class="u">,</span>
-      <span class="p">Dimensions:</span> <span class="u">[{</span> <span class="p">Name:</span> <span class="s">&quot;QueueName&quot;</span><span class="u">,</span> <span class="p">Value:</span> <span class="s">&quot;image-processing&quot;</span> <span class="u">}],</span>
-      <span class="p">Statistic:</span> <span class="s">&quot;Average&quot;</span><span class="u">,</span>
-    <span class="u">},</span>
-    <span class="p">ScaleInCooldown:</span> <span class="n">300</span><span class="u">,</span>
-    <span class="p">ScaleOutCooldown:</span> <span class="n">60</span><span class="u">,</span>
-  <span class="u">},</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> scalingPolicy <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">PolicyName:</span> <span class="text-syn-s">&quot;scale-on-queue-depth&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">ServiceNamespace:</span> <span class="text-syn-s">&quot;ecs&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">ResourceId:</span> <span class="text-syn-s">&quot;service/cluster/image-processor&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">ScalableDimension:</span> <span class="text-syn-s">&quot;ecs:service:DesiredCount&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">PolicyType:</span> <span class="text-syn-s">&quot;TargetTrackingScaling&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">TargetTrackingScalingPolicyConfiguration:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">TargetValue:</span> <span class="text-syn-n">100</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">CustomizedMetricSpecification:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">MetricName:</span> <span class="text-syn-s">&quot;ApproximateNumberOfMessagesVisible&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">Namespace:</span> <span class="text-syn-s">&quot;AWS/SQS&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">Dimensions:</span> <span class="text-syn-u">[{</span> <span class="text-syn-p">Name:</span> <span class="text-syn-s">&quot;QueueName&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">Value:</span> <span class="text-syn-s">&quot;image-processing&quot;</span> <span class="text-syn-u">}],</span>
+      <span class="text-syn-p">Statistic:</span> <span class="text-syn-s">&quot;Average&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+    <span class="text-syn-p">ScaleInCooldown:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">ScaleOutCooldown:</span> <span class="text-syn-n">60</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <p>
               Target: 100 messages per worker. Queue hits 500 messages? Spin up 5 workers. Queue
@@ -816,19 +825,19 @@
             </p>
             <p><strong>Batch processing helps.</strong> Instead of one message at a time:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> sqs<span class="u">.</span><span class="f">receiveMessage</span><span class="u">({</span>
-  <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
-  <span class="p">MaxNumberOfMessages:</span> <span class="n">10</span><span class="u">,</span>
-  <span class="p">WaitTimeSeconds:</span> <span class="n">20</span><span class="u">,</span>
-<span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">receiveMessage</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">QueueUrl:</span> QUEUE_URL<span class="text-syn-u">,</span>
+  <span class="text-syn-p">MaxNumberOfMessages:</span> <span class="text-syn-n">10</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">WaitTimeSeconds:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">for</span> <span class="u">(</span><span class="k">const</span> message <span class="o">of</span> response<span class="u">.</span><span class="p">Messages</span> <span class="o">??</span> <span class="u">[])</span> <span class="u">{</span>
-  <span class="k">await</span> <span class="f">processMessage</span><span class="u">(</span>message<span class="u">);</span>
-  <span class="k">await</span> sqs<span class="u">.</span><span class="f">deleteMessage</span><span class="u">({</span>
-    <span class="p">QueueUrl:</span> QUEUE_URL<span class="u">,</span>
-    <span class="p">ReceiptHandle:</span> message<span class="u">.</span><span class="p">ReceiptHandle</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> message <span class="text-syn-o">of</span> response<span class="text-syn-u">.</span><span class="text-syn-p">Messages</span> <span class="text-syn-o">??</span> <span class="text-syn-u">[])</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> <span class="text-syn-f">processMessage</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">deleteMessage</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">QueueUrl:</span> QUEUE_URL<span class="text-syn-u">,</span>
+    <span class="text-syn-p">ReceiptHandle:</span> message<span class="text-syn-u">.</span><span class="text-syn-p">ReceiptHandle</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Fewer network round-trips. Higher throughput per worker.</p>
             <h2 id="message-streams">Message Streams</h2>
@@ -856,20 +865,20 @@
             </p>
             <p>Single RabbitMQ queue. Consumer handles all three:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">onProductListed</span><span class="u">(</span>event<span class="o">:</span> <span class="t">ProductListedEvent</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> elasticsearch<span class="u">.</span><span class="f">index</span><span class="u">({</span>
-    <span class="p">index:</span> <span class="s">&quot;products&quot;</span><span class="u">,</span>
-    <span class="p">id:</span> event<span class="u">.</span><span class="p">productId</span><span class="u">,</span>
-    <span class="p">body:</span> event<span class="u">.</span><span class="p">product</span><span class="u">,</span>
-  <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">onProductListed</span><span class="text-syn-u">(</span>event<span class="text-syn-o">:</span> <span class="text-syn-t">ProductListedEvent</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> elasticsearch<span class="text-syn-u">.</span><span class="text-syn-f">index</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">index:</span> <span class="text-syn-s">&quot;products&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">id:</span> event<span class="text-syn-u">.</span><span class="text-syn-p">productId</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">body:</span> event<span class="text-syn-u">.</span><span class="text-syn-p">product</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> db<span class="u">.</span>category<span class="u">.</span><span class="f">update</span><span class="u">({</span>
-    <span class="p">where:</span> <span class="u">{</span> <span class="p">id:</span> event<span class="u">.</span><span class="p">categoryId</span> <span class="u">},</span>
-    <span class="p">data:</span> <span class="u">{</span> <span class="p">productCount:</span> <span class="u">{</span> <span class="p">increment:</span> <span class="n">1</span> <span class="u">}</span> <span class="u">},</span>
-  <span class="u">});</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>category<span class="text-syn-u">.</span><span class="text-syn-f">update</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">where:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> event<span class="text-syn-u">.</span><span class="text-syn-p">categoryId</span> <span class="text-syn-u">},</span>
+    <span class="text-syn-p">data:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">productCount:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">increment:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">}</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> recommendationService<span class="u">.</span><span class="f">triggerRetrain</span><span class="u">(</span>event<span class="u">.</span><span class="p">categoryId</span><span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> recommendationService<span class="text-syn-u">.</span><span class="text-syn-f">triggerRetrain</span><span class="text-syn-u">(</span>event<span class="text-syn-u">.</span><span class="text-syn-p">categoryId</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Problem</strong>: What if Elasticsearch write succeeds but DB update fails?
@@ -886,13 +895,13 @@
             </p>
             <p>Three separate queues. API writes to all three:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">listProduct</span><span class="u">(</span>product<span class="o">:</span> <span class="t">Product</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> db<span class="u">.</span>product<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> product <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">listProduct</span><span class="text-syn-u">(</span>product<span class="text-syn-o">:</span> <span class="text-syn-t">Product</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>product<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> product <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> searchQueue<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span> <span class="p">productId:</span> product<span class="u">.</span><span class="p">id</span><span class="u">,</span> product <span class="u">});</span>
-  <span class="k">await</span> categoryQueue<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span> <span class="p">categoryId:</span> product<span class="u">.</span><span class="p">categoryId</span> <span class="u">});</span>
-  <span class="k">await</span> recommendationQueue<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span> <span class="p">categoryId:</span> product<span class="u">.</span><span class="p">categoryId</span> <span class="u">});</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> searchQueue<span class="text-syn-u">.</span><span class="text-syn-f">sendMessage</span><span class="text-syn-u">({</span> <span class="text-syn-p">productId:</span> product<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span> product <span class="text-syn-u">});</span>
+  <span class="text-syn-k">await</span> categoryQueue<span class="text-syn-u">.</span><span class="text-syn-f">sendMessage</span><span class="text-syn-u">({</span> <span class="text-syn-p">categoryId:</span> product<span class="text-syn-u">.</span><span class="text-syn-p">categoryId</span> <span class="text-syn-u">});</span>
+  <span class="text-syn-k">await</span> recommendationQueue<span class="text-syn-u">.</span><span class="text-syn-f">sendMessage</span><span class="text-syn-u">({</span> <span class="text-syn-p">categoryId:</span> product<span class="text-syn-u">.</span><span class="text-syn-p">categoryId</span> <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Problem</strong>: API writes to three places. What if write to first queue
@@ -939,23 +948,23 @@
               />
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">listProduct</span><span class="u">(</span>product<span class="o">:</span> <span class="t">Product</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> db<span class="u">.</span>product<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> product <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">listProduct</span><span class="text-syn-u">(</span>product<span class="text-syn-o">:</span> <span class="text-syn-t">Product</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>product<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> product <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> kafka<span class="u">.</span><span class="f">send</span><span class="u">({</span>
-    <span class="p">topic:</span> <span class="s">&quot;product-listed&quot;</span><span class="u">,</span>
-    <span class="p">messages:</span> <span class="u">[</span>
-      <span class="u">{</span>
-        <span class="p">key:</span> product<span class="u">.</span><span class="p">categoryId</span><span class="u">,</span>
-        <span class="p">value:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
-          <span class="p">productId:</span> product<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-          <span class="p">categoryId:</span> product<span class="u">.</span><span class="p">categoryId</span><span class="u">,</span>
-          product<span class="u">,</span>
-        <span class="u">}),</span>
-      <span class="u">},</span>
-    <span class="u">],</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> kafka<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">topic:</span> <span class="text-syn-s">&quot;product-listed&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">messages:</span> <span class="text-syn-u">[</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">key:</span> product<span class="text-syn-u">.</span><span class="text-syn-p">categoryId</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">value:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span>
+          <span class="text-syn-p">productId:</span> product<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">categoryId:</span> product<span class="text-syn-u">.</span><span class="text-syn-p">categoryId</span><span class="text-syn-u">,</span>
+          product<span class="text-syn-u">,</span>
+        <span class="text-syn-u">}),</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">],</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               API writes one message. Three consumer groups (search, category-counter,
@@ -1060,15 +1069,15 @@
               <li><strong>Without a key</strong>: Round-robin across partitions.</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">await</span> kafka<span class="u">.</span><span class="f">send</span><span class="u">({</span>
-  <span class="p">topic:</span> <span class="s">&quot;product-listed&quot;</span><span class="u">,</span>
-  <span class="p">messages:</span> <span class="u">[</span>
-    <span class="u">{</span>
-      <span class="p">key:</span> categoryId<span class="u">,</span>
-      <span class="p">value:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>event<span class="u">),</span>
-    <span class="u">},</span>
-  <span class="u">],</span>
-<span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">await</span> kafka<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">topic:</span> <span class="text-syn-s">&quot;product-listed&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">messages:</span> <span class="text-syn-u">[</span>
+    <span class="text-syn-u">{</span>
+      <span class="text-syn-p">key:</span> categoryId<span class="text-syn-u">,</span>
+      <span class="text-syn-p">value:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>event<span class="text-syn-u">),</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">],</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>
               Using <code>categoryId</code> as the key means all products in the same category go to
@@ -1119,21 +1128,21 @@ Category Counter Group:
               position in the partition:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> consumer <span class="o">=</span> kafka<span class="u">.</span><span class="f">consumer</span><span class="u">({</span> <span class="p">groupId:</span> <span class="s">&quot;search-indexer&quot;</span> <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> consumer <span class="text-syn-o">=</span> kafka<span class="text-syn-u">.</span><span class="text-syn-f">consumer</span><span class="text-syn-u">({</span> <span class="text-syn-p">groupId:</span> <span class="text-syn-s">&quot;search-indexer&quot;</span> <span class="text-syn-u">});</span>
 
-<span class="k">await</span> consumer<span class="u">.</span><span class="f">subscribe</span><span class="u">({</span> <span class="p">topic:</span> <span class="s">&quot;product-listed&quot;</span> <span class="u">});</span>
+<span class="text-syn-k">await</span> consumer<span class="text-syn-u">.</span><span class="text-syn-f">subscribe</span><span class="text-syn-u">({</span> <span class="text-syn-p">topic:</span> <span class="text-syn-s">&quot;product-listed&quot;</span> <span class="text-syn-u">});</span>
 
-<span class="k">await</span> consumer<span class="u">.</span><span class="f">run</span><span class="u">({</span>
-  <span class="p">eachMessage:</span> <span class="k">async</span> <span class="u">({</span> topic<span class="u">,</span> partition<span class="u">,</span> message <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> event <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">.</span>value<span class="u">?.</span><span class="f">toString</span><span class="u">()</span> <span class="o">??</span> <span class="s">&quot;{}&quot;</span><span class="u">);</span>
+<span class="text-syn-k">await</span> consumer<span class="text-syn-u">.</span><span class="text-syn-f">run</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">eachMessage:</span> <span class="text-syn-k">async</span> <span class="text-syn-u">({</span> topic<span class="text-syn-u">,</span> partition<span class="text-syn-u">,</span> message <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> event <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>message<span class="text-syn-u">.</span>value<span class="text-syn-u">?.</span><span class="text-syn-f">toString</span><span class="text-syn-u">()</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;{}&quot;</span><span class="text-syn-u">);</span>
 
-    <span class="k">await</span> elasticsearch<span class="u">.</span><span class="f">index</span><span class="u">({</span>
-      <span class="p">index:</span> <span class="s">&quot;products&quot;</span><span class="u">,</span>
-      <span class="p">id:</span> event<span class="u">.</span><span class="p">productId</span><span class="u">,</span>
-      <span class="p">body:</span> event<span class="u">.</span><span class="p">product</span><span class="u">,</span>
-    <span class="u">});</span>
-  <span class="u">},</span>
-<span class="u">});</span>
+    <span class="text-syn-k">await</span> elasticsearch<span class="text-syn-u">.</span><span class="text-syn-f">index</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">index:</span> <span class="text-syn-s">&quot;products&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">id:</span> event<span class="text-syn-u">.</span><span class="text-syn-p">productId</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">body:</span> event<span class="text-syn-u">.</span><span class="text-syn-p">product</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>
               Commit says &quot;I&#39;ve processed up to here.&quot; Consumer restarts? Resumes from
@@ -1239,27 +1248,27 @@ Day 8: [msg200, ..., msg700]  ← Old messages deleted
             </p>
             <p><strong>Publisher:</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> redis <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
+<span class="text-syn-k">const</span> redis <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">();</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">publishConfigChange</span><span class="u">(</span>config<span class="o">:</span> <span class="t">AppConfig</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span><span class="s">&quot;config-updates&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>config<span class="u">));</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">publishConfigChange</span><span class="text-syn-u">(</span>config<span class="text-syn-o">:</span> <span class="text-syn-t">AppConfig</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">publish</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;config-updates&quot;</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>config<span class="text-syn-u">));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p><strong>Subscriber:</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> subscriber <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
+<span class="text-syn-k">const</span> subscriber <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">();</span>
 
-subscriber<span class="u">.</span><span class="f">subscribe</span><span class="u">(</span><span class="s">&quot;config-updates&quot;</span><span class="u">);</span>
+subscriber<span class="text-syn-u">.</span><span class="text-syn-f">subscribe</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;config-updates&quot;</span><span class="text-syn-u">);</span>
 
-subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;message&quot;</span><span class="u">,</span> <span class="u">(</span>channel<span class="u">,</span> message<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> config<span class="o">:</span> <span class="t">AppConfig</span> <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>message<span class="u">);</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`Received config update on ${channel}:`</span><span class="u">,</span> config<span class="u">);</span>
-  <span class="f">applyConfig</span><span class="u">(</span>config<span class="u">);</span>
-<span class="u">});</span>
+subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;message&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>channel<span class="text-syn-u">,</span> message<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> config<span class="text-syn-o">:</span> <span class="text-syn-t">AppConfig</span> <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">`Received config update on ${channel}:`</span><span class="text-syn-u">,</span> config<span class="text-syn-u">);</span>
+  <span class="text-syn-f">applyConfig</span><span class="text-syn-u">(</span>config<span class="text-syn-u">);</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>Publisher sends. All connected subscribers receive instantly.</p>
             <h3 id="use-cases">Use Cases</h3>
@@ -1277,25 +1286,25 @@ subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</sp
               clients subscribed to that channel receive it in real-time.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">sendChatMessage</span><span class="u">(</span>roomId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> message<span class="o">:</span> <span class="t">ChatMessage</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> db<span class="u">.</span>message<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> message <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendChatMessage</span><span class="text-syn-u">(</span>roomId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> message<span class="text-syn-o">:</span> <span class="text-syn-t">ChatMessage</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>message<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> message <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span><span class="s">`room:${roomId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>message<span class="u">));</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">publish</span><span class="text-syn-u">(</span><span class="text-syn-s">`room:${roomId}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>message<span class="text-syn-u">));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>All users in the room get the message pushed to them. No polling required.</p>
             <p><strong>3. Real-time Notifications</strong></p>
             <p>User gets a new follower. Push notification to their active sessions immediately.</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">notifyNewFollower</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> follower<span class="o">:</span> <span class="t">User</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span>
-    <span class="s">`notifications:${userId}`</span><span class="u">,</span>
-    JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
-      <span class="p">type:</span> <span class="s">&quot;new_follower&quot;</span><span class="u">,</span>
-      <span class="p">follower:</span> <span class="u">{</span> <span class="p">id:</span> follower<span class="u">.</span><span class="p">id</span><span class="u">,</span> <span class="p">name:</span> follower<span class="u">.</span><span class="p">name</span> <span class="u">},</span>
-    <span class="u">}),</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">notifyNewFollower</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> follower<span class="text-syn-o">:</span> <span class="text-syn-t">User</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">publish</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">`notifications:${userId}`</span><span class="text-syn-u">,</span>
+    JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;new_follower&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">follower:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> follower<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span> <span class="text-syn-p">name:</span> follower<span class="text-syn-u">.</span><span class="text-syn-p">name</span> <span class="text-syn-u">},</span>
+    <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="the-catch-no-buffering">The Catch: No Buffering</h3>
             <p>
@@ -1364,19 +1373,19 @@ subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</sp
             <h3 id="combining-them">Combining Them</h3>
             <p>Common pattern: use both.</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processOrder</span><span class="u">(</span>order<span class="o">:</span> <span class="t">Order</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> db<span class="u">.</span>order<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> order <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processOrder</span><span class="text-syn-u">(</span>order<span class="text-syn-o">:</span> <span class="text-syn-t">Order</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>order<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> order <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> sqs<span class="u">.</span><span class="f">sendMessage</span><span class="u">({</span>
-    <span class="p">QueueUrl:</span> ORDER_PROCESSING_QUEUE<span class="u">,</span>
-    <span class="p">MessageBody:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>order<span class="u">),</span>
-  <span class="u">});</span>
+  <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">sendMessage</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">QueueUrl:</span> ORDER_PROCESSING_QUEUE<span class="text-syn-u">,</span>
+    <span class="text-syn-p">MessageBody:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>order<span class="text-syn-u">),</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">publish</span><span class="u">(</span>
-    <span class="s">`user:${order.</span><span class="p">userId</span><span class="s">}:orders`</span><span class="u">,</span>
-    JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span> <span class="p">type:</span> <span class="s">&quot;order_created&quot;</span><span class="u">,</span> <span class="p">orderId:</span> order<span class="u">.</span><span class="p">id</span> <span class="u">}),</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">publish</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">`user:${order.</span><span class="text-syn-p">userId</span><span class="text-syn-s">}:orders`</span><span class="text-syn-u">,</span>
+    JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span> <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;order_created&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">orderId:</span> order<span class="text-syn-u">.</span><span class="text-syn-p">id</span> <span class="text-syn-u">}),</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               SQS ensures the order gets processed (even if workers are temporarily down). Redis
@@ -1431,26 +1440,33 @@ subscriber<span class="u">.</span><span class="f">on</span><span class="u">(</sp
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
             </li>
-            <li><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
-            <li><a href="/blogs/system-design/caching/">Caching</a></li>
+            <li class="my-2"><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
+            <li class="my-2"><a href="/blogs/system-design/caching/">Caching</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

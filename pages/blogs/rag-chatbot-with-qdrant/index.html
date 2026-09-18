@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">RAG Chatbot with Qdrant</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>RAG Chatbot with Qdrant</h1>
-            <p class="detail-meta"><time datetime="2025-12-11">2025-12-11</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              RAG Chatbot with Qdrant
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2025-12-11">2025-12-11</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               When I first added a chatbot to my portfolio, I wanted it to actually know about my
               work, not just give generic responses. A standard LLM prompt won&#39;t cut it when you
@@ -145,42 +154,42 @@
             </ul>
             <p>Here&#39;s a simplified example:</p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ContentChunk</span> <span class="u">{</span>
-  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  title<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  text<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  sourceId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  metadata<span class="o">?:</span> <span class="t">Record</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">string</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">ContentChunk</span> <span class="text-syn-u">{</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  title<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  text<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  sourceId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  metadata<span class="text-syn-o">?:</span> <span class="text-syn-t">Record</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">string</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">chunkContent</span><span class="u">(</span>documents<span class="o">:</span> <span class="t">Document</span><span class="u">[])</span><span class="o">:</span> <span class="t">ContentChunk</span><span class="u">[]</span> <span class="u">{</span>
-  <span class="k">const</span> chunks<span class="o">:</span> <span class="t">ContentChunk</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[];</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">chunkContent</span><span class="text-syn-u">(</span>documents<span class="text-syn-o">:</span> <span class="text-syn-t">Document</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">ContentChunk</span><span class="text-syn-u">[]</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> chunks<span class="text-syn-o">:</span> <span class="text-syn-t">ContentChunk</span><span class="text-syn-u">[]</span> <span class="text-syn-o">=</span> <span class="text-syn-u">[];</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> doc <span class="o">of</span> documents<span class="u">)</span> <span class="u">{</span>
-<span class="c">    // Split document into smaller sections</span>
-<span class="c">    // This could split by paragraphs, headings, or fixed character limits</span>
-    <span class="k">const</span> sections <span class="o">=</span> <span class="f">splitIntoSections</span><span class="u">(</span>doc<span class="u">.</span><span class="p">content</span><span class="u">);</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> doc <span class="text-syn-o">of</span> documents<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+<span class="text-syn-c italic">    // Split document into smaller sections</span>
+<span class="text-syn-c italic">    // This could split by paragraphs, headings, or fixed character limits</span>
+    <span class="text-syn-k">const</span> sections <span class="text-syn-o">=</span> <span class="text-syn-f">splitIntoSections</span><span class="text-syn-u">(</span>doc<span class="text-syn-u">.</span><span class="text-syn-p">content</span><span class="text-syn-u">);</span>
 
-    <span class="k">for</span> <span class="u">(</span><span class="k">const</span> section <span class="o">of</span> sections<span class="u">)</span> <span class="u">{</span>
-      chunks<span class="u">.</span><span class="f">push</span><span class="u">({</span>
-        <span class="p">id:</span> <span class="f">generateId</span><span class="u">(),</span>
-        <span class="p">title:</span> doc<span class="u">.</span><span class="p">title</span><span class="u">,</span>
-        <span class="p">text:</span> section<span class="u">,</span>
-        <span class="p">sourceId:</span> doc<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-        <span class="p">metadata:</span> <span class="u">{</span> <span class="p">url:</span> doc<span class="u">.</span><span class="p">url</span> <span class="u">},</span>
-      <span class="u">});</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+    <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> section <span class="text-syn-o">of</span> sections<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      chunks<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">({</span>
+        <span class="text-syn-p">id:</span> <span class="text-syn-f">generateId</span><span class="text-syn-u">(),</span>
+        <span class="text-syn-p">title:</span> doc<span class="text-syn-u">.</span><span class="text-syn-p">title</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">text:</span> section<span class="text-syn-u">,</span>
+        <span class="text-syn-p">sourceId:</span> doc<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">metadata:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">url:</span> doc<span class="text-syn-u">.</span><span class="text-syn-p">url</span> <span class="text-syn-u">},</span>
+      <span class="text-syn-u">});</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> chunks<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> chunks<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="c">// Example implementation: split by double newlines (paragraphs)</span>
-<span class="k">function</span> <span class="f">splitIntoSections</span><span class="u">(</span>content<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span><span class="u">[]</span> <span class="u">{</span>
-<span class="c">  // Split by double newlines to get paragraphs</span>
-<span class="c">  // You could also split by headings, fixed sizes, or semantic boundaries</span>
-  <span class="k">return</span> content<span class="u">.</span><span class="f">split</span><span class="u">(</span><span class="s">/\n\n+/</span><span class="u">).</span><span class="f">filter</span><span class="u">((</span>section<span class="u">)</span> <span class="k">=&gt;</span> section<span class="u">.</span><span class="f">trim</span><span class="u">().</span>length <span class="o">&gt;</span> <span class="n">0</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">// Example implementation: split by double newlines (paragraphs)</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">splitIntoSections</span><span class="text-syn-u">(</span>content<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[]</span> <span class="text-syn-u">{</span>
+<span class="text-syn-c italic">  // Split by double newlines to get paragraphs</span>
+<span class="text-syn-c italic">  // You could also split by headings, fixed sizes, or semantic boundaries</span>
+  <span class="text-syn-k">return</span> content<span class="text-syn-u">.</span><span class="text-syn-f">split</span><span class="text-syn-u">(</span><span class="text-syn-s">/\n\n+/</span><span class="text-syn-u">).</span><span class="text-syn-f">filter</span><span class="text-syn-u">((</span>section<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> section<span class="text-syn-u">.</span><span class="text-syn-f">trim</span><span class="text-syn-u">().</span>length <span class="text-syn-o">&gt;</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>The exact chunking logic depends on your content structure. You might split by:</p>
             <ul>
@@ -203,15 +212,15 @@
             </p>
             <p><strong>Sample embedding</strong></p>
             <p><strong>JSON input</strong></p>
-            <pre><code class="language-json"><span class="u">{</span>
-    text<span class="u">:</span> <span class="s">&quot;Hi there&quot;</span><span class="u">,</span>
-  <span class="u">}</span>;
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+    text<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hi there&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">}</span>;
 </code></pre>
             <p><strong>Output shape</strong></p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;dimensions&quot;</span><span class="u">:</span> <span class="n">3072</span><span class="u">,</span>
-  <span class="p">&quot;embedding&quot;</span><span class="u">:</span> <span class="u">[</span><span class="n">-0.0006984524079598486</span><span class="u">,</span><span class="n">-0.019356805831193924</span><span class="u">,</span><span class="n">-0.03219897672533989</span><span class="u">,</span><span class="n">0.012672074139118195</span><span class="u">,</span>............<span class="u">]</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;dimensions&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">3072</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;embedding&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span><span class="text-syn-n">-0.0006984524079598486</span><span class="text-syn-u">,</span><span class="text-syn-n">-0.019356805831193924</span><span class="text-syn-u">,</span><span class="text-syn-n">-0.03219897672533989</span><span class="text-syn-u">,</span><span class="text-syn-n">0.012672074139118195</span><span class="text-syn-u">,</span>............<span class="text-syn-u">]</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               In practice, you would repeat this for every chunk and store the resulting vectors in
@@ -222,14 +231,14 @@
               3072-dimensional vectors. The embedding API is straightforward:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">generateEmbedding</span><span class="u">(</span>text<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">number</span><span class="u">[]&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> openai<span class="u">.</span>embeddings<span class="u">.</span><span class="f">create</span><span class="u">({</span>
-    <span class="p">model:</span> <span class="s">&quot;text-embedding-3-large&quot;</span><span class="u">,</span>
-    <span class="p">input:</span> text<span class="u">,</span>
-  <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">generateEmbedding</span><span class="text-syn-u">(</span>text<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> openai<span class="text-syn-u">.</span>embeddings<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">model:</span> <span class="text-syn-s">&quot;text-embedding-3-large&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">input:</span> text<span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> response<span class="u">.</span><span class="p">data</span><span class="u">[</span><span class="n">0</span><span class="u">].</span><span class="p">embedding</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> response<span class="text-syn-u">.</span><span class="text-syn-p">data</span><span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">].</span><span class="text-syn-p">embedding</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               When processing many chunks, you&#39;ll want to batch requests and handle rate limits.
@@ -237,31 +246,31 @@
               approach is to hash each chunk&#39;s text and cache the embeddings:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ChunkWithVector</span> <span class="k">extends</span> ContentChunk <span class="u">{</span>
-  vector<span class="o">:</span> <span class="t">number</span><span class="u">[];</span>
-  hash<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">ChunkWithVector</span> <span class="text-syn-k">extends</span> ContentChunk <span class="text-syn-u">{</span>
+  vector<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">[];</span>
+  hash<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">processChunks</span><span class="u">(</span>chunks<span class="o">:</span> <span class="t">ContentChunk</span><span class="u">[])</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">ChunkWithVector</span><span class="u">[]&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> processed<span class="o">:</span> <span class="t">ChunkWithVector</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[];</span>
-  <span class="k">const</span> cache <span class="o">=</span> <span class="f">loadEmbeddingCache</span><span class="u">();</span> <span class="c">// Load from disk or database</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processChunks</span><span class="text-syn-u">(</span>chunks<span class="text-syn-o">:</span> <span class="text-syn-t">ContentChunk</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">ChunkWithVector</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> processed<span class="text-syn-o">:</span> <span class="text-syn-t">ChunkWithVector</span><span class="text-syn-u">[]</span> <span class="text-syn-o">=</span> <span class="text-syn-u">[];</span>
+  <span class="text-syn-k">const</span> cache <span class="text-syn-o">=</span> <span class="text-syn-f">loadEmbeddingCache</span><span class="text-syn-u">();</span> <span class="text-syn-c italic">// Load from disk or database</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> chunk <span class="o">of</span> chunks<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> hash <span class="o">=</span> <span class="f">hashText</span><span class="u">(</span>chunk<span class="u">.</span><span class="p">text</span><span class="u">);</span>
-    <span class="k">const</span> cached <span class="o">=</span> cache<span class="u">.</span><span class="f">get</span><span class="u">(</span>hash<span class="u">);</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> chunk <span class="text-syn-o">of</span> chunks<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashText</span><span class="text-syn-u">(</span>chunk<span class="text-syn-u">.</span><span class="text-syn-p">text</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> cache<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>hash<span class="text-syn-u">);</span>
 
-    <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-      processed<span class="u">.</span><span class="f">push</span><span class="u">({</span> <span class="o">...</span>chunk<span class="u">,</span> <span class="p">vector:</span> cached<span class="u">.</span><span class="p">vector</span><span class="u">,</span> hash <span class="u">});</span>
-    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
-      <span class="k">const</span> vector <span class="o">=</span> <span class="k">await</span> <span class="f">generateEmbedding</span><span class="u">(</span>chunk<span class="u">.</span><span class="p">text</span><span class="u">);</span>
-      processed<span class="u">.</span><span class="f">push</span><span class="u">({</span> <span class="o">...</span>chunk<span class="u">,</span> vector<span class="u">,</span> hash <span class="u">});</span>
-      cache<span class="u">.</span><span class="f">set</span><span class="u">(</span>hash<span class="u">,</span> <span class="u">{</span> vector<span class="u">,</span> <span class="p">timestamp:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="u">});</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      processed<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">({</span> <span class="text-syn-o">...</span>chunk<span class="text-syn-u">,</span> <span class="text-syn-p">vector:</span> cached<span class="text-syn-u">.</span><span class="text-syn-p">vector</span><span class="text-syn-u">,</span> hash <span class="text-syn-u">});</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">else</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> vector <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">generateEmbedding</span><span class="text-syn-u">(</span>chunk<span class="text-syn-u">.</span><span class="text-syn-p">text</span><span class="text-syn-u">);</span>
+      processed<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">({</span> <span class="text-syn-o">...</span>chunk<span class="text-syn-u">,</span> vector<span class="text-syn-u">,</span> hash <span class="text-syn-u">});</span>
+      cache<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>hash<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> vector<span class="text-syn-u">,</span> <span class="text-syn-p">timestamp:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-u">});</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="f">saveEmbeddingCache</span><span class="u">(</span>cache<span class="u">);</span>
-  <span class="k">return</span> processed<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-f">saveEmbeddingCache</span><span class="text-syn-u">(</span>cache<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> processed<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This way, you only pay for embeddings when content actually changes. The hash-based
@@ -274,58 +283,58 @@
             </p>
             <p>Setting up a collection is straightforward:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> QdrantClient <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@qdrant/js-client-rest&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> QdrantClient <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@qdrant/js-client-rest&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> client <span class="o">=</span> <span class="o">new</span> <span class="f">QdrantClient</span><span class="u">({</span>
-  <span class="p">url:</span> process<span class="u">.</span>env<span class="u">.</span>QDRANT_URL<span class="u">,</span>
-  <span class="p">apiKey:</span> process<span class="u">.</span>env<span class="u">.</span>QDRANT_API_KEY<span class="u">,</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> client <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">QdrantClient</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">url:</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>QDRANT_URL<span class="text-syn-u">,</span>
+  <span class="text-syn-p">apiKey:</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>QDRANT_API_KEY<span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">initializeCollection</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> collectionName <span class="o">=</span> <span class="s">&quot;content_vectors&quot;</span><span class="u">;</span>
-  <span class="k">const</span> vectorSize <span class="o">=</span> <span class="n">3072</span><span class="u">;</span> <span class="c">// Must match your embedding model</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">initializeCollection</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> collectionName <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;content_vectors&quot;</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> vectorSize <span class="text-syn-o">=</span> <span class="text-syn-n">3072</span><span class="text-syn-u">;</span> <span class="text-syn-c italic">// Must match your embedding model</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">await</span> client<span class="u">.</span><span class="f">getCollection</span><span class="u">(</span>collectionName<span class="u">);</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Collection already exists&quot;</span><span class="u">);</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">{</span>
-    <span class="k">await</span> client<span class="u">.</span><span class="f">createCollection</span><span class="u">(</span>collectionName<span class="u">,</span> <span class="u">{</span>
-      <span class="p">vectors:</span> <span class="u">{</span>
-        <span class="p">size:</span> vectorSize<span class="u">,</span>
-        <span class="p">distance:</span> <span class="s">&quot;Cosine&quot;</span><span class="u">,</span> <span class="c">// Cosine similarity for semantic search</span>
-      <span class="u">},</span>
-    <span class="u">});</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Collection created&quot;</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> client<span class="text-syn-u">.</span><span class="text-syn-f">getCollection</span><span class="text-syn-u">(</span>collectionName<span class="text-syn-u">);</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Collection already exists&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> client<span class="text-syn-u">.</span><span class="text-syn-f">createCollection</span><span class="text-syn-u">(</span>collectionName<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">vectors:</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">size:</span> vectorSize<span class="text-syn-u">,</span>
+        <span class="text-syn-p">distance:</span> <span class="text-syn-s">&quot;Cosine&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-c italic">// Cosine similarity for semantic search</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">});</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Collection created&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Once the collection exists, you can upload your chunks. Qdrant stores each chunk as a
               &quot;point&quot; with an ID, a vector, and a payload (your metadata):
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">uploadChunks</span><span class="u">(</span>chunks<span class="o">:</span> <span class="t">ChunkWithVector</span><span class="u">[])</span> <span class="u">{</span>
-  <span class="k">const</span> points <span class="o">=</span> chunks<span class="u">.</span><span class="f">map</span><span class="u">((</span>chunk<span class="u">,</span> index<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">id:</span> index<span class="u">,</span>
-    <span class="p">vector:</span> chunk<span class="u">.</span><span class="p">vector</span><span class="u">,</span>
-    <span class="p">payload:</span> <span class="u">{</span>
-      <span class="p">text:</span> chunk<span class="u">.</span><span class="p">text</span><span class="u">,</span>
-      <span class="p">title:</span> chunk<span class="u">.</span><span class="p">title</span><span class="u">,</span>
-      <span class="p">sourceId:</span> chunk<span class="u">.</span><span class="p">sourceId</span><span class="u">,</span>
-      <span class="p">hash:</span> chunk<span class="u">.</span><span class="p">hash</span><span class="u">,</span>
-      <span class="o">...</span>chunk<span class="u">.</span><span class="p">metadata</span><span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">}));</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">uploadChunks</span><span class="text-syn-u">(</span>chunks<span class="text-syn-o">:</span> <span class="text-syn-t">ChunkWithVector</span><span class="text-syn-u">[])</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> points <span class="text-syn-o">=</span> chunks<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>chunk<span class="text-syn-u">,</span> index<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">id:</span> index<span class="text-syn-u">,</span>
+    <span class="text-syn-p">vector:</span> chunk<span class="text-syn-u">.</span><span class="text-syn-p">vector</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">payload:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">text:</span> chunk<span class="text-syn-u">.</span><span class="text-syn-p">text</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">title:</span> chunk<span class="text-syn-u">.</span><span class="text-syn-p">title</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">sourceId:</span> chunk<span class="text-syn-u">.</span><span class="text-syn-p">sourceId</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">hash:</span> chunk<span class="text-syn-u">.</span><span class="text-syn-p">hash</span><span class="text-syn-u">,</span>
+      <span class="text-syn-o">...</span>chunk<span class="text-syn-u">.</span><span class="text-syn-p">metadata</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">}));</span>
 
-  <span class="k">const</span> batchSize <span class="o">=</span> <span class="n">100</span><span class="u">;</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> points<span class="u">.</span>length<span class="u">;</span> i <span class="o">+=</span> batchSize<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> batch <span class="o">=</span> points<span class="u">.</span><span class="f">slice</span><span class="u">(</span>i<span class="u">,</span> i <span class="o">+</span> batchSize<span class="u">);</span>
-    <span class="k">await</span> client<span class="u">.</span><span class="f">upsert</span><span class="u">(</span>collectionName<span class="u">,</span> <span class="u">{</span>
-      <span class="p">points:</span> batch<span class="u">,</span>
-      <span class="p">wait:</span> <span class="k">true</span><span class="u">,</span>
-    <span class="u">});</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  <span class="text-syn-k">const</span> batchSize <span class="text-syn-o">=</span> <span class="text-syn-n">100</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> points<span class="text-syn-u">.</span>length<span class="text-syn-u">;</span> i <span class="text-syn-o">+=</span> batchSize<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> batch <span class="text-syn-o">=</span> points<span class="text-syn-u">.</span><span class="text-syn-f">slice</span><span class="text-syn-u">(</span>i<span class="text-syn-u">,</span> i <span class="text-syn-o">+</span> batchSize<span class="text-syn-u">);</span>
+    <span class="text-syn-k">await</span> client<span class="text-syn-u">.</span><span class="text-syn-f">upsert</span><span class="text-syn-u">(</span>collectionName<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">points:</span> batch<span class="text-syn-u">,</span>
+      <span class="text-syn-p">wait:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The payload is crucial, it stores the actual text and metadata you&#39;ll retrieve
@@ -348,37 +357,37 @@
             </ol>
             <p>Here&#39;s how that looks:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getRelevantContext</span><span class="u">(</span>
-  question<span class="o">:</span> <span class="t">string</span><span class="u">,</span>
-  limit<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> <span class="n">5</span><span class="u">,</span>
-  filters<span class="o">?:</span> <span class="t">Record</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">any</span><span class="u">&gt;,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">ContextChunk</span><span class="u">[]&gt;</span> <span class="u">{</span>
-<span class="c">  // Generate embedding for the question</span>
-  <span class="k">const</span> queryEmbedding <span class="o">=</span> <span class="k">await</span> <span class="f">generateEmbedding</span><span class="u">(</span>question<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getRelevantContext</span><span class="text-syn-u">(</span>
+  question<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+  limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-o">=</span> <span class="text-syn-n">5</span><span class="text-syn-u">,</span>
+  filters<span class="text-syn-o">?:</span> <span class="text-syn-t">Record</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">any</span><span class="text-syn-u">&gt;,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">ContextChunk</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
+<span class="text-syn-c italic">  // Generate embedding for the question</span>
+  <span class="text-syn-k">const</span> queryEmbedding <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">generateEmbedding</span><span class="text-syn-u">(</span>question<span class="text-syn-u">);</span>
 
-<span class="c">  // Search Qdrant</span>
-  <span class="k">const</span> results <span class="o">=</span> <span class="k">await</span> client<span class="u">.</span><span class="f">search</span><span class="u">(</span>collectionName<span class="u">,</span> <span class="u">{</span>
-    <span class="p">vector:</span> queryEmbedding<span class="u">,</span>
-    limit<span class="u">,</span>
-    <span class="p">with_payload:</span> <span class="k">true</span><span class="u">,</span> <span class="c">// Include the text and metadata</span>
-    <span class="p">filter:</span> filters
-      <span class="o">?</span> <span class="u">{</span>
-          <span class="p">must:</span> Object<span class="u">.</span><span class="f">entries</span><span class="u">(</span>filters<span class="u">).</span><span class="f">map</span><span class="u">(([</span>key<span class="u">,</span> value<span class="u">])</span> <span class="k">=&gt;</span> <span class="u">({</span>
-            <span class="p">key:</span> key<span class="u">,</span>
-            <span class="p">match:</span> <span class="u">{</span> value <span class="u">},</span>
-          <span class="u">})),</span>
-        <span class="u">}</span>
-      <span class="o">:</span> <span class="k">undefined</span><span class="u">,</span>
-  <span class="u">});</span>
+<span class="text-syn-c italic">  // Search Qdrant</span>
+  <span class="text-syn-k">const</span> results <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> client<span class="text-syn-u">.</span><span class="text-syn-f">search</span><span class="text-syn-u">(</span>collectionName<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">vector:</span> queryEmbedding<span class="text-syn-u">,</span>
+    limit<span class="text-syn-u">,</span>
+    <span class="text-syn-p">with_payload:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span> <span class="text-syn-c italic">// Include the text and metadata</span>
+    <span class="text-syn-p">filter:</span> filters
+      <span class="text-syn-o">?</span> <span class="text-syn-u">{</span>
+          <span class="text-syn-p">must:</span> Object<span class="text-syn-u">.</span><span class="text-syn-f">entries</span><span class="text-syn-u">(</span>filters<span class="text-syn-u">).</span><span class="text-syn-f">map</span><span class="text-syn-u">(([</span>key<span class="text-syn-u">,</span> value<span class="text-syn-u">])</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+            <span class="text-syn-p">key:</span> key<span class="text-syn-u">,</span>
+            <span class="text-syn-p">match:</span> <span class="text-syn-u">{</span> value <span class="text-syn-u">},</span>
+          <span class="text-syn-u">})),</span>
+        <span class="text-syn-u">}</span>
+      <span class="text-syn-o">:</span> <span class="text-syn-k">undefined</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-<span class="c">  // Map results to a simpler format</span>
-  <span class="k">return</span> results<span class="u">.</span><span class="f">map</span><span class="u">((</span>result<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">text:</span> result<span class="u">.</span>payload<span class="u">.</span><span class="p">text</span> <span class="k">as</span> <span class="t">string</span><span class="u">,</span>
-    <span class="p">title:</span> result<span class="u">.</span>payload<span class="u">.</span><span class="p">title</span> <span class="k">as</span> <span class="t">string</span><span class="u">,</span>
-    <span class="p">sourceId:</span> result<span class="u">.</span>payload<span class="u">.</span><span class="p">sourceId</span> <span class="k">as</span> <span class="t">string</span><span class="u">,</span>
-    <span class="p">score:</span> result<span class="u">.</span><span class="p">score</span><span class="u">,</span> <span class="c">// Similarity score (0-1)</span>
-  <span class="u">}));</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">  // Map results to a simpler format</span>
+  <span class="text-syn-k">return</span> results<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>result<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">text:</span> result<span class="text-syn-u">.</span>payload<span class="text-syn-u">.</span><span class="text-syn-p">text</span> <span class="text-syn-k">as</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">title:</span> result<span class="text-syn-u">.</span>payload<span class="text-syn-u">.</span><span class="text-syn-p">title</span> <span class="text-syn-k">as</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">sourceId:</span> result<span class="text-syn-u">.</span>payload<span class="text-syn-u">.</span><span class="text-syn-p">sourceId</span> <span class="text-syn-k">as</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">score:</span> result<span class="text-syn-u">.</span><span class="text-syn-p">score</span><span class="text-syn-u">,</span> <span class="text-syn-c italic">// Similarity score (0-1)</span>
+  <span class="text-syn-u">}));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The <code>score</code> tells you how similar the chunk is to the query. Higher scores
@@ -402,22 +411,22 @@
             </ul>
             <p>Here&#39;s a simplified version:</p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">buildSystemPrompt</span><span class="u">(</span>contextChunks<span class="o">:</span> <span class="t">ContextChunk</span><span class="u">[])</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
-  <span class="k">const</span> contextText <span class="o">=</span> contextChunks
-    <span class="u">.</span><span class="f">map</span><span class="u">((</span>chunk<span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`${chunk.</span><span class="p">title</span><span class="s">}:\n${chunk.</span><span class="p">text</span><span class="s">}`</span><span class="u">)</span>
-    <span class="u">.</span><span class="f">join</span><span class="u">(</span><span class="s">&quot;\n\n---\n\n&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">buildSystemPrompt</span><span class="text-syn-u">(</span>contextChunks<span class="text-syn-o">:</span> <span class="text-syn-t">ContextChunk</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> contextText <span class="text-syn-o">=</span> contextChunks
+    <span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>chunk<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`${chunk.</span><span class="text-syn-p">title</span><span class="text-syn-s">}:\n${chunk.</span><span class="text-syn-p">text</span><span class="text-syn-s">}`</span><span class="text-syn-u">)</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;\n\n---\n\n&quot;</span><span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="s">`You are an AI assistant helping answer questions based on the provided context.</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-s">`You are an AI assistant helping answer questions based on the provided context.</span>
 
-<span class="s">Here is relevant context:</span>
-<span class="s">${contextText}</span>
+<span class="text-syn-s">Here is relevant context:</span>
+<span class="text-syn-s">${contextText}</span>
 
-<span class="s">Guidelines:</span>
-<span class="s">- Answer based only on the provided context</span>
-<span class="s">- Be concise and direct</span>
-<span class="s">- If you don&#39;t know something, say so</span>
-<span class="s">- Use natural language, avoid phrases like &quot;according to the context&quot;`</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-s">Guidelines:</span>
+<span class="text-syn-s">- Answer based only on the provided context</span>
+<span class="text-syn-s">- Be concise and direct</span>
+<span class="text-syn-s">- If you don&#39;t know something, say so</span>
+<span class="text-syn-s">- Use natural language, avoid phrases like &quot;according to the context&quot;`</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The key is making the context easy for the model to parse and reference. Clear
@@ -436,43 +445,43 @@
               <li>Returns the response</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">POST</span><span class="u">(</span>req<span class="o">:</span> <span class="t">Request</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> <span class="u">{</span> messages <span class="u">}</span> <span class="o">=</span> <span class="k">await</span> req<span class="u">.</span><span class="f">json</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">POST</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> messages <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> req<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">();</span>
 
-  <span class="k">const</span> lastMessage <span class="o">=</span> messages<span class="u">[</span>messages<span class="u">.</span>length <span class="o">-</span> <span class="n">1</span><span class="u">];</span>
+  <span class="text-syn-k">const</span> lastMessage <span class="text-syn-o">=</span> messages<span class="text-syn-u">[</span>messages<span class="text-syn-u">.</span>length <span class="text-syn-o">-</span> <span class="text-syn-n">1</span><span class="text-syn-u">];</span>
 
-<span class="c">  // Get relevant context from Qdrant</span>
-  <span class="k">const</span> context <span class="o">=</span> <span class="k">await</span> <span class="f">getRelevantContext</span><span class="u">(</span>lastMessage<span class="u">.</span><span class="p">content</span><span class="u">,</span> <span class="n">5</span><span class="u">);</span>
+<span class="text-syn-c italic">  // Get relevant context from Qdrant</span>
+  <span class="text-syn-k">const</span> context <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getRelevantContext</span><span class="text-syn-u">(</span>lastMessage<span class="text-syn-u">.</span><span class="text-syn-p">content</span><span class="text-syn-u">,</span> <span class="text-syn-n">5</span><span class="text-syn-u">);</span>
 
-<span class="c">  // Build system prompt with context</span>
-  <span class="k">const</span> systemPrompt <span class="o">=</span> <span class="f">buildSystemPrompt</span><span class="u">(</span>context<span class="u">);</span>
+<span class="text-syn-c italic">  // Build system prompt with context</span>
+  <span class="text-syn-k">const</span> systemPrompt <span class="text-syn-o">=</span> <span class="text-syn-f">buildSystemPrompt</span><span class="text-syn-u">(</span>context<span class="text-syn-u">);</span>
 
-<span class="c">  // Call LLM with streaming</span>
-  <span class="k">const</span> openai <span class="o">=</span> <span class="o">new</span> <span class="f">OpenAI</span><span class="u">({</span> <span class="p">apiKey:</span> process<span class="u">.</span>env<span class="u">.</span>OPENAI_API_KEY <span class="u">});</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> openai<span class="u">.</span>chat<span class="u">.</span>completions<span class="u">.</span><span class="f">create</span><span class="u">({</span>
-    <span class="p">model:</span> <span class="s">&quot;gpt-4&quot;</span><span class="u">,</span>
-    <span class="p">messages:</span> <span class="u">[{</span> <span class="p">role:</span> <span class="s">&quot;system&quot;</span><span class="u">,</span> <span class="p">content:</span> systemPrompt <span class="u">},</span> <span class="o">...</span>messages<span class="u">],</span>
-    <span class="p">stream:</span> <span class="k">true</span><span class="u">,</span>
-    <span class="p">temperature:</span> <span class="n">0.7</span><span class="u">,</span>
-  <span class="u">});</span>
+<span class="text-syn-c italic">  // Call LLM with streaming</span>
+  <span class="text-syn-k">const</span> openai <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">OpenAI</span><span class="text-syn-u">({</span> <span class="text-syn-p">apiKey:</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>OPENAI_API_KEY <span class="text-syn-u">});</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> openai<span class="text-syn-u">.</span>chat<span class="text-syn-u">.</span>completions<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">model:</span> <span class="text-syn-s">&quot;gpt-4&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">messages:</span> <span class="text-syn-u">[{</span> <span class="text-syn-p">role:</span> <span class="text-syn-s">&quot;system&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">content:</span> systemPrompt <span class="text-syn-u">},</span> <span class="text-syn-o">...</span>messages<span class="text-syn-u">],</span>
+    <span class="text-syn-p">stream:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">temperature:</span> <span class="text-syn-n">0.7</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-<span class="c">  // Stream response back to client</span>
-  <span class="k">const</span> stream <span class="o">=</span> <span class="o">new</span> <span class="f">ReadableStream</span><span class="u">({</span>
-    <span class="k">async</span> <span class="f">start</span><span class="u">(</span>controller<span class="u">)</span> <span class="u">{</span>
-      <span class="k">for</span> <span class="k">await</span> <span class="u">(</span><span class="k">const</span> chunk <span class="o">of</span> response<span class="u">)</span> <span class="u">{</span>
-        <span class="k">const</span> content <span class="o">=</span> chunk<span class="u">.</span><span class="p">choices</span><span class="u">[</span><span class="n">0</span><span class="u">]?.</span>delta<span class="u">?.</span><span class="p">content</span> <span class="o">||</span> <span class="s">&quot;&quot;</span><span class="u">;</span>
-        <span class="k">if</span> <span class="u">(</span>content<span class="u">)</span> <span class="u">{</span>
-          controller<span class="u">.</span><span class="f">enqueue</span><span class="u">(</span><span class="o">new</span> <span class="f">TextEncoder</span><span class="u">().</span><span class="f">encode</span><span class="u">(</span>content<span class="u">));</span>
-        <span class="u">}</span>
-      <span class="u">}</span>
-      controller<span class="u">.</span><span class="f">close</span><span class="u">();</span>
-    <span class="u">},</span>
-  <span class="u">});</span>
+<span class="text-syn-c italic">  // Stream response back to client</span>
+  <span class="text-syn-k">const</span> stream <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">ReadableStream</span><span class="text-syn-u">({</span>
+    <span class="text-syn-k">async</span> <span class="text-syn-f">start</span><span class="text-syn-u">(</span>controller<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">for</span> <span class="text-syn-k">await</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> chunk <span class="text-syn-o">of</span> response<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">const</span> content <span class="text-syn-o">=</span> chunk<span class="text-syn-u">.</span><span class="text-syn-p">choices</span><span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">]?.</span>delta<span class="text-syn-u">?.</span><span class="text-syn-p">content</span> <span class="text-syn-o">||</span> <span class="text-syn-s">&quot;&quot;</span><span class="text-syn-u">;</span>
+        <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>content<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+          controller<span class="text-syn-u">.</span><span class="text-syn-f">enqueue</span><span class="text-syn-u">(</span><span class="text-syn-o">new</span> <span class="text-syn-f">TextEncoder</span><span class="text-syn-u">().</span><span class="text-syn-f">encode</span><span class="text-syn-u">(</span>content<span class="text-syn-u">));</span>
+        <span class="text-syn-u">}</span>
+      <span class="text-syn-u">}</span>
+      controller<span class="text-syn-u">.</span><span class="text-syn-f">close</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> <span class="o">new</span> <span class="f">Response</span><span class="u">(</span>stream<span class="u">,</span> <span class="u">{</span>
-    <span class="p">headers:</span> <span class="u">{</span> <span class="p">&quot;Content-Type&quot;:</span> <span class="s">&quot;text/plain; charset=utf-8&quot;</span> <span class="u">},</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Response</span><span class="text-syn-u">(</span>stream<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">headers:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;Content-Type&quot;:</span> <span class="text-syn-s">&quot;text/plain; charset=utf-8&quot;</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The frontend sends messages to this endpoint, and streaming gives users immediate
@@ -545,26 +554,35 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
-            <li><a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a></li>
-            <li>
+            <li class="my-2"><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
+            <li class="my-2">
+              <a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/mcp-server-that-writes-itself/">An MCP Server That Writes Itself</a>
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

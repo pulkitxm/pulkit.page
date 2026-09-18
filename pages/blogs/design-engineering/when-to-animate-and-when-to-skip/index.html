@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>When to Animate and When to Skip</h1>
-            <p class="detail-meta"><time datetime="2026-01-28">2026-01-28</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              When to Animate and When to Skip
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-28">2026-01-28</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>Animation can transform an interface. It can also ruin one.</p>
             <p>
               The difference comes down to intent. Every animation you add creates a tradeoff
@@ -454,12 +463,12 @@
               </li>
             </ul>
             <pre
-            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="g">*</span> <span class="u">{</span>
-    <span class="p">animation-duration</span><span class="u">:</span> <span class="n">0.01ms</span> <span class="k">!important</span><span class="u">;</span>
-    <span class="p">transition-duration</span><span class="u">:</span> <span class="n">0.01ms</span> <span class="k">!important</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-g">*</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">animation-duration</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.01ms</span> <span class="text-syn-k">!important</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transition-duration</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.01ms</span> <span class="text-syn-k">!important</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="building-intuition">Building Intuition</h2>
             <p>
@@ -522,16 +531,18 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/easing-curves-that-feel-natural/"
                 >Easing Curves That Feel Natural</a
               >
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/moving-things-without-moving-them/"
                 >Moving Things Without Moving Them</a
               >
@@ -539,15 +550,22 @@
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

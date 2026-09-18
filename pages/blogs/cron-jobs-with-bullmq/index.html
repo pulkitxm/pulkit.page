@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">BullMQ Cron Jobs with Redis in Node.js</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>BullMQ Cron Jobs with Redis in Node.js</h1>
-            <p class="detail-meta"><time datetime="2026-03-29">2026-03-29</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              BullMQ Cron Jobs with Redis in Node.js
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-03-29">2026-03-29</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               I was building cron jobs at <a href="https://noveum.ai">Noveum.ai</a>. We needed users
               to schedule automated analysis reports on their own terms: daily at 6 AM, every Monday
@@ -95,14 +104,14 @@
               route at that interval. No infrastructure to manage, no Redis, no workers. For simple
               periodic tasks, it&#39;s perfect.
             </p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;crons&quot;</span><span class="u">:</span> <span class="u">[</span>
-    <span class="u">{</span>
-      <span class="p">&quot;path&quot;</span><span class="u">:</span> <span class="s">&quot;/api/cron/daily-digest&quot;</span><span class="u">,</span>
-      <span class="p">&quot;schedule&quot;</span><span class="u">:</span> <span class="s">&quot;0 8 * * *&quot;</span>
-    <span class="u">}</span>
-  <span class="u">]</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;crons&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span>
+    <span class="text-syn-u">{</span>
+      <span class="text-syn-p">&quot;path&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;/api/cron/daily-digest&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">&quot;schedule&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;0 8 * * *&quot;</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">]</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               But it didn&#39;t fit our use case. We wanted to self-host the whole thing inside our
@@ -370,7 +379,7 @@
             <h2 id="setting-up">Setting Up</h2>
             <p>Install BullMQ:</p>
             <pre
-            ><code class="language-sh"><span class="f">npm</span> <span class="s">install</span> <span class="s">bullmq</span>
+            ><code class="language-sh"><span class="text-syn-f">npm</span> <span class="text-syn-s">install</span> <span class="text-syn-s">bullmq</span>
 </code></pre>
             <p>
               BullMQ uses Redis under the hood. You&#39;ll need a Redis instance running, whether
@@ -378,24 +387,24 @@
             </p>
             <p>First, set up the Redis connection:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="k">type</span> <span class="u">{</span> ConnectionOptions <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-k">type</span> <span class="text-syn-u">{</span> ConnectionOptions <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">createRedisConnection</span><span class="u">()</span><span class="o">:</span> <span class="t">ConnectionOptions</span> <span class="u">{</span>
-  <span class="k">const</span> host <span class="o">=</span> process<span class="u">.</span>env<span class="u">.</span>REDIS_HOST<span class="u">;</span>
-  <span class="k">const</span> port <span class="o">=</span> process<span class="u">.</span>env<span class="u">.</span>REDIS_PORT<span class="u">;</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">createRedisConnection</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">ConnectionOptions</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> host <span class="text-syn-o">=</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>REDIS_HOST<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> port <span class="text-syn-o">=</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>REDIS_PORT<span class="text-syn-u">;</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>host <span class="o">||</span> <span class="o">!</span>port<span class="u">)</span> <span class="u">{</span>
-    <span class="k">throw</span> <span class="o">new</span> <span class="f">Error</span><span class="u">(</span><span class="s">&quot;REDIS_HOST and REDIS_PORT are required&quot;</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>host <span class="text-syn-o">||</span> <span class="text-syn-o">!</span>port<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">throw</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;REDIS_HOST and REDIS_PORT are required&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    host<span class="u">,</span>
-    <span class="p">port:</span> <span class="f">parseInt</span><span class="u">(</span>port<span class="u">,</span> <span class="n">10</span><span class="u">),</span>
-    <span class="p">password:</span> process<span class="u">.</span>env<span class="u">.</span>REDIS_PASSWORD <span class="o">||</span> <span class="k">undefined</span><span class="u">,</span>
-    <span class="p">maxRetriesPerRequest:</span> <span class="k">null</span><span class="u">,</span>
-    <span class="p">enableOfflineQueue:</span> <span class="k">true</span><span class="u">,</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    host<span class="text-syn-u">,</span>
+    <span class="text-syn-p">port:</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>port<span class="text-syn-u">,</span> <span class="text-syn-n">10</span><span class="text-syn-u">),</span>
+    <span class="text-syn-p">password:</span> process<span class="text-syn-u">.</span>env<span class="text-syn-u">.</span>REDIS_PASSWORD <span class="text-syn-o">||</span> <span class="text-syn-k">undefined</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">maxRetriesPerRequest:</span> <span class="text-syn-k">null</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">enableOfflineQueue:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The
@@ -407,22 +416,22 @@
             </p>
             <p>Now create a queue:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Queue <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Queue <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> connection <span class="o">=</span> <span class="f">createRedisConnection</span><span class="u">();</span>
+<span class="text-syn-k">const</span> connection <span class="text-syn-o">=</span> <span class="text-syn-f">createRedisConnection</span><span class="text-syn-u">();</span>
 
-<span class="k">const</span> scheduledQueue <span class="o">=</span> <span class="o">new</span> <span class="f">Queue</span><span class="u">(</span><span class="s">&quot;scheduled-reports&quot;</span><span class="u">,</span> <span class="u">{</span>
-  connection<span class="u">,</span>
-  <span class="p">defaultJobOptions:</span> <span class="u">{</span>
-    <span class="p">removeOnComplete:</span> <span class="n">50</span><span class="u">,</span>
-    <span class="p">removeOnFail:</span> <span class="n">25</span><span class="u">,</span>
-    <span class="p">attempts:</span> <span class="n">2</span><span class="u">,</span>
-    <span class="p">backoff:</span> <span class="u">{</span>
-      <span class="p">type:</span> <span class="s">&quot;exponential&quot;</span><span class="u">,</span>
-      <span class="p">delay:</span> <span class="n">5000</span><span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">},</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> scheduledQueue <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Queue</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;scheduled-reports&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+  connection<span class="text-syn-u">,</span>
+  <span class="text-syn-p">defaultJobOptions:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">removeOnComplete:</span> <span class="text-syn-n">50</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">removeOnFail:</span> <span class="text-syn-n">25</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">attempts:</span> <span class="text-syn-n">2</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">backoff:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;exponential&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">delay:</span> <span class="text-syn-n">5000</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>The <code>defaultJobOptions</code> matter in production:</p>
             <ul>
@@ -450,29 +459,29 @@
               with a <code>repeat</code> option:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ScheduledJobData</span> <span class="u">{</span>
-  jobId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  scheduleId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  userId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  reportType<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">ScheduledJobData</span> <span class="text-syn-u">{</span>
+  jobId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  scheduleId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  reportType<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">addScheduledJob</span><span class="u">(</span>data<span class="o">:</span> <span class="t">ScheduledJobData</span><span class="u">,</span> cronExpression<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> job <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;generate-report&quot;</span><span class="u">,</span> data<span class="u">,</span> <span class="u">{</span>
-    <span class="p">repeat:</span> <span class="u">{</span>
-      <span class="p">pattern:</span> cronExpression<span class="u">,</span>
-      <span class="p">tz:</span> <span class="s">&quot;UTC&quot;</span><span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">});</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">addScheduledJob</span><span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-t">ScheduledJobData</span><span class="text-syn-u">,</span> cronExpression<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> job <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;generate-report&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">repeat:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">pattern:</span> cronExpression<span class="text-syn-u">,</span>
+      <span class="text-syn-p">tz:</span> <span class="text-syn-s">&quot;UTC&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
 
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Scheduled job registered&quot;</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">scheduleId:</span> data<span class="u">.</span><span class="p">scheduleId</span><span class="u">,</span>
-    cronExpression<span class="u">,</span>
-    <span class="p">repeatJobKey:</span> job<span class="u">.</span><span class="p">repeatJobKey</span><span class="u">,</span>
-  <span class="u">});</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Scheduled job registered&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">scheduleId:</span> data<span class="text-syn-u">.</span><span class="text-syn-p">scheduleId</span><span class="text-syn-u">,</span>
+    cronExpression<span class="text-syn-u">,</span>
+    <span class="text-syn-p">repeatJobKey:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">repeatJobKey</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> job<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> job<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>A few things happening here:</p>
             <ul>
@@ -505,15 +514,15 @@
               >:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getSchedules</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> jobs <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">getRepeatableJobs</span><span class="u">();</span>
-  <span class="k">return</span> jobs<span class="u">.</span><span class="f">map</span><span class="u">((</span>job<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">key:</span> job<span class="u">.</span><span class="p">key</span><span class="u">,</span>
-    <span class="p">name:</span> job<span class="u">.</span><span class="p">name</span><span class="u">,</span>
-    <span class="p">pattern:</span> job<span class="u">.</span><span class="p">pattern</span><span class="u">,</span>
-    <span class="p">next:</span> <span class="o">new</span> <span class="f">Date</span><span class="u">(</span>job<span class="u">.</span><span class="p">next</span><span class="u">),</span>
-  <span class="u">}));</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getSchedules</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> jobs <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">getRepeatableJobs</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">return</span> jobs<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>job<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">key:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">key</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">name:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">pattern:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">pattern</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">next:</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Date</span><span class="text-syn-u">(</span>job<span class="text-syn-u">.</span><span class="text-syn-p">next</span><span class="text-syn-u">),</span>
+  <span class="text-syn-u">}));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               To remove a schedule using
@@ -522,24 +531,24 @@
               >:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">removeSchedule</span><span class="u">(</span>repeatJobKey<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>repeatJobKey<span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">removeSchedule</span><span class="text-syn-u">(</span>repeatJobKey<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">removeRepeatableByKey</span><span class="text-syn-u">(</span>repeatJobKey<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>You can also find and remove by scanning through repeatable jobs:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">removeScheduleById</span><span class="u">(</span>scheduleId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> repeatableJobs <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">getRepeatableJobs</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">removeScheduleById</span><span class="text-syn-u">(</span>scheduleId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> repeatableJobs <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">getRepeatableJobs</span><span class="text-syn-u">();</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> job <span class="o">of</span> repeatableJobs<span class="u">)</span> <span class="u">{</span>
-    <span class="k">if</span> <span class="u">(</span>job<span class="u">.</span>key<span class="u">.</span><span class="f">includes</span><span class="u">(</span>scheduleId<span class="u">))</span> <span class="u">{</span>
-      <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>job<span class="u">.</span><span class="p">key</span><span class="u">);</span>
-      <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> job <span class="text-syn-o">of</span> repeatableJobs<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>job<span class="text-syn-u">.</span>key<span class="text-syn-u">.</span><span class="text-syn-f">includes</span><span class="text-syn-u">(</span>scheduleId<span class="text-syn-u">))</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">removeRepeatableByKey</span><span class="text-syn-u">(</span>job<span class="text-syn-u">.</span><span class="text-syn-p">key</span><span class="text-syn-u">);</span>
+      <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="building-the-worker">Building the Worker</h2>
             <p>
@@ -547,38 +556,38 @@
               them according to the cron schedule.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Worker<span class="u">,</span> <span class="k">type</span> Job<span class="u">,</span> UnrecoverableError <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Worker<span class="text-syn-u">,</span> <span class="text-syn-k">type</span> Job<span class="text-syn-u">,</span> UnrecoverableError <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> connection <span class="o">=</span> <span class="f">createRedisConnection</span><span class="u">();</span>
+<span class="text-syn-k">const</span> connection <span class="text-syn-o">=</span> <span class="text-syn-f">createRedisConnection</span><span class="text-syn-u">();</span>
 
-<span class="k">const</span> worker <span class="o">=</span> <span class="o">new</span> <span class="f">Worker</span><span class="u">&lt;</span><span class="t">ScheduledJobData</span><span class="u">&gt;(</span>
-  <span class="s">&quot;scheduled-reports&quot;</span><span class="u">,</span>
-  <span class="k">async</span> <span class="u">(</span>job<span class="o">:</span> <span class="t">Job</span><span class="u">&lt;</span><span class="t">ScheduledJobData</span><span class="u">&gt;)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Processing scheduled job&quot;</span><span class="u">,</span> <span class="u">{</span>
-      <span class="p">jobId:</span> job<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-      <span class="p">scheduleId:</span> job<span class="u">.</span>data<span class="u">.</span><span class="p">scheduleId</span><span class="u">,</span>
-      <span class="p">attempt:</span> job<span class="u">.</span><span class="p">attemptsMade</span> <span class="o">+</span> <span class="n">1</span><span class="u">,</span>
-    <span class="u">});</span>
+<span class="text-syn-k">const</span> worker <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Worker</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">ScheduledJobData</span><span class="text-syn-u">&gt;(</span>
+  <span class="text-syn-s">&quot;scheduled-reports&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>job<span class="text-syn-o">:</span> <span class="text-syn-t">Job</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">ScheduledJobData</span><span class="text-syn-u">&gt;)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Processing scheduled job&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">jobId:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">scheduleId:</span> job<span class="text-syn-u">.</span>data<span class="text-syn-u">.</span><span class="text-syn-p">scheduleId</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">attempt:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">attemptsMade</span> <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
 
-    <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> <span class="f">generateReport</span><span class="u">(</span>job<span class="u">.</span><span class="p">data</span><span class="u">);</span>
+    <span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">generateReport</span><span class="text-syn-u">(</span>job<span class="text-syn-u">.</span><span class="text-syn-p">data</span><span class="text-syn-u">);</span>
 
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>result<span class="u">.</span><span class="p">success</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">if</span> <span class="u">(</span>result<span class="u">.</span><span class="p">error</span> <span class="o">===</span> <span class="s">&quot;cancelled&quot;</span><span class="u">)</span> <span class="u">{</span>
-        <span class="k">throw</span> <span class="o">new</span> <span class="f">UnrecoverableError</span><span class="u">(</span><span class="s">&quot;Job was cancelled&quot;</span><span class="u">);</span>
-      <span class="u">}</span>
-      <span class="k">throw</span> <span class="o">new</span> <span class="f">Error</span><span class="u">(</span>result<span class="u">.</span><span class="p">error</span> <span class="o">||</span> <span class="s">&quot;Report generation failed&quot;</span><span class="u">);</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>result<span class="text-syn-u">.</span><span class="text-syn-p">success</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>result<span class="text-syn-u">.</span><span class="text-syn-p">error</span> <span class="text-syn-o">===</span> <span class="text-syn-s">&quot;cancelled&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">throw</span> <span class="text-syn-o">new</span> <span class="text-syn-f">UnrecoverableError</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Job was cancelled&quot;</span><span class="text-syn-u">);</span>
+      <span class="text-syn-u">}</span>
+      <span class="text-syn-k">throw</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Error</span><span class="text-syn-u">(</span>result<span class="text-syn-u">.</span><span class="text-syn-p">error</span> <span class="text-syn-o">||</span> <span class="text-syn-s">&quot;Report generation failed&quot;</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">return</span> result<span class="u">;</span>
-  <span class="u">},</span>
-  <span class="u">{</span>
-    connection<span class="u">,</span>
-    <span class="p">concurrency:</span> <span class="n">3</span><span class="u">,</span>
-    <span class="p">lockDuration:</span> <span class="n">1800000</span><span class="u">,</span>
-    <span class="p">lockRenewTime:</span> <span class="n">300000</span><span class="u">,</span>
-    <span class="p">stalledInterval:</span> <span class="n">1800000</span><span class="u">,</span>
-  <span class="u">},</span>
-<span class="u">);</span>
+    <span class="text-syn-k">return</span> result<span class="text-syn-u">;</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span>
+    connection<span class="text-syn-u">,</span>
+    <span class="text-syn-p">concurrency:</span> <span class="text-syn-n">3</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">lockDuration:</span> <span class="text-syn-n">1800000</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">lockRenewTime:</span> <span class="text-syn-n">300000</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">stalledInterval:</span> <span class="text-syn-n">1800000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">);</span>
 </code></pre>
             <p>The worker options are tuned for long-running jobs:</p>
             <ul>
@@ -613,25 +622,25 @@
             <h3 id="error-handling">Error Handling</h3>
             <p>Hook into worker events to log failures:</p>
             <pre
-            ><code class="language-typescript">worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;completed&quot;</span><span class="u">,</span> <span class="u">(</span>job<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Job completed&quot;</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">jobId:</span> job<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-    <span class="p">scheduleId:</span> job<span class="u">.</span>data<span class="u">.</span><span class="p">scheduleId</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">});</span>
+            ><code class="language-typescript">worker<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;completed&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>job<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Job completed&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">jobId:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">scheduleId:</span> job<span class="text-syn-u">.</span>data<span class="text-syn-u">.</span><span class="text-syn-p">scheduleId</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">});</span>
 
-worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;failed&quot;</span><span class="u">,</span> <span class="u">(</span>job<span class="u">,</span> err<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Job failed&quot;</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">jobId:</span> job<span class="u">?.</span><span class="p">id</span><span class="u">,</span>
-    <span class="p">scheduleId:</span> job<span class="u">?.</span>data<span class="u">?.</span><span class="p">scheduleId</span><span class="u">,</span>
-    <span class="p">error:</span> err<span class="u">.</span><span class="p">message</span><span class="u">,</span>
-    <span class="p">attempt:</span> job<span class="u">?.</span><span class="p">attemptsMade</span><span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">});</span>
+worker<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;failed&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>job<span class="text-syn-u">,</span> err<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Job failed&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">jobId:</span> job<span class="text-syn-u">?.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">scheduleId:</span> job<span class="text-syn-u">?.</span>data<span class="text-syn-u">?.</span><span class="text-syn-p">scheduleId</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">error:</span> err<span class="text-syn-u">.</span><span class="text-syn-p">message</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">attempt:</span> job<span class="text-syn-u">?.</span><span class="text-syn-p">attemptsMade</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">});</span>
 
-worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;error&quot;</span><span class="u">,</span> <span class="u">(</span>err<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Worker error&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">error:</span> err<span class="u">.</span><span class="p">message</span> <span class="u">});</span>
-<span class="u">});</span>
+worker<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;error&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>err<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Worker error&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">error:</span> err<span class="text-syn-u">.</span><span class="text-syn-p">message</span> <span class="text-syn-u">});</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <h3 id="graceful-shutdown">Graceful Shutdown</h3>
             <p>
@@ -639,44 +648,44 @@ worker<span class="u">.</span><span class="f">on</span><span class="u">(</span><
               of killing them mid-execution. Here&#39;s the pattern:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">let</span> isShuttingDown <span class="o">=</span> <span class="k">false</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">let</span> isShuttingDown <span class="text-syn-o">=</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">shutdown</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span>isShuttingDown<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
-  isShuttingDown <span class="o">=</span> <span class="k">true</span><span class="u">;</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">shutdown</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>isShuttingDown<span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
+  isShuttingDown <span class="text-syn-o">=</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
 
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Starting graceful shutdown&quot;</span><span class="u">);</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Starting graceful shutdown&quot;</span><span class="text-syn-u">);</span>
 
-  <span class="k">const</span> SHUTDOWN_TIMEOUT <span class="o">=</span> <span class="n">120_000</span><span class="u">;</span>
+  <span class="text-syn-k">const</span> SHUTDOWN_TIMEOUT <span class="text-syn-o">=</span> <span class="text-syn-n">120_000</span><span class="text-syn-u">;</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">await</span> <span class="t">Promise</span><span class="u">.</span><span class="f">race</span><span class="u">([</span>
-      <span class="f">waitForActiveJobs</span><span class="u">(),</span>
-      <span class="o">new</span> <span class="t">Promise</span><span class="u">((</span>_<span class="u">,</span> reject<span class="u">)</span> <span class="k">=&gt;</span>
-        <span class="f">setTimeout</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="f">reject</span><span class="u">(</span><span class="o">new</span> <span class="f">Error</span><span class="u">(</span><span class="s">&quot;Shutdown timeout&quot;</span><span class="u">)),</span> SHUTDOWN_TIMEOUT<span class="u">),</span>
-      <span class="u">),</span>
-    <span class="u">]);</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>err<span class="u">)</span> <span class="u">{</span>
-    console<span class="u">.</span><span class="f">warn</span><span class="u">(</span><span class="s">&quot;Shutdown timeout, forcing close&quot;</span><span class="u">);</span>
-  <span class="u">}</span> <span class="k">finally</span> <span class="u">{</span>
-    <span class="k">await</span> worker<span class="u">.</span><span class="f">close</span><span class="u">();</span>
-    <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">close</span><span class="u">();</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Worker stopped&quot;</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">.</span><span class="text-syn-f">race</span><span class="text-syn-u">([</span>
+      <span class="text-syn-f">waitForActiveJobs</span><span class="text-syn-u">(),</span>
+      <span class="text-syn-o">new</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">((</span>_<span class="text-syn-u">,</span> reject<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span>
+        <span class="text-syn-f">setTimeout</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">reject</span><span class="text-syn-u">(</span><span class="text-syn-o">new</span> <span class="text-syn-f">Error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Shutdown timeout&quot;</span><span class="text-syn-u">)),</span> SHUTDOWN_TIMEOUT<span class="text-syn-u">),</span>
+      <span class="text-syn-u">),</span>
+    <span class="text-syn-u">]);</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>err<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">warn</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Shutdown timeout, forcing close&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">finally</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> worker<span class="text-syn-u">.</span><span class="text-syn-f">close</span><span class="text-syn-u">();</span>
+    <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">close</span><span class="text-syn-u">();</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Worker stopped&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">waitForActiveJobs</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> MAX_CHECKS <span class="o">=</span> <span class="n">120</span><span class="u">;</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> MAX_CHECKS<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> active <span class="o">=</span> <span class="k">await</span> scheduledQueue<span class="u">.</span><span class="f">getActiveCount</span><span class="u">();</span>
-    <span class="k">if</span> <span class="u">(</span>active <span class="o">===</span> <span class="n">0</span><span class="u">)</span> <span class="k">return</span><span class="u">;</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`Waiting for ${active} active jobs...`</span><span class="u">);</span>
-    <span class="k">await</span> <span class="o">new</span> <span class="t">Promise</span><span class="u">((</span>r<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">setTimeout</span><span class="u">(</span>r<span class="u">,</span> <span class="n">1000</span><span class="u">));</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">waitForActiveJobs</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> MAX_CHECKS <span class="text-syn-o">=</span> <span class="text-syn-n">120</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> MAX_CHECKS<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> active <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">getActiveCount</span><span class="text-syn-u">();</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>active <span class="text-syn-o">===</span> <span class="text-syn-n">0</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">`Waiting for ${active} active jobs...`</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-o">new</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">((</span>r<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">setTimeout</span><span class="text-syn-u">(</span>r<span class="text-syn-u">,</span> <span class="text-syn-n">1000</span><span class="text-syn-u">));</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-process<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;SIGTERM&quot;</span><span class="u">,</span> shutdown<span class="u">);</span>
-process<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;SIGINT&quot;</span><span class="u">,</span> shutdown<span class="u">);</span>
+process<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SIGTERM&quot;</span><span class="text-syn-u">,</span> shutdown<span class="text-syn-u">);</span>
+process<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SIGINT&quot;</span><span class="text-syn-u">,</span> shutdown<span class="text-syn-u">);</span>
 </code></pre>
             <p>
               The idea: when we receive a shutdown signal, stop accepting new jobs and wait up to 2
@@ -700,91 +709,91 @@ process<span class="u">.</span><span class="f">on</span><span class="u">(</span>
               says against what Redis has, and brings them in line:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Queue <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;bullmq&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Queue <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">interface</span> <span class="t">DbSchedule</span> <span class="u">{</span>
-  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  cronExpression<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  userId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  reportType<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  enabled<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">interface</span> <span class="text-syn-t">DbSchedule</span> <span class="text-syn-u">{</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  cronExpression<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  reportType<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  enabled<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">syncSchedules</span><span class="u">(</span>dbSchedules<span class="o">:</span> <span class="t">DbSchedule</span><span class="u">[],</span> queue<span class="o">:</span> <span class="t">Queue</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> enabledSchedules <span class="o">=</span> dbSchedules<span class="u">.</span><span class="f">filter</span><span class="u">((</span>s<span class="u">)</span> <span class="k">=&gt;</span> s<span class="u">.</span><span class="p">enabled</span><span class="u">);</span>
-  <span class="k">const</span> repeatableJobs <span class="o">=</span> <span class="k">await</span> queue<span class="u">.</span><span class="f">getRepeatableJobs</span><span class="u">();</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">syncSchedules</span><span class="text-syn-u">(</span>dbSchedules<span class="text-syn-o">:</span> <span class="text-syn-t">DbSchedule</span><span class="text-syn-u">[],</span> queue<span class="text-syn-o">:</span> <span class="text-syn-t">Queue</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> enabledSchedules <span class="text-syn-o">=</span> dbSchedules<span class="text-syn-u">.</span><span class="text-syn-f">filter</span><span class="text-syn-u">((</span>s<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> s<span class="text-syn-u">.</span><span class="text-syn-p">enabled</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> repeatableJobs <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">getRepeatableJobs</span><span class="text-syn-u">();</span>
 
-  <span class="k">const</span> desiredIds <span class="o">=</span> <span class="o">new</span> <span class="f">Set</span><span class="u">(</span>enabledSchedules<span class="u">.</span><span class="f">map</span><span class="u">((</span>s<span class="u">)</span> <span class="k">=&gt;</span> s<span class="u">.</span><span class="p">id</span><span class="u">));</span>
+  <span class="text-syn-k">const</span> desiredIds <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Set</span><span class="text-syn-u">(</span>enabledSchedules<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>s<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> s<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">));</span>
 
-  <span class="k">const</span> existingByScheduleId <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="u">{</span> key<span class="o">:</span> <span class="t">string</span><span class="u">;</span> pattern<span class="o">:</span> <span class="t">string</span> <span class="u">}&gt;();</span>
-  <span class="k">const</span> orphaned<span class="o">:</span> <span class="t">string</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[];</span>
+  <span class="text-syn-k">const</span> existingByScheduleId <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span> pattern<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">}&gt;();</span>
+  <span class="text-syn-k">const</span> orphaned<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[]</span> <span class="text-syn-o">=</span> <span class="text-syn-u">[];</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> job <span class="o">of</span> repeatableJobs<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> scheduleId <span class="o">=</span> <span class="f">extractScheduleId</span><span class="u">(</span>job<span class="u">.</span><span class="p">key</span><span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>scheduleId <span class="o">&amp;&amp;</span> desiredIds<span class="u">.</span><span class="f">has</span><span class="u">(</span>scheduleId<span class="u">))</span> <span class="u">{</span>
-      existingByScheduleId<span class="u">.</span><span class="f">set</span><span class="u">(</span>scheduleId<span class="u">,</span> <span class="u">{</span>
-        <span class="p">key:</span> job<span class="u">.</span><span class="p">key</span><span class="u">,</span>
-        <span class="p">pattern:</span> job<span class="u">.</span><span class="p">pattern</span> <span class="o">??</span> <span class="s">&quot;&quot;</span><span class="u">,</span>
-      <span class="u">});</span>
-    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
-      orphaned<span class="u">.</span><span class="f">push</span><span class="u">(</span>job<span class="u">.</span><span class="p">key</span><span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> job <span class="text-syn-o">of</span> repeatableJobs<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> scheduleId <span class="text-syn-o">=</span> <span class="text-syn-f">extractScheduleId</span><span class="text-syn-u">(</span>job<span class="text-syn-u">.</span><span class="text-syn-p">key</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>scheduleId <span class="text-syn-o">&amp;&amp;</span> desiredIds<span class="text-syn-u">.</span><span class="text-syn-f">has</span><span class="text-syn-u">(</span>scheduleId<span class="text-syn-u">))</span> <span class="text-syn-u">{</span>
+      existingByScheduleId<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>scheduleId<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">key:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">key</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">pattern:</span> job<span class="text-syn-u">.</span><span class="text-syn-p">pattern</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">});</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">else</span> <span class="text-syn-u">{</span>
+      orphaned<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span>job<span class="text-syn-u">.</span><span class="text-syn-p">key</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">let</span> removed <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> key <span class="o">of</span> orphaned<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> queue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>key<span class="u">);</span>
-    removed<span class="o">++</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">let</span> removed <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> key <span class="text-syn-o">of</span> orphaned<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">removeRepeatableByKey</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+    removed<span class="text-syn-o">++</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">let</span> added <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
-  <span class="k">let</span> updated <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
-  <span class="k">let</span> unchanged <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
+  <span class="text-syn-k">let</span> added <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">let</span> updated <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">let</span> unchanged <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> schedule <span class="o">of</span> enabledSchedules<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> existing <span class="o">=</span> existingByScheduleId<span class="u">.</span><span class="f">get</span><span class="u">(</span>schedule<span class="u">.</span><span class="p">id</span><span class="u">);</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> schedule <span class="text-syn-o">of</span> enabledSchedules<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> existing <span class="text-syn-o">=</span> existingByScheduleId<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>schedule<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">);</span>
 
-    <span class="k">if</span> <span class="u">(</span>existing <span class="o">&amp;&amp;</span> existing<span class="u">.</span><span class="p">pattern</span> <span class="o">===</span> schedule<span class="u">.</span><span class="p">cronExpression</span><span class="u">)</span> <span class="u">{</span>
-      unchanged<span class="o">++</span><span class="u">;</span>
-      <span class="k">continue</span><span class="u">;</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>existing <span class="text-syn-o">&amp;&amp;</span> existing<span class="text-syn-u">.</span><span class="text-syn-p">pattern</span> <span class="text-syn-o">===</span> schedule<span class="text-syn-u">.</span><span class="text-syn-p">cronExpression</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      unchanged<span class="text-syn-o">++</span><span class="text-syn-u">;</span>
+      <span class="text-syn-k">continue</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">if</span> <span class="u">(</span>existing<span class="u">)</span> <span class="u">{</span>
-      <span class="k">await</span> queue<span class="u">.</span><span class="f">removeRepeatableByKey</span><span class="u">(</span>existing<span class="u">.</span><span class="p">key</span><span class="u">);</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>existing<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">removeRepeatableByKey</span><span class="text-syn-u">(</span>existing<span class="text-syn-u">.</span><span class="text-syn-p">key</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">await</span> queue<span class="u">.</span><span class="f">add</span><span class="u">(</span>
-      <span class="s">&quot;generate-report&quot;</span><span class="u">,</span>
-      <span class="u">{</span>
-        <span class="p">jobId:</span> <span class="s">`scheduled-${schedule.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span>
-        <span class="p">scheduleId:</span> schedule<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-        <span class="p">userId:</span> schedule<span class="u">.</span><span class="p">userId</span><span class="u">,</span>
-        <span class="p">reportType:</span> schedule<span class="u">.</span><span class="p">reportType</span><span class="u">,</span>
-      <span class="u">},</span>
-      <span class="u">{</span>
-        <span class="p">repeat:</span> <span class="u">{</span>
-          <span class="p">pattern:</span> schedule<span class="u">.</span><span class="p">cronExpression</span><span class="u">,</span>
-          <span class="p">tz:</span> <span class="s">&quot;UTC&quot;</span><span class="u">,</span>
-        <span class="u">},</span>
-      <span class="u">},</span>
-    <span class="u">);</span>
+    <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">(</span>
+      <span class="text-syn-s">&quot;generate-report&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">jobId:</span> <span class="text-syn-s">`scheduled-${schedule.</span><span class="text-syn-p">id</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">scheduleId:</span> schedule<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">userId:</span> schedule<span class="text-syn-u">.</span><span class="text-syn-p">userId</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">reportType:</span> schedule<span class="text-syn-u">.</span><span class="text-syn-p">reportType</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">},</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">repeat:</span> <span class="text-syn-u">{</span>
+          <span class="text-syn-p">pattern:</span> schedule<span class="text-syn-u">.</span><span class="text-syn-p">cronExpression</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">tz:</span> <span class="text-syn-s">&quot;UTC&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">},</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">);</span>
 
-    existing <span class="o">?</span> updated<span class="o">++</span> <span class="o">:</span> added<span class="o">++</span><span class="u">;</span>
-  <span class="u">}</span>
+    existing <span class="text-syn-o">?</span> updated<span class="text-syn-o">++</span> <span class="text-syn-o">:</span> added<span class="text-syn-o">++</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;Schedule sync complete&quot;</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">total:</span> enabledSchedules<span class="u">.</span>length<span class="u">,</span>
-    added<span class="u">,</span>
-    updated<span class="u">,</span>
-    unchanged<span class="u">,</span>
-    <span class="p">removedOrphans:</span> removed<span class="u">,</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Schedule sync complete&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">total:</span> enabledSchedules<span class="text-syn-u">.</span>length<span class="text-syn-u">,</span>
+    added<span class="text-syn-u">,</span>
+    updated<span class="text-syn-u">,</span>
+    unchanged<span class="text-syn-u">,</span>
+    <span class="text-syn-p">removedOrphans:</span> removed<span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">extractScheduleId</span><span class="u">(</span>jobKey<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="o">|</span> <span class="t">null</span> <span class="u">{</span>
-  <span class="k">const</span> match <span class="o">=</span> jobKey<span class="u">.</span><span class="f">match</span><span class="u">(</span><span class="s">/scheduled-([a-zA-Z0-9_-]+)/</span><span class="u">);</span>
-  <span class="k">return</span> match<span class="u">?.[</span><span class="n">1</span><span class="u">]</span> <span class="o">??</span> <span class="k">null</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">extractScheduleId</span><span class="text-syn-u">(</span>jobKey<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> match <span class="text-syn-o">=</span> jobKey<span class="text-syn-u">.</span><span class="text-syn-f">match</span><span class="text-syn-u">(</span><span class="text-syn-s">/scheduled-([a-zA-Z0-9_-]+)/</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> match<span class="text-syn-u">?.[</span><span class="text-syn-n">1</span><span class="text-syn-u">]</span> <span class="text-syn-o">??</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>The logic is straightforward:</p>
             <ol>
@@ -809,10 +818,10 @@ process<span class="u">.</span><span class="f">on</span><span class="u">(</span>
               container runs the sync script to reconcile the database with Redis:
             </p>
             <pre
-            ><code class="language-yaml"><span class="s">initContainers</span><span class="u">:</span>
-  <span class="u">-</span> <span class="s">name</span><span class="u">:</span> <span class="s">sync-schedules</span>
-    <span class="s">image</span><span class="u">:</span> <span class="s">your-workers-image:latest</span>
-    <span class="s">command</span><span class="u">:</span> <span class="u">[</span><span class="s">&quot;tsx&quot;</span><span class="u">,</span> <span class="s">&quot;scripts/sync-schedules.ts&quot;</span><span class="u">]</span>
+            ><code class="language-yaml"><span class="text-syn-s">initContainers</span><span class="text-syn-u">:</span>
+  <span class="text-syn-u">-</span> <span class="text-syn-s">name</span><span class="text-syn-u">:</span> <span class="text-syn-s">sync-schedules</span>
+    <span class="text-syn-s">image</span><span class="text-syn-u">:</span> <span class="text-syn-s">your-workers-image:latest</span>
+    <span class="text-syn-s">command</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;tsx&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;scripts/sync-schedules.ts&quot;</span><span class="text-syn-u">]</span>
 </code></pre>
             <p>
               This guarantees that every time a worker pod starts (fresh deploy, restart after a
@@ -927,26 +936,37 @@ process<span class="u">.</span><span class="f">on</span><span class="u">(</span>
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/prisma-with-postgresql/">Prisma ORM with PostgreSQL</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/prisma-with-postgresql/">Prisma ORM with PostgreSQL</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
             </li>
-            <li><a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a></li>
+            <li class="my-2">
+              <a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Build a Contact Form with Resend in Next.js</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Build a Contact Form with Resend in Next.js</h1>
-            <p class="detail-meta"><time datetime="2024-12-13">2024-12-13</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Build a Contact Form with Resend in Next.js
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-12-13">2024-12-13</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Sending emails is a common feature in web applications, whether for user signups,
               notifications, or transactional purposes. In this guide, we’ll explore how to
@@ -126,23 +135,23 @@
               one too!
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pnpx</span> <span class="s">create-next-app</span> <span class="s">resend-demo</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpx</span> <span class="text-syn-s">create-next-app</span> <span class="text-syn-s">resend-demo</span>
 </code></pre>
             <pre
-            ><code class="language-bash"><span class="f">pulkit@pulkit-tuf:~/Desktop/resend-demo</span> <span class="s">pnpx</span> <span class="s">create-next-app</span> <span class="s">resend-demo</span>
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">to</span> <span class="s">use</span> <span class="s">TypeScript?</span> <span class="s">…</span> <span class="s">No</span> <span class="s">/</span> <span class="s">Yes</span>
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">to</span> <span class="s">use</span> <span class="s">ESLint?</span> <span class="s">…</span> <span class="s">No</span> <span class="s">/</span> <span class="s">Yes</span>
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">to</span> <span class="s">use</span> <span class="s">Tailwind</span> <span class="s">CSS?</span> <span class="s">…</span> <span class="s">No</span> <span class="s">/</span> <span class="s">Yes</span>
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">your</span> <span class="s">code</span> <span class="s">inside</span> <span class="s">a</span> <span class="s">`src/`</span> <span class="f">directory?</span> <span class="s">…</span> <span class="s">No</span> <span class="s">/</span> <span class="s">Yes</span>
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">to</span> <span class="s">use</span> <span class="s">App</span> <span class="s">Router?</span> (recommended) … No / Yes
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">to</span> <span class="s">use</span> <span class="s">Turbopack</span> <span class="s">for</span> <span class="s">`next dev`</span><span class="o">?</span> … No / Yes
-<span class="f">&#10004;</span> <span class="s">Would</span> <span class="s">you</span> <span class="s">like</span> <span class="s">to</span> <span class="s">customize</span> <span class="s">the</span> <span class="s">import</span> <span class="s">alias</span> (<span class="s">`@/*`</span> <span class="f">by</span> <span class="s">default</span>)<span class="o">?</span> … No / Yes
-<span class="f">Creating</span> <span class="s">a</span> <span class="s">new</span> <span class="s">Next.js</span> <span class="s">app</span> <span class="s">in</span> <span class="s">~/Desktop/resend-demo.</span>
+            ><code class="language-bash"><span class="text-syn-f">pulkit@pulkit-tuf:~/Desktop/resend-demo</span> <span class="text-syn-s">pnpx</span> <span class="text-syn-s">create-next-app</span> <span class="text-syn-s">resend-demo</span>
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">to</span> <span class="text-syn-s">use</span> <span class="text-syn-s">TypeScript?</span> <span class="text-syn-s">…</span> <span class="text-syn-s">No</span> <span class="text-syn-s">/</span> <span class="text-syn-s">Yes</span>
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">to</span> <span class="text-syn-s">use</span> <span class="text-syn-s">ESLint?</span> <span class="text-syn-s">…</span> <span class="text-syn-s">No</span> <span class="text-syn-s">/</span> <span class="text-syn-s">Yes</span>
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">to</span> <span class="text-syn-s">use</span> <span class="text-syn-s">Tailwind</span> <span class="text-syn-s">CSS?</span> <span class="text-syn-s">…</span> <span class="text-syn-s">No</span> <span class="text-syn-s">/</span> <span class="text-syn-s">Yes</span>
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">your</span> <span class="text-syn-s">code</span> <span class="text-syn-s">inside</span> <span class="text-syn-s">a</span> <span class="text-syn-s">`src/`</span> <span class="text-syn-f">directory?</span> <span class="text-syn-s">…</span> <span class="text-syn-s">No</span> <span class="text-syn-s">/</span> <span class="text-syn-s">Yes</span>
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">to</span> <span class="text-syn-s">use</span> <span class="text-syn-s">App</span> <span class="text-syn-s">Router?</span> (recommended) … No / Yes
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">to</span> <span class="text-syn-s">use</span> <span class="text-syn-s">Turbopack</span> <span class="text-syn-s">for</span> <span class="text-syn-s">`next dev`</span><span class="text-syn-o">?</span> … No / Yes
+<span class="text-syn-f">&#10004;</span> <span class="text-syn-s">Would</span> <span class="text-syn-s">you</span> <span class="text-syn-s">like</span> <span class="text-syn-s">to</span> <span class="text-syn-s">customize</span> <span class="text-syn-s">the</span> <span class="text-syn-s">import</span> <span class="text-syn-s">alias</span> (<span class="text-syn-s">`@/*`</span> <span class="text-syn-f">by</span> <span class="text-syn-s">default</span>)<span class="text-syn-o">?</span> … No / Yes
+<span class="text-syn-f">Creating</span> <span class="text-syn-s">a</span> <span class="text-syn-s">new</span> <span class="text-syn-s">Next.js</span> <span class="text-syn-s">app</span> <span class="text-syn-s">in</span> <span class="text-syn-s">~/Desktop/resend-demo.</span>
 </code></pre>
             <p>Once the setup is complete, navigate to the project directory:</p>
             <pre
-            ><code class="language-bash"><span class="f">cd</span> <span class="s">resend-demo</span>
-<span class="f">pnpm</span> <span class="s">dev</span>
+            ><code class="language-bash"><span class="text-syn-f">cd</span> <span class="text-syn-s">resend-demo</span>
+<span class="text-syn-f">pnpm</span> <span class="text-syn-s">dev</span>
 </code></pre>
             <p>
               Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser. You
@@ -151,7 +160,7 @@
             <h3 id="install-required-dependencies">Install Required Dependencies</h3>
             <p>Next, install the Resend SDK to integrate email functionality:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">resend</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">resend</span>
 </code></pre>
             <p>This package will allow us to interact with Resend&#39;s API effortlessly.</p>
             <h3 id="set-up-environment-variables">Set Up Environment Variables</h3>
@@ -189,7 +198,7 @@
                       <li>
                         Add the key to a <code>.env</code> file in your project root
                         <pre
-                        ><code class="language-bash">RESEND_API_KEY<span class="o">=</span><span class="s">your-resend-api-key</span>
+                        ><code class="language-bash">RESEND_API_KEY<span class="text-syn-o">=</span><span class="text-syn-s">your-resend-api-key</span>
 </code></pre>
                       </li>
                     </ul>
@@ -224,142 +233,143 @@
             </blockquote>
             <p>Before copying and pasting, please install the dependencies.</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpx</span> <span class="s">shadcn</span> <span class="s">add</span> <span class="s">input</span> <span class="s">textarea</span> <span class="s">button</span> <span class="s">label</span>
-<span class="c">#lucid-icons are installed along these</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpx</span> <span class="text-syn-s">shadcn</span> <span class="text-syn-s">add</span> <span class="text-syn-s">input</span> <span class="text-syn-s">textarea</span> <span class="text-syn-s">button</span> <span class="text-syn-s">label</span>
+<span class="text-syn-c italic">#lucid-icons are installed along these</span>
 </code></pre>
-            <pre><code class="language-tsx"><span class="c">// src/components/ContactForm.tsx</span>
-<span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            <pre
+            ><code class="language-tsx"><span class="text-syn-c italic">// src/components/ContactForm.tsx</span>
+<span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useCallback<span class="u">,</span> useState <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> Input <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@/components/ui/input&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> Textarea <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@/components/ui/textarea&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> Button <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@/components/ui/button&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> Label <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@/components/ui/label&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> Mail<span class="u">,</span> MessageSquare<span class="u">,</span> Send<span class="u">,</span> User <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;lucide-react&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useCallback<span class="text-syn-u">,</span> useState <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Input <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/ui/input&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Textarea <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/ui/textarea&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Button <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/ui/button&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Label <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/ui/label&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Mail<span class="text-syn-u">,</span> MessageSquare<span class="text-syn-u">,</span> Send<span class="text-syn-u">,</span> User <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;lucide-react&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">ContactForm</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> <span class="u">[</span>formInputs<span class="u">,</span> setFormInputs<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">({</span>
-    <span class="p">name:</span> <span class="s">&quot;&quot;</span><span class="u">,</span>
-    <span class="p">email:</span> <span class="s">&quot;&quot;</span><span class="u">,</span>
-    <span class="p">message:</span> <span class="s">&quot;&quot;</span><span class="u">,</span>
-  <span class="u">});</span>
-  <span class="k">const</span> <span class="u">[</span>isSubmitting<span class="u">,</span> setIsSubmitting<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">(</span><span class="k">false</span><span class="u">);</span>
-  <span class="k">const</span> <span class="u">[</span>isSubmitted<span class="u">,</span> setIsSubmitted<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">(</span><span class="k">false</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">ContactForm</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">[</span>formInputs<span class="text-syn-u">,</span> setFormInputs<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">name:</span> <span class="text-syn-s">&quot;&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">email:</span> <span class="text-syn-s">&quot;&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">message:</span> <span class="text-syn-s">&quot;&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">[</span>isSubmitting<span class="text-syn-u">,</span> setIsSubmitting<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">[</span>isSubmitted<span class="text-syn-u">,</span> setIsSubmitted<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
-  <span class="k">const</span> handleSendMessage <span class="o">=</span> <span class="f">useCallback</span><span class="u">(</span>
-    <span class="k">async</span> <span class="u">(</span>e<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">FormEvent</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      e<span class="u">.</span><span class="f">preventDefault</span><span class="u">();</span>
-      <span class="k">if</span> <span class="u">(</span><span class="o">!</span>formInputs<span class="u">.</span><span class="p">name</span> <span class="o">||</span> <span class="o">!</span>formInputs<span class="u">.</span><span class="p">email</span> <span class="o">||</span> <span class="o">!</span>formInputs<span class="u">.</span><span class="p">message</span><span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+  <span class="text-syn-k">const</span> handleSendMessage <span class="text-syn-o">=</span> <span class="text-syn-f">useCallback</span><span class="text-syn-u">(</span>
+    <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>e<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">FormEvent</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      e<span class="text-syn-u">.</span><span class="text-syn-f">preventDefault</span><span class="text-syn-u">();</span>
+      <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">name</span> <span class="text-syn-o">||</span> <span class="text-syn-o">!</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">email</span> <span class="text-syn-o">||</span> <span class="text-syn-o">!</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">message</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
-      <span class="f">setIsSubmitting</span><span class="u">(</span><span class="k">true</span><span class="u">);</span>
+      <span class="text-syn-f">setIsSubmitting</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
 
-      <span class="k">try</span> <span class="u">{</span>
-        <span class="k">await</span> <span class="o">new</span> <span class="t">Promise</span><span class="u">((</span>resolve<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">setTimeout</span><span class="u">(</span>resolve<span class="u">,</span> <span class="n">2000</span><span class="u">));</span>
-        <span class="f">setIsSubmitted</span><span class="u">(</span><span class="k">true</span><span class="u">);</span>
-      <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-        console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Failed to send email:&quot;</span><span class="u">,</span> error<span class="u">);</span>
-      <span class="u">}</span> <span class="k">finally</span> <span class="u">{</span>
-        <span class="f">setIsSubmitting</span><span class="u">(</span><span class="k">false</span><span class="u">);</span>
-      <span class="u">}</span>
-    <span class="u">},</span>
-    <span class="u">[</span>formInputs<span class="u">],</span>
-  <span class="u">);</span>
+      <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">await</span> <span class="text-syn-o">new</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">((</span>resolve<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">setTimeout</span><span class="text-syn-u">(</span>resolve<span class="text-syn-u">,</span> <span class="text-syn-n">2000</span><span class="text-syn-u">));</span>
+        <span class="text-syn-f">setIsSubmitted</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
+      <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+        console<span class="text-syn-u">.</span><span class="text-syn-f">error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Failed to send email:&quot;</span><span class="text-syn-u">,</span> error<span class="text-syn-u">);</span>
+      <span class="text-syn-u">}</span> <span class="text-syn-k">finally</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-f">setIsSubmitting</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
+      <span class="text-syn-u">}</span>
+    <span class="text-syn-u">},</span>
+    <span class="text-syn-u">[</span>formInputs<span class="text-syn-u">],</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">form</span>
-      <span class="p">onSubmit</span><span class="o">=</span><span class="u">{</span>handleSendMessage<span class="u">}</span>
-      <span class="p">className</span><span class="o">=</span><span class="s">&quot;mx-auto max-w-4xl space-y-4 px-4 sm:px-6 lg:px-8 min-w-[600px]&quot;</span>
-    <span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;space-y-2&quot;</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">Label</span> <span class="p">htmlFor</span><span class="o">=</span><span class="s">&quot;name&quot;</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-gray-300&quot;</span><span class="u">&gt;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">form</span>
+      <span class="text-syn-p">onSubmit</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>handleSendMessage<span class="text-syn-u">}</span>
+      <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;mx-auto max-w-4xl space-y-4 px-4 sm:px-6 lg:px-8 min-w-[600px]&quot;</span>
+    <span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;space-y-2&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Label</span> <span class="text-syn-p">htmlFor</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;name&quot;</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-gray-300&quot;</span><span class="text-syn-u">&gt;</span>
           Name
-        <span class="u">&lt;/</span><span class="g">Label</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;relative&quot;</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">User</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400&quot;</span> <span class="u">/&gt;</span>
-          <span class="u">&lt;</span><span class="g">Input</span>
-            <span class="p">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span>
-            <span class="p">value</span><span class="o">=</span><span class="u">{</span>formInputs<span class="u">.</span><span class="p">name</span><span class="u">}</span>
-            <span class="p">onChange</span><span class="o">=</span><span class="u">{(</span>e<span class="u">)</span> <span class="k">=&gt;</span>
-              <span class="f">setFormInputs</span><span class="u">((</span>prev<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-                <span class="o">...</span>prev<span class="u">,</span>
-                <span class="p">name:</span> e<span class="u">.</span>target<span class="u">.</span><span class="p">value</span><span class="u">,</span>
-              <span class="u">}))</span>
-            <span class="u">}</span>
-            <span class="p">className</span><span class="o">=</span><span class="s">&quot;border-white/10 bg-white/5 pl-10 text-white placeholder:text-gray-400&quot;</span>
-            <span class="p">placeholder</span><span class="o">=</span><span class="s">&quot;John Doe&quot;</span>
-            <span class="p">required</span>
-          <span class="u">/&gt;</span>
-        <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Label</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;relative&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">User</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400&quot;</span> <span class="text-syn-u">/&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">Input</span>
+            <span class="text-syn-p">type</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text&quot;</span>
+            <span class="text-syn-p">value</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">}</span>
+            <span class="text-syn-p">onChange</span><span class="text-syn-o">=</span><span class="text-syn-u">{(</span>e<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span>
+              <span class="text-syn-f">setFormInputs</span><span class="text-syn-u">((</span>prev<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+                <span class="text-syn-o">...</span>prev<span class="text-syn-u">,</span>
+                <span class="text-syn-p">name:</span> e<span class="text-syn-u">.</span>target<span class="text-syn-u">.</span><span class="text-syn-p">value</span><span class="text-syn-u">,</span>
+              <span class="text-syn-u">}))</span>
+            <span class="text-syn-u">}</span>
+            <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;border-white/10 bg-white/5 pl-10 text-white placeholder:text-gray-400&quot;</span>
+            <span class="text-syn-p">placeholder</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;John Doe&quot;</span>
+            <span class="text-syn-p">required</span>
+          <span class="text-syn-u">/&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
 
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;space-y-2&quot;</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">Label</span> <span class="p">htmlFor</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-gray-300&quot;</span><span class="u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;space-y-2&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Label</span> <span class="text-syn-p">htmlFor</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;email&quot;</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-gray-300&quot;</span><span class="text-syn-u">&gt;</span>
           Email
-        <span class="u">&lt;/</span><span class="g">Label</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;relative&quot;</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">Mail</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400&quot;</span> <span class="u">/&gt;</span>
-          <span class="u">&lt;</span><span class="g">Input</span>
-            <span class="p">type</span><span class="o">=</span><span class="s">&quot;email&quot;</span>
-            <span class="p">value</span><span class="o">=</span><span class="u">{</span>formInputs<span class="u">.</span><span class="p">email</span><span class="u">}</span>
-            <span class="p">onChange</span><span class="o">=</span><span class="u">{(</span>e<span class="u">)</span> <span class="k">=&gt;</span>
-              <span class="f">setFormInputs</span><span class="u">((</span>prev<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-                <span class="o">...</span>prev<span class="u">,</span>
-                <span class="p">email:</span> e<span class="u">.</span>target<span class="u">.</span><span class="p">value</span><span class="u">,</span>
-              <span class="u">}))</span>
-            <span class="u">}</span>
-            <span class="p">className</span><span class="o">=</span><span class="s">&quot;border-white/10 bg-white/5 pl-10 text-white placeholder:text-gray-400&quot;</span>
-            <span class="p">placeholder</span><span class="o">=</span><span class="s">&quot;john@example.com&quot;</span>
-            <span class="p">required</span>
-          <span class="u">/&gt;</span>
-        <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Label</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;relative&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">Mail</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400&quot;</span> <span class="text-syn-u">/&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">Input</span>
+            <span class="text-syn-p">type</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;email&quot;</span>
+            <span class="text-syn-p">value</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">email</span><span class="text-syn-u">}</span>
+            <span class="text-syn-p">onChange</span><span class="text-syn-o">=</span><span class="text-syn-u">{(</span>e<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span>
+              <span class="text-syn-f">setFormInputs</span><span class="text-syn-u">((</span>prev<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+                <span class="text-syn-o">...</span>prev<span class="text-syn-u">,</span>
+                <span class="text-syn-p">email:</span> e<span class="text-syn-u">.</span>target<span class="text-syn-u">.</span><span class="text-syn-p">value</span><span class="text-syn-u">,</span>
+              <span class="text-syn-u">}))</span>
+            <span class="text-syn-u">}</span>
+            <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;border-white/10 bg-white/5 pl-10 text-white placeholder:text-gray-400&quot;</span>
+            <span class="text-syn-p">placeholder</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;john@example.com&quot;</span>
+            <span class="text-syn-p">required</span>
+          <span class="text-syn-u">/&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
 
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;space-y-2&quot;</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">Label</span> <span class="p">htmlFor</span><span class="o">=</span><span class="s">&quot;message&quot;</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-gray-300&quot;</span><span class="u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;space-y-2&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Label</span> <span class="text-syn-p">htmlFor</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;message&quot;</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-gray-300&quot;</span><span class="text-syn-u">&gt;</span>
           Message
-        <span class="u">&lt;/</span><span class="g">Label</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;relative&quot;</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">MessageSquare</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;absolute left-3 top-3 h-4 w-4 text-gray-400&quot;</span> <span class="u">/&gt;</span>
-          <span class="u">&lt;</span><span class="g">Textarea</span>
-            <span class="p">value</span><span class="o">=</span><span class="u">{</span>formInputs<span class="u">.</span><span class="p">message</span><span class="u">}</span>
-            <span class="p">onChange</span><span class="o">=</span><span class="u">{(</span>e<span class="u">)</span> <span class="k">=&gt;</span>
-              <span class="f">setFormInputs</span><span class="u">((</span>prev<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-                <span class="o">...</span>prev<span class="u">,</span>
-                <span class="p">message:</span> e<span class="u">.</span>target<span class="u">.</span><span class="p">value</span><span class="u">,</span>
-              <span class="u">}))</span>
-            <span class="u">}</span>
-            <span class="p">className</span><span class="o">=</span><span class="s">&quot;min-h-[120px] border-white/10 bg-white/5 pl-10 text-white placeholder:text-gray-400&quot;</span>
-            <span class="p">placeholder</span><span class="o">=</span><span class="s">&quot;Your message here...&quot;</span>
-            <span class="p">required</span>
-          <span class="u">/&gt;</span>
-        <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Label</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;relative&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">MessageSquare</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;absolute left-3 top-3 h-4 w-4 text-gray-400&quot;</span> <span class="text-syn-u">/&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">Textarea</span>
+            <span class="text-syn-p">value</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">message</span><span class="text-syn-u">}</span>
+            <span class="text-syn-p">onChange</span><span class="text-syn-o">=</span><span class="text-syn-u">{(</span>e<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span>
+              <span class="text-syn-f">setFormInputs</span><span class="text-syn-u">((</span>prev<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+                <span class="text-syn-o">...</span>prev<span class="text-syn-u">,</span>
+                <span class="text-syn-p">message:</span> e<span class="text-syn-u">.</span>target<span class="text-syn-u">.</span><span class="text-syn-p">value</span><span class="text-syn-u">,</span>
+              <span class="text-syn-u">}))</span>
+            <span class="text-syn-u">}</span>
+            <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;min-h-[120px] border-white/10 bg-white/5 pl-10 text-white placeholder:text-gray-400&quot;</span>
+            <span class="text-syn-p">placeholder</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;Your message here...&quot;</span>
+            <span class="text-syn-p">required</span>
+          <span class="text-syn-u">/&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
 
-      <span class="u">&lt;</span><span class="g">Button</span>
-        <span class="p">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span>
-        <span class="p">className</span><span class="o">=</span><span class="s">&quot;w-full bg-white text-black hover:bg-white/90&quot;</span>
-        <span class="p">disabled</span><span class="o">=</span><span class="u">{</span>isSubmitting <span class="o">||</span> isSubmitted<span class="u">}</span>
-      <span class="u">&gt;</span>
-        <span class="u">{</span>isSubmitting <span class="o">?</span> <span class="u">(</span>
-          <span class="u">&lt;</span><span class="g">span</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;flex items-center gap-2&quot;</span><span class="u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">Button</span>
+        <span class="text-syn-p">type</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;submit&quot;</span>
+        <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;w-full bg-white text-black hover:bg-white/90&quot;</span>
+        <span class="text-syn-p">disabled</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>isSubmitting <span class="text-syn-o">||</span> isSubmitted<span class="text-syn-u">}</span>
+      <span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">{</span>isSubmitting <span class="text-syn-o">?</span> <span class="text-syn-u">(</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">span</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex items-center gap-2&quot;</span><span class="text-syn-u">&gt;</span>
             Sending...
-            <span class="u">&lt;</span><span class="g">span</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;animate-spin&quot;</span><span class="u">&gt;</span>⏳<span class="u">&lt;/</span><span class="g">span</span><span class="u">&gt;</span>
-          <span class="u">&lt;/</span><span class="g">span</span><span class="u">&gt;</span>
-        <span class="u">)</span> <span class="o">:</span> isSubmitted <span class="o">?</span> <span class="u">(</span>
-          <span class="u">&lt;</span><span class="g">span</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;flex items-center gap-2&quot;</span><span class="u">&gt;</span>
+            <span class="text-syn-u">&lt;</span><span class="text-syn-g">span</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;animate-spin&quot;</span><span class="text-syn-u">&gt;</span>⏳<span class="text-syn-u">&lt;/</span><span class="text-syn-g">span</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;/</span><span class="text-syn-g">span</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">)</span> <span class="text-syn-o">:</span> isSubmitted <span class="text-syn-o">?</span> <span class="text-syn-u">(</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">span</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex items-center gap-2&quot;</span><span class="text-syn-u">&gt;</span>
             Thanks
-            <span class="u">&lt;</span><span class="g">span</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;animate-pulse&quot;</span><span class="u">&gt;</span>✨<span class="u">&lt;/</span><span class="g">span</span><span class="u">&gt;</span>
-          <span class="u">&lt;/</span><span class="g">span</span><span class="u">&gt;</span>
-        <span class="u">)</span> <span class="o">:</span> <span class="u">(</span>
-          <span class="u">&lt;</span><span class="g">span</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;flex items-center gap-2&quot;</span><span class="u">&gt;</span>
+            <span class="text-syn-u">&lt;</span><span class="text-syn-g">span</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;animate-pulse&quot;</span><span class="text-syn-u">&gt;</span>✨<span class="text-syn-u">&lt;/</span><span class="text-syn-g">span</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;/</span><span class="text-syn-g">span</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">)</span> <span class="text-syn-o">:</span> <span class="text-syn-u">(</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">span</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex items-center gap-2&quot;</span><span class="text-syn-u">&gt;</span>
             Send Message
-            <span class="u">&lt;</span><span class="g">Send</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;h-4 w-4&quot;</span> <span class="u">/&gt;</span>
-          <span class="u">&lt;/</span><span class="g">span</span><span class="u">&gt;</span>
-        <span class="u">)}</span>
-      <span class="u">&lt;/</span><span class="g">Button</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">form</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+            <span class="text-syn-u">&lt;</span><span class="text-syn-g">Send</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;h-4 w-4&quot;</span> <span class="text-syn-u">/&gt;</span>
+          <span class="text-syn-u">&lt;/</span><span class="text-syn-g">span</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">)}</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Button</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">form</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="sending-emails-with-resend">Sending Emails with Resend</h3>
             <p>
@@ -370,44 +380,44 @@
             </p>
             <p>Now, let&#39;s dive into the code implementation:</p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use server&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use server&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> EmailTemplate <span class="k">from</span> <span class="s">&quot;@/components/EmailTemplate&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> Resend <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;resend&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> EmailTemplate <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/EmailTemplate&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Resend <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;resend&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> <span class="u">{</span> RESEND_API_KEY <span class="u">}</span> <span class="o">=</span> process<span class="u">.</span><span class="p">env</span><span class="u">;</span>
+<span class="text-syn-k">const</span> <span class="text-syn-u">{</span> RESEND_API_KEY <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> process<span class="text-syn-u">.</span><span class="text-syn-p">env</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">sendEmail</span><span class="u">(</span>data<span class="o">:</span> <span class="u">{</span>
-  from_name<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  message<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  sender_email<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-<span class="u">})</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>RESEND_API_KEY<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="u">{</span> <span class="p">error:</span> <span class="s">&quot;Failed to send email&quot;</span><span class="u">,</span> <span class="p">status:</span> <span class="n">500</span> <span class="u">};</span>
-  <span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendEmail</span><span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-u">{</span>
+  from_name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  message<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  sender_email<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>RESEND_API_KEY<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">error:</span> <span class="text-syn-s">&quot;Failed to send email&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">status:</span> <span class="text-syn-n">500</span> <span class="text-syn-u">};</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> resend <span class="o">=</span> <span class="o">new</span> <span class="f">Resend</span><span class="u">(</span>RESEND_API_KEY<span class="u">);</span>
+  <span class="text-syn-k">const</span> resend <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Resend</span><span class="text-syn-u">(</span>RESEND_API_KEY<span class="text-syn-u">);</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">const</span> resp <span class="o">=</span> <span class="k">await</span> resend<span class="u">.</span>emails<span class="u">.</span><span class="f">send</span><span class="u">({</span>
-      <span class="p">from:</span> <span class="s">&quot;Acme &lt;onboarding@resend.dev&gt;&quot;</span><span class="u">,</span>
-      <span class="p">to:</span> <span class="u">[</span><span class="s">&quot;delivered@resend.dev&quot;</span><span class="u">],</span>
-      <span class="p">subject:</span> <span class="s">&quot;🎉New submission to your contact form!&quot;</span><span class="u">,</span>
-      <span class="p">react:</span> <span class="f">EmailTemplate</span><span class="u">(</span>data<span class="u">),</span>
-    <span class="u">});</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> resp <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> resend<span class="text-syn-u">.</span>emails<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">from:</span> <span class="text-syn-s">&quot;Acme &lt;onboarding@resend.dev&gt;&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">to:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;delivered@resend.dev&quot;</span><span class="text-syn-u">],</span>
+      <span class="text-syn-p">subject:</span> <span class="text-syn-s">&quot;🎉New submission to your contact form!&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">react:</span> <span class="text-syn-f">EmailTemplate</span><span class="text-syn-u">(</span>data<span class="text-syn-u">),</span>
+    <span class="text-syn-u">});</span>
 
-    <span class="k">if</span> <span class="u">(</span>resp<span class="u">.</span><span class="p">error</span><span class="u">)</span> <span class="u">{</span>
-      console<span class="u">.</span><span class="f">log</span><span class="u">(</span>resp<span class="u">.</span><span class="p">error</span><span class="u">);</span>
-      <span class="k">return</span> <span class="u">{</span> <span class="p">error:</span> <span class="s">&quot;Failed to send email&quot;</span><span class="u">,</span> <span class="p">status:</span> <span class="n">500</span> <span class="u">};</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>resp<span class="text-syn-u">.</span><span class="text-syn-p">error</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>resp<span class="text-syn-u">.</span><span class="text-syn-p">error</span><span class="text-syn-u">);</span>
+      <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">error:</span> <span class="text-syn-s">&quot;Failed to send email&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">status:</span> <span class="text-syn-n">500</span> <span class="text-syn-u">};</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">return</span> <span class="u">{</span> <span class="p">message:</span> <span class="s">&quot;Email sent successfully&quot;</span> <span class="u">};</span>
-<span class="c">    // eslint-disable-next-line @typescript-eslint/no-explicit-any</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="o">:</span> <span class="t">any</span><span class="u">)</span> <span class="u">{</span>
-    console<span class="u">.</span><span class="f">log</span><span class="u">(</span>error<span class="u">);</span>
-    <span class="k">return</span> <span class="u">{</span> <span class="p">error:</span> <span class="s">&quot;Failed to send email&quot;</span><span class="u">,</span> <span class="p">status:</span> <span class="n">500</span> <span class="u">};</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">message:</span> <span class="text-syn-s">&quot;Email sent successfully&quot;</span> <span class="text-syn-u">};</span>
+<span class="text-syn-c italic">    // eslint-disable-next-line @typescript-eslint/no-explicit-any</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-o">:</span> <span class="text-syn-t">any</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>error<span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">error:</span> <span class="text-syn-s">&quot;Failed to send email&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">status:</span> <span class="text-syn-n">500</span> <span class="text-syn-u">};</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               You must have noticed the email template in the code above. Yes,
@@ -416,58 +426,58 @@
               super convenient to create dynamic and personalized email layouts.
             </p>
             <pre
-            ><code class="language-tsx"><span class="c">// src/components/EmailTemplate.tsx</span>
-<span class="k">import</span> Link <span class="k">from</span> <span class="s">&quot;next/link&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-c italic">// src/components/EmailTemplate.tsx</span>
+<span class="text-syn-k">import</span> Link <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/link&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">EmailTemplate</span><span class="u">({</span>
-  from_name<span class="u">,</span>
-  message<span class="u">,</span>
-  sender_email<span class="u">,</span>
-<span class="u">}</span><span class="o">:</span> <span class="u">{</span>
-  message<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  from_name<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  sender_email<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-<span class="u">})</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;mx-auto max-w-md rounded-lg bg-white p-6 shadow-md&quot;</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">h1</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;mb-4 text-2xl font-bold text-gray-800&quot;</span><span class="u">&gt;</span>New message from <span class="u">{</span>from_name<span class="u">}&lt;/</span><span class="g">h1</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">p</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;mb-2 text-gray-600&quot;</span><span class="u">&gt;{</span>message<span class="u">}&lt;/</span><span class="g">p</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">p</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-gray-500&quot;</span><span class="u">&gt;</span>
-        Sender email:<span class="u">{</span><span class="s">&quot; &quot;</span><span class="u">}</span>
-        <span class="u">&lt;</span><span class="g">Link</span> <span class="p">href</span><span class="o">=</span><span class="u">{</span><span class="s">`mailto:${sender_email}`</span><span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-blue-500 hover:underline&quot;</span><span class="u">&gt;</span>
-          <span class="u">{</span>sender_email<span class="u">}</span>
-        <span class="u">&lt;/</span><span class="g">Link</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">p</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">EmailTemplate</span><span class="text-syn-u">({</span>
+  from_name<span class="text-syn-u">,</span>
+  message<span class="text-syn-u">,</span>
+  sender_email<span class="text-syn-u">,</span>
+<span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span>
+  message<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  from_name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  sender_email<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;mx-auto max-w-md rounded-lg bg-white p-6 shadow-md&quot;</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">h1</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;mb-4 text-2xl font-bold text-gray-800&quot;</span><span class="text-syn-u">&gt;</span>New message from <span class="text-syn-u">{</span>from_name<span class="text-syn-u">}&lt;/</span><span class="text-syn-g">h1</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">p</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;mb-2 text-gray-600&quot;</span><span class="text-syn-u">&gt;{</span>message<span class="text-syn-u">}&lt;/</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">p</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-gray-500&quot;</span><span class="text-syn-u">&gt;</span>
+        Sender email:<span class="text-syn-u">{</span><span class="text-syn-s">&quot; &quot;</span><span class="text-syn-u">}</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Link</span> <span class="text-syn-p">href</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span><span class="text-syn-s">`mailto:${sender_email}`</span><span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-blue-500 hover:underline&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">{</span>sender_email<span class="text-syn-u">}</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Link</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Now you can update the</p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="u">{</span> sendEmail <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@/actions/email&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> sendEmail <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/actions/email&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> handleSendMessage <span class="o">=</span> <span class="f">useCallback</span><span class="u">(</span>
-  <span class="k">async</span> <span class="u">(</span>e<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">FormEvent</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    e<span class="u">.</span><span class="f">preventDefault</span><span class="u">();</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>formInputs<span class="u">.</span><span class="p">name</span> <span class="o">||</span> <span class="o">!</span>formInputs<span class="u">.</span><span class="p">email</span> <span class="o">||</span> <span class="o">!</span>formInputs<span class="u">.</span><span class="p">message</span><span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+<span class="text-syn-k">const</span> handleSendMessage <span class="text-syn-o">=</span> <span class="text-syn-f">useCallback</span><span class="text-syn-u">(</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>e<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">FormEvent</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    e<span class="text-syn-u">.</span><span class="text-syn-f">preventDefault</span><span class="text-syn-u">();</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">name</span> <span class="text-syn-o">||</span> <span class="text-syn-o">!</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">email</span> <span class="text-syn-o">||</span> <span class="text-syn-o">!</span>formInputs<span class="text-syn-u">.</span><span class="text-syn-p">message</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
-    <span class="f">setIsSubmitting</span><span class="u">(</span><span class="k">true</span><span class="u">);</span>
+    <span class="text-syn-f">setIsSubmitting</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
 
-    <span class="k">try</span> <span class="u">{</span>
-      <span class="k">await</span> <span class="f">sendEmail</span><span class="u">({</span>
-        <span class="p">from_name:</span> formInputs<span class="u">.</span><span class="p">name</span><span class="u">,</span>
-        <span class="p">message:</span> formInputs<span class="u">.</span><span class="p">message</span><span class="u">,</span>
-        <span class="p">sender_email:</span> formInputs<span class="u">.</span><span class="p">email</span><span class="u">,</span>
-      <span class="u">});</span>
-      <span class="f">setIsSubmitted</span><span class="u">(</span><span class="k">true</span><span class="u">);</span>
-    <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-      console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;Failed to send email:&quot;</span><span class="u">,</span> error<span class="u">);</span>
-    <span class="u">}</span> <span class="k">finally</span> <span class="u">{</span>
-      <span class="f">setIsSubmitting</span><span class="u">(</span><span class="k">false</span><span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">},</span>
-  <span class="u">[</span>formInputs<span class="u">],</span>
-<span class="u">);</span>
+    <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> <span class="text-syn-f">sendEmail</span><span class="text-syn-u">({</span>
+        <span class="text-syn-p">from_name:</span> formInputs<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">message:</span> formInputs<span class="text-syn-u">.</span><span class="text-syn-p">message</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">sender_email:</span> formInputs<span class="text-syn-u">.</span><span class="text-syn-p">email</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">});</span>
+      <span class="text-syn-f">setIsSubmitted</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      console<span class="text-syn-u">.</span><span class="text-syn-f">error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Failed to send email:&quot;</span><span class="text-syn-u">,</span> error<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">finally</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-f">setIsSubmitting</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">[</span>formInputs<span class="text-syn-u">],</span>
+<span class="text-syn-u">);</span>
 </code></pre>
             <p>Now we can test the contact form and find all the emails in the resend dashboard.</p>
             <p>
@@ -540,24 +550,35 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a></li>
-            <li><a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a></li>
-            <li><a href="/blogs/smooth-scroll/">Smooth Scrolling in Next.js</a></li>
+            <li class="my-2">
+              <a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a>
+            </li>
+            <li class="my-2"><a href="/blogs/smooth-scroll/">Smooth Scrolling in Next.js</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

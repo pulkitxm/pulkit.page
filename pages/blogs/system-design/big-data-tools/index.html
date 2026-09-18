@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,9 +73,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -78,11 +85,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Introduction to Big Data Tools</h1>
-            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Introduction to Big Data Tools
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-24">2026-01-24</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Big data processing is all about a set of tools that help you process data in a
               distributed fashion. When one machine is not capable of processing a huge amount of
@@ -146,12 +155,12 @@
               <li>When you encounter a space, update an in-memory hash table</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> wordFreq<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> wordFreq<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-<span class="k">function</span> <span class="f">processWord</span><span class="u">(</span>word<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  <span class="k">const</span> count <span class="o">=</span> wordFreq<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
-  wordFreq<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> count <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">processWord</span><span class="text-syn-u">(</span>word<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> wordFreq<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>word<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  wordFreq<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>word<span class="text-syn-u">,</span> count <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This runs in O(n) time. You traverse the entire file exactly once. Build the hash map.
@@ -161,24 +170,24 @@
             <h3 id="approach-2-threads">Approach 2: Threads</h3>
             <p>You can easily parallelize this code. Each thread handles a chunk of the file.</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">processChunk</span><span class="u">(</span>start<span class="o">:</span> <span class="t">number</span><span class="u">,</span> end<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> localFreq<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processChunk</span><span class="text-syn-u">(</span>start<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> end<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> localFreq<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> start<span class="u">;</span> i <span class="o">&lt;</span> end<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> word <span class="o">=</span> <span class="f">getWordAt</span><span class="u">(</span>i<span class="u">);</span>
-    <span class="k">const</span> count <span class="o">=</span> localFreq<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
-    localFreq<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> count <span class="o">+</span> <span class="n">1</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> start<span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> end<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> word <span class="text-syn-o">=</span> <span class="text-syn-f">getWordAt</span><span class="text-syn-u">(</span>i<span class="text-syn-u">);</span>
+    <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> localFreq<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>word<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+    localFreq<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>word<span class="text-syn-u">,</span> count <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> localFreq<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> localFreq<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> chunkSize <span class="o">=</span> fileSize <span class="o">/</span> threadCount<span class="u">;</span>
-<span class="k">const</span> results <span class="o">=</span> <span class="k">await</span> <span class="t">Promise</span><span class="u">.</span><span class="f">all</span><span class="u">(</span>
-  threads<span class="u">.</span><span class="f">map</span><span class="u">((</span>_<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">processChunk</span><span class="u">(</span>i <span class="o">*</span> chunkSize<span class="u">,</span> <span class="u">(</span>i <span class="o">+</span> <span class="n">1</span><span class="u">)</span> <span class="o">*</span> chunkSize<span class="u">)),</span>
-<span class="u">);</span>
+<span class="text-syn-k">const</span> chunkSize <span class="text-syn-o">=</span> fileSize <span class="text-syn-o">/</span> threadCount<span class="text-syn-u">;</span>
+<span class="text-syn-k">const</span> results <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">.</span><span class="text-syn-f">all</span><span class="text-syn-u">(</span>
+  threads<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>_<span class="text-syn-u">,</span> i<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">processChunk</span><span class="text-syn-u">(</span>i <span class="text-syn-o">*</span> chunkSize<span class="text-syn-u">,</span> <span class="text-syn-u">(</span>i <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-o">*</span> chunkSize<span class="text-syn-u">)),</span>
+<span class="text-syn-u">);</span>
 
-<span class="k">const</span> finalFreq <span class="o">=</span> <span class="f">mergeResults</span><span class="u">(</span>results<span class="u">);</span>
+<span class="text-syn-k">const</span> finalFreq <span class="text-syn-o">=</span> <span class="text-syn-f">mergeResults</span><span class="text-syn-u">(</span>results<span class="text-syn-u">);</span>
 </code></pre>
             <p>If you have 10 threads, each handles 100 GB. You get roughly 10x speed benefit.</p>
             <p>But what if data is 100 TB? Something that doesn&#39;t fit on one machine?</p>
@@ -209,35 +218,35 @@
               <li>Return final result</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Partition</span> <span class="u">{</span>
-  id<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  data<span class="o">:</span> <span class="t">Buffer</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">Partition</span> <span class="text-syn-u">{</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  data<span class="text-syn-o">:</span> <span class="text-syn-t">Buffer</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">interface</span> <span class="t">WorkerResult</span> <span class="u">{</span>
-  workerId<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  frequencies<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+<span class="text-syn-k">interface</span> <span class="text-syn-t">WorkerResult</span> <span class="text-syn-u">{</span>
+  workerId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  frequencies<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">distributeWork</span><span class="u">(</span>partitions<span class="o">:</span> <span class="t">Partition</span><span class="u">[],</span> workers<span class="o">:</span> <span class="t">Worker</span><span class="u">[])</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  partitions<span class="u">.</span><span class="f">forEach</span><span class="u">((</span>partition<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> worker <span class="o">=</span> workers<span class="u">[</span>i <span class="o">%</span> workers<span class="u">.</span>length<span class="u">];</span>
-    worker<span class="u">.</span><span class="f">process</span><span class="u">(</span>partition<span class="u">);</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">distributeWork</span><span class="text-syn-u">(</span>partitions<span class="text-syn-o">:</span> <span class="text-syn-t">Partition</span><span class="text-syn-u">[],</span> workers<span class="text-syn-o">:</span> <span class="text-syn-t">Worker</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  partitions<span class="text-syn-u">.</span><span class="text-syn-f">forEach</span><span class="text-syn-u">((</span>partition<span class="text-syn-u">,</span> i<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> worker <span class="text-syn-o">=</span> workers<span class="text-syn-u">[</span>i <span class="text-syn-o">%</span> workers<span class="text-syn-u">.</span>length<span class="text-syn-u">];</span>
+    worker<span class="text-syn-u">.</span><span class="text-syn-f">process</span><span class="text-syn-u">(</span>partition<span class="text-syn-u">);</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">mergeResults</span><span class="u">(</span>results<span class="o">:</span> <span class="t">WorkerResult</span><span class="u">[])</span><span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> final<span class="o">:</span> <span class="t">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="t">number</span><span class="u">&gt;</span> <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">mergeResults</span><span class="text-syn-u">(</span>results<span class="text-syn-o">:</span> <span class="text-syn-t">WorkerResult</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> final<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> result <span class="o">of</span> results<span class="u">)</span> <span class="u">{</span>
-    <span class="k">for</span> <span class="u">(</span><span class="k">const</span> <span class="u">[</span>word<span class="u">,</span> count<span class="u">]</span> <span class="o">of</span> result<span class="u">.</span><span class="p">frequencies</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">const</span> existing <span class="o">=</span> final<span class="u">.</span><span class="f">get</span><span class="u">(</span>word<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">;</span>
-      final<span class="u">.</span><span class="f">set</span><span class="u">(</span>word<span class="u">,</span> existing <span class="o">+</span> count<span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> result <span class="text-syn-o">of</span> results<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>word<span class="text-syn-u">,</span> count<span class="text-syn-u">]</span> <span class="text-syn-o">of</span> result<span class="text-syn-u">.</span><span class="text-syn-p">frequencies</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> existing <span class="text-syn-o">=</span> final<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>word<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+      final<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>word<span class="text-syn-u">,</span> existing <span class="text-syn-o">+</span> count<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> final<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> final<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="the-coordinator-pattern">The Coordinator Pattern</h2>
             <p>
@@ -361,13 +370,13 @@
               dialect of each database. You use simple DataFrames:
             </p>
             <pre
-            ><code class="language-python">users_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> mysql_url<span class="u">).</span>load<span class="u">()</span>
-orders_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> postgres_url<span class="u">).</span>load<span class="u">()</span>
-payments_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;mongodb&quot;</span><span class="u">).</span>load<span class="u">()</span>
+            ><code class="language-python">users_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> mysql_url<span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
+orders_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> postgres_url<span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
+payments_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;mongodb&quot;</span><span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
 
-combined <span class="o">=</span> users_df<span class="u">.</span>join<span class="u">(</span>orders_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">).</span>join<span class="u">(</span>payments_df<span class="u">,</span> <span class="s">&quot;order_id&quot;</span><span class="u">)</span>
+combined <span class="text-syn-o">=</span> users_df<span class="text-syn-u">.</span>join<span class="text-syn-u">(</span>orders_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_id&quot;</span><span class="text-syn-u">).</span>join<span class="text-syn-u">(</span>payments_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;order_id&quot;</span><span class="text-syn-u">)</span>
 
-combined<span class="u">.</span>write<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;jdbc&quot;</span><span class="u">).</span>option<span class="u">(</span><span class="s">&quot;url&quot;</span><span class="u">,</span> redshift_url<span class="u">).</span>save<span class="u">()</span>
+combined<span class="text-syn-u">.</span>write<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> redshift_url<span class="text-syn-u">).</span>save<span class="text-syn-u">()</span>
 </code></pre>
             <p>Spark ensures no row or document is missed. That&#39;s its job.</p>
             <h3 id="example-event-enrichment">Example: Event Enrichment</h3>
@@ -388,12 +397,12 @@ combined<span class="u">.</span>write<span class="u">.</span>format<span class="
               Elasticsearch? That scales.
             </p>
             <pre
-            ><code class="language-python">events <span class="o">=</span> spark<span class="u">.</span>readStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;kafka&quot;</span><span class="u">).</span>load<span class="u">()</span>
+            ><code class="language-python">events <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>readStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka&quot;</span><span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
 
-enriched <span class="o">=</span> events<span class="u">.</span>join<span class="u">(</span>users_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">)</span>
-enriched <span class="o">=</span> enriched<span class="u">.</span>withColumn<span class="u">(</span><span class="s">&quot;is_paid&quot;</span><span class="u">,</span> users_df<span class="u">[</span><span class="s">&quot;subscription&quot;</span><span class="u">]</span> <span class="o">==</span> <span class="s">&quot;paid&quot;</span><span class="u">)</span>
+enriched <span class="text-syn-o">=</span> events<span class="text-syn-u">.</span>join<span class="text-syn-u">(</span>users_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_id&quot;</span><span class="text-syn-u">)</span>
+enriched <span class="text-syn-o">=</span> enriched<span class="text-syn-u">.</span>withColumn<span class="text-syn-u">(</span><span class="text-syn-s">&quot;is_paid&quot;</span><span class="text-syn-u">,</span> users_df<span class="text-syn-u">[</span><span class="text-syn-s">&quot;subscription&quot;</span><span class="text-syn-u">]</span> <span class="text-syn-o">==</span> <span class="text-syn-s">&quot;paid&quot;</span><span class="text-syn-u">)</span>
 
-enriched<span class="u">.</span>writeStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;elasticsearch&quot;</span><span class="u">).</span>start<span class="u">()</span>
+enriched<span class="text-syn-u">.</span>writeStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;elasticsearch&quot;</span><span class="text-syn-u">).</span>start<span class="text-syn-u">()</span>
 </code></pre>
             <p>
               Big data processing isn&#39;t just about aggregations. It&#39;s about any computation
@@ -491,11 +500,11 @@ enriched<span class="u">.</span>writeStream<span class="u">.</span>format<span c
               </li>
             </ol>
             <pre
-            ><code class="language-python">sales_df <span class="o">=</span> spark<span class="u">.</span>read<span class="u">.</span>csv<span class="u">(</span><span class="s">&quot;sales.csv&quot;</span><span class="u">,</span> header<span class="o">=</span><span class="k">True</span><span class="u">)</span>
+            ><code class="language-python">sales_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>csv<span class="text-syn-u">(</span><span class="text-syn-s">&quot;sales.csv&quot;</span><span class="text-syn-u">,</span> header<span class="text-syn-o">=</span><span class="text-syn-k">True</span><span class="text-syn-u">)</span>
 
-sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&quot;product&quot;</span><span class="u">).</span>agg<span class="u">({</span><span class="s">&quot;amount&quot;</span><span class="u">:</span> <span class="s">&quot;sum&quot;</span><span class="u">}).</span>show<span class="u">()</span>
+sales_df<span class="text-syn-u">.</span>groupBy<span class="text-syn-u">(</span><span class="text-syn-s">&quot;product&quot;</span><span class="text-syn-u">).</span>agg<span class="text-syn-u">({</span><span class="text-syn-s">&quot;amount&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;sum&quot;</span><span class="text-syn-u">}).</span>show<span class="text-syn-u">()</span>
 
-sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&quot;region&quot;</span><span class="u">).</span>count<span class="u">().</span>show<span class="u">()</span>
+sales_df<span class="text-syn-u">.</span>groupBy<span class="text-syn-u">(</span><span class="text-syn-s">&quot;region&quot;</span><span class="text-syn-u">).</span>count<span class="text-syn-u">().</span>show<span class="text-syn-u">()</span>
 </code></pre>
             <ol start="3">
               <li>
@@ -504,17 +513,17 @@ sales_df<span class="u">.</span>groupBy<span class="u">(</span><span class="s">&
               </li>
             </ol>
             <pre
-            ><code class="language-python">events <span class="o">=</span> spark<span class="u">.</span>readStream<span class="u">.</span>format<span class="u">(</span><span class="s">&quot;kafka&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;kafka.bootstrap.servers&quot;</span><span class="u">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;subscribe&quot;</span><span class="u">,</span> <span class="s">&quot;blog_published&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>load<span class="u">()</span>
+            ><code class="language-python">events <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>readStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka.bootstrap.servers&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;localhost:9092&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;subscribe&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;blog_published&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>load<span class="text-syn-u">()</span>
 
-enriched <span class="o">=</span> events<span class="u">.</span>join<span class="u">(</span>users_df<span class="u">,</span> <span class="s">&quot;user_id&quot;</span><span class="u">)</span>
+enriched <span class="text-syn-o">=</span> events<span class="text-syn-u">.</span>join<span class="text-syn-u">(</span>users_df<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_id&quot;</span><span class="text-syn-u">)</span>
 
-query <span class="o">=</span> enriched<span class="u">.</span>writeStream <span class="u">\</span>
-    <span class="u">.</span>format<span class="u">(</span><span class="s">&quot;json&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>option<span class="u">(</span><span class="s">&quot;path&quot;</span><span class="u">,</span> <span class="s">&quot;/output/enriched&quot;</span><span class="u">)</span> <span class="u">\</span>
-    <span class="u">.</span>start<span class="u">()</span>
+query <span class="text-syn-o">=</span> enriched<span class="text-syn-u">.</span>writeStream <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;json&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;path&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;/output/enriched&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
+    <span class="text-syn-u">.</span>start<span class="text-syn-u">()</span>
 </code></pre>
             <p>For each event, enrich it with user details and flush to disk.</p>
             <p>
@@ -603,24 +612,37 @@ query <span class="o">=</span> enriched<span class="u">.</span>writeStream <span
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
-            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
-            <li><a href="/blogs/system-design/high-availability/">High Availability</a></li>
+            <li class="my-2">
+              <a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/system-design/high-availability/">High Availability</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

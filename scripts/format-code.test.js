@@ -16,7 +16,7 @@ function codeInner(html) {
 
 function visibleText(html) {
   return codeInner(html)
-    .replace(/<span class="[a-z]+">/g, "")
+    .replace(/<span class="[^"]+">/g, "")
     .replace(/<\/span>/g, "")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -37,9 +37,9 @@ describe("generate-time fence formatting", () => {
     );
     expect(visibleText(html)).toBe("const value = 1;\n\nconst next = 2;");
     const inner = codeInner(html);
-    expect(inner).toContain('<span class="k">const</span>');
-    expect(inner).toContain('<span class="n">1</span>');
-    expect(inner).toContain('<span class="n">2</span>');
+    expect(inner).toContain('<span class="text-syn-k">const</span>');
+    expect(inner).toContain('<span class="text-syn-n">1</span>');
+    expect(inner).toContain('<span class="text-syn-n">2</span>');
   });
 
   test("valid messy javascript is Biome-formatted in rendered HTML", async () => {
@@ -57,7 +57,7 @@ describe("generate-time fence formatting", () => {
       ),
     );
     expect(visibleText(html)).toBe('const value = "ready";\n\nconsole.log(value);');
-    expect(codeInner(html)).toContain('<span class="s">&quot;ready&quot;</span>');
+    expect(codeInner(html)).toContain('<span class="text-syn-s">&quot;ready&quot;</span>');
   });
 
   test("invalid javascript still renders after hygiene", async () => {
@@ -103,7 +103,7 @@ describe("generate-time fence formatting", () => {
     const html = await highlightFence("typescript", formatted);
     expect(
       html
-        .replace(/<span class="[a-z]+">/g, "")
+        .replace(/<span class="[^"]+">/g, "")
         .replace(/<\/span>/g, "")
         .replace(/&amp;/g, "&")
         .replace(/&lt;/g, "<")

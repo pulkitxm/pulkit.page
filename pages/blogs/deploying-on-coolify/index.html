@@ -58,12 +58,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -71,20 +76,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Coolify: Self-Host Postgres, Redis &amp; Next.js</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Coolify: Self-Host Postgres, Redis &amp; Next.js</h1>
-            <p class="detail-meta"><time datetime="2025-07-26">2025-07-26</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Coolify: Self-Host Postgres, Redis &amp; Next.js
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2025-07-26">2025-07-26</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <h2 id="intro">Intro</h2>
             <p>
               While exploring some cool tech I came across <a href="http://coolify.io">Coolify</a>.
@@ -202,7 +211,7 @@
             </p>
             <p>Or you can directly run this command:</p>
             <pre
-            ><code class="language-bash"><span class="f">curl</span> <span class="s">-fsSL</span> <span class="s">https://cdn.coollabs.io/coolify/install.sh</span> <span class="o">|</span> <span class="f">sudo</span> <span class="s">bash</span>
+            ><code class="language-bash"><span class="text-syn-f">curl</span> <span class="text-syn-s">-fsSL</span> <span class="text-syn-s">https://cdn.coollabs.io/coolify/install.sh</span> <span class="text-syn-o">|</span> <span class="text-syn-f">sudo</span> <span class="text-syn-s">bash</span>
 </code></pre>
             <p>You need to ssh into your server and run this command</p>
             <p>
@@ -219,24 +228,24 @@
               this
             </p>
             <pre
-            ><code class="language-bash">   <span class="f">____</span>                            <span class="s">_</span>         <span class="s">_</span>       <span class="s">_</span>   <span class="s">_</span>                 <span class="s">_</span>
-  <span class="f">/</span> <span class="s">___</span><span class="o">|</span><span class="f">___</span>  <span class="s">_</span> <span class="s">__</span>   <span class="s">__</span> <span class="s">_</span> <span class="s">_</span> <span class="s">__</span> <span class="s">__</span> <span class="s">_</span><span class="o">|</span> <span class="o">|</span><span class="f">_</span> <span class="s">_</span>   <span class="s">_</span><span class="o">|</span> <span class="o">|</span> <span class="f">__</span> <span class="s">_</span><span class="o">|</span> <span class="o">|</span><span class="f">_(_</span>) ___  _ __  ___<span class="o">|</span> <span class="o">|</span>
- <span class="o">|</span> <span class="o">|</span>   <span class="f">/</span> <span class="s">_</span> \| <span class="s">&#39;_ \ / _` | &#39;__/</span> <span class="s">_` | __| | | | |/ _`</span> <span class="o">|</span> <span class="f">__</span><span class="o">|</span> <span class="o">|</span><span class="f">/</span> <span class="s">_</span> \| <span class="s">&#39;_ \/ __| |</span>
-<span class="s"> | |__| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \__ \_|</span>
-<span class="s">  \____\___/|_| |_|\__, |_|  \__,_|\__|\__,_|_|\__,_|\__|_|\___/|_| |_|___(_)</span>
-<span class="s">                   |___/</span>
+            ><code class="language-bash">   <span class="text-syn-f">____</span>                            <span class="text-syn-s">_</span>         <span class="text-syn-s">_</span>       <span class="text-syn-s">_</span>   <span class="text-syn-s">_</span>                 <span class="text-syn-s">_</span>
+  <span class="text-syn-f">/</span> <span class="text-syn-s">___</span><span class="text-syn-o">|</span><span class="text-syn-f">___</span>  <span class="text-syn-s">_</span> <span class="text-syn-s">__</span>   <span class="text-syn-s">__</span> <span class="text-syn-s">_</span> <span class="text-syn-s">_</span> <span class="text-syn-s">__</span> <span class="text-syn-s">__</span> <span class="text-syn-s">_</span><span class="text-syn-o">|</span> <span class="text-syn-o">|</span><span class="text-syn-f">_</span> <span class="text-syn-s">_</span>   <span class="text-syn-s">_</span><span class="text-syn-o">|</span> <span class="text-syn-o">|</span> <span class="text-syn-f">__</span> <span class="text-syn-s">_</span><span class="text-syn-o">|</span> <span class="text-syn-o">|</span><span class="text-syn-f">_(_</span>) ___  _ __  ___<span class="text-syn-o">|</span> <span class="text-syn-o">|</span>
+ <span class="text-syn-o">|</span> <span class="text-syn-o">|</span>   <span class="text-syn-f">/</span> <span class="text-syn-s">_</span> \| <span class="text-syn-s">&#39;_ \ / _` | &#39;__/</span> <span class="text-syn-s">_` | __| | | | |/ _`</span> <span class="text-syn-o">|</span> <span class="text-syn-f">__</span><span class="text-syn-o">|</span> <span class="text-syn-o">|</span><span class="text-syn-f">/</span> <span class="text-syn-s">_</span> \| <span class="text-syn-s">&#39;_ \/ __| |</span>
+<span class="text-syn-s"> | |__| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \__ \_|</span>
+<span class="text-syn-s">  \____\___/|_| |_|\__, |_|  \__,_|\__|\__,_|_|\__,_|\__|_|\___/|_| |_|___(_)</span>
+<span class="text-syn-s">                   |___/</span>
 
-<span class="s">Your instance is ready to use!</span>
+<span class="text-syn-s">Your instance is ready to use!</span>
 
-<span class="s">You can access Coolify through your Public IPV4: http://[your-server-ip]:8000</span>
+<span class="text-syn-s">You can access Coolify through your Public IPV4: http://[your-server-ip]:8000</span>
 
-<span class="s">If your Public IP is not accessible, you can use the following Private IPs:</span>
+<span class="text-syn-s">If your Public IP is not accessible, you can use the following Private IPs:</span>
 
-<span class="s">http://10.0.0.1:8000</span>
-<span class="s">http://10.0.1.1:8000</span>
-<span class="s">http://fdb9:e3dd:639b::1:8000</span>
+<span class="text-syn-s">http://10.0.0.1:8000</span>
+<span class="text-syn-s">http://10.0.1.1:8000</span>
+<span class="text-syn-s">http://fdb9:e3dd:639b::1:8000</span>
 
-<span class="s">WARNING: It is highly recommended to backup your Environment variables file (/data/coolify/source/.env) to a safe location, outside of this server (e.g. into a Password Manager).</span>
+<span class="text-syn-s">WARNING: It is highly recommended to backup your Environment variables file (/data/coolify/source/.env) to a safe location, outside of this server (e.g. into a Password Manager).</span>
 </code></pre>
             <p>
               So as it says your public dashboard will be available at →
@@ -372,15 +381,15 @@
               />
             </p>
             <p>And that’s it after this, click on start and you will see the deployment logs.</p>
-            <pre><code class="language-bash"><span class="f">...</span>
- <span class="f">Volume</span> <span class="s">&quot;postgres-data-agookgc8ckkwkwww8ccsk8ok&quot;</span>  <span class="s">Creating</span>
- <span class="f">Volume</span> <span class="s">&quot;postgres-data-agookgc8ckkwkwww8ccsk8ok&quot;</span>  <span class="s">Created</span>
- <span class="f">Container</span> <span class="s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="s">Creating</span>
- <span class="f">agookgc8ckkwkwww8ccsk8ok</span> <span class="s">Your</span> <span class="s">kernel</span> <span class="s">does</span> <span class="s">not</span> <span class="s">support</span> <span class="s">memory</span> <span class="s">swappiness</span> <span class="s">capabilities</span> <span class="s">or</span> <span class="s">the</span> <span class="s">cgroup</span> <span class="s">is</span> <span class="s">not</span> <span class="s">mounted.</span> <span class="s">Memory</span> <span class="s">swappiness</span> <span class="s">discarded.</span>
- <span class="f">Container</span> <span class="s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="s">Created</span>
- <span class="f">Container</span> <span class="s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="s">Starting</span>
- <span class="f">Container</span> <span class="s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="s">Started</span>
-<span class="f">Database</span> <span class="s">started.</span>
+            <pre><code class="language-bash"><span class="text-syn-f">...</span>
+ <span class="text-syn-f">Volume</span> <span class="text-syn-s">&quot;postgres-data-agookgc8ckkwkwww8ccsk8ok&quot;</span>  <span class="text-syn-s">Creating</span>
+ <span class="text-syn-f">Volume</span> <span class="text-syn-s">&quot;postgres-data-agookgc8ckkwkwww8ccsk8ok&quot;</span>  <span class="text-syn-s">Created</span>
+ <span class="text-syn-f">Container</span> <span class="text-syn-s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="text-syn-s">Creating</span>
+ <span class="text-syn-f">agookgc8ckkwkwww8ccsk8ok</span> <span class="text-syn-s">Your</span> <span class="text-syn-s">kernel</span> <span class="text-syn-s">does</span> <span class="text-syn-s">not</span> <span class="text-syn-s">support</span> <span class="text-syn-s">memory</span> <span class="text-syn-s">swappiness</span> <span class="text-syn-s">capabilities</span> <span class="text-syn-s">or</span> <span class="text-syn-s">the</span> <span class="text-syn-s">cgroup</span> <span class="text-syn-s">is</span> <span class="text-syn-s">not</span> <span class="text-syn-s">mounted.</span> <span class="text-syn-s">Memory</span> <span class="text-syn-s">swappiness</span> <span class="text-syn-s">discarded.</span>
+ <span class="text-syn-f">Container</span> <span class="text-syn-s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="text-syn-s">Created</span>
+ <span class="text-syn-f">Container</span> <span class="text-syn-s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="text-syn-s">Starting</span>
+ <span class="text-syn-f">Container</span> <span class="text-syn-s">agookgc8ckkwkwww8ccsk8ok</span>  <span class="text-syn-s">Started</span>
+<span class="text-syn-f">Database</span> <span class="text-syn-s">started.</span>
 </code></pre>
             <p>
               For configuring if the database should be exposed to the internet or not you can edit
@@ -415,12 +424,14 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/nodejs-on-ec2/">Node.js on EC2 with PM2 and NGINX</a></li>
-            <li><a href="/blogs/vscode-in-browser/">VSCode in Your Browser</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/nodejs-on-ec2/">Node.js on EC2 with PM2 and NGINX</a>
+            </li>
+            <li class="my-2"><a href="/blogs/vscode-in-browser/">VSCode in Your Browser</a></li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
@@ -428,15 +439,22 @@
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

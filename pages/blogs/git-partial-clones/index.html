@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,20 +79,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Partial Clones, Shallow Clones, and Sparse Checkout</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Partial Clones, Shallow Clones, and Sparse Checkout</h1>
-            <p class="detail-meta"><time datetime="2026-08-03">2026-08-03</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Partial Clones, Shallow Clones, and Sparse Checkout
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-08-03">2026-08-03</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               The other day I had to change exactly one file in a repo that had grown enormous:
               years of history and hundreds of committed videos and images, the kind of repo where
@@ -124,10 +133,10 @@
             <h2 id="tl-dr">TL;DR</h2>
             <p>The whole trick is these four commands:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">clone</span> <span class="s">--filter=blob:none</span> <span class="s">--depth</span> <span class="s">1</span> <span class="s">--no-checkout</span> <span class="s">--branch</span> <span class="s">main</span> <span class="o">&lt;</span><span class="s">ur</span>l<span class="o">&gt;</span> <span class="s">repo</span>
-<span class="f">cd</span> <span class="s">repo</span>
-<span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">set</span> <span class="s">--no-cone</span> <span class="s">/README.md</span>
-<span class="f">git</span> <span class="s">checkout</span> <span class="s">main</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--filter=blob:none</span> <span class="text-syn-s">--depth</span> <span class="text-syn-s">1</span> <span class="text-syn-s">--no-checkout</span> <span class="text-syn-s">--branch</span> <span class="text-syn-s">main</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span> <span class="text-syn-s">repo</span>
+<span class="text-syn-f">cd</span> <span class="text-syn-s">repo</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">set</span> <span class="text-syn-s">--no-cone</span> <span class="text-syn-s">/README.md</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">checkout</span> <span class="text-syn-s">main</span>
 </code></pre>
             <ul>
               <li>
@@ -218,7 +227,7 @@
             </h2>
             <p>The oldest and best-known knob:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">clone</span> <span class="s">--depth</span> <span class="s">1</span> <span class="o">&lt;</span><span class="s">ur</span>l<span class="o">&gt;</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--depth</span> <span class="text-syn-s">1</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span>
 </code></pre>
             <p>
               <code>--depth 1</code>
@@ -236,8 +245,8 @@
             </p>
             <p>You can change your mind later:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">fetch</span> <span class="s">--deepen=50</span>      <span class="c"># pull in 50 more commits of history</span>
-<span class="f">git</span> <span class="s">fetch</span> <span class="s">--unshallow</span>      <span class="c"># give up, download everything</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">fetch</span> <span class="text-syn-s">--deepen=50</span>      <span class="text-syn-c italic"># pull in 50 more commits of history</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">fetch</span> <span class="text-syn-s">--unshallow</span>      <span class="text-syn-c italic"># give up, download everything</span>
 </code></pre>
             <p>
               Shallow clones are why CI checkouts are fast, and for a one-shot &quot;build this and
@@ -250,7 +259,7 @@
             </h2>
             <p>This is the modern one, and the one that changes everything:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">clone</span> <span class="s">--filter=blob:none</span> <span class="o">&lt;</span><span class="s">ur</span>l<span class="o">&gt;</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--filter=blob:none</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span>
 </code></pre>
             <p>
               The <code>--filter</code> tells the server: send me the commits and the trees, but
@@ -268,9 +277,9 @@
             </p>
             <p>You can watch it happen. In a fresh blobless clone:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">log</span> <span class="s">--oneline</span> <span class="s">-20</span>        <span class="c"># instant, commits are local</span>
-<span class="f">git</span> <span class="s">ls-tree</span> <span class="s">HEAD</span>             <span class="c"># instant, trees are local</span>
-<span class="f">git</span> <span class="s">show</span> <span class="s">HEAD:package.json</span>   <span class="c"># pauses briefly... fetches ONE blob, prints it</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">log</span> <span class="text-syn-s">--oneline</span> <span class="text-syn-s">-20</span>        <span class="text-syn-c italic"># instant, commits are local</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">ls-tree</span> <span class="text-syn-s">HEAD</span>             <span class="text-syn-c italic"># instant, trees are local</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">show</span> <span class="text-syn-s">HEAD:package.json</span>   <span class="text-syn-c italic"># pauses briefly... fetches ONE blob, prints it</span>
 </code></pre>
             <p>
               That last command is the whole feature in miniature: the repository is a skeleton, and
@@ -278,9 +287,9 @@
             </p>
             <p>There are other filters worth knowing:</p>
             <pre
-            ><code class="language-bash">--filter<span class="o">=</span><span class="s">blob:none</span>        <span class="c"># no blobs (the one you want 95% of the time)</span>
---filter<span class="o">=</span><span class="s">blob:</span>limit<span class="o">=</span><span class="s">1m</span>    <span class="c"># blobs over 1 MB stay behind, small ones come along</span>
---filter<span class="o">=</span><span class="s">tree:0</span>           <span class="c"># not even trees, just commits (extreme, see gotchas)</span>
+            ><code class="language-bash">--filter<span class="text-syn-o">=</span><span class="text-syn-s">blob:none</span>        <span class="text-syn-c italic"># no blobs (the one you want 95% of the time)</span>
+--filter<span class="text-syn-o">=</span><span class="text-syn-s">blob:</span>limit<span class="text-syn-o">=</span><span class="text-syn-s">1m</span>    <span class="text-syn-c italic"># blobs over 1 MB stay behind, small ones come along</span>
+--filter<span class="text-syn-o">=</span><span class="text-syn-s">tree:0</span>           <span class="text-syn-c italic"># not even trees, just commits (extreme, see gotchas)</span>
 </code></pre>
             <p>
               Two caveats before you fall in love. First, the server has to support filtering (<code
@@ -299,7 +308,7 @@
               <strong>which files git materializes into your working directory.</strong>
             </p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">set</span> <span class="s">apps/web</span> <span class="s">shared/ui</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">set</span> <span class="text-syn-s">apps/web</span> <span class="text-syn-s">shared/ui</span>
 </code></pre>
             <p>
               After this, your working directory contains only those directories (plus files at the
@@ -315,7 +324,7 @@
               patterns:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">set</span> <span class="s">--no-cone</span> <span class="s">/README.md</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">set</span> <span class="text-syn-s">--no-cone</span> <span class="text-syn-s">/README.md</span>
 </code></pre>
             <p>
               <code>--no-cone</code>
@@ -326,9 +335,9 @@
             </p>
             <p>The rest of the surface is small:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">list</span>           <span class="c"># show current patterns</span>
-<span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">add</span> <span class="s">docs/</span>      <span class="c"># widen the checkout</span>
-<span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">disable</span>        <span class="c"># materialize everything again</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">list</span>           <span class="text-syn-c italic"># show current patterns</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">add</span> <span class="text-syn-s">docs/</span>      <span class="text-syn-c italic"># widen the checkout</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">disable</span>        <span class="text-syn-c italic"># materialize everything again</span>
 </code></pre>
             <p>
               On its own, sparse checkout saves disk and makes tools faster (your editor, file
@@ -341,10 +350,10 @@
             <h2 id="the-recipe-line-by-line">The recipe, line by line</h2>
             <p>Here it is again, the whole thing:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">clone</span> <span class="s">--filter=blob:none</span> <span class="s">--depth</span> <span class="s">1</span> <span class="s">--no-checkout</span> <span class="s">--branch</span> <span class="s">main</span> <span class="o">&lt;</span><span class="s">ur</span>l<span class="o">&gt;</span> <span class="s">repo</span>
-<span class="f">cd</span> <span class="s">repo</span>
-<span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">set</span> <span class="s">--no-cone</span> <span class="s">/README.md</span>
-<span class="f">git</span> <span class="s">checkout</span> <span class="s">main</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">clone</span> <span class="text-syn-s">--filter=blob:none</span> <span class="text-syn-s">--depth</span> <span class="text-syn-s">1</span> <span class="text-syn-s">--no-checkout</span> <span class="text-syn-s">--branch</span> <span class="text-syn-s">main</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span> <span class="text-syn-s">repo</span>
+<span class="text-syn-f">cd</span> <span class="text-syn-s">repo</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">set</span> <span class="text-syn-s">--no-cone</span> <span class="text-syn-s">/README.md</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">checkout</span> <span class="text-syn-s">main</span>
 </code></pre>
             <p>
               <strong>Line 1</strong>
@@ -385,7 +394,7 @@
             </p>
             <p>Need more of the repo later? Widen it, and git fetches just the difference:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">sparse-checkout</span> <span class="s">add</span> <span class="s">scripts/</span>     <span class="c"># fetches only the blobs under scripts/</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">sparse-checkout</span> <span class="text-syn-s">add</span> <span class="text-syn-s">scripts/</span>     <span class="text-syn-c italic"># fetches only the blobs under scripts/</span>
 </code></pre>
             <h2 id="the-part-that-feels-illegal-committing-from-a-skeleton">
               The part that feels illegal: committing from a skeleton
@@ -416,7 +425,7 @@
             </p>
             <p>Then push:</p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">push</span> <span class="s">origin</span> <span class="s">main</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">push</span> <span class="text-syn-s">origin</span> <span class="text-syn-s">main</span>
 </code></pre>
             <p>
               Push is a negotiation, and it&#39;s beautifully minimal. Your git and the server
@@ -446,9 +455,9 @@
               blobs, and those live on the server:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">log</span> <span class="s">-p</span>            <span class="c"># fetches blobs for EVERY commit it displays, one batch at a time</span>
-<span class="f">git</span> <span class="s">blame</span> <span class="s">src/app.ts</span>  <span class="c"># fetches every historical version of that file</span>
-<span class="f">git</span> <span class="s">bisect</span>            <span class="c"># fetches each checkout as you go</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">log</span> <span class="text-syn-s">-p</span>            <span class="text-syn-c italic"># fetches blobs for EVERY commit it displays, one batch at a time</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">blame</span> <span class="text-syn-s">src/app.ts</span>  <span class="text-syn-c italic"># fetches every historical version of that file</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">bisect</span>            <span class="text-syn-c italic"># fetches each checkout as you go</span>
 </code></pre>
             <p>
               On a blobless clone these work, but they crawl, and they need the network. A partial
@@ -525,7 +534,7 @@
               a tool that bundles the recommended setup:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">scalar</span> <span class="s">clone</span> <span class="o">&lt;</span><span class="s">ur</span>l<span class="o">&gt;</span>
+            ><code class="language-bash"><span class="text-syn-f">scalar</span> <span class="text-syn-s">clone</span> <span class="text-syn-o">&lt;</span><span class="text-syn-s">ur</span>l<span class="text-syn-o">&gt;</span>
 </code></pre>
             <p>
               <code>scalar</code>
@@ -666,24 +675,33 @@
             <p>Happy (skeleton) shipping!</p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
-            <li><a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a></li>
-            <li><a href="/blogs/cookie-sync-pattern/">The Cookie Sync Pattern</a></li>
+            <li class="my-2"><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
+            <li class="my-2">
+              <a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a>
+            </li>
+            <li class="my-2"><a href="/blogs/cookie-sync-pattern/">The Cookie Sync Pattern</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

@@ -49,12 +49,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -62,20 +67,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Git Worktrees</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Git Worktrees</h1>
-            <p class="detail-meta"><time datetime="2026-05-29">2026-05-29</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Git Worktrees
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-05-29">2026-05-29</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               I work at <a href="https://noveum.ai">Noveum.ai</a>, a small, fast-moving startup. On
               a normal day I&#39;ll be deep in a new feature, an agent grinding through a refactor
@@ -225,7 +234,7 @@
               and you run:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">../myapp-worktrees/feat-auth</span> <span class="s">-b</span> <span class="s">feat-auth</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">feat-auth</span>
 </code></pre>
             <p>Let&#39;s read that command left to right, because every piece matters:</p>
             <ul>
@@ -297,32 +306,32 @@
             <h3 id="git-worktree-add-create-one"><code>git worktree add</code>: create one</h3>
             <p>This is the command you&#39;ll use 95% of the time.</p>
             <pre
-            ><code class="language-bash"><span class="c"># Create a NEW branch and check it out in a new directory (most common)</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">../myapp-worktrees/feat-auth</span> <span class="s">-b</span> <span class="s">feat-auth</span>
+            ><code class="language-bash"><span class="text-syn-c italic"># Create a NEW branch and check it out in a new directory (most common)</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">feat-auth</span>
 
-<span class="c"># Check out an EXISTING branch into a new directory</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">../myapp-worktrees/hotfix</span> <span class="s">hotfix</span>
+<span class="text-syn-c italic"># Check out an EXISTING branch into a new directory</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../myapp-worktrees/hotfix</span> <span class="text-syn-s">hotfix</span>
 
-<span class="c"># Branch from a specific start point</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">../myapp-worktrees/feat-auth</span> <span class="s">-b</span> <span class="s">feat-auth</span> <span class="s">origin/main</span>
+<span class="text-syn-c italic"># Branch from a specific start point</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">feat-auth</span> <span class="text-syn-s">origin/main</span>
 </code></pre>
             <h3 id="git-worktree-list-see-what-you-ve-got">
               <code>git worktree list</code>: see what you&#39;ve got
             </h3>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">worktree</span> <span class="s">list</span>
-<span class="c"># /Users/you/code/myapp                  abcd123 [main]</span>
-<span class="c"># /Users/you/code/myapp-worktrees/feat   ef45678 [feat-auth]</span>
-<span class="c"># /Users/you/code/inspect                9988776 (detached HEAD)</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">list</span>
+<span class="text-syn-c italic"># /Users/you/code/myapp                  abcd123 [main]</span>
+<span class="text-syn-c italic"># /Users/you/code/myapp-worktrees/feat   ef45678 [feat-auth]</span>
+<span class="text-syn-c italic"># /Users/you/code/inspect                9988776 (detached HEAD)</span>
 
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">list</span> <span class="s">--porcelain</span>   <span class="c"># stable, machine-readable; parse this, not the human format</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">list</span> <span class="text-syn-s">--porcelain</span>   <span class="text-syn-c italic"># stable, machine-readable; parse this, not the human format</span>
 </code></pre>
             <h3 id="git-worktree-remove-clean-one-up">
               <code>git worktree remove</code>: clean one up
             </h3>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">worktree</span> <span class="s">remove</span> <span class="s">../myapp-worktrees/feat-auth</span>        <span class="c"># refuses if there are uncommitted changes</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">remove</span> <span class="s">--force</span> <span class="s">../myapp-worktrees/feat-auth</span> <span class="c"># remove anyway</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span>        <span class="text-syn-c italic"># refuses if there are uncommitted changes</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">--force</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-c italic"># remove anyway</span>
 </code></pre>
             <p>
               Always prefer this over <code>rm -rf</code>-ing the directory. If you delete the
@@ -336,9 +345,9 @@
               <code>git worktree prune</code>: sweep the ghosts
             </h3>
             <pre
-            ><code class="language-bash"><span class="f">git</span> <span class="s">worktree</span> <span class="s">prune</span> <span class="s">-n</span>              <span class="c"># dry run: show what would be pruned</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">prune</span> <span class="s">-v</span>              <span class="c"># verbose: report each removal</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">prune</span> <span class="s">--expire</span> <span class="s">3.days.ago</span>
+            ><code class="language-bash"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span> <span class="text-syn-s">-n</span>              <span class="text-syn-c italic"># dry run: show what would be pruned</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span> <span class="text-syn-s">-v</span>              <span class="text-syn-c italic"># verbose: report each removal</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span> <span class="text-syn-s">--expire</span> <span class="text-syn-s">3.days.ago</span>
 </code></pre>
             <h2 id="the-gotchas-that-will-bite-you">The gotchas that will bite you</h2>
             <p>I hit most of these the hard way, so let me save you the trouble.</p>
@@ -347,8 +356,8 @@
             </h3>
             <p>This is the cardinal rule and it confuses everyone the first time:</p>
             <pre
-            ><code class="language-bash"><span class="f">$</span> <span class="s">git</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">../second</span> <span class="s">main</span>
-<span class="f">fatal:</span> <span class="s">&#39;main&#39;</span> <span class="s">is</span> <span class="s">already</span> <span class="s">checked</span> <span class="s">out</span> <span class="s">at</span> <span class="s">&#39;/Users/you/code/myapp&#39;</span>
+            ><code class="language-bash"><span class="text-syn-f">$</span> <span class="text-syn-s">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../second</span> <span class="text-syn-s">main</span>
+<span class="text-syn-f">fatal:</span> <span class="text-syn-s">&#39;main&#39;</span> <span class="text-syn-s">is</span> <span class="text-syn-s">already</span> <span class="text-syn-s">checked</span> <span class="text-syn-s">out</span> <span class="text-syn-s">at</span> <span class="text-syn-s">&#39;/Users/you/code/myapp&#39;</span>
 </code></pre>
             <p>
               Why? Each worktree has its own <code>HEAD</code> and <code>index</code>, but a branch
@@ -490,39 +499,39 @@
               <code>~/.bashrc</code>:
             </p>
             <pre
-            ><code class="language-bash"><span class="c"># wt &lt;branch&gt; [base]: create a worktree, copy common config, install deps</span>
-<span class="f">wt</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">local</span> branch<span class="o">=</span><span class="s">&quot;$1&quot;</span>
-  <span class="k">local</span> base<span class="o">=</span><span class="s">&quot;${2:-origin/HEAD}&quot;</span>
-  <span class="u">[</span> <span class="o">-z</span> <span class="s">&quot;$branch&quot;</span> <span class="u">]</span> <span class="u">&amp;&amp;</span> <span class="u">{</span> <span class="f">echo</span> <span class="s">&quot;usage: wt &lt;branch&gt; [base]&quot;</span><span class="u">;</span> <span class="f">return</span> <span class="s">1</span><span class="u">;</span> <span class="u">}</span>
+            ><code class="language-bash"><span class="text-syn-c italic"># wt &lt;branch&gt; [base]: create a worktree, copy common config, install deps</span>
+<span class="text-syn-f">wt</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">local</span> branch<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$1&quot;</span>
+  <span class="text-syn-k">local</span> base<span class="text-syn-o">=</span><span class="text-syn-s">&quot;${2:-origin/HEAD}&quot;</span>
+  <span class="text-syn-u">[</span> <span class="text-syn-o">-z</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-u">]</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-u">{</span> <span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;usage: wt &lt;branch&gt; [base]&quot;</span><span class="text-syn-u">;</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span><span class="text-syn-u">;</span> <span class="text-syn-u">}</span>
 
-  <span class="k">local</span> root<span class="u">;</span> root<span class="o">=</span><span class="s">&quot;$(git rev-parse --show-toplevel)&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="k">local</span> repo<span class="u">;</span> repo<span class="o">=</span><span class="s">&quot;$(basename &quot;$root&quot;)&quot;</span>
-  <span class="k">local</span> wtdir<span class="o">=</span><span class="s">&quot;$(dirname &quot;$root&quot;)/${repo}-worktrees/${branch//\//-}&quot;</span>
+  <span class="text-syn-k">local</span> root<span class="text-syn-u">;</span> root<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git rev-parse --show-toplevel)&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-k">local</span> repo<span class="text-syn-u">;</span> repo<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(basename &quot;$root&quot;)&quot;</span>
+  <span class="text-syn-k">local</span> wtdir<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(dirname &quot;$root&quot;)/${repo}-worktrees/${branch//\//-}&quot;</span>
 
-  <span class="f">git</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">fetch</span> <span class="s">--quiet</span> <span class="s">origin</span>
-  <span class="f">git</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">&quot;$wtdir&quot;</span> <span class="s">-b</span> <span class="s">&quot;$branch&quot;</span> <span class="s">&quot;$base&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
+  <span class="text-syn-f">git</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">fetch</span> <span class="text-syn-s">--quiet</span> <span class="text-syn-s">origin</span>
+  <span class="text-syn-f">git</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">&quot;$wtdir&quot;</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-s">&quot;$base&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
 
-  <span class="c"># copy the common gitignored config a fresh checkout is missing</span>
-  <span class="k">for</span> f <span class="k">in</span> <span class="s">.env</span> <span class="s">.env.local</span> <span class="s">.npmrc</span><span class="u">;</span> <span class="k">do</span>
-    <span class="u">[</span> <span class="o">-f</span> <span class="s">&quot;$root/$f&quot;</span> <span class="u">]</span> <span class="u">&amp;&amp;</span> <span class="f">cp</span> <span class="s">&quot;$root/$f&quot;</span> <span class="s">&quot;$wtdir/$f&quot;</span>
-  <span class="k">done</span>
+  <span class="text-syn-c italic"># copy the common gitignored config a fresh checkout is missing</span>
+  <span class="text-syn-k">for</span> f <span class="text-syn-k">in</span> <span class="text-syn-s">.env</span> <span class="text-syn-s">.env.local</span> <span class="text-syn-s">.npmrc</span><span class="text-syn-u">;</span> <span class="text-syn-k">do</span>
+    <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> <span class="text-syn-s">&quot;$root/$f&quot;</span> <span class="text-syn-u">]</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">cp</span> <span class="text-syn-s">&quot;$root/$f&quot;</span> <span class="text-syn-s">&quot;$wtdir/$f&quot;</span>
+  <span class="text-syn-k">done</span>
 
-  <span class="c"># install deps</span>
-  <span class="f">cd</span> <span class="s">&quot;$wtdir&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="f">bun</span> <span class="s">install</span>
+  <span class="text-syn-c italic"># install deps</span>
+  <span class="text-syn-f">cd</span> <span class="text-syn-s">&quot;$wtdir&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-f">bun</span> <span class="text-syn-s">install</span>
 
-  <span class="f">echo</span> <span class="s">&quot;✅ worktree ready: $wtdir&quot;</span>
-<span class="u">}</span>
+  <span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;✅ worktree ready: $wtdir&quot;</span>
+<span class="text-syn-u">}</span>
 
-<span class="c"># wtrm: tear down the current worktree + its branch, run from inside it</span>
-<span class="f">wtrm</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">local</span> wt<span class="u">;</span> wt<span class="o">=</span><span class="s">&quot;$(git rev-parse --show-toplevel)&quot;</span>
-  <span class="k">local</span> branch<span class="u">;</span> branch<span class="o">=</span><span class="s">&quot;$(git symbolic-ref --short HEAD)&quot;</span>
-  <span class="k">local</span> main<span class="u">;</span> main<span class="o">=</span><span class="s">&quot;$(git worktree list --porcelain | awk &#39;NR==1{print $2}&#39;)&quot;</span>
-  <span class="f">cd</span> <span class="s">&quot;$main&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="f">git</span> <span class="s">worktree</span> <span class="s">remove</span> <span class="s">&quot;$wt&quot;</span> <span class="u">&amp;&amp;</span> <span class="f">git</span> <span class="s">branch</span> <span class="s">-D</span> <span class="s">&quot;$branch&quot;</span> <span class="u">&amp;&amp;</span> <span class="f">git</span> <span class="s">worktree</span> <span class="s">prune</span>
-<span class="u">}</span>
+<span class="text-syn-c italic"># wtrm: tear down the current worktree + its branch, run from inside it</span>
+<span class="text-syn-f">wtrm</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">local</span> wt<span class="text-syn-u">;</span> wt<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git rev-parse --show-toplevel)&quot;</span>
+  <span class="text-syn-k">local</span> branch<span class="text-syn-u">;</span> branch<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git symbolic-ref --short HEAD)&quot;</span>
+  <span class="text-syn-k">local</span> main<span class="text-syn-u">;</span> main<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git worktree list --porcelain | awk &#39;NR==1{print $2}&#39;)&quot;</span>
+  <span class="text-syn-f">cd</span> <span class="text-syn-s">&quot;$main&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">&quot;$wt&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">branch</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p><strong>The full version I actually use in my workflow</strong></p>
             <p>
@@ -532,62 +541,62 @@
               attaches to a branch that already exists instead of erroring, and it detects Bun.
             </p>
             <pre
-            ><code class="language-bash"><span class="f">wt</span><span class="u">()</span> <span class="u">{</span>
-  <span class="f">emulate</span> <span class="s">-L</span> <span class="s">bash</span> <span class="o">2&gt;</span><span class="s">/dev/null</span> <span class="o">||</span> <span class="f">true</span>
-  <span class="k">local</span> branch<span class="o">=</span><span class="s">&quot;$1&quot;</span>
-  <span class="k">local</span> base<span class="o">=</span><span class="s">&quot;${2:-origin/HEAD}&quot;</span>
-  <span class="u">[</span> <span class="o">-z</span> <span class="s">&quot;$branch&quot;</span> <span class="u">]</span> <span class="u">&amp;&amp;</span> <span class="u">{</span> <span class="f">echo</span> <span class="s">&quot;usage: wt &lt;branch&gt; [base]&quot;</span><span class="u">;</span> <span class="f">return</span> <span class="s">1</span><span class="u">;</span> <span class="u">}</span>
+            ><code class="language-bash"><span class="text-syn-f">wt</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-f">emulate</span> <span class="text-syn-s">-L</span> <span class="text-syn-s">bash</span> <span class="text-syn-o">2&gt;</span><span class="text-syn-s">/dev/null</span> <span class="text-syn-o">||</span> <span class="text-syn-f">true</span>
+  <span class="text-syn-k">local</span> branch<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$1&quot;</span>
+  <span class="text-syn-k">local</span> base<span class="text-syn-o">=</span><span class="text-syn-s">&quot;${2:-origin/HEAD}&quot;</span>
+  <span class="text-syn-u">[</span> <span class="text-syn-o">-z</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-u">]</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-u">{</span> <span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;usage: wt &lt;branch&gt; [base]&quot;</span><span class="text-syn-u">;</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span><span class="text-syn-u">;</span> <span class="text-syn-u">}</span>
 
-  <span class="k">local</span> root<span class="u">;</span> root<span class="o">=</span><span class="s">&quot;$(git rev-parse --show-toplevel)&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="k">local</span> repo<span class="u">;</span> repo<span class="o">=</span><span class="s">&quot;$(basename &quot;$root&quot;)&quot;</span>
-  <span class="k">local</span> wtdir<span class="o">=</span><span class="s">&quot;$(dirname &quot;$root&quot;)/${repo}-worktrees/${branch//\//-}&quot;</span>
+  <span class="text-syn-k">local</span> root<span class="text-syn-u">;</span> root<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git rev-parse --show-toplevel)&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-k">local</span> repo<span class="text-syn-u">;</span> repo<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(basename &quot;$root&quot;)&quot;</span>
+  <span class="text-syn-k">local</span> wtdir<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(dirname &quot;$root&quot;)/${repo}-worktrees/${branch//\//-}&quot;</span>
 
-  <span class="f">git</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">fetch</span> <span class="s">--quiet</span> <span class="s">origin</span>
+  <span class="text-syn-f">git</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">fetch</span> <span class="text-syn-s">--quiet</span> <span class="text-syn-s">origin</span>
 
-  <span class="k">if</span> <span class="f">git</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">show-ref</span> <span class="s">--verify</span> <span class="s">--quiet</span> <span class="s">&quot;refs/heads/$branch&quot;</span><span class="u">;</span> <span class="k">then</span>
-    <span class="f">echo</span> <span class="s">&quot;branch &#39;$branch&#39; already exists, attaching a worktree to it&quot;</span>
-    <span class="f">git</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">&quot;$wtdir&quot;</span> <span class="s">&quot;$branch&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="k">else</span>
-    <span class="f">git</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">worktree</span> <span class="s">add</span> <span class="s">&quot;$wtdir&quot;</span> <span class="s">-b</span> <span class="s">&quot;$branch&quot;</span> <span class="s">&quot;$base&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="k">fi</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-f">git</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">show-ref</span> <span class="text-syn-s">--verify</span> <span class="text-syn-s">--quiet</span> <span class="text-syn-s">&quot;refs/heads/$branch&quot;</span><span class="text-syn-u">;</span> <span class="text-syn-k">then</span>
+    <span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;branch &#39;$branch&#39; already exists, attaching a worktree to it&quot;</span>
+    <span class="text-syn-f">git</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">&quot;$wtdir&quot;</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-k">else</span>
+    <span class="text-syn-f">git</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">&quot;$wtdir&quot;</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-s">&quot;$base&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-k">fi</span>
 
-  wtdir<span class="o">=</span><span class="s">&quot;$(cd &quot;$wtdir&quot; &amp;&amp; pwd)&quot;</span>
+  wtdir<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(cd &quot;$wtdir&quot; &amp;&amp; pwd)&quot;</span>
 
-  <span class="k">local</span> <span class="s">-a</span> include
-  <span class="k">if</span> <span class="u">[</span> <span class="o">-f</span> <span class="s">&quot;$root/.worktreeinclude&quot;</span> <span class="u">];</span> <span class="k">then</span>
-    <span class="k">while</span> IFS<span class="o">=</span> <span class="f">read</span> <span class="s">-r</span> <span class="s">line</span><span class="u">;</span> <span class="k">do</span>
-      <span class="k">case</span> <span class="s">&quot;$line&quot;</span> <span class="k">in</span> <span class="s">&#39;&#39;</span><span class="o">|</span><span class="s">&#39;#&#39;</span><span class="o">*)</span> <span class="f">continue</span> <span class="u">;;</span> <span class="k">esac</span>
-      include<span class="o">+=</span><span class="u">(</span><span class="s">&quot;$line&quot;</span><span class="u">)</span>
-    <span class="k">done</span> <span class="o">&lt;</span> <span class="s">&quot;$root/.worktreeinclude&quot;</span>
-  <span class="k">else</span>
-    include<span class="o">=</span><span class="u">(</span><span class="s">.env</span> <span class="s">.env.local</span> <span class="s">.env.development</span> <span class="s">.env.production</span> <span class="s">.env.test</span>
-             <span class="s">.npmrc</span> <span class="s">.tool-versions</span> <span class="s">.nvmrc</span>
-             <span class="s">config/secrets.json</span> <span class="s">certs/localhost.pem</span> <span class="s">certs/localhost-key.pem</span><span class="u">)</span>
-  <span class="k">fi</span>
+  <span class="text-syn-k">local</span> <span class="text-syn-s">-a</span> include
+  <span class="text-syn-k">if</span> <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> <span class="text-syn-s">&quot;$root/.worktreeinclude&quot;</span> <span class="text-syn-u">];</span> <span class="text-syn-k">then</span>
+    <span class="text-syn-k">while</span> IFS<span class="text-syn-o">=</span> <span class="text-syn-f">read</span> <span class="text-syn-s">-r</span> <span class="text-syn-s">line</span><span class="text-syn-u">;</span> <span class="text-syn-k">do</span>
+      <span class="text-syn-k">case</span> <span class="text-syn-s">&quot;$line&quot;</span> <span class="text-syn-k">in</span> <span class="text-syn-s">&#39;&#39;</span><span class="text-syn-o">|</span><span class="text-syn-s">&#39;#&#39;</span><span class="text-syn-o">*)</span> <span class="text-syn-f">continue</span> <span class="text-syn-u">;;</span> <span class="text-syn-k">esac</span>
+      include<span class="text-syn-o">+=</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;$line&quot;</span><span class="text-syn-u">)</span>
+    <span class="text-syn-k">done</span> <span class="text-syn-o">&lt;</span> <span class="text-syn-s">&quot;$root/.worktreeinclude&quot;</span>
+  <span class="text-syn-k">else</span>
+    include<span class="text-syn-o">=</span><span class="text-syn-u">(</span><span class="text-syn-s">.env</span> <span class="text-syn-s">.env.local</span> <span class="text-syn-s">.env.development</span> <span class="text-syn-s">.env.production</span> <span class="text-syn-s">.env.test</span>
+             <span class="text-syn-s">.npmrc</span> <span class="text-syn-s">.tool-versions</span> <span class="text-syn-s">.nvmrc</span>
+             <span class="text-syn-s">config/secrets.json</span> <span class="text-syn-s">certs/localhost.pem</span> <span class="text-syn-s">certs/localhost-key.pem</span><span class="text-syn-u">)</span>
+  <span class="text-syn-k">fi</span>
 
-  <span class="u">(</span> <span class="f">cd</span> <span class="s">&quot;$root&quot;</span>
-    <span class="k">for</span> pat <span class="k">in</span> <span class="s">&quot;${include[@]}&quot;</span><span class="u">;</span> <span class="k">do</span>
-      <span class="k">for</span> f <span class="k">in</span> <span class="u">$</span>pat<span class="u">;</span> <span class="k">do</span> <span class="u">[</span> <span class="o">-e</span> <span class="s">&quot;$f&quot;</span> <span class="u">]</span> <span class="u">&amp;&amp;</span> <span class="f">printf</span> <span class="s">&#39;%s\0&#39;</span> <span class="s">&quot;$f&quot;</span><span class="u">;</span> <span class="k">done</span>
-    <span class="k">done</span>
-  <span class="u">)</span> <span class="o">|</span> <span class="f">tar</span> <span class="s">-C</span> <span class="s">&quot;$root&quot;</span> <span class="s">--null</span> <span class="s">-T</span> <span class="s">-</span> <span class="s">-cf</span> <span class="s">-</span> <span class="o">|</span> <span class="f">tar</span> <span class="s">-C</span> <span class="s">&quot;$wtdir&quot;</span> <span class="s">-xf</span> <span class="s">-</span>
+  <span class="text-syn-u">(</span> <span class="text-syn-f">cd</span> <span class="text-syn-s">&quot;$root&quot;</span>
+    <span class="text-syn-k">for</span> pat <span class="text-syn-k">in</span> <span class="text-syn-s">&quot;${include[@]}&quot;</span><span class="text-syn-u">;</span> <span class="text-syn-k">do</span>
+      <span class="text-syn-k">for</span> f <span class="text-syn-k">in</span> <span class="text-syn-u">$</span>pat<span class="text-syn-u">;</span> <span class="text-syn-k">do</span> <span class="text-syn-u">[</span> <span class="text-syn-o">-e</span> <span class="text-syn-s">&quot;$f&quot;</span> <span class="text-syn-u">]</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">printf</span> <span class="text-syn-s">&#39;%s\0&#39;</span> <span class="text-syn-s">&quot;$f&quot;</span><span class="text-syn-u">;</span> <span class="text-syn-k">done</span>
+    <span class="text-syn-k">done</span>
+  <span class="text-syn-u">)</span> <span class="text-syn-o">|</span> <span class="text-syn-f">tar</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$root&quot;</span> <span class="text-syn-s">--null</span> <span class="text-syn-s">-T</span> <span class="text-syn-s">-</span> <span class="text-syn-s">-cf</span> <span class="text-syn-s">-</span> <span class="text-syn-o">|</span> <span class="text-syn-f">tar</span> <span class="text-syn-s">-C</span> <span class="text-syn-s">&quot;$wtdir&quot;</span> <span class="text-syn-s">-xf</span> <span class="text-syn-s">-</span>
 
-  <span class="f">cd</span> <span class="s">&quot;$wtdir&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="k">if</span>   <span class="u">[</span> <span class="o">-f</span> pnpm-lock.yaml <span class="u">];</span>               <span class="k">then</span> <span class="f">pnpm</span> <span class="s">install</span>
-  <span class="k">elif</span> <span class="u">[</span> <span class="o">-f</span> bun.lockb <span class="u">]</span> <span class="o">||</span> <span class="u">[</span> <span class="o">-f</span> bun.lock <span class="u">];</span> <span class="k">then</span> <span class="f">bun</span> <span class="s">install</span>
-  <span class="k">elif</span> <span class="u">[</span> <span class="o">-f</span> yarn.lock <span class="u">];</span>                    <span class="k">then</span> <span class="f">yarn</span> <span class="s">install</span>
-  <span class="k">elif</span> <span class="u">[</span> <span class="o">-f</span> package-lock.json <span class="u">];</span>            <span class="k">then</span> <span class="f">npm</span> <span class="s">ci</span>
-  <span class="k">fi</span>
+  <span class="text-syn-f">cd</span> <span class="text-syn-s">&quot;$wtdir&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-k">if</span>   <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> pnpm-lock.yaml <span class="text-syn-u">];</span>               <span class="text-syn-k">then</span> <span class="text-syn-f">pnpm</span> <span class="text-syn-s">install</span>
+  <span class="text-syn-k">elif</span> <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> bun.lockb <span class="text-syn-u">]</span> <span class="text-syn-o">||</span> <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> bun.lock <span class="text-syn-u">];</span> <span class="text-syn-k">then</span> <span class="text-syn-f">bun</span> <span class="text-syn-s">install</span>
+  <span class="text-syn-k">elif</span> <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> yarn.lock <span class="text-syn-u">];</span>                    <span class="text-syn-k">then</span> <span class="text-syn-f">yarn</span> <span class="text-syn-s">install</span>
+  <span class="text-syn-k">elif</span> <span class="text-syn-u">[</span> <span class="text-syn-o">-f</span> package-lock.json <span class="text-syn-u">];</span>            <span class="text-syn-k">then</span> <span class="text-syn-f">npm</span> <span class="text-syn-s">ci</span>
+  <span class="text-syn-k">fi</span>
 
-  <span class="f">echo</span> <span class="s">&quot;✅ worktree ready: $wtdir (branch: $branch, config seeded from $repo)&quot;</span>
-<span class="u">}</span>
+  <span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;✅ worktree ready: $wtdir (branch: $branch, config seeded from $repo)&quot;</span>
+<span class="text-syn-u">}</span>
 
-<span class="f">wtrm</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">local</span> wt<span class="u">;</span> wt<span class="o">=</span><span class="s">&quot;$(git rev-parse --show-toplevel)&quot;</span>
-  <span class="k">local</span> branch<span class="u">;</span> branch<span class="o">=</span><span class="s">&quot;$(git symbolic-ref --short HEAD)&quot;</span>
-  <span class="k">local</span> main<span class="u">;</span> main<span class="o">=</span><span class="s">&quot;$(git worktree list --porcelain | awk &#39;NR==1{print $2}&#39;)&quot;</span>
-  <span class="f">cd</span> <span class="s">&quot;$main&quot;</span> <span class="o">||</span> <span class="f">return</span> <span class="s">1</span>
-  <span class="f">git</span> <span class="s">worktree</span> <span class="s">remove</span> <span class="s">&quot;$wt&quot;</span> <span class="u">&amp;&amp;</span> <span class="f">git</span> <span class="s">branch</span> <span class="s">-D</span> <span class="s">&quot;$branch&quot;</span> <span class="u">&amp;&amp;</span> <span class="f">git</span> <span class="s">worktree</span> <span class="s">prune</span>
-<span class="u">}</span>
+<span class="text-syn-f">wtrm</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">local</span> wt<span class="text-syn-u">;</span> wt<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git rev-parse --show-toplevel)&quot;</span>
+  <span class="text-syn-k">local</span> branch<span class="text-syn-u">;</span> branch<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git symbolic-ref --short HEAD)&quot;</span>
+  <span class="text-syn-k">local</span> main<span class="text-syn-u">;</span> main<span class="text-syn-o">=</span><span class="text-syn-s">&quot;$(git worktree list --porcelain | awk &#39;NR==1{print $2}&#39;)&quot;</span>
+  <span class="text-syn-f">cd</span> <span class="text-syn-s">&quot;$main&quot;</span> <span class="text-syn-o">||</span> <span class="text-syn-f">return</span> <span class="text-syn-s">1</span>
+  <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">&quot;$wt&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">branch</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">&quot;$branch&quot;</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Now <code>wt feat-auth</code> gives me a working worktree in seconds: branched, config
@@ -645,8 +654,9 @@
               Give each one its own port via its (gitignored, therefore per-worktree)
               <code>.env.local</code>:
             </p>
-            <pre><code class="language-bash"><span class="c"># in each worktree</span>
-<span class="f">echo</span> <span class="s">&quot;PORT=3001&quot;</span> <span class="o">&gt;&gt;</span> <span class="s">.env.local</span>        <span class="c"># 3002, 3003, ... per worktree</span>
+            <pre
+            ><code class="language-bash"><span class="text-syn-c italic"># in each worktree</span>
+<span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;PORT=3001&quot;</span> <span class="text-syn-o">&gt;&gt;</span> <span class="text-syn-s">.env.local</span>        <span class="text-syn-c italic"># 3002, 3003, ... per worktree</span>
 </code></pre>
             <p>
               The bigger hazard is shared external state. If two worktrees point at the
@@ -722,10 +732,10 @@
               Start an isolated session in one command:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">claude</span> <span class="s">--worktree</span> <span class="s">feat-auth</span>      <span class="c"># creates an isolated worktree + branch, starts Claude in it</span>
-<span class="f">claude</span> <span class="s">-w</span> <span class="s">bugfix-123</span>             <span class="c"># second isolated session, its own branch</span>
-<span class="f">claude</span> <span class="s">--worktree</span> <span class="s">&quot;#1234&quot;</span>        <span class="c"># check out a PR (fetches pull/1234/head) into its own worktree</span>
-<span class="f">claude</span> <span class="s">--worktree</span>                <span class="c"># no name -&gt; auto-generates one like &quot;bright-running-fox&quot;</span>
+            ><code class="language-bash"><span class="text-syn-f">claude</span> <span class="text-syn-s">--worktree</span> <span class="text-syn-s">feat-auth</span>      <span class="text-syn-c italic"># creates an isolated worktree + branch, starts Claude in it</span>
+<span class="text-syn-f">claude</span> <span class="text-syn-s">-w</span> <span class="text-syn-s">bugfix-123</span>             <span class="text-syn-c italic"># second isolated session, its own branch</span>
+<span class="text-syn-f">claude</span> <span class="text-syn-s">--worktree</span> <span class="text-syn-s">&quot;#1234&quot;</span>        <span class="text-syn-c italic"># check out a PR (fetches pull/1234/head) into its own worktree</span>
+<span class="text-syn-f">claude</span> <span class="text-syn-s">--worktree</span>                <span class="text-syn-c italic"># no name -&gt; auto-generates one like &quot;bright-running-fox&quot;</span>
 </code></pre>
             <p>
               By default it creates the worktree under
@@ -835,10 +845,11 @@ certs/localhost-key.pem
               Worktrees map one-to-one onto a PR-per-feature flow, which is exactly how you want to
               work with agents anyway. One worktree, one branch, one PR.
             </p>
-            <pre><code class="language-bash"><span class="c"># inside the worktree</span>
-<span class="f">git</span> <span class="s">add</span> <span class="s">-A</span> <span class="u">&amp;&amp;</span> <span class="f">git</span> <span class="s">commit</span> <span class="s">-m</span> <span class="s">&quot;feat: add auth flow&quot;</span>
-<span class="f">git</span> <span class="s">push</span> <span class="s">-u</span> <span class="s">origin</span> <span class="s">feat-auth</span>
-<span class="f">gh</span> <span class="s">pr</span> <span class="s">create</span> <span class="s">--fill</span>
+            <pre
+            ><code class="language-bash"><span class="text-syn-c italic"># inside the worktree</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-A</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">commit</span> <span class="text-syn-s">-m</span> <span class="text-syn-s">&quot;feat: add auth flow&quot;</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">push</span> <span class="text-syn-s">-u</span> <span class="text-syn-s">origin</span> <span class="text-syn-s">feat-auth</span>
+<span class="text-syn-f">gh</span> <span class="text-syn-s">pr</span> <span class="text-syn-s">create</span> <span class="text-syn-s">--fill</span>
 </code></pre>
             <p>
               When the PR merges, tear it all down. Note that you can&#39;t remove a worktree from
@@ -847,10 +858,10 @@ certs/localhost-key.pem
               matters:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">cd</span> <span class="s">~/code/myapp</span>                                       <span class="c"># back to the main checkout</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">remove</span> <span class="s">../myapp-worktrees/feat-auth</span>      <span class="c"># add --force if there&#39;s leftover junk</span>
-<span class="f">git</span> <span class="s">branch</span> <span class="s">-d</span> <span class="s">feat-auth</span>                               <span class="c"># -d refuses if unmerged; -D forces</span>
-<span class="f">git</span> <span class="s">worktree</span> <span class="s">prune</span>                                    <span class="c"># drop stale admin entries</span>
+            ><code class="language-bash"><span class="text-syn-f">cd</span> <span class="text-syn-s">~/code/myapp</span>                                       <span class="text-syn-c italic"># back to the main checkout</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span>      <span class="text-syn-c italic"># add --force if there&#39;s leftover junk</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">branch</span> <span class="text-syn-s">-d</span> <span class="text-syn-s">feat-auth</span>                               <span class="text-syn-c italic"># -d refuses if unmerged; -D forces</span>
+<span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span>                                    <span class="text-syn-c italic"># drop stale admin entries</span>
 </code></pre>
             <p>
               If you use Claude Code, it cleans most of this up for you: an unnamed session that
@@ -936,30 +947,39 @@ certs/localhost-key.pem
             <p>Happy shipping!</p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/git-partial-clones/"
                 >Partial Clones, Shallow Clones, and Sparse Checkout</a
               >
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/mcp-server-that-writes-itself/">An MCP Server That Writes Itself</a>
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

@@ -15,7 +15,7 @@ function codeInner(html) {
 
 function visibleText(html) {
   return codeInner(html)
-    .replace(/<span class="[a-z]+">/g, "")
+    .replace(/<span class="[^"]+">/g, "")
     .replace(/<\/span>/g, "")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -40,9 +40,9 @@ describe("build-time syntax highlighting", () => {
       ].join("\n"),
     );
     const inner = codeInner(html);
-    expect(inner).toContain('<span class="k">const</span>');
-    expect(inner).toContain('<span class="n">1</span>');
-    expect(inner).toContain('<span class="c">');
+    expect(inner).toContain('<span class="text-syn-k">const</span>');
+    expect(inner).toContain('<span class="text-syn-n">1</span>');
+    expect(inner).toContain('<span class="text-syn-c italic">');
     expect(inner).toContain("// keep");
     expect(inner).not.toContain("style=");
     expect(html).not.toContain("shiki");
@@ -70,20 +70,18 @@ describe("build-time syntax highlighting", () => {
   test("inline backtick code stays unhighlighted", async () => {
     const html = await renderPage("---\ntitle: Inline\n---\n\nUse `const` in prose.\n");
     expect(html).toContain("<code>const</code>");
-    expect(html).not.toContain('<span class="k">const</span>');
+    expect(html).not.toContain('<span class="text-syn-k">const</span>');
   });
 
   test("theme CSS defines token colors for light and dark", () => {
     for (const name of ["k", "s", "c", "n", "f", "t", "p", "o", "u", "g"]) {
-      expect(styles).toContain(`--syn-${name}:`);
-      expect(styles).toContain(`pre code .${name}`);
+      expect(styles).toContain(`--color-syn-${name}:`);
     }
     expect(styles).toContain(':root[data-theme="light"]');
     expect(styles).toContain(':root[data-theme="dark"]');
     expect(styles).toContain("@media (prefers-color-scheme: dark)");
-    expect(styles).toMatch(/:root\[data-theme="light"\][\s\S]*--syn-k:/);
-    expect(styles).toMatch(/:root\[data-theme="dark"\][\s\S]*--syn-k:/);
-    expect(styles).toMatch(/prefers-color-scheme: dark\)[\s\S]*--syn-k:/);
+    expect(styles).toMatch(/:root\[data-theme="dark"\][\s\S]*--color-syn-k:/);
+    expect(styles).toMatch(/prefers-color-scheme: dark\)[\s\S]*--color-syn-k:/);
   });
 
   test("comment scanner still sees comments through classed spans", async () => {

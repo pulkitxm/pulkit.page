@@ -67,12 +67,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -80,9 +85,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -90,11 +97,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Understanding Database Scaling and Sharding Patterns</h1>
-            <p class="detail-meta"><time datetime="2026-01-07">2026-01-07</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Understanding Database Scaling and Sharding Patterns
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-07">2026-01-07</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               One of the fastest ways to break a production system is to underestimate the database.
             </p>
@@ -166,19 +175,19 @@
               database spends time and memory on connection management instead of queries.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Pool <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;pg&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Pool <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;pg&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> pool <span class="o">=</span> <span class="o">new</span> <span class="f">Pool</span><span class="u">({</span>
-  <span class="p">host:</span> <span class="s">&quot;db.example.com&quot;</span><span class="u">,</span>
-  <span class="p">max:</span> <span class="n">20</span><span class="u">,</span>
-  <span class="p">idleTimeoutMillis:</span> <span class="n">30_000</span><span class="u">,</span>
-  <span class="p">connectionTimeoutMillis:</span> <span class="n">2_000</span><span class="u">,</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> pool <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Pool</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;db.example.com&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">max:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">idleTimeoutMillis:</span> <span class="text-syn-n">30_000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">connectionTimeoutMillis:</span> <span class="text-syn-n">2_000</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getUser</span><span class="u">(</span>id<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> pool<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>id<span class="u">]);</span>
-  <span class="k">return</span> result<span class="u">.</span><span class="p">rows</span><span class="u">[</span><span class="n">0</span><span class="u">]</span> <span class="o">??</span> <span class="k">null</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> pool<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>id<span class="text-syn-u">]);</span>
+  <span class="text-syn-k">return</span> result<span class="text-syn-u">.</span><span class="text-syn-p">rows</span><span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">]</span> <span class="text-syn-o">??</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="vertical-scaling">Vertical Scaling</h2>
             <p>
@@ -282,19 +291,19 @@
               </li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Pool <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;pg&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Pool <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;pg&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> masterDb <span class="o">=</span> <span class="o">new</span> <span class="f">Pool</span><span class="u">({</span> <span class="p">host:</span> <span class="s">&quot;master.db.example.com&quot;</span> <span class="u">});</span>
-<span class="k">const</span> replicaDb <span class="o">=</span> <span class="o">new</span> <span class="f">Pool</span><span class="u">({</span> <span class="p">host:</span> <span class="s">&quot;replica.db.example.com&quot;</span> <span class="u">});</span>
+<span class="text-syn-k">const</span> masterDb <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Pool</span><span class="text-syn-u">({</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;master.db.example.com&quot;</span> <span class="text-syn-u">});</span>
+<span class="text-syn-k">const</span> replicaDb <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Pool</span><span class="text-syn-u">({</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;replica.db.example.com&quot;</span> <span class="text-syn-u">});</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getUser</span><span class="u">(</span>id<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> replicaDb<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>id<span class="u">]);</span>
-  <span class="k">return</span> result<span class="u">.</span><span class="p">rows</span><span class="u">[</span><span class="n">0</span><span class="u">]</span> <span class="o">??</span> <span class="k">null</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> replicaDb<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>id<span class="text-syn-u">]);</span>
+  <span class="text-syn-k">return</span> result<span class="text-syn-u">.</span><span class="text-syn-p">rows</span><span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">]</span> <span class="text-syn-o">??</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">updateUser</span><span class="u">(</span>id<span class="o">:</span> <span class="t">string</span><span class="u">,</span> data<span class="o">:</span> <span class="t">UserData</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">await</span> masterDb<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;UPDATE users SET name = $1 WHERE id = $2&quot;</span><span class="u">,</span> <span class="u">[</span>data<span class="u">.</span><span class="p">name</span><span class="u">,</span> id<span class="u">]);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">updateUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> data<span class="text-syn-o">:</span> <span class="text-syn-t">UserData</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> masterDb<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;UPDATE users SET name = $1 WHERE id = $2&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>data<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">,</span> id<span class="text-syn-u">]);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h4 id="replication-modes">Replication Modes</h4>
             <p>
@@ -482,18 +491,18 @@
               <li><strong>Resharding</strong>: Adding/removing shards is complex</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getShardForUser</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Database</span> <span class="u">{</span>
-  <span class="k">const</span> firstChar <span class="o">=</span> userId<span class="u">[</span><span class="n">0</span><span class="u">].</span><span class="f">toLowerCase</span><span class="u">();</span>
-  <span class="k">if</span> <span class="u">(</span>firstChar <span class="o">&gt;=</span> <span class="s">&quot;a&quot;</span> <span class="o">&amp;&amp;</span> firstChar <span class="o">&lt;=</span> <span class="s">&quot;m&quot;</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> shardA<span class="u">;</span> <span class="c">// handles a-m</span>
-  <span class="u">}</span>
-  <span class="k">return</span> shardB<span class="u">;</span> <span class="c">// handles n-z</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getShardForUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Database</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> firstChar <span class="text-syn-o">=</span> userId<span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">].</span><span class="text-syn-f">toLowerCase</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>firstChar <span class="text-syn-o">&gt;=</span> <span class="text-syn-s">&quot;a&quot;</span> <span class="text-syn-o">&amp;&amp;</span> firstChar <span class="text-syn-o">&lt;=</span> <span class="text-syn-s">&quot;m&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> shardA<span class="text-syn-u">;</span> <span class="text-syn-c italic">// handles a-m</span>
+  <span class="text-syn-u">}</span>
+  <span class="text-syn-k">return</span> shardB<span class="text-syn-u">;</span> <span class="text-syn-c italic">// handles n-z</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getUser</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> shard <span class="o">=</span> <span class="f">getShardForUser</span><span class="u">(</span>userId<span class="u">);</span>
-  <span class="k">return</span> shard<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>userId<span class="u">]);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> shard <span class="text-syn-o">=</span> <span class="text-syn-f">getShardForUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> shard<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>userId<span class="text-syn-u">]);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Note:</strong>
@@ -655,30 +664,30 @@ Partition E: Names starting with S-Z  → 10GB
             </p>
             <p><strong>Query example:</strong></p>
             <pre
-            ><code class="language-sql"><span class="c">-- Query hits only Partition A (products starting with &#39;A&#39; or &#39;B&#39;)</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> products <span class="k">WHERE</span> <span class="k">name</span> <span class="k">LIKE</span> <span class="s">&#39;Apple%&#39;</span>;
+            ><code class="language-sql"><span class="text-syn-c italic">-- Query hits only Partition A (products starting with &#39;A&#39; or &#39;B&#39;)</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> products <span class="text-syn-k">WHERE</span> <span class="text-syn-k">name</span> <span class="text-syn-k">LIKE</span> <span class="text-syn-s">&#39;Apple%&#39;</span>;
 
-<span class="c">-- Query hits only Partition E</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> products <span class="k">WHERE</span> <span class="k">name</span> <span class="o">=</span> <span class="s">&#39;Samsung Galaxy S23&#39;</span>;
+<span class="text-syn-c italic">-- Query hits only Partition E</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> products <span class="text-syn-k">WHERE</span> <span class="text-syn-k">name</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&#39;Samsung Galaxy S23&#39;</span>;
 
-<span class="c">-- Range query might hit multiple partitions</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> products <span class="k">WHERE</span> <span class="k">name</span> <span class="k">BETWEEN</span> <span class="s">&#39;Dell&#39;</span> <span class="k">AND</span> <span class="s">&#39;Samsung&#39;</span>;
+<span class="text-syn-c italic">-- Range query might hit multiple partitions</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> products <span class="text-syn-k">WHERE</span> <span class="text-syn-k">name</span> <span class="text-syn-k">BETWEEN</span> <span class="text-syn-s">&#39;Dell&#39;</span> <span class="text-syn-k">AND</span> <span class="text-syn-s">&#39;Samsung&#39;</span>;
 </code></pre>
             <p><strong>Implementation in code:</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getPartitionForProduct</span><span class="u">(</span>productName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
-  <span class="k">const</span> firstChar <span class="o">=</span> productName<span class="u">[</span><span class="n">0</span><span class="u">].</span><span class="f">toUpperCase</span><span class="u">();</span>
-  <span class="k">if</span> <span class="u">(</span>firstChar <span class="o">&lt;=</span> <span class="s">&quot;D&quot;</span><span class="u">)</span> <span class="k">return</span> <span class="s">&quot;partition_a&quot;</span><span class="u">;</span>
-  <span class="k">if</span> <span class="u">(</span>firstChar <span class="o">&lt;=</span> <span class="s">&quot;H&quot;</span><span class="u">)</span> <span class="k">return</span> <span class="s">&quot;partition_b&quot;</span><span class="u">;</span>
-  <span class="k">if</span> <span class="u">(</span>firstChar <span class="o">&lt;=</span> <span class="s">&quot;M&quot;</span><span class="u">)</span> <span class="k">return</span> <span class="s">&quot;partition_c&quot;</span><span class="u">;</span>
-  <span class="k">if</span> <span class="u">(</span>firstChar <span class="o">&lt;=</span> <span class="s">&quot;R&quot;</span><span class="u">)</span> <span class="k">return</span> <span class="s">&quot;partition_d&quot;</span><span class="u">;</span>
-  <span class="k">return</span> <span class="s">&quot;partition_e&quot;</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getPartitionForProduct</span><span class="text-syn-u">(</span>productName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> firstChar <span class="text-syn-o">=</span> productName<span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">].</span><span class="text-syn-f">toUpperCase</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>firstChar <span class="text-syn-o">&lt;=</span> <span class="text-syn-s">&quot;D&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-s">&quot;partition_a&quot;</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>firstChar <span class="text-syn-o">&lt;=</span> <span class="text-syn-s">&quot;H&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-s">&quot;partition_b&quot;</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>firstChar <span class="text-syn-o">&lt;=</span> <span class="text-syn-s">&quot;M&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-s">&quot;partition_c&quot;</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>firstChar <span class="text-syn-o">&lt;=</span> <span class="text-syn-s">&quot;R&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-s">&quot;partition_d&quot;</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-s">&quot;partition_e&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getProduct</span><span class="u">(</span>name<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> partition <span class="o">=</span> <span class="f">getPartitionForProduct</span><span class="u">(</span>name<span class="u">);</span>
-  <span class="k">return</span> db<span class="u">[</span>partition<span class="u">].</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM products WHERE name = $1&quot;</span><span class="u">,</span> <span class="u">[</span>name<span class="u">]);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getProduct</span><span class="text-syn-u">(</span>name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> partition <span class="text-syn-o">=</span> <span class="text-syn-f">getPartitionForProduct</span><span class="text-syn-u">(</span>name<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> db<span class="text-syn-u">[</span>partition<span class="text-syn-u">].</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM products WHERE name = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>name<span class="text-syn-u">]);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p><strong>Use cases for horizontal partitioning:</strong></p>
             <ul>
@@ -719,11 +728,12 @@ Partition 2 (Cold data - rarely accessed):
               <strong>subset of columns</strong>.
             </p>
             <p><strong>Query example:</strong></p>
-            <pre><code class="language-sql"><span class="c">-- Fast: hits only Partition 1</span>
-<span class="k">SELECT</span> <span class="k">name</span>, email <span class="k">FROM</span> users <span class="k">WHERE</span> user_id <span class="o">=</span> <span class="n">500</span>;
+            <pre
+            ><code class="language-sql"><span class="text-syn-c italic">-- Fast: hits only Partition 1</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-k">name</span>, email <span class="text-syn-k">FROM</span> users <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> <span class="text-syn-n">500</span>;
 
-<span class="c">-- Slow: requires JOIN across partitions</span>
-<span class="k">SELECT</span> <span class="k">name</span>, email, <span class="k">address</span>, bio <span class="k">FROM</span> users <span class="k">WHERE</span> user_id <span class="o">=</span> <span class="n">500</span>;
+<span class="text-syn-c italic">-- Slow: requires JOIN across partitions</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-k">name</span>, email, <span class="text-syn-k">address</span>, bio <span class="text-syn-k">FROM</span> users <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> <span class="text-syn-n">500</span>;
 </code></pre>
             <p><strong>Use cases:</strong></p>
             <ul>
@@ -832,12 +842,12 @@ User IDs 2M-3M           → Shard 3
             </ul>
             <p><strong>2. Hash-based Sharding</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getShard</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">hashFunction</span><span class="u">(</span>userId<span class="u">);</span>
-  <span class="k">return</span> hash <span class="o">%</span> numberOfShards<span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getShard</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashFunction</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> hash <span class="text-syn-o">%</span> numberOfShards<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="c">// Example: hash(&quot;user_123&quot;) % 4 = 2 → Goes to Shard 2</span>
+<span class="text-syn-c italic">// Example: hash(&quot;user_123&quot;) % 4 = 2 → Goes to Shard 2</span>
 </code></pre>
             <ul>
               <li><strong>Pros</strong>: Even distribution of data</li>
@@ -869,9 +879,9 @@ Company C&#39;s data → Shard 3
             <h3 id="challenges-with-sharding">Challenges with Sharding</h3>
             <p><strong>1. Cross-shard Queries</strong></p>
             <pre
-            ><code class="language-sql"><span class="c">-- This is expensive if users are on different shards</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> orders
-<span class="k">WHERE</span> user_id <span class="k">IN</span> (<span class="n">123</span>, <span class="n">456</span>, <span class="n">789</span>);
+            ><code class="language-sql"><span class="text-syn-c italic">-- This is expensive if users are on different shards</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> orders
+<span class="text-syn-k">WHERE</span> user_id <span class="text-syn-k">IN</span> (<span class="text-syn-n">123</span>, <span class="text-syn-n">456</span>, <span class="text-syn-n">789</span>);
 </code></pre>
             <p>You have to query multiple shards and aggregate results in your application.</p>
             <p><strong>2. Resharding</strong></p>
@@ -884,9 +894,9 @@ Company C&#39;s data → Shard 3
             <p><strong>3. Referential Integrity</strong></p>
             <p>Foreign keys don&#39;t work across shards:</p>
             <pre
-            ><code class="language-sql"><span class="c">-- This won&#39;t work if users and orders are on different shards</span>
-<span class="k">ALTER</span> <span class="k">TABLE</span> orders
-<span class="k">ADD</span> <span class="k">FOREIGN KEY</span> (user_id) <span class="k">REFERENCES</span> users(id);
+            ><code class="language-sql"><span class="text-syn-c italic">-- This won&#39;t work if users and orders are on different shards</span>
+<span class="text-syn-k">ALTER</span> <span class="text-syn-k">TABLE</span> orders
+<span class="text-syn-k">ADD</span> <span class="text-syn-k">FOREIGN KEY</span> (user_id) <span class="text-syn-k">REFERENCES</span> users(id);
 </code></pre>
             <p>You have to handle this at the application level.</p>
             <p><strong>4. Distributed Transactions</strong></p>
@@ -914,12 +924,12 @@ Company C&#39;s data → Shard 3
             </ul>
             <p><strong>Design for Single-Shard Queries</strong></p>
             <pre
-            ><code class="language-typescript"><span class="c">// Good: Query stays within one shard</span>
-<span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>users<span class="u">.</span><span class="f">findOne</span><span class="u">({</span> <span class="p">user_id:</span> <span class="s">&quot;123&quot;</span> <span class="u">});</span>
-<span class="k">const</span> posts <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>posts<span class="u">.</span><span class="f">find</span><span class="u">({</span> <span class="p">user_id:</span> <span class="s">&quot;123&quot;</span> <span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-c italic">// Good: Query stays within one shard</span>
+<span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>users<span class="text-syn-u">.</span><span class="text-syn-f">findOne</span><span class="text-syn-u">({</span> <span class="text-syn-p">user_id:</span> <span class="text-syn-s">&quot;123&quot;</span> <span class="text-syn-u">});</span>
+<span class="text-syn-k">const</span> posts <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>posts<span class="text-syn-u">.</span><span class="text-syn-f">find</span><span class="text-syn-u">({</span> <span class="text-syn-p">user_id:</span> <span class="text-syn-s">&quot;123&quot;</span> <span class="text-syn-u">});</span>
 
-<span class="c">// Bad: Query needs to scan all shards</span>
-<span class="k">const</span> posts <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>posts<span class="u">.</span><span class="f">find</span><span class="u">({</span> <span class="p">likes:</span> <span class="u">{</span> <span class="p">$gt:</span> <span class="n">100</span> <span class="u">}</span> <span class="u">});</span>
+<span class="text-syn-c italic">// Bad: Query needs to scan all shards</span>
+<span class="text-syn-k">const</span> posts <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>posts<span class="text-syn-u">.</span><span class="text-syn-f">find</span><span class="text-syn-u">({</span> <span class="text-syn-p">likes:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">$gt:</span> <span class="text-syn-n">100</span> <span class="text-syn-u">}</span> <span class="text-syn-u">});</span>
 </code></pre>
             <p>Structure your data so most queries can be answered from a single shard.</p>
             <p><strong>Plan for Growth</strong></p>
@@ -1108,34 +1118,35 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
             </table>
             <h3 id="real-world-examples">Real-World Examples</h3>
             <p><strong>PostgreSQL Table Partitioning</strong> (Partitioning, not Sharding)</p>
-            <pre><code class="language-sql"><span class="c">-- Create parent table</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="f">measurements</span> (
-    id <span class="k">SERIAL</span>,
-    logdate <span class="k">DATE</span> <span class="k">NOT NULL</span>,
-    temperature <span class="k">INT</span>
-) <span class="k">PARTITION</span> <span class="k">BY</span> <span class="k">RANGE</span> (logdate);
+            <pre
+            ><code class="language-sql"><span class="text-syn-c italic">-- Create parent table</span>
+<span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">measurements</span> (
+    id <span class="text-syn-k">SERIAL</span>,
+    logdate <span class="text-syn-k">DATE</span> <span class="text-syn-k">NOT NULL</span>,
+    temperature <span class="text-syn-k">INT</span>
+) <span class="text-syn-k">PARTITION</span> <span class="text-syn-k">BY</span> <span class="text-syn-k">RANGE</span> (logdate);
 
-<span class="c">-- Create partitions for different months</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="f">measurements_2024_01</span> <span class="k">PARTITION</span> OF measurements
-    <span class="k">FOR</span> <span class="k">VALUES</span> <span class="k">FROM</span> (<span class="s">&#39;2024-01-01&#39;</span>) <span class="k">TO</span> (<span class="s">&#39;2024-02-01&#39;</span>);
+<span class="text-syn-c italic">-- Create partitions for different months</span>
+<span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">measurements_2024_01</span> <span class="text-syn-k">PARTITION</span> OF measurements
+    <span class="text-syn-k">FOR</span> <span class="text-syn-k">VALUES</span> <span class="text-syn-k">FROM</span> (<span class="text-syn-s">&#39;2024-01-01&#39;</span>) <span class="text-syn-k">TO</span> (<span class="text-syn-s">&#39;2024-02-01&#39;</span>);
 
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="f">measurements_2024_02</span> <span class="k">PARTITION</span> OF measurements
-    <span class="k">FOR</span> <span class="k">VALUES</span> <span class="k">FROM</span> (<span class="s">&#39;2024-02-01&#39;</span>) <span class="k">TO</span> (<span class="s">&#39;2024-03-01&#39;</span>);
+<span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">measurements_2024_02</span> <span class="text-syn-k">PARTITION</span> OF measurements
+    <span class="text-syn-k">FOR</span> <span class="text-syn-k">VALUES</span> <span class="text-syn-k">FROM</span> (<span class="text-syn-s">&#39;2024-02-01&#39;</span>) <span class="text-syn-k">TO</span> (<span class="text-syn-s">&#39;2024-03-01&#39;</span>);
 
-<span class="c">-- Query automatically uses the right partition</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> measurements <span class="k">WHERE</span> logdate <span class="o">=</span> <span class="s">&#39;2024-01-15&#39;</span>;
+<span class="text-syn-c italic">-- Query automatically uses the right partition</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> measurements <span class="text-syn-k">WHERE</span> logdate <span class="text-syn-o">=</span> <span class="text-syn-s">&#39;2024-01-15&#39;</span>;
 </code></pre>
             <p>All partitions are on the same PostgreSQL instance.</p>
             <p><strong>MongoDB Sharded Cluster</strong> (True Sharding)</p>
             <pre
-            ><code class="language-javascript"><span class="c">// Enable sharding for a database</span>
-sh<span class="u">.</span><span class="f">enableSharding</span><span class="u">(</span><span class="s">&quot;myapp&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-c italic">// Enable sharding for a database</span>
+sh<span class="text-syn-u">.</span><span class="text-syn-f">enableSharding</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;myapp&quot;</span><span class="text-syn-u">);</span>
 
-<span class="c">// Shard a collection by user_id</span>
-sh<span class="u">.</span><span class="f">shardCollection</span><span class="u">(</span><span class="s">&quot;myapp.users&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">user_id:</span> <span class="s">&quot;hashed&quot;</span> <span class="u">});</span>
+<span class="text-syn-c italic">// Shard a collection by user_id</span>
+sh<span class="text-syn-u">.</span><span class="text-syn-f">shardCollection</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;myapp.users&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">user_id:</span> <span class="text-syn-s">&quot;hashed&quot;</span> <span class="text-syn-u">});</span>
 
-<span class="c">// MongoDB automatically distributes data across shards</span>
-<span class="c">// mongos router handles query routing transparently</span>
+<span class="text-syn-c italic">// MongoDB automatically distributes data across shards</span>
+<span class="text-syn-c italic">// mongos router handles query routing transparently</span>
 </code></pre>
             <p>Data is distributed across multiple MongoDB instances (shards).</p>
             <p><strong>Why This Matters</strong></p>
@@ -1226,28 +1237,35 @@ sh<span class="u">.</span><span class="f">shardCollection</span><span class="u">
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/db-transaction-internals/"
                 >Database Transaction Internals: ACID, WAL, MVCC &amp; Locking</a
               >
             </li>
-            <li><a href="/blogs/system-design/load-balancers/">Load Balancers</a></li>
-            <li><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
+            <li class="my-2"><a href="/blogs/system-design/load-balancers/">Load Balancers</a></li>
+            <li class="my-2"><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

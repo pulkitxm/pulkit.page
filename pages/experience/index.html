@@ -42,12 +42,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/" aria-current="page">Experience</a>
           <a href="/about/">About</a>
@@ -55,112 +60,185 @@
         </nav>
       </header>
 
-      <main id="main" class="simple">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li aria-current="page">Experience</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Experience</h1>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Experience
+            </h1>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>Teams I&#39;ve worked with and things I&#39;ve helped build.</p>
-            <ul class="entry-list">
-              <li>
-                <a class="entry-link experience-link" href="/experience/magicapi/"
-                  ><span class="experience-icons"
+            <ul class="list-none p-0">
+              <li class="border-b border-line">
+                <a
+                  class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-[1.5] no-underline max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3"
+                  href="/experience/magicapi/"
+                  ><span class="flex w-12 items-center max-sm:row-span-2"
                     ><img
+                      class="m-0 size-9 rounded-[10px] border-2 border-bg bg-icon object-contain"
                       src="/assets/experience/noveum.webp"
                       alt=""
                       width="36"
                       height="36"
                       loading="lazy"
                     /></span
-                  ><span class="experience-info"
-                    ><span class="entry-title">MagicAPI &amp; Noveum.ai</span
-                    ><span class="experience-role">Software Engineer</span></span
-                  ><span class="entry-meta experience-period"
-                    ><time datetime="2025-03-25" title="March 25, 2025">Mar 2025</time>
+                  ><span class="grid gap-0.75"
+                    ><span class="group-hover:underline" data-title>MagicAPI &amp; Noveum.ai</span
+                    ><span class="text-xs text-muted">Software Engineer</span></span
+                  ><span
+                    class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs"
+                    ><time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2025-03-25"
+                      title="March 25, 2025"
+                      >Mar 2025</time
+                    >
                     – present</span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link experience-link" href="/experience/crowdvolt/"
-                  ><span class="experience-icons"
+              <li class="border-b border-line">
+                <a
+                  class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-[1.5] no-underline max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3"
+                  href="/experience/crowdvolt/"
+                  ><span class="flex w-12 items-center max-sm:row-span-2"
                     ><img
+                      class="m-0 size-9 rounded-[10px] border-2 border-bg bg-icon object-contain"
                       src="/assets/experience/crowdvolt.webp"
                       alt=""
                       width="36"
                       height="36"
                       loading="lazy"
                     /></span
-                  ><span class="experience-info"
-                    ><span class="entry-title">CrowdVolt (YC W24)</span
-                    ><span class="experience-role">Software Engineer</span></span
-                  ><span class="entry-meta experience-period"
-                    ><time datetime="2025-02-03" title="February 3, 2025">Feb 2025</time>
-                    – <time datetime="2025-03-14" title="March 14, 2025">Mar 2025</time></span
+                  ><span class="grid gap-0.75"
+                    ><span class="group-hover:underline" data-title>CrowdVolt (YC W24)</span
+                    ><span class="text-xs text-muted">Software Engineer</span></span
+                  ><span
+                    class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs"
+                    ><time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2025-02-03"
+                      title="February 3, 2025"
+                      >Feb 2025</time
+                    >
+                    –
+                    <time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2025-03-14"
+                      title="March 14, 2025"
+                      >Mar 2025</time
+                    ></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link experience-link" href="/experience/datawavelabs/"
-                  ><span class="experience-icons"
+              <li class="border-b border-line">
+                <a
+                  class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-[1.5] no-underline max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3"
+                  href="/experience/datawavelabs/"
+                  ><span class="flex w-12 items-center max-sm:row-span-2"
                     ><img
+                      class="m-0 size-9 rounded-[10px] border-2 border-bg bg-icon object-contain"
                       src="/assets/experience/datawavelabs.webp"
                       alt=""
                       width="36"
                       height="36"
                       loading="lazy"
                     /></span
-                  ><span class="experience-info"
-                    ><span class="entry-title">DatawaveLabs</span
-                    ><span class="experience-role">Full Stack Engineer</span></span
-                  ><span class="entry-meta experience-period"
-                    ><time datetime="2024-04-01" title="April 1, 2024">Apr 2024</time>
-                    – <time datetime="2024-09-30" title="September 30, 2024">Sep 2024</time></span
+                  ><span class="grid gap-0.75"
+                    ><span class="group-hover:underline" data-title>DatawaveLabs</span
+                    ><span class="text-xs text-muted">Full Stack Engineer</span></span
+                  ><span
+                    class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs"
+                    ><time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2024-04-01"
+                      title="April 1, 2024"
+                      >Apr 2024</time
+                    >
+                    –
+                    <time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2024-09-30"
+                      title="September 30, 2024"
+                      >Sep 2024</time
+                    ></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link experience-link" href="/experience/geeksforgeeks/"
-                  ><span class="experience-icons"
+              <li class="border-b border-line">
+                <a
+                  class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-[1.5] no-underline max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3"
+                  href="/experience/geeksforgeeks/"
+                  ><span class="flex w-12 items-center max-sm:row-span-2"
                     ><img
+                      class="m-0 size-9 rounded-[10px] border-2 border-bg bg-icon object-contain"
                       src="/assets/experience/geeksforgeeks.webp"
                       alt=""
                       width="36"
                       height="36"
                       loading="lazy"
                     /></span
-                  ><span class="experience-info"
-                    ><span class="entry-title">GeeksforGeeks</span
-                    ><span class="experience-role">Campus Mantri</span></span
-                  ><span class="entry-meta experience-period"
-                    ><time datetime="2024-04-01" title="April 1, 2024">Apr 2024</time>
-                    – <time datetime="2025-04-01" title="April 1, 2025">Apr 2025</time></span
+                  ><span class="grid gap-0.75"
+                    ><span class="group-hover:underline" data-title>GeeksforGeeks</span
+                    ><span class="text-xs text-muted">Campus Mantri</span></span
+                  ><span
+                    class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs"
+                    ><time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2024-04-01"
+                      title="April 1, 2024"
+                      >Apr 2024</time
+                    >
+                    –
+                    <time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2025-04-01"
+                      title="April 1, 2025"
+                      >Apr 2025</time
+                    ></span
                   ></a
                 >
               </li>
-              <li>
-                <a class="entry-link experience-link" href="/experience/deviators/"
-                  ><span class="experience-icons"
+              <li class="border-b border-line">
+                <a
+                  class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-[1.5] no-underline max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3"
+                  href="/experience/deviators/"
+                  ><span class="flex w-12 items-center max-sm:row-span-2"
                     ><img
+                      class="m-0 size-9 rounded-[10px] border-2 border-bg bg-icon object-contain"
                       src="/assets/experience/deviators.svg"
                       alt=""
                       width="36"
                       height="36"
                       loading="lazy"
                     /></span
-                  ><span class="experience-info"
-                    ><span class="entry-title">Deviators</span
-                    ><span class="experience-role">Chairperson</span></span
-                  ><span class="entry-meta experience-period"
-                    ><time datetime="2024-02-16" title="February 16, 2024">Feb 2024</time>
-                    – <time datetime="2025-07-13" title="July 13, 2025">Jul 2025</time></span
+                  ><span class="grid gap-0.75"
+                    ><span class="group-hover:underline" data-title>Deviators</span
+                    ><span class="text-xs text-muted">Chairperson</span></span
+                  ><span
+                    class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs"
+                    ><time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2024-02-16"
+                      title="February 16, 2024"
+                      >Feb 2024</time
+                    >
+                    –
+                    <time
+                      class="cursor-help underline decoration-line decoration-dotted underline-offset-4"
+                      datetime="2025-07-13"
+                      title="July 13, 2025"
+                      >Jul 2025</time
+                    ></span
                   ></a
                 >
               </li>
@@ -168,15 +246,22 @@
           </div>
         </article>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

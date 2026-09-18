@@ -73,12 +73,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -86,9 +91,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -98,11 +105,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Database Transaction Internals: ACID, WAL, MVCC &amp; Locking</h1>
-            <p class="detail-meta"><time datetime="2026-01-03">2026-01-03</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Database Transaction Internals: ACID, WAL, MVCC &amp; Locking
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-03">2026-01-03</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Building reliable applications requires understanding database transactions. When you
               transfer money between accounts, update inventory after a purchase, or maintain
@@ -170,12 +179,12 @@
             </p>
             <p>Here&#39;s a classic example:</p>
             <pre
-            ><code class="language-sql"><span class="k">BEGIN</span> <span class="k">TRANSACTION</span>;
+            ><code class="language-sql"><span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span>;
 
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> balance <span class="o">-</span> <span class="n">100</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> balance <span class="o">+</span> <span class="n">100</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">2</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> balance <span class="text-syn-o">-</span> <span class="text-syn-n">100</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> balance <span class="text-syn-o">+</span> <span class="text-syn-n">100</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">2</span>;
 
-<span class="k">COMMIT</span>;
+<span class="text-syn-k">COMMIT</span>;
 </code></pre>
             <p>
               In this money transfer, both updates must succeed. If the first update executes but
@@ -233,9 +242,9 @@
               It&#39;s enforced by constraints, indexes, and triggers.
             </p>
             <pre
-            ><code class="language-sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="f">accounts</span> (
-  id <span class="k">INT</span> <span class="k">PRIMARY KEY</span>,
-  balance <span class="k">DECIMAL</span> <span class="k">CHECK</span> (balance <span class="o">&gt;=</span> <span class="n">0</span>)
+            ><code class="language-sql"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">accounts</span> (
+  id <span class="text-syn-k">INT</span> <span class="text-syn-k">PRIMARY KEY</span>,
+  balance <span class="text-syn-k">DECIMAL</span> <span class="text-syn-k">CHECK</span> (balance <span class="text-syn-o">&gt;=</span> <span class="text-syn-n">0</span>)
 );
 </code></pre>
             <p>
@@ -249,17 +258,17 @@
               until commit time:
             </p>
             <pre
-            ><code class="language-sql"><span class="c">-- Default: checked after each statement</span>
-<span class="k">BEGIN</span>;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> <span class="o">-</span><span class="n">50</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Fails immediately!</span>
-<span class="k">COMMIT</span>;
+            ><code class="language-sql"><span class="text-syn-c italic">-- Default: checked after each statement</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> <span class="text-syn-o">-</span><span class="text-syn-n">50</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Fails immediately!</span>
+<span class="text-syn-k">COMMIT</span>;
 
-<span class="c">-- Deferred: checked at commit</span>
-<span class="k">BEGIN</span>;
-<span class="k">SET</span> CONSTRAINTS ALL DEFERRED;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> <span class="o">-</span><span class="n">50</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Allowed temporarily</span>
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> <span class="n">50</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;  <span class="c">-- Fix it before commit</span>
-<span class="k">COMMIT</span>; <span class="c">-- Checks pass, transaction succeeds</span>
+<span class="text-syn-c italic">-- Deferred: checked at commit</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">SET</span> CONSTRAINTS ALL DEFERRED;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> <span class="text-syn-o">-</span><span class="text-syn-n">50</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Allowed temporarily</span>
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> <span class="text-syn-n">50</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;  <span class="text-syn-c italic">-- Fix it before commit</span>
+<span class="text-syn-k">COMMIT</span>; <span class="text-syn-c italic">-- Checks pass, transaction succeeds</span>
 </code></pre>
             <p>
               This flexibility allows temporary constraint violations inside a transaction while
@@ -304,18 +313,18 @@
               </li>
             </ol>
             <p>Here&#39;s how MVCC works in PostgreSQL:</p>
-            <pre><code class="language-sql"><span class="c">-- Transaction 1</span>
-<span class="k">BEGIN</span>;
-<span class="k">SELECT</span> balance <span class="k">FROM</span> accounts <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Sees 100</span>
+            <pre><code class="language-sql"><span class="text-syn-c italic">-- Transaction 1</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">SELECT</span> balance <span class="text-syn-k">FROM</span> accounts <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Sees 100</span>
 
-<span class="c">-- Transaction 2 (concurrent)</span>
-<span class="k">BEGIN</span>;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> <span class="n">200</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
-<span class="k">COMMIT</span>;
+<span class="text-syn-c italic">-- Transaction 2 (concurrent)</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> <span class="text-syn-n">200</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
+<span class="text-syn-k">COMMIT</span>;
 
-<span class="c">-- Back to Transaction 1</span>
-<span class="k">SELECT</span> balance <span class="k">FROM</span> accounts <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Still sees 100!</span>
-<span class="k">COMMIT</span>;
+<span class="text-syn-c italic">-- Back to Transaction 1</span>
+<span class="text-syn-k">SELECT</span> balance <span class="text-syn-k">FROM</span> accounts <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Still sees 100!</span>
+<span class="text-syn-k">COMMIT</span>;
 </code></pre>
             <p>
               PostgreSQL achieves this by storing a transaction ID (xmin) with each row version.
@@ -363,10 +372,10 @@
               </li>
             </ol>
             <pre
-            ><code class="language-sql"><span class="c">-- PostgreSQL configuration for durability</span>
-<span class="k">synchronous_commit</span> <span class="o">=</span> <span class="k">on</span>  <span class="c">-- Wait for WAL flush before COMMIT returns</span>
-fsync <span class="o">=</span> <span class="k">on</span>              <span class="c">-- Force WAL to physical disk</span>
-wal_level <span class="o">=</span> <span class="k">replica</span>     <span class="c">-- Write enough WAL for replication</span>
+            ><code class="language-sql"><span class="text-syn-c italic">-- PostgreSQL configuration for durability</span>
+<span class="text-syn-k">synchronous_commit</span> <span class="text-syn-o">=</span> <span class="text-syn-k">on</span>  <span class="text-syn-c italic">-- Wait for WAL flush before COMMIT returns</span>
+fsync <span class="text-syn-o">=</span> <span class="text-syn-k">on</span>              <span class="text-syn-c italic">-- Force WAL to physical disk</span>
+wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</span>     <span class="text-syn-c italic">-- Write enough WAL for replication</span>
 </code></pre>
             <h2 id="isolation-levels-and-tradeoffs">Isolation Levels and Tradeoffs</h2>
             <p>
@@ -385,15 +394,16 @@ wal_level <span class="o">=</span> <span class="k">replica</span>     <span clas
               only see committed data, but the data can change between reads within your
               transaction.
             </p>
-            <pre><code class="language-sql"><span class="c">-- Your transaction</span>
-<span class="k">BEGIN</span>;
-<span class="k">SELECT</span> balance <span class="k">FROM</span> accounts <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Returns 100</span>
+            <pre
+            ><code class="language-sql"><span class="text-syn-c italic">-- Your transaction</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">SELECT</span> balance <span class="text-syn-k">FROM</span> accounts <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Returns 100</span>
 
-<span class="c">-- Another transaction commits</span>
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> <span class="n">200</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
+<span class="text-syn-c italic">-- Another transaction commits</span>
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> <span class="text-syn-n">200</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
 
-<span class="c">-- Your transaction</span>
-<span class="k">SELECT</span> balance <span class="k">FROM</span> accounts <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Returns 200 now!</span>
+<span class="text-syn-c italic">-- Your transaction</span>
+<span class="text-syn-k">SELECT</span> balance <span class="text-syn-k">FROM</span> accounts <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Returns 200 now!</span>
 </code></pre>
             <p>
               This can lead to non-repeatable reads, but it&#39;s fast and works well for most
@@ -406,25 +416,25 @@ wal_level <span class="o">=</span> <span class="k">replica</span>     <span clas
               same results every time.
             </p>
             <pre
-            ><code class="language-sql"><span class="k">BEGIN</span> <span class="k">TRANSACTION</span> <span class="k">ISOLATION</span> <span class="k">LEVEL</span> <span class="k">REPEATABLE</span> <span class="k">READ</span>;
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> accounts; <span class="c">-- Snapshot taken here</span>
-<span class="c">-- All subsequent reads see this same snapshot</span>
-<span class="k">COMMIT</span>;
+            ><code class="language-sql"><span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span> <span class="text-syn-k">ISOLATION</span> <span class="text-syn-k">LEVEL</span> <span class="text-syn-k">REPEATABLE</span> <span class="text-syn-k">READ</span>;
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> accounts; <span class="text-syn-c italic">-- Snapshot taken here</span>
+<span class="text-syn-c italic">-- All subsequent reads see this same snapshot</span>
+<span class="text-syn-k">COMMIT</span>;
 </code></pre>
             <p>
               A common issue at lower isolation levels is phantom reads, where new rows appear in
               your results between queries:
             </p>
-            <pre><code class="language-sql"><span class="c">-- Transaction 1</span>
-<span class="k">BEGIN</span>;
-<span class="k">SELECT</span> <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">FROM</span> accounts <span class="k">WHERE</span> balance <span class="o">&gt;</span> <span class="n">1000</span>; <span class="c">-- Returns 5</span>
+            <pre><code class="language-sql"><span class="text-syn-c italic">-- Transaction 1</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">SELECT</span> <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">FROM</span> accounts <span class="text-syn-k">WHERE</span> balance <span class="text-syn-o">&gt;</span> <span class="text-syn-n">1000</span>; <span class="text-syn-c italic">-- Returns 5</span>
 
-<span class="c">-- Transaction 2 (concurrent)</span>
-<span class="k">INSERT INTO</span> accounts (id, balance) <span class="k">VALUES</span> (<span class="n">100</span>, <span class="n">2000</span>);
-<span class="k">COMMIT</span>;
+<span class="text-syn-c italic">-- Transaction 2 (concurrent)</span>
+<span class="text-syn-k">INSERT INTO</span> accounts (id, balance) <span class="text-syn-k">VALUES</span> (<span class="text-syn-n">100</span>, <span class="text-syn-n">2000</span>);
+<span class="text-syn-k">COMMIT</span>;
 
-<span class="c">-- Transaction 1</span>
-<span class="k">SELECT</span> <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">FROM</span> accounts <span class="k">WHERE</span> balance <span class="o">&gt;</span> <span class="n">1000</span>; <span class="c">-- Returns 6 (phantom row!)</span>
+<span class="text-syn-c italic">-- Transaction 1</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">FROM</span> accounts <span class="text-syn-k">WHERE</span> balance <span class="text-syn-o">&gt;</span> <span class="text-syn-n">1000</span>; <span class="text-syn-c italic">-- Returns 6 (phantom row!)</span>
 </code></pre>
             <p>
               PostgreSQL prevents phantom reads at Repeatable Read (unlike the SQL standard, which
@@ -438,30 +448,30 @@ wal_level <span class="o">=</span> <span class="k">replica</span>     <span clas
               another. Even Repeatable Read can&#39;t prevent all anomalies. Consider this scenario:
             </p>
             <pre
-            ><code class="language-sql"><span class="c">-- Two transactions allocating the last seat on a flight</span>
+            ><code class="language-sql"><span class="text-syn-c italic">-- Two transactions allocating the last seat on a flight</span>
 
-<span class="c">-- Transaction 1: Check available seats</span>
-<span class="k">BEGIN</span> <span class="k">TRANSACTION</span> <span class="k">ISOLATION</span> <span class="k">LEVEL</span> <span class="k">REPEATABLE</span> <span class="k">READ</span>;
-<span class="k">SELECT</span> seats <span class="k">FROM</span> flights <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Returns 1 seat available</span>
+<span class="text-syn-c italic">-- Transaction 1: Check available seats</span>
+<span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span> <span class="text-syn-k">ISOLATION</span> <span class="text-syn-k">LEVEL</span> <span class="text-syn-k">REPEATABLE</span> <span class="text-syn-k">READ</span>;
+<span class="text-syn-k">SELECT</span> seats <span class="text-syn-k">FROM</span> flights <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Returns 1 seat available</span>
 
-<span class="c">-- Transaction 2: Also checks seats (concurrent)</span>
-<span class="k">BEGIN</span> <span class="k">TRANSACTION</span> <span class="k">ISOLATION</span> <span class="k">LEVEL</span> <span class="k">REPEATABLE</span> <span class="k">READ</span>;
-<span class="k">SELECT</span> seats <span class="k">FROM</span> flights <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Also sees 1 seat available</span>
+<span class="text-syn-c italic">-- Transaction 2: Also checks seats (concurrent)</span>
+<span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span> <span class="text-syn-k">ISOLATION</span> <span class="text-syn-k">LEVEL</span> <span class="text-syn-k">REPEATABLE</span> <span class="text-syn-k">READ</span>;
+<span class="text-syn-k">SELECT</span> seats <span class="text-syn-k">FROM</span> flights <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Also sees 1 seat available</span>
 
-<span class="c">-- Transaction 1: Book the seat</span>
-<span class="k">UPDATE</span> flights <span class="k">SET</span> seats <span class="o">=</span> <span class="n">0</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
-<span class="k">COMMIT</span>;
+<span class="text-syn-c italic">-- Transaction 1: Book the seat</span>
+<span class="text-syn-k">UPDATE</span> flights <span class="text-syn-k">SET</span> seats <span class="text-syn-o">=</span> <span class="text-syn-n">0</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
+<span class="text-syn-k">COMMIT</span>;
 
-<span class="c">-- Transaction 2: Also books the seat</span>
-<span class="k">UPDATE</span> flights <span class="k">SET</span> seats <span class="o">=</span> <span class="n">0</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>; <span class="c">-- Goes to -1!</span>
-<span class="k">COMMIT</span>;
+<span class="text-syn-c italic">-- Transaction 2: Also books the seat</span>
+<span class="text-syn-k">UPDATE</span> flights <span class="text-syn-k">SET</span> seats <span class="text-syn-o">=</span> <span class="text-syn-n">0</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>; <span class="text-syn-c italic">-- Goes to -1!</span>
+<span class="text-syn-k">COMMIT</span>;
 </code></pre>
             <p>Both transactions saw 1 seat and both booked it. Serializable prevents this.</p>
             <pre
-            ><code class="language-sql"><span class="k">BEGIN</span> <span class="k">TRANSACTION</span> <span class="k">ISOLATION</span> <span class="k">LEVEL</span> <span class="k">SERIALIZABLE</span>;
-<span class="k">SELECT</span> seats <span class="k">FROM</span> flights <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
-<span class="k">UPDATE</span> flights <span class="k">SET</span> seats <span class="o">=</span> seats <span class="o">-</span> <span class="n">1</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
-<span class="k">COMMIT</span>; <span class="c">-- One transaction succeeds, the other gets serialization error</span>
+            ><code class="language-sql"><span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span> <span class="text-syn-k">ISOLATION</span> <span class="text-syn-k">LEVEL</span> <span class="text-syn-k">SERIALIZABLE</span>;
+<span class="text-syn-k">SELECT</span> seats <span class="text-syn-k">FROM</span> flights <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
+<span class="text-syn-k">UPDATE</span> flights <span class="text-syn-k">SET</span> seats <span class="text-syn-o">=</span> seats <span class="text-syn-o">-</span> <span class="text-syn-n">1</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
+<span class="text-syn-k">COMMIT</span>; <span class="text-syn-c italic">-- One transaction succeeds, the other gets serialization error</span>
 </code></pre>
             <p>
               PostgreSQL implements this using Serializable Snapshot Isolation (SSI). It tracks what
@@ -492,8 +502,9 @@ wal_level <span class="o">=</span> <span class="k">replica</span>     <span clas
               <li>VACUUM process cleans up old row versions that no transaction can see anymore</li>
               <li>Excellent for read-heavy workloads because readers never block</li>
             </ul>
-            <pre><code class="language-sql"><span class="c">-- Check transaction IDs</span>
-<span class="k">SELECT</span> xmin, xmax, <span class="o">*</span> <span class="k">FROM</span> accounts;
+            <pre
+            ><code class="language-sql"><span class="text-syn-c italic">-- Check transaction IDs</span>
+<span class="text-syn-k">SELECT</span> xmin, xmax, <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> accounts;
 </code></pre>
             <h3 id="mysql-innodb">MySQL (InnoDB)</h3>
             <p>
@@ -513,9 +524,10 @@ wal_level <span class="o">=</span> <span class="k">replica</span>     <span clas
                 against phantoms but higher lock contention under write-heavy workloads
               </li>
             </ul>
-            <pre><code class="language-sql"><span class="c">-- InnoDB specific transaction</span>
-<span class="k">START TRANSACTION</span> <span class="k">WITH</span> CONSISTENT <span class="k">SNAPSHOT</span>;
-<span class="c">-- Creates a consistent read view</span>
+            <pre
+            ><code class="language-sql"><span class="text-syn-c italic">-- InnoDB specific transaction</span>
+<span class="text-syn-k">START TRANSACTION</span> <span class="text-syn-k">WITH</span> CONSISTENT <span class="text-syn-k">SNAPSHOT</span>;
+<span class="text-syn-c italic">-- Creates a consistent read view</span>
 </code></pre>
             <h3 id="mongodb">MongoDB</h3>
             <p>
@@ -532,21 +544,21 @@ wal_level <span class="o">=</span> <span class="k">replica</span>     <span clas
               <li>Uses two-phase commit protocol across shards, which adds latency</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> session <span class="o">=</span> client<span class="u">.</span><span class="f">startSession</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> session <span class="text-syn-o">=</span> client<span class="text-syn-u">.</span><span class="text-syn-f">startSession</span><span class="text-syn-u">();</span>
 
-session<span class="u">.</span><span class="f">startTransaction</span><span class="u">();</span>
-<span class="k">try</span> <span class="u">{</span>
-  <span class="k">await</span> accounts<span class="u">.</span><span class="f">updateOne</span><span class="u">({</span> <span class="p">_id:</span> <span class="n">1</span> <span class="u">},</span> <span class="u">{</span> <span class="p">$inc:</span> <span class="u">{</span> <span class="p">balance:</span> <span class="o">-</span><span class="n">100</span> <span class="u">}</span> <span class="u">},</span> <span class="u">{</span> session <span class="u">});</span>
+session<span class="text-syn-u">.</span><span class="text-syn-f">startTransaction</span><span class="text-syn-u">();</span>
+<span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> accounts<span class="text-syn-u">.</span><span class="text-syn-f">updateOne</span><span class="text-syn-u">({</span> <span class="text-syn-p">_id:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span> <span class="text-syn-u">{</span> <span class="text-syn-p">$inc:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">balance:</span> <span class="text-syn-o">-</span><span class="text-syn-n">100</span> <span class="text-syn-u">}</span> <span class="text-syn-u">},</span> <span class="text-syn-u">{</span> session <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> accounts<span class="u">.</span><span class="f">updateOne</span><span class="u">({</span> <span class="p">_id:</span> <span class="n">2</span> <span class="u">},</span> <span class="u">{</span> <span class="p">$inc:</span> <span class="u">{</span> <span class="p">balance:</span> <span class="n">100</span> <span class="u">}</span> <span class="u">},</span> <span class="u">{</span> session <span class="u">});</span>
+  <span class="text-syn-k">await</span> accounts<span class="text-syn-u">.</span><span class="text-syn-f">updateOne</span><span class="text-syn-u">({</span> <span class="text-syn-p">_id:</span> <span class="text-syn-n">2</span> <span class="text-syn-u">},</span> <span class="text-syn-u">{</span> <span class="text-syn-p">$inc:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">balance:</span> <span class="text-syn-n">100</span> <span class="text-syn-u">}</span> <span class="text-syn-u">},</span> <span class="text-syn-u">{</span> session <span class="text-syn-u">});</span>
 
-  <span class="k">await</span> session<span class="u">.</span><span class="f">commitTransaction</span><span class="u">();</span>
-<span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-  <span class="k">await</span> session<span class="u">.</span><span class="f">abortTransaction</span><span class="u">();</span>
-  <span class="k">throw</span> error<span class="u">;</span>
-<span class="u">}</span> <span class="k">finally</span> <span class="u">{</span>
-  session<span class="u">.</span><span class="f">endSession</span><span class="u">();</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> session<span class="text-syn-u">.</span><span class="text-syn-f">commitTransaction</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> session<span class="text-syn-u">.</span><span class="text-syn-f">abortTransaction</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">throw</span> error<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span> <span class="text-syn-k">finally</span> <span class="text-syn-u">{</span>
+  session<span class="text-syn-u">.</span><span class="text-syn-f">endSession</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Transactions are durable and isolated, but they&#39;re expensive. This is why MongoDB
@@ -584,17 +596,17 @@ session<span class="u">.</span><span class="f">startTransaction</span><span clas
               </li>
             </ol>
             <p><strong>Deadlock example:</strong></p>
-            <pre><code class="language-sql"><span class="c">-- Transaction 1</span>
-<span class="k">BEGIN</span>;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> balance <span class="o">-</span> <span class="n">100</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">1</span>;
-<span class="c">-- Now needs a lock on id = 2</span>
+            <pre><code class="language-sql"><span class="text-syn-c italic">-- Transaction 1</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> balance <span class="text-syn-o">-</span> <span class="text-syn-n">100</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
+<span class="text-syn-c italic">-- Now needs a lock on id = 2</span>
 
-<span class="c">-- Transaction 2</span>
-<span class="k">BEGIN</span>;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> balance <span class="o">+</span> <span class="n">50</span> <span class="k">WHERE</span> id <span class="o">=</span> <span class="n">2</span>;
-<span class="c">-- Now needs a lock on id = 1</span>
+<span class="text-syn-c italic">-- Transaction 2</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> balance <span class="text-syn-o">+</span> <span class="text-syn-n">50</span> <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">2</span>;
+<span class="text-syn-c italic">-- Now needs a lock on id = 1</span>
 
-<span class="c">-- Deadlock! Each transaction waits for the other&#39;s lock</span>
+<span class="text-syn-c italic">-- Deadlock! Each transaction waits for the other&#39;s lock</span>
 </code></pre>
             <p>
               Databases detect deadlocks using wait-for graphs. When cycles are detected, one
@@ -608,18 +620,18 @@ session<span class="u">.</span><span class="f">startTransaction</span><span clas
               row versions in PostgreSQL. This leads to table bloat and degraded performance. The
               rule of thumb: keep transactions as short as possible.
             </p>
-            <pre><code class="language-sql"><span class="c">-- Bad</span>
-<span class="k">BEGIN</span>;
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> large_table; <span class="c">-- Takes 10 minutes</span>
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> balance <span class="o">+</span> <span class="n">100</span>;
-<span class="k">COMMIT</span>;
+            <pre><code class="language-sql"><span class="text-syn-c italic">-- Bad</span>
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> large_table; <span class="text-syn-c italic">-- Takes 10 minutes</span>
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> balance <span class="text-syn-o">+</span> <span class="text-syn-n">100</span>;
+<span class="text-syn-k">COMMIT</span>;
 
-<span class="c">-- Good: Split into separate transactions</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> large_table;
+<span class="text-syn-c italic">-- Good: Split into separate transactions</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> large_table;
 
-<span class="k">BEGIN</span>;
-<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance <span class="o">=</span> balance <span class="o">+</span> <span class="n">100</span>;
-<span class="k">COMMIT</span>;
+<span class="text-syn-k">BEGIN</span>;
+<span class="text-syn-k">UPDATE</span> accounts <span class="text-syn-k">SET</span> balance <span class="text-syn-o">=</span> balance <span class="text-syn-o">+</span> <span class="text-syn-n">100</span>;
+<span class="text-syn-k">COMMIT</span>;
 </code></pre>
             <h3 id="table-bloat-dead-tuples-and-vacuum">Table Bloat (Dead Tuples) and VACUUM</h3>
             <p>
@@ -660,20 +672,20 @@ session<span class="u">.</span><span class="f">startTransaction</span><span clas
             </p>
             <p>You can observe bloat with a simple before/after:</p>
             <pre
-            ><code class="language-sql"><span class="c">-- How many dead tuples are we carrying?</span>
-<span class="k">SELECT</span>
+            ><code class="language-sql"><span class="text-syn-c italic">-- How many dead tuples are we carrying?</span>
+<span class="text-syn-k">SELECT</span>
   schemaname,
   relname,
   n_live_tup,
   n_dead_tup
-<span class="k">FROM</span> pg_stat_user_tables
-<span class="k">WHERE</span> relname <span class="o">=</span> <span class="s">&#39;accounts&#39;</span>;
+<span class="text-syn-k">FROM</span> pg_stat_user_tables
+<span class="text-syn-k">WHERE</span> relname <span class="text-syn-o">=</span> <span class="text-syn-s">&#39;accounts&#39;</span>;
 
-<span class="c">-- Table size (logical bloat shows up here)</span>
-<span class="k">SELECT</span> pg_size_pretty(pg_total_relation_size(<span class="s">&#39;accounts&#39;</span>)) <span class="k">AS</span> total_size;
+<span class="text-syn-c italic">-- Table size (logical bloat shows up here)</span>
+<span class="text-syn-k">SELECT</span> pg_size_pretty(pg_total_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>)) <span class="text-syn-k">AS</span> total_size;
 
-<span class="c">-- Clean up dead tuples (space becomes reusable)</span>
-VACUUM (<span class="k">VERBOSE</span>) accounts;
+<span class="text-syn-c italic">-- Clean up dead tuples (space becomes reusable)</span>
+VACUUM (<span class="text-syn-k">VERBOSE</span>) accounts;
 </code></pre>
             <p>Here’s what a typical <code>VACUUM VERBOSE</code> looks like (trimmed):</p>
             <pre
@@ -733,10 +745,10 @@ WAL usage: 3 records, 1 full page images, 8506 bytes
               </li>
             </ul>
             <p>To make this more concrete, break the size down:</p>
-            <pre><code class="language-sql"><span class="k">SELECT</span>
-  pg_size_pretty(pg_relation_size(<span class="s">&#39;accounts&#39;</span>))        <span class="k">AS</span> table_only,
-  pg_size_pretty(pg_indexes_size(<span class="s">&#39;accounts&#39;</span>))         <span class="k">AS</span> indexes_only,
-  pg_size_pretty(pg_total_relation_size(<span class="s">&#39;accounts&#39;</span>))  <span class="k">AS</span> total;
+            <pre><code class="language-sql"><span class="text-syn-k">SELECT</span>
+  pg_size_pretty(pg_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>))        <span class="text-syn-k">AS</span> table_only,
+  pg_size_pretty(pg_indexes_size(<span class="text-syn-s">&#39;accounts&#39;</span>))         <span class="text-syn-k">AS</span> indexes_only,
+  pg_size_pretty(pg_total_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>))  <span class="text-syn-k">AS</span> total;
 </code></pre>
             <p>
               Example (toy table, a few UPDATEs, then VACUUM): you might see total size go up, like
@@ -780,12 +792,12 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
  56 kB
 </code></pre>
             <p>If you want to <strong>see the forks directly</strong>, run:</p>
-            <pre><code class="language-sql"><span class="k">SELECT</span>
-  pg_size_pretty(pg_relation_size(<span class="s">&#39;accounts&#39;</span>))                              <span class="k">AS</span> heap_main,
-  pg_size_pretty(pg_relation_size(<span class="s">&#39;accounts&#39;</span>, <span class="s">&#39;fsm&#39;</span>))                       <span class="k">AS</span> fsm,
-  pg_size_pretty(pg_relation_size(<span class="s">&#39;accounts&#39;</span>, <span class="s">&#39;vm&#39;</span>))                        <span class="k">AS</span> vm,
-  pg_size_pretty(pg_indexes_size(<span class="s">&#39;accounts&#39;</span>))                               <span class="k">AS</span> indexes,
-  pg_size_pretty(pg_total_relation_size(<span class="s">&#39;accounts&#39;</span>))                        <span class="k">AS</span> total;
+            <pre><code class="language-sql"><span class="text-syn-k">SELECT</span>
+  pg_size_pretty(pg_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>))                              <span class="text-syn-k">AS</span> heap_main,
+  pg_size_pretty(pg_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>, <span class="text-syn-s">&#39;fsm&#39;</span>))                       <span class="text-syn-k">AS</span> fsm,
+  pg_size_pretty(pg_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>, <span class="text-syn-s">&#39;vm&#39;</span>))                        <span class="text-syn-k">AS</span> vm,
+  pg_size_pretty(pg_indexes_size(<span class="text-syn-s">&#39;accounts&#39;</span>))                               <span class="text-syn-k">AS</span> indexes,
+  pg_size_pretty(pg_total_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>))                        <span class="text-syn-k">AS</span> total;
 </code></pre>
             <p>Sample output (toy table):</p>
             <pre><code class="language-text"> heap_main |  fsm  |  vm   | indexes | total
@@ -816,28 +828,28 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
               Always implement retry logic:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">transferMoney</span><span class="u">(</span>
-  from<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-  to<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-  amount<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-  maxRetries <span class="o">=</span> <span class="n">3</span><span class="u">,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> maxRetries<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">try</span> <span class="u">{</span>
-      <span class="k">await</span> db<span class="u">.</span><span class="f">transaction</span><span class="u">(</span><span class="k">async</span> <span class="u">(</span>trx<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-        <span class="k">await</span> <span class="f">trx</span><span class="u">(</span><span class="s">&quot;accounts&quot;</span><span class="u">).</span><span class="f">where</span><span class="u">(</span><span class="s">&quot;id&quot;</span><span class="u">,</span> from<span class="u">).</span><span class="f">decrement</span><span class="u">(</span><span class="s">&quot;balance&quot;</span><span class="u">,</span> amount<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">transferMoney</span><span class="text-syn-u">(</span>
+  from<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+  to<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+  amount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+  maxRetries <span class="text-syn-o">=</span> <span class="text-syn-n">3</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> maxRetries<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">transaction</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">(</span>trx<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">await</span> <span class="text-syn-f">trx</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;accounts&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">where</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;id&quot;</span><span class="text-syn-u">,</span> from<span class="text-syn-u">).</span><span class="text-syn-f">decrement</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;balance&quot;</span><span class="text-syn-u">,</span> amount<span class="text-syn-u">);</span>
 
-        <span class="k">await</span> <span class="f">trx</span><span class="u">(</span><span class="s">&quot;accounts&quot;</span><span class="u">).</span><span class="f">where</span><span class="u">(</span><span class="s">&quot;id&quot;</span><span class="u">,</span> to<span class="u">).</span><span class="f">increment</span><span class="u">(</span><span class="s">&quot;balance&quot;</span><span class="u">,</span> amount<span class="u">);</span>
-      <span class="u">});</span>
-      <span class="k">return</span><span class="u">;</span>
-    <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-      <span class="k">if</span> <span class="u">((</span>error <span class="k">as</span> <span class="u">{</span> code<span class="o">?:</span> <span class="t">string</span> <span class="u">}).</span><span class="p">code</span> <span class="o">===</span> <span class="s">&quot;40001&quot;</span> <span class="o">&amp;&amp;</span> i <span class="o">&lt;</span> maxRetries <span class="o">-</span> <span class="n">1</span><span class="u">)</span> <span class="u">{</span>
-        <span class="k">continue</span><span class="u">;</span>
-      <span class="u">}</span>
-      <span class="k">throw</span> error<span class="u">;</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+        <span class="text-syn-k">await</span> <span class="text-syn-f">trx</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;accounts&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">where</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;id&quot;</span><span class="text-syn-u">,</span> to<span class="text-syn-u">).</span><span class="text-syn-f">increment</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;balance&quot;</span><span class="text-syn-u">,</span> amount<span class="text-syn-u">);</span>
+      <span class="text-syn-u">});</span>
+      <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">if</span> <span class="text-syn-u">((</span>error <span class="text-syn-k">as</span> <span class="text-syn-u">{</span> code<span class="text-syn-o">?:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">}).</span><span class="text-syn-p">code</span> <span class="text-syn-o">===</span> <span class="text-syn-s">&quot;40001&quot;</span> <span class="text-syn-o">&amp;&amp;</span> i <span class="text-syn-o">&lt;</span> maxRetries <span class="text-syn-o">-</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">continue</span><span class="text-syn-u">;</span>
+      <span class="text-syn-u">}</span>
+      <span class="text-syn-k">throw</span> error<span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="use-savepoints-for-partial-rollbacks">Use Savepoints for Partial Rollbacks</h3>
             <p>
@@ -848,27 +860,27 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
               Imagine you&#39;re processing an order with multiple items. You want to save the order
               even if some items fail validation:
             </p>
-            <pre><code class="language-sql"><span class="k">BEGIN</span>;
+            <pre><code class="language-sql"><span class="text-syn-k">BEGIN</span>;
 
-<span class="c">-- Step 1: Create the order</span>
-<span class="k">INSERT INTO</span> orders (id, total) <span class="k">VALUES</span> (<span class="n">1</span>, <span class="n">100</span>);
+<span class="text-syn-c italic">-- Step 1: Create the order</span>
+<span class="text-syn-k">INSERT INTO</span> orders (id, total) <span class="text-syn-k">VALUES</span> (<span class="text-syn-n">1</span>, <span class="text-syn-n">100</span>);
 
-<span class="c">-- Step 2: Mark a savepoint (checkpoint)</span>
+<span class="text-syn-c italic">-- Step 2: Mark a savepoint (checkpoint)</span>
 SAVEPOINT before_items;
 
-<span class="c">-- Step 3: Try to add items</span>
-<span class="k">INSERT INTO</span> order_items (order_id, item) <span class="k">VALUES</span> (<span class="n">1</span>, <span class="s">&#39;laptop&#39;</span>);  <span class="c">-- Works fine</span>
+<span class="text-syn-c italic">-- Step 3: Try to add items</span>
+<span class="text-syn-k">INSERT INTO</span> order_items (order_id, item) <span class="text-syn-k">VALUES</span> (<span class="text-syn-n">1</span>, <span class="text-syn-s">&#39;laptop&#39;</span>);  <span class="text-syn-c italic">-- Works fine</span>
 
-<span class="c">-- Step 4: This one fails (invalid item)</span>
-<span class="k">INSERT INTO</span> order_items (order_id, item) <span class="k">VALUES</span> (<span class="n">1</span>, <span class="s">&#39;invalid&#39;</span>); <span class="c">-- ERROR!</span>
+<span class="text-syn-c italic">-- Step 4: This one fails (invalid item)</span>
+<span class="text-syn-k">INSERT INTO</span> order_items (order_id, item) <span class="text-syn-k">VALUES</span> (<span class="text-syn-n">1</span>, <span class="text-syn-s">&#39;invalid&#39;</span>); <span class="text-syn-c italic">-- ERROR!</span>
 
-<span class="c">-- Step 5: Roll back only to the savepoint</span>
-<span class="k">ROLLBACK</span> <span class="k">TO</span> SAVEPOINT before_items;
-<span class="c">-- Now we&#39;re back to just after creating the order</span>
-<span class="c">-- The order still exists, but the failed items are gone</span>
+<span class="text-syn-c italic">-- Step 5: Roll back only to the savepoint</span>
+<span class="text-syn-k">ROLLBACK</span> <span class="text-syn-k">TO</span> SAVEPOINT before_items;
+<span class="text-syn-c italic">-- Now we&#39;re back to just after creating the order</span>
+<span class="text-syn-c italic">-- The order still exists, but the failed items are gone</span>
 
-<span class="c">-- Step 6: Commit everything that&#39;s left</span>
-<span class="k">COMMIT</span>;
+<span class="text-syn-c italic">-- Step 6: Commit everything that&#39;s left</span>
+<span class="text-syn-k">COMMIT</span>;
 </code></pre>
             <p>
               Final result: The order exists in the database with the laptop, but the invalid item
@@ -908,18 +920,18 @@ SAVEPOINT before_items;
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/non-relational-databases/">Non-Relational Databases</a>
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/understanding-database-scaling-sharding/"
                 >Understanding Database Scaling and Sharding Patterns</a
               >
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/async-processing/"
                 >Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</a
               >
@@ -927,15 +939,22 @@ SAVEPOINT before_items;
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

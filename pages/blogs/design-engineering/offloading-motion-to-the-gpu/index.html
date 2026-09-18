@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Offloading Motion to the GPU</h1>
-            <p class="detail-meta"><time datetime="2026-02-03">2026-02-03</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Offloading Motion to the GPU
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-02-03">2026-02-03</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               There&#39;s something special about CSS animations. No dependencies, no JavaScript,
               just HTML and CSS. It feels like you are writing code how it was meant to be written.
@@ -190,37 +199,37 @@
             </p>
             <p>Let&#39;s look at the broken code:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> janky-pulse <span class="u">{</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> janky-pulse <span class="text-syn-u">{</span>
   0%,
-  100% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">100%</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">100%</span><span class="u">;</span>
-  <span class="u">}</span>
-  50% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">40%</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">40%</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+  50% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">40%</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">40%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.janky-box</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> janky-pulse <span class="n">800ms</span> <span class="k">ease-in-out</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.janky-box</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> janky-pulse <span class="text-syn-n">800ms</span> <span class="text-syn-k">ease-in-out</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>And the fixed version:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> smooth-pulse <span class="u">{</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> smooth-pulse <span class="text-syn-u">{</span>
   0%,
-  100% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-  <span class="u">}</span>
-  50% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.4</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  50% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.4</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.smooth-box</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> smooth-pulse <span class="n">800ms</span> <span class="k">ease-in-out</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.smooth-box</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> smooth-pulse <span class="text-syn-n">800ms</span> <span class="text-syn-k">ease-in-out</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The difference? The first version changes <code>width</code> and <code>height</code>,
@@ -313,26 +322,28 @@ transform change:  Style → Composite                   (fastest)
               This is why you hear &quot;only animate transform and opacity&quot; repeated
               everywhere. It&#39;s not a style preference. It&#39;s a performance reality.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">0</span><span class="u">);</span>
-  <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-  <span class="p">transition</span><span class="u">:</span>
-    transform <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">,</span>
-    opacity <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span>
+    transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">,</span>
+    opacity <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element:hover</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">20px</span><span class="u">)</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.05</span><span class="u">);</span>
-  <span class="p">opacity</span><span class="u">:</span> <span class="n">0.9</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element:hover</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">20px</span><span class="text-syn-u">)</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.05</span><span class="text-syn-u">);</span>
+  <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.9</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="what-about-will-change">What About will-change?</h3>
             <p>
               The <code>will-change</code> property tells the browser to prepare a layer in advance.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">will-change</span><span class="u">:</span> transform<span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">will-change</span><span class="text-syn-u">:</span> transform<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This can help with complex animations, but use it sparingly. Every
@@ -389,17 +400,18 @@ transform change:  Style → Composite                   (fastest)
             <p>CSS animations win in specific scenarios.</p>
             <h3 id="hover-effects">Hover Effects</h3>
             <p>A button that scales on hover doesn&#39;t need JavaScript.</p>
-            <pre><code class="language-css"><span class="p">.button</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">150ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.button</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.button:hover</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.05</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.button:hover</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.05</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.button:active</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.98</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.button:active</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.98</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -414,20 +426,20 @@ transform change:  Style → Composite                   (fastest)
             <h3 id="enter-animations">Enter Animations</h3>
             <p>When an element appears, CSS can handle the entrance.</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> fadeSlideIn <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">0</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">translateY</span><span class="u">(</span><span class="n">10px</span><span class="u">);</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">translateY</span><span class="u">(</span><span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> fadeSlideIn <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateY</span><span class="text-syn-u">(</span><span class="text-syn-n">10px</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateY</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.card</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> fadeSlideIn <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.card</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> fadeSlideIn <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               For simple fades and slides, this is all you need. No JavaScript, no animation
@@ -438,18 +450,18 @@ transform change:  Style → Composite                   (fastest)
               Loading spinners, pulsing indicators, scrolling marquees. These should always be CSS.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> spin <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">0deg</span><span class="u">);</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">360deg</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> spin <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">0deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">360deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.spinner</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> spin <span class="n">1s</span> <span class="k">linear</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.spinner</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> spin <span class="text-syn-n">1s</span> <span class="text-syn-k">linear</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -493,14 +505,14 @@ transform change:  Style → Composite                   (fastest)
               based on their physical properties.
             </p>
             <pre
-            ><code class="language-tsx"><span class="u">&lt;</span><span class="g">motion.div</span>
-  <span class="p">animate</span><span class="o">=</span><span class="u">{{</span> <span class="p">x:</span> <span class="n">100</span> <span class="u">}}</span>
-  <span class="p">transition</span><span class="o">=</span><span class="u">{{</span>
-    <span class="p">type:</span> <span class="s">&quot;spring&quot;</span><span class="u">,</span>
-    <span class="p">stiffness:</span> <span class="n">300</span><span class="u">,</span>
-    <span class="p">damping:</span> <span class="n">20</span><span class="u">,</span>
-  <span class="u">}}</span>
-<span class="u">/&gt;;</span>
+            ><code class="language-tsx"><span class="text-syn-u">&lt;</span><span class="text-syn-g">motion.div</span>
+  <span class="text-syn-p">animate</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span> <span class="text-syn-p">x:</span> <span class="text-syn-n">100</span> <span class="text-syn-u">}}</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+    <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;spring&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">damping:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">}}</span>
+<span class="text-syn-u">/&gt;;</span>
 </code></pre>
             <p>
               The motion feels different. Springs respond to velocity. They overshoot and settle
@@ -514,14 +526,14 @@ transform change:  Style → Composite                   (fastest)
               JavaScript gives you programmatic control.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> variants <span class="o">=</span> <span class="u">{</span>
-  <span class="p">hidden:</span> <span class="u">{</span> <span class="p">opacity:</span> <span class="n">0</span><span class="u">,</span> <span class="p">y:</span> <span class="n">20</span> <span class="u">},</span>
-  <span class="p">visible:</span> <span class="u">(</span>i<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">opacity:</span> <span class="n">1</span><span class="u">,</span>
-    <span class="p">y:</span> <span class="n">0</span><span class="u">,</span>
-    <span class="p">transition:</span> <span class="u">{</span> <span class="p">delay:</span> i <span class="o">*</span> <span class="n">0.1</span> <span class="u">},</span>
-  <span class="u">}),</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> variants <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">hidden:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">opacity:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-p">y:</span> <span class="text-syn-n">20</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">visible:</span> <span class="text-syn-u">(</span>i<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">opacity:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">y:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">transition:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">delay:</span> i <span class="text-syn-o">*</span> <span class="text-syn-n">0.1</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">}),</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h3 id="state-driven-animation">State-Driven Animation</h3>
             <p>
@@ -571,23 +583,23 @@ transform change:  Style → Composite                   (fastest)
             </p>
             <p>The bad version:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> pulse-bad <span class="u">{</span>
-  0% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0.7</span><span class="u">);</span>
-  <span class="u">}</span>
-  70% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">12px</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">12px</span><span class="u">;</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">10px</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-  100% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> pulse-bad <span class="text-syn-u">{</span>
+  0% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.7</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  70% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">12px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">12px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">10px</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Animating <code>width</code> and <code>height</code> triggers layout on every frame.
@@ -596,33 +608,33 @@ transform change:  Style → Composite                   (fastest)
             </p>
             <p>The good version:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> pulse-good <span class="u">{</span>
-  0% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0.7</span><span class="u">);</span>
-  <span class="u">}</span>
-  70% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.5</span><span class="u">);</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">10px</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-  100% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> pulse-good <span class="text-syn-u">{</span>
+  0% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.7</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  70% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.5</span><span class="text-syn-u">);</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">10px</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Same visual effect. <code>transform: scale()</code> instead of <code>width</code> and
               <code>height</code>. The GPU handles it. Battery life preserved.
             </p>
             <pre
-            ><code class="language-css"><span class="p">.notification-dot</span> <span class="u">{</span>
-  <span class="p">width</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-  <span class="p">height</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-  <span class="p">background-color</span><span class="u">:</span> <span class="u">#</span>ef4444<span class="u">;</span>
-  <span class="p">border-radius</span><span class="u">:</span> <span class="n">50%</span><span class="u">;</span>
-  <span class="p">animation</span><span class="u">:</span> pulse-good <span class="n">2s</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.4</span><span class="u">,</span> <span class="n">0</span><span class="u">,</span> <span class="n">0.6</span><span class="u">,</span> <span class="n">1</span><span class="u">)</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-p">.notification-dot</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">background-color</span><span class="text-syn-u">:</span> <span class="text-syn-u">#</span>ef4444<span class="text-syn-u">;</span>
+  <span class="text-syn-p">border-radius</span><span class="text-syn-u">:</span> <span class="text-syn-n">50%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> pulse-good <span class="text-syn-n">2s</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.4</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.6</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Run this in Chrome DevTools Performance panel. The good version shows almost no main
@@ -679,11 +691,11 @@ transform change:  Style → Composite                   (fastest)
               prefer reduced motion for focus.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.notification-dot</span> <span class="u">{</span>
-    <span class="p">animation</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.notification-dot</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               For our notification dot, removing the pulse entirely is appropriate. The dot still
@@ -694,12 +706,12 @@ transform change:  Style → Composite                   (fastest)
               transitions:
             </p>
             <pre
-            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.modal</span> <span class="u">{</span>
-    <span class="p">animation</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="making-the-choice">Making the Choice</h2>
             <p>After everything we&#39;ve covered, here&#39;s how I think about it.</p>
@@ -747,28 +759,39 @@ transform change:  Style → Composite                   (fastest)
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/keyframe-animations/"
                 >Choreographing Multi-Step Motion</a
               >
             </li>
-            <li><a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a></li>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

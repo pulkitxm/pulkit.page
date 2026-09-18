@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Prisma ORM with PostgreSQL</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Prisma ORM with PostgreSQL</h1>
-            <p class="detail-meta"><time datetime="2024-08-17">2024-08-17</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Prisma ORM with PostgreSQL
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-08-17">2024-08-17</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>Title: Setting Up Prisma ORM with PostgreSQL</p>
             <p>
               Content: ORM stands for Object-Relational Mapping. It is a technique that allows
@@ -103,32 +112,33 @@
               To begin, let&#39;s set up a new Node.js project. First, initialize a new Node.js
               project by running the following command in your terminal:
             </p>
-            <pre><code class="language-bash"><span class="f">pnpm</span> <span class="s">init</span>
+            <pre
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
             <p>Next, install TypeScript and the necessary type definitions:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">-D</span> <span class="s">typescript</span> <span class="s">@types/node</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">typescript</span> <span class="text-syn-s">@types/node</span>
 </code></pre>
             <p>Create a <code>tsconfig.json</code> file to configure TypeScript:</p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;compilerOptions&quot;</span><span class="u">:</span> <span class="u">{</span>
-    <span class="p">&quot;target&quot;</span><span class="u">:</span> <span class="s">&quot;ES6&quot;</span><span class="u">,</span>
-    <span class="p">&quot;module&quot;</span><span class="u">:</span> <span class="s">&quot;commonjs&quot;</span><span class="u">,</span>
-    <span class="p">&quot;strict&quot;</span><span class="u">:</span> <span class="k">true</span><span class="u">,</span>
-    <span class="p">&quot;esModuleInterop&quot;</span><span class="u">:</span> <span class="k">true</span><span class="u">,</span>
-    <span class="p">&quot;skipLibCheck&quot;</span><span class="u">:</span> <span class="k">true</span><span class="u">,</span>
-    <span class="p">&quot;forceConsistentCasingInFileNames&quot;</span><span class="u">:</span> <span class="k">true</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;compilerOptions&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">&quot;target&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;ES6&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;module&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;commonjs&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;strict&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;esModuleInterop&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;skipLibCheck&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;forceConsistentCasingInFileNames&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">true</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Now, let&#39;s add Prisma as a dependency:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">@prisma/client</span>
-<span class="f">pnpm</span> <span class="s">add</span> <span class="s">-D</span> <span class="s">prisma</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">@prisma/client</span>
+<span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">prisma</span>
 </code></pre>
             <p>Initialize Prisma in your project:</p>
             <pre
-            ><code class="language-bash"><span class="f">npx</span> <span class="s">prisma</span> <span class="s">init</span>
+            ><code class="language-bash"><span class="text-syn-f">npx</span> <span class="text-syn-s">prisma</span> <span class="text-syn-s">init</span>
 </code></pre>
             <p>
               This command will create a new <code>prisma</code> directory with a
@@ -142,20 +152,20 @@
               <code>schema.prisma</code>
               file. Open the file and add the following user schema:
             </p>
-            <pre><code class="language-typescript">datasource db <span class="u">{</span>
-  provider <span class="o">=</span> <span class="s">&quot;postgresql&quot;</span>
-  url      <span class="o">=</span> <span class="f">env</span><span class="u">(</span><span class="s">&quot;DATABASE_URL&quot;</span><span class="u">)</span>
-<span class="u">}</span>
+            <pre><code class="language-typescript">datasource db <span class="text-syn-u">{</span>
+  provider <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;postgresql&quot;</span>
+  url      <span class="text-syn-o">=</span> <span class="text-syn-f">env</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;DATABASE_URL&quot;</span><span class="text-syn-u">)</span>
+<span class="text-syn-u">}</span>
 
-generator client <span class="u">{</span>
-  provider <span class="o">=</span> <span class="s">&quot;prisma-client-js&quot;</span>
-<span class="u">}</span>
+generator client <span class="text-syn-u">{</span>
+  provider <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;prisma-client-js&quot;</span>
+<span class="text-syn-u">}</span>
 
-model User <span class="u">{</span>
-  id    Int     <span class="u">@</span>id <span class="u">@</span><span class="f">default</span><span class="u">(</span><span class="f">uuid</span><span class="u">())</span>
+model User <span class="text-syn-u">{</span>
+  id    Int     <span class="text-syn-u">@</span>id <span class="text-syn-u">@</span><span class="text-syn-f">default</span><span class="text-syn-u">(</span><span class="text-syn-f">uuid</span><span class="text-syn-u">())</span>
   name  String
-  email String  <span class="u">@</span>unique
-<span class="u">}</span>
+  email String  <span class="text-syn-u">@</span>unique
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Ensure you have a PostgreSQL database running and set the
@@ -164,15 +174,15 @@ model User <span class="u">{</span>
             </p>
             <p>You can run a postgres instance using docker also</p>
             <pre
-            ><code class="language-bash"><span class="f">docker</span> <span class="s">run</span> <span class="s">--name</span> <span class="s">some-postgres</span> <span class="s">-e</span> <span class="s">POSTGRES_PASSWORD=mysecretpassword</span> <span class="s">-p</span> <span class="s">5432:5432</span> <span class="s">-d</span> <span class="s">postgres</span>
+            ><code class="language-bash"><span class="text-syn-f">docker</span> <span class="text-syn-s">run</span> <span class="text-syn-s">--name</span> <span class="text-syn-s">some-postgres</span> <span class="text-syn-s">-e</span> <span class="text-syn-s">POSTGRES_PASSWORD=mysecretpassword</span> <span class="text-syn-s">-p</span> <span class="text-syn-s">5432:5432</span> <span class="text-syn-s">-d</span> <span class="text-syn-s">postgres</span>
 </code></pre>
             <pre
-            ><code class="language-bash">DATABASE_URL<span class="o">=</span><span class="s">&quot;postgresql://postgres:mysecretpassword@localhost:5432/postgres&quot;</span>
+            ><code class="language-bash">DATABASE_URL<span class="text-syn-o">=</span><span class="text-syn-s">&quot;postgresql://postgres:mysecretpassword@localhost:5432/postgres&quot;</span>
 </code></pre>
             <h3 id="making-a-database-migration">Making a Database Migration</h3>
             <p>To apply this schema to the database, let&#39;s create a migration:</p>
             <pre
-            ><code class="language-bash"><span class="f">npx</span> <span class="s">prisma</span> <span class="s">migrate</span> <span class="s">dev</span> <span class="s">--name</span> <span class="s">init</span>
+            ><code class="language-bash"><span class="text-syn-f">npx</span> <span class="text-syn-s">prisma</span> <span class="text-syn-s">migrate</span> <span class="text-syn-s">dev</span> <span class="text-syn-s">--name</span> <span class="text-syn-s">init</span>
 </code></pre>
             <p>
               This command will generate the necessary SQL to create the <code>User</code> table in
@@ -191,27 +201,27 @@ model User <span class="u">{</span>
             </p>
             <p>You can also generate the Prisma Client manually using:</p>
             <pre
-            ><code class="language-bash"><span class="f">npx</span> <span class="s">prisma</span> <span class="s">generate</span>
+            ><code class="language-bash"><span class="text-syn-f">npx</span> <span class="text-syn-s">prisma</span> <span class="text-syn-s">generate</span>
 </code></pre>
             <h3 id="database-operations-using-prisma-client">
               Database Operations Using Prisma Client
             </h3>
             <p>Let&#39;s start coding by creating a <code>/src/index.ts</code> file:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> PrismaClient <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@prisma/client&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> PrismaClient <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@prisma/client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> prisma <span class="o">=</span> <span class="o">new</span> <span class="f">PrismaClient</span><span class="u">();</span>
+<span class="text-syn-k">const</span> prisma <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">PrismaClient</span><span class="text-syn-u">();</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">main</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> users <span class="o">=</span> <span class="k">await</span> <span class="f">getUsers</span><span class="u">();</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span>users<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">main</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> users <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getUsers</span><span class="text-syn-u">();</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>users<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="f">main</span><span class="u">();</span>
+<span class="text-syn-f">main</span><span class="text-syn-u">();</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getUsers</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="k">await</span> prisma<span class="u">.</span>user<span class="u">.</span><span class="f">findMany</span><span class="u">();</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUsers</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">findMany</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Create a new instance of <code>PrismaClient</code> in your code. This instance will
@@ -219,18 +229,18 @@ model User <span class="u">{</span>
             </p>
             <p>Let&#39;s start by defining the <code>getUsers()</code> function:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getUsers</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="k">await</span> prisma<span class="u">.</span>user<span class="u">.</span><span class="f">findMany</span><span class="u">();</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUsers</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">findMany</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               And let&#39;s call it and see it in action. Add the following scripts in
               <code>package.json</code>:
             </p>
             <pre
-            ><code class="language-json"><span class="s">&quot;scripts&quot;</span>: <span class="u">{</span>
-  <span class="p">&quot;start&quot;</span><span class="u">:</span> <span class="s">&quot;ts-node src/index.ts&quot;</span> or <span class="s">&quot;tsc -b &amp;&amp; node dist/index.js&quot;</span>
-<span class="u">}</span>
+            ><code class="language-json"><span class="text-syn-s">&quot;scripts&quot;</span>: <span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;start&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;ts-node src/index.ts&quot;</span> or <span class="text-syn-s">&quot;tsc -b &amp;&amp; node dist/index.js&quot;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Run <code>npm start</code> to see the result. Of course, we have not created any users
@@ -238,42 +248,42 @@ model User <span class="u">{</span>
             </p>
             <p>Let&#39;s add a <code>createUser()</code> function:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createUser</span><span class="u">(</span>name<span class="o">:</span> <span class="t">string</span><span class="u">,</span> email<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="k">await</span> prisma<span class="u">.</span>user<span class="u">.</span><span class="f">create</span><span class="u">({</span>
-    <span class="p">data:</span> <span class="u">{</span>
-      name<span class="u">,</span>
-      email<span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createUser</span><span class="text-syn-u">(</span>name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> email<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">data:</span> <span class="text-syn-u">{</span>
+      name<span class="text-syn-u">,</span>
+      email<span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               After running
               <code>await createUser(&quot;Alice&quot;, &quot;alice@xyz.com&quot;);</code>, we see
               the following output:
             </p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;id&quot;</span><span class="u">:</span> <span class="n">1</span><span class="u">,</span>
-  <span class="p">&quot;name&quot;</span><span class="u">:</span> <span class="s">&quot;Alice&quot;</span><span class="u">,</span>
-  <span class="p">&quot;email&quot;</span><span class="u">:</span> <span class="s">&quot;alice@xyz.com&quot;</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;name&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Alice&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;email&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;alice@xyz.com&quot;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>We can also update user details:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">updateUser</span><span class="u">(</span>id<span class="o">:</span> <span class="t">number</span><span class="u">,</span> name<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="k">await</span> prisma<span class="u">.</span>user<span class="u">.</span><span class="f">update</span><span class="u">({</span>
-    <span class="p">where:</span> <span class="u">{</span> id <span class="u">},</span>
-    <span class="p">data:</span> <span class="u">{</span> name <span class="u">},</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">updateUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">update</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">where:</span> <span class="text-syn-u">{</span> id <span class="text-syn-u">},</span>
+    <span class="text-syn-p">data:</span> <span class="text-syn-u">{</span> name <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>To delete a user, we can simply use:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">deleteUser</span><span class="u">(</span>id<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="k">await</span> prisma<span class="u">.</span>user<span class="u">.</span><span class="f">delete</span><span class="u">({</span>
-    <span class="p">where:</span> <span class="u">{</span> id <span class="u">},</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">deleteUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">delete</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">where:</span> <span class="text-syn-u">{</span> id <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               By following these steps, you can easily set up Prisma ORM with PostgreSQL and perform
@@ -283,28 +293,37 @@ model User <span class="u">{</span>
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/cron-jobs-with-bullmq/">BullMQ Cron Jobs with Redis in Node.js</a>
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
             </li>
-            <li><a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a></li>
+            <li class="my-2">
+              <a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

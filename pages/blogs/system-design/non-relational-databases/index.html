@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Non-Relational Databases</h1>
-            <p class="detail-meta"><time datetime="2026-01-08">2026-01-08</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Non-Relational Databases
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-08">2026-01-08</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               <img
                 src="/assets/content/blogs/non-relational-databases/types.webp"
@@ -189,19 +198,19 @@
             </ul>
             <h3 id="partial-updates">Partial Updates</h3>
             <p>Consider this document:</p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;user_id&quot;</span><span class="u">:</span> <span class="s">&quot;u_12345&quot;</span><span class="u">,</span>
-  <span class="p">&quot;name&quot;</span><span class="u">:</span> <span class="s">&quot;Emma&quot;</span><span class="u">,</span>
-  <span class="p">&quot;city&quot;</span><span class="u">:</span> <span class="s">&quot;Los Angeles&quot;</span><span class="u">,</span>
-  <span class="p">&quot;profile&quot;</span><span class="u">:</span> <span class="u">{</span>
-    <span class="p">&quot;bio&quot;</span><span class="u">:</span> <span class="s">&quot;Love traveling and photography&quot;</span><span class="u">,</span>
-    <span class="p">&quot;interests&quot;</span><span class="u">:</span> <span class="u">[</span><span class="s">&quot;travel&quot;</span><span class="u">,</span> <span class="s">&quot;photography&quot;</span><span class="u">,</span> <span class="s">&quot;hiking&quot;</span><span class="u">]</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;user_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;u_12345&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;name&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;city&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Los Angeles&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;profile&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">&quot;bio&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Love traveling and photography&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;interests&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;travel&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;photography&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;hiking&quot;</span><span class="text-syn-u">]</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>When you want to add a new interest, you can issue a simple update:</p>
             <pre
-            ><code class="language-javascript">db<span class="u">.</span>users<span class="u">.</span><span class="f">updateOne</span><span class="u">({</span> <span class="p">user_id:</span> <span class="s">&quot;u_12345&quot;</span> <span class="u">},</span> <span class="u">{</span> <span class="p">$push:</span> <span class="u">{</span> <span class="p">&quot;profile.interests&quot;:</span> <span class="s">&quot;cooking&quot;</span> <span class="u">}</span> <span class="u">});</span>
+            ><code class="language-javascript">db<span class="text-syn-u">.</span>users<span class="text-syn-u">.</span><span class="text-syn-f">updateOne</span><span class="text-syn-u">({</span> <span class="text-syn-p">user_id:</span> <span class="text-syn-s">&quot;u_12345&quot;</span> <span class="text-syn-u">},</span> <span class="text-syn-u">{</span> <span class="text-syn-p">$push:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;profile.interests&quot;:</span> <span class="text-syn-s">&quot;cooking&quot;</span> <span class="text-syn-u">}</span> <span class="text-syn-u">});</span>
 </code></pre>
             <p>
               This updates only the <code>total_posts</code> field. The database applies this change
@@ -229,18 +238,18 @@
             </p>
             <h3 id="when-to-use-document-dbs">When to Use Document DBs</h3>
             <p><strong>In-App Notifications:</strong></p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;notification_id&quot;</span><span class="u">:</span> <span class="s">&quot;n_789&quot;</span><span class="u">,</span>
-  <span class="p">&quot;user_id&quot;</span><span class="u">:</span> <span class="s">&quot;u_12345&quot;</span><span class="u">,</span>
-  <span class="p">&quot;type&quot;</span><span class="u">:</span> <span class="s">&quot;like&quot;</span><span class="u">,</span>
-  <span class="p">&quot;message&quot;</span><span class="u">:</span> <span class="s">&quot;John liked your post&quot;</span><span class="u">,</span>
-  <span class="p">&quot;read&quot;</span><span class="u">:</span> <span class="k">false</span><span class="u">,</span>
-  <span class="p">&quot;metadata&quot;</span><span class="u">:</span> <span class="u">{</span>
-    <span class="p">&quot;post_id&quot;</span><span class="u">:</span> <span class="s">&quot;p_456&quot;</span><span class="u">,</span>
-    <span class="p">&quot;liker_avatar&quot;</span><span class="u">:</span> <span class="s">&quot;https://...&quot;</span>
-  <span class="u">},</span>
-  <span class="p">&quot;created_at&quot;</span><span class="u">:</span> <span class="s">&quot;2026-01-07T10:30:00Z&quot;</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;notification_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;n_789&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;user_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;u_12345&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;type&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;like&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;message&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;John liked your post&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;read&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">false</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;metadata&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">&quot;post_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;p_456&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;liker_avatar&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;https://...&quot;</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-p">&quot;created_at&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;2026-01-07T10:30:00Z&quot;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Notifications are inherently unstructured. Different notification types have different
@@ -248,18 +257,18 @@
               every new notification type.
             </p>
             <p><strong>Product Catalogs:</strong></p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;product_id&quot;</span><span class="u">:</span> <span class="s">&quot;p_001&quot;</span><span class="u">,</span>
-  <span class="p">&quot;title&quot;</span><span class="u">:</span> <span class="s">&quot;Wireless Headphones&quot;</span><span class="u">,</span>
-  <span class="p">&quot;price&quot;</span><span class="u">:</span> <span class="n">149.99</span><span class="u">,</span>
-  <span class="p">&quot;category&quot;</span><span class="u">:</span> <span class="s">&quot;Electronics&quot;</span><span class="u">,</span>
-  <span class="p">&quot;specifications&quot;</span><span class="u">:</span> <span class="u">{</span>
-    <span class="p">&quot;battery_life&quot;</span><span class="u">:</span> <span class="s">&quot;30 hours&quot;</span><span class="u">,</span>
-    <span class="p">&quot;driver_size&quot;</span><span class="u">:</span> <span class="s">&quot;40mm&quot;</span><span class="u">,</span>
-    <span class="p">&quot;noise_cancellation&quot;</span><span class="u">:</span> <span class="k">true</span>
-  <span class="u">},</span>
-  <span class="p">&quot;seller_notes&quot;</span><span class="u">:</span> <span class="s">&quot;Limited edition color available&quot;</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;product_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;p_001&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;title&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Wireless Headphones&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;price&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">149.99</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;category&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Electronics&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;specifications&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">&quot;battery_life&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;30 hours&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;driver_size&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;40mm&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">&quot;noise_cancellation&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">true</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-p">&quot;seller_notes&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Limited edition color available&quot;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Different products have different attributes. A laptop has RAM and storage specs. A
@@ -292,17 +301,17 @@ DEL(key) → success
               trivial.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getUserProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">`profile:${userId}`</span><span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUserProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">setUserProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> profile<span class="o">:</span> <span class="t">Profile</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`profile:${userId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>profile<span class="u">));</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">setUserProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> profile<span class="text-syn-o">:</span> <span class="text-syn-t">Profile</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>profile<span class="text-syn-u">));</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">deleteUserProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">del</span><span class="u">(</span><span class="s">`profile:${userId}`</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">deleteUserProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">del</span><span class="text-syn-u">(</span><span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="when-key-value-is-enough">When Key-Value Is Enough</h3>
             <p>
@@ -361,26 +370,26 @@ DEL(key) → success
               needed.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">OrderStore</span> <span class="u">{</span>
-  <span class="f">getOrder</span><span class="u">(</span>orderId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Order</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;;</span>
-  <span class="f">saveOrder</span><span class="u">(</span>order<span class="o">:</span> <span class="t">Order</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;;</span>
-  <span class="f">deleteOrder</span><span class="u">(</span>orderId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrderStore</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-f">getOrder</span><span class="text-syn-u">(</span>orderId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Order</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;;</span>
+  <span class="text-syn-f">saveOrder</span><span class="text-syn-u">(</span>order<span class="text-syn-o">:</span> <span class="text-syn-t">Order</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;;</span>
+  <span class="text-syn-f">deleteOrder</span><span class="text-syn-u">(</span>orderId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> orderStore<span class="o">:</span> <span class="t">OrderStore</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="k">async</span> <span class="f">getOrder</span><span class="u">(</span>orderId<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">`order:${orderId}`</span><span class="u">);</span>
-    <span class="k">return</span> data <span class="o">?</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>data<span class="u">)</span> <span class="o">:</span> <span class="k">null</span><span class="u">;</span>
-  <span class="u">},</span>
+<span class="text-syn-k">const</span> orderStore<span class="text-syn-o">:</span> <span class="text-syn-t">OrderStore</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-f">getOrder</span><span class="text-syn-u">(</span>orderId<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`order:${orderId}`</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span> data <span class="text-syn-o">?</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>data<span class="text-syn-u">)</span> <span class="text-syn-o">:</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">},</span>
 
-  <span class="k">async</span> <span class="f">saveOrder</span><span class="u">(</span>order<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`order:${order.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>order<span class="u">));</span>
-  <span class="u">},</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-f">saveOrder</span><span class="text-syn-u">(</span>order<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`order:${order.</span><span class="text-syn-p">id</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>order<span class="text-syn-u">));</span>
+  <span class="text-syn-u">},</span>
 
-  <span class="k">async</span> <span class="f">deleteOrder</span><span class="u">(</span>orderId<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">del</span><span class="u">(</span><span class="s">`order:${orderId}`</span><span class="u">);</span>
-  <span class="u">},</span>
-<span class="u">};</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-f">deleteOrder</span><span class="text-syn-u">(</span>orderId<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">del</span><span class="text-syn-u">(</span><span class="text-syn-s">`order:${orderId}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h3 id="what-key-value-stores-can-t-do">What Key-Value Stores Can&#39;t Do</h3>
             <p>
@@ -389,18 +398,18 @@ DEL(key) → success
               inspecting every value.
             </p>
             <pre
-            ><code class="language-typescript"><span class="c">// This is NOT how key-value stores work</span>
-<span class="k">const</span> highBalanceUsers <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM users WHERE balance &gt; 1000&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-c italic">// This is NOT how key-value stores work</span>
+<span class="text-syn-k">const</span> highBalanceUsers <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM users WHERE balance &gt; 1000&quot;</span><span class="text-syn-u">);</span>
 
-<span class="c">// You&#39;d have to do this instead (terrible for large datasets)</span>
-<span class="k">const</span> allKeys <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">keys</span><span class="u">(</span><span class="s">&quot;user:*&quot;</span><span class="u">);</span>
-<span class="k">const</span> highBalanceUsers <span class="o">=</span> <span class="u">[];</span>
-<span class="k">for</span> <span class="u">(</span><span class="k">const</span> key <span class="o">of</span> allKeys<span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> user <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span><span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">));</span>
-  <span class="k">if</span> <span class="u">(</span>user<span class="u">.</span><span class="p">balance</span> <span class="o">&gt;</span> <span class="n">1000</span><span class="u">)</span> <span class="u">{</span>
-    highBalanceUsers<span class="u">.</span><span class="f">push</span><span class="u">(</span>user<span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">// You&#39;d have to do this instead (terrible for large datasets)</span>
+<span class="text-syn-k">const</span> allKeys <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">keys</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user:*&quot;</span><span class="text-syn-u">);</span>
+<span class="text-syn-k">const</span> highBalanceUsers <span class="text-syn-o">=</span> <span class="text-syn-u">[];</span>
+<span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> key <span class="text-syn-o">of</span> allKeys<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span><span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-u">));</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>user<span class="text-syn-u">.</span><span class="text-syn-p">balance</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-n">1000</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    highBalanceUsers<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span>user<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               If you need to filter, aggregate, or query based on attributes inside the value, you
@@ -412,20 +421,20 @@ DEL(key) → success
               key-value semantics on top of any database:
             </p>
             <pre
-            ><code class="language-sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="f">kv_store</span> (
-  <span class="k">key</span> <span class="k">VARCHAR</span>(<span class="n">255</span>) <span class="k">PRIMARY KEY</span>,
-  <span class="k">value</span> <span class="k">TEXT</span>
+            ><code class="language-sql"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">kv_store</span> (
+  <span class="text-syn-k">key</span> <span class="text-syn-k">VARCHAR</span>(<span class="text-syn-n">255</span>) <span class="text-syn-k">PRIMARY KEY</span>,
+  <span class="text-syn-k">value</span> <span class="text-syn-k">TEXT</span>
 );
 
-<span class="c">-- GET</span>
-<span class="k">SELECT</span> <span class="k">value</span> <span class="k">FROM</span> kv_store <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s">&#39;user:emma&#39;</span>;
+<span class="text-syn-c italic">-- GET</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-k">value</span> <span class="text-syn-k">FROM</span> kv_store <span class="text-syn-k">WHERE</span> <span class="text-syn-k">key</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&#39;user:emma&#39;</span>;
 
-<span class="c">-- PUT</span>
-<span class="k">INSERT INTO</span> kv_store (<span class="k">key</span>, <span class="k">value</span>) <span class="k">VALUES</span> (<span class="s">&#39;user:emma&#39;</span>, <span class="s">&#39;{&quot;name&quot;: &quot;Emma&quot;, &quot;city&quot;: &quot;Los Angeles&quot;}&#39;</span>)
-<span class="k">ON</span> CONFLICT (<span class="k">key</span>) DO <span class="k">UPDATE</span> <span class="k">SET</span> <span class="k">value</span> <span class="o">=</span> EXCLUDED.value;
+<span class="text-syn-c italic">-- PUT</span>
+<span class="text-syn-k">INSERT INTO</span> kv_store (<span class="text-syn-k">key</span>, <span class="text-syn-k">value</span>) <span class="text-syn-k">VALUES</span> (<span class="text-syn-s">&#39;user:emma&#39;</span>, <span class="text-syn-s">&#39;{&quot;name&quot;: &quot;Emma&quot;, &quot;city&quot;: &quot;Los Angeles&quot;}&#39;</span>)
+<span class="text-syn-k">ON</span> CONFLICT (<span class="text-syn-k">key</span>) DO <span class="text-syn-k">UPDATE</span> <span class="text-syn-k">SET</span> <span class="text-syn-k">value</span> <span class="text-syn-o">=</span> EXCLUDED.value;
 
-<span class="c">-- DEL</span>
-<span class="k">DELETE</span> <span class="k">FROM</span> kv_store <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s">&#39;user:emma&#39;</span>;
+<span class="text-syn-c italic">-- DEL</span>
+<span class="text-syn-k">DELETE</span> <span class="text-syn-k">FROM</span> kv_store <span class="text-syn-k">WHERE</span> <span class="text-syn-k">key</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&#39;user:emma&#39;</span>;
 </code></pre>
             <p>
               If you limit your access patterns, you can use any database as a key-value store. The
@@ -469,60 +478,61 @@ Los Angeles    Olivia
               path between two entities&quot; are natural operations.
             </p>
             <h3 id="graph-queries-with-cypher-neo4j">Graph Queries with Cypher (Neo4j)</h3>
-            <pre><code class="language-cypher"><span class="c">// Find all friends of Emma</span>
-<span class="k">MATCH</span> (emma:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Emma&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-&gt;</span>(friend)
-<span class="k">RETURN</span> friend.name
+            <pre
+            ><code class="language-cypher"><span class="text-syn-c italic">// Find all friends of Emma</span>
+<span class="text-syn-k">MATCH</span> (emma:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(friend)
+<span class="text-syn-k">RETURN</span> friend.name
 
-<span class="c">// Find friends of friends (2 hops)</span>
-<span class="k">MATCH</span> (emma:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Emma&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="f">*2</span><span class="o">]</span><span class="f">-&gt;</span>(fof)
-<span class="k">WHERE</span> <span class="k">NOT</span> (emma)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-&gt;</span>(fof) <span class="o">AND</span> emma <span class="o">&lt;&gt;</span> fof
-<span class="k">RETURN</span> <span class="k">DISTINCT</span> fof.name
+<span class="text-syn-c italic">// Find friends of friends (2 hops)</span>
+<span class="text-syn-k">MATCH</span> (emma:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-f">*2</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(fof)
+<span class="text-syn-k">WHERE</span> <span class="text-syn-k">NOT</span> (emma)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(fof) <span class="text-syn-o">AND</span> emma <span class="text-syn-o">&lt;&gt;</span> fof
+<span class="text-syn-k">RETURN</span> <span class="text-syn-k">DISTINCT</span> fof.name
 
-<span class="c">// Find what Alex&#39;s friends like</span>
-<span class="k">MATCH</span> (alex:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Alex&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-&gt;</span>(friend)
-<span class="k">MATCH</span> (friend)<span class="f">-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-&gt;</span>(interest)
-<span class="k">RETURN</span> friend.name, interest.name
-<span class="k">ORDER BY</span> friend.name
+<span class="text-syn-c italic">// Find what Alex&#39;s friends like</span>
+<span class="text-syn-k">MATCH</span> (alex:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Alex&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(friend)
+<span class="text-syn-k">MATCH</span> (friend)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)
+<span class="text-syn-k">RETURN</span> friend.name, interest.name
+<span class="text-syn-k">ORDER BY</span> friend.name
 
-<span class="c">// Recommendations: What do my friends like that I don&#39;t?</span>
-<span class="k">MATCH</span> (me:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Alex&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-&gt;</span>(friend)<span class="f">-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-&gt;</span>(interest)
-<span class="k">WHERE</span> <span class="k">NOT</span> (me)<span class="f">-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-&gt;</span>(interest)
-<span class="k">RETURN</span> interest.name, <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">as</span> popularity
-<span class="k">ORDER BY</span> popularity <span class="k">DESC</span>
+<span class="text-syn-c italic">// Recommendations: What do my friends like that I don&#39;t?</span>
+<span class="text-syn-k">MATCH</span> (me:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Alex&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(friend)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)
+<span class="text-syn-k">WHERE</span> <span class="text-syn-k">NOT</span> (me)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)
+<span class="text-syn-k">RETURN</span> interest.name, <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">as</span> popularity
+<span class="text-syn-k">ORDER BY</span> popularity <span class="text-syn-k">DESC</span>
 </code></pre>
             <h3 id="when-to-use-graph-databases">When to Use Graph Databases</h3>
             <p><strong>Social Networks:</strong></p>
             <pre
-            ><code class="language-cypher"><span class="c">// Mutual friends between Emma and Alex</span>
-<span class="k">MATCH</span> (emma:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Emma&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-&gt;</span>(mutual)<span class="f">&lt;-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-</span>(alex:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Alex&quot;</span><span class="k">}</span>)
-<span class="k">RETURN</span> mutual.name
+            ><code class="language-cypher"><span class="text-syn-c italic">// Mutual friends between Emma and Alex</span>
+<span class="text-syn-k">MATCH</span> (emma:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(mutual)<span class="text-syn-f">&lt;-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-</span>(alex:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Alex&quot;</span><span class="text-syn-k">}</span>)
+<span class="text-syn-k">RETURN</span> mutual.name
 
-<span class="c">// Find people who live in the same city as Emma</span>
-<span class="k">MATCH</span> (emma:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Emma&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:LIVES_IN</span><span class="o">]</span><span class="f">-&gt;</span>(city)<span class="f">&lt;-</span><span class="o">[</span><span class="t">:LIVES_IN</span><span class="o">]</span><span class="f">-</span>(neighbor)
-<span class="k">WHERE</span> neighbor <span class="o">&lt;&gt;</span> emma
-<span class="k">RETURN</span> neighbor.name, city.name
+<span class="text-syn-c italic">// Find people who live in the same city as Emma</span>
+<span class="text-syn-k">MATCH</span> (emma:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIVES_IN</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(city)<span class="text-syn-f">&lt;-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIVES_IN</span><span class="text-syn-o">]</span><span class="text-syn-f">-</span>(neighbor)
+<span class="text-syn-k">WHERE</span> neighbor <span class="text-syn-o">&lt;&gt;</span> emma
+<span class="text-syn-k">RETURN</span> neighbor.name, city.name
 </code></pre>
             <p><strong>Recommendation Engines:</strong></p>
             <pre
-            ><code class="language-cypher"><span class="c">// &quot;People like you also like&quot; - find interests based on friends</span>
-<span class="k">MATCH</span> (me:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Olivia&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:FRIENDS</span><span class="o">]</span><span class="f">-&gt;</span>(friend)<span class="f">-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-&gt;</span>(interest)
-<span class="k">WHERE</span> <span class="k">NOT</span> (me)<span class="f">-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-&gt;</span>(interest)
-<span class="k">RETURN</span> interest.name, <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">as</span> score
-<span class="k">ORDER BY</span> score <span class="k">DESC</span>
-<span class="k">LIMIT</span> <span class="n">5</span>
+            ><code class="language-cypher"><span class="text-syn-c italic">// &quot;People like you also like&quot; - find interests based on friends</span>
+<span class="text-syn-k">MATCH</span> (me:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Olivia&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(friend)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)
+<span class="text-syn-k">WHERE</span> <span class="text-syn-k">NOT</span> (me)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)
+<span class="text-syn-k">RETURN</span> interest.name, <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">as</span> score
+<span class="text-syn-k">ORDER BY</span> score <span class="text-syn-k">DESC</span>
+<span class="text-syn-k">LIMIT</span> <span class="text-syn-n">5</span>
 
-<span class="c">// Find people with similar interests</span>
-<span class="k">MATCH</span> (me:Person <span class="k">{</span>name<span class="k">:</span> <span class="s">&quot;Alex&quot;</span><span class="k">}</span>)<span class="f">-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-&gt;</span>(interest)<span class="f">&lt;-</span><span class="o">[</span><span class="t">:LIKES</span><span class="o">]</span><span class="f">-</span>(similar)
-<span class="k">WHERE</span> similar <span class="o">&lt;&gt;</span> me
-<span class="k">RETURN</span> similar.name, <span class="f">COUNT</span>(interest) <span class="k">as</span> common_interests
-<span class="k">ORDER BY</span> common_interests <span class="k">DESC</span>
+<span class="text-syn-c italic">// Find people with similar interests</span>
+<span class="text-syn-k">MATCH</span> (me:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Alex&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)<span class="text-syn-f">&lt;-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-</span>(similar)
+<span class="text-syn-k">WHERE</span> similar <span class="text-syn-o">&lt;&gt;</span> me
+<span class="text-syn-k">RETURN</span> similar.name, <span class="text-syn-f">COUNT</span>(interest) <span class="text-syn-k">as</span> common_interests
+<span class="text-syn-k">ORDER BY</span> common_interests <span class="text-syn-k">DESC</span>
 </code></pre>
             <p><strong>Fraud Detection:</strong></p>
             <pre
-            ><code class="language-cypher"><span class="c">// Find circular money transfers (potential money laundering)</span>
-<span class="k">MATCH</span> path <span class="o">=</span> (a:Account)<span class="f">-</span><span class="o">[</span><span class="t">:TRANSFERRED</span><span class="f">*3..6</span><span class="o">]</span><span class="f">-&gt;</span>(a)
-<span class="k">WHERE</span> <span class="f">ALL</span>(r <span class="o">IN</span> <span class="f">relationships</span>(path) <span class="k">WHERE</span> r.amount <span class="o">&gt;</span> <span class="n">10000</span>)
-<span class="k">RETURN</span> path
+            ><code class="language-cypher"><span class="text-syn-c italic">// Find circular money transfers (potential money laundering)</span>
+<span class="text-syn-k">MATCH</span> path <span class="text-syn-o">=</span> (a:Account)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:TRANSFERRED</span><span class="text-syn-f">*3..6</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(a)
+<span class="text-syn-k">WHERE</span> <span class="text-syn-f">ALL</span>(r <span class="text-syn-o">IN</span> <span class="text-syn-f">relationships</span>(path) <span class="text-syn-k">WHERE</span> r.amount <span class="text-syn-o">&gt;</span> <span class="text-syn-n">10000</span>)
+<span class="text-syn-k">RETURN</span> path
 </code></pre>
             <h3 id="the-graph-database-warning">The Graph Database Warning</h3>
             <p>
@@ -603,28 +613,35 @@ Los Angeles    Olivia
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/db-transaction-internals/"
                 >Database Transaction Internals: ACID, WAL, MVCC &amp; Locking</a
               >
             </li>
-            <li><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
-            <li><a href="/blogs/system-design/caching/">Caching</a></li>
+            <li class="my-2"><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
+            <li class="my-2"><a href="/blogs/system-design/caching/">Caching</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

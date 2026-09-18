@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Open Graph Images in Next.js</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Open Graph Images in Next.js</h1>
-            <p class="detail-meta"><time datetime="2024-11-15">2024-11-15</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Open Graph Images in Next.js
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-11-15">2024-11-15</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <h2 id="introduction">Introduction</h2>
             <p>
               In today&#39;s digital playground, having a social media presence is like having a
@@ -116,12 +125,12 @@
               quick example of how to manually add an Open Graph image:
             </p>
             <pre
-            ><code class="language-xml"><span class="u">&lt;</span><span class="g">head</span><span class="u">&gt;</span>
-  <span class="u">&lt;</span><span class="g">meta</span> <span class="p">property</span>=<span class="s">&quot;og:title&quot;</span> <span class="p">content</span>=<span class="s">&quot;Your Page Title&quot;</span> <span class="u">/&gt;</span>
-  <span class="u">&lt;</span><span class="g">meta</span> <span class="p">property</span>=<span class="s">&quot;og:description&quot;</span> <span class="p">content</span>=<span class="s">&quot;A brief description of your content.&quot;</span> <span class="u">/&gt;</span>
-  <span class="u">&lt;</span><span class="g">meta</span> <span class="p">property</span>=<span class="s">&quot;og:image&quot;</span> <span class="p">content</span>=<span class="s">&quot;https://example.com/path/to/your/image.jpg&quot;</span> <span class="u">/&gt;</span>
-  <span class="u">&lt;</span><span class="g">meta</span> <span class="p">property</span>=<span class="s">&quot;og:url&quot;</span> <span class="p">content</span>=<span class="s">&quot;https://example.com&quot;</span> <span class="u">/&gt;</span>
-<span class="u">&lt;/</span><span class="g">head</span><span class="u">&gt;</span>
+            ><code class="language-xml"><span class="text-syn-u">&lt;</span><span class="text-syn-g">head</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">&lt;</span><span class="text-syn-g">meta</span> <span class="text-syn-p">property</span>=<span class="text-syn-s">&quot;og:title&quot;</span> <span class="text-syn-p">content</span>=<span class="text-syn-s">&quot;Your Page Title&quot;</span> <span class="text-syn-u">/&gt;</span>
+  <span class="text-syn-u">&lt;</span><span class="text-syn-g">meta</span> <span class="text-syn-p">property</span>=<span class="text-syn-s">&quot;og:description&quot;</span> <span class="text-syn-p">content</span>=<span class="text-syn-s">&quot;A brief description of your content.&quot;</span> <span class="text-syn-u">/&gt;</span>
+  <span class="text-syn-u">&lt;</span><span class="text-syn-g">meta</span> <span class="text-syn-p">property</span>=<span class="text-syn-s">&quot;og:image&quot;</span> <span class="text-syn-p">content</span>=<span class="text-syn-s">&quot;https://example.com/path/to/your/image.jpg&quot;</span> <span class="text-syn-u">/&gt;</span>
+  <span class="text-syn-u">&lt;</span><span class="text-syn-g">meta</span> <span class="text-syn-p">property</span>=<span class="text-syn-s">&quot;og:url&quot;</span> <span class="text-syn-p">content</span>=<span class="text-syn-s">&quot;https://example.com&quot;</span> <span class="text-syn-u">/&gt;</span>
+<span class="text-syn-u">&lt;/</span><span class="text-syn-g">head</span><span class="text-syn-u">&gt;</span>
 </code></pre>
             <p>Now, let&#39;s break it down:</p>
             <ul>
@@ -206,23 +215,23 @@
             </p>
             <p>Here’s an example of how you can include Open Graph tags in your Next.js pages:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> Head <span class="k">from</span> <span class="s">&#39;next/head&#39;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> Head <span class="text-syn-k">from</span> <span class="text-syn-s">&#39;next/head&#39;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">HomePage</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="o">&lt;&gt;</span>
-      <span class="u">&lt;</span><span class="t">Head</span><span class="u">&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:title&quot;</span> content<span class="o">=</span><span class="s">&quot;Awesome Next.js Page&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:description&quot;</span> content<span class="o">=</span><span class="s">&quot;This is the best Next.js page ever!&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:image&quot;</span> content<span class="o">=</span><span class="s">&quot;https://example.com/path/to/your/dynamic-image.jpg&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:url&quot;</span> content<span class="o">=</span><span class="s">&quot;https://yourwebsite.com&quot;</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;/</span>Head<span class="o">&gt;</span>
-      <span class="u">&lt;</span><span class="t">div</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="t">h1</span><span class="u">&gt;</span>Welcome to the Awesome Next<span class="u">.</span><span class="p">js</span> Page<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
-      <span class="o">&lt;/</span>div<span class="o">&gt;</span>
-    <span class="o">&lt;/&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">HomePage</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-o">&lt;&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">Head</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:title&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Awesome Next.js Page&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:description&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;This is the best Next.js page ever!&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:image&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://example.com/path/to/your/dynamic-image.jpg&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:url&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://yourwebsite.com&quot;</span> <span class="text-syn-o">/&gt;</span>
+      <span class="text-syn-o">&lt;/</span>Head<span class="text-syn-o">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">div</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-t">h1</span><span class="text-syn-u">&gt;</span>Welcome to the Awesome Next<span class="text-syn-u">.</span><span class="text-syn-p">js</span> Page<span class="text-syn-o">&lt;/</span>h1<span class="text-syn-o">&gt;</span>
+      <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
+    <span class="text-syn-o">&lt;/&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>What’s happening here:</p>
             <ul>
@@ -328,75 +337,76 @@
               folder.
             </p>
             <p>Here&#39;s how I added the Open Graph image to my portfolio code:</p>
-            <pre><code class="language-typescript"><span class="c">// src/app/layout.tsx</span>
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">RootLayout</span><span class="u">({</span>
-  children<span class="u">,</span>
-<span class="u">}</span><span class="o">:</span> <span class="t">Readonly</span><span class="u">&lt;{</span>
-  children<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span><span class="u">;</span>
-<span class="u">}&gt;)</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="o">&lt;</span>html lang<span class="o">=</span><span class="s">&quot;en&quot;</span> suppressHydrationWarning className<span class="o">=</span><span class="s">&quot;light&quot;</span><span class="o">&gt;</span>
-      <span class="u">&lt;</span><span class="t">head</span><span class="u">&gt;</span>
-        <span class="o">&lt;</span>meta
-          name<span class="o">=</span><span class="s">&quot;description&quot;</span>
-          content<span class="o">=</span><span class="s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
-        <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta
-          name<span class="o">=</span><span class="s">&quot;keywords&quot;</span>
-          content<span class="o">=</span><span class="s">&quot;Pulkit, Developer, Web Development, React, Portfolio&quot;</span>
-        <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta name<span class="o">=</span><span class="s">&quot;author&quot;</span> content<span class="o">=</span><span class="s">&quot;Pulkit&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta name<span class="o">=</span><span class="s">&quot;robots&quot;</span> content<span class="o">=</span><span class="s">&quot;index, follow&quot;</span> <span class="o">/&gt;</span>
+            <pre
+            ><code class="language-typescript"><span class="text-syn-c italic">// src/app/layout.tsx</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RootLayout</span><span class="text-syn-u">({</span>
+  children<span class="text-syn-u">,</span>
+<span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-t">Readonly</span><span class="text-syn-u">&lt;{</span>
+  children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}&gt;)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-o">&lt;</span>html lang<span class="text-syn-o">=</span><span class="text-syn-s">&quot;en&quot;</span> suppressHydrationWarning className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;light&quot;</span><span class="text-syn-o">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">head</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta
+          name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;description&quot;</span>
+          content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
+        <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta
+          name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;keywords&quot;</span>
+          content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit, Developer, Web Development, React, Portfolio&quot;</span>
+        <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;author&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;robots&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;index, follow&quot;</span> <span class="text-syn-o">/&gt;</span>
 
-        <span class="u">{</span><span class="c">/* Open Graph Tags */</span><span class="u">}</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:title&quot;</span> content<span class="o">=</span><span class="s">&quot;Pulkit - Developer&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta
-          property<span class="o">=</span><span class="s">&quot;og:description&quot;</span>
-          content<span class="o">=</span><span class="s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
-        <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:image&quot;</span> content<span class="o">=</span><span class="s">&quot;https://pulkitxm.com/banner.png&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:url&quot;</span> content<span class="o">=</span><span class="s">&quot;https://pulkitxm.com&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:type&quot;</span> content<span class="o">=</span><span class="s">&quot;website&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:site_name&quot;</span> content<span class="o">=</span><span class="s">&quot;Pulkit - Developer&quot;</span> <span class="o">/&gt;</span>
+        <span class="text-syn-u">{</span><span class="text-syn-c italic">/* Open Graph Tags */</span><span class="text-syn-u">}</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:title&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta
+          property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:description&quot;</span>
+          content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
+        <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:image&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://pulkitxm.com/banner.png&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:url&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://pulkitxm.com&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:type&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;website&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:site_name&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer&quot;</span> <span class="text-syn-o">/&gt;</span>
 
-        <span class="u">{</span><span class="c">/* Twitter Cards */</span><span class="u">}</span>
-        <span class="o">&lt;</span>meta name<span class="o">=</span><span class="s">&quot;twitter:card&quot;</span> content<span class="o">=</span><span class="s">&quot;summary_large_image&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta name<span class="o">=</span><span class="s">&quot;twitter:title&quot;</span> content<span class="o">=</span><span class="s">&quot;Pulkit - Developer&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta
-          name<span class="o">=</span><span class="s">&quot;twitter:description&quot;</span>
-          content<span class="o">=</span><span class="s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
-        <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta name<span class="o">=</span><span class="s">&quot;twitter:image&quot;</span> content<span class="o">=</span><span class="s">&quot;https://pulkitxm.com/banner.png&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta name<span class="o">=</span><span class="s">&quot;twitter:site&quot;</span> content<span class="o">=</span><span class="s">&quot;@devpulkitt&quot;</span> <span class="o">/&gt;</span>
+        <span class="text-syn-u">{</span><span class="text-syn-c italic">/* Twitter Cards */</span><span class="text-syn-u">}</span>
+        <span class="text-syn-o">&lt;</span>meta name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;twitter:card&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;summary_large_image&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;twitter:title&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta
+          name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;twitter:description&quot;</span>
+          content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
+        <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;twitter:image&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://pulkitxm.com/banner.png&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta name<span class="text-syn-o">=</span><span class="text-syn-s">&quot;twitter:site&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;@devpulkitt&quot;</span> <span class="text-syn-o">/&gt;</span>
 
-        <span class="u">{</span><span class="c">/* Canonical Tag */</span><span class="u">}</span>
-        <span class="o">&lt;</span>link rel<span class="o">=</span><span class="s">&quot;canonical&quot;</span> href<span class="o">=</span><span class="s">&quot;https://pulkitxm.com&quot;</span> <span class="o">/&gt;</span>
+        <span class="text-syn-u">{</span><span class="text-syn-c italic">/* Canonical Tag */</span><span class="text-syn-u">}</span>
+        <span class="text-syn-o">&lt;</span>link rel<span class="text-syn-o">=</span><span class="text-syn-s">&quot;canonical&quot;</span> href<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://pulkitxm.com&quot;</span> <span class="text-syn-o">/&gt;</span>
 
-        <span class="u">{</span><span class="c">/* Facebook Tag */</span><span class="u">}</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:url&quot;</span> content<span class="o">=</span><span class="s">&quot;https://pulkitxm.com&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:type&quot;</span> content<span class="o">=</span><span class="s">&quot;website&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:title&quot;</span> content<span class="o">=</span><span class="s">&quot;Pulkit - Developer&quot;</span> <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta
-          property<span class="o">=</span><span class="s">&quot;og:description&quot;</span>
-          content<span class="o">=</span><span class="s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
-        <span class="o">/&gt;</span>
-        <span class="o">&lt;</span>meta property<span class="o">=</span><span class="s">&quot;og:image&quot;</span> content<span class="o">=</span><span class="s">&quot;https://pulkitxm.com/banner.png&quot;</span> <span class="o">/&gt;</span>
+        <span class="text-syn-u">{</span><span class="text-syn-c italic">/* Facebook Tag */</span><span class="text-syn-u">}</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:url&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://pulkitxm.com&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:type&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;website&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:title&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer&quot;</span> <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta
+          property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:description&quot;</span>
+          content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;Pulkit - Developer. Portfolio and projects showcasing my skills and work in web development.&quot;</span>
+        <span class="text-syn-o">/&gt;</span>
+        <span class="text-syn-o">&lt;</span>meta property<span class="text-syn-o">=</span><span class="text-syn-s">&quot;og:image&quot;</span> content<span class="text-syn-o">=</span><span class="text-syn-s">&quot;https://pulkitxm.com/banner.png&quot;</span> <span class="text-syn-o">/&gt;</span>
 
-        <span class="u">{</span><span class="c">/* Title Tag */</span><span class="u">}</span>
-        <span class="u">&lt;</span><span class="t">title</span><span class="u">&gt;</span>Pulkit <span class="o">-</span> Developer<span class="o">&lt;/</span>title<span class="o">&gt;</span>
-        <span class="o">&lt;</span>link
-          rel<span class="o">=</span><span class="s">&quot;icon&quot;</span>
-          href<span class="o">=</span><span class="s">&quot;/icon?&lt;generated&gt;&quot;</span>
-          type<span class="o">=</span><span class="s">&quot;image/&lt;generated&gt;&quot;</span>
-          sizes<span class="o">=</span><span class="s">&quot;&lt;generated&gt;&quot;</span>
-        <span class="o">/&gt;</span>
-      <span class="o">&lt;/</span>head<span class="o">&gt;</span>
-      <span class="u">&lt;</span><span class="t">body</span><span class="u">&gt;</span>
-        <span class="o">......</span>
-      <span class="o">&lt;/</span>body<span class="o">&gt;</span>
-    <span class="o">&lt;/</span>html<span class="o">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+        <span class="text-syn-u">{</span><span class="text-syn-c italic">/* Title Tag */</span><span class="text-syn-u">}</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-t">title</span><span class="text-syn-u">&gt;</span>Pulkit <span class="text-syn-o">-</span> Developer<span class="text-syn-o">&lt;/</span>title<span class="text-syn-o">&gt;</span>
+        <span class="text-syn-o">&lt;</span>link
+          rel<span class="text-syn-o">=</span><span class="text-syn-s">&quot;icon&quot;</span>
+          href<span class="text-syn-o">=</span><span class="text-syn-s">&quot;/icon?&lt;generated&gt;&quot;</span>
+          type<span class="text-syn-o">=</span><span class="text-syn-s">&quot;image/&lt;generated&gt;&quot;</span>
+          sizes<span class="text-syn-o">=</span><span class="text-syn-s">&quot;&lt;generated&gt;&quot;</span>
+        <span class="text-syn-o">/&gt;</span>
+      <span class="text-syn-o">&lt;/</span>head<span class="text-syn-o">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">body</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-o">......</span>
+      <span class="text-syn-o">&lt;/</span>body<span class="text-syn-o">&gt;</span>
+    <span class="text-syn-o">&lt;/</span>html<span class="text-syn-o">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               In the code above, you can see how I’ve added the Open Graph tags using the
@@ -534,28 +544,37 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
             </li>
-            <li><a href="/blogs/smooth-scroll/">Smooth Scrolling in Next.js</a></li>
+            <li class="my-2"><a href="/blogs/smooth-scroll/">Smooth Scrolling in Next.js</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

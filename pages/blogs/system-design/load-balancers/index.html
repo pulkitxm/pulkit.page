@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,9 +73,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -78,11 +85,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Load Balancers</h1>
-            <p class="detail-meta"><time datetime="2026-01-11">2026-01-11</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Load Balancers
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-11">2026-01-11</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               You&#39;ve built an API server. It&#39;s handling 100 requests per second just fine.
               Then your app goes viral. Traffic spikes to 500 requests per second. Your single
@@ -172,12 +181,12 @@
               capacity.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> API_BASE <span class="o">=</span> <span class="s">&quot;https://api.pulkitxm.com&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> API_BASE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;https://api.pulkitxm.com&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">fetchUserProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">User</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">`${API_BASE}/users/${userId}`</span><span class="u">);</span>
-  <span class="k">return</span> response<span class="u">.</span><span class="f">json</span><span class="u">();</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">fetchUserProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">User</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">`${API_BASE}/users/${userId}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> response<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The client makes a request to <code>api.pulkitxm.com</code>. Behind the scenes, the
@@ -217,7 +226,7 @@
             </p>
             <p><strong>Step 2: Client makes a request</strong></p>
             <pre
-            ><code class="language-bash"><span class="f">GET</span> <span class="s">https://auth.pulkitxm.com/login</span>
+            ><code class="language-bash"><span class="text-syn-f">GET</span> <span class="text-syn-s">https://auth.pulkitxm.com/login</span>
 </code></pre>
             <p>The request arrives at the load balancer.</p>
             <p><strong>Step 3: Load balancer picks a backend server</strong></p>
@@ -234,7 +243,7 @@ Server 3: 10.0.1.12:8080
             <p><strong>Step 4: Load balancer forwards the request</strong></p>
             <p>The load balancer makes the exact same request to Server 2:</p>
             <pre
-            ><code class="language-bash"><span class="f">GET</span> <span class="s">http://10.0.1.11:8080/login</span>
+            ><code class="language-bash"><span class="text-syn-f">GET</span> <span class="text-syn-s">http://10.0.1.11:8080/login</span>
 </code></pre>
             <p><strong>Step 5: Server responds</strong></p>
             <p>Server 2 processes the request and sends back a response.</p>
@@ -355,11 +364,11 @@ Request 8 → Server 3
             </ul>
             <p><strong>Configuration example:</strong></p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> servers <span class="o">=</span> <span class="u">[</span>
-  <span class="u">{</span> <span class="p">host:</span> <span class="s">&quot;10.0.1.10&quot;</span><span class="u">,</span> <span class="p">port:</span> <span class="n">8080</span><span class="u">,</span> <span class="p">weight:</span> <span class="n">1</span> <span class="u">},</span>
-  <span class="u">{</span> <span class="p">host:</span> <span class="s">&quot;10.0.1.11&quot;</span><span class="u">,</span> <span class="p">port:</span> <span class="n">8080</span><span class="u">,</span> <span class="p">weight:</span> <span class="n">2</span> <span class="u">},</span>
-  <span class="u">{</span> <span class="p">host:</span> <span class="s">&quot;10.0.1.12&quot;</span><span class="u">,</span> <span class="p">port:</span> <span class="n">8080</span><span class="u">,</span> <span class="p">weight:</span> <span class="n">1</span> <span class="u">},</span>
-<span class="u">];</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> servers <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
+  <span class="text-syn-u">{</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;10.0.1.10&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">port:</span> <span class="text-syn-n">8080</span><span class="text-syn-u">,</span> <span class="text-syn-p">weight:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;10.0.1.11&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">port:</span> <span class="text-syn-n">8080</span><span class="text-syn-u">,</span> <span class="text-syn-p">weight:</span> <span class="text-syn-n">2</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;10.0.1.12&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">port:</span> <span class="text-syn-n">8080</span><span class="text-syn-u">,</span> <span class="text-syn-p">weight:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span>
+<span class="text-syn-u">];</span>
 </code></pre>
             <h3 id="least-connections">Least Connections</h3>
             <p>
@@ -422,11 +431,11 @@ Server 3: 8 connections
               it:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getServer</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Server</span> <span class="u">{</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">hashFunction</span><span class="u">(</span>userId<span class="u">);</span>
-  <span class="k">const</span> serverIndex <span class="o">=</span> hash <span class="o">%</span> servers<span class="u">.</span>length<span class="u">;</span>
-  <span class="k">return</span> servers<span class="u">[</span>serverIndex<span class="u">];</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getServer</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Server</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashFunction</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> serverIndex <span class="text-syn-o">=</span> hash <span class="text-syn-o">%</span> servers<span class="text-syn-u">.</span>length<span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> servers<span class="text-syn-u">[</span>serverIndex<span class="text-syn-u">];</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Because hash functions are deterministic, the same input always produces the same
@@ -531,7 +540,7 @@ Request 4 → Server 3
             <p><strong>Health checks:</strong></p>
             <p>Load balancers periodically ping each backend server:</p>
             <pre
-            ><code class="language-bash"><span class="f">GET</span> <span class="s">http://10.0.1.11:8080/health</span>
+            ><code class="language-bash"><span class="text-syn-f">GET</span> <span class="text-syn-s">http://10.0.1.11:8080/health</span>
 </code></pre>
             <p>
               If a server doesn&#39;t respond or returns an error, the load balancer marks it as
@@ -539,21 +548,21 @@ Request 4 → Server 3
               responding to health checks again, the load balancer adds it back to the pool.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">HealthCheck</span> <span class="u">{</span>
-  path<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  interval<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  timeout<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  unhealthyThreshold<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  healthyThreshold<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-u">{</span>
+  path<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  interval<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  timeout<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  unhealthyThreshold<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  healthyThreshold<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> healthCheck<span class="o">:</span> <span class="t">HealthCheck</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="p">path:</span> <span class="s">&quot;/health&quot;</span><span class="u">,</span>
-  <span class="p">interval:</span> <span class="n">10000</span><span class="u">,</span>
-  <span class="p">timeout:</span> <span class="n">2000</span><span class="u">,</span>
-  <span class="p">unhealthyThreshold:</span> <span class="n">3</span><span class="u">,</span>
-  <span class="p">healthyThreshold:</span> <span class="n">2</span><span class="u">,</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> healthCheck<span class="text-syn-o">:</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">path:</span> <span class="text-syn-s">&quot;/health&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">interval:</span> <span class="text-syn-n">10000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">timeout:</span> <span class="text-syn-n">2000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">unhealthyThreshold:</span> <span class="text-syn-n">3</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">healthyThreshold:</span> <span class="text-syn-n">2</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <p>
               This configuration checks <code>/health</code> every 10 seconds. If a server fails 3
@@ -645,21 +654,21 @@ Request 4 → Server 3
             </ul>
             <h3 id="nginx">NGINX</h3>
             <p>Open-source web server that also functions as a load balancer.</p>
-            <pre><code class="language-nginx"><span class="k">upstream</span> backend {
-    <span class="k">least_conn</span><span class="u">;</span>  <span class="c"># or: ip_hash, round_robin (default)</span>
-    <span class="k">server</span> 10.0.1.10:8080 weight<span class="o">=</span><span class="n">1</span>;
-    server 10.0.1.11:8080 weight<span class="o">=</span><span class="n">2</span>;
-    server 10.0.1.12:8080 weight<span class="o">=</span><span class="n">1</span>;
+            <pre><code class="language-nginx"><span class="text-syn-k">upstream</span> backend {
+    <span class="text-syn-k">least_conn</span><span class="text-syn-u">;</span>  <span class="text-syn-c italic"># or: ip_hash, round_robin (default)</span>
+    <span class="text-syn-k">server</span> 10.0.1.10:8080 weight<span class="text-syn-o">=</span><span class="text-syn-n">1</span>;
+    server 10.0.1.11:8080 weight<span class="text-syn-o">=</span><span class="text-syn-n">2</span>;
+    server 10.0.1.12:8080 weight<span class="text-syn-o">=</span><span class="text-syn-n">1</span>;
 }
 
 server {
-    listen <span class="n">80</span>;
-   <span class="k"> server_name </span>api.pulkitxm.com<span class="u">;</span>
+    listen <span class="text-syn-n">80</span>;
+   <span class="text-syn-k"> server_name </span>api.pulkitxm.com<span class="text-syn-u">;</span>
 
-    <span class="k">location</span> / {
-       <span class="k"> proxy_pass </span>http://backend<span class="u">;</span>
-       <span class="k"> proxy_set_header </span>Host <span class="u">$</span>host<span class="u">;</span>
-       <span class="k"> proxy_set_header </span>X-Real-IP <span class="u">$</span>remote_addr<span class="u">;</span>
+    <span class="text-syn-k">location</span> / {
+       <span class="text-syn-k"> proxy_pass </span>http://backend<span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_set_header </span>Host <span class="text-syn-u">$</span>host<span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_set_header </span>X-Real-IP <span class="text-syn-u">$</span>remote_addr<span class="text-syn-u">;</span>
     }
 }
 </code></pre>
@@ -728,26 +737,35 @@ backend http_back
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/communication-protocols/">Communication Protocols</a>
             </li>
-            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
-            <li><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
+            <li class="my-2">
+              <a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a>
+            </li>
+            <li class="my-2"><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

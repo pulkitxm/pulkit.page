@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Moving Things Without Moving Them</h1>
-            <p class="detail-meta"><time datetime="2026-02-24">2026-02-24</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Moving Things Without Moving Them
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-02-24">2026-02-24</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Most animations you&#39;ll write use the <code>transform</code> property. Not margins.
               Not positioning. Not width or height. Transforms.
@@ -183,17 +192,18 @@
               moves an element along the x and y axes. Positive values go right and down. Negative
               values go left and up.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translate</span><span class="u">(</span><span class="n">50px</span><span class="u">,</span> <span class="n">20px</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translate</span><span class="text-syn-u">(</span><span class="text-syn-n">50px</span><span class="text-syn-u">,</span> <span class="text-syn-n">20px</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">50px</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">50px</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateY</span><span class="u">(</span><span class="n">20px</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateY</span><span class="text-syn-u">(</span><span class="text-syn-n">20px</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The single-axis versions are cleaner when you only need to move in one direction. I
@@ -228,17 +238,18 @@
               <code>2</code>
               doubles it. <code>0.5</code> halves it.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.5</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.5</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scaleX</span><span class="u">(</span><span class="n">0.8</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scaleX</span><span class="text-syn-u">(</span><span class="text-syn-n">0.8</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.2</span><span class="u">,</span> <span class="n">0.9</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.2</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.9</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Unlike changing <code>width</code> and <code>height</code>, scaling affects the entire
@@ -264,16 +275,16 @@
               an opacity fade. The element feels like it&#39;s entering rather than materializing.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> enter <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">0</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.95</span><span class="u">);</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> enter <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.95</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="rotate-for-spinning">Rotate for Spinning</h3>
             <p>
@@ -281,17 +292,18 @@
               spins an element around its center (by default). Positive values rotate clockwise,
               negative values rotate counter-clockwise.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">45deg</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">45deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">-90deg</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">-90deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">0.5turn</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">0.5turn</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               You can use degrees, radians, or turns. I stick with degrees because they&#39;re the
@@ -313,13 +325,14 @@
               <code>skew()</code>
               tilts an element along its axes, creating a parallelogram effect.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">skew</span><span class="u">(</span><span class="n">10deg</span><span class="u">,</span> <span class="n">5deg</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">skew</span><span class="text-syn-u">(</span><span class="text-syn-n">10deg</span><span class="text-syn-u">,</span> <span class="text-syn-n">5deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">skewX</span><span class="u">(</span><span class="n">15deg</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">skewX</span><span class="text-syn-u">(</span><span class="text-syn-n">15deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Skew is the least commonly used transform function. It&#39;s hard to make skewed
@@ -338,13 +351,13 @@
               they&#39;re applied from left to right. This means the order changes the result.
             </p>
             <pre
-            ><code class="language-css"><span class="p">.element-a</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">100px</span><span class="u">)</span> <span class="f">rotate</span><span class="u">(</span><span class="n">45deg</span><span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-p">.element-a</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">100px</span><span class="text-syn-u">)</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">45deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element-b</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">45deg</span><span class="u">)</span> <span class="f">translateX</span><span class="u">(</span><span class="n">100px</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element-b</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">45deg</span><span class="text-syn-u">)</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">100px</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>These look similar but produce completely different results.</p>
             <p>
@@ -370,7 +383,7 @@
               operations. The leftmost function happens first.
             </p>
             <pre
-            ><code class="language-css">transform: translateX(50px) scale(1<span class="p">.2</span>) rotate(15deg);
+            ><code class="language-css">transform: translateX(50px) scale(1<span class="text-syn-p">.2</span>) rotate(15deg);
 </code></pre>
             <p>
               The element first translates 50px, then scales up, then rotates 15 degrees. Each
@@ -381,20 +394,21 @@
               By default, transforms happen from the center of the element. But you can change this
               anchor point with <code>transform-origin</code>.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform-origin</span><span class="u">:</span> <span class="k">top</span> <span class="k">left</span><span class="u">;</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">45deg</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform-origin</span><span class="text-syn-u">:</span> <span class="text-syn-k">top</span> <span class="text-syn-k">left</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">45deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform-origin</span><span class="u">:</span> <span class="k">center</span> <span class="k">bottom</span><span class="u">;</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.8</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform-origin</span><span class="text-syn-u">:</span> <span class="text-syn-k">center</span> <span class="text-syn-k">bottom</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.8</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform-origin</span><span class="u">:</span> <span class="n">100%</span> <span class="n">50%</span><span class="u">;</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">-90deg</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform-origin</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span> <span class="text-syn-n">50%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">-90deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -460,14 +474,15 @@
               />). <code>rotateZ()</code> is the same as regular <code>rotate()</code>.
             </p>
             <p>But there&#39;s a catch. Without perspective, 3D rotations look flat.</p>
-            <pre><code class="language-css"><span class="p">.flat</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotateY</span><span class="u">(</span><span class="n">45deg</span><span class="u">);</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.flat</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotateY</span><span class="text-syn-u">(</span><span class="text-syn-n">45deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.with-depth</span> <span class="u">{</span>
-  <span class="p">perspective</span><span class="u">:</span> <span class="n">800px</span><span class="u">;</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotateY</span><span class="u">(</span><span class="n">45deg</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.with-depth</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">perspective</span><span class="text-syn-u">:</span> <span class="text-syn-n">800px</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotateY</span><span class="text-syn-u">(</span><span class="text-syn-n">45deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <a
@@ -486,18 +501,18 @@
               in the same 3D environment.
             </p>
             <pre
-            ><code class="language-css"><span class="p">.container</span> <span class="u">{</span>
-  <span class="p">perspective</span><span class="u">:</span> <span class="n">1000px</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-p">.container</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">perspective</span><span class="text-syn-u">:</span> <span class="text-syn-n">1000px</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.card</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotateY</span><span class="u">(</span><span class="n">15deg</span><span class="u">);</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.card</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotateY</span><span class="text-syn-u">(</span><span class="text-syn-n">15deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.card:hover</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">rotateY</span><span class="u">(</span><span class="n">-15deg</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.card:hover</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotateY</span><span class="text-syn-u">(</span><span class="text-syn-n">-15deg</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               For interactive 3D effects, you&#39;ll also want
@@ -521,17 +536,17 @@
               Positive values bring the element closer to the viewer. Negative values push it away.
             </p>
             <pre
-            ><code class="language-css"><span class="p">.container</span> <span class="u">{</span>
-  <span class="p">perspective</span><span class="u">:</span> <span class="n">600px</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-p">.container</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">perspective</span><span class="text-syn-u">:</span> <span class="text-syn-n">600px</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.closer</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateZ</span><span class="u">(</span><span class="n">100px</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.closer</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateZ</span><span class="text-syn-u">(</span><span class="text-syn-n">100px</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.further</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateZ</span><span class="u">(</span><span class="n">-100px</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.further</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateZ</span><span class="text-syn-u">(</span><span class="text-syn-n">-100px</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This creates a parallax effect without JavaScript. Elements at different z-positions
@@ -555,9 +570,10 @@
               can help with complex animations, but it creates a new compositor layer. Too many
               layers hurt performance instead of helping.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">will-change</span><span class="u">:</span> transform<span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">will-change</span><span class="text-syn-u">:</span> transform<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Only add this if you&#39;re seeing jank in DevTools and have identified that element
@@ -616,12 +632,16 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a></li>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/easing-curves-that-feel-natural/"
                 >Easing Curves That Feel Natural</a
               >
@@ -629,15 +649,22 @@
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

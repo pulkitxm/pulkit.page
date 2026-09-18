@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,9 +73,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -78,11 +85,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Caching</h1>
-            <p class="detail-meta"><time datetime="2026-01-08">2026-01-08</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Caching
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-08">2026-01-08</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Caching is one of the most effective ways to get performance out of your system. The
               idea is simple: store frequently accessed data in a place that&#39;s faster to access.
@@ -189,29 +198,29 @@
               <li>No database query needed</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`profile:${userId}`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>cached<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> profile <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span>
-    <span class="s">`</span>
-<span class="s">    SELECT u.*, p.*, s.*</span>
-<span class="s">    FROM users u</span>
-<span class="s">    JOIN preferences p ON u.id = p.user_id</span>
-<span class="s">    JOIN settings s ON u.id = s.user_id</span>
-<span class="s">    WHERE u.id = $1</span>
-<span class="s">  `</span><span class="u">,</span>
-    <span class="u">[</span>userId<span class="u">],</span>
-  <span class="u">);</span>
+  <span class="text-syn-k">const</span> profile <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">`</span>
+<span class="text-syn-s">    SELECT u.*, p.*, s.*</span>
+<span class="text-syn-s">    FROM users u</span>
+<span class="text-syn-s">    JOIN preferences p ON u.id = p.user_id</span>
+<span class="text-syn-s">    JOIN settings s ON u.id = s.user_id</span>
+<span class="text-syn-s">    WHERE u.id = $1</span>
+<span class="text-syn-s">  `</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">[</span>userId<span class="text-syn-u">],</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>profile<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>profile<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3600</span><span class="text-syn-u">);</span>
 
-  <span class="k">return</span> profile<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> profile<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The first request still hits the database. But every subsequent request for the same
@@ -250,28 +259,28 @@
               <li>Performance degrades, but the system keeps functioning</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getProfile</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`profile:${userId}`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-      <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-<span class="c">    // Cache is down - fall through to database</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>cached<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+<span class="text-syn-c italic">    // Cache is down - fall through to database</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> profile <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getProfile</span><span class="u">(</span>userId<span class="u">);</span>
+  <span class="text-syn-k">const</span> profile <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">getProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>profile<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">(</span>error<span class="u">)</span> <span class="u">{</span>
-<span class="c">    // Cache write failed - that&#39;s okay, we have the data</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>profile<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3600</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+<span class="text-syn-c italic">    // Cache write failed - that&#39;s okay, we have the data</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> profile<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> profile<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The cache makes things faster. The database is the source of truth. If the cache
@@ -335,20 +344,20 @@
               </li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> CACHE_TTL <span class="o">=</span> <span class="u">{</span>
-  <span class="p">USER_SESSION:</span> <span class="n">3600</span><span class="u">,</span>
-  <span class="p">RECENT_TWEETS:</span> <span class="n">300</span><span class="u">,</span>
-  <span class="p">TRENDING_TOPICS:</span> <span class="n">60</span><span class="u">,</span>
-  <span class="p">USER_PROFILE:</span> <span class="n">1800</span><span class="u">,</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> CACHE_TTL <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">USER_SESSION:</span> <span class="text-syn-n">3600</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">RECENT_TWEETS:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">TRENDING_TOPICS:</span> <span class="text-syn-n">60</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">USER_PROFILE:</span> <span class="text-syn-n">1800</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">cacheTweet</span><span class="u">(</span>tweet<span class="o">:</span> <span class="t">Tweet</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> isRecent <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">-</span> tweet<span class="u">.</span><span class="p">createdAt</span> <span class="o">&lt;</span> <span class="n">24</span> <span class="o">*</span> <span class="n">60</span> <span class="o">*</span> <span class="n">60</span> <span class="o">*</span> <span class="n">1000</span><span class="u">;</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">cacheTweet</span><span class="text-syn-u">(</span>tweet<span class="text-syn-o">:</span> <span class="text-syn-t">Tweet</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> isRecent <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">-</span> tweet<span class="text-syn-u">.</span><span class="text-syn-p">createdAt</span> <span class="text-syn-o">&lt;</span> <span class="text-syn-n">24</span> <span class="text-syn-o">*</span> <span class="text-syn-n">60</span> <span class="text-syn-o">*</span> <span class="text-syn-n">60</span> <span class="text-syn-o">*</span> <span class="text-syn-n">1000</span><span class="text-syn-u">;</span>
 
-  <span class="k">if</span> <span class="u">(</span>isRecent<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`tweet:${tweet.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>tweet<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> CACHE_TTL<span class="u">.</span>RECENT_TWEETS<span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>isRecent<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`tweet:${tweet.</span><span class="text-syn-p">id</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>tweet<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> CACHE_TTL<span class="text-syn-u">.</span>RECENT_TWEETS<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="caches-are-glorified-hash-tables">Caches Are Glorified Hash Tables</h2>
             <p>At their core, caches have a simple access pattern: <strong>key-value</strong>.</p>
@@ -362,15 +371,15 @@ DEL(key)         → removes data
               <li>Get it out with that same key</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Cache</span> <span class="u">{</span>
-  <span class="f">get</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;;</span>
-  <span class="f">set</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> value<span class="o">:</span> <span class="t">string</span><span class="u">,</span> ttl<span class="o">?:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;;</span>
-  <span class="f">del</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">Cache</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;;</span>
+  <span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> value<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> ttl<span class="text-syn-o">?:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;;</span>
+  <span class="text-syn-f">del</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> <span class="f">profileKey</span> <span class="o">=</span> <span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`profile:${userId}`</span><span class="u">;</span>
-<span class="k">const</span> <span class="f">sessionKey</span> <span class="o">=</span> <span class="u">(</span>token<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`session:${token}`</span><span class="u">;</span>
-<span class="k">const</span> <span class="f">tweetKey</span> <span class="o">=</span> <span class="u">(</span>tweetId<span class="o">:</span> <span class="t">string</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="s">`tweet:${tweetId}`</span><span class="u">;</span>
+<span class="text-syn-k">const</span> <span class="text-syn-f">profileKey</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">const</span> <span class="text-syn-f">sessionKey</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>token<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`session:${token}`</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">const</span> <span class="text-syn-f">tweetKey</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>tweetId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`tweet:${tweetId}`</span><span class="text-syn-u">;</span>
 </code></pre>
             <p>
               When you&#39;re checking the cache, you check if a specific key exists. If it does,
@@ -396,27 +405,27 @@ DEL(key)         → removes data
               <li>API server memory is nearer than Redis</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">class</span> <span class="t">MultiLevelCache</span> <span class="u">{</span>
-  <span class="k">private</span> localCache <span class="o">=</span> <span class="o">new</span> <span class="f">Map</span><span class="u">&lt;</span><span class="t">string</span><span class="u">,</span> <span class="u">{</span> value<span class="o">:</span> <span class="t">string</span><span class="u">;</span> expiry<span class="o">:</span> <span class="t">number</span> <span class="u">}&gt;();</span>
+            ><code class="language-typescript"><span class="text-syn-k">class</span> <span class="text-syn-t">MultiLevelCache</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">private</span> localCache <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> value<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span> expiry<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">}&gt;();</span>
 
-  <span class="k">async</span> <span class="f">get</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> local <span class="o">=</span> this<span class="u">.</span>localCache<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>local <span class="o">&amp;&amp;</span> local<span class="u">.</span><span class="p">expiry</span> <span class="o">&gt;</span> Date<span class="u">.</span><span class="f">now</span><span class="u">())</span> <span class="u">{</span>
-      <span class="k">return</span> local<span class="u">.</span><span class="p">value</span><span class="u">;</span>
-    <span class="u">}</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> local <span class="text-syn-o">=</span> this<span class="text-syn-u">.</span>localCache<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>local <span class="text-syn-o">&amp;&amp;</span> local<span class="text-syn-u">.</span><span class="text-syn-p">expiry</span> <span class="text-syn-o">&gt;</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">())</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> local<span class="text-syn-u">.</span><span class="text-syn-p">value</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">const</span> remote <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>remote<span class="u">)</span> <span class="u">{</span>
-      this<span class="u">.</span>localCache<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> <span class="u">{</span>
-        <span class="p">value:</span> remote<span class="u">,</span>
-        <span class="p">expiry:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">+</span> <span class="n">60000</span><span class="u">,</span>
-      <span class="u">});</span>
-      <span class="k">return</span> remote<span class="u">;</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">const</span> remote <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>remote<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      this<span class="text-syn-u">.</span>localCache<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">value:</span> remote<span class="text-syn-u">,</span>
+        <span class="text-syn-p">expiry:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">+</span> <span class="text-syn-n">60000</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">});</span>
+      <span class="text-syn-k">return</span> remote<span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">return</span> <span class="k">null</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               In this example, the API server&#39;s memory acts as a first-level cache before Redis.
@@ -446,21 +455,21 @@ DEL(key)         → removes data
               That&#39;s unnecessary load on your database. Instead, cache authentication tokens:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">validateToken</span><span class="u">(</span>token<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">User</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`auth:${token}`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">validateToken</span><span class="text-syn-u">(</span>token<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">User</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`auth:${token}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>cached<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getUserByToken</span><span class="u">(</span>token<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>user<span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>user<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">900</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">getUserByToken</span><span class="text-syn-u">(</span>token<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>user<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>user<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">900</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> user<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> user<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               When a user is online, they&#39;re making requests constantly. Their token is accessed
@@ -503,25 +512,25 @@ DEL(key)         → removes data
               <li>Atomic operations</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> redis <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">({</span>
-  <span class="p">host:</span> <span class="s">&quot;localhost&quot;</span><span class="u">,</span>
-  <span class="p">port:</span> <span class="n">6379</span><span class="u">,</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> redis <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;localhost&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">port:</span> <span class="text-syn-n">6379</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">&quot;user:abc&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>user<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
+<span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user:abc&quot;</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>user<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3600</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">&quot;user:abc&quot;</span><span class="u">);</span>
+<span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user:abc&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">await</span> redis<span class="u">.</span><span class="f">del</span><span class="u">(</span><span class="s">&quot;user:abc&quot;</span><span class="u">);</span>
+<span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">del</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user:abc&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">await</span> redis<span class="u">.</span><span class="f">hset</span><span class="u">(</span><span class="s">&quot;profile:abc&quot;</span><span class="u">,</span> <span class="u">{</span>
-  <span class="p">name:</span> <span class="s">&quot;Alex&quot;</span><span class="u">,</span>
-  <span class="p">email:</span> <span class="s">&quot;alex@example.com&quot;</span><span class="u">,</span>
-<span class="u">});</span>
+<span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hset</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;profile:abc&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">name:</span> <span class="text-syn-s">&quot;Alex&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">email:</span> <span class="text-syn-s">&quot;alex@example.com&quot;</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">await</span> redis<span class="u">.</span><span class="f">lpush</span><span class="u">(</span><span class="s">&quot;notifications:abc&quot;</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>notification<span class="u">));</span>
+<span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">lpush</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;notifications:abc&quot;</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>notification<span class="text-syn-u">));</span>
 </code></pre>
             <h3 id="memcached">Memcached</h3>
             <p>
@@ -665,31 +674,31 @@ DEL(key)         → removes data
               let requests come in, experience cache misses, and then populate the cache.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getBlog</span><span class="u">(</span>blogId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Blog</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> cacheKey <span class="o">=</span> <span class="s">`blog:${blogId}`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getBlog</span><span class="text-syn-u">(</span>blogId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Blog</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`blog:${blogId}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> cached <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">get</span><span class="u">(</span>cacheKey<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>cached<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> blog <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span>
-    <span class="s">`</span>
-<span class="s">    SELECT b.*, a.name as author_name, array_agg(t.name) as tags</span>
-<span class="s">    FROM blogs b</span>
-<span class="s">    JOIN authors a ON b.author_id = a.id</span>
-<span class="s">    JOIN blog_tags bt ON b.id = bt.blog_id</span>
-<span class="s">    JOIN tags t ON bt.tag_id = t.id</span>
-<span class="s">    WHERE b.id = $1</span>
-<span class="s">    GROUP BY b.id, a.name</span>
-<span class="s">  `</span><span class="u">,</span>
-    <span class="u">[</span>blogId<span class="u">],</span>
-  <span class="u">);</span>
+  <span class="text-syn-k">const</span> blog <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span>
+    <span class="text-syn-s">`</span>
+<span class="text-syn-s">    SELECT b.*, a.name as author_name, array_agg(t.name) as tags</span>
+<span class="text-syn-s">    FROM blogs b</span>
+<span class="text-syn-s">    JOIN authors a ON b.author_id = a.id</span>
+<span class="text-syn-s">    JOIN blog_tags bt ON b.id = bt.blog_id</span>
+<span class="text-syn-s">    JOIN tags t ON bt.tag_id = t.id</span>
+<span class="text-syn-s">    WHERE b.id = $1</span>
+<span class="text-syn-s">    GROUP BY b.id, a.name</span>
+<span class="text-syn-s">  `</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">[</span>blogId<span class="text-syn-u">],</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>cacheKey<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>blog<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">1800</span><span class="u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>cacheKey<span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>blog<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">1800</span><span class="text-syn-u">);</span>
 
-  <span class="k">return</span> blog<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> blog<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The first request for a blog hits the database (cache miss). Subsequent requests get
@@ -711,9 +720,9 @@ DEL(key)         → removes data
               <li>Classic memory leak</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> value<span class="u">,</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">300</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> value<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">300</span><span class="text-syn-u">);</span>
 
-<span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> value<span class="u">);</span>
+<span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> value<span class="text-syn-u">);</span>
 </code></pre>
             <p>
               Once the TTL expires, the key is automatically deleted. This ensures your cache only
@@ -755,11 +764,11 @@ DEL(key)         → removes data
             </p>
             <p>With eager population:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">updateScore</span><span class="u">(</span>matchId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> newScore<span class="o">:</span> <span class="t">Score</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;UPDATE matches SET score = $1 WHERE id = $2&quot;</span><span class="u">,</span> <span class="u">[</span>newScore<span class="u">,</span> matchId<span class="u">]);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">updateScore</span><span class="text-syn-u">(</span>matchId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> newScore<span class="text-syn-o">:</span> <span class="text-syn-t">Score</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;UPDATE matches SET score = $1 WHERE id = $2&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>newScore<span class="text-syn-u">,</span> matchId<span class="text-syn-u">]);</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`match:${matchId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>newScore<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`match:${matchId}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>newScore<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3600</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               When the commentator updates the score, it goes to both database and cache
@@ -797,17 +806,17 @@ DEL(key)         → removes data
               cache miss), you proactively push it to cache.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createTweet</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> content<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Tweet</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> tweet <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">createTweet</span><span class="u">(</span>userId<span class="u">,</span> content<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createTweet</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> content<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Tweet</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> tweet <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">createTweet</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">,</span> content<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getUser</span><span class="u">(</span>userId<span class="u">);</span>
+  <span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">getUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>user<span class="u">.</span><span class="p">followerCount</span> <span class="o">&gt;</span> <span class="n">50000</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`tweet:${tweet.</span><span class="p">id</span><span class="s">}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>tweet<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">3600</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>user<span class="text-syn-u">.</span><span class="text-syn-p">followerCount</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-n">50000</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`tweet:${tweet.</span><span class="text-syn-p">id</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>tweet<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3600</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> tweet<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> tweet<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The tweet is in the cache before anyone even requests it. First request? Cache hit. No
@@ -821,14 +830,14 @@ DEL(key)         → removes data
               can proactively cache that video&#39;s metadata.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">addToRecommendationFeed</span><span class="u">(</span>videoId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> userIds<span class="o">:</span> <span class="t">string</span><span class="u">[])</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span>userIds<span class="u">.</span>length <span class="o">&gt;</span> <span class="n">10000</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> videoMetadata <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span><span class="f">getVideoMetadata</span><span class="u">(</span>videoId<span class="u">);</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">set</span><span class="u">(</span><span class="s">`video:${videoId}`</span><span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>videoMetadata<span class="u">),</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> <span class="n">7200</span><span class="u">);</span>
-  <span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">addToRecommendationFeed</span><span class="text-syn-u">(</span>videoId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> userIds<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>userIds<span class="text-syn-u">.</span>length <span class="text-syn-o">&gt;</span> <span class="text-syn-n">10000</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> videoMetadata <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">getVideoMetadata</span><span class="text-syn-u">(</span>videoId<span class="text-syn-u">);</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span><span class="text-syn-s">`video:${videoId}`</span><span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>videoMetadata<span class="text-syn-u">),</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">7200</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> recommendationService<span class="u">.</span><span class="f">pushToFeeds</span><span class="u">(</span>videoId<span class="u">,</span> userIds<span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> recommendationService<span class="text-syn-u">.</span><span class="text-syn-f">pushToFeeds</span><span class="text-syn-u">(</span>videoId<span class="text-syn-u">,</span> userIds<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The video was published years ago (cold data), but it&#39;s about to become hot.
@@ -935,21 +944,21 @@ DEL(key)         → removes data
               <li>Each shard can have its own replicas</li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getShardForKey</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Redis</span> <span class="u">{</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">hashFunction</span><span class="u">(</span>key<span class="u">);</span>
-  <span class="k">const</span> shardIndex <span class="o">=</span> hash <span class="o">%</span> shards<span class="u">.</span>length<span class="u">;</span>
-  <span class="k">return</span> shards<span class="u">[</span>shardIndex<span class="u">];</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getShardForKey</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Redis</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashFunction</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> shardIndex <span class="text-syn-o">=</span> hash <span class="text-syn-o">%</span> shards<span class="text-syn-u">.</span>length<span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> shards<span class="text-syn-u">[</span>shardIndex<span class="text-syn-u">];</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">get</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> shard <span class="o">=</span> <span class="f">getShardForKey</span><span class="u">(</span>key<span class="u">);</span>
-  <span class="k">return</span> shard<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> shard <span class="text-syn-o">=</span> <span class="text-syn-f">getShardForKey</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> shard<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">set</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> value<span class="o">:</span> <span class="t">string</span><span class="u">,</span> ttl<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> shard <span class="o">=</span> <span class="f">getShardForKey</span><span class="u">(</span>key<span class="u">);</span>
-  <span class="k">await</span> shard<span class="u">.</span><span class="f">set</span><span class="u">(</span>key<span class="u">,</span> value<span class="u">,</span> <span class="s">&quot;EX&quot;</span><span class="u">,</span> ttl<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> value<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> ttl<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> shard <span class="text-syn-o">=</span> <span class="text-syn-f">getShardForKey</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> shard<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> value<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;EX&quot;</span><span class="text-syn-u">,</span> ttl<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="scaling-summary">Scaling Summary</h3>
             <table>
@@ -1014,9 +1023,9 @@ DEL(key)         → removes data
             </p>
             <p>Some data cannot be cached:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getAccountBalance</span><span class="u">(</span>accountId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">number</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">return</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT balance FROM accounts WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>accountId<span class="u">]);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getAccountBalance</span><span class="text-syn-u">(</span>accountId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT balance FROM accounts WHERE id = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>accountId<span class="text-syn-u">]);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Bank account balances, financial summaries, real-time inventory - these need the most
@@ -1061,19 +1070,19 @@ DEL(key)         → removes data
               </li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> CACHE_KEY <span class="o">=</span> <span class="s">&quot;user_preferences&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> CACHE_KEY <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;user_preferences&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">getUserPreferences</span><span class="u">()</span><span class="o">:</span> <span class="t">UserPreferences</span> <span class="u">{</span>
-  <span class="k">const</span> cached <span class="o">=</span> localStorage<span class="u">.</span><span class="f">getItem</span><span class="u">(</span>CACHE_KEY<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>cached<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>cached<span class="u">);</span>
-  <span class="u">}</span>
-  <span class="k">return</span> DEFAULT_PREFERENCES<span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">getUserPreferences</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">UserPreferences</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cached <span class="text-syn-o">=</span> localStorage<span class="text-syn-u">.</span><span class="text-syn-f">getItem</span><span class="text-syn-u">(</span>CACHE_KEY<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>cached<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>cached<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  <span class="text-syn-k">return</span> DEFAULT_PREFERENCES<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">saveUserPreferences</span><span class="u">(</span>prefs<span class="o">:</span> <span class="t">UserPreferences</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  localStorage<span class="u">.</span><span class="f">setItem</span><span class="u">(</span>CACHE_KEY<span class="u">,</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>prefs<span class="u">));</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">saveUserPreferences</span><span class="text-syn-u">(</span>prefs<span class="text-syn-o">:</span> <span class="text-syn-t">UserPreferences</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  localStorage<span class="text-syn-u">.</span><span class="text-syn-f">setItem</span><span class="text-syn-u">(</span>CACHE_KEY<span class="text-syn-u">,</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>prefs<span class="text-syn-u">));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>The massive benefit</strong>: No network request at all. Data is served
@@ -1132,11 +1141,11 @@ DEL(key)         → removes data
               region populates that region&#39;s cache.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> CDN_BASE <span class="o">=</span> <span class="s">&quot;https://cdn.example.com&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> CDN_BASE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;https://cdn.example.com&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">getImageUrl</span><span class="u">(</span>imagePath<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="s">`${CDN_BASE}/images/${imagePath}`</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">getImageUrl</span><span class="text-syn-u">(</span>imagePath<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-s">`${CDN_BASE}/images/${imagePath}`</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p><strong>Popular CDNs</strong>: Cloudflare, Akamai, AWS CloudFront, Fastly</p>
             <p>
@@ -1199,7 +1208,7 @@ DEL(key)         → removes data
               profile. The straightforward approach:
             </p>
             <pre
-            ><code class="language-sql"><span class="k">SELECT</span> <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">FROM</span> posts <span class="k">WHERE</span> user_id <span class="o">=</span> abc;
+            ><code class="language-sql"><span class="text-syn-k">SELECT</span> <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">FROM</span> posts <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> abc;
 </code></pre>
             <p>
               This query runs every time someone views the profile. If the user has 10,000 posts,
@@ -1208,29 +1217,30 @@ DEL(key)         → removes data
             <p><strong>The caching approach:</strong></p>
             <p>Add a <code>total_posts</code> column to the users table:</p>
             <pre
-            ><code class="language-sql"><span class="k">ALTER</span> <span class="k">TABLE</span> users <span class="k">ADD</span> COLUMN total_posts <span class="k">INT</span> <span class="k">DEFAULT</span> <span class="n">0</span>;
+            ><code class="language-sql"><span class="text-syn-k">ALTER</span> <span class="text-syn-k">TABLE</span> users <span class="text-syn-k">ADD</span> COLUMN total_posts <span class="text-syn-k">INT</span> <span class="text-syn-k">DEFAULT</span> <span class="text-syn-n">0</span>;
 </code></pre>
             <p>Now, whenever a post is published:</p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createPost</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> content<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Post</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">return</span> db<span class="u">.</span><span class="f">transaction</span><span class="u">(</span><span class="k">async</span> <span class="u">(</span>trx<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> post <span class="o">=</span> <span class="k">await</span> <span class="f">trx</span><span class="u">(</span><span class="s">&quot;posts&quot;</span><span class="u">).</span><span class="f">insert</span><span class="u">({</span> <span class="p">user_id:</span> userId<span class="u">,</span> content <span class="u">}).</span><span class="f">returning</span><span class="u">(</span><span class="s">&quot;*&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createPost</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> content<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Post</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> db<span class="text-syn-u">.</span><span class="text-syn-f">transaction</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">(</span>trx<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> post <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">trx</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;posts&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">insert</span><span class="text-syn-u">({</span> <span class="text-syn-p">user_id:</span> userId<span class="text-syn-u">,</span> content <span class="text-syn-u">}).</span><span class="text-syn-f">returning</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;*&quot;</span><span class="text-syn-u">);</span>
 
-    <span class="k">await</span> <span class="f">trx</span><span class="u">(</span><span class="s">&quot;users&quot;</span><span class="u">).</span><span class="f">where</span><span class="u">(</span><span class="s">&quot;id&quot;</span><span class="u">,</span> userId<span class="u">).</span><span class="f">increment</span><span class="u">(</span><span class="s">&quot;total_posts&quot;</span><span class="u">,</span> <span class="n">1</span><span class="u">);</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-f">trx</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;users&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">where</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;id&quot;</span><span class="text-syn-u">,</span> userId<span class="text-syn-u">).</span><span class="text-syn-f">increment</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;total_posts&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
 
-    <span class="k">return</span> post<span class="u">[</span><span class="n">0</span><span class="u">];</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+    <span class="text-syn-k">return</span> post<span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">];</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Both operations happen in the same transaction. The count is always accurate, and you
               never run that expensive <code>COUNT(*)</code> query.
             </p>
-            <pre><code class="language-sql"><span class="c">-- Before: expensive</span>
-<span class="k">SELECT</span> <span class="f">COUNT</span>(<span class="o">*</span>) <span class="k">FROM</span> posts <span class="k">WHERE</span> user_id <span class="o">=</span> abc;
+            <pre
+            ><code class="language-sql"><span class="text-syn-c italic">-- Before: expensive</span>
+<span class="text-syn-k">SELECT</span> <span class="text-syn-f">COUNT</span>(<span class="text-syn-o">*</span>) <span class="text-syn-k">FROM</span> posts <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> abc;
 
-<span class="c">-- After: instant</span>
-<span class="k">SELECT</span> total_posts <span class="k">FROM</span> users <span class="k">WHERE</span> id <span class="o">=</span> abc;
+<span class="text-syn-c italic">-- After: instant</span>
+<span class="text-syn-k">SELECT</span> total_posts <span class="text-syn-k">FROM</span> users <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> abc;
 </code></pre>
             <p>
               This is caching. You&#39;re storing a pre-computed value to avoid an expensive
@@ -1340,12 +1350,12 @@ DEL(key)         → removes data
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
-            <li><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
-            <li>
+            <li class="my-2"><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
+            <li class="my-2"><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
+            <li class="my-2">
               <a href="/blogs/system-design/async-processing/"
                 >Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</a
               >
@@ -1353,15 +1363,22 @@ DEL(key)         → removes data
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

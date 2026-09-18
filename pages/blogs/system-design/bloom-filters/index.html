@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,9 +73,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -78,11 +85,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Bloom Filters</h1>
-            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Bloom Filters
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-24">2026-01-24</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Instagram wants to recommend reels to you. But does it make sense to recommend a reel
               you&#39;ve already watched? No. You&#39;d see the exact same video you saw an hour
@@ -145,16 +154,16 @@
             </p>
             <p>The naive approach? Store everything in a set:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> watchedPosts <span class="o">=</span> <span class="o">new</span> <span class="f">Set</span><span class="u">&lt;</span><span class="t">string</span><span class="u">&gt;();</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> watchedPosts <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Set</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">&gt;();</span>
 
-watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_1&quot;</span><span class="u">);</span>
-watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_9&quot;</span><span class="u">);</span>
-watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_7&quot;</span><span class="u">);</span>
-watchedPosts<span class="u">.</span><span class="f">add</span><span class="u">(</span><span class="s">&quot;post_1024&quot;</span><span class="u">);</span>
+watchedPosts<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;post_1&quot;</span><span class="text-syn-u">);</span>
+watchedPosts<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;post_9&quot;</span><span class="text-syn-u">);</span>
+watchedPosts<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;post_7&quot;</span><span class="text-syn-u">);</span>
+watchedPosts<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;post_1024&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">function</span> <span class="f">hasUserWatched</span><span class="u">(</span>postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">boolean</span> <span class="u">{</span>
-  <span class="k">return</span> watchedPosts<span class="u">.</span><span class="f">has</span><span class="u">(</span>postId<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">hasUserWatched</span><span class="text-syn-u">(</span>postId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> watchedPosts<span class="text-syn-u">.</span><span class="text-syn-f">has</span><span class="text-syn-u">(</span>postId<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This works. But think about the scale. People watch hundreds of reels every single
@@ -364,23 +373,23 @@ Many keys: [1][1][1][1][1][1][1][1]  → Everything says &quot;present&quot;!
               different functions, and k bits are set.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">addToBloomFilter</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  <span class="k">const</span> hash1 <span class="o">=</span> <span class="f">murmurhash</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
-  <span class="k">const</span> hash2 <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
-  <span class="k">const</span> hash3 <span class="o">=</span> <span class="f">fnv1a</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">addToBloomFilter</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash1 <span class="text-syn-o">=</span> <span class="text-syn-f">murmurhash</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> hash2 <span class="text-syn-o">=</span> <span class="text-syn-f">sha256</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> hash3 <span class="text-syn-o">=</span> <span class="text-syn-f">fnv1a</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
 
-  bitArray<span class="u">[</span>hash1<span class="u">]</span> <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
-  bitArray<span class="u">[</span>hash2<span class="u">]</span> <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
-  bitArray<span class="u">[</span>hash3<span class="u">]</span> <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
-<span class="u">}</span>
+  bitArray<span class="text-syn-u">[</span>hash1<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  bitArray<span class="text-syn-u">[</span>hash2<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  bitArray<span class="text-syn-u">[</span>hash3<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">mightExist</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">boolean</span> <span class="u">{</span>
-  <span class="k">const</span> hash1 <span class="o">=</span> <span class="f">murmurhash</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
-  <span class="k">const</span> hash2 <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
-  <span class="k">const</span> hash3 <span class="o">=</span> <span class="f">fnv1a</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> filterSize<span class="u">;</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">mightExist</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash1 <span class="text-syn-o">=</span> <span class="text-syn-f">murmurhash</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> hash2 <span class="text-syn-o">=</span> <span class="text-syn-f">sha256</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> hash3 <span class="text-syn-o">=</span> <span class="text-syn-f">fnv1a</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> filterSize<span class="text-syn-u">;</span>
 
-  <span class="k">return</span> bitArray<span class="u">[</span>hash1<span class="u">]</span> <span class="o">===</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> bitArray<span class="u">[</span>hash2<span class="u">]</span> <span class="o">===</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> bitArray<span class="u">[</span>hash3<span class="u">]</span> <span class="o">===</span> <span class="n">1</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> bitArray<span class="text-syn-u">[</span>hash1<span class="text-syn-u">]</span> <span class="text-syn-o">===</span> <span class="text-syn-n">1</span> <span class="text-syn-o">&amp;&amp;</span> bitArray<span class="text-syn-u">[</span>hash2<span class="text-syn-u">]</span> <span class="text-syn-o">===</span> <span class="text-syn-n">1</span> <span class="text-syn-o">&amp;&amp;</span> bitArray<span class="text-syn-u">[</span>hash3<span class="text-syn-u">]</span> <span class="text-syn-o">===</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               With multiple hash functions, all k bits must be set for a &quot;might exist&quot;
@@ -446,25 +455,25 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
               </li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">BloomFilterConfig</span> <span class="u">{</span>
-  expectedElements<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  falsePositiveRate<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">BloomFilterConfig</span> <span class="text-syn-u">{</span>
+  expectedElements<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  falsePositiveRate<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">calculateOptimalSize</span><span class="u">(</span>config<span class="o">:</span> <span class="t">BloomFilterConfig</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
-  <span class="k">const</span> <span class="u">{</span> expectedElements<span class="u">,</span> falsePositiveRate <span class="u">}</span> <span class="o">=</span> config<span class="u">;</span>
-  <span class="k">const</span> bits <span class="o">=</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>
-    <span class="u">(</span><span class="o">-</span>expectedElements <span class="o">*</span> Math<span class="u">.</span><span class="f">log</span><span class="u">(</span>falsePositiveRate<span class="u">))</span> <span class="o">/</span> Math<span class="u">.</span><span class="f">pow</span><span class="u">(</span>Math<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="n">2</span><span class="u">),</span> <span class="n">2</span><span class="u">),</span>
-  <span class="u">);</span>
-  <span class="k">return</span> bits<span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">calculateOptimalSize</span><span class="text-syn-u">(</span>config<span class="text-syn-o">:</span> <span class="text-syn-t">BloomFilterConfig</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> expectedElements<span class="text-syn-u">,</span> falsePositiveRate <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> config<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> bits <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">ceil</span><span class="text-syn-u">(</span>
+    <span class="text-syn-u">(</span><span class="text-syn-o">-</span>expectedElements <span class="text-syn-o">*</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>falsePositiveRate<span class="text-syn-u">))</span> <span class="text-syn-o">/</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">pow</span><span class="text-syn-u">(</span>Math<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-n">2</span><span class="text-syn-u">),</span> <span class="text-syn-n">2</span><span class="text-syn-u">),</span>
+  <span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> bits<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> config<span class="o">:</span> <span class="t">BloomFilterConfig</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="p">expectedElements:</span> <span class="n">10_000_000</span><span class="u">,</span>
-  <span class="p">falsePositiveRate:</span> <span class="n">0.01</span><span class="u">,</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> config<span class="text-syn-o">:</span> <span class="text-syn-t">BloomFilterConfig</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">expectedElements:</span> <span class="text-syn-n">10_000_000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">falsePositiveRate:</span> <span class="text-syn-n">0.01</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 
-<span class="k">const</span> filterSize <span class="o">=</span> <span class="f">calculateOptimalSize</span><span class="u">(</span>config<span class="u">);</span>
+<span class="text-syn-k">const</span> filterSize <span class="text-syn-o">=</span> <span class="text-syn-f">calculateOptimalSize</span><span class="text-syn-u">(</span>config<span class="text-syn-u">);</span>
 </code></pre>
             <h2 id="bloom-filters-with-redis">Bloom Filters with Redis</h2>
             <p>
@@ -477,21 +486,21 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
             </p>
             <p>Here&#39;s how you use it via Redis CLI:</p>
             <pre
-            ><code class="language-bash"><span class="c"># Create a Bloom filter named &quot;watched_posts&quot;</span>
-<span class="c"># 0.01 = 1% false positive rate</span>
-<span class="c"># 1000000 = expected capacity of 1 million items</span>
-<span class="f">BF.RESERVE</span> <span class="s">watched_posts</span> <span class="s">0.01</span> <span class="s">1000000</span>
+            ><code class="language-bash"><span class="text-syn-c italic"># Create a Bloom filter named &quot;watched_posts&quot;</span>
+<span class="text-syn-c italic"># 0.01 = 1% false positive rate</span>
+<span class="text-syn-c italic"># 1000000 = expected capacity of 1 million items</span>
+<span class="text-syn-f">BF.RESERVE</span> <span class="text-syn-s">watched_posts</span> <span class="text-syn-s">0.01</span> <span class="text-syn-s">1000000</span>
 
-<span class="c"># Add items to the filter</span>
-<span class="f">BF.ADD</span> <span class="s">watched_posts</span> <span class="s">post_123</span>
-<span class="f">BF.ADD</span> <span class="s">watched_posts</span> <span class="s">post_456</span>
+<span class="text-syn-c italic"># Add items to the filter</span>
+<span class="text-syn-f">BF.ADD</span> <span class="text-syn-s">watched_posts</span> <span class="text-syn-s">post_123</span>
+<span class="text-syn-f">BF.ADD</span> <span class="text-syn-s">watched_posts</span> <span class="text-syn-s">post_456</span>
 
-<span class="c"># Check if an item exists</span>
-<span class="f">BF.EXISTS</span> <span class="s">watched_posts</span> <span class="s">post_123</span>  <span class="c"># Returns 1 (might exist)</span>
-<span class="f">BF.EXISTS</span> <span class="s">watched_posts</span> <span class="s">post_789</span>  <span class="c"># Returns 0 (definitely not)</span>
+<span class="text-syn-c italic"># Check if an item exists</span>
+<span class="text-syn-f">BF.EXISTS</span> <span class="text-syn-s">watched_posts</span> <span class="text-syn-s">post_123</span>  <span class="text-syn-c italic"># Returns 1 (might exist)</span>
+<span class="text-syn-f">BF.EXISTS</span> <span class="text-syn-s">watched_posts</span> <span class="text-syn-s">post_789</span>  <span class="text-syn-c italic"># Returns 0 (definitely not)</span>
 
-<span class="c"># Add multiple items at once</span>
-<span class="f">BF.MADD</span> <span class="s">watched_posts</span> <span class="s">post_1</span> <span class="s">post_2</span> <span class="s">post_3</span>
+<span class="text-syn-c italic"># Add multiple items at once</span>
+<span class="text-syn-f">BF.MADD</span> <span class="text-syn-s">watched_posts</span> <span class="text-syn-s">post_1</span> <span class="text-syn-s">post_2</span> <span class="text-syn-s">post_3</span>
 </code></pre>
             <table>
               <thead>
@@ -523,28 +532,28 @@ After:  [0][0][0][0][0][0][1][0]  → Now &quot;cat&quot; appears not present!
             </table>
             <p>In TypeScript with ioredis:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> Redis <span class="k">from</span> <span class="s">&quot;ioredis&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> redis <span class="o">=</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">();</span>
+<span class="text-syn-k">const</span> redis <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">();</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">markAsWatched</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.ADD&quot;</span><span class="u">,</span> <span class="s">`watched:${userId}`</span><span class="u">,</span> postId<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">markAsWatched</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> postId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.ADD&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">`watched:${userId}`</span><span class="text-syn-u">,</span> postId<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">hasUserWatched</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">`watched:${userId}`</span><span class="u">,</span> postId<span class="u">);</span>
-  <span class="k">return</span> result <span class="o">===</span> <span class="n">1</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">hasUserWatched</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> postId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.EXISTS&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">`watched:${userId}`</span><span class="text-syn-u">,</span> postId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> result <span class="text-syn-o">===</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">recommendPost</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> postId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> mightHaveWatched <span class="o">=</span> <span class="k">await</span> <span class="f">hasUserWatched</span><span class="u">(</span>userId<span class="u">,</span> postId<span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">recommendPost</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> postId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> mightHaveWatched <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">hasUserWatched</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">,</span> postId<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>mightHaveWatched<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>mightHaveWatched<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>When creating a Bloom filter in Redis, you specify:</p>
             <ul>
@@ -581,26 +590,26 @@ Return filtered feed
               Track which URLs have already been crawled. Don&#39;t waste resources re-crawling.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">crawl</span><span class="u">(</span>startUrl<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> queue <span class="o">=</span> <span class="u">[</span>startUrl<span class="u">];</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">crawl</span><span class="text-syn-u">(</span>startUrl<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> queue <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>startUrl<span class="text-syn-u">];</span>
 
-  <span class="k">while</span> <span class="u">(</span>queue<span class="u">.</span>length <span class="o">&gt;</span> <span class="n">0</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> url <span class="o">=</span> queue<span class="u">.</span><span class="f">shift</span><span class="u">()</span><span class="o">!</span><span class="u">;</span>
+  <span class="text-syn-k">while</span> <span class="text-syn-u">(</span>queue<span class="text-syn-u">.</span>length <span class="text-syn-o">&gt;</span> <span class="text-syn-n">0</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> url <span class="text-syn-o">=</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">shift</span><span class="text-syn-u">()</span><span class="text-syn-o">!</span><span class="text-syn-u">;</span>
 
-    <span class="k">const</span> alreadyCrawled <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">&quot;crawled_urls&quot;</span><span class="u">,</span> url<span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>alreadyCrawled<span class="u">)</span> <span class="u">{</span>
-      <span class="k">continue</span><span class="u">;</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">const</span> alreadyCrawled <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.EXISTS&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;crawled_urls&quot;</span><span class="text-syn-u">,</span> url<span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>alreadyCrawled<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">continue</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="k">const</span> html <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span>url<span class="u">);</span>
-    <span class="k">await</span> <span class="f">processPage</span><span class="u">(</span>html<span class="u">);</span>
+    <span class="text-syn-k">const</span> html <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span>url<span class="text-syn-u">);</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-f">processPage</span><span class="text-syn-u">(</span>html<span class="text-syn-u">);</span>
 
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.ADD&quot;</span><span class="u">,</span> <span class="s">&quot;crawled_urls&quot;</span><span class="u">,</span> url<span class="u">);</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.ADD&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;crawled_urls&quot;</span><span class="text-syn-u">,</span> url<span class="text-syn-u">);</span>
 
-    <span class="k">const</span> links <span class="o">=</span> <span class="f">extractLinks</span><span class="u">(</span>html<span class="u">);</span>
-    queue<span class="u">.</span><span class="f">push</span><span class="u">(</span><span class="o">...</span>links<span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+    <span class="text-syn-k">const</span> links <span class="text-syn-o">=</span> <span class="text-syn-f">extractLinks</span><span class="text-syn-u">(</span>html<span class="text-syn-u">);</span>
+    queue<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span><span class="text-syn-o">...</span>links<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="database-query-optimization">Database Query Optimization</h3>
             <p>
@@ -608,15 +617,15 @@ Return filtered feed
               skip the database query entirely.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getUser</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">User</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> mightExist <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">&quot;user_ids&quot;</span><span class="u">,</span> userId<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">User</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> mightExist <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.EXISTS&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_ids&quot;</span><span class="text-syn-u">,</span> userId<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>mightExist<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">null</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>mightExist<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">null</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="k">await</span> db<span class="u">.</span><span class="f">query</span><span class="u">(</span><span class="s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="u">,</span> <span class="u">[</span>userId<span class="u">]);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM users WHERE id = $1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">[</span>userId<span class="text-syn-u">]);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This is particularly useful for negative lookups. If most queries are for non-existent
@@ -628,23 +637,23 @@ Return filtered feed
               right, that profile shouldn&#39;t appear again.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">getNextProfiles</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Profile</span><span class="u">[]&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> candidates <span class="o">=</span> <span class="k">await</span> <span class="f">getCandidateProfiles</span><span class="u">(</span>userId<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getNextProfiles</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> candidates <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCandidateProfiles</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> unseen <span class="o">=</span> <span class="u">[];</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">const</span> profile <span class="o">of</span> candidates<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> seen <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.EXISTS&quot;</span><span class="u">,</span> <span class="s">`swiped:${userId}`</span><span class="u">,</span> profile<span class="u">.</span><span class="p">id</span><span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>seen<span class="u">)</span> <span class="u">{</span>
-      unseen<span class="u">.</span><span class="f">push</span><span class="u">(</span>profile<span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">const</span> unseen <span class="text-syn-o">=</span> <span class="text-syn-u">[];</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> profile <span class="text-syn-o">of</span> candidates<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> seen <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.EXISTS&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">`swiped:${userId}`</span><span class="text-syn-u">,</span> profile<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>seen<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      unseen<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">(</span>profile<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> unseen<span class="u">.</span><span class="f">slice</span><span class="u">(</span><span class="n">0</span><span class="u">,</span> <span class="n">10</span><span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> unseen<span class="text-syn-u">.</span><span class="text-syn-f">slice</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">10</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">recordSwipe</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> profileId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">call</span><span class="u">(</span><span class="s">&quot;BF.ADD&quot;</span><span class="u">,</span> <span class="s">`swiped:${userId}`</span><span class="u">,</span> profileId<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">recordSwipe</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> profileId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">call</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;BF.ADD&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">`swiped:${userId}`</span><span class="text-syn-u">,</span> profileId<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="spell-checkers">Spell Checkers</h3>
             <p>
@@ -767,12 +776,12 @@ Return filtered feed
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/system-design/caching/">Caching</a></li>
-            <li><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
-            <li>
+            <li class="my-2"><a href="/blogs/system-design/caching/">Caching</a></li>
+            <li class="my-2"><a href="/blogs/system-design/rate-limiting/">Rate Limiting</a></li>
+            <li class="my-2">
               <a href="/blogs/system-design/async-processing/"
                 >Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</a
               >
@@ -780,15 +789,22 @@ Return filtered feed
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

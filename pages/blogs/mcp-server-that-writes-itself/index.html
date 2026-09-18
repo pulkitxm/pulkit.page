@@ -58,12 +58,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -71,20 +76,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">An MCP Server That Writes Itself</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>An MCP Server That Writes Itself</h1>
-            <p class="detail-meta"><time datetime="2026-04-22">2026-04-22</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              An MCP Server That Writes Itself
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-04-22">2026-04-22</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               I was building an MCP server for <a href="https://noveum.ai">Noveum.ai</a>. We already
               had a
@@ -281,13 +290,13 @@
               handler from a route file. The whole entry can be six lines:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> mcpHandler <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@repo/api&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> mcpHandler <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@repo/api&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">const</span> runtime <span class="o">=</span> <span class="s">&quot;nodejs&quot;</span><span class="u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> runtime <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;nodejs&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">const</span> GET <span class="o">=</span> mcpHandler<span class="u">;</span>
-<span class="k">export</span> <span class="k">const</span> POST <span class="o">=</span> mcpHandler<span class="u">;</span>
-<span class="k">export</span> <span class="k">const</span> DELETE <span class="o">=</span> mcpHandler<span class="u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> GET <span class="text-syn-o">=</span> mcpHandler<span class="text-syn-u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> POST <span class="text-syn-o">=</span> mcpHandler<span class="text-syn-u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> DELETE <span class="text-syn-o">=</span> mcpHandler<span class="text-syn-u">;</span>
 </code></pre>
             <p>
               Put this at <code>app/api/mcp/[[...path]]/route.ts</code>. The
@@ -307,27 +316,27 @@
               bad requests:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> createMcpHandler<span class="u">,</span> withMcpAuth <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;mcp-handler&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="k">type</span> <span class="u">{</span> McpServer <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@modelcontextprotocol/sdk/server/mcp.js&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> createMcpHandler<span class="text-syn-u">,</span> withMcpAuth <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;mcp-handler&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-k">type</span> <span class="text-syn-u">{</span> McpServer <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@modelcontextprotocol/sdk/server/mcp.js&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> innerHandler <span class="o">=</span> <span class="f">createMcpHandler</span><span class="u">(</span>
-  <span class="k">async</span> <span class="u">(</span>server<span class="o">:</span> <span class="t">McpServer</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">await</span> <span class="f">initializeMcpServer</span><span class="u">(</span>server<span class="u">);</span>
-  <span class="u">},</span>
-  <span class="u">{</span>
-    <span class="p">serverInfo:</span> <span class="u">{</span> <span class="p">name:</span> <span class="s">&quot;myapp&quot;</span><span class="u">,</span> <span class="p">version:</span> <span class="s">&quot;1.0.0&quot;</span> <span class="u">},</span>
-    <span class="p">instructions:</span>
-      <span class="s">&quot;Read the projects and filter-values resources first, then query tools with real IDs.&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
-  <span class="u">{</span>
-    <span class="p">basePath:</span> <span class="s">&quot;/api&quot;</span><span class="u">,</span>
-    <span class="p">disableSse:</span> <span class="k">true</span><span class="u">,</span>
-  <span class="u">},</span>
-<span class="u">);</span>
+<span class="text-syn-k">const</span> innerHandler <span class="text-syn-o">=</span> <span class="text-syn-f">createMcpHandler</span><span class="text-syn-u">(</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>server<span class="text-syn-o">:</span> <span class="text-syn-t">McpServer</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> <span class="text-syn-f">initializeMcpServer</span><span class="text-syn-u">(</span>server<span class="text-syn-u">);</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">serverInfo:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">name:</span> <span class="text-syn-s">&quot;myapp&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">version:</span> <span class="text-syn-s">&quot;1.0.0&quot;</span> <span class="text-syn-u">},</span>
+    <span class="text-syn-p">instructions:</span>
+      <span class="text-syn-s">&quot;Read the projects and filter-values resources first, then query tools with real IDs.&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">basePath:</span> <span class="text-syn-s">&quot;/api&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">disableSse:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">const</span> mcpHandler <span class="o">=</span> <span class="f">withMcpAuth</span><span class="u">(</span>innerHandler<span class="u">,</span> verifyApiKey<span class="u">,</span> <span class="u">{</span>
-  <span class="p">required:</span> <span class="k">true</span><span class="u">,</span>
-<span class="u">});</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> mcpHandler <span class="text-syn-o">=</span> <span class="text-syn-f">withMcpAuth</span><span class="text-syn-u">(</span>innerHandler<span class="text-syn-u">,</span> verifyApiKey<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">required:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>Quick read on the options:</p>
             <ul>
@@ -356,34 +365,34 @@
               swap in whatever your REST middleware does today:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">verifyApiKey</span><span class="u">(</span>
-  _req<span class="o">:</span> <span class="t">Request</span><span class="u">,</span>
-  bearerToken<span class="o">?:</span> <span class="t">string</span><span class="u">,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">AuthInfo</span> <span class="o">|</span> <span class="t">undefined</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>bearerToken<span class="u">)</span> <span class="k">return</span> <span class="k">undefined</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">verifyApiKey</span><span class="text-syn-u">(</span>
+  _req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">,</span>
+  bearerToken<span class="text-syn-o">?:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">AuthInfo</span> <span class="text-syn-o">|</span> <span class="text-syn-t">undefined</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>bearerToken<span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-k">undefined</span><span class="text-syn-u">;</span>
 
-  <span class="k">let</span> record <span class="o">=</span> <span class="k">await</span> apiKeyCache<span class="u">.</span><span class="f">get</span><span class="u">(</span>bearerToken<span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>record<span class="u">)</span> <span class="u">{</span>
-    record <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>apiKey<span class="u">.</span><span class="f">findFirst</span><span class="u">({</span>
-      <span class="p">where:</span> <span class="u">{</span>
-        <span class="c">/* hashed lookup */</span>
-      <span class="u">},</span>
-    <span class="u">});</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>record<span class="u">)</span> <span class="k">return</span> <span class="k">undefined</span><span class="u">;</span>
-    <span class="k">await</span> apiKeyCache<span class="u">.</span><span class="f">set</span><span class="u">(</span>bearerToken<span class="u">,</span> record<span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">let</span> record <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> apiKeyCache<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>bearerToken<span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>record<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    record <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>apiKey<span class="text-syn-u">.</span><span class="text-syn-f">findFirst</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">where:</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-c italic">/* hashed lookup */</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">});</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>record<span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-k">undefined</span><span class="text-syn-u">;</span>
+    <span class="text-syn-k">await</span> apiKeyCache<span class="text-syn-u">.</span><span class="text-syn-f">set</span><span class="text-syn-u">(</span>bearerToken<span class="text-syn-u">,</span> record<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    <span class="p">token:</span> bearerToken<span class="u">,</span>
-    <span class="p">clientId:</span> <span class="s">&quot;myapp-api-key&quot;</span><span class="u">,</span>
-    <span class="p">scopes:</span> <span class="u">[</span><span class="s">&quot;myapp.api&quot;</span><span class="u">],</span>
-    <span class="p">extra:</span> <span class="u">{</span>
-      <span class="p">apiKeyId:</span> record<span class="u">.</span><span class="p">id</span><span class="u">,</span>
-      <span class="p">organizationId:</span> record<span class="u">.</span><span class="p">organizationId</span><span class="u">,</span>
-      <span class="p">userId:</span> record<span class="u">.</span><span class="p">userId</span><span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">token:</span> bearerToken<span class="text-syn-u">,</span>
+    <span class="text-syn-p">clientId:</span> <span class="text-syn-s">&quot;myapp-api-key&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">scopes:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;myapp.api&quot;</span><span class="text-syn-u">],</span>
+    <span class="text-syn-p">extra:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">apiKeyId:</span> record<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">organizationId:</span> record<span class="text-syn-u">.</span><span class="text-syn-p">organizationId</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">userId:</span> record<span class="text-syn-u">.</span><span class="text-syn-p">userId</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Same auth check as your REST API means one mental model for users. The SDK also passes
@@ -394,12 +403,12 @@
             <h2 id="server-initialization">Server Initialization</h2>
             <p>The <code>initializeMcpServer</code> function is where the real work lives:</p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">initializeMcpServer</span><span class="u">(</span>server<span class="o">:</span> <span class="t">McpServer</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> spec <span class="o">=</span> <span class="k">await</span> <span class="f">loadFilteredOpenApi</span><span class="u">(</span>app<span class="u">);</span>
-  <span class="f">registerOpenApiTools</span><span class="u">(</span>server<span class="u">,</span> app<span class="u">,</span> spec<span class="u">);</span>
-  <span class="f">registerResources</span><span class="u">(</span>server<span class="u">,</span> app<span class="u">);</span>
-  <span class="f">registerPrompts</span><span class="u">(</span>server<span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">initializeMcpServer</span><span class="text-syn-u">(</span>server<span class="text-syn-o">:</span> <span class="text-syn-t">McpServer</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> spec <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">loadFilteredOpenApi</span><span class="text-syn-u">(</span>app<span class="text-syn-u">);</span>
+  <span class="text-syn-f">registerOpenApiTools</span><span class="text-syn-u">(</span>server<span class="text-syn-u">,</span> app<span class="text-syn-u">,</span> spec<span class="text-syn-u">);</span>
+  <span class="text-syn-f">registerResources</span><span class="text-syn-u">(</span>server<span class="text-syn-u">,</span> app<span class="text-syn-u">);</span>
+  <span class="text-syn-f">registerPrompts</span><span class="text-syn-u">(</span>server<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Three layers, in order: auto-generated tools from the spec, hand-written resources,
@@ -419,14 +428,14 @@
               app already serves:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">loadFilteredOpenApi</span><span class="u">(</span>app<span class="o">:</span> <span class="t">Hono</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> res <span class="o">=</span> <span class="k">await</span> app<span class="u">.</span><span class="f">request</span><span class="u">(</span><span class="s">&quot;http://internal/api/openapi&quot;</span><span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>res<span class="u">.</span><span class="p">ok</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">throw</span> <span class="o">new</span> <span class="f">Error</span><span class="u">(</span><span class="s">`openapi fetch failed: ${res.</span><span class="p">status</span><span class="s">}`</span><span class="u">);</span>
-  <span class="u">}</span>
-  <span class="k">const</span> spec <span class="o">=</span> <span class="u">(</span><span class="k">await</span> res<span class="u">.</span><span class="f">json</span><span class="u">())</span> <span class="k">as</span> <span class="t">OpenApiDoc</span><span class="u">;</span>
-  <span class="k">return</span> <span class="f">filterOpenApiSpec</span><span class="u">(</span>spec<span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">loadFilteredOpenApi</span><span class="text-syn-u">(</span>app<span class="text-syn-o">:</span> <span class="text-syn-t">Hono</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> res <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> app<span class="text-syn-u">.</span><span class="text-syn-f">request</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;http://internal/api/openapi&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>res<span class="text-syn-u">.</span><span class="text-syn-p">ok</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">throw</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Error</span><span class="text-syn-u">(</span><span class="text-syn-s">`openapi fetch failed: ${res.</span><span class="text-syn-p">status</span><span class="text-syn-s">}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  <span class="text-syn-k">const</span> spec <span class="text-syn-o">=</span> <span class="text-syn-u">(</span><span class="text-syn-k">await</span> res<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">())</span> <span class="text-syn-k">as</span> <span class="text-syn-t">OpenApiDoc</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">filterOpenApiSpec</span><span class="text-syn-u">(</span>spec<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               If that file powers your docs page, your tool list always matches what humans see in
@@ -439,18 +448,18 @@
               substrings is enough to start:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> DENY_PATH_PREFIXES <span class="o">=</span> <span class="u">[</span>
-  <span class="s">&quot;/api/auth&quot;</span><span class="u">,</span>
-  <span class="s">&quot;/api/webhooks&quot;</span><span class="u">,</span>
-  <span class="s">&quot;/api/payments&quot;</span><span class="u">,</span>
-  <span class="s">&quot;/api/admin&quot;</span><span class="u">,</span>
-  <span class="s">&quot;/api/uploads&quot;</span><span class="u">,</span>
-  <span class="s">&quot;/api/mcp&quot;</span><span class="u">,</span>
-<span class="u">]</span> <span class="k">as</span> <span class="k">const</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> DENY_PATH_PREFIXES <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
+  <span class="text-syn-s">&quot;/api/auth&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-s">&quot;/api/webhooks&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-s">&quot;/api/payments&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-s">&quot;/api/admin&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-s">&quot;/api/uploads&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-s">&quot;/api/mcp&quot;</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">]</span> <span class="text-syn-k">as</span> <span class="text-syn-k">const</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> DENY_PATH_SUBSTRINGS <span class="o">=</span> <span class="u">[</span><span class="s">&quot;/api-keys&quot;</span><span class="u">,</span> <span class="s">&quot;/credentials&quot;</span><span class="u">,</span> <span class="s">&quot;/signed-upload-url&quot;</span><span class="u">]</span> <span class="k">as</span> <span class="k">const</span><span class="u">;</span>
+<span class="text-syn-k">const</span> DENY_PATH_SUBSTRINGS <span class="text-syn-o">=</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;/api-keys&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;/credentials&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;/signed-upload-url&quot;</span><span class="text-syn-u">]</span> <span class="text-syn-k">as</span> <span class="text-syn-k">const</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> DENY_OPERATION_ID_SUBSTRINGS <span class="o">=</span> <span class="u">[</span><span class="s">&quot;apiKey&quot;</span><span class="u">,</span> <span class="s">&quot;credential&quot;</span><span class="u">,</span> <span class="s">&quot;signedUpload&quot;</span><span class="u">];</span>
+<span class="text-syn-k">const</span> DENY_OPERATION_ID_SUBSTRINGS <span class="text-syn-o">=</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;apiKey&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;credential&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;signedUpload&quot;</span><span class="text-syn-u">];</span>
 </code></pre>
             <p>
               If a route matches the list, it never appears in <code>tools/list</code>, so the model
@@ -492,15 +501,15 @@
               strings and add a short hash to avoid collisions:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> MCP_TOOL_NAME_MAX_LEN <span class="o">=</span> <span class="n">48</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> MCP_TOOL_NAME_MAX_LEN <span class="text-syn-o">=</span> <span class="text-syn-n">48</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">shortenToMcpToolLimit</span><span class="u">(</span>fullName<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span>fullName<span class="u">.</span>length <span class="o">&lt;=</span> MCP_TOOL_NAME_MAX_LEN<span class="u">)</span> <span class="k">return</span> fullName<span class="u">;</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">createHash</span><span class="u">(</span><span class="s">&quot;sha256&quot;</span><span class="u">).</span><span class="f">update</span><span class="u">(</span>fullName<span class="u">).</span><span class="f">digest</span><span class="u">(</span><span class="s">&quot;hex&quot;</span><span class="u">).</span><span class="f">slice</span><span class="u">(</span><span class="n">0</span><span class="u">,</span> <span class="n">6</span><span class="u">);</span>
-  <span class="k">const</span> suffix <span class="o">=</span> <span class="s">`_${hash}`</span><span class="u">;</span>
-  <span class="k">const</span> headLen <span class="o">=</span> MCP_TOOL_NAME_MAX_LEN <span class="o">-</span> suffix<span class="u">.</span>length<span class="u">;</span>
-  <span class="k">return</span> <span class="s">`${fullName.slice(0, headLen)}${suffix}`</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">shortenToMcpToolLimit</span><span class="text-syn-u">(</span>fullName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>fullName<span class="text-syn-u">.</span>length <span class="text-syn-o">&lt;=</span> MCP_TOOL_NAME_MAX_LEN<span class="text-syn-u">)</span> <span class="text-syn-k">return</span> fullName<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">createHash</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;sha256&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">update</span><span class="text-syn-u">(</span>fullName<span class="text-syn-u">).</span><span class="text-syn-f">digest</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;hex&quot;</span><span class="text-syn-u">).</span><span class="text-syn-f">slice</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">6</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> suffix <span class="text-syn-o">=</span> <span class="text-syn-s">`_${hash}`</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> headLen <span class="text-syn-o">=</span> MCP_TOOL_NAME_MAX_LEN <span class="text-syn-o">-</span> suffix<span class="text-syn-u">.</span>length<span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-s">`${fullName.slice(0, headLen)}${suffix}`</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Converting OpenAPI JSON Schema to Zod is mostly mechanical. One edge case is an
@@ -510,17 +519,17 @@
               so a bad spec line does not break every tool at startup:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">jsonSchemaToZod</span><span class="u">(</span>schema<span class="u">,</span> root<span class="u">,</span> required<span class="u">)</span><span class="o">:</span> <span class="t">ZodTypeAny</span> <span class="u">{</span>
-<span class="c">  // ... type switches, $ref resolution ...</span>
-  <span class="k">if</span> <span class="u">(</span>Array<span class="u">.</span><span class="f">isArray</span><span class="u">(</span>schema<span class="u">.</span><span class="p">enum</span><span class="u">)</span> <span class="o">&amp;&amp;</span> schema<span class="u">.</span>enum<span class="u">.</span><span class="f">every</span><span class="u">((</span>x<span class="u">)</span> <span class="k">=&gt;</span> <span class="o">typeof</span> x <span class="o">===</span> <span class="s">&quot;string&quot;</span><span class="u">))</span> <span class="u">{</span>
-    <span class="k">if</span> <span class="u">(</span>schema<span class="u">.</span>enum<span class="u">.</span>length <span class="o">===</span> <span class="n">0</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">return</span> required <span class="o">?</span> z<span class="u">.</span><span class="f">never</span><span class="u">()</span> <span class="o">:</span> z<span class="u">.</span><span class="f">never</span><span class="u">().</span><span class="f">optional</span><span class="u">();</span>
-    <span class="u">}</span>
-    <span class="k">const</span> en <span class="o">=</span> z<span class="u">.</span><span class="f">enum</span><span class="u">(</span>schema<span class="u">.</span><span class="p">enum</span> <span class="k">as</span> <span class="u">[</span><span class="t">string</span><span class="u">,</span> <span class="o">...</span><span class="t">string</span><span class="u">[]]);</span>
-    <span class="k">return</span> required <span class="o">?</span> en <span class="o">:</span> en<span class="u">.</span><span class="f">optional</span><span class="u">();</span>
-  <span class="u">}</span>
-<span class="c">  // ...</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">jsonSchemaToZod</span><span class="text-syn-u">(</span>schema<span class="text-syn-u">,</span> root<span class="text-syn-u">,</span> required<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">ZodTypeAny</span> <span class="text-syn-u">{</span>
+<span class="text-syn-c italic">  // ... type switches, $ref resolution ...</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>Array<span class="text-syn-u">.</span><span class="text-syn-f">isArray</span><span class="text-syn-u">(</span>schema<span class="text-syn-u">.</span><span class="text-syn-p">enum</span><span class="text-syn-u">)</span> <span class="text-syn-o">&amp;&amp;</span> schema<span class="text-syn-u">.</span>enum<span class="text-syn-u">.</span><span class="text-syn-f">every</span><span class="text-syn-u">((</span>x<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-o">typeof</span> x <span class="text-syn-o">===</span> <span class="text-syn-s">&quot;string&quot;</span><span class="text-syn-u">))</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>schema<span class="text-syn-u">.</span>enum<span class="text-syn-u">.</span>length <span class="text-syn-o">===</span> <span class="text-syn-n">0</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> required <span class="text-syn-o">?</span> z<span class="text-syn-u">.</span><span class="text-syn-f">never</span><span class="text-syn-u">()</span> <span class="text-syn-o">:</span> z<span class="text-syn-u">.</span><span class="text-syn-f">never</span><span class="text-syn-u">().</span><span class="text-syn-f">optional</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">}</span>
+    <span class="text-syn-k">const</span> en <span class="text-syn-o">=</span> z<span class="text-syn-u">.</span><span class="text-syn-f">enum</span><span class="text-syn-u">(</span>schema<span class="text-syn-u">.</span><span class="text-syn-p">enum</span> <span class="text-syn-k">as</span> <span class="text-syn-u">[</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-o">...</span><span class="text-syn-t">string</span><span class="text-syn-u">[]]);</span>
+    <span class="text-syn-k">return</span> required <span class="text-syn-o">?</span> en <span class="text-syn-o">:</span> en<span class="text-syn-u">.</span><span class="text-syn-f">optional</span><span class="text-syn-u">();</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-c italic">  // ...</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               For object types, allowing extra fields with <code>.passthrough()</code> avoids
@@ -531,27 +540,27 @@
               The tool implementation builds the same URL your REST client would and calls the app:
             </p>
             <pre
-            ><code class="language-typescript">server<span class="u">.</span><span class="f">registerTool</span><span class="u">(</span>toolName<span class="u">,</span> <span class="u">{</span> title<span class="u">,</span> description<span class="u">,</span> inputSchema <span class="u">},</span> <span class="k">async</span> <span class="u">(</span>args<span class="u">,</span> <span class="u">{</span> extra <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> <span class="u">{</span> url<span class="u">,</span> method<span class="u">,</span> body <span class="u">}</span> <span class="o">=</span> <span class="f">buildRequest</span><span class="u">(</span>path<span class="u">,</span> httpMethod<span class="u">,</span> args<span class="u">);</span>
-  <span class="k">const</span> headers <span class="o">=</span> <span class="o">new</span> <span class="f">Headers</span><span class="u">({</span>
-    <span class="p">&quot;content-type&quot;:</span> <span class="s">&quot;application/json&quot;</span><span class="u">,</span>
-    <span class="p">authorization:</span> <span class="s">`Bearer ${extra.authInfo.</span><span class="p">token</span><span class="s">}`</span><span class="u">,</span>
-  <span class="u">});</span>
+            ><code class="language-typescript">server<span class="text-syn-u">.</span><span class="text-syn-f">registerTool</span><span class="text-syn-u">(</span>toolName<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> title<span class="text-syn-u">,</span> description<span class="text-syn-u">,</span> inputSchema <span class="text-syn-u">},</span> <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>args<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> extra <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> url<span class="text-syn-u">,</span> method<span class="text-syn-u">,</span> body <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">buildRequest</span><span class="text-syn-u">(</span>path<span class="text-syn-u">,</span> httpMethod<span class="text-syn-u">,</span> args<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> headers <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Headers</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">&quot;content-type&quot;:</span> <span class="text-syn-s">&quot;application/json&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">authorization:</span> <span class="text-syn-s">`Bearer ${extra.authInfo.</span><span class="text-syn-p">token</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">const</span> res <span class="o">=</span> <span class="k">await</span> app<span class="u">.</span><span class="f">request</span><span class="u">(</span>url<span class="u">,</span> <span class="u">{</span> method<span class="u">,</span> headers<span class="u">,</span> body <span class="u">});</span>
+  <span class="text-syn-k">const</span> res <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> app<span class="text-syn-u">.</span><span class="text-syn-f">request</span><span class="text-syn-u">(</span>url<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> method<span class="text-syn-u">,</span> headers<span class="text-syn-u">,</span> body <span class="text-syn-u">});</span>
 
-  <span class="k">const</span> <span class="u">{</span> payload<span class="u">,</span> truncatedChars <span class="u">}</span> <span class="o">=</span> <span class="k">await</span> <span class="f">readResponsePreview</span><span class="u">(</span>res<span class="u">,</span> MAX_TOOL_RESPONSE_CHARS<span class="u">);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> payload<span class="text-syn-u">,</span> truncatedChars <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">readResponsePreview</span><span class="text-syn-u">(</span>res<span class="text-syn-u">,</span> MAX_TOOL_RESPONSE_CHARS<span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    <span class="p">isError:</span> <span class="o">!</span>res<span class="u">.</span><span class="p">ok</span><span class="u">,</span>
-    <span class="p">content:</span> <span class="u">[</span>
-      <span class="u">{</span>
-        <span class="p">type:</span> <span class="s">&quot;text&quot;</span><span class="u">,</span>
-        <span class="p">text:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span> <span class="p">status:</span> res<span class="u">.</span><span class="p">status</span><span class="u">,</span> <span class="p">body:</span> payload<span class="u">,</span> truncatedChars <span class="u">},</span> <span class="k">null</span><span class="u">,</span> <span class="n">2</span><span class="u">),</span>
-      <span class="u">},</span>
-    <span class="u">],</span>
-  <span class="u">};</span>
-<span class="u">});</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">isError:</span> <span class="text-syn-o">!</span>res<span class="text-syn-u">.</span><span class="text-syn-p">ok</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">content:</span> <span class="text-syn-u">[</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;text&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">text:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span> <span class="text-syn-p">status:</span> res<span class="text-syn-u">.</span><span class="text-syn-p">status</span><span class="text-syn-u">,</span> <span class="text-syn-p">body:</span> payload<span class="text-syn-u">,</span> truncatedChars <span class="text-syn-u">},</span> <span class="text-syn-k">null</span><span class="text-syn-u">,</span> <span class="text-syn-n">2</span><span class="text-syn-u">),</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">],</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>Why this matters:</p>
             <ul>
@@ -584,22 +593,22 @@
               other call:
             </p>
             <pre
-            ><code class="language-typescript">server<span class="u">.</span><span class="f">registerResource</span><span class="u">(</span>
-  <span class="s">&quot;scorers&quot;</span><span class="u">,</span>
-  <span class="s">&quot;myapp://scorers&quot;</span><span class="u">,</span>
-  <span class="u">{</span>
-    <span class="p">title:</span> <span class="s">&quot;Available Scorers&quot;</span><span class="u">,</span>
-    <span class="p">description:</span>
-      <span class="s">&quot;All scorers available for evaluation jobs. Read this before creating an eval job.&quot;</span><span class="u">,</span>
-    <span class="p">mimeType:</span> <span class="s">&quot;application/json&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
-  <span class="k">async</span> <span class="u">(</span>uri<span class="u">,</span> <span class="u">{</span> extra <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> <span class="f">forwardJson</span><span class="u">(</span>app<span class="u">,</span> <span class="s">&quot;/api/v1/scorers&quot;</span><span class="u">,</span> extra<span class="u">.</span>authInfo<span class="u">.</span><span class="p">token</span><span class="u">);</span>
-    <span class="k">return</span> <span class="u">{</span>
-      <span class="p">contents:</span> <span class="u">[{</span> <span class="p">uri:</span> uri<span class="u">.</span><span class="p">href</span><span class="u">,</span> <span class="p">text:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>data<span class="u">)</span> <span class="u">}],</span>
-    <span class="u">};</span>
-  <span class="u">},</span>
-<span class="u">);</span>
+            ><code class="language-typescript">server<span class="text-syn-u">.</span><span class="text-syn-f">registerResource</span><span class="text-syn-u">(</span>
+  <span class="text-syn-s">&quot;scorers&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-s">&quot;myapp://scorers&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">title:</span> <span class="text-syn-s">&quot;Available Scorers&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">description:</span>
+      <span class="text-syn-s">&quot;All scorers available for evaluation jobs. Read this before creating an eval job.&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">mimeType:</span> <span class="text-syn-s">&quot;application/json&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>uri<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> extra <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">forwardJson</span><span class="text-syn-u">(</span>app<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;/api/v1/scorers&quot;</span><span class="text-syn-u">,</span> extra<span class="text-syn-u">.</span>authInfo<span class="text-syn-u">.</span><span class="text-syn-p">token</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">contents:</span> <span class="text-syn-u">[{</span> <span class="text-syn-p">uri:</span> uri<span class="text-syn-u">.</span><span class="text-syn-p">href</span><span class="text-syn-u">,</span> <span class="text-syn-p">text:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>data<span class="text-syn-u">)</span> <span class="text-syn-u">}],</span>
+    <span class="text-syn-u">};</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">);</span>
 </code></pre>
             <p>Practical tips:</p>
             <ul>
@@ -622,30 +631,30 @@
               traces, then open spans for errors.&quot; A tiny example:
             </p>
             <pre
-            ><code class="language-typescript">server<span class="u">.</span><span class="f">registerPrompt</span><span class="u">(</span>
-  <span class="s">&quot;debug_traces&quot;</span><span class="u">,</span>
-  <span class="u">{</span>
-    <span class="p">description:</span> <span class="s">&quot;Walk through error traces and summarise root causes&quot;</span><span class="u">,</span>
-    <span class="p">argsSchema:</span> <span class="u">{</span> <span class="p">project:</span> z<span class="u">.</span><span class="f">string</span><span class="u">().</span><span class="f">optional</span><span class="u">()</span> <span class="u">},</span>
-  <span class="u">},</span>
-  <span class="u">({</span> project <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">messages:</span> <span class="u">[</span>
-      <span class="u">{</span>
-        <span class="p">role:</span> <span class="s">&quot;user&quot;</span><span class="u">,</span>
-        <span class="p">content:</span> <span class="u">{</span>
-          <span class="p">type:</span> <span class="s">&quot;text&quot;</span><span class="u">,</span>
-          <span class="p">text:</span> <span class="s">`You are debugging traces in the ${project ?? &quot;user&#39;s&quot;} project.</span>
-<span class="s">1. Read myapp://filter-values to see environments and statuses.</span>
-<span class="s">2. Call list_traces with status=error and size=20.</span>
-<span class="s">3. For each error trace, call get_trace_spans to find the failing span.</span>
-<span class="s">4. Summarise by failure mode, not by individual trace.</span>
+            ><code class="language-typescript">server<span class="text-syn-u">.</span><span class="text-syn-f">registerPrompt</span><span class="text-syn-u">(</span>
+  <span class="text-syn-s">&quot;debug_traces&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">description:</span> <span class="text-syn-s">&quot;Walk through error traces and summarise root causes&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">argsSchema:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">project:</span> z<span class="text-syn-u">.</span><span class="text-syn-f">string</span><span class="text-syn-u">().</span><span class="text-syn-f">optional</span><span class="text-syn-u">()</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">({</span> project <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">messages:</span> <span class="text-syn-u">[</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">role:</span> <span class="text-syn-s">&quot;user&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">content:</span> <span class="text-syn-u">{</span>
+          <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;text&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">text:</span> <span class="text-syn-s">`You are debugging traces in the ${project ?? &quot;user&#39;s&quot;} project.</span>
+<span class="text-syn-s">1. Read myapp://filter-values to see environments and statuses.</span>
+<span class="text-syn-s">2. Call list_traces with status=error and size=20.</span>
+<span class="text-syn-s">3. For each error trace, call get_trace_spans to find the failing span.</span>
+<span class="text-syn-s">4. Summarise by failure mode, not by individual trace.</span>
 
-<span class="s">${WORKERS_AND_POLLING}`</span><span class="u">,</span>
-        <span class="u">},</span>
-      <span class="u">},</span>
-    <span class="u">],</span>
-  <span class="u">}),</span>
-<span class="u">);</span>
+<span class="text-syn-s">${WORKERS_AND_POLLING}`</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">},</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">],</span>
+  <span class="text-syn-u">}),</span>
+<span class="text-syn-u">);</span>
 </code></pre>
             <p>
               If work runs in a queue, the first POST often returns a job id, not a finished result.
@@ -653,15 +662,15 @@
               that says which GET to poll, how often, and which status values count as done:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> WORKERS_AND_POLLING <span class="o">=</span> <span class="s">`</span>
-<span class="s">---</span>
-<span class="s">Background work (read this every time):</span>
-<span class="s">- Heavy work runs in background workers. Kickoff POSTs return immediately with a runId.</span>
-<span class="s">- Poll the documented GET until status is terminal.</span>
-<span class="s">- Queue map: ETL → etl-jobs, evaluation → eval-jobs, analysis → synthetic-runs.</span>
-<span class="s">- Polling cadence: ETL every 3s then 15s; evaluation every 2s (cap ~5min); analysis every 5s.</span>
-<span class="s">- Terminal statuses: completed | failed | cancelled.</span>
-<span class="s">`</span><span class="u">.</span><span class="f">trim</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> WORKERS_AND_POLLING <span class="text-syn-o">=</span> <span class="text-syn-s">`</span>
+<span class="text-syn-s">---</span>
+<span class="text-syn-s">Background work (read this every time):</span>
+<span class="text-syn-s">- Heavy work runs in background workers. Kickoff POSTs return immediately with a runId.</span>
+<span class="text-syn-s">- Poll the documented GET until status is terminal.</span>
+<span class="text-syn-s">- Queue map: ETL → etl-jobs, evaluation → eval-jobs, analysis → synthetic-runs.</span>
+<span class="text-syn-s">- Polling cadence: ETL every 3s then 15s; evaluation every 2s (cap ~5min); analysis every 5s.</span>
+<span class="text-syn-s">- Terminal statuses: completed | failed | cancelled.</span>
+<span class="text-syn-s">`</span><span class="text-syn-u">.</span><span class="text-syn-f">trim</span><span class="text-syn-u">();</span>
 </code></pre>
             <p>
               Reuse that block anywhere a prompt touches background jobs so the model does not treat
@@ -693,12 +702,12 @@
               everything:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">bun</span> <span class="s">dev</span>   <span class="c"># starts Next.js on :3000</span>
+            ><code class="language-bash"><span class="text-syn-f">bun</span> <span class="text-syn-s">dev</span>   <span class="text-syn-c italic"># starts Next.js on :3000</span>
 
-<span class="k">export</span> KEY<span class="o">=</span>nv_xxxxxxxxxxxxxxxxxxxxxx
+<span class="text-syn-k">export</span> KEY<span class="text-syn-o">=</span>nv_xxxxxxxxxxxxxxxxxxxxxx
 
-<span class="f">bunx</span> <span class="s">@modelcontextprotocol/inspector</span> <span class="s">http://localhost:3000/api/mcp</span> \
-  <span class="s">--header</span> <span class="s">&quot;Authorization: Bearer $KEY&quot;</span>
+<span class="text-syn-f">bunx</span> <span class="text-syn-s">@modelcontextprotocol/inspector</span> <span class="text-syn-s">http://localhost:3000/api/mcp</span> \
+  <span class="text-syn-s">--header</span> <span class="text-syn-s">&quot;Authorization: Bearer $KEY&quot;</span>
 </code></pre>
             <p>
               You can click through tools, try arguments, and read resources. If a tool is missing,
@@ -706,14 +715,14 @@
               long or repeated. A 401 usually means the auth check did not return a user.
             </p>
             <p>To wire it up to Cursor for real:</p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;mcpServers&quot;</span><span class="u">:</span> <span class="u">{</span>
-    <span class="p">&quot;myapp&quot;</span><span class="u">:</span> <span class="u">{</span>
-      <span class="p">&quot;url&quot;</span><span class="u">:</span> <span class="s">&quot;http://localhost:3000/api/mcp&quot;</span><span class="u">,</span>
-      <span class="p">&quot;headers&quot;</span><span class="u">:</span> <span class="u">{</span> <span class="p">&quot;Authorization&quot;</span><span class="u">:</span> <span class="s">&quot;Bearer nv_xxxxxxxxxxxxxxxxxxxxxx&quot;</span> <span class="u">}</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;mcpServers&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">&quot;myapp&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">&quot;url&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;http://localhost:3000/api/mcp&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">&quot;headers&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;Authorization&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Bearer nv_xxxxxxxxxxxxxxxxxxxxxx&quot;</span> <span class="text-syn-u">}</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Drop that into <code>~/.cursor/mcp.json</code>, restart Cursor, and you should see
@@ -744,12 +753,14 @@
             <p>Happy shipping!</p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
-            <li><a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a></li>
-            <li>
+            <li class="my-2"><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
+            <li class="my-2">
+              <a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
@@ -757,15 +768,22 @@
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

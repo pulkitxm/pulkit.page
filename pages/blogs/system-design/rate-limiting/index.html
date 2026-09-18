@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,9 +73,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -78,11 +85,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Rate Limiting</h1>
-            <p class="detail-meta"><time datetime="2026-04-11">2026-04-11</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Rate Limiting
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-04-11">2026-04-11</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Your API launches. Traffic is steady. Then a bot starts hammering your login endpoint
               with thousands of requests per second. Or a misbehaving client enters a retry loop. Or
@@ -205,16 +214,16 @@ X-Ratelimit-Retry-After: 30
               never reaches your backend service at all.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">proxyHandler</span><span class="u">(</span>req<span class="o">:</span> <span class="t">Request</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Response</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> clientIp <span class="o">=</span> req<span class="u">.</span>headers<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">&quot;x-forwarded-for&quot;</span><span class="u">)</span> <span class="o">??</span> <span class="s">&quot;unknown&quot;</span><span class="u">;</span>
-  <span class="k">const</span> allowed <span class="o">=</span> <span class="k">await</span> <span class="f">checkRateLimit</span><span class="u">(</span>clientIp<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">proxyHandler</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> clientIp <span class="text-syn-o">=</span> req<span class="text-syn-u">.</span>headers<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;x-forwarded-for&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;unknown&quot;</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> allowed <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">checkRateLimit</span><span class="text-syn-u">(</span>clientIp<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>allowed<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="o">new</span> <span class="f">Response</span><span class="u">(</span><span class="s">&quot;Too Many Requests&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">status:</span> <span class="n">429</span> <span class="u">});</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>allowed<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Response</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Too Many Requests&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">status:</span> <span class="text-syn-n">429</span> <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="f">forwardToBackend</span><span class="u">(</span>req<span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">forwardToBackend</span><span class="text-syn-u">(</span>req<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This is ideal when you want to protect your backend from even seeing excess traffic.
@@ -233,22 +242,22 @@ X-Ratelimit-Retry-After: 30
               middleware checks the rate limiter before invoking the actual handler.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">rateLimitMiddleware</span><span class="u">(</span>req<span class="o">:</span> <span class="t">Request</span><span class="u">,</span> <span class="f">next</span><span class="o">:</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Response</span><span class="u">&gt;)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Response</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> userId <span class="o">=</span> <span class="f">extractUserId</span><span class="u">(</span>req<span class="u">);</span>
-  <span class="k">const</span> endpoint <span class="o">=</span> <span class="o">new</span> <span class="f">URL</span><span class="u">(</span>req<span class="u">.</span><span class="p">url</span><span class="u">).</span><span class="p">pathname</span><span class="u">;</span>
-  <span class="k">const</span> key <span class="o">=</span> <span class="s">`${userId}:${endpoint}`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">rateLimitMiddleware</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">,</span> <span class="text-syn-f">next</span><span class="text-syn-o">:</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> userId <span class="text-syn-o">=</span> <span class="text-syn-f">extractUserId</span><span class="text-syn-u">(</span>req<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> endpoint <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">URL</span><span class="text-syn-u">(</span>req<span class="text-syn-u">.</span><span class="text-syn-p">url</span><span class="text-syn-u">).</span><span class="text-syn-p">pathname</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> key <span class="text-syn-o">=</span> <span class="text-syn-s">`${userId}:${endpoint}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> allowed <span class="o">=</span> <span class="k">await</span> <span class="f">checkRateLimit</span><span class="u">(</span>key<span class="u">);</span>
+  <span class="text-syn-k">const</span> allowed <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">checkRateLimit</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>allowed<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="o">new</span> <span class="f">Response</span><span class="u">(</span><span class="s">&quot;Too Many Requests&quot;</span><span class="u">,</span> <span class="u">{</span>
-      <span class="p">status:</span> <span class="n">429</span><span class="u">,</span>
-      <span class="p">headers:</span> <span class="u">{</span> <span class="p">&quot;Retry-After&quot;:</span> <span class="s">&quot;30&quot;</span> <span class="u">},</span>
-    <span class="u">});</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>allowed<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Response</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Too Many Requests&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">status:</span> <span class="text-syn-n">429</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">headers:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;Retry-After&quot;:</span> <span class="text-syn-s">&quot;30&quot;</span> <span class="text-syn-u">},</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="f">next</span><span class="u">();</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">next</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This gives you granular control. You can set different limits per endpoint: maybe your
@@ -291,15 +300,15 @@ X-Ratelimit-Retry-After: 30
               </li>
             </ul>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">checkRateLimit</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> current <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">incr</span><span class="u">(</span><span class="s">`ratelimit:${key}`</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">checkRateLimit</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> current <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">incr</span><span class="text-syn-u">(</span><span class="text-syn-s">`ratelimit:${key}`</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>current <span class="o">===</span> <span class="n">1</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">expire</span><span class="u">(</span><span class="s">`ratelimit:${key}`</span><span class="u">,</span> <span class="n">60</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>current <span class="text-syn-o">===</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span><span class="text-syn-s">`ratelimit:${key}`</span><span class="text-syn-u">,</span> <span class="text-syn-n">60</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> current <span class="o">&lt;=</span> <span class="n">100</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> current <span class="text-syn-o">&lt;=</span> <span class="text-syn-n">100</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The first time a key is incremented, it&#39;s created with value 1 and you set a
@@ -323,16 +332,16 @@ X-Ratelimit-Retry-After: 30
               counter exceeds the limit. When the window ends, the counter resets.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">fixedWindow</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> limit<span class="o">:</span> <span class="t">number</span><span class="u">,</span> windowSeconds<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> windowKey <span class="o">=</span> <span class="s">`${key}:${Math.floor(Date.now() / 1000 / windowSeconds)}`</span><span class="u">;</span>
-  <span class="k">const</span> count <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">incr</span><span class="u">(</span>windowKey<span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">fixedWindow</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> windowSeconds<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> windowKey <span class="text-syn-o">=</span> <span class="text-syn-s">`${key}:${Math.floor(Date.now() / 1000 / windowSeconds)}`</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">incr</span><span class="text-syn-u">(</span>windowKey<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>count <span class="o">===</span> <span class="n">1</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> redis<span class="u">.</span><span class="f">expire</span><span class="u">(</span>windowKey<span class="u">,</span> windowSeconds<span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>count <span class="text-syn-o">===</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span>windowKey<span class="text-syn-u">,</span> windowSeconds<span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> count <span class="o">&lt;=</span> limit<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> count <span class="text-syn-o">&lt;=</span> limit<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Pros:</strong>
@@ -389,17 +398,17 @@ X-Ratelimit-Retry-After: 30
               the request:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">slidingWindowLog</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> limit<span class="o">:</span> <span class="t">number</span><span class="u">,</span> windowMs<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> now <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">();</span>
-  <span class="k">const</span> windowStart <span class="o">=</span> now <span class="o">-</span> windowMs<span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">slidingWindowLog</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> windowMs<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> windowStart <span class="text-syn-o">=</span> now <span class="text-syn-o">-</span> windowMs<span class="text-syn-u">;</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">zremrangebyscore</span><span class="u">(</span>key<span class="u">,</span> <span class="n">0</span><span class="u">,</span> windowStart<span class="u">);</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">zadd</span><span class="u">(</span>key<span class="u">,</span> now<span class="u">,</span> <span class="s">`${now}-${Math.random()}`</span><span class="u">);</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">expire</span><span class="u">(</span>key<span class="u">,</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>windowMs <span class="o">/</span> <span class="n">1000</span><span class="u">));</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">zremrangebyscore</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> windowStart<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">zadd</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> now<span class="text-syn-u">,</span> <span class="text-syn-s">`${now}-${Math.random()}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span>key<span class="text-syn-u">,</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">ceil</span><span class="text-syn-u">(</span>windowMs <span class="text-syn-o">/</span> <span class="text-syn-n">1000</span><span class="text-syn-u">));</span>
 
-  <span class="k">const</span> count <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">zcard</span><span class="u">(</span>key<span class="u">);</span>
-  <span class="k">return</span> count <span class="o">&lt;=</span> limit<span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">zcard</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> count <span class="text-syn-o">&lt;=</span> limit<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <code>ZREMRANGEBYSCORE</code>
@@ -470,31 +479,31 @@ X-Ratelimit-Retry-After: 30
               usually close: <strong>counts per bucket</strong>, not per request.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">slidingWindowCounter</span><span class="u">(</span>
-  key<span class="o">:</span> <span class="t">string</span><span class="u">,</span>
-  limit<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-  windowSeconds<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> now <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">/</span> <span class="n">1000</span><span class="u">;</span>
-  <span class="k">const</span> currentWindow <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">(</span>now <span class="o">/</span> windowSeconds<span class="u">);</span>
-  <span class="k">const</span> previousWindow <span class="o">=</span> currentWindow <span class="o">-</span> <span class="n">1</span><span class="u">;</span>
-  <span class="k">const</span> elapsed <span class="o">=</span> <span class="u">(</span>now <span class="o">%</span> windowSeconds<span class="u">)</span> <span class="o">/</span> windowSeconds<span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">slidingWindowCounter</span><span class="text-syn-u">(</span>
+  key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+  limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+  windowSeconds<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">/</span> <span class="text-syn-n">1000</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> currentWindow <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">floor</span><span class="text-syn-u">(</span>now <span class="text-syn-o">/</span> windowSeconds<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> previousWindow <span class="text-syn-o">=</span> currentWindow <span class="text-syn-o">-</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> elapsed <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>now <span class="text-syn-o">%</span> windowSeconds<span class="text-syn-u">)</span> <span class="text-syn-o">/</span> windowSeconds<span class="text-syn-u">;</span>
 
-  <span class="k">const</span> <span class="u">[</span>currentCount<span class="u">,</span> previousCount<span class="u">]</span> <span class="o">=</span> <span class="k">await</span> <span class="t">Promise</span><span class="u">.</span><span class="f">all</span><span class="u">([</span>
-    redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">`${key}:${currentWindow}`</span><span class="u">).</span><span class="f">then</span><span class="u">((</span>v<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">Number</span><span class="u">(</span>v<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">),</span>
-    redis<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">`${key}:${previousWindow}`</span><span class="u">).</span><span class="f">then</span><span class="u">((</span>v<span class="u">)</span> <span class="k">=&gt;</span> <span class="f">Number</span><span class="u">(</span>v<span class="u">)</span> <span class="o">||</span> <span class="n">0</span><span class="u">),</span>
-  <span class="u">]);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">[</span>currentCount<span class="text-syn-u">,</span> previousCount<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">.</span><span class="text-syn-f">all</span><span class="text-syn-u">([</span>
+    redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${currentWindow}`</span><span class="text-syn-u">).</span><span class="text-syn-f">then</span><span class="text-syn-u">((</span>v<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">Number</span><span class="text-syn-u">(</span>v<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">),</span>
+    redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${previousWindow}`</span><span class="text-syn-u">).</span><span class="text-syn-f">then</span><span class="text-syn-u">((</span>v<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-f">Number</span><span class="text-syn-u">(</span>v<span class="text-syn-u">)</span> <span class="text-syn-o">||</span> <span class="text-syn-n">0</span><span class="text-syn-u">),</span>
+  <span class="text-syn-u">]);</span>
 
-  <span class="k">const</span> effectiveCount <span class="o">=</span> previousCount <span class="o">*</span> <span class="u">(</span><span class="n">1</span> <span class="o">-</span> elapsed<span class="u">)</span> <span class="o">+</span> currentCount<span class="u">;</span>
+  <span class="text-syn-k">const</span> effectiveCount <span class="text-syn-o">=</span> previousCount <span class="text-syn-o">*</span> <span class="text-syn-u">(</span><span class="text-syn-n">1</span> <span class="text-syn-o">-</span> elapsed<span class="text-syn-u">)</span> <span class="text-syn-o">+</span> currentCount<span class="text-syn-u">;</span>
 
-  <span class="k">if</span> <span class="u">(</span>effectiveCount <span class="o">&gt;=</span> limit<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>effectiveCount <span class="text-syn-o">&gt;=</span> limit<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">incr</span><span class="u">(</span><span class="s">`${key}:${currentWindow}`</span><span class="u">);</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">expire</span><span class="u">(</span><span class="s">`${key}:${currentWindow}`</span><span class="u">,</span> windowSeconds <span class="o">*</span> <span class="n">2</span><span class="u">);</span>
-  <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">incr</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${currentWindow}`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span><span class="text-syn-s">`${key}:${currentWindow}`</span><span class="text-syn-u">,</span> windowSeconds <span class="text-syn-o">*</span> <span class="text-syn-n">2</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               TTL on the active key is stretched (here <code>windowSeconds * 2</code>) so the minute
@@ -522,28 +531,28 @@ X-Ratelimit-Retry-After: 30
               rejected. The bucket has a maximum capacity, which allows short bursts.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">tokenBucket</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> capacity<span class="o">:</span> <span class="t">number</span><span class="u">,</span> refillRate<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> now <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">();</span>
-  <span class="k">const</span> bucket <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">hgetall</span><span class="u">(</span><span class="s">`bucket:${key}`</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">tokenBucket</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> capacity<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> refillRate<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> bucket <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hgetall</span><span class="text-syn-u">(</span><span class="text-syn-s">`bucket:${key}`</span><span class="text-syn-u">);</span>
 
-  <span class="k">let</span> tokens <span class="o">=</span> <span class="f">Number</span><span class="u">(</span>bucket<span class="u">.</span><span class="p">tokens</span> <span class="o">??</span> capacity<span class="u">);</span>
-  <span class="k">const</span> lastRefill <span class="o">=</span> <span class="f">Number</span><span class="u">(</span>bucket<span class="u">.</span><span class="p">lastRefill</span> <span class="o">??</span> now<span class="u">);</span>
+  <span class="text-syn-k">let</span> tokens <span class="text-syn-o">=</span> <span class="text-syn-f">Number</span><span class="text-syn-u">(</span>bucket<span class="text-syn-u">.</span><span class="text-syn-p">tokens</span> <span class="text-syn-o">??</span> capacity<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> lastRefill <span class="text-syn-o">=</span> <span class="text-syn-f">Number</span><span class="text-syn-u">(</span>bucket<span class="text-syn-u">.</span><span class="text-syn-p">lastRefill</span> <span class="text-syn-o">??</span> now<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> elapsed <span class="o">=</span> <span class="u">(</span>now <span class="o">-</span> lastRefill<span class="u">)</span> <span class="o">/</span> <span class="n">1000</span><span class="u">;</span>
-  tokens <span class="o">=</span> Math<span class="u">.</span><span class="f">min</span><span class="u">(</span>capacity<span class="u">,</span> tokens <span class="o">+</span> elapsed <span class="o">*</span> refillRate<span class="u">);</span>
+  <span class="text-syn-k">const</span> elapsed <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>now <span class="text-syn-o">-</span> lastRefill<span class="text-syn-u">)</span> <span class="text-syn-o">/</span> <span class="text-syn-n">1000</span><span class="text-syn-u">;</span>
+  tokens <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">min</span><span class="text-syn-u">(</span>capacity<span class="text-syn-u">,</span> tokens <span class="text-syn-o">+</span> elapsed <span class="text-syn-o">*</span> refillRate<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>tokens <span class="o">&lt;</span> <span class="n">1</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>tokens <span class="text-syn-o">&lt;</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`bucket:${key}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">tokens:</span> <span class="u">(</span>tokens <span class="o">-</span> <span class="n">1</span><span class="u">).</span><span class="f">toString</span><span class="u">(),</span>
-    <span class="p">lastRefill:</span> now<span class="u">.</span><span class="f">toString</span><span class="u">(),</span>
-  <span class="u">});</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">expire</span><span class="u">(</span><span class="s">`bucket:${key}`</span><span class="u">,</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>capacity <span class="o">/</span> refillRate<span class="u">)</span> <span class="o">+</span> <span class="n">60</span><span class="u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`bucket:${key}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">tokens:</span> <span class="text-syn-u">(</span>tokens <span class="text-syn-o">-</span> <span class="text-syn-n">1</span><span class="text-syn-u">).</span><span class="text-syn-f">toString</span><span class="text-syn-u">(),</span>
+    <span class="text-syn-p">lastRefill:</span> now<span class="text-syn-u">.</span><span class="text-syn-f">toString</span><span class="text-syn-u">(),</span>
+  <span class="text-syn-u">});</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span><span class="text-syn-s">`bucket:${key}`</span><span class="text-syn-u">,</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">ceil</span><span class="text-syn-u">(</span>capacity <span class="text-syn-o">/</span> refillRate<span class="text-syn-u">)</span> <span class="text-syn-o">+</span> <span class="text-syn-n">60</span><span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Pros:</strong>
@@ -562,28 +571,28 @@ X-Ratelimit-Retry-After: 30
               dropped. Requests are pulled from the queue and processed at a steady rate.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">leakyBucket</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> capacity<span class="o">:</span> <span class="t">number</span><span class="u">,</span> leakRate<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> now <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">();</span>
-  <span class="k">const</span> bucket <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">hgetall</span><span class="u">(</span><span class="s">`leak:${key}`</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">leakyBucket</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> capacity<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> leakRate<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> bucket <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hgetall</span><span class="text-syn-u">(</span><span class="text-syn-s">`leak:${key}`</span><span class="text-syn-u">);</span>
 
-  <span class="k">let</span> waterLevel <span class="o">=</span> <span class="f">Number</span><span class="u">(</span>bucket<span class="u">.</span><span class="p">level</span> <span class="o">??</span> <span class="n">0</span><span class="u">);</span>
-  <span class="k">const</span> lastLeak <span class="o">=</span> <span class="f">Number</span><span class="u">(</span>bucket<span class="u">.</span><span class="p">lastLeak</span> <span class="o">??</span> now<span class="u">);</span>
+  <span class="text-syn-k">let</span> waterLevel <span class="text-syn-o">=</span> <span class="text-syn-f">Number</span><span class="text-syn-u">(</span>bucket<span class="text-syn-u">.</span><span class="text-syn-p">level</span> <span class="text-syn-o">??</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> lastLeak <span class="text-syn-o">=</span> <span class="text-syn-f">Number</span><span class="text-syn-u">(</span>bucket<span class="text-syn-u">.</span><span class="text-syn-p">lastLeak</span> <span class="text-syn-o">??</span> now<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> elapsed <span class="o">=</span> <span class="u">(</span>now <span class="o">-</span> lastLeak<span class="u">)</span> <span class="o">/</span> <span class="n">1000</span><span class="u">;</span>
-  waterLevel <span class="o">=</span> Math<span class="u">.</span><span class="f">max</span><span class="u">(</span><span class="n">0</span><span class="u">,</span> waterLevel <span class="o">-</span> elapsed <span class="o">*</span> leakRate<span class="u">);</span>
+  <span class="text-syn-k">const</span> elapsed <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>now <span class="text-syn-o">-</span> lastLeak<span class="text-syn-u">)</span> <span class="text-syn-o">/</span> <span class="text-syn-n">1000</span><span class="text-syn-u">;</span>
+  waterLevel <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">max</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> waterLevel <span class="text-syn-o">-</span> elapsed <span class="text-syn-o">*</span> leakRate<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>waterLevel <span class="o">&gt;=</span> capacity<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="k">false</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>waterLevel <span class="text-syn-o">&gt;=</span> capacity<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">hmset</span><span class="u">(</span><span class="s">`leak:${key}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">level:</span> <span class="u">(</span>waterLevel <span class="o">+</span> <span class="n">1</span><span class="u">).</span><span class="f">toString</span><span class="u">(),</span>
-    <span class="p">lastLeak:</span> now<span class="u">.</span><span class="f">toString</span><span class="u">(),</span>
-  <span class="u">});</span>
-  <span class="k">await</span> redis<span class="u">.</span><span class="f">expire</span><span class="u">(</span><span class="s">`leak:${key}`</span><span class="u">,</span> Math<span class="u">.</span><span class="f">ceil</span><span class="u">(</span>capacity <span class="o">/</span> leakRate<span class="u">)</span> <span class="o">+</span> <span class="n">60</span><span class="u">);</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`leak:${key}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">level:</span> <span class="text-syn-u">(</span>waterLevel <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">).</span><span class="text-syn-f">toString</span><span class="text-syn-u">(),</span>
+    <span class="text-syn-p">lastLeak:</span> now<span class="text-syn-u">.</span><span class="text-syn-f">toString</span><span class="text-syn-u">(),</span>
+  <span class="text-syn-u">});</span>
+  <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span><span class="text-syn-s">`leak:${key}`</span><span class="text-syn-u">,</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">ceil</span><span class="text-syn-u">(</span>capacity <span class="text-syn-o">/</span> leakRate<span class="text-syn-u">)</span> <span class="text-syn-o">+</span> <span class="text-syn-n">60</span><span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="k">true</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <strong>Pros:</strong>
@@ -679,25 +688,25 @@ X-Ratelimit-Retry-After: 30
               (the algorithm, the Redis commands) as a library that your services import directly.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> createRateLimiter <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@your-org/rate-limiter&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> createRateLimiter <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@your-org/rate-limiter&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> limiter <span class="o">=</span> <span class="f">createRateLimiter</span><span class="u">({</span>
-  <span class="p">redis:</span> <span class="u">{</span> <span class="p">host:</span> <span class="s">&quot;redis-shard-1.internal&quot;</span><span class="u">,</span> <span class="p">port:</span> <span class="n">6379</span> <span class="u">},</span>
-  <span class="p">algorithm:</span> <span class="s">&quot;sliding-window-counter&quot;</span><span class="u">,</span>
-  <span class="p">defaultLimit:</span> <span class="n">100</span><span class="u">,</span>
-  <span class="p">defaultWindow:</span> <span class="n">60</span><span class="u">,</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> limiter <span class="text-syn-o">=</span> <span class="text-syn-f">createRateLimiter</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">redis:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;redis-shard-1.internal&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">port:</span> <span class="text-syn-n">6379</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">algorithm:</span> <span class="text-syn-s">&quot;sliding-window-counter&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">defaultLimit:</span> <span class="text-syn-n">100</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">defaultWindow:</span> <span class="text-syn-n">60</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">handler</span><span class="u">(</span>req<span class="o">:</span> <span class="t">Request</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Response</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> userId <span class="o">=</span> <span class="f">extractUserId</span><span class="u">(</span>req<span class="u">);</span>
-  <span class="k">const</span> allowed <span class="o">=</span> <span class="k">await</span> limiter<span class="u">.</span><span class="f">check</span><span class="u">(</span>userId<span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">handler</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> userId <span class="text-syn-o">=</span> <span class="text-syn-f">extractUserId</span><span class="text-syn-u">(</span>req<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> allowed <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> limiter<span class="text-syn-u">.</span><span class="text-syn-f">check</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>allowed<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="o">new</span> <span class="f">Response</span><span class="u">(</span><span class="s">&quot;Too Many Requests&quot;</span><span class="u">,</span> <span class="u">{</span> <span class="p">status:</span> <span class="n">429</span> <span class="u">});</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>allowed<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Response</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Too Many Requests&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">status:</span> <span class="text-syn-n">429</span> <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> <span class="f">processRequest</span><span class="u">(</span>req<span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">processRequest</span><span class="text-syn-u">(</span>req<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Your service imports the library and talks directly to Redis. One network hop. No load
@@ -788,21 +797,21 @@ X-Ratelimit-Retry-After: 30
               Each user&#39;s counter only lives on one shard. No cross-shard queries needed.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getShardForUser</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> shards<span class="o">:</span> <span class="t">Redis</span><span class="u">[])</span><span class="o">:</span> <span class="t">Redis</span> <span class="u">{</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">hashCode</span><span class="u">(</span>userId<span class="u">);</span>
-  <span class="k">return</span> shards<span class="u">[</span>hash <span class="o">%</span> shards<span class="u">.</span>length<span class="u">];</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">function</span> <span class="text-syn-f">getShardForUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> shards<span class="text-syn-o">:</span> <span class="text-syn-t">Redis</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Redis</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashCode</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> shards<span class="text-syn-u">[</span>hash <span class="text-syn-o">%</span> shards<span class="text-syn-u">.</span>length<span class="text-syn-u">];</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">checkRateLimit</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> shard <span class="o">=</span> <span class="f">getShardForUser</span><span class="u">(</span>userId<span class="u">,</span> redisShards<span class="u">);</span>
-  <span class="k">const</span> count <span class="o">=</span> <span class="k">await</span> shard<span class="u">.</span><span class="f">incr</span><span class="u">(</span><span class="s">`ratelimit:${userId}`</span><span class="u">);</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">checkRateLimit</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> shard <span class="text-syn-o">=</span> <span class="text-syn-f">getShardForUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">,</span> redisShards<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> count <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> shard<span class="text-syn-u">.</span><span class="text-syn-f">incr</span><span class="text-syn-u">(</span><span class="text-syn-s">`ratelimit:${userId}`</span><span class="text-syn-u">);</span>
 
-  <span class="k">if</span> <span class="u">(</span>count <span class="o">===</span> <span class="n">1</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">await</span> shard<span class="u">.</span><span class="f">expire</span><span class="u">(</span><span class="s">`ratelimit:${userId}`</span><span class="u">,</span> <span class="n">60</span><span class="u">);</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>count <span class="text-syn-o">===</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">await</span> shard<span class="text-syn-u">.</span><span class="text-syn-f">expire</span><span class="text-syn-u">(</span><span class="text-syn-s">`ratelimit:${userId}`</span><span class="text-syn-u">,</span> <span class="text-syn-n">60</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> count <span class="o">&lt;=</span> <span class="n">100</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> count <span class="text-syn-o">&lt;=</span> <span class="text-syn-n">100</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The library needs to know about all Redis shards. Store shard addresses in a central
@@ -810,10 +819,10 @@ X-Ratelimit-Retry-After: 30
               initializes, it reads the config and creates connections to all shards.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">initRateLimiter</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Redis</span><span class="u">[]&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> config <span class="o">=</span> <span class="k">await</span> <span class="f">fetchShardConfig</span><span class="u">();</span>
-  <span class="k">return</span> config<span class="u">.</span>shards<span class="u">.</span><span class="f">map</span><span class="u">((</span>addr<span class="u">)</span> <span class="k">=&gt;</span> <span class="o">new</span> <span class="f">Redis</span><span class="u">({</span> <span class="p">host:</span> addr<span class="u">.</span><span class="p">host</span><span class="u">,</span> <span class="p">port:</span> addr<span class="u">.</span><span class="p">port</span> <span class="u">}));</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">initRateLimiter</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Redis</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> config <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetchShardConfig</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">return</span> config<span class="text-syn-u">.</span>shards<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>addr<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">({</span> <span class="text-syn-p">host:</span> addr<span class="text-syn-u">.</span><span class="text-syn-p">host</span><span class="text-syn-u">,</span> <span class="text-syn-p">port:</span> addr<span class="text-syn-u">.</span><span class="text-syn-p">port</span> <span class="text-syn-u">}));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               On each request, hash the user ID, pick a shard, and do the rate limiting operations
@@ -843,43 +852,43 @@ X-Ratelimit-Retry-After: 30
               Lua scripts as a single atomic operation, so no interleaving can happen.
             </p>
             <pre
-            ><code class="language-lua"><span class="k">local</span> key <span class="o">=</span> KEYS[<span class="n">1</span>]
-<span class="k">local</span> limit <span class="o">=</span> <span class="f">tonumber</span>(ARGV[<span class="n">1</span>])
-<span class="k">local</span> window <span class="o">=</span> <span class="f">tonumber</span>(ARGV[<span class="n">2</span>])
+            ><code class="language-lua"><span class="text-syn-k">local</span> key <span class="text-syn-o">=</span> KEYS[<span class="text-syn-n">1</span>]
+<span class="text-syn-k">local</span> limit <span class="text-syn-o">=</span> <span class="text-syn-f">tonumber</span>(ARGV[<span class="text-syn-n">1</span>])
+<span class="text-syn-k">local</span> window <span class="text-syn-o">=</span> <span class="text-syn-f">tonumber</span>(ARGV[<span class="text-syn-n">2</span>])
 
-<span class="k">local</span> current <span class="o">=</span> redis.<span class="f">call</span>(<span class="s">&quot;INCR&quot;</span>, key)
-<span class="k">if</span> current <span class="o">==</span> <span class="n">1</span> <span class="k">then</span>
-  redis.<span class="f">call</span>(<span class="s">&quot;EXPIRE&quot;</span>, key, window)
-<span class="k">end</span>
+<span class="text-syn-k">local</span> current <span class="text-syn-o">=</span> redis.<span class="text-syn-f">call</span>(<span class="text-syn-s">&quot;INCR&quot;</span>, key)
+<span class="text-syn-k">if</span> current <span class="text-syn-o">==</span> <span class="text-syn-n">1</span> <span class="text-syn-k">then</span>
+  redis.<span class="text-syn-f">call</span>(<span class="text-syn-s">&quot;EXPIRE&quot;</span>, key, window)
+<span class="text-syn-k">end</span>
 
-<span class="k">if</span> current <span class="o">&gt;</span> limit <span class="k">then</span>
-  <span class="k">return</span> <span class="n">0</span>
-<span class="k">end</span>
-<span class="k">return</span> <span class="n">1</span>
+<span class="text-syn-k">if</span> current <span class="text-syn-o">&gt;</span> limit <span class="text-syn-k">then</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-n">0</span>
+<span class="text-syn-k">end</span>
+<span class="text-syn-k">return</span> <span class="text-syn-n">1</span>
 </code></pre>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> RATE_LIMIT_SCRIPT <span class="o">=</span> <span class="s">`</span>
-<span class="s">local key = KEYS[1]</span>
-<span class="s">local limit = tonumber(ARGV[1])</span>
-<span class="s">local window = tonumber(ARGV[2])</span>
-<span class="s">local current = redis.call(&quot;INCR&quot;, key)</span>
-<span class="s">if current == 1 then</span>
-<span class="s">  redis.call(&quot;EXPIRE&quot;, key, window)</span>
-<span class="s">end</span>
-<span class="s">if current &gt; limit then</span>
-<span class="s">  return 0</span>
-<span class="s">end</span>
-<span class="s">return 1</span>
-<span class="s">`</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> RATE_LIMIT_SCRIPT <span class="text-syn-o">=</span> <span class="text-syn-s">`</span>
+<span class="text-syn-s">local key = KEYS[1]</span>
+<span class="text-syn-s">local limit = tonumber(ARGV[1])</span>
+<span class="text-syn-s">local window = tonumber(ARGV[2])</span>
+<span class="text-syn-s">local current = redis.call(&quot;INCR&quot;, key)</span>
+<span class="text-syn-s">if current == 1 then</span>
+<span class="text-syn-s">  redis.call(&quot;EXPIRE&quot;, key, window)</span>
+<span class="text-syn-s">end</span>
+<span class="text-syn-s">if current &gt; limit then</span>
+<span class="text-syn-s">  return 0</span>
+<span class="text-syn-s">end</span>
+<span class="text-syn-s">return 1</span>
+<span class="text-syn-s">`</span><span class="text-syn-u">;</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">atomicRateLimit</span><span class="u">(</span>
-  key<span class="o">:</span> <span class="t">string</span><span class="u">,</span>
-  limit<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-  windowSeconds<span class="o">:</span> <span class="t">number</span><span class="u">,</span>
-<span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">boolean</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> result <span class="o">=</span> <span class="k">await</span> redis<span class="u">.</span><span class="f">eval</span><span class="u">(</span>RATE_LIMIT_SCRIPT<span class="u">,</span> <span class="n">1</span><span class="u">,</span> <span class="s">`ratelimit:${key}`</span><span class="u">,</span> limit<span class="u">,</span> windowSeconds<span class="u">);</span>
-  <span class="k">return</span> result <span class="o">===</span> <span class="n">1</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">atomicRateLimit</span><span class="text-syn-u">(</span>
+  key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
+  limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+  windowSeconds<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">eval</span><span class="text-syn-u">(</span>RATE_LIMIT_SCRIPT<span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-s">`ratelimit:${key}`</span><span class="text-syn-u">,</span> limit<span class="text-syn-u">,</span> windowSeconds<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> result <span class="text-syn-o">===</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The <code>INCR</code> + conditional <code>EXPIRE</code> + limit check all happen as
@@ -925,24 +934,31 @@ X-Ratelimit-Retry-After: 30
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
-            <li><a href="/blogs/system-design/caching/">Caching</a></li>
-            <li><a href="/blogs/system-design/load-balancers/">Load Balancers</a></li>
+            <li class="my-2"><a href="/blogs/system-design/bloom-filters/">Bloom Filters</a></li>
+            <li class="my-2"><a href="/blogs/system-design/caching/">Caching</a></li>
+            <li class="my-2"><a href="/blogs/system-design/load-balancers/">Load Balancers</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

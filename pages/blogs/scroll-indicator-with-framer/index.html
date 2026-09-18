@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Scroll Indicator with Framer Motion useScroll</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Scroll Indicator with Framer Motion useScroll</h1>
-            <p class="detail-meta"><time datetime="2024-07-24">2024-07-24</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Scroll Indicator with Framer Motion useScroll
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-07-24">2024-07-24</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <h2 id="the-idea">The Idea</h2>
             <p>
               Creating a visually appealing and functional portfolio website is essential for
@@ -113,48 +122,48 @@
               />
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">framer-motion</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">framer-motion</span>
 </code></pre>
             <p>To get a good viewport to observe the scroll effect, I am adding a test height.</p>
             <pre
-            ><code class="language-jsx"><span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">main</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span>
-        <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-          <span class="p">height:</span> <span class="s">&quot;300vh&quot;</span><span class="u">,</span>
-        <span class="u">}}</span>
-      <span class="u">/&gt;</span>
-    <span class="u">&lt;/</span><span class="g">main</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-jsx"><span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span>
+        <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+          <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;300vh&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">}}</span>
+      <span class="text-syn-u">/&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Now let&#39;s add the main div that&#39;s gonna act like the scroll indicator</p>
             <pre
-            ><code class="language-jsx"><span class="k">import</span> <span class="u">{</span> motion <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;framer-motion&quot;</span><span class="u">;</span>
+            ><code class="language-jsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> motion <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">main</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">motion.div</span>
-        <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-          <span class="p">position:</span> <span class="s">&quot;fixed&quot;</span><span class="u">,</span>
-          <span class="p">top:</span> <span class="n">0</span><span class="u">,</span>
-          <span class="p">left:</span> <span class="n">0</span><span class="u">,</span>
-          <span class="p">width:</span> <span class="s">&quot;20vw&quot;</span><span class="u">,</span>
-          <span class="p">height:</span> <span class="s">&quot;10px&quot;</span><span class="u">,</span>
-          <span class="p">backgroundColor:</span> <span class="s">&quot;black&quot;</span><span class="u">,</span>
-          <span class="p">borderRadius:</span> <span class="s">&quot;0 10px 10px 0&quot;</span><span class="u">,</span>
-        <span class="u">}}</span>
-      <span class="u">/&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span>
-        <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-          <span class="p">height:</span> <span class="s">&quot;300vh&quot;</span><span class="u">,</span>
-        <span class="u">}}</span>
-      <span class="u">/&gt;</span>
-    <span class="u">&lt;/</span><span class="g">main</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">motion.div</span>
+        <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+          <span class="text-syn-p">position:</span> <span class="text-syn-s">&quot;fixed&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">top:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">left:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">width:</span> <span class="text-syn-s">&quot;20vw&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;10px&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">backgroundColor:</span> <span class="text-syn-s">&quot;black&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">borderRadius:</span> <span class="text-syn-s">&quot;0 10px 10px 0&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">}}</span>
+      <span class="text-syn-u">/&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span>
+        <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+          <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;300vh&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">}}</span>
+      <span class="text-syn-u">/&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               You can read more about
@@ -175,16 +184,16 @@
               hook from framer-motion.
             </p>
             <pre
-            ><code class="language-jsx"><span class="k">import</span> <span class="u">{</span> useScroll <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;framer-motion&quot;</span><span class="u">;</span>
+            ><code class="language-jsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useScroll <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> <span class="u">{</span> scrollYProgress <span class="u">}</span> <span class="o">=</span> <span class="f">useScroll</span><span class="u">();</span>
+<span class="text-syn-k">const</span> <span class="text-syn-u">{</span> scrollYProgress <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useScroll</span><span class="text-syn-u">();</span>
 </code></pre>
             <p>
               Now, to animate the changing values received from <code>scrollYProgress</code>, we
               will use the <code>useTransform</code> hook from framer-motion.
             </p>
             <pre
-            ><code class="language-jsx"><span class="k">const</span> width <span class="o">=</span> <span class="f">useTransform</span><span class="u">(</span>scrollYProgress<span class="u">,</span> <span class="u">[</span><span class="n">0</span><span class="u">,</span> <span class="n">1</span><span class="u">],</span> <span class="u">[</span><span class="s">&quot;0%&quot;</span><span class="u">,</span> <span class="s">&quot;100%&quot;</span><span class="u">]);</span>
+            ><code class="language-jsx"><span class="text-syn-k">const</span> width <span class="text-syn-o">=</span> <span class="text-syn-f">useTransform</span><span class="text-syn-u">(</span>scrollYProgress<span class="text-syn-u">,</span> <span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">],</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;0%&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;100%&quot;</span><span class="text-syn-u">]);</span>
 </code></pre>
             <p>
               Here, the width will provide an animated value based on <code>scrollYProgress</code>.
@@ -194,32 +203,32 @@
               values (which range from 0 to 1) to the corresponding width values.
             </p>
             <pre
-            ><code class="language-jsx"><span class="k">import</span> <span class="u">{</span> motion<span class="u">,</span> useScroll<span class="u">,</span> useTransform <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;framer-motion&quot;</span><span class="u">;</span>
+            ><code class="language-jsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> motion<span class="text-syn-u">,</span> useScroll<span class="text-syn-u">,</span> useTransform <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">App</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> <span class="u">{</span> scrollYProgress <span class="u">}</span> <span class="o">=</span> <span class="f">useScroll</span><span class="u">();</span>
-  <span class="k">const</span> width <span class="o">=</span> <span class="f">useTransform</span><span class="u">(</span>scrollYProgress<span class="u">,</span> <span class="u">[</span><span class="n">0</span><span class="u">,</span> <span class="n">1</span><span class="u">],</span> <span class="u">[</span><span class="s">&quot;0%&quot;</span><span class="u">,</span> <span class="s">&quot;102%&quot;</span><span class="u">]);</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">main</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">motion.div</span>
-        <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-          <span class="p">position:</span> <span class="s">&quot;fixed&quot;</span><span class="u">,</span>
-          <span class="p">top:</span> <span class="n">0</span><span class="u">,</span>
-          <span class="p">left:</span> <span class="n">0</span><span class="u">,</span>
-          <span class="p">height:</span> <span class="s">&quot;10px&quot;</span><span class="u">,</span>
-          <span class="p">backgroundColor:</span> <span class="s">&quot;black&quot;</span><span class="u">,</span>
-          <span class="p">borderRadius:</span> <span class="s">&quot;0 10px 10px 0&quot;</span><span class="u">,</span>
-          width<span class="u">,</span>
-        <span class="u">}}</span>
-      <span class="u">/&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span>
-        <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-          <span class="p">height:</span> <span class="s">&quot;300vh&quot;</span><span class="u">,</span>
-        <span class="u">}}</span>
-      <span class="u">/&gt;</span>
-    <span class="u">&lt;/</span><span class="g">main</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> scrollYProgress <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useScroll</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> width <span class="text-syn-o">=</span> <span class="text-syn-f">useTransform</span><span class="text-syn-u">(</span>scrollYProgress<span class="text-syn-u">,</span> <span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">],</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;0%&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;102%&quot;</span><span class="text-syn-u">]);</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">motion.div</span>
+        <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+          <span class="text-syn-p">position:</span> <span class="text-syn-s">&quot;fixed&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">top:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">left:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;10px&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">backgroundColor:</span> <span class="text-syn-s">&quot;black&quot;</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">borderRadius:</span> <span class="text-syn-s">&quot;0 10px 10px 0&quot;</span><span class="text-syn-u">,</span>
+          width<span class="text-syn-u">,</span>
+        <span class="text-syn-u">}}</span>
+      <span class="text-syn-u">/&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span>
+        <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+          <span class="text-syn-p">height:</span> <span class="text-syn-s">&quot;300vh&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-u">}}</span>
+      <span class="text-syn-u">/&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               So, we use the width as a style prop for the <code>motion.div</code>. And that&#39;s
@@ -239,30 +248,39 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/context-menu-in-react/">React Context Menu with react-contexify</a>
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/image-gallery-with-photoswipe/"
                 >React Image Gallery with PhotoSwipe</a
               >
             </li>
-            <li><a href="/blogs/typewriter-effect-in-react/">Typewriter Effect in React</a></li>
+            <li class="my-2">
+              <a href="/blogs/typewriter-effect-in-react/">Typewriter Effect in React</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

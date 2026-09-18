@@ -2,6 +2,7 @@ import { realpathSync } from "node:fs";
 import { resolve, sep } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
 import { developmentLog } from "./dev-log.mjs";
 import { developmentRenderer } from "./dev-renderer.mjs";
@@ -29,6 +30,7 @@ const server = await createServer({
     fs: { strict: true, allow: [process.cwd()] },
   },
   plugins: [
+    tailwindcss(),
     {
       name: "markdown-pages",
       configureServer(vite) {

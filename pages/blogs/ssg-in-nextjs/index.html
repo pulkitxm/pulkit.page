@@ -49,12 +49,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -62,20 +67,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Next.js Build Output Symbols (● ○ ƒ) and SSG</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Next.js Build Output Symbols (● ○ ƒ) and SSG</h1>
-            <p class="detail-meta"><time datetime="2026-01-01">2026-01-01</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Next.js Build Output Symbols (● ○ ƒ) and SSG
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-01">2026-01-01</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               When building a Next.js application, understanding how your pages are rendered is
               crucial for optimizing performance and user experience. Two of the most powerful
@@ -143,12 +152,12 @@
               >
             </p>
             <p>Which returns:</p>
-            <pre><code class="language-json"><span class="u">{</span>
-  <span class="p">&quot;userId&quot;</span><span class="u">:</span> <span class="n">1</span><span class="u">,</span>
-  <span class="p">&quot;id&quot;</span><span class="u">:</span> <span class="n">1</span><span class="u">,</span>
-  <span class="p">&quot;title&quot;</span><span class="u">:</span> <span class="s">&quot;delectus aut autem&quot;</span><span class="u">,</span>
-  <span class="p">&quot;completed&quot;</span><span class="u">:</span> <span class="k">false</span>
-<span class="u">}</span>
+            <pre><code class="language-json"><span class="text-syn-u">{</span>
+  <span class="text-syn-p">&quot;userId&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;title&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;delectus aut autem&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">&quot;completed&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-k">false</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="with-server-side-rendering-ssr">With Server-Side Rendering (SSR)</h3>
             <p>
@@ -156,81 +165,81 @@
               <code>app/todos/[id]/page.tsx</code>:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Todo</span> <span class="u">{</span>
-  userId<span class="o">:</span> <span class="t">number</span>
-  id<span class="o">:</span> <span class="t">number</span>
-  title<span class="o">:</span> <span class="t">string</span>
-  completed<span class="o">:</span> <span class="t">boolean</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">Todo</span> <span class="text-syn-u">{</span>
+  userId<span class="text-syn-o">:</span> <span class="text-syn-t">number</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span>
+  title<span class="text-syn-o">:</span> <span class="text-syn-t">string</span>
+  completed<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getTodo</span><span class="u">(</span>id<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Todo</span><span class="u">&gt;</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`[SSR] Fetching todo with ID: ${id} at ${new Date().toISOString()}`</span><span class="u">)</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getTodo</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Todo</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">`[SSR] Fetching todo with ID: ${id} at ${new Date().toISOString()}`</span><span class="text-syn-u">)</span>
 
-  <span class="k">const</span> res <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">`https://jsonplaceholder.typicode.com/todos/${id}`</span><span class="u">,</span> <span class="u">{</span>
-    <span class="p">cache:</span> <span class="s">&#39;no-store&#39;</span><span class="u">,</span>
-  <span class="u">})</span>
+  <span class="text-syn-k">const</span> res <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">`https://jsonplaceholder.typicode.com/todos/${id}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">cache:</span> <span class="text-syn-s">&#39;no-store&#39;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">})</span>
 
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>res<span class="u">.</span><span class="p">ok</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">throw</span> <span class="o">new</span> <span class="f">Error</span><span class="u">(</span><span class="s">&#39;Failed to fetch todo&#39;</span><span class="u">)</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>res<span class="text-syn-u">.</span><span class="text-syn-p">ok</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">throw</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Error</span><span class="text-syn-u">(</span><span class="text-syn-s">&#39;Failed to fetch todo&#39;</span><span class="text-syn-u">)</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> res<span class="u">.</span><span class="f">json</span><span class="u">()</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">`[SSR] Successfully fetched todo: ${data.</span><span class="p">title</span><span class="s">}`</span><span class="u">)</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> res<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">()</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">`[SSR] Successfully fetched todo: ${data.</span><span class="text-syn-p">title</span><span class="text-syn-s">}`</span><span class="text-syn-u">)</span>
 
-  <span class="k">return</span> data
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> data
+<span class="text-syn-u">}</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">async</span> <span class="k">function</span> <span class="f">TodoPage</span><span class="u">({</span> params <span class="u">}</span><span class="o">:</span> <span class="u">{</span> params<span class="o">:</span> <span class="u">{</span> id<span class="o">:</span> <span class="t">string</span> <span class="u">}</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> todo <span class="o">=</span> <span class="k">await</span> <span class="f">getTodo</span><span class="u">(</span>params<span class="u">.</span><span class="p">id</span><span class="u">)</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">TodoPage</span><span class="text-syn-u">({</span> params <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> params<span class="text-syn-o">:</span> <span class="text-syn-u">{</span> id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">}</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> todo <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getTodo</span><span class="text-syn-u">(</span>params<span class="text-syn-u">.</span><span class="text-syn-p">id</span><span class="text-syn-u">)</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="o">&lt;</span>div className<span class="o">=</span><span class="s">&quot;min-h-screen flex items-center justify-center bg-gray-50 p-4&quot;</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span>div className<span class="o">=</span><span class="s">&quot;max-w-md w-full bg-white rounded-lg shadow-lg p-8&quot;</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span>div className<span class="o">=</span><span class="s">&quot;mb-6&quot;</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span>span className<span class="o">=</span><span class="s">&quot;inline-block px-3 py-1 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full&quot;</span><span class="o">&gt;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-o">&lt;</span>div className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;min-h-screen flex items-center justify-center bg-gray-50 p-4&quot;</span><span class="text-syn-o">&gt;</span>
+      <span class="text-syn-o">&lt;</span>div className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;max-w-md w-full bg-white rounded-lg shadow-lg p-8&quot;</span><span class="text-syn-o">&gt;</span>
+        <span class="text-syn-o">&lt;</span>div className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;mb-6&quot;</span><span class="text-syn-o">&gt;</span>
+          <span class="text-syn-o">&lt;</span>span className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;inline-block px-3 py-1 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full&quot;</span><span class="text-syn-o">&gt;</span>
             SSR Mode
-          <span class="o">&lt;/</span>span<span class="o">&gt;</span>
-        <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+          <span class="text-syn-o">&lt;/</span>span<span class="text-syn-o">&gt;</span>
+        <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
 
-        <span class="o">&lt;</span>h1 className<span class="o">=</span><span class="s">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span><span class="o">&gt;</span>
-          Todo #<span class="u">{</span>todo.id<span class="u">}</span>
-        <span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+        <span class="text-syn-o">&lt;</span>h1 className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span><span class="text-syn-o">&gt;</span>
+          Todo #<span class="text-syn-u">{</span>todo.id<span class="text-syn-u">}</span>
+        <span class="text-syn-o">&lt;/</span>h1<span class="text-syn-o">&gt;</span>
 
-        <span class="o">&lt;</span>div className<span class="o">=</span><span class="s">&quot;space-y-4&quot;</span><span class="o">&gt;</span>
-          <span class="u">&lt;</span><span class="t">div</span><span class="u">&gt;</span>
-            <span class="o">&lt;</span>p className<span class="o">=</span><span class="s">&quot;text-sm text-gray-500 mb-1&quot;</span><span class="o">&gt;</span>Title<span class="o">&lt;/</span>p<span class="o">&gt;</span>
-            <span class="o">&lt;</span>p className<span class="o">=</span><span class="s">&quot;text-lg text-gray-800&quot;</span><span class="o">&gt;</span><span class="u">{</span>todo.title<span class="u">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
-          <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+        <span class="text-syn-o">&lt;</span>div className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;space-y-4&quot;</span><span class="text-syn-o">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-t">div</span><span class="text-syn-u">&gt;</span>
+            <span class="text-syn-o">&lt;</span>p className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-sm text-gray-500 mb-1&quot;</span><span class="text-syn-o">&gt;</span>Title<span class="text-syn-o">&lt;/</span>p<span class="text-syn-o">&gt;</span>
+            <span class="text-syn-o">&lt;</span>p className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-lg text-gray-800&quot;</span><span class="text-syn-o">&gt;</span><span class="text-syn-u">{</span>todo.title<span class="text-syn-u">}</span><span class="text-syn-o">&lt;/</span>p<span class="text-syn-o">&gt;</span>
+          <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
 
-          <span class="u">&lt;</span><span class="t">div</span><span class="u">&gt;</span>
-            <span class="o">&lt;</span>p className<span class="o">=</span><span class="s">&quot;text-sm text-gray-500 mb-1&quot;</span><span class="o">&gt;</span>User ID<span class="o">&lt;/</span>p<span class="o">&gt;</span>
-            <span class="o">&lt;</span>p className<span class="o">=</span><span class="s">&quot;text-lg text-gray-800&quot;</span><span class="o">&gt;</span><span class="u">{</span>todo.userId<span class="u">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
-          <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-t">div</span><span class="text-syn-u">&gt;</span>
+            <span class="text-syn-o">&lt;</span>p className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-sm text-gray-500 mb-1&quot;</span><span class="text-syn-o">&gt;</span>User ID<span class="text-syn-o">&lt;/</span>p<span class="text-syn-o">&gt;</span>
+            <span class="text-syn-o">&lt;</span>p className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-lg text-gray-800&quot;</span><span class="text-syn-o">&gt;</span><span class="text-syn-u">{</span>todo.userId<span class="text-syn-u">}</span><span class="text-syn-o">&lt;/</span>p<span class="text-syn-o">&gt;</span>
+          <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
 
-          <span class="u">&lt;</span><span class="t">div</span><span class="u">&gt;</span>
-            <span class="o">&lt;</span>p className<span class="o">=</span><span class="s">&quot;text-sm text-gray-500 mb-1&quot;</span><span class="o">&gt;</span>Status<span class="o">&lt;/</span>p<span class="o">&gt;</span>
-            <span class="o">&lt;</span>div className<span class="o">=</span><span class="s">&quot;flex items-center gap-2&quot;</span><span class="o">&gt;</span>
-              <span class="o">&lt;</span>div
-                className<span class="o">=</span><span class="u">{</span><span class="p">`w-3 h-3 rounded-full ${</span>
-<span class="p">                  todo.completed ? &#39;bg-green-500&#39; : &#39;bg-yellow-500&#39;</span>
-<span class="p">                }`</span><span class="u">}</span>
-              <span class="o">/&gt;</span>
-              <span class="o">&lt;</span>span className<span class="o">=</span><span class="s">&quot;text-lg text-gray-800&quot;</span><span class="o">&gt;</span>
-                <span class="u">{</span>todo.completed ? <span class="s">&#39;Completed&#39;</span> <span class="u">:</span> <span class="s">&#39;In Progress&#39;</span><span class="u">}</span>
-              <span class="o">&lt;/</span>span<span class="o">&gt;</span>
-            <span class="o">&lt;/</span>div<span class="o">&gt;</span>
-          <span class="o">&lt;/</span>div<span class="o">&gt;</span>
-        <span class="o">&lt;/</span>div<span class="o">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-t">div</span><span class="text-syn-u">&gt;</span>
+            <span class="text-syn-o">&lt;</span>p className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-sm text-gray-500 mb-1&quot;</span><span class="text-syn-o">&gt;</span>Status<span class="text-syn-o">&lt;/</span>p<span class="text-syn-o">&gt;</span>
+            <span class="text-syn-o">&lt;</span>div className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex items-center gap-2&quot;</span><span class="text-syn-o">&gt;</span>
+              <span class="text-syn-o">&lt;</span>div
+                className<span class="text-syn-o">=</span><span class="text-syn-u">{</span><span class="text-syn-p">`w-3 h-3 rounded-full ${</span>
+<span class="text-syn-p">                  todo.completed ? &#39;bg-green-500&#39; : &#39;bg-yellow-500&#39;</span>
+<span class="text-syn-p">                }`</span><span class="text-syn-u">}</span>
+              <span class="text-syn-o">/&gt;</span>
+              <span class="text-syn-o">&lt;</span>span className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-lg text-gray-800&quot;</span><span class="text-syn-o">&gt;</span>
+                <span class="text-syn-u">{</span>todo.completed ? <span class="text-syn-s">&#39;Completed&#39;</span> <span class="text-syn-u">:</span> <span class="text-syn-s">&#39;In Progress&#39;</span><span class="text-syn-u">}</span>
+              <span class="text-syn-o">&lt;/</span>span<span class="text-syn-o">&gt;</span>
+            <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
+          <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
+        <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
 
-        <span class="o">&lt;</span>div className<span class="o">=</span><span class="s">&quot;mt-6 pt-6 border-t border-gray-200&quot;</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span>p className<span class="o">=</span><span class="s">&quot;text-xs text-gray-400&quot;</span><span class="o">&gt;</span>
+        <span class="text-syn-o">&lt;</span>div className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;mt-6 pt-6 border-t border-gray-200&quot;</span><span class="text-syn-o">&gt;</span>
+          <span class="text-syn-o">&lt;</span>p className<span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-xs text-gray-400&quot;</span><span class="text-syn-o">&gt;</span>
             This page is rendered on the server for every request
-          <span class="o">&lt;/</span>p<span class="o">&gt;</span>
-        <span class="o">&lt;/</span>div<span class="o">&gt;</span>
-      <span class="o">&lt;/</span>div<span class="o">&gt;</span>
-    <span class="o">&lt;/</span>div<span class="o">&gt;</span>
-  <span class="u">)</span>
-<span class="u">}</span>
+          <span class="text-syn-o">&lt;/</span>p<span class="text-syn-o">&gt;</span>
+        <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
+      <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
+    <span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span>
+  <span class="text-syn-u">)</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               <img
@@ -261,12 +270,12 @@
               terminal:
             </p>
             <pre
-            ><code class="language-bash"><span class="u">[</span>SSR<span class="u">]</span> Fetching todo with ID: 1 at 2025-12-13T17:17:15.184Z
-<span class="u">[</span>SSR<span class="u">]</span> Successfully fetched todo: delectus aut autem
- <span class="f">GET</span> <span class="s">/todos/1</span> <span class="s">200</span> <span class="s">in</span> <span class="s">66ms</span>
-<span class="u">[</span>SSR<span class="u">]</span> Fetching todo with ID: 2 at 2025-12-13T17:17:18.359Z
-<span class="u">[</span>SSR<span class="u">]</span> Successfully fetched todo: quis ut nam facilis et officia qui
- <span class="f">GET</span> <span class="s">/todos/2</span> <span class="s">200</span> <span class="s">in</span> <span class="s">88ms</span>
+            ><code class="language-bash"><span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Fetching todo with ID: 1 at 2025-12-13T17:17:15.184Z
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Successfully fetched todo: delectus aut autem
+ <span class="text-syn-f">GET</span> <span class="text-syn-s">/todos/1</span> <span class="text-syn-s">200</span> <span class="text-syn-s">in</span> <span class="text-syn-s">66ms</span>
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Fetching todo with ID: 2 at 2025-12-13T17:17:18.359Z
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Successfully fetched todo: quis ut nam facilis et officia qui
+ <span class="text-syn-f">GET</span> <span class="text-syn-s">/todos/2</span> <span class="text-syn-s">200</span> <span class="text-syn-s">in</span> <span class="text-syn-s">88ms</span>
 </code></pre>
             <p>
               <strong>Every time you refresh the page</strong>, you&#39;ll see new logs with updated
@@ -292,15 +301,16 @@
               function to tell Next.js which pages to pre-render at build time.
             </p>
             <p>Update <code>app/todos/[id]/page.tsx</code>:</p>
-            <pre><code class="language-typescript"><span class="c">// same code as above</span>
+            <pre
+            ><code class="language-typescript"><span class="text-syn-c italic">// same code as above</span>
 
-<span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">generateStaticParams</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> ids <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">&quot;https://jsonplaceholder.typicode.com/todos&quot;</span><span class="u">);</span>
-  <span class="k">const</span> data <span class="o">=</span> <span class="k">await</span> ids<span class="u">.</span><span class="f">json</span><span class="u">();</span>
-  <span class="k">return</span> data<span class="u">.</span><span class="f">map</span><span class="u">((</span>todo<span class="o">:</span> <span class="t">Todo</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">id:</span> todo<span class="u">.</span>id<span class="u">.</span><span class="f">toString</span><span class="u">(),</span>
-  <span class="u">}));</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">generateStaticParams</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> ids <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;https://jsonplaceholder.typicode.com/todos&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> ids<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">return</span> data<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>todo<span class="text-syn-o">:</span> <span class="text-syn-t">Todo</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">id:</span> todo<span class="text-syn-u">.</span>id<span class="text-syn-u">.</span><span class="text-syn-f">toString</span><span class="text-syn-u">(),</span>
+  <span class="text-syn-u">}));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h4 id="key-changes-for-ssg">Key Changes for SSG:</h4>
             <ol>
@@ -316,18 +326,18 @@
             <h4 id="ssg-build-logs">SSG Build Logs</h4>
             <p>Now when you build your application with:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">build</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">build</span>
 </code></pre>
             <p>You&#39;ll see logs like this during the build process:</p>
             <pre
-            ><code class="language-bash"><span class="f">Route</span> (app)                              Size     First Load JS
-<span class="f">┌</span> <span class="s">○</span> <span class="s">/</span>                                    <span class="s">5.42</span> <span class="s">kB</span>        <span class="s">92.4</span> <span class="s">kB</span>
-<span class="f">├</span> <span class="s">○</span> <span class="s">/_not-found</span>                          <span class="s">871</span> <span class="s">B</span>          <span class="s">87.9</span> <span class="s">kB</span>
-<span class="f">└</span> <span class="s">●</span> <span class="s">/todos/[id]</span>                          <span class="s">338</span> <span class="s">B</span>          <span class="s">87.4</span> <span class="s">kB</span>
-   <span class="f">├</span> <span class="s">/todos/1</span>
-   <span class="f">├</span> <span class="s">/todos/2</span>
-   <span class="f">├</span> <span class="s">/todos/3</span>
-   <span class="f">└</span> [+97 <span class="s">more</span> <span class="s">paths]</span>
+            ><code class="language-bash"><span class="text-syn-f">Route</span> (app)                              Size     First Load JS
+<span class="text-syn-f">┌</span> <span class="text-syn-s">○</span> <span class="text-syn-s">/</span>                                    <span class="text-syn-s">5.42</span> <span class="text-syn-s">kB</span>        <span class="text-syn-s">92.4</span> <span class="text-syn-s">kB</span>
+<span class="text-syn-f">├</span> <span class="text-syn-s">○</span> <span class="text-syn-s">/_not-found</span>                          <span class="text-syn-s">871</span> <span class="text-syn-s">B</span>          <span class="text-syn-s">87.9</span> <span class="text-syn-s">kB</span>
+<span class="text-syn-f">└</span> <span class="text-syn-s">●</span> <span class="text-syn-s">/todos/[id]</span>                          <span class="text-syn-s">338</span> <span class="text-syn-s">B</span>          <span class="text-syn-s">87.4</span> <span class="text-syn-s">kB</span>
+   <span class="text-syn-f">├</span> <span class="text-syn-s">/todos/1</span>
+   <span class="text-syn-f">├</span> <span class="text-syn-s">/todos/2</span>
+   <span class="text-syn-f">├</span> <span class="text-syn-s">/todos/3</span>
+   <span class="text-syn-f">└</span> [+97 <span class="text-syn-s">more</span> <span class="text-syn-s">paths]</span>
 </code></pre>
             <h3 id="reading-the-next-build-output-symbols">
               Reading the <code>next build</code> output (● ○ ƒ symbols)
@@ -364,7 +374,7 @@
             </ol>
             <p>After the build completes, when you run:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">start</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">start</span>
 </code></pre>
             <p>
               And navigate to <code>/todos/1</code>, <code>/todos/2</code>, or
@@ -386,33 +396,34 @@
             <h2 id="comparing-the-logs-ssr-vs-ssg">Comparing the Logs: SSR vs SSG</h2>
             <p>Let&#39;s put the log outputs side by side to see the difference:</p>
             <p><strong>SSR (Development):</strong></p>
-            <pre><code class="language-bash"><span class="f">pnpm</span> <span class="s">dev</span>
-<span class="c"># Visit /todos/1</span>
-<span class="u">[</span>SSR<span class="u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:23:45.123Z
-<span class="u">[</span>SSR<span class="u">]</span> Successfully fetched todo: delectus aut autem
+            <pre
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">dev</span>
+<span class="text-syn-c italic"># Visit /todos/1</span>
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:23:45.123Z
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Successfully fetched todo: delectus aut autem
 
-<span class="c"># Refresh the page</span>
-<span class="u">[</span>SSR<span class="u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:24:02.456Z
-<span class="u">[</span>SSR<span class="u">]</span> Successfully fetched todo: delectus aut autem
+<span class="text-syn-c italic"># Refresh the page</span>
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:24:02.456Z
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Successfully fetched todo: delectus aut autem
 
-<span class="c"># Refresh again</span>
-<span class="u">[</span>SSR<span class="u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:24:15.789Z
-<span class="u">[</span>SSR<span class="u">]</span> Successfully fetched todo: delectus aut autem
+<span class="text-syn-c italic"># Refresh again</span>
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:24:15.789Z
+<span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Successfully fetched todo: delectus aut autem
 </code></pre>
             <p><strong>SSG (Build + Production):</strong></p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">build</span>
-<span class="u">[</span>SSG<span class="u">]</span> Generating static params at build <span class="k">time</span>
-<span class="u">[</span>SSG<span class="u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:30:15.456Z
-<span class="u">[</span>SSG<span class="u">]</span> Successfully fetched todo: delectus aut autem
-<span class="u">[</span>SSG<span class="u">]</span> Fetching todo with ID: 2 at 2024-12-13T10:30:15.789Z
-<span class="u">[</span>SSG<span class="u">]</span> Successfully fetched todo: quis ut nam facilis et officia qui
-<span class="u">[</span>SSG<span class="u">]</span> Fetching todo with ID: 3 at 2024-12-13T10:30:16.012Z
-<span class="u">[</span>SSG<span class="u">]</span> Successfully fetched todo: fugiat veniam minus
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">build</span>
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Generating static params at build <span class="text-syn-k">time</span>
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Fetching todo with ID: 1 at 2024-12-13T10:30:15.456Z
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Successfully fetched todo: delectus aut autem
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Fetching todo with ID: 2 at 2024-12-13T10:30:15.789Z
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Successfully fetched todo: quis ut nam facilis et officia qui
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Fetching todo with ID: 3 at 2024-12-13T10:30:16.012Z
+<span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Successfully fetched todo: fugiat veniam minus
 
-<span class="f">pnpm</span> <span class="s">start</span>
-<span class="c"># Visit /todos/1, /todos/2, /todos/3, refresh as many times as you want</span>
-<span class="c"># No logs appear! Pages are served as static files</span>
+<span class="text-syn-f">pnpm</span> <span class="text-syn-s">start</span>
+<span class="text-syn-c italic"># Visit /todos/1, /todos/2, /todos/3, refresh as many times as you want</span>
+<span class="text-syn-c italic"># No logs appear! Pages are served as static files</span>
 </code></pre>
             <p>The difference is clear:</p>
             <ul>
@@ -438,8 +449,8 @@
               app. You simply export a <code>revalidate</code> value in your page file, like this:
             </p>
             <pre
-            ><code class="language-typescript"><span class="c">// Enable ISR - revalidate every hour to check for newly published blogs</span>
-<span class="k">export</span> <span class="k">const</span> revalidate <span class="o">=</span> <span class="n">3600</span><span class="u">;</span> <span class="c">// 1 hour in seconds</span>
+            ><code class="language-typescript"><span class="text-syn-c italic">// Enable ISR - revalidate every hour to check for newly published blogs</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> revalidate <span class="text-syn-o">=</span> <span class="text-syn-n">3600</span><span class="text-syn-u">;</span> <span class="text-syn-c italic">// 1 hour in seconds</span>
 </code></pre>
             <p>
               I use ISR for future blog posts on this site, so new content gets picked up
@@ -469,28 +480,37 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/cookie-sync-pattern/">The Cookie Sync Pattern</a></li>
-            <li>
+            <li class="my-2"><a href="/blogs/cookie-sync-pattern/">The Cookie Sync Pattern</a></li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
             </li>
-            <li><a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a></li>
+            <li class="my-2">
+              <a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

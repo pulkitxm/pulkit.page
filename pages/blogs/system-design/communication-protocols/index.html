@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Communication Protocols</h1>
-            <p class="detail-meta"><time datetime="2026-01-23">2026-01-23</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Communication Protocols
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-23">2026-01-23</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Two machines need to talk to each other. One machine (the client) wants something
               done. The other machine (the server) does the heavy lifting. This is the client-server
@@ -514,10 +523,10 @@ With keep-alive:
             <p>Before WebSockets, real-time was achieved through polling:</p>
             <p><strong>Short polling</strong>: Client asks repeatedly at fixed intervals.</p>
             <pre
-            ><code class="language-typescript"><span class="f">setInterval</span><span class="u">(</span><span class="k">async</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> messages <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">&quot;/api/messages&quot;</span><span class="u">);</span>
-  <span class="f">updateUI</span><span class="u">(</span>messages<span class="u">);</span>
-<span class="u">},</span> <span class="n">5000</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-f">setInterval</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> messages <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/messages&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-f">updateUI</span><span class="text-syn-u">(</span>messages<span class="text-syn-u">);</span>
+<span class="text-syn-u">},</span> <span class="text-syn-n">5000</span><span class="text-syn-u">);</span>
 </code></pre>
             <p>
               Simple but wasteful. You&#39;re making requests even when there&#39;s nothing new.
@@ -527,11 +536,11 @@ With keep-alive:
               there&#39;s data.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">longPoll</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">&quot;/api/messages?wait=true&quot;</span><span class="u">);</span>
-  <span class="f">updateUI</span><span class="u">(</span>response<span class="u">);</span>
-  <span class="f">longPoll</span><span class="u">();</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">longPoll</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/messages?wait=true&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-f">updateUI</span><span class="text-syn-u">(</span>response<span class="text-syn-u">);</span>
+  <span class="text-syn-f">longPoll</span><span class="text-syn-u">();</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Better, but still has connection overhead on each response.</p>
             <p>
@@ -582,42 +591,42 @@ id: 1002
             <h3 id="client-side-implementation">Client-Side Implementation</h3>
             <p>The browser provides a native <code>EventSource</code> API:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> eventSource <span class="o">=</span> <span class="o">new</span> <span class="f">EventSource</span><span class="u">(</span><span class="s">&quot;/api/stock-updates&quot;</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> eventSource <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">EventSource</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/stock-updates&quot;</span><span class="text-syn-u">);</span>
 
-eventSource<span class="u">.</span><span class="f">onmessage</span> <span class="o">=</span> <span class="u">(</span>event<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> data <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>event<span class="u">.</span><span class="p">data</span><span class="u">);</span>
-  <span class="f">updateStockPrice</span><span class="u">(</span>data<span class="u">);</span>
-<span class="u">};</span>
+eventSource<span class="text-syn-u">.</span><span class="text-syn-f">onmessage</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>event<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>event<span class="text-syn-u">.</span><span class="text-syn-p">data</span><span class="text-syn-u">);</span>
+  <span class="text-syn-f">updateStockPrice</span><span class="text-syn-u">(</span>data<span class="text-syn-u">);</span>
+<span class="text-syn-u">};</span>
 
-eventSource<span class="u">.</span><span class="f">onerror</span> <span class="o">=</span> <span class="u">(</span>error<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">error</span><span class="u">(</span><span class="s">&quot;SSE connection failed:&quot;</span><span class="u">,</span> error<span class="u">);</span>
-<span class="u">};</span>
+eventSource<span class="text-syn-u">.</span><span class="text-syn-f">onerror</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>error<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">error</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SSE connection failed:&quot;</span><span class="text-syn-u">,</span> error<span class="text-syn-u">);</span>
+<span class="text-syn-u">};</span>
 
-eventSource<span class="u">.</span><span class="f">addEventListener</span><span class="u">(</span><span class="s">&quot;stock-update&quot;</span><span class="u">,</span> <span class="u">(</span>event<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> data <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>event<span class="u">.</span><span class="p">data</span><span class="u">);</span>
-  <span class="f">handleStockUpdate</span><span class="u">(</span>data<span class="u">);</span>
-<span class="u">});</span>
+eventSource<span class="text-syn-u">.</span><span class="text-syn-f">addEventListener</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;stock-update&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>event<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> data <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>event<span class="text-syn-u">.</span><span class="text-syn-p">data</span><span class="text-syn-u">);</span>
+  <span class="text-syn-f">handleStockUpdate</span><span class="text-syn-u">(</span>data<span class="text-syn-u">);</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <h3 id="server-side-implementation">Server-Side Implementation</h3>
             <p>Here&#39;s a simple SSE endpoint in Node.js:</p>
             <pre
-            ><code class="language-typescript">app<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">&quot;/api/events&quot;</span><span class="u">,</span> <span class="u">(</span>req<span class="u">,</span> res<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  res<span class="u">.</span><span class="f">setHeader</span><span class="u">(</span><span class="s">&quot;Content-Type&quot;</span><span class="u">,</span> <span class="s">&quot;text/event-stream&quot;</span><span class="u">);</span>
-  res<span class="u">.</span><span class="f">setHeader</span><span class="u">(</span><span class="s">&quot;Cache-Control&quot;</span><span class="u">,</span> <span class="s">&quot;no-cache&quot;</span><span class="u">);</span>
-  res<span class="u">.</span><span class="f">setHeader</span><span class="u">(</span><span class="s">&quot;Connection&quot;</span><span class="u">,</span> <span class="s">&quot;keep-alive&quot;</span><span class="u">);</span>
+            ><code class="language-typescript">app<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/events&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>req<span class="text-syn-u">,</span> res<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  res<span class="text-syn-u">.</span><span class="text-syn-f">setHeader</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Content-Type&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;text/event-stream&quot;</span><span class="text-syn-u">);</span>
+  res<span class="text-syn-u">.</span><span class="text-syn-f">setHeader</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Cache-Control&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;no-cache&quot;</span><span class="text-syn-u">);</span>
+  res<span class="text-syn-u">.</span><span class="text-syn-f">setHeader</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Connection&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;keep-alive&quot;</span><span class="text-syn-u">);</span>
 
-  <span class="k">const</span> <span class="f">sendEvent</span> <span class="o">=</span> <span class="u">(</span>data<span class="o">:</span> <span class="t">object</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    res<span class="u">.</span><span class="f">write</span><span class="u">(</span><span class="s">`data: ${JSON.stringify(data)}\n\n`</span><span class="u">);</span>
-  <span class="u">};</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-f">sendEvent</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-t">object</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    res<span class="text-syn-u">.</span><span class="text-syn-f">write</span><span class="text-syn-u">(</span><span class="text-syn-s">`data: ${JSON.stringify(data)}\n\n`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">};</span>
 
-  <span class="k">const</span> interval <span class="o">=</span> <span class="f">setInterval</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="f">sendEvent</span><span class="u">({</span> <span class="p">timestamp:</span> Date<span class="u">.</span><span class="f">now</span><span class="u">(),</span> <span class="p">value:</span> Math<span class="u">.</span><span class="f">random</span><span class="u">()</span> <span class="u">});</span>
-  <span class="u">},</span> <span class="n">1000</span><span class="u">);</span>
+  <span class="text-syn-k">const</span> interval <span class="text-syn-o">=</span> <span class="text-syn-f">setInterval</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-f">sendEvent</span><span class="text-syn-u">({</span> <span class="text-syn-p">timestamp:</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">(),</span> <span class="text-syn-p">value:</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">random</span><span class="text-syn-u">()</span> <span class="text-syn-u">});</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-n">1000</span><span class="text-syn-u">);</span>
 
-  req<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;close&quot;</span><span class="u">,</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="f">clearInterval</span><span class="u">(</span>interval<span class="u">);</span>
-  <span class="u">});</span>
-<span class="u">});</span>
+  req<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;close&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-f">clearInterval</span><span class="text-syn-u">(</span>interval<span class="text-syn-u">);</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <h3 id="sse-vs-websockets">SSE vs WebSockets</h3>
             <table>
@@ -710,16 +719,16 @@ DELETE /users/123      → Delete user 123
 </code></pre>
             <p>Resources are nouns. HTTP methods are verbs. URLs are hierarchical.</p>
             <pre
-            ><code class="language-typescript"><span class="c">// Fetching a user&#39;s orders</span>
-<span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">&quot;/users/123/orders&quot;</span><span class="u">);</span>
-<span class="k">const</span> orders <span class="o">=</span> <span class="k">await</span> response<span class="u">.</span><span class="f">json</span><span class="u">();</span>
+            ><code class="language-typescript"><span class="text-syn-c italic">// Fetching a user&#39;s orders</span>
+<span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/users/123/orders&quot;</span><span class="text-syn-u">);</span>
+<span class="text-syn-k">const</span> orders <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> response<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">();</span>
 
-<span class="c">// Creating an order</span>
-<span class="k">const</span> newOrder <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">&quot;/users/123/orders&quot;</span><span class="u">,</span> <span class="u">{</span>
-  <span class="p">method:</span> <span class="s">&quot;POST&quot;</span><span class="u">,</span>
-  <span class="p">headers:</span> <span class="u">{</span> <span class="p">&quot;Content-Type&quot;:</span> <span class="s">&quot;application/json&quot;</span> <span class="u">},</span>
-  <span class="p">body:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span> <span class="p">product_id:</span> <span class="n">456</span><span class="u">,</span> <span class="p">quantity:</span> <span class="n">2</span> <span class="u">}),</span>
-<span class="u">});</span>
+<span class="text-syn-c italic">// Creating an order</span>
+<span class="text-syn-k">const</span> newOrder <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/users/123/orders&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">method:</span> <span class="text-syn-s">&quot;POST&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">headers:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;Content-Type&quot;:</span> <span class="text-syn-s">&quot;application/json&quot;</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">body:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span> <span class="text-syn-p">product_id:</span> <span class="text-syn-n">456</span><span class="text-syn-u">,</span> <span class="text-syn-p">quantity:</span> <span class="text-syn-n">2</span> <span class="text-syn-u">}),</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p><strong>Strengths:</strong></p>
             <ul>
@@ -743,44 +752,44 @@ DELETE /users/123      → Delete user 123
               specifies exactly what data it wants.
             </p>
             <pre
-            ><code class="language-graphql"><span class="c"># Single request for user, their orders, and reviews</span>
-<span class="k">query</span> <span class="u">{</span>
-  user<span class="u">(</span>id<span class="u">:</span> <span class="n">123</span><span class="u">)</span> <span class="u">{</span>
+            ><code class="language-graphql"><span class="text-syn-c italic"># Single request for user, their orders, and reviews</span>
+<span class="text-syn-k">query</span> <span class="text-syn-u">{</span>
+  user<span class="text-syn-u">(</span>id<span class="text-syn-u">:</span> <span class="text-syn-n">123</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
     name
     email
-    orders<span class="u">(</span>last<span class="u">:</span> <span class="n">5</span><span class="u">)</span> <span class="u">{</span>
+    orders<span class="text-syn-u">(</span>last<span class="text-syn-u">:</span> <span class="text-syn-n">5</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
       id
       total
-      items <span class="u">{</span>
+      items <span class="text-syn-u">{</span>
         productName
         quantity
-      <span class="u">}</span>
-    <span class="u">}</span>
-    reviews <span class="u">{</span>
+      <span class="text-syn-u">}</span>
+    <span class="text-syn-u">}</span>
+    reviews <span class="text-syn-u">{</span>
       rating
       comment
-    <span class="u">}</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>One request. Exactly the data you need. No more, no less.</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> response <span class="o">=</span> <span class="k">await</span> <span class="f">fetch</span><span class="u">(</span><span class="s">&quot;/graphql&quot;</span><span class="u">,</span> <span class="u">{</span>
-  <span class="p">method:</span> <span class="s">&quot;POST&quot;</span><span class="u">,</span>
-  <span class="p">headers:</span> <span class="u">{</span> <span class="p">&quot;Content-Type&quot;:</span> <span class="s">&quot;application/json&quot;</span> <span class="u">},</span>
-  <span class="p">body:</span> JSON<span class="u">.</span><span class="f">stringify</span><span class="u">({</span>
-    <span class="p">query:</span> <span class="s">`</span>
-<span class="s">      query GetUser($id: ID!) {</span>
-<span class="s">        user(id: $id) {</span>
-<span class="s">          name</span>
-<span class="s">          email</span>
-<span class="s">          orders { id total }</span>
-<span class="s">        }</span>
-<span class="s">      }</span>
-<span class="s">    `</span><span class="u">,</span>
-    <span class="p">variables:</span> <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;123&quot;</span> <span class="u">},</span>
-  <span class="u">}),</span>
-<span class="u">});</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/graphql&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">method:</span> <span class="text-syn-s">&quot;POST&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">headers:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;Content-Type&quot;:</span> <span class="text-syn-s">&quot;application/json&quot;</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">body:</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">query:</span> <span class="text-syn-s">`</span>
+<span class="text-syn-s">      query GetUser($id: ID!) {</span>
+<span class="text-syn-s">        user(id: $id) {</span>
+<span class="text-syn-s">          name</span>
+<span class="text-syn-s">          email</span>
+<span class="text-syn-s">          orders { id total }</span>
+<span class="text-syn-s">        }</span>
+<span class="text-syn-s">      }</span>
+<span class="text-syn-s">    `</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">variables:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> <span class="text-syn-s">&quot;123&quot;</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">}),</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p><strong>Strengths:</strong></p>
             <ul>
@@ -804,37 +813,38 @@ DELETE /users/123      → Delete user 123
             </p>
             <p>First, you define your service in a <code>.proto</code> file:</p>
             <pre
-            ><code class="language-protobuf"><span class="k">syntax</span> <span class="o">=</span> <span class="s">&quot;proto3&quot;</span><span class="u">;</span>
+            ><code class="language-protobuf"><span class="text-syn-k">syntax</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;proto3&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">service</span> <span class="t">UserService</span> {
-  <span class="k">rpc</span> <span class="f">GetUser</span>(<span class="t">GetUserRequest</span>) <span class="k">returns</span> (<span class="t">User</span>)<span class="u">;</span>
-  <span class="k">rpc</span> <span class="f">ListUsers</span>(<span class="t">ListUsersRequest</span>) <span class="k">returns</span> (<span class="k">stream</span> <span class="t">User</span>)<span class="u">;</span>
-  <span class="k">rpc</span> <span class="f">CreateUser</span>(<span class="t">CreateUserRequest</span>) <span class="k">returns</span> (<span class="t">User</span>)<span class="u">;</span>
+<span class="text-syn-k">service</span> <span class="text-syn-t">UserService</span> {
+  <span class="text-syn-k">rpc</span> <span class="text-syn-f">GetUser</span>(<span class="text-syn-t">GetUserRequest</span>) <span class="text-syn-k">returns</span> (<span class="text-syn-t">User</span>)<span class="text-syn-u">;</span>
+  <span class="text-syn-k">rpc</span> <span class="text-syn-f">ListUsers</span>(<span class="text-syn-t">ListUsersRequest</span>) <span class="text-syn-k">returns</span> (<span class="text-syn-k">stream</span> <span class="text-syn-t">User</span>)<span class="text-syn-u">;</span>
+  <span class="text-syn-k">rpc</span> <span class="text-syn-f">CreateUser</span>(<span class="text-syn-t">CreateUserRequest</span>) <span class="text-syn-k">returns</span> (<span class="text-syn-t">User</span>)<span class="text-syn-u">;</span>
 }
 
-<span class="k">message</span> <span class="t">GetUserRequest</span> {
-  <span class="k">string</span> id <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
+<span class="text-syn-k">message</span> <span class="text-syn-t">GetUserRequest</span> {
+  <span class="text-syn-k">string</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
 }
 
-<span class="k">message</span> <span class="t">User</span> {
-  <span class="k">string</span> id <span class="o">=</span> <span class="n">1</span><span class="u">;</span>
-  <span class="k">string</span> name <span class="o">=</span> <span class="n">2</span><span class="u">;</span>
-  <span class="k">string</span> email <span class="o">=</span> <span class="n">3</span><span class="u">;</span>
-  <span class="k">int32</span> age <span class="o">=</span> <span class="n">4</span><span class="u">;</span>
+<span class="text-syn-k">message</span> <span class="text-syn-t">User</span> {
+  <span class="text-syn-k">string</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">string</span> name <span class="text-syn-o">=</span> <span class="text-syn-n">2</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">string</span> email <span class="text-syn-o">=</span> <span class="text-syn-n">3</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">int32</span> age <span class="text-syn-o">=</span> <span class="text-syn-n">4</span><span class="text-syn-u">;</span>
 }
 </code></pre>
             <p>The protobuf compiler generates client and server code in your language:</p>
-            <pre><code class="language-typescript"><span class="c">// Generated client usage</span>
-<span class="k">const</span> client <span class="o">=</span> <span class="o">new</span> <span class="f">UserServiceClient</span><span class="u">(</span><span class="s">&quot;localhost:50051&quot;</span><span class="u">);</span>
+            <pre
+            ><code class="language-typescript"><span class="text-syn-c italic">// Generated client usage</span>
+<span class="text-syn-k">const</span> client <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">UserServiceClient</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;localhost:50051&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> client<span class="u">.</span><span class="f">getUser</span><span class="u">({</span> <span class="p">id:</span> <span class="s">&quot;123&quot;</span> <span class="u">});</span>
-console<span class="u">.</span><span class="f">log</span><span class="u">(</span>user<span class="u">.</span><span class="p">name</span><span class="u">);</span>
+<span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> client<span class="text-syn-u">.</span><span class="text-syn-f">getUser</span><span class="text-syn-u">({</span> <span class="text-syn-p">id:</span> <span class="text-syn-s">&quot;123&quot;</span> <span class="text-syn-u">});</span>
+console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>user<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">);</span>
 
-<span class="c">// Streaming: server sends multiple users</span>
-<span class="k">const</span> stream <span class="o">=</span> client<span class="u">.</span><span class="f">listUsers</span><span class="u">({</span> <span class="p">limit:</span> <span class="n">100</span> <span class="u">});</span>
-<span class="k">for</span> <span class="k">await</span> <span class="u">(</span><span class="k">const</span> user <span class="o">of</span> stream<span class="u">)</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span>user<span class="u">.</span><span class="p">name</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">// Streaming: server sends multiple users</span>
+<span class="text-syn-k">const</span> stream <span class="text-syn-o">=</span> client<span class="text-syn-u">.</span><span class="text-syn-f">listUsers</span><span class="text-syn-u">({</span> <span class="text-syn-p">limit:</span> <span class="text-syn-n">100</span> <span class="text-syn-u">});</span>
+<span class="text-syn-k">for</span> <span class="text-syn-k">await</span> <span class="text-syn-u">(</span><span class="text-syn-k">const</span> user <span class="text-syn-o">of</span> stream<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>user<span class="text-syn-u">.</span><span class="text-syn-p">name</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p><strong>Strengths:</strong></p>
             <ul>
@@ -861,34 +871,36 @@ console<span class="u">.</span><span class="f">log</span><span class="u">(</span
               code generation.
             </p>
             <p>Define your API on the server:</p>
-            <pre><code class="language-typescript"><span class="c">// server/routers/user.ts</span>
-<span class="k">import</span> <span class="u">{</span> router<span class="u">,</span> publicProcedure <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;../trpc&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> z <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;zod&quot;</span><span class="u">;</span>
+            <pre
+            ><code class="language-typescript"><span class="text-syn-c italic">// server/routers/user.ts</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> router<span class="text-syn-u">,</span> publicProcedure <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;../trpc&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> z <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;zod&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">const</span> userRouter <span class="o">=</span> <span class="f">router</span><span class="u">({</span>
-  <span class="p">getUser:</span> publicProcedure<span class="u">.</span><span class="f">input</span><span class="u">(</span>z<span class="u">.</span><span class="f">object</span><span class="u">({</span> <span class="p">id:</span> z<span class="u">.</span><span class="f">string</span><span class="u">()</span> <span class="u">})).</span><span class="f">query</span><span class="u">(</span><span class="k">async</span> <span class="u">({</span> input <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> user <span class="o">=</span> <span class="k">await</span> db<span class="u">.</span>user<span class="u">.</span><span class="f">findUnique</span><span class="u">({</span> <span class="p">where:</span> <span class="u">{</span> <span class="p">id:</span> input<span class="u">.</span><span class="p">id</span> <span class="u">}</span> <span class="u">});</span>
-    <span class="k">return</span> user<span class="u">;</span>
-  <span class="u">}),</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> userRouter <span class="text-syn-o">=</span> <span class="text-syn-f">router</span><span class="text-syn-u">({</span>
+  <span class="text-syn-p">getUser:</span> publicProcedure<span class="text-syn-u">.</span><span class="text-syn-f">input</span><span class="text-syn-u">(</span>z<span class="text-syn-u">.</span><span class="text-syn-f">object</span><span class="text-syn-u">({</span> <span class="text-syn-p">id:</span> z<span class="text-syn-u">.</span><span class="text-syn-f">string</span><span class="text-syn-u">()</span> <span class="text-syn-u">})).</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">({</span> input <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">findUnique</span><span class="text-syn-u">({</span> <span class="text-syn-p">where:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> input<span class="text-syn-u">.</span><span class="text-syn-p">id</span> <span class="text-syn-u">}</span> <span class="text-syn-u">});</span>
+    <span class="text-syn-k">return</span> user<span class="text-syn-u">;</span>
+  <span class="text-syn-u">}),</span>
 
-  <span class="p">createUser:</span> publicProcedure
-    <span class="u">.</span><span class="f">input</span><span class="u">(</span>z<span class="u">.</span><span class="f">object</span><span class="u">({</span> <span class="p">name:</span> z<span class="u">.</span><span class="f">string</span><span class="u">(),</span> <span class="p">email:</span> z<span class="u">.</span><span class="f">string</span><span class="u">().</span><span class="f">email</span><span class="u">()</span> <span class="u">}))</span>
-    <span class="u">.</span><span class="f">mutation</span><span class="u">(</span><span class="k">async</span> <span class="u">({</span> input <span class="u">})</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      <span class="k">return</span> db<span class="u">.</span>user<span class="u">.</span><span class="f">create</span><span class="u">({</span> <span class="p">data:</span> input <span class="u">});</span>
-    <span class="u">}),</span>
-<span class="u">});</span>
+  <span class="text-syn-p">createUser:</span> publicProcedure
+    <span class="text-syn-u">.</span><span class="text-syn-f">input</span><span class="text-syn-u">(</span>z<span class="text-syn-u">.</span><span class="text-syn-f">object</span><span class="text-syn-u">({</span> <span class="text-syn-p">name:</span> z<span class="text-syn-u">.</span><span class="text-syn-f">string</span><span class="text-syn-u">(),</span> <span class="text-syn-p">email:</span> z<span class="text-syn-u">.</span><span class="text-syn-f">string</span><span class="text-syn-u">().</span><span class="text-syn-f">email</span><span class="text-syn-u">()</span> <span class="text-syn-u">}))</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">mutation</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">({</span> input <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> db<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> input <span class="text-syn-u">});</span>
+    <span class="text-syn-u">}),</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <p>Use it on the client with full type inference:</p>
-            <pre><code class="language-typescript"><span class="c">// client/pages/user.tsx</span>
-<span class="k">import</span> <span class="u">{</span> trpc <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;../utils/trpc&quot;</span><span class="u">;</span>
+            <pre
+            ><code class="language-typescript"><span class="text-syn-c italic">// client/pages/user.tsx</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> trpc <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;../utils/trpc&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">UserProfile</span><span class="u">({</span> userId <span class="u">}</span><span class="o">:</span> <span class="u">{</span> userId<span class="o">:</span> <span class="t">string</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> <span class="u">{</span> data<span class="u">:</span> user <span class="u">}</span> <span class="o">=</span> trpc<span class="u">.</span>user<span class="u">.</span>getUser<span class="u">.</span><span class="f">useQuery</span><span class="u">({</span> <span class="p">id:</span> userId <span class="u">});</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">UserProfile</span><span class="text-syn-u">({</span> userId <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> data<span class="text-syn-u">:</span> user <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> trpc<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span>getUser<span class="text-syn-u">.</span><span class="text-syn-f">useQuery</span><span class="text-syn-u">({</span> <span class="text-syn-p">id:</span> userId <span class="text-syn-u">});</span>
 
-<span class="c">  // TypeScript knows user.name, user.email exist</span>
-<span class="c">  // Autocomplete works. Typos are caught at compile time.</span>
-  <span class="k">return</span> <span class="u">&lt;</span><span class="t">div</span><span class="u">&gt;{</span>user?.name<span class="u">}</span><span class="o">&lt;/</span>div<span class="o">&gt;</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-c italic">  // TypeScript knows user.name, user.email exist</span>
+<span class="text-syn-c italic">  // Autocomplete works. Typos are caught at compile time.</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-t">div</span><span class="text-syn-u">&gt;{</span>user?.name<span class="text-syn-u">}</span><span class="text-syn-o">&lt;/</span>div<span class="text-syn-o">&gt;</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Change the server response? TypeScript immediately shows errors in all clients.</p>
             <p><strong>Strengths:</strong></p>
@@ -1096,30 +1108,37 @@ console<span class="u">.</span><span class="f">log</span><span class="u">(</span
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/system-design/load-balancers/">Load Balancers</a></li>
-            <li>
+            <li class="my-2"><a href="/blogs/system-design/load-balancers/">Load Balancers</a></li>
+            <li class="my-2">
               <a href="/blogs/system-design/async-processing/"
                 >Message Queues vs Streams: SQS, RabbitMQ, Kafka, Pub/Sub</a
               >
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

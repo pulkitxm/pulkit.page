@@ -49,12 +49,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -62,20 +67,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Smooth Scrolling in Next.js</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Smooth Scrolling in Next.js</h1>
-            <p class="detail-meta"><time datetime="2026-03-03">2026-03-03</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Smooth Scrolling in Next.js
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-03-03">2026-03-03</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               You&#39;ve visited those websites. The ones where scrolling feels like gliding through
               silk. Every section flows into the next, parallax layers shift at different speeds,
@@ -202,77 +211,77 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
             <h2 id="setting-up-lenis-in-next-js">Setting Up Lenis in Next.js</h2>
             <p>Lenis is the simplest to get running. Install it:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">lenis</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">lenis</span>
 </code></pre>
             <p>
               Create a provider component that initializes Lenis and makes it available throughout
               your app:
             </p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> ReactNode<span class="u">,</span> useEffect<span class="u">,</span> useRef <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> Lenis <span class="k">from</span> <span class="s">&quot;lenis&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ReactNode<span class="text-syn-u">,</span> useEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Lenis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;lenis&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">SmoothScrollProvider</span><span class="u">({</span> children <span class="u">}</span><span class="o">:</span> <span class="u">{</span> children<span class="o">:</span> <span class="t">ReactNode</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> lenisRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">Lenis</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">SmoothScrollProvider</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> lenisRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Lenis</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
 
-  <span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> lenis <span class="o">=</span> <span class="o">new</span> <span class="f">Lenis</span><span class="u">({</span>
-      <span class="p">duration:</span> <span class="n">1.2</span><span class="u">,</span>
-      <span class="p">easing:</span> <span class="u">(</span>t<span class="u">)</span> <span class="k">=&gt;</span> Math<span class="u">.</span><span class="f">min</span><span class="u">(</span><span class="n">1</span><span class="u">,</span> <span class="n">1.001</span> <span class="o">-</span> Math<span class="u">.</span><span class="f">pow</span><span class="u">(</span><span class="n">2</span><span class="u">,</span> <span class="o">-</span><span class="n">10</span> <span class="o">*</span> t<span class="u">)),</span>
-      <span class="p">touchMultiplier:</span> <span class="n">2</span><span class="u">,</span>
-    <span class="u">});</span>
+  <span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> lenis <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Lenis</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">duration:</span> <span class="text-syn-n">1.2</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">easing:</span> <span class="text-syn-u">(</span>t<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">min</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">1.001</span> <span class="text-syn-o">-</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">pow</span><span class="text-syn-u">(</span><span class="text-syn-n">2</span><span class="text-syn-u">,</span> <span class="text-syn-o">-</span><span class="text-syn-n">10</span> <span class="text-syn-o">*</span> t<span class="text-syn-u">)),</span>
+      <span class="text-syn-p">touchMultiplier:</span> <span class="text-syn-n">2</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
 
-    lenisRef<span class="u">.</span><span class="p">current</span> <span class="o">=</span> lenis<span class="u">;</span>
+    lenisRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span> <span class="text-syn-o">=</span> lenis<span class="text-syn-u">;</span>
 
-    <span class="k">function</span> <span class="f">raf</span><span class="u">(</span>time<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="u">{</span>
-      lenis<span class="u">.</span><span class="f">raf</span><span class="u">(</span>time<span class="u">);</span>
-      <span class="f">requestAnimationFrame</span><span class="u">(</span>raf<span class="u">);</span>
-    <span class="u">}</span>
+    <span class="text-syn-k">function</span> <span class="text-syn-f">raf</span><span class="text-syn-u">(</span>time<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      lenis<span class="text-syn-u">.</span><span class="text-syn-f">raf</span><span class="text-syn-u">(</span>time<span class="text-syn-u">);</span>
+      <span class="text-syn-f">requestAnimationFrame</span><span class="text-syn-u">(</span>raf<span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
 
-    <span class="f">requestAnimationFrame</span><span class="u">(</span>raf<span class="u">);</span>
+    <span class="text-syn-f">requestAnimationFrame</span><span class="text-syn-u">(</span>raf<span class="text-syn-u">);</span>
 
-    <span class="k">return</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      lenis<span class="u">.</span><span class="f">destroy</span><span class="u">();</span>
-    <span class="u">};</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      lenis<span class="text-syn-u">.</span><span class="text-syn-f">destroy</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">};</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">&lt;&gt;{</span>children<span class="u">}&lt;/&gt;;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;&gt;{</span>children<span class="text-syn-u">}&lt;/&gt;;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Then wrap your layout:</p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="u">{</span> SmoothScrollProvider <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;@/components/smooth-scroll-provider&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> SmoothScrollProvider <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/smooth-scroll-provider&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">RootLayout</span><span class="u">({</span> children <span class="u">}</span><span class="o">:</span> <span class="u">{</span> children<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">html</span> <span class="p">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">body</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">SmoothScrollProvider</span><span class="u">&gt;{</span>children<span class="u">}&lt;/</span><span class="g">SmoothScrollProvider</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">body</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">html</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RootLayout</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">html</span> <span class="text-syn-p">lang</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;en&quot;</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">body</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">SmoothScrollProvider</span><span class="text-syn-u">&gt;{</span>children<span class="text-syn-u">}&lt;/</span><span class="text-syn-g">SmoothScrollProvider</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">body</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">html</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>And add the required CSS. Lenis needs the html element to be set up correctly:</p>
             <pre
-            ><code class="language-css"><span class="g">html</span><span class="p">.lenis</span><span class="u">,</span>
-<span class="g">html</span><span class="p">.lenis</span> <span class="g">body</span> <span class="u">{</span>
-  <span class="p">height</span><span class="u">:</span> <span class="k">auto</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span><span class="text-syn-u">,</span>
+<span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span> <span class="text-syn-g">body</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-k">auto</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.lenis.lenis-smooth</span> <span class="u">{</span>
-  <span class="p">scroll-behavior</span><span class="u">:</span> <span class="k">auto</span> <span class="k">!important</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.lenis.lenis-smooth</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">scroll-behavior</span><span class="text-syn-u">:</span> <span class="text-syn-k">auto</span> <span class="text-syn-k">!important</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.lenis.lenis-smooth</span> <span class="u">[</span><span class="p">data-lenis-prevent</span><span class="u">]</span> <span class="u">{</span>
-  <span class="p">overscroll-behavior</span><span class="u">:</span> <span class="k">contain</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.lenis.lenis-smooth</span> <span class="text-syn-u">[</span><span class="text-syn-p">data-lenis-prevent</span><span class="text-syn-u">]</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">overscroll-behavior</span><span class="text-syn-u">:</span> <span class="text-syn-k">contain</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.lenis.lenis-stopped</span> <span class="u">{</span>
-  <span class="p">overflow</span><span class="u">:</span> <span class="k">hidden</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.lenis.lenis-stopped</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">overflow</span><span class="text-syn-u">:</span> <span class="text-syn-k">hidden</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               That&#39;s it. Your entire app now has smooth scrolling. The
@@ -284,27 +293,27 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
             <h2 id="setting-up-locomotive-scroll-v5">Setting Up Locomotive Scroll v5</h2>
             <p>Locomotive Scroll is just as straightforward. Install it:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">locomotive-scroll</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">locomotive-scroll</span>
 </code></pre>
             <p>
               Since Locomotive Scroll relies on the <code>window</code> object, you need to import
               it dynamically in Next.js:
             </p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useEffect <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useEffect <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">Home</span><span class="u">()</span> <span class="u">{</span>
-  <span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="u">(</span><span class="k">async</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      <span class="k">const</span> LocomotiveScroll <span class="o">=</span> <span class="u">(</span><span class="k">await</span> <span class="o">import</span><span class="u">(</span><span class="s">&quot;locomotive-scroll&quot;</span><span class="u">)).</span><span class="p">default</span><span class="u">;</span>
-      <span class="k">const</span> locomotiveScroll <span class="o">=</span> <span class="o">new</span> <span class="f">LocomotiveScroll</span><span class="u">();</span>
-    <span class="u">})();</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">Home</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> LocomotiveScroll <span class="text-syn-o">=</span> <span class="text-syn-u">(</span><span class="text-syn-k">await</span> <span class="text-syn-o">import</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;locomotive-scroll&quot;</span><span class="text-syn-u">)).</span><span class="text-syn-p">default</span><span class="text-syn-u">;</span>
+      <span class="text-syn-k">const</span> locomotiveScroll <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">LocomotiveScroll</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">})();</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">&lt;</span><span class="g">main</span><span class="u">&gt;{</span><span class="c">/* your content */</span><span class="u">}&lt;/</span><span class="g">main</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;{</span><span class="text-syn-c italic">/* your content */</span><span class="text-syn-u">}&lt;/</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The async import is necessary because Locomotive Scroll accesses
@@ -317,13 +326,13 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               effects:
             </p>
             <pre
-            ><code class="language-tsx"><span class="u">&lt;</span><span class="g">div</span> <span class="p">data-scroll</span> <span class="p">data-scroll-speed</span><span class="o">=</span><span class="s">&quot;0.5&quot;</span><span class="u">&gt;</span>
+            ><code class="language-tsx"><span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">data-scroll</span> <span class="text-syn-p">data-scroll-speed</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.5&quot;</span><span class="text-syn-u">&gt;</span>
   This element scrolls at half speed
-<span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
+<span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
 
-<span class="u">&lt;</span><span class="g">h1</span> <span class="p">data-scroll</span> <span class="p">data-scroll-speed</span><span class="o">=</span><span class="s">&quot;0.7&quot;</span><span class="u">&gt;</span>
+<span class="text-syn-u">&lt;</span><span class="text-syn-g">h1</span> <span class="text-syn-p">data-scroll</span> <span class="text-syn-p">data-scroll-speed</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.7&quot;</span><span class="text-syn-u">&gt;</span>
   This one is a bit faster
-<span class="u">&lt;/</span><span class="g">h1</span><span class="u">&gt;</span>
+<span class="text-syn-u">&lt;/</span><span class="text-syn-g">h1</span><span class="text-syn-u">&gt;</span>
 </code></pre>
             <p>
               The <code>data-scroll-speed</code> attribute controls how fast an element moves
@@ -338,43 +347,43 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
             </p>
             <p>First, install GSAP:</p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">gsap</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">gsap</span>
 </code></pre>
             <p>
               If you&#39;re using Lenis, you need to sync it with GSAP&#39;s ticker so ScrollTrigger
               knows about the smooth scroll position:
             </p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useEffect<span class="u">,</span> useRef <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> Lenis <span class="k">from</span> <span class="s">&quot;lenis&quot;</span><span class="u">;</span>
-<span class="k">import</span> gsap <span class="k">from</span> <span class="s">&quot;gsap&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> ScrollTrigger <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;gsap/ScrollTrigger&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Lenis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;lenis&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ScrollTrigger <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap/ScrollTrigger&quot;</span><span class="text-syn-u">;</span>
 
-gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u">(</span>ScrollTrigger<span class="u">);</span>
+gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</span><span class="text-syn-u">(</span>ScrollTrigger<span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">SmoothScrollProvider</span><span class="u">({</span> children <span class="u">}</span><span class="o">:</span> <span class="u">{</span> children<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> lenisRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">Lenis</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">SmoothScrollProvider</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> lenisRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Lenis</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
 
-  <span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> lenis <span class="o">=</span> <span class="o">new</span> <span class="f">Lenis</span><span class="u">();</span>
-    lenisRef<span class="u">.</span><span class="p">current</span> <span class="o">=</span> lenis<span class="u">;</span>
+  <span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> lenis <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Lenis</span><span class="text-syn-u">();</span>
+    lenisRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span> <span class="text-syn-o">=</span> lenis<span class="text-syn-u">;</span>
 
-    lenis<span class="u">.</span><span class="f">on</span><span class="u">(</span><span class="s">&quot;scroll&quot;</span><span class="u">,</span> ScrollTrigger<span class="u">.</span><span class="p">update</span><span class="u">);</span>
+    lenis<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;scroll&quot;</span><span class="text-syn-u">,</span> ScrollTrigger<span class="text-syn-u">.</span><span class="text-syn-p">update</span><span class="text-syn-u">);</span>
 
-    gsap<span class="u">.</span>ticker<span class="u">.</span><span class="f">add</span><span class="u">((</span>time<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      lenis<span class="u">.</span><span class="f">raf</span><span class="u">(</span>time <span class="o">*</span> <span class="n">1000</span><span class="u">);</span>
-    <span class="u">});</span>
-    gsap<span class="u">.</span>ticker<span class="u">.</span><span class="f">lagSmoothing</span><span class="u">(</span><span class="n">0</span><span class="u">);</span>
+    gsap<span class="text-syn-u">.</span>ticker<span class="text-syn-u">.</span><span class="text-syn-f">add</span><span class="text-syn-u">((</span>time<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      lenis<span class="text-syn-u">.</span><span class="text-syn-f">raf</span><span class="text-syn-u">(</span>time <span class="text-syn-o">*</span> <span class="text-syn-n">1000</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">});</span>
+    gsap<span class="text-syn-u">.</span>ticker<span class="text-syn-u">.</span><span class="text-syn-f">lagSmoothing</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
 
-    <span class="k">return</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      lenis<span class="u">.</span><span class="f">destroy</span><span class="u">();</span>
-    <span class="u">};</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      lenis<span class="text-syn-u">.</span><span class="text-syn-f">destroy</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">};</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">&lt;&gt;{</span>children<span class="u">}&lt;/&gt;;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;&gt;{</span>children<span class="text-syn-u">}&lt;/&gt;;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The key lines here are
@@ -386,33 +395,33 @@ gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u"
             </p>
             <p>Now you can create scroll-triggered animations:</p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useLayoutEffect<span class="u">,</span> useRef <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> gsap <span class="k">from</span> <span class="s">&quot;gsap&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> ScrollTrigger <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;gsap/ScrollTrigger&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ScrollTrigger <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap/ScrollTrigger&quot;</span><span class="text-syn-u">;</span>
 
-gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u">(</span>ScrollTrigger<span class="u">);</span>
+gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</span><span class="text-syn-u">(</span>ScrollTrigger<span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">RevealOnScroll</span><span class="u">({</span> children <span class="u">}</span><span class="o">:</span> <span class="u">{</span> children<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> ref <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RevealOnScroll</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> ref <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
 
-  <span class="f">useLayoutEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    gsap<span class="u">.</span><span class="f">from</span><span class="u">(</span>ref<span class="u">.</span><span class="p">current</span><span class="u">,</span> <span class="u">{</span>
-      <span class="p">scrollTrigger:</span> <span class="u">{</span>
-        <span class="p">trigger:</span> ref<span class="u">.</span><span class="p">current</span><span class="u">,</span>
-        <span class="p">start:</span> <span class="s">&quot;top 80%&quot;</span><span class="u">,</span>
-        <span class="p">end:</span> <span class="s">&quot;top 20%&quot;</span><span class="u">,</span>
-        <span class="p">scrub:</span> <span class="k">true</span><span class="u">,</span>
-      <span class="u">},</span>
-      <span class="p">opacity:</span> <span class="n">0</span><span class="u">,</span>
-      <span class="p">y:</span> <span class="n">100</span><span class="u">,</span>
-      <span class="p">ease:</span> <span class="s">&quot;power3.out&quot;</span><span class="u">,</span>
-    <span class="u">});</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+  <span class="text-syn-f">useLayoutEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    gsap<span class="text-syn-u">.</span><span class="text-syn-f">from</span><span class="text-syn-u">(</span>ref<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">scrollTrigger:</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">trigger:</span> ref<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">start:</span> <span class="text-syn-s">&quot;top 80%&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">end:</span> <span class="text-syn-s">&quot;top 20%&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">scrub:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">},</span>
+      <span class="text-syn-p">opacity:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">y:</span> <span class="text-syn-n">100</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">ease:</span> <span class="text-syn-s">&quot;power3.out&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">&lt;</span><span class="g">div</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>ref<span class="u">}&gt;{</span>children<span class="u">}&lt;/</span><span class="g">div</span><span class="u">&gt;;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>ref<span class="text-syn-u">}&gt;{</span>children<span class="text-syn-u">}&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The <code>scrub: true</code> ties the animation directly to scroll progress instead of
@@ -427,48 +436,48 @@ gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u"
             </p>
             <p>Here&#39;s a parallax hero section using GSAP and Lenis:</p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useLayoutEffect<span class="u">,</span> useRef <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> Image <span class="k">from</span> <span class="s">&quot;next/image&quot;</span><span class="u">;</span>
-<span class="k">import</span> gsap <span class="k">from</span> <span class="s">&quot;gsap&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> ScrollTrigger <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;gsap/ScrollTrigger&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Image <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/image&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ScrollTrigger <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap/ScrollTrigger&quot;</span><span class="text-syn-u">;</span>
 
-gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u">(</span>ScrollTrigger<span class="u">);</span>
+gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</span><span class="text-syn-u">(</span>ScrollTrigger<span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">ParallaxHero</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> sectionRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
-  <span class="k">const</span> bgRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
-  <span class="k">const</span> titleRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLHeadingElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">ParallaxHero</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> sectionRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> bgRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> titleRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLHeadingElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
 
-  <span class="f">useLayoutEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> tl <span class="o">=</span> gsap<span class="u">.</span><span class="f">timeline</span><span class="u">({</span>
-      <span class="p">scrollTrigger:</span> <span class="u">{</span>
-        <span class="p">trigger:</span> sectionRef<span class="u">.</span><span class="p">current</span><span class="u">,</span>
-        <span class="p">start:</span> <span class="s">&quot;top top&quot;</span><span class="u">,</span>
-        <span class="p">end:</span> <span class="s">&quot;+=500px&quot;</span><span class="u">,</span>
-        <span class="p">scrub:</span> <span class="k">true</span><span class="u">,</span>
-      <span class="u">},</span>
-    <span class="u">});</span>
+  <span class="text-syn-f">useLayoutEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> tl <span class="text-syn-o">=</span> gsap<span class="text-syn-u">.</span><span class="text-syn-f">timeline</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">scrollTrigger:</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">trigger:</span> sectionRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">start:</span> <span class="text-syn-s">&quot;top top&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">end:</span> <span class="text-syn-s">&quot;+=500px&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">scrub:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">});</span>
 
-    tl<span class="u">.</span><span class="f">to</span><span class="u">(</span>bgRef<span class="u">.</span><span class="p">current</span><span class="u">,</span> <span class="u">{</span> <span class="p">y:</span> <span class="n">150</span><span class="u">,</span> <span class="p">scale:</span> <span class="n">1.1</span> <span class="u">},</span> <span class="n">0</span><span class="u">);</span>
-    tl<span class="u">.</span><span class="f">to</span><span class="u">(</span>titleRef<span class="u">.</span><span class="p">current</span><span class="u">,</span> <span class="u">{</span> <span class="p">y:</span> <span class="o">-</span><span class="n">80</span> <span class="u">},</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+    tl<span class="text-syn-u">.</span><span class="text-syn-f">to</span><span class="text-syn-u">(</span>bgRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">y:</span> <span class="text-syn-n">150</span><span class="text-syn-u">,</span> <span class="text-syn-p">scale:</span> <span class="text-syn-n">1.1</span> <span class="text-syn-u">},</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+    tl<span class="text-syn-u">.</span><span class="text-syn-f">to</span><span class="text-syn-u">(</span>titleRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> <span class="text-syn-p">y:</span> <span class="text-syn-o">-</span><span class="text-syn-n">80</span> <span class="text-syn-u">},</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">section</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>sectionRef<span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;relative h-screen overflow-hidden&quot;</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>bgRef<span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;absolute inset-0&quot;</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">Image</span> <span class="p">src</span><span class="o">=</span><span class="s">&quot;/hero-bg.webp&quot;</span> <span class="p">alt</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="p">fill</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;object-cover&quot;</span> <span class="p">priority</span> <span class="u">/&gt;</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">h1</span>
-        <span class="p">ref</span><span class="o">=</span><span class="u">{</span>titleRef<span class="u">}</span>
-        <span class="p">className</span><span class="o">=</span><span class="s">&quot;relative z-10 flex h-full items-center justify-center text-6xl font-bold text-white&quot;</span>
-      <span class="u">&gt;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">section</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>sectionRef<span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;relative h-screen overflow-hidden&quot;</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>bgRef<span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;absolute inset-0&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Image</span> <span class="text-syn-p">src</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;/hero-bg.webp&quot;</span> <span class="text-syn-p">alt</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;&quot;</span> <span class="text-syn-p">fill</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;object-cover&quot;</span> <span class="text-syn-p">priority</span> <span class="text-syn-u">/&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">h1</span>
+        <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>titleRef<span class="text-syn-u">}</span>
+        <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;relative z-10 flex h-full items-center justify-center text-6xl font-bold text-white&quot;</span>
+      <span class="text-syn-u">&gt;</span>
         Your Title Here
-      <span class="u">&lt;/</span><span class="g">h1</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">section</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">h1</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">section</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The background moves down at 150px while the title moves up at 80px over the same
@@ -483,53 +492,53 @@ gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u"
               scroll by.
             </p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useLayoutEffect<span class="u">,</span> useRef <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> gsap <span class="k">from</span> <span class="s">&quot;gsap&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> ScrollTrigger <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;gsap/ScrollTrigger&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ScrollTrigger <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap/ScrollTrigger&quot;</span><span class="text-syn-u">;</span>
 
-gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u">(</span>ScrollTrigger<span class="u">);</span>
+gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</span><span class="text-syn-u">(</span>ScrollTrigger<span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">PinnedShowcase</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> containerRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
-  <span class="k">const</span> imageRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">PinnedShowcase</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> containerRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> imageRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
 
-  <span class="f">useLayoutEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    ScrollTrigger<span class="u">.</span><span class="f">create</span><span class="u">({</span>
-      <span class="p">trigger:</span> imageRef<span class="u">.</span><span class="p">current</span><span class="u">,</span>
-      <span class="p">pin:</span> <span class="k">true</span><span class="u">,</span>
-      <span class="p">start:</span> <span class="s">&quot;top 100px&quot;</span><span class="u">,</span>
-      <span class="p">end:</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-        <span class="k">const</span> container <span class="o">=</span> containerRef<span class="u">.</span><span class="p">current</span><span class="u">;</span>
-        <span class="k">if</span> <span class="u">(</span><span class="o">!</span>container<span class="u">)</span> <span class="k">return</span> <span class="s">&quot;+=500&quot;</span><span class="u">;</span>
-        <span class="k">return</span> <span class="s">`+=${container.</span><span class="p">offsetHeight</span><span class="s"> - window.</span><span class="p">innerHeight</span><span class="s">}`</span><span class="u">;</span>
-      <span class="u">},</span>
-    <span class="u">});</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+  <span class="text-syn-f">useLayoutEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    ScrollTrigger<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">trigger:</span> imageRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">pin:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">start:</span> <span class="text-syn-s">&quot;top 100px&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">end:</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">const</span> container <span class="text-syn-o">=</span> containerRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">;</span>
+        <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>container<span class="text-syn-u">)</span> <span class="text-syn-k">return</span> <span class="text-syn-s">&quot;+=500&quot;</span><span class="text-syn-u">;</span>
+        <span class="text-syn-k">return</span> <span class="text-syn-s">`+=${container.</span><span class="text-syn-p">offsetHeight</span><span class="text-syn-s"> - window.</span><span class="text-syn-p">innerHeight</span><span class="text-syn-s">}`</span><span class="text-syn-u">;</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">div</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>containerRef<span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;flex gap-12&quot;</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>imageRef<span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;w-1/2&quot;</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">Image</span> <span class="p">src</span><span class="o">=</span><span class="s">&quot;/showcase.webp&quot;</span> <span class="p">alt</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="p">width</span><span class="o">=</span><span class="u">{</span><span class="n">600</span><span class="u">}</span> <span class="p">height</span><span class="o">=</span><span class="u">{</span><span class="n">400</span><span class="u">}</span> <span class="u">/&gt;</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;w-1/2 space-y-96&quot;</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;rounded-lg bg-neutral-100 p-8&quot;</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">h3</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-2xl font-semibold&quot;</span><span class="u">&gt;</span>Feature One<span class="u">&lt;/</span><span class="g">h3</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">p</span><span class="u">&gt;</span>Description of the first feature.<span class="u">&lt;/</span><span class="g">p</span><span class="u">&gt;</span>
-        <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;rounded-lg bg-neutral-100 p-8&quot;</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">h3</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-2xl font-semibold&quot;</span><span class="u">&gt;</span>Feature Two<span class="u">&lt;/</span><span class="g">h3</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">p</span><span class="u">&gt;</span>Description of the second feature.<span class="u">&lt;/</span><span class="g">p</span><span class="u">&gt;</span>
-        <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">div</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;rounded-lg bg-neutral-100 p-8&quot;</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">h3</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;text-2xl font-semibold&quot;</span><span class="u">&gt;</span>Feature Three<span class="u">&lt;/</span><span class="g">h3</span><span class="u">&gt;</span>
-          <span class="u">&lt;</span><span class="g">p</span><span class="u">&gt;</span>Description of the third feature.<span class="u">&lt;/</span><span class="g">p</span><span class="u">&gt;</span>
-        <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>containerRef<span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex gap-12&quot;</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>imageRef<span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;w-1/2&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Image</span> <span class="text-syn-p">src</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;/showcase.webp&quot;</span> <span class="text-syn-p">alt</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;&quot;</span> <span class="text-syn-p">width</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span><span class="text-syn-n">600</span><span class="text-syn-u">}</span> <span class="text-syn-p">height</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span><span class="text-syn-n">400</span><span class="text-syn-u">}</span> <span class="text-syn-u">/&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;w-1/2 space-y-96&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;rounded-lg bg-neutral-100 p-8&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">h3</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-2xl font-semibold&quot;</span><span class="text-syn-u">&gt;</span>Feature One<span class="text-syn-u">&lt;/</span><span class="text-syn-g">h3</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>Description of the first feature.<span class="text-syn-u">&lt;/</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;rounded-lg bg-neutral-100 p-8&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">h3</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-2xl font-semibold&quot;</span><span class="text-syn-u">&gt;</span>Feature Two<span class="text-syn-u">&lt;/</span><span class="text-syn-g">h3</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>Description of the second feature.<span class="text-syn-u">&lt;/</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;rounded-lg bg-neutral-100 p-8&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">h3</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;text-2xl font-semibold&quot;</span><span class="text-syn-u">&gt;</span>Feature Three<span class="text-syn-u">&lt;/</span><span class="text-syn-g">h3</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>Description of the third feature.<span class="text-syn-u">&lt;/</span><span class="text-syn-g">p</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The image stays pinned while the right column scrolls past. The pin starts when the
@@ -542,51 +551,51 @@ gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u"
               sections. The user scrolls vertically, but a section moves horizontally.
             </p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useLayoutEffect<span class="u">,</span> useRef <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
-<span class="k">import</span> gsap <span class="k">from</span> <span class="s">&quot;gsap&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> ScrollTrigger <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;gsap/ScrollTrigger&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ScrollTrigger <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap/ScrollTrigger&quot;</span><span class="text-syn-u">;</span>
 
-gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u">(</span>ScrollTrigger<span class="u">);</span>
+gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</span><span class="text-syn-u">(</span>ScrollTrigger<span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">HorizontalScroll</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> containerRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
-  <span class="k">const</span> trackRef <span class="o">=</span> <span class="f">useRef</span><span class="u">&lt;</span><span class="t">HTMLDivElement</span><span class="u">&gt;(</span><span class="k">null</span><span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">HorizontalScroll</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> containerRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> trackRef <span class="text-syn-o">=</span> <span class="text-syn-f">useRef</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">HTMLDivElement</span><span class="text-syn-u">&gt;(</span><span class="text-syn-k">null</span><span class="text-syn-u">);</span>
 
-  <span class="f">useLayoutEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> track <span class="o">=</span> trackRef<span class="u">.</span><span class="p">current</span><span class="u">;</span>
-    <span class="k">if</span> <span class="u">(</span><span class="o">!</span>track<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+  <span class="text-syn-f">useLayoutEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> track <span class="text-syn-o">=</span> trackRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">;</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>track<span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
-    <span class="k">const</span> scrollDistance <span class="o">=</span> track<span class="u">.</span><span class="p">scrollWidth</span> <span class="o">-</span> window<span class="u">.</span><span class="p">innerWidth</span><span class="u">;</span>
+    <span class="text-syn-k">const</span> scrollDistance <span class="text-syn-o">=</span> track<span class="text-syn-u">.</span><span class="text-syn-p">scrollWidth</span> <span class="text-syn-o">-</span> window<span class="text-syn-u">.</span><span class="text-syn-p">innerWidth</span><span class="text-syn-u">;</span>
 
-    gsap<span class="u">.</span><span class="f">to</span><span class="u">(</span>track<span class="u">,</span> <span class="u">{</span>
-      <span class="p">x:</span> <span class="o">-</span>scrollDistance<span class="u">,</span>
-      <span class="p">ease:</span> <span class="s">&quot;none&quot;</span><span class="u">,</span>
-      <span class="p">scrollTrigger:</span> <span class="u">{</span>
-        <span class="p">trigger:</span> containerRef<span class="u">.</span><span class="p">current</span><span class="u">,</span>
-        <span class="p">pin:</span> <span class="k">true</span><span class="u">,</span>
-        <span class="p">scrub:</span> <span class="n">1</span><span class="u">,</span>
-        <span class="p">end:</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="s">`+=${scrollDistance}`</span><span class="u">,</span>
-      <span class="u">},</span>
-    <span class="u">});</span>
-  <span class="u">},</span> <span class="u">[]);</span>
+    gsap<span class="text-syn-u">.</span><span class="text-syn-f">to</span><span class="text-syn-u">(</span>track<span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">x:</span> <span class="text-syn-o">-</span>scrollDistance<span class="text-syn-u">,</span>
+      <span class="text-syn-p">ease:</span> <span class="text-syn-s">&quot;none&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">scrollTrigger:</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">trigger:</span> containerRef<span class="text-syn-u">.</span><span class="text-syn-p">current</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">pin:</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">scrub:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">end:</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`+=${scrollDistance}`</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">section</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>containerRef<span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;overflow-hidden&quot;</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">div</span> <span class="p">ref</span><span class="o">=</span><span class="u">{</span>trackRef<span class="u">}</span> <span class="p">className</span><span class="o">=</span><span class="s">&quot;flex gap-8&quot;</span><span class="u">&gt;</span>
-        <span class="u">{</span>Array<span class="u">.</span><span class="f">from</span><span class="u">({</span> <span class="p">length:</span> <span class="n">5</span> <span class="u">}).</span><span class="f">map</span><span class="u">((</span>_<span class="u">,</span> i<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">(</span>
-          <span class="u">&lt;</span><span class="g">div</span>
-            <span class="p">key</span><span class="o">=</span><span class="u">{</span>i<span class="u">}</span>
-            <span class="p">className</span><span class="o">=</span><span class="s">&quot;flex h-screen w-screen flex-shrink-0 items-center justify-center bg-neutral-900 text-4xl text-white&quot;</span>
-          <span class="u">&gt;</span>
-            Section <span class="u">{</span>i <span class="o">+</span> <span class="n">1</span><span class="u">}</span>
-          <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-        <span class="u">))}</span>
-      <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">section</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">section</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>containerRef<span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;overflow-hidden&quot;</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>trackRef<span class="text-syn-u">}</span> <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex gap-8&quot;</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">{</span>Array<span class="text-syn-u">.</span><span class="text-syn-f">from</span><span class="text-syn-u">({</span> <span class="text-syn-p">length:</span> <span class="text-syn-n">5</span> <span class="text-syn-u">}).</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>_<span class="text-syn-u">,</span> i<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
+          <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span>
+            <span class="text-syn-p">key</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>i<span class="text-syn-u">}</span>
+            <span class="text-syn-p">className</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;flex h-screen w-screen flex-shrink-0 items-center justify-center bg-neutral-900 text-4xl text-white&quot;</span>
+          <span class="text-syn-u">&gt;</span>
+            Section <span class="text-syn-u">{</span>i <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">}</span>
+          <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">))}</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">section</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The container is pinned, and the inner track translates left as the user scrolls down.
@@ -619,13 +628,13 @@ gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u"
               requested reduced motion:
             </p>
             <pre
-            ><code class="language-tsx"><span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> mediaQuery <span class="o">=</span> window<span class="u">.</span><span class="f">matchMedia</span><span class="u">(</span><span class="s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span>mediaQuery<span class="u">.</span><span class="p">matches</span><span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> mediaQuery <span class="text-syn-o">=</span> window<span class="text-syn-u">.</span><span class="text-syn-f">matchMedia</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>mediaQuery<span class="text-syn-u">.</span><span class="text-syn-p">matches</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> lenis <span class="o">=</span> <span class="o">new</span> <span class="f">Lenis</span><span class="u">();</span>
-<span class="c">  // ... setup</span>
-<span class="u">},</span> <span class="u">[]);</span>
+  <span class="text-syn-k">const</span> lenis <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Lenis</span><span class="text-syn-u">();</span>
+<span class="text-syn-c italic">  // ... setup</span>
+<span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 </code></pre>
             <h2 id="wrapping-up">Wrapping Up</h2>
             <p>
@@ -647,28 +656,39 @@ gsap<span class="u">.</span><span class="f">registerPlugin</span><span class="u"
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
             </li>
-            <li><a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a></li>
-            <li><a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a></li>
+            <li class="my-2">
+              <a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

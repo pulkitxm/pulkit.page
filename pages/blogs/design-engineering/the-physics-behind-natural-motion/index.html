@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>The Physics Behind Natural Motion</h1>
-            <p class="detail-meta"><time datetime="2026-01-28">2026-01-28</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              The Physics Behind Natural Motion
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-28">2026-01-28</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Remember the Vercel conference badge? The 3D lanyard that swung when you dragged it,
               responding to your movements with satisfying weight and momentum? That wasn&#39;t just
@@ -380,12 +389,12 @@ a = acceleration
               calls for it.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> SPRING_CONFIGS <span class="o">=</span> <span class="u">{</span>
-  <span class="p">smooth:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">300</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">30</span><span class="u">,</span> <span class="p">mass:</span> <span class="n">1</span> <span class="u">},</span>
-  <span class="p">responsive:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">400</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">25</span><span class="u">,</span> <span class="p">mass:</span> <span class="n">0.8</span> <span class="u">},</span>
-  <span class="p">bouncy:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">300</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">10</span><span class="u">,</span> <span class="p">mass:</span> <span class="n">1</span> <span class="u">},</span>
-  <span class="p">gentle:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">150</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">20</span><span class="u">,</span> <span class="p">mass:</span> <span class="n">1</span> <span class="u">},</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> SPRING_CONFIGS <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">smooth:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">30</span><span class="text-syn-u">,</span> <span class="text-syn-p">mass:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">responsive:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">400</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">25</span><span class="text-syn-u">,</span> <span class="text-syn-p">mass:</span> <span class="text-syn-n">0.8</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">bouncy:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">10</span><span class="text-syn-u">,</span> <span class="text-syn-p">mass:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">gentle:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">150</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span> <span class="text-syn-p">mass:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h2 id="duration-reimagined">Duration, Reimagined</h2>
             <p>If springs don&#39;t have duration, how do you control timing?</p>
@@ -447,16 +456,17 @@ a = acceleration
               >, battle-tested values used throughout iOS. These are great starting points when
               you&#39;re not sure what parameters to use:
             </p>
-            <pre><code class="language-swift"><span class="c">// SwiftUI spring presets</span>
-<span class="f">withAnimation</span><span class="u">(</span>.snappy<span class="u">)</span> <span class="u">{</span> <span class="c">/* changes */</span> <span class="u">}</span>
-<span class="f">withAnimation</span><span class="u">(</span>.bouncy<span class="u">)</span> <span class="u">{</span> <span class="c">/* changes */</span> <span class="u">}</span>
-<span class="f">withAnimation</span><span class="u">(</span>.smooth<span class="u">)</span> <span class="u">{</span> <span class="c">/* changes */</span> <span class="u">}</span>
+            <pre
+            ><code class="language-swift"><span class="text-syn-c italic">// SwiftUI spring presets</span>
+<span class="text-syn-f">withAnimation</span><span class="text-syn-u">(</span>.snappy<span class="text-syn-u">)</span> <span class="text-syn-u">{</span> <span class="text-syn-c italic">/* changes */</span> <span class="text-syn-u">}</span>
+<span class="text-syn-f">withAnimation</span><span class="text-syn-u">(</span>.bouncy<span class="text-syn-u">)</span> <span class="text-syn-u">{</span> <span class="text-syn-c italic">/* changes */</span> <span class="text-syn-u">}</span>
+<span class="text-syn-f">withAnimation</span><span class="text-syn-u">(</span>.smooth<span class="text-syn-u">)</span> <span class="text-syn-u">{</span> <span class="text-syn-c italic">/* changes */</span> <span class="text-syn-u">}</span>
 
-<span class="c">// Customize with duration</span>
-<span class="f">withAnimation</span><span class="u">(</span>.<span class="f">snappy</span><span class="u">(</span><span class="f">duration</span><span class="u">:</span> <span class="n">0.4</span><span class="u">))</span> <span class="u">{</span> <span class="c">/* changes */</span> <span class="u">}</span>
+<span class="text-syn-c italic">// Customize with duration</span>
+<span class="text-syn-f">withAnimation</span><span class="text-syn-u">(</span>.<span class="text-syn-f">snappy</span><span class="text-syn-u">(</span><span class="text-syn-f">duration</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.4</span><span class="text-syn-u">))</span> <span class="text-syn-u">{</span> <span class="text-syn-c italic">/* changes */</span> <span class="text-syn-u">}</span>
 
-<span class="c">// Or add extra bounce</span>
-<span class="f">withAnimation</span><span class="u">(</span>.<span class="f">snappy</span><span class="u">(</span><span class="f">extraBounce</span><span class="u">:</span> <span class="n">0.1</span><span class="u">))</span> <span class="u">{</span> <span class="c">/* changes */</span> <span class="u">}</span>
+<span class="text-syn-c italic">// Or add extra bounce</span>
+<span class="text-syn-f">withAnimation</span><span class="text-syn-u">(</span>.<span class="text-syn-f">snappy</span><span class="text-syn-u">(</span><span class="text-syn-f">extraBounce</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.1</span><span class="text-syn-u">))</span> <span class="text-syn-u">{</span> <span class="text-syn-c italic">/* changes */</span> <span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The presets aren&#39;t magic numbers. They&#39;re tunable starting points. You can
@@ -466,12 +476,12 @@ a = acceleration
             </p>
             <p>In web development, you can create similar presets:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> SPRING_PRESETS <span class="o">=</span> <span class="u">{</span>
-  <span class="p">snappy:</span> <span class="u">{</span> <span class="p">duration:</span> <span class="n">0.35</span><span class="u">,</span> <span class="p">bounce:</span> <span class="n">0.1</span> <span class="u">},</span>
-  <span class="p">bouncy:</span> <span class="u">{</span> <span class="p">duration:</span> <span class="n">0.5</span><span class="u">,</span> <span class="p">bounce:</span> <span class="n">0.3</span> <span class="u">},</span>
-  <span class="p">smooth:</span> <span class="u">{</span> <span class="p">duration:</span> <span class="n">0.5</span><span class="u">,</span> <span class="p">bounce:</span> <span class="n">0</span> <span class="u">},</span>
-  <span class="p">gentle:</span> <span class="u">{</span> <span class="p">duration:</span> <span class="n">0.6</span><span class="u">,</span> <span class="p">bounce:</span> <span class="n">0</span> <span class="u">},</span>
-<span class="u">};</span>
+            ><code class="language-typescript"><span class="text-syn-k">const</span> SPRING_PRESETS <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">snappy:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">duration:</span> <span class="text-syn-n">0.35</span><span class="text-syn-u">,</span> <span class="text-syn-p">bounce:</span> <span class="text-syn-n">0.1</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">bouncy:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">duration:</span> <span class="text-syn-n">0.5</span><span class="text-syn-u">,</span> <span class="text-syn-p">bounce:</span> <span class="text-syn-n">0.3</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">smooth:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">duration:</span> <span class="text-syn-n">0.5</span><span class="text-syn-u">,</span> <span class="text-syn-p">bounce:</span> <span class="text-syn-n">0</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">gentle:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">duration:</span> <span class="text-syn-n">0.6</span><span class="text-syn-u">,</span> <span class="text-syn-p">bounce:</span> <span class="text-syn-n">0</span> <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h2 id="when-not-to-use-springs">When Not to Use Springs</h2>
             <p>Springs aren&#39;t always the answer.</p>
@@ -501,23 +511,24 @@ a = acceleration
               If you&#39;re optimizing for initial load, consider whether springs are worth it for
               your use case.
             </p>
-            <pre><code class="language-css"><span class="c">/* CSS is fine for these */</span>
-<span class="p">.button</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> background-color <span class="n">150ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-c italic">/* CSS is fine for these */</span>
+<span class="text-syn-p">.button</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> background-color <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.fade-in</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> fadeIn <span class="n">200ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.fade-in</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> fadeIn <span class="text-syn-n">200ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">@keyframes</span> fadeIn <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">0</span><span class="u">;</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+<span class="text-syn-k">@keyframes</span> fadeIn <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The trade-off is real. Vaul, the drawer component library, intentionally uses CSS
@@ -534,36 +545,36 @@ a = acceleration
               with many keyframes. You can pre-calculate a spring curve and encode it:
             </p>
             <pre
-            ><code class="language-css"><span class="p">.spring-approximation</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">500ms</span>
-    <span class="k">linear</span>(
-      <span class="n">0</span><span class="u">,</span>
-      <span class="n">0.009</span><span class="u">,</span>
-      <span class="n">0.035</span> <span class="n">2.1%</span><span class="u">,</span>
-      <span class="n">0.141</span><span class="u">,</span>
-      <span class="n">0.281</span> <span class="n">6.7%</span><span class="u">,</span>
-      <span class="n">0.723</span> <span class="n">12.9%</span><span class="u">,</span>
-      <span class="n">0.938</span> <span class="n">16.7%</span><span class="u">,</span>
-      <span class="n">1.017</span><span class="u">,</span>
-      <span class="n">1.077</span><span class="u">,</span>
-      <span class="n">1.121</span><span class="u">,</span>
-      <span class="n">1.149</span> <span class="n">24.3%</span><span class="u">,</span>
-      <span class="n">1.159</span><span class="u">,</span>
-      <span class="n">1.163</span><span class="u">,</span>
-      <span class="n">1.161</span><span class="u">,</span>
-      <span class="n">1.154</span> <span class="n">29.9%</span><span class="u">,</span>
-      <span class="n">1.129</span> <span class="n">32.8%</span><span class="u">,</span>
-      <span class="n">1.051</span> <span class="n">39.6%</span><span class="u">,</span>
-      <span class="n">1.017</span> <span class="n">43.1%</span><span class="u">,</span>
-      <span class="n">0.991</span><span class="u">,</span>
-      <span class="n">0.977</span> <span class="n">51%</span><span class="u">,</span>
-      <span class="n">0.974</span> <span class="n">53.8%</span><span class="u">,</span>
-      <span class="n">0.975</span> <span class="n">57.1%</span><span class="u">,</span>
-      <span class="n">0.997</span> <span class="n">69.8%</span><span class="u">,</span>
-      <span class="n">1.003</span> <span class="n">76.9%</span><span class="u">,</span>
-      <span class="n">1</span>
-    )<span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-p">.spring-approximation</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">500ms</span>
+    <span class="text-syn-k">linear</span>(
+      <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.009</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.035</span> <span class="text-syn-n">2.1%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.141</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.281</span> <span class="text-syn-n">6.7%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.723</span> <span class="text-syn-n">12.9%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.938</span> <span class="text-syn-n">16.7%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.017</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.077</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.121</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.149</span> <span class="text-syn-n">24.3%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.159</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.163</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.161</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.154</span> <span class="text-syn-n">29.9%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.129</span> <span class="text-syn-n">32.8%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.051</span> <span class="text-syn-n">39.6%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.017</span> <span class="text-syn-n">43.1%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.991</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.977</span> <span class="text-syn-n">51%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.974</span> <span class="text-syn-n">53.8%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.975</span> <span class="text-syn-n">57.1%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">0.997</span> <span class="text-syn-n">69.8%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1.003</span> <span class="text-syn-n">76.9%</span><span class="text-syn-u">,</span>
+      <span class="text-syn-n">1</span>
+    )<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This creates bounce-like motion, but it&#39;s still duration-locked. You lose
@@ -599,17 +610,17 @@ a = acceleration
               = Slow and wobbly. Usually not what you want.
             </p>
             <pre
-            ><code class="language-typescript"><span class="c">// Stiffness affects how quickly it reaches the target</span>
-<span class="c">// Damping affects how much it oscillates around the target</span>
-<span class="c">// Mass affects how much inertia it has</span>
+            ><code class="language-typescript"><span class="text-syn-c italic">// Stiffness affects how quickly it reaches the target</span>
+<span class="text-syn-c italic">// Damping affects how much it oscillates around the target</span>
+<span class="text-syn-c italic">// Mass affects how much inertia it has</span>
 
-<span class="k">const</span> configs <span class="o">=</span> <span class="u">{</span>
-  <span class="p">button:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">500</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">30</span> <span class="u">},</span>
-  <span class="p">modal:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">300</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">30</span> <span class="u">},</span>
-  <span class="p">drawer:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">400</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">40</span> <span class="u">},</span>
-  <span class="p">tooltip:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">600</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">35</span> <span class="u">},</span>
-  <span class="p">card:</span> <span class="u">{</span> <span class="p">stiffness:</span> <span class="n">300</span><span class="u">,</span> <span class="p">damping:</span> <span class="n">25</span> <span class="u">},</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> configs <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">button:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">500</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">30</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">modal:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">30</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">drawer:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">400</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">40</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">tooltip:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">600</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">35</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">card:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span> <span class="text-syn-p">damping:</span> <span class="text-syn-n">25</span> <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h2 id="the-ios-feel">The iOS Feel</h2>
             <p>
@@ -660,16 +671,18 @@ a = acceleration
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/easing-curves-that-feel-natural/"
                 >Easing Curves That Feel Natural</a
               >
             </li>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/when-to-animate-and-when-to-skip/"
                 >When to Animate and When to Skip</a
               >
@@ -677,15 +690,22 @@ a = acceleration
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

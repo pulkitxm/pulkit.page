@@ -58,12 +58,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -71,9 +76,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -81,11 +88,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>High Availability</h1>
-            <p class="detail-meta"><time datetime="2026-01-23">2026-01-23</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              High Availability
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-01-23">2026-01-23</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Your server crashes. That&#39;s annoying, but manageable. Spin up another one, route
               traffic there. API servers are typically stateless. Losing one is like losing a waiter
@@ -235,10 +244,10 @@ If this fails catastrophically, you&#39;re done.
               Replicate individual records across databases. Useful for specific high-value data.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">createCriticalRecord</span><span class="u">(</span>data<span class="o">:</span> <span class="t">CriticalData</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">await</span> primaryDb<span class="u">.</span><span class="f">insert</span><span class="u">(</span><span class="s">&quot;critical_records&quot;</span><span class="u">,</span> data<span class="u">);</span>
-  <span class="k">await</span> secondaryDb<span class="u">.</span><span class="f">insert</span><span class="u">(</span><span class="s">&quot;critical_records&quot;</span><span class="u">,</span> data<span class="u">);</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createCriticalRecord</span><span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-t">CriticalData</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">await</span> primaryDb<span class="text-syn-u">.</span><span class="text-syn-f">insert</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;critical_records&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> secondaryDb<span class="text-syn-u">.</span><span class="text-syn-f">insert</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;critical_records&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Financial transactions, user authentication data, audit logs. Things where losing a
@@ -250,7 +259,7 @@ If this fails catastrophically, you&#39;re done.
               important data.
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pg_dump</span> <span class="s">-t</span> <span class="s">users</span> <span class="s">-t</span> <span class="s">orders</span> <span class="s">mydb</span> <span class="o">&gt;</span> <span class="s">critical_tables.sql</span>
+            ><code class="language-bash"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">users</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">orders</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">critical_tables.sql</span>
 </code></pre>
             <h3 id="database-level">Database Level</h3>
             <p>
@@ -258,7 +267,7 @@ If this fails catastrophically, you&#39;re done.
               protection.
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pg_basebackup</span> <span class="s">-D</span> <span class="s">/backup/postgres</span> <span class="s">-Fp</span> <span class="s">-Xs</span> <span class="s">-P</span>
+            ><code class="language-bash"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/postgres</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
 </code></pre>
             <p>
               The right level depends on what you&#39;re protecting and how much you can afford to
@@ -316,14 +325,14 @@ If this fails catastrophically, you&#39;re done.
               backup. Small, fast, low overhead.
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pg_dump</span> <span class="s">--data-only</span> <span class="s">--inserts</span> <span class="s">mydb</span> <span class="o">&gt;</span> <span class="s">incremental_</span><span class="u">$(</span><span class="f">date</span> <span class="s">+%Y%m%d</span><span class="u">)</span><span class="s">.sql</span>
+            ><code class="language-bash"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">--data-only</span> <span class="text-syn-s">--inserts</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">incremental_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span><span class="text-syn-s">.sql</span>
 </code></pre>
             <p>
               <strong>Weekly full backups</strong>: Complete snapshot of everything. Larger, slower,
               but comprehensive.
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pg_basebackup</span> <span class="s">-D</span> <span class="s">/backup/full_</span><span class="u">$(</span><span class="f">date</span> <span class="s">+%Y%m%d</span><span class="u">)</span> <span class="s">-Fp</span> <span class="s">-Xs</span> <span class="s">-P</span>
+            ><code class="language-bash"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/full_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
 </code></pre>
             <p>
               <strong>Cross-region copy</strong>: At least one copy in a different data center. Fire
@@ -496,7 +505,7 @@ wal_keep_size = 1GB
               this user if it doesn&#39;t exist:
             </p>
             <pre
-            ><code class="language-sql"><span class="k">CREATE</span> <span class="k">USER</span> <span class="f">replicator</span> <span class="k">WITH</span> REPLICATION <span class="k">ENCRYPTED</span> <span class="k">PASSWORD</span> <span class="s">&#39;secure_password&#39;</span>;
+            ><code class="language-sql"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">USER</span> <span class="text-syn-f">replicator</span> <span class="text-syn-k">WITH</span> REPLICATION <span class="text-syn-k">ENCRYPTED</span> <span class="text-syn-k">PASSWORD</span> <span class="text-syn-s">&#39;secure_password&#39;</span>;
 </code></pre>
             <p>Restart PostgreSQL for changes to take effect.</p>
             <p><strong>Step 3: Initialize the Replica</strong></p>
@@ -505,7 +514,7 @@ wal_keep_size = 1GB
               changes. <code>pg_basebackup</code> handles this:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">pg_basebackup</span> <span class="s">-h</span> <span class="s">primary_ip</span> <span class="s">-D</span> <span class="s">/var/lib/postgresql/data</span> <span class="s">-U</span> <span class="s">replicator</span> <span class="s">-P</span> <span class="s">-R</span>
+            ><code class="language-bash"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-h</span> <span class="text-syn-s">primary_ip</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/var/lib/postgresql/data</span> <span class="text-syn-s">-U</span> <span class="text-syn-s">replicator</span> <span class="text-syn-s">-P</span> <span class="text-syn-s">-R</span>
 </code></pre>
             <p>Breaking this down:</p>
             <ul>
@@ -525,7 +534,7 @@ wal_keep_size = 1GB
             </p>
             <p><strong>Step 4: Start the Replica</strong></p>
             <pre
-            ><code class="language-bash"><span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">start</span> <span class="s">postgresql</span>
+            ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">postgresql</span>
 </code></pre>
             <p>
               The replica automatically connects to the primary and starts receiving WAL stream.
@@ -535,8 +544,8 @@ wal_keep_size = 1GB
             <p><strong>Step 5: Verify It&#39;s Working</strong></p>
             <p>On the primary, check connected replicas:</p>
             <pre
-            ><code class="language-sql"><span class="k">SELECT</span> client_addr, <span class="k">state</span>, sent_lsn, replay_lsn
-<span class="k">FROM</span> pg_stat_replication;
+            ><code class="language-sql"><span class="text-syn-k">SELECT</span> client_addr, <span class="text-syn-k">state</span>, sent_lsn, replay_lsn
+<span class="text-syn-k">FROM</span> pg_stat_replication;
 </code></pre>
             <p>
               You should see your replica listed with <code>state = streaming</code>. The
@@ -675,19 +684,19 @@ Secondary DC (Singapore)
             <h3 id="how-it-works">How It Works</h3>
             <p>A monitoring system continuously checks the primary&#39;s health:</p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">HealthCheck</span> <span class="u">{</span>
-  endpoint<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  interval<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  timeout<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-  failureThreshold<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-u">{</span>
+  endpoint<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  interval<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  timeout<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+  failureThreshold<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> primaryHealthCheck<span class="o">:</span> <span class="t">HealthCheck</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="p">endpoint:</span> <span class="s">&quot;tcp://primary:5432&quot;</span><span class="u">,</span>
-  <span class="p">interval:</span> <span class="n">5000</span><span class="u">,</span>
-  <span class="p">timeout:</span> <span class="n">2000</span><span class="u">,</span>
-  <span class="p">failureThreshold:</span> <span class="n">3</span><span class="u">,</span>
-<span class="u">};</span>
+<span class="text-syn-k">const</span> primaryHealthCheck<span class="text-syn-o">:</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">endpoint:</span> <span class="text-syn-s">&quot;tcp://primary:5432&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">interval:</span> <span class="text-syn-n">5000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">timeout:</span> <span class="text-syn-n">2000</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">failureThreshold:</span> <span class="text-syn-n">3</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <p>If the primary fails consecutive health checks:</p>
             <ol>
@@ -700,15 +709,15 @@ Secondary DC (Singapore)
               <li><strong>Redirect traffic</strong>: Update connection strings or DNS</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">async</span> <span class="k">function</span> <span class="f">handlePrimaryFailure</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> confirmed <span class="o">=</span> <span class="k">await</span> <span class="f">confirmFailure</span><span class="u">(</span>primary<span class="u">,</span> <span class="n">3</span><span class="u">);</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>confirmed<span class="u">)</span> <span class="k">return</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">handlePrimaryFailure</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> confirmed <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">confirmFailure</span><span class="text-syn-u">(</span>primary<span class="text-syn-u">,</span> <span class="text-syn-n">3</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>confirmed<span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
-  <span class="k">await</span> <span class="f">fencePrimary</span><span class="u">(</span>primary<span class="u">);</span>
-  <span class="k">await</span> <span class="f">promoteReplica</span><span class="u">(</span>standby<span class="u">);</span>
-  <span class="k">await</span> <span class="f">updateDns</span><span class="u">(</span><span class="s">&quot;db.myapp.com&quot;</span><span class="u">,</span> standby<span class="u">.</span><span class="p">ip</span><span class="u">);</span>
-  <span class="k">await</span> <span class="f">alertOps</span><span class="u">(</span><span class="s">&quot;Primary failed. Standby promoted.&quot;</span><span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">await</span> <span class="text-syn-f">fencePrimary</span><span class="text-syn-u">(</span>primary<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> <span class="text-syn-f">promoteReplica</span><span class="text-syn-u">(</span>standby<span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> <span class="text-syn-f">updateDns</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;db.myapp.com&quot;</span><span class="text-syn-u">,</span> standby<span class="text-syn-u">.</span><span class="text-syn-p">ip</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">await</span> <span class="text-syn-f">alertOps</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Primary failed. Standby promoted.&quot;</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="tools-for-automatic-failover">Tools for Automatic Failover</h3>
             <p><strong>PostgreSQL:</strong></p>
@@ -1074,58 +1083,58 @@ Manager returns:
             <h2 id="implementation-sketch">Implementation Sketch</h2>
             <p>Here&#39;s a simplified view of how this might look:</p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">OrchestratorNode</span> <span class="u">{</span>
-  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  isLeader<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
-  peers<span class="o">:</span> <span class="t">string</span><span class="u">[];</span>
-<span class="u">}</span>
+            ><code class="language-typescript"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrchestratorNode</span> <span class="text-syn-u">{</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  isLeader<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
+  peers<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[];</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">class</span> <span class="t">Orchestrator</span> <span class="u">{</span>
-  <span class="k">private</span> node<span class="o">:</span> <span class="t">OrchestratorNode</span><span class="u">;</span>
-  <span class="k">private</span> leaderHeartbeatTimeout<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> <span class="n">5000</span><span class="u">;</span>
+<span class="text-syn-k">class</span> <span class="text-syn-t">Orchestrator</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">private</span> node<span class="text-syn-o">:</span> <span class="text-syn-t">OrchestratorNode</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">private</span> leaderHeartbeatTimeout<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-o">=</span> <span class="text-syn-n">5000</span><span class="text-syn-u">;</span>
 
-  <span class="k">async</span> <span class="f">start</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-    <span class="k">if</span> <span class="u">(</span>this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span><span class="u">)</span> <span class="u">{</span>
-      this<span class="u">.</span><span class="f">runAsLeader</span><span class="u">();</span>
-    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
-      this<span class="u">.</span><span class="f">runAsWorker</span><span class="u">();</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-f">start</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>this<span class="text-syn-u">.</span>node<span class="text-syn-u">.</span><span class="text-syn-p">isLeader</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      this<span class="text-syn-u">.</span><span class="text-syn-f">runAsLeader</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">else</span> <span class="text-syn-u">{</span>
+      this<span class="text-syn-u">.</span><span class="text-syn-f">runAsWorker</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">private</span> <span class="k">async</span> <span class="f">runAsLeader</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-    <span class="k">while</span> <span class="u">(</span>this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">await</span> this<span class="u">.</span><span class="f">sendHeartbeatsToWorkers</span><span class="u">();</span>
-      <span class="k">await</span> this<span class="u">.</span><span class="f">checkWorkerHealth</span><span class="u">();</span>
-      <span class="k">await</span> this<span class="u">.</span><span class="f">replaceDeadWorkers</span><span class="u">();</span>
-      <span class="k">await</span> <span class="f">sleep</span><span class="u">(</span><span class="n">1000</span><span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">private</span> <span class="text-syn-k">async</span> <span class="text-syn-f">runAsLeader</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">while</span> <span class="text-syn-u">(</span>this<span class="text-syn-u">.</span>node<span class="text-syn-u">.</span><span class="text-syn-p">isLeader</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">sendHeartbeatsToWorkers</span><span class="text-syn-u">();</span>
+      <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">checkWorkerHealth</span><span class="text-syn-u">();</span>
+      <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">replaceDeadWorkers</span><span class="text-syn-u">();</span>
+      <span class="text-syn-k">await</span> <span class="text-syn-f">sleep</span><span class="text-syn-u">(</span><span class="text-syn-n">1000</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">private</span> <span class="k">async</span> <span class="f">runAsWorker</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-    <span class="k">let</span> lastLeaderHeartbeat <span class="o">=</span> Date<span class="u">.</span><span class="f">now</span><span class="u">();</span>
+  <span class="text-syn-k">private</span> <span class="text-syn-k">async</span> <span class="text-syn-f">runAsWorker</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">let</span> lastLeaderHeartbeat <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
 
-    <span class="k">while</span> <span class="u">(</span><span class="o">!</span>this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span><span class="u">)</span> <span class="u">{</span>
-      <span class="k">await</span> this<span class="u">.</span><span class="f">checkServerHealth</span><span class="u">();</span>
-      <span class="k">await</span> this<span class="u">.</span><span class="f">replaceDeadServers</span><span class="u">();</span>
+    <span class="text-syn-k">while</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>this<span class="text-syn-u">.</span>node<span class="text-syn-u">.</span><span class="text-syn-p">isLeader</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">checkServerHealth</span><span class="text-syn-u">();</span>
+      <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">replaceDeadServers</span><span class="text-syn-u">();</span>
 
-      <span class="k">if</span> <span class="u">(</span>Date<span class="u">.</span><span class="f">now</span><span class="u">()</span> <span class="o">-</span> lastLeaderHeartbeat <span class="o">&gt;</span> this<span class="u">.</span><span class="p">leaderHeartbeatTimeout</span><span class="u">)</span> <span class="u">{</span>
-        <span class="k">await</span> this<span class="u">.</span><span class="f">initiateLeaderElection</span><span class="u">();</span>
-      <span class="u">}</span>
+      <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">()</span> <span class="text-syn-o">-</span> lastLeaderHeartbeat <span class="text-syn-o">&gt;</span> this<span class="text-syn-u">.</span><span class="text-syn-p">leaderHeartbeatTimeout</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">initiateLeaderElection</span><span class="text-syn-u">();</span>
+      <span class="text-syn-u">}</span>
 
-      <span class="k">await</span> <span class="f">sleep</span><span class="u">(</span><span class="n">1000</span><span class="u">);</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+      <span class="text-syn-k">await</span> <span class="text-syn-f">sleep</span><span class="text-syn-u">(</span><span class="text-syn-n">1000</span><span class="text-syn-u">);</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">private</span> <span class="k">async</span> <span class="f">initiateLeaderElection</span><span class="u">()</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">void</span><span class="u">&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> votes <span class="o">=</span> <span class="k">await</span> this<span class="u">.</span><span class="f">requestVotesFromPeers</span><span class="u">();</span>
-    <span class="k">const</span> majority <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">(</span>this<span class="u">.</span>node<span class="u">.</span>peers<span class="u">.</span>length <span class="o">/</span> <span class="n">2</span><span class="u">)</span> <span class="o">+</span> <span class="n">1</span><span class="u">;</span>
+  <span class="text-syn-k">private</span> <span class="text-syn-k">async</span> <span class="text-syn-f">initiateLeaderElection</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> votes <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">requestVotesFromPeers</span><span class="text-syn-u">();</span>
+    <span class="text-syn-k">const</span> majority <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">floor</span><span class="text-syn-u">(</span>this<span class="text-syn-u">.</span>node<span class="text-syn-u">.</span>peers<span class="text-syn-u">.</span>length <span class="text-syn-o">/</span> <span class="text-syn-n">2</span><span class="text-syn-u">)</span> <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
 
-    <span class="k">if</span> <span class="u">(</span>votes <span class="o">&gt;=</span> majority<span class="u">)</span> <span class="u">{</span>
-      this<span class="u">.</span>node<span class="u">.</span><span class="p">isLeader</span> <span class="o">=</span> <span class="k">true</span><span class="u">;</span>
-      <span class="k">await</span> this<span class="u">.</span><span class="f">announceLeadership</span><span class="u">();</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>votes <span class="text-syn-o">&gt;=</span> majority<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      this<span class="text-syn-u">.</span>node<span class="text-syn-u">.</span><span class="text-syn-p">isLeader</span> <span class="text-syn-o">=</span> <span class="text-syn-k">true</span><span class="text-syn-u">;</span>
+      <span class="text-syn-k">await</span> this<span class="text-syn-u">.</span><span class="text-syn-f">announceLeadership</span><span class="text-syn-u">();</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="hands-on-simulate-leader-election">Hands-on: Simulate Leader Election</h2>
             <p>
@@ -1193,26 +1202,37 @@ Manager returns:
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
             </li>
-            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
-            <li><a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a></li>
+            <li class="my-2">
+              <a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/system-design/consistent-hashing/">Consistent Hashing</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

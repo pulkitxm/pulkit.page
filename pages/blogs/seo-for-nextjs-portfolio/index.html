@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">SEO for Next.js Portfolio</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>SEO for Next.js Portfolio</h1>
-            <p class="detail-meta"><time datetime="2025-12-21">2025-12-21</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              SEO for Next.js Portfolio
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2025-12-21">2025-12-21</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <h2 id="introduction">Introduction</h2>
             <p>
               Recently, I randomly searched for &quot;Deploying portfolio on Coolify&quot; and was
@@ -151,14 +160,14 @@
   └── content-3.mdx
 </code></pre>
             <p>Each <code>.mdx</code> file contains frontmatter metadata and the actual content:</p>
-            <pre><code class="language-markdown"><span class="u">---</span>
-<span class="s">title</span><span class="u">:</span> <span class="s">&quot;Your Content Title&quot;</span>
-<span class="s">description</span><span class="u">:</span> <span class="s">&quot;SEO-optimized description&quot;</span>
-<span class="s">date</span><span class="u">:</span> <span class="s">&quot;2025-12-11&quot;</span>
-<span class="s">tags</span><span class="u">:</span> <span class="u">[</span><span class="s">&quot;Next.js&quot;</span><span class="u">,</span> <span class="s">&quot;SEO&quot;</span><span class="u">]</span>
-<span class="s">readTime</span><span class="u">:</span> <span class="n">10</span>
-<span class="s">slug</span><span class="u">:</span> <span class="s">&quot;your-content-slug&quot;</span>
-<span class="u">---</span>
+            <pre><code class="language-markdown"><span class="text-syn-u">---</span>
+<span class="text-syn-s">title</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Your Content Title&quot;</span>
+<span class="text-syn-s">description</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;SEO-optimized description&quot;</span>
+<span class="text-syn-s">date</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;2025-12-11&quot;</span>
+<span class="text-syn-s">tags</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;Next.js&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;SEO&quot;</span><span class="text-syn-u">]</span>
+<span class="text-syn-s">readTime</span><span class="text-syn-u">:</span> <span class="text-syn-n">10</span>
+<span class="text-syn-s">slug</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;your-content-slug&quot;</span>
+<span class="text-syn-u">---</span>
 
 Your content here...
 </code></pre>
@@ -209,34 +218,34 @@ Your content here...
             <h3 id="implementing-ssg-for-dynamic-pages">Implementing SSG for Dynamic Pages</h3>
             <p>Here&#39;s how I generate static pages for all my content:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> fs <span class="k">from</span> <span class="s">&#39;fs&#39;</span><span class="u">;</span>
-<span class="k">import</span> path <span class="k">from</span> <span class="s">&#39;path&#39;</span><span class="u">;</span>
-<span class="k">import</span> matter <span class="k">from</span> <span class="s">&#39;gray-matter&#39;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&#39;fs&#39;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> path <span class="text-syn-k">from</span> <span class="text-syn-s">&#39;path&#39;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> matter <span class="text-syn-k">from</span> <span class="text-syn-s">&#39;gray-matter&#39;</span><span class="text-syn-u">;</span>
 
-<span class="k">const</span> CONTENT_DIR <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>process<span class="u">.</span><span class="f">cwd</span><span class="u">(),</span> <span class="s">&#39;content/blogs&#39;</span><span class="u">);</span>
+<span class="text-syn-k">const</span> CONTENT_DIR <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>process<span class="text-syn-u">.</span><span class="text-syn-f">cwd</span><span class="text-syn-u">(),</span> <span class="text-syn-s">&#39;content/blogs&#39;</span><span class="text-syn-u">);</span>
 
-<span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">generateStaticParams</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> files <span class="o">=</span> fs<span class="u">.</span><span class="f">readdirSync</span><span class="u">(</span>CONTENT_DIR<span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">generateStaticParams</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> files <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readdirSync</span><span class="text-syn-u">(</span>CONTENT_DIR<span class="text-syn-u">);</span>
 
-  <span class="k">return</span> files
-    <span class="u">.</span><span class="f">filter</span><span class="u">(</span>file <span class="k">=&gt;</span> file<span class="u">.</span><span class="f">endsWith</span><span class="u">(</span><span class="s">&#39;.mdx&#39;</span><span class="u">))</span>
-    <span class="u">.</span><span class="f">map</span><span class="u">(</span>file <span class="k">=&gt;</span> <span class="u">({</span>
-      <span class="p">slug:</span> file<span class="u">.</span><span class="f">replace</span><span class="u">(</span><span class="s">&#39;.mdx&#39;</span><span class="u">,</span> <span class="s">&#39;&#39;</span><span class="u">),</span>
-    <span class="u">}));</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> files
+    <span class="text-syn-u">.</span><span class="text-syn-f">filter</span><span class="text-syn-u">(</span>file <span class="text-syn-k">=&gt;</span> file<span class="text-syn-u">.</span><span class="text-syn-f">endsWith</span><span class="text-syn-u">(</span><span class="text-syn-s">&#39;.mdx&#39;</span><span class="text-syn-u">))</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">(</span>file <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+      <span class="text-syn-p">slug:</span> file<span class="text-syn-u">.</span><span class="text-syn-f">replace</span><span class="text-syn-u">(</span><span class="text-syn-s">&#39;.mdx&#39;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&#39;&#39;</span><span class="text-syn-u">),</span>
+    <span class="text-syn-u">}));</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">async</span> <span class="k">function</span> <span class="f">Page</span><span class="u">({</span> params <span class="u">}</span><span class="o">:</span> <span class="u">{</span> params<span class="o">:</span> <span class="u">{</span> slug<span class="o">:</span> <span class="t">string</span> <span class="u">}</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> filePath <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>CONTENT_DIR<span class="u">,</span> <span class="s">`${params.</span><span class="p">slug</span><span class="s">}.mdx`</span><span class="u">);</span>
-  <span class="k">const</span> fileContent <span class="o">=</span> fs<span class="u">.</span><span class="f">readFileSync</span><span class="u">(</span>filePath<span class="u">,</span> <span class="s">&#39;utf8&#39;</span><span class="u">);</span>
-  <span class="k">const</span> <span class="u">{</span> data<span class="u">,</span> content <span class="u">}</span> <span class="o">=</span> <span class="f">matter</span><span class="u">(</span>fileContent<span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">Page</span><span class="text-syn-u">({</span> params <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> params<span class="text-syn-o">:</span> <span class="text-syn-u">{</span> slug<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">}</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> filePath <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>CONTENT_DIR<span class="text-syn-u">,</span> <span class="text-syn-s">`${params.</span><span class="text-syn-p">slug</span><span class="text-syn-s">}.mdx`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> fileContent <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readFileSync</span><span class="text-syn-u">(</span>filePath<span class="text-syn-u">,</span> <span class="text-syn-s">&#39;utf8&#39;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> data<span class="text-syn-u">,</span> content <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">matter</span><span class="text-syn-u">(</span>fileContent<span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="t">article</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="t">h1</span><span class="u">&gt;{</span>data.title<span class="u">}</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
-      <span class="u">{</span><span class="c">/* Render MDX content */</span><span class="u">}</span>
-    <span class="o">&lt;/</span>article<span class="o">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-t">article</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">h1</span><span class="text-syn-u">&gt;{</span>data.title<span class="text-syn-u">}</span><span class="text-syn-o">&lt;/</span>h1<span class="text-syn-o">&gt;</span>
+      <span class="text-syn-u">{</span><span class="text-syn-c italic">/* Render MDX content */</span><span class="text-syn-u">}</span>
+    <span class="text-syn-o">&lt;/</span>article<span class="text-syn-o">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This approach ensures that all pages are pre-rendered at build time, giving you the
@@ -258,56 +267,56 @@ Your content here...
             </ul>
             <p>Here&#39;s the implementation:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> Metadata <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;next&quot;</span><span class="u">;</span>
-<span class="k">import</span> fs <span class="k">from</span> <span class="s">&quot;fs&quot;</span><span class="u">;</span>
-<span class="k">import</span> path <span class="k">from</span> <span class="s">&quot;path&quot;</span><span class="u">;</span>
-<span class="k">import</span> matter <span class="k">from</span> <span class="s">&quot;gray-matter&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Metadata <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> path <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;path&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> matter <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gray-matter&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">generateMetadata</span><span class="u">({</span>
-  params<span class="u">,</span>
-<span class="u">}</span><span class="o">:</span> <span class="u">{</span>
-  params<span class="o">:</span> <span class="u">{</span> slug<span class="o">:</span> <span class="t">string</span> <span class="u">};</span>
-<span class="u">})</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">Metadata</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> filePath <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>process<span class="u">.</span><span class="f">cwd</span><span class="u">(),</span> <span class="s">&quot;content/blogs&quot;</span><span class="u">,</span> <span class="s">`${params.</span><span class="p">slug</span><span class="s">}.mdx`</span><span class="u">);</span>
-  <span class="k">const</span> fileContent <span class="o">=</span> fs<span class="u">.</span><span class="f">readFileSync</span><span class="u">(</span>filePath<span class="u">,</span> <span class="s">&quot;utf8&quot;</span><span class="u">);</span>
-  <span class="k">const</span> <span class="u">{</span> data <span class="u">}</span> <span class="o">=</span> <span class="f">matter</span><span class="u">(</span>fileContent<span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">generateMetadata</span><span class="text-syn-u">({</span>
+  params<span class="text-syn-u">,</span>
+<span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span>
+  params<span class="text-syn-o">:</span> <span class="text-syn-u">{</span> slug<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">};</span>
+<span class="text-syn-u">})</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Metadata</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> filePath <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>process<span class="text-syn-u">.</span><span class="text-syn-f">cwd</span><span class="text-syn-u">(),</span> <span class="text-syn-s">&quot;content/blogs&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">`${params.</span><span class="text-syn-p">slug</span><span class="text-syn-s">}.mdx`</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> fileContent <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readFileSync</span><span class="text-syn-u">(</span>filePath<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;utf8&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> data <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">matter</span><span class="text-syn-u">(</span>fileContent<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> title <span class="o">=</span> <span class="s">`${data.</span><span class="p">title</span><span class="s">} | Pulkit`</span><span class="u">;</span>
-  <span class="k">const</span> description <span class="o">=</span> data<span class="u">.</span><span class="p">description</span><span class="u">;</span>
-  <span class="k">const</span> coverImage <span class="o">=</span> <span class="s">`https://pulkitxm.com/images/${data.</span><span class="p">coverImage</span><span class="s">}.png`</span><span class="u">;</span>
-  <span class="k">const</span> url <span class="o">=</span> <span class="s">`https://pulkitxm.com/blogs/${params.</span><span class="p">slug</span><span class="s">}`</span><span class="u">;</span>
+  <span class="text-syn-k">const</span> title <span class="text-syn-o">=</span> <span class="text-syn-s">`${data.</span><span class="text-syn-p">title</span><span class="text-syn-s">} | Pulkit`</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> description <span class="text-syn-o">=</span> data<span class="text-syn-u">.</span><span class="text-syn-p">description</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> coverImage <span class="text-syn-o">=</span> <span class="text-syn-s">`https://pulkitxm.com/images/${data.</span><span class="text-syn-p">coverImage</span><span class="text-syn-s">}.png`</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> url <span class="text-syn-o">=</span> <span class="text-syn-s">`https://pulkitxm.com/blogs/${params.</span><span class="text-syn-p">slug</span><span class="text-syn-s">}`</span><span class="text-syn-u">;</span>
 
-  <span class="k">return</span> <span class="u">{</span>
-    title<span class="u">,</span>
-    description<span class="u">,</span>
-    <span class="p">openGraph:</span> <span class="u">{</span>
-      title<span class="u">,</span>
-      description<span class="u">,</span>
-      url<span class="u">,</span>
-      <span class="p">type:</span> <span class="s">&quot;article&quot;</span><span class="u">,</span>
-      <span class="p">publishedTime:</span> data<span class="u">.</span><span class="p">date</span><span class="u">,</span>
-      <span class="p">authors:</span> <span class="u">[</span>data<span class="u">.</span><span class="p">author</span><span class="u">],</span>
-      <span class="p">images:</span> <span class="u">[</span>
-        <span class="u">{</span>
-          <span class="p">url:</span> coverImage<span class="u">,</span>
-          <span class="p">width:</span> <span class="n">1200</span><span class="u">,</span>
-          <span class="p">height:</span> <span class="n">630</span><span class="u">,</span>
-          <span class="p">alt:</span> title<span class="u">,</span>
-        <span class="u">},</span>
-      <span class="u">],</span>
-    <span class="u">},</span>
-    <span class="p">twitter:</span> <span class="u">{</span>
-      <span class="p">card:</span> <span class="s">&quot;summary_large_image&quot;</span><span class="u">,</span>
-      title<span class="u">,</span>
-      description<span class="u">,</span>
-      <span class="p">images:</span> <span class="u">[</span>coverImage<span class="u">],</span>
-      <span class="p">creator:</span> <span class="s">&quot;@_pulkitxm&quot;</span><span class="u">,</span>
-    <span class="u">},</span>
-    <span class="p">alternates:</span> <span class="u">{</span>
-      <span class="p">canonical:</span> url<span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">};</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+    title<span class="text-syn-u">,</span>
+    description<span class="text-syn-u">,</span>
+    <span class="text-syn-p">openGraph:</span> <span class="text-syn-u">{</span>
+      title<span class="text-syn-u">,</span>
+      description<span class="text-syn-u">,</span>
+      url<span class="text-syn-u">,</span>
+      <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;article&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">publishedTime:</span> data<span class="text-syn-u">.</span><span class="text-syn-p">date</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">authors:</span> <span class="text-syn-u">[</span>data<span class="text-syn-u">.</span><span class="text-syn-p">author</span><span class="text-syn-u">],</span>
+      <span class="text-syn-p">images:</span> <span class="text-syn-u">[</span>
+        <span class="text-syn-u">{</span>
+          <span class="text-syn-p">url:</span> coverImage<span class="text-syn-u">,</span>
+          <span class="text-syn-p">width:</span> <span class="text-syn-n">1200</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">height:</span> <span class="text-syn-n">630</span><span class="text-syn-u">,</span>
+          <span class="text-syn-p">alt:</span> title<span class="text-syn-u">,</span>
+        <span class="text-syn-u">},</span>
+      <span class="text-syn-u">],</span>
+    <span class="text-syn-u">},</span>
+    <span class="text-syn-p">twitter:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">card:</span> <span class="text-syn-s">&quot;summary_large_image&quot;</span><span class="text-syn-u">,</span>
+      title<span class="text-syn-u">,</span>
+      description<span class="text-syn-u">,</span>
+      <span class="text-syn-p">images:</span> <span class="text-syn-u">[</span>coverImage<span class="text-syn-u">],</span>
+      <span class="text-syn-p">creator:</span> <span class="text-syn-s">&quot;@_pulkitxm&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+    <span class="text-syn-p">alternates:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">canonical:</span> url<span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="custom-cover-images-for-each-page">Custom Cover Images for Each Page</h3>
             <p>Each page has its own cover image, which is crucial for:</p>
@@ -344,46 +353,46 @@ Your content here...
               <code>/content/blogs/</code>, I dynamically map them to generate sitemap entries:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> MetadataRoute <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;next&quot;</span><span class="u">;</span>
-<span class="k">import</span> fs <span class="k">from</span> <span class="s">&quot;fs&quot;</span><span class="u">;</span>
-<span class="k">import</span> path <span class="k">from</span> <span class="s">&quot;path&quot;</span><span class="u">;</span>
-<span class="k">import</span> matter <span class="k">from</span> <span class="s">&quot;gray-matter&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> MetadataRoute <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> path <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;path&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> matter <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gray-matter&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">function</span> <span class="f">sitemap</span><span class="u">()</span><span class="o">:</span> <span class="t">MetadataRoute</span><span class="u">.</span><span class="t">Sitemap</span> <span class="u">{</span>
-  <span class="k">const</span> blogsDir <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>process<span class="u">.</span><span class="f">cwd</span><span class="u">(),</span> <span class="s">&quot;content/blogs&quot;</span><span class="u">);</span>
-  <span class="k">const</span> files <span class="o">=</span> fs<span class="u">.</span><span class="f">readdirSync</span><span class="u">(</span>blogsDir<span class="u">);</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sitemap</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">MetadataRoute</span><span class="text-syn-u">.</span><span class="text-syn-t">Sitemap</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> blogsDir <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>process<span class="text-syn-u">.</span><span class="text-syn-f">cwd</span><span class="text-syn-u">(),</span> <span class="text-syn-s">&quot;content/blogs&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> files <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readdirSync</span><span class="text-syn-u">(</span>blogsDir<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> blogs <span class="o">=</span> files
-    <span class="u">.</span><span class="f">filter</span><span class="u">((</span>file<span class="u">)</span> <span class="k">=&gt;</span> file<span class="u">.</span><span class="f">endsWith</span><span class="u">(</span><span class="s">&quot;.mdx&quot;</span><span class="u">))</span>
-    <span class="u">.</span><span class="f">map</span><span class="u">((</span>file<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-      <span class="k">const</span> filePath <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>blogsDir<span class="u">,</span> file<span class="u">);</span>
-      <span class="k">const</span> fileContent <span class="o">=</span> fs<span class="u">.</span><span class="f">readFileSync</span><span class="u">(</span>filePath<span class="u">,</span> <span class="s">&quot;utf8&quot;</span><span class="u">);</span>
-      <span class="k">const</span> <span class="u">{</span> data <span class="u">}</span> <span class="o">=</span> <span class="f">matter</span><span class="u">(</span>fileContent<span class="u">);</span>
+  <span class="text-syn-k">const</span> blogs <span class="text-syn-o">=</span> files
+    <span class="text-syn-u">.</span><span class="text-syn-f">filter</span><span class="text-syn-u">((</span>file<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> file<span class="text-syn-u">.</span><span class="text-syn-f">endsWith</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;.mdx&quot;</span><span class="text-syn-u">))</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>file<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">const</span> filePath <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>blogsDir<span class="text-syn-u">,</span> file<span class="text-syn-u">);</span>
+      <span class="text-syn-k">const</span> fileContent <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readFileSync</span><span class="text-syn-u">(</span>filePath<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;utf8&quot;</span><span class="text-syn-u">);</span>
+      <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> data <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">matter</span><span class="text-syn-u">(</span>fileContent<span class="text-syn-u">);</span>
 
-      <span class="k">return</span> <span class="u">{</span>
-        <span class="p">url:</span> <span class="s">`https://pulkitxm.com/blogs/${data.</span><span class="p">slug</span><span class="s">}`</span><span class="u">,</span>
-        <span class="p">lastModified:</span> <span class="o">new</span> <span class="f">Date</span><span class="u">(</span>data<span class="u">.</span><span class="p">date</span><span class="u">),</span>
-        <span class="p">changeFrequency:</span> <span class="s">&quot;monthly&quot;</span> <span class="k">as</span> <span class="k">const</span><span class="u">,</span>
-        <span class="p">priority:</span> <span class="n">0.8</span><span class="u">,</span>
-      <span class="u">};</span>
-    <span class="u">});</span>
+      <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+        <span class="text-syn-p">url:</span> <span class="text-syn-s">`https://pulkitxm.com/blogs/${data.</span><span class="text-syn-p">slug</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">lastModified:</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Date</span><span class="text-syn-u">(</span>data<span class="text-syn-u">.</span><span class="text-syn-p">date</span><span class="text-syn-u">),</span>
+        <span class="text-syn-p">changeFrequency:</span> <span class="text-syn-s">&quot;monthly&quot;</span> <span class="text-syn-k">as</span> <span class="text-syn-k">const</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">priority:</span> <span class="text-syn-n">0.8</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">};</span>
+    <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> <span class="u">[</span>
-    <span class="u">{</span>
-      <span class="p">url:</span> <span class="s">&quot;https://pulkitxm.com&quot;</span><span class="u">,</span>
-      <span class="p">lastModified:</span> <span class="o">new</span> <span class="f">Date</span><span class="u">(),</span>
-      <span class="p">changeFrequency:</span> <span class="s">&quot;yearly&quot;</span><span class="u">,</span>
-      <span class="p">priority:</span> <span class="n">1</span><span class="u">,</span>
-    <span class="u">},</span>
-    <span class="u">{</span>
-      <span class="p">url:</span> <span class="s">&quot;https://pulkitxm.com/blogs&quot;</span><span class="u">,</span>
-      <span class="p">lastModified:</span> <span class="o">new</span> <span class="f">Date</span><span class="u">(),</span>
-      <span class="p">changeFrequency:</span> <span class="s">&quot;weekly&quot;</span><span class="u">,</span>
-      <span class="p">priority:</span> <span class="n">0.9</span><span class="u">,</span>
-    <span class="u">},</span>
-    <span class="o">...</span>blogs<span class="u">,</span>
-  <span class="u">];</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">[</span>
+    <span class="text-syn-u">{</span>
+      <span class="text-syn-p">url:</span> <span class="text-syn-s">&quot;https://pulkitxm.com&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">lastModified:</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Date</span><span class="text-syn-u">(),</span>
+      <span class="text-syn-p">changeFrequency:</span> <span class="text-syn-s">&quot;yearly&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">priority:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+    <span class="text-syn-u">{</span>
+      <span class="text-syn-p">url:</span> <span class="text-syn-s">&quot;https://pulkitxm.com/blogs&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">lastModified:</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Date</span><span class="text-syn-u">(),</span>
+      <span class="text-syn-p">changeFrequency:</span> <span class="text-syn-s">&quot;weekly&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">priority:</span> <span class="text-syn-n">0.9</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+    <span class="text-syn-o">...</span>blogs<span class="text-syn-u">,</span>
+  <span class="text-syn-u">];</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="submitting-to-google-search-console">Submitting to Google Search Console</h3>
             <p>After generating your sitemap:</p>
@@ -436,42 +445,42 @@ Your content here...
             <h3 id="example-implementation">Example Implementation</h3>
             <p>Here&#39;s what a complete metadata setup looks like:</p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">const</span> metadata<span class="o">:</span> <span class="t">Metadata</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="p">title:</span> <span class="s">&quot;Blog Title | Pulkit&quot;</span><span class="u">,</span>
-  <span class="p">description:</span> <span class="s">&quot;SEO-optimized description under 160 characters&quot;</span><span class="u">,</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> metadata<span class="text-syn-o">:</span> <span class="text-syn-t">Metadata</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">title:</span> <span class="text-syn-s">&quot;Blog Title | Pulkit&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">description:</span> <span class="text-syn-s">&quot;SEO-optimized description under 160 characters&quot;</span><span class="text-syn-u">,</span>
 
-  <span class="p">openGraph:</span> <span class="u">{</span>
-    <span class="p">title:</span> <span class="s">&quot;Blog Title&quot;</span><span class="u">,</span>
-    <span class="p">description:</span> <span class="s">&quot;Engaging description for social sharing&quot;</span><span class="u">,</span>
-    <span class="p">url:</span> <span class="s">&quot;https://pulkitxm.com/blogs/blog-slug&quot;</span><span class="u">,</span>
-    <span class="p">type:</span> <span class="s">&quot;article&quot;</span><span class="u">,</span>
-    <span class="p">publishedTime:</span> <span class="s">&quot;2025-12-11&quot;</span><span class="u">,</span>
-    <span class="p">authors:</span> <span class="u">[</span><span class="s">&quot;Pulkit&quot;</span><span class="u">],</span>
-    <span class="p">images:</span> <span class="u">[</span>
-      <span class="u">{</span>
-        <span class="p">url:</span> <span class="s">&quot;https://pulkitxm.com/images/cover.png&quot;</span><span class="u">,</span>
-        <span class="p">width:</span> <span class="n">1200</span><span class="u">,</span>
-        <span class="p">height:</span> <span class="n">630</span><span class="u">,</span>
-        <span class="p">alt:</span> <span class="s">&quot;Blog Title&quot;</span><span class="u">,</span>
-      <span class="u">},</span>
-    <span class="u">],</span>
-    <span class="p">siteName:</span> <span class="s">&quot;Pulkit - Developer&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
+  <span class="text-syn-p">openGraph:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">title:</span> <span class="text-syn-s">&quot;Blog Title&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">description:</span> <span class="text-syn-s">&quot;Engaging description for social sharing&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">url:</span> <span class="text-syn-s">&quot;https://pulkitxm.com/blogs/blog-slug&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;article&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">publishedTime:</span> <span class="text-syn-s">&quot;2025-12-11&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">authors:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;Pulkit&quot;</span><span class="text-syn-u">],</span>
+    <span class="text-syn-p">images:</span> <span class="text-syn-u">[</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">url:</span> <span class="text-syn-s">&quot;https://pulkitxm.com/images/cover.png&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">width:</span> <span class="text-syn-n">1200</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">height:</span> <span class="text-syn-n">630</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">alt:</span> <span class="text-syn-s">&quot;Blog Title&quot;</span><span class="text-syn-u">,</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">],</span>
+    <span class="text-syn-p">siteName:</span> <span class="text-syn-s">&quot;Pulkit - Developer&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
 
-  <span class="p">twitter:</span> <span class="u">{</span>
-    <span class="p">card:</span> <span class="s">&quot;summary_large_image&quot;</span><span class="u">,</span>
-    <span class="p">title:</span> <span class="s">&quot;Blog Title&quot;</span><span class="u">,</span>
-    <span class="p">description:</span> <span class="s">&quot;Engaging description for Twitter&quot;</span><span class="u">,</span>
-    <span class="p">creator:</span> <span class="s">&quot;@_pulkitxm&quot;</span><span class="u">,</span>
-    <span class="p">images:</span> <span class="u">[</span><span class="s">&quot;https://pulkitxm.com/images/cover.png&quot;</span><span class="u">],</span>
-  <span class="u">},</span>
+  <span class="text-syn-p">twitter:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">card:</span> <span class="text-syn-s">&quot;summary_large_image&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">title:</span> <span class="text-syn-s">&quot;Blog Title&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">description:</span> <span class="text-syn-s">&quot;Engaging description for Twitter&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">creator:</span> <span class="text-syn-s">&quot;@_pulkitxm&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">images:</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;https://pulkitxm.com/images/cover.png&quot;</span><span class="text-syn-u">],</span>
+  <span class="text-syn-u">},</span>
 
-  <span class="p">alternates:</span> <span class="u">{</span>
-    <span class="p">canonical:</span> <span class="s">&quot;https://pulkitxm.com/blogs/blog-slug&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
+  <span class="text-syn-p">alternates:</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">canonical:</span> <span class="text-syn-s">&quot;https://pulkitxm.com/blogs/blog-slug&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
 
-  <span class="p">authors:</span> <span class="u">[{</span> <span class="p">name:</span> <span class="s">&quot;Pulkit&quot;</span> <span class="u">}],</span>
-<span class="u">};</span>
+  <span class="text-syn-p">authors:</span> <span class="text-syn-u">[{</span> <span class="text-syn-p">name:</span> <span class="text-syn-s">&quot;Pulkit&quot;</span> <span class="text-syn-u">}],</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h3 id="why-social-cards-matter">Why Social Cards Matter</h3>
             <p>When your content has rich social media cards:</p>
@@ -489,35 +498,35 @@ Your content here...
               Implement proper security and caching headers in your <code>next.config.js</code>:
             </p>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> securityHeaders <span class="o">=</span> <span class="u">[</span>
-  <span class="u">{</span>
-    <span class="p">key:</span> <span class="s">&quot;X-DNS-Prefetch-Control&quot;</span><span class="u">,</span>
-    <span class="p">value:</span> <span class="s">&quot;on&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
-  <span class="u">{</span>
-    <span class="p">key:</span> <span class="s">&quot;X-Frame-Options&quot;</span><span class="u">,</span>
-    <span class="p">value:</span> <span class="s">&quot;SAMEORIGIN&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
-  <span class="u">{</span>
-    <span class="p">key:</span> <span class="s">&quot;X-Content-Type-Options&quot;</span><span class="u">,</span>
-    <span class="p">value:</span> <span class="s">&quot;nosniff&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
-  <span class="u">{</span>
-    <span class="p">key:</span> <span class="s">&quot;Referrer-Policy&quot;</span><span class="u">,</span>
-    <span class="p">value:</span> <span class="s">&quot;origin-when-cross-origin&quot;</span><span class="u">,</span>
-  <span class="u">},</span>
-<span class="u">];</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> securityHeaders <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">key:</span> <span class="text-syn-s">&quot;X-DNS-Prefetch-Control&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">value:</span> <span class="text-syn-s">&quot;on&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">key:</span> <span class="text-syn-s">&quot;X-Frame-Options&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">value:</span> <span class="text-syn-s">&quot;SAMEORIGIN&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">key:</span> <span class="text-syn-s">&quot;X-Content-Type-Options&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">value:</span> <span class="text-syn-s">&quot;nosniff&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span>
+    <span class="text-syn-p">key:</span> <span class="text-syn-s">&quot;Referrer-Policy&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">value:</span> <span class="text-syn-s">&quot;origin-when-cross-origin&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">];</span>
 
-<span class="t">module</span><span class="u">.</span><span class="t">exports</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="k">async</span> <span class="f">headers</span><span class="u">()</span> <span class="u">{</span>
-    <span class="k">return</span> <span class="u">[</span>
-      <span class="u">{</span>
-        <span class="p">source:</span> <span class="s">&quot;/:path*&quot;</span><span class="u">,</span>
-        <span class="p">headers:</span> securityHeaders<span class="u">,</span>
-      <span class="u">},</span>
-    <span class="u">];</span>
-  <span class="u">},</span>
-<span class="u">};</span>
+<span class="text-syn-t">module</span><span class="text-syn-u">.</span><span class="text-syn-t">exports</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">async</span> <span class="text-syn-f">headers</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">[</span>
+      <span class="text-syn-u">{</span>
+        <span class="text-syn-p">source:</span> <span class="text-syn-s">&quot;/:path*&quot;</span><span class="text-syn-u">,</span>
+        <span class="text-syn-p">headers:</span> securityHeaders<span class="text-syn-u">,</span>
+      <span class="text-syn-u">},</span>
+    <span class="text-syn-u">];</span>
+  <span class="text-syn-u">},</span>
+<span class="text-syn-u">};</span>
 </code></pre>
             <h3 id="semantic-html">Semantic HTML</h3>
             <p>Use proper HTML5 semantic elements:</p>
@@ -540,70 +549,70 @@ Your content here...
               for your content:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> RSS <span class="k">from</span> <span class="s">&quot;rss&quot;</span><span class="u">;</span>
-<span class="k">import</span> fs <span class="k">from</span> <span class="s">&quot;fs&quot;</span><span class="u">;</span>
-<span class="k">import</span> path <span class="k">from</span> <span class="s">&quot;path&quot;</span><span class="u">;</span>
-<span class="k">import</span> matter <span class="k">from</span> <span class="s">&quot;gray-matter&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">import</span> RSS <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;rss&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> path <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;path&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> matter <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gray-matter&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">async</span> <span class="k">function</span> <span class="f">GET</span><span class="u">()</span> <span class="u">{</span>
-  <span class="k">const</span> feed <span class="o">=</span> <span class="o">new</span> <span class="f">RSS</span><span class="u">({</span>
-    <span class="p">title:</span> <span class="s">&quot;Pulkit&quot;</span><span class="u">,</span>
-    <span class="p">description:</span> <span class="s">&quot;Technical content about web development&quot;</span><span class="u">,</span>
-    <span class="p">feed_url:</span> <span class="s">&quot;https://pulkitxm.com/rss.xml&quot;</span><span class="u">,</span>
-    <span class="p">site_url:</span> <span class="s">&quot;https://pulkitxm.com&quot;</span><span class="u">,</span>
-    <span class="p">language:</span> <span class="s">&quot;en&quot;</span><span class="u">,</span>
-  <span class="u">});</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">GET</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> feed <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">RSS</span><span class="text-syn-u">({</span>
+    <span class="text-syn-p">title:</span> <span class="text-syn-s">&quot;Pulkit&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">description:</span> <span class="text-syn-s">&quot;Technical content about web development&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">feed_url:</span> <span class="text-syn-s">&quot;https://pulkitxm.com/rss.xml&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">site_url:</span> <span class="text-syn-s">&quot;https://pulkitxm.com&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">language:</span> <span class="text-syn-s">&quot;en&quot;</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">const</span> contentDir <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>process<span class="u">.</span><span class="f">cwd</span><span class="u">(),</span> <span class="s">&quot;content/blogs&quot;</span><span class="u">);</span>
-  <span class="k">const</span> files <span class="o">=</span> fs<span class="u">.</span><span class="f">readdirSync</span><span class="u">(</span>contentDir<span class="u">);</span>
+  <span class="text-syn-k">const</span> contentDir <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>process<span class="text-syn-u">.</span><span class="text-syn-f">cwd</span><span class="text-syn-u">(),</span> <span class="text-syn-s">&quot;content/blogs&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> files <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readdirSync</span><span class="text-syn-u">(</span>contentDir<span class="text-syn-u">);</span>
 
-  files<span class="u">.</span><span class="f">forEach</span><span class="u">((</span>file<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="k">const</span> filePath <span class="o">=</span> path<span class="u">.</span><span class="f">join</span><span class="u">(</span>contentDir<span class="u">,</span> file<span class="u">);</span>
-    <span class="k">const</span> fileContent <span class="o">=</span> fs<span class="u">.</span><span class="f">readFileSync</span><span class="u">(</span>filePath<span class="u">,</span> <span class="s">&quot;utf8&quot;</span><span class="u">);</span>
-    <span class="k">const</span> <span class="u">{</span> data<span class="u">,</span> content <span class="u">}</span> <span class="o">=</span> <span class="f">matter</span><span class="u">(</span>fileContent<span class="u">);</span>
+  files<span class="text-syn-u">.</span><span class="text-syn-f">forEach</span><span class="text-syn-u">((</span>file<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> filePath <span class="text-syn-o">=</span> path<span class="text-syn-u">.</span><span class="text-syn-f">join</span><span class="text-syn-u">(</span>contentDir<span class="text-syn-u">,</span> file<span class="text-syn-u">);</span>
+    <span class="text-syn-k">const</span> fileContent <span class="text-syn-o">=</span> fs<span class="text-syn-u">.</span><span class="text-syn-f">readFileSync</span><span class="text-syn-u">(</span>filePath<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;utf8&quot;</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> data<span class="text-syn-u">,</span> content <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">matter</span><span class="text-syn-u">(</span>fileContent<span class="text-syn-u">);</span>
 
-    feed<span class="u">.</span><span class="f">item</span><span class="u">({</span>
-      <span class="p">title:</span> data<span class="u">.</span><span class="p">title</span><span class="u">,</span>
-      <span class="p">description:</span> data<span class="u">.</span><span class="p">description</span><span class="u">,</span>
-      <span class="p">url:</span> <span class="s">`https://pulkitxm.com/blogs/${data.</span><span class="p">slug</span><span class="s">}`</span><span class="u">,</span>
-      <span class="p">date:</span> data<span class="u">.</span><span class="p">date</span><span class="u">,</span>
-      <span class="p">author:</span> data<span class="u">.</span><span class="p">author</span><span class="u">,</span>
-    <span class="u">});</span>
-  <span class="u">});</span>
+    feed<span class="text-syn-u">.</span><span class="text-syn-f">item</span><span class="text-syn-u">({</span>
+      <span class="text-syn-p">title:</span> data<span class="text-syn-u">.</span><span class="text-syn-p">title</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">description:</span> data<span class="text-syn-u">.</span><span class="text-syn-p">description</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">url:</span> <span class="text-syn-s">`https://pulkitxm.com/blogs/${data.</span><span class="text-syn-p">slug</span><span class="text-syn-s">}`</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">date:</span> data<span class="text-syn-u">.</span><span class="text-syn-p">date</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">author:</span> data<span class="text-syn-u">.</span><span class="text-syn-p">author</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">});</span>
+  <span class="text-syn-u">});</span>
 
-  <span class="k">return</span> <span class="o">new</span> <span class="f">Response</span><span class="u">(</span>feed<span class="u">.</span><span class="f">xml</span><span class="u">(),</span> <span class="u">{</span>
-    <span class="p">headers:</span> <span class="u">{</span>
-      <span class="p">&quot;Content-Type&quot;:</span> <span class="s">&quot;application/xml&quot;</span><span class="u">,</span>
-    <span class="u">},</span>
-  <span class="u">});</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Response</span><span class="text-syn-u">(</span>feed<span class="text-syn-u">.</span><span class="text-syn-f">xml</span><span class="text-syn-u">(),</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">headers:</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">&quot;Content-Type&quot;:</span> <span class="text-syn-s">&quot;application/xml&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">},</span>
+  <span class="text-syn-u">});</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="internal-linking-via-tags">Internal Linking via Tags</h3>
             <p>Implement a tagging system that creates internal links between related posts:</p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">function</span> <span class="f">RelatedPosts</span><span class="u">({</span> currentSlug<span class="u">,</span> tags <span class="u">}</span><span class="o">:</span> <span class="u">{</span> currentSlug<span class="o">:</span> <span class="t">string</span><span class="u">;</span> tags<span class="o">:</span> <span class="t">string</span><span class="u">[]</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> relatedPosts <span class="o">=</span> <span class="f">getAllPosts</span><span class="u">()</span>
-    <span class="u">.</span><span class="f">filter</span><span class="u">(</span>post <span class="k">=&gt;</span>
-      post<span class="u">.</span><span class="p">slug</span> <span class="o">!==</span> currentSlug <span class="o">&amp;&amp;</span>
-      post<span class="u">.</span>tags<span class="u">.</span><span class="f">some</span><span class="u">(</span>tag <span class="k">=&gt;</span> tags<span class="u">.</span><span class="f">includes</span><span class="u">(</span>tag<span class="u">))</span>
-    <span class="u">)</span>
-    <span class="u">.</span><span class="f">slice</span><span class="u">(</span><span class="n">0</span><span class="u">,</span> <span class="n">3</span><span class="u">);</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RelatedPosts</span><span class="text-syn-u">({</span> currentSlug<span class="text-syn-u">,</span> tags <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> currentSlug<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span> tags<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[]</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> relatedPosts <span class="text-syn-o">=</span> <span class="text-syn-f">getAllPosts</span><span class="text-syn-u">()</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">filter</span><span class="text-syn-u">(</span>post <span class="text-syn-k">=&gt;</span>
+      post<span class="text-syn-u">.</span><span class="text-syn-p">slug</span> <span class="text-syn-o">!==</span> currentSlug <span class="text-syn-o">&amp;&amp;</span>
+      post<span class="text-syn-u">.</span>tags<span class="text-syn-u">.</span><span class="text-syn-f">some</span><span class="text-syn-u">(</span>tag <span class="text-syn-k">=&gt;</span> tags<span class="text-syn-u">.</span><span class="text-syn-f">includes</span><span class="text-syn-u">(</span>tag<span class="text-syn-u">))</span>
+    <span class="text-syn-u">)</span>
+    <span class="text-syn-u">.</span><span class="text-syn-f">slice</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">3</span><span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="t">aside</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="t">h3</span><span class="u">&gt;</span>Related Posts<span class="o">&lt;/</span>h3<span class="o">&gt;</span>
-      <span class="u">&lt;</span><span class="t">ul</span><span class="u">&gt;</span>
-        <span class="u">{</span>relatedPosts.map(post <span class="o">=&gt;</span> <span class="u">(</span>
-          <span class="o">&lt;</span>li key<span class="o">=</span><span class="u">{</span>post.slug<span class="u">}</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span>Link href<span class="o">=</span><span class="u">{</span><span class="p">`/blogs/${post.slug}`</span><span class="u">}</span><span class="o">&gt;</span>
-              <span class="u">{</span>post.title<span class="u">}</span>
-            <span class="o">&lt;/</span>Link<span class="o">&gt;</span>
-          <span class="o">&lt;/</span>li<span class="o">&gt;</span>
-        <span class="u">)</span>)<span class="u">}</span>
-      <span class="o">&lt;/</span>ul<span class="o">&gt;</span>
-    <span class="o">&lt;/</span>aside<span class="o">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-t">aside</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">h3</span><span class="text-syn-u">&gt;</span>Related Posts<span class="text-syn-o">&lt;/</span>h3<span class="text-syn-o">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-t">ul</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">{</span>relatedPosts.map(post <span class="text-syn-o">=&gt;</span> <span class="text-syn-u">(</span>
+          <span class="text-syn-o">&lt;</span>li key<span class="text-syn-o">=</span><span class="text-syn-u">{</span>post.slug<span class="text-syn-u">}</span><span class="text-syn-o">&gt;</span>
+            <span class="text-syn-o">&lt;</span>Link href<span class="text-syn-o">=</span><span class="text-syn-u">{</span><span class="text-syn-p">`/blogs/${post.slug}`</span><span class="text-syn-u">}</span><span class="text-syn-o">&gt;</span>
+              <span class="text-syn-u">{</span>post.title<span class="text-syn-u">}</span>
+            <span class="text-syn-o">&lt;/</span>Link<span class="text-syn-o">&gt;</span>
+          <span class="text-syn-o">&lt;/</span>li<span class="text-syn-o">&gt;</span>
+        <span class="text-syn-u">)</span>)<span class="text-syn-u">}</span>
+      <span class="text-syn-o">&lt;/</span>ul<span class="text-syn-o">&gt;</span>
+    <span class="text-syn-o">&lt;/</span>aside<span class="text-syn-o">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Internal linking:</p>
             <ul>
@@ -738,28 +747,37 @@ Your content here...
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li><a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
             </li>
-            <li><a href="/blogs/smooth-scroll/">Smooth Scrolling in Next.js</a></li>
+            <li class="my-2"><a href="/blogs/smooth-scroll/">Smooth Scrolling in Next.js</a></li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

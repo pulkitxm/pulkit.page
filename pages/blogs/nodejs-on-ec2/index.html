@@ -49,12 +49,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -62,20 +67,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">Node.js on EC2 with PM2 and NGINX</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Node.js on EC2 with PM2 and NGINX</h1>
-            <p class="detail-meta"><time datetime="2024-08-05">2024-08-05</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Node.js on EC2 with PM2 and NGINX
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2024-08-05">2024-08-05</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               Deploying Node.js applications can be a daunting task, especially when aiming for a
               robust and scalable production environment. However, with the right tools and a clear
@@ -92,7 +101,8 @@
                 on EC2. Let&#39;s start by initialize a simple express app</strong
               >
             </p>
-            <pre><code class="language-bash"><span class="f">pnpm</span> <span class="s">init</span>
+            <pre
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
             <p>
               <img
@@ -103,28 +113,28 @@
             </p>
             <h3 id="add-express-as-a-dependency">Add express as a dependency</h3>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">express</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">express</span>
 </code></pre>
             <h3 id="adding-a-simple-endpoint-that-returns-a-hello-world-object">
               Adding a simple / endpoint that returns a hello world object
             </h3>
             <pre
-            ><code class="language-javascript"><span class="k">const</span> express <span class="o">=</span> <span class="f">require</span><span class="u">(</span><span class="s">&quot;express&quot;</span><span class="u">);</span>
+            ><code class="language-javascript"><span class="text-syn-k">const</span> express <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;express&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> app <span class="o">=</span> <span class="f">express</span><span class="u">();</span>
+<span class="text-syn-k">const</span> app <span class="text-syn-o">=</span> <span class="text-syn-f">express</span><span class="text-syn-u">();</span>
 
-app<span class="u">.</span><span class="f">get</span><span class="u">(</span><span class="s">&quot;/&quot;</span><span class="u">,</span> <span class="u">(</span>req<span class="u">,</span> res<span class="u">)</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  res<span class="u">.</span><span class="f">json</span><span class="u">({</span> <span class="p">message:</span> <span class="s">&quot;Hello world&quot;</span> <span class="u">});</span>
-<span class="u">});</span>
+app<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>req<span class="text-syn-u">,</span> res<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  res<span class="text-syn-u">.</span><span class="text-syn-f">json</span><span class="text-syn-u">({</span> <span class="text-syn-p">message:</span> <span class="text-syn-s">&quot;Hello world&quot;</span> <span class="text-syn-u">});</span>
+<span class="text-syn-u">});</span>
 
-<span class="k">const</span> PORT <span class="o">=</span> <span class="n">3000</span><span class="u">;</span>
-app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>PORT<span class="u">,</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  console<span class="u">.</span><span class="f">log</span><span class="u">(</span><span class="s">&quot;app is listening on port &quot;</span> <span class="o">+</span> PORT<span class="u">);</span>
-<span class="u">});</span>
+<span class="text-syn-k">const</span> PORT <span class="text-syn-o">=</span> <span class="text-syn-n">3000</span><span class="text-syn-u">;</span>
+app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span class="text-syn-u">(</span>PORT<span class="text-syn-u">,</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;app is listening on port &quot;</span> <span class="text-syn-o">+</span> PORT<span class="text-syn-u">);</span>
+<span class="text-syn-u">});</span>
 </code></pre>
             <h3 id="start-your-express-application">Start your express application</h3>
             <pre
-            ><code class="language-bash"><span class="f">node</span> <span class="s">index.js</span>
+            ><code class="language-bash"><span class="text-syn-f">node</span> <span class="text-syn-s">index.js</span>
 </code></pre>
             <p>and you see a / endpoint like this</p>
             <p>
@@ -227,7 +237,7 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
             </h3>
             <p>Update the package lists by running:</p>
             <pre
-            ><code class="language-bash"><span class="f">sudo</span> <span class="s">apt-get</span> <span class="s">update</span> <span class="u">&amp;&amp;</span> <span class="f">sudo</span> <span class="s">apt-get</span> <span class="s">upgrade</span>
+            ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">update</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">upgrade</span>
 </code></pre>
             <p><strong>Installing node using the NVM(Node Version Manager)</strong></p>
             <p>
@@ -238,22 +248,22 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
               >
             </p>
             <pre
-            ><code class="language-bash"><span class="f">curl</span> <span class="s">-o-</span> <span class="s">https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh</span> <span class="o">|</span> <span class="f">bash</span>
+            ><code class="language-bash"><span class="text-syn-f">curl</span> <span class="text-syn-s">-o-</span> <span class="text-syn-s">https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh</span> <span class="text-syn-o">|</span> <span class="text-syn-f">bash</span>
 </code></pre>
             <p>
               This will install the <code>nvm</code> script to your user account. To use it, you
               must first source your <code>.bashrc</code> file:
             </p>
             <pre
-            ><code class="language-bash"><span class="f">source</span> <span class="s">~/.bashrc</span>
+            ><code class="language-bash"><span class="text-syn-f">source</span> <span class="text-syn-s">~/.bashrc</span>
 </code></pre>
             <p>Now let&#39;s install node using the nvm</p>
             <pre
-            ><code class="language-bash"><span class="f">nvm</span> <span class="s">install</span> <span class="s">node</span>
+            ><code class="language-bash"><span class="text-syn-f">nvm</span> <span class="text-syn-s">install</span> <span class="text-syn-s">node</span>
 </code></pre>
             <p>To check if it is installed correctly:</p>
             <pre
-            ><code class="language-bash"><span class="f">node</span> <span class="s">--version</span>
+            ><code class="language-bash"><span class="text-syn-f">node</span> <span class="text-syn-s">--version</span>
 </code></pre>
             <p>
               <img
@@ -293,11 +303,11 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
             </p>
             <p><strong>So let&#39;s install pm2</strong></p>
             <pre
-            ><code class="language-bash"><span class="f">pnpm</span> <span class="s">add</span> <span class="s">-g</span> <span class="s">pm2</span>
+            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-g</span> <span class="text-syn-s">pm2</span>
 </code></pre>
             <p>Now we&#39;ll start the express app using pm2</p>
             <pre
-            ><code class="language-bash"><span class="f">pm2</span> <span class="s">start</span> <span class="s">index.js</span>
+            ><code class="language-bash"><span class="text-syn-f">pm2</span> <span class="text-syn-s">start</span> <span class="text-syn-s">index.js</span>
 </code></pre>
             <p>
               Now we have deployed the app, but it won&#39;t be accessible on the internet yet. To
@@ -376,36 +386,36 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
                 <p><strong>Install NGINX</strong></p>
                 <p>First, install NGINX on your EC2 instance by running the following commands:</p>
                 <pre
-                ><code class="language-bash"><span class="f">sudo</span> <span class="s">apt</span> <span class="s">update</span>
-<span class="f">sudo</span> <span class="s">apt</span> <span class="s">install</span> <span class="s">nginx</span>
+                ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">update</span>
+<span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">install</span> <span class="text-syn-s">nginx</span>
 </code></pre>
               </li>
               <li>
                 <p><strong>Start and Enable NGINX</strong></p>
                 <p>Ensure that NGINX is running and set to start on boot:</p>
                 <pre
-                ><code class="language-bash"><span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">start</span> <span class="s">nginx</span>
-<span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">enable</span> <span class="s">nginx</span>
+                ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">nginx</span>
+<span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">enable</span> <span class="text-syn-s">nginx</span>
 </code></pre>
               </li>
               <li>
                 <p><strong>Configure NGINX as a Reverse Proxy</strong></p>
                 <p>Open the NGINX configuration file for editing:</p>
                 <pre
-                ><code class="language-bash"><span class="f">sudo</span> <span class="s">vi</span> <span class="s">/etc/nginx/sites-available/default</span>
+                ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">vi</span> <span class="text-syn-s">/etc/nginx/sites-available/default</span>
 </code></pre>
                 <p>Replace the contents of the file with the following configuration:</p>
-                <pre><code class="language-nginx"><span class="k">server</span> {
-   <span class="k"> listen </span><span class="n">80</span><span class="u">;</span>
-   <span class="k"> server_name </span>ec2-54-242-52-243.compute-1.amazonaws.com<span class="u">;</span>
+                <pre><code class="language-nginx"><span class="text-syn-k">server</span> {
+   <span class="text-syn-k"> listen </span><span class="text-syn-n">80</span><span class="text-syn-u">;</span>
+   <span class="text-syn-k"> server_name </span>ec2-54-242-52-243.compute-1.amazonaws.com<span class="text-syn-u">;</span>
 
-    <span class="k">location</span> / {
-       <span class="k"> proxy_pass </span>http://localhost:3000<span class="u">;</span>
-       <span class="k"> proxy_http_version </span><span class="n">1.1</span><span class="u">;</span>
-       <span class="k"> proxy_set_header </span>Upgrade <span class="u">$</span>http_upgrade<span class="u">;</span>
-       <span class="k"> proxy_set_header </span>Connection <span class="s">&#39;upgrade&#39;</span><span class="u">;</span>
-       <span class="k"> proxy_set_header </span>Host <span class="u">$</span>host<span class="u">;</span>
-       <span class="k"> proxy_cache_bypass </span><span class="u">$</span>http_upgrade<span class="u">;</span>
+    <span class="text-syn-k">location</span> / {
+       <span class="text-syn-k"> proxy_pass </span>http://localhost:3000<span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_http_version </span><span class="text-syn-n">1.1</span><span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_set_header </span>Upgrade <span class="text-syn-u">$</span>http_upgrade<span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_set_header </span>Connection <span class="text-syn-s">&#39;upgrade&#39;</span><span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_set_header </span>Host <span class="text-syn-u">$</span>host<span class="text-syn-u">;</span>
+       <span class="text-syn-k"> proxy_cache_bypass </span><span class="text-syn-u">$</span>http_upgrade<span class="text-syn-u">;</span>
     }
 }
 </code></pre>
@@ -421,7 +431,7 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
                     <p><strong>Test the NGINX Configuration</strong></p>
                     <p>Test the NGINX configuration to ensure there are no syntax errors:</p>
                     <pre
-                    ><code class="language-bash"><span class="f">sudo</span> <span class="s">nginx</span> <span class="s">-t</span>
+                    ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">nginx</span> <span class="text-syn-s">-t</span>
 </code></pre>
                     <p>
                       If the test is successful, you should see a message indicating that the
@@ -439,7 +449,7 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
                     <p><strong>Restart NGINX</strong></p>
                     <p>Restart NGINX to apply the new configuration:</p>
                     <pre
-                    ><code class="language-bash"><span class="f">sudo</span> <span class="s">systemctl</span> <span class="s">restart</span> <span class="s">nginx</span>
+                    ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">restart</span> <span class="text-syn-s">nginx</span>
 </code></pre>
                   </li>
                   <li>
@@ -485,30 +495,39 @@ app<span class="u">.</span><span class="f">listen</span><span class="u">(</span>
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
             </li>
-            <li>
+            <li class="my-2">
               <a href="/blogs/deploying-on-coolify/"
                 >Coolify: Self-Host Postgres, Redis &amp; Next.js</a
               >
             </li>
-            <li><a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a></li>
+            <li class="my-2">
+              <a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

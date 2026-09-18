@@ -55,12 +55,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -68,20 +73,24 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">The Cookie Sync Pattern</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>The Cookie Sync Pattern</h1>
-            <p class="detail-meta"><time datetime="2026-05-04">2026-05-04</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              The Cookie Sync Pattern
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-05-04">2026-05-04</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               You&#39;ve seen this before. You persist something to localStorage (a theme
               preference, a sidebar width, a collapsed panel state), and it works great. Until you
@@ -160,22 +169,22 @@
               Hide or fade the affected component until the client has resolved the correct state:
             </p>
             <pre
-            ><code class="language-tsx"><span class="k">const</span> <span class="u">[</span>mounted<span class="u">,</span> setMounted<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">(</span><span class="k">false</span><span class="u">);</span>
+            ><code class="language-tsx"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>mounted<span class="text-syn-u">,</span> setMounted<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
-<span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="f">setMounted</span><span class="u">(</span><span class="k">true</span><span class="u">);</span>
-<span class="u">},</span> <span class="u">[]);</span>
+<span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-f">setMounted</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-<span class="k">return</span> <span class="u">(</span>
-  <span class="u">&lt;</span><span class="g">div</span>
-    <span class="p">style</span><span class="o">=</span><span class="u">{{</span>
-      <span class="p">opacity:</span> mounted <span class="o">?</span> <span class="n">1</span> <span class="o">:</span> <span class="n">0</span><span class="u">,</span>
-      <span class="p">transition:</span> <span class="s">&quot;opacity 200ms ease&quot;</span><span class="u">,</span>
-    <span class="u">}}</span>
-  <span class="u">&gt;</span>
-    <span class="u">{</span><span class="c">/* content that depends on localStorage state */</span><span class="u">}</span>
-  <span class="u">&lt;/</span><span class="g">div</span><span class="u">&gt;</span>
-<span class="u">);</span>
+<span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+  <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span>
+    <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+      <span class="text-syn-p">opacity:</span> mounted <span class="text-syn-o">?</span> <span class="text-syn-n">1</span> <span class="text-syn-o">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">transition:</span> <span class="text-syn-s">&quot;opacity 200ms ease&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">}}</span>
+  <span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">{</span><span class="text-syn-c italic">/* content that depends on localStorage state */</span><span class="text-syn-u">}</span>
+  <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
+<span class="text-syn-u">);</span>
 </code></pre>
             <p>
               This masks the problem with a fade. It works, but you&#39;re still rendering the wrong
@@ -185,17 +194,17 @@
             <h3 id="option-3-loading-skeleton-state">Option 3: Loading/Skeleton State</h3>
             <p>Render a placeholder until the client has the real values:</p>
             <pre
-            ><code class="language-tsx"><span class="k">const</span> <span class="u">[</span>ready<span class="u">,</span> setReady<span class="u">]</span> <span class="o">=</span> <span class="f">useState</span><span class="u">(</span><span class="k">false</span><span class="u">);</span>
+            ><code class="language-tsx"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>ready<span class="text-syn-u">,</span> setReady<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
-<span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-  <span class="f">setReady</span><span class="u">(</span><span class="k">true</span><span class="u">);</span>
-<span class="u">},</span> <span class="u">[]);</span>
+<span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-f">setReady</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 
-<span class="k">if</span> <span class="u">(</span><span class="o">!</span>ready<span class="u">)</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">&lt;</span><span class="g">Skeleton</span> <span class="u">/&gt;;</span>
-<span class="u">}</span>
+<span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>ready<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">Skeleton</span> <span class="text-syn-u">/&gt;;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">return</span> <span class="u">&lt;</span><span class="g">ActualComponent</span> <span class="u">/&gt;;</span>
+<span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">ActualComponent</span> <span class="text-syn-u">/&gt;;</span>
 </code></pre>
             <p>
               This is explicit about the loading state, which can be good UX for data-fetching
@@ -246,43 +255,43 @@
               cookie:
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">const</span> PREFS_COOKIE <span class="o">=</span> <span class="s">&quot;ui_prefs&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> PREFS_COOKIE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;ui_prefs&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">interface</span> <span class="t">UIPrefs</span> <span class="u">{</span>
-  sidebarCollapsed<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
-  sidebarWidth<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">interface</span> <span class="text-syn-t">UIPrefs</span> <span class="text-syn-u">{</span>
+  sidebarCollapsed<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
+  sidebarWidth<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">export</span> <span class="k">const</span> DEFAULT_PREFS<span class="o">:</span> <span class="t">UIPrefs</span> <span class="o">=</span> <span class="u">{</span>
-  <span class="p">sidebarCollapsed:</span> <span class="k">false</span><span class="u">,</span>
-  <span class="p">sidebarWidth:</span> <span class="n">224</span><span class="u">,</span>
-<span class="u">};</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> DEFAULT_PREFS<span class="text-syn-o">:</span> <span class="text-syn-t">UIPrefs</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">sidebarCollapsed:</span> <span class="text-syn-k">false</span><span class="text-syn-u">,</span>
+  <span class="text-syn-p">sidebarWidth:</span> <span class="text-syn-n">224</span><span class="text-syn-u">,</span>
+<span class="text-syn-u">};</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">parsePrefs</span><span class="u">(</span>cookieValue<span class="o">:</span> <span class="t">string</span> <span class="o">|</span> <span class="t">undefined</span><span class="u">)</span><span class="o">:</span> <span class="t">UIPrefs</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>cookieValue<span class="u">)</span> <span class="k">return</span> DEFAULT_PREFS<span class="u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">parsePrefs</span><span class="text-syn-u">(</span>cookieValue<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">undefined</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">UIPrefs</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>cookieValue<span class="text-syn-u">)</span> <span class="text-syn-k">return</span> DEFAULT_PREFS<span class="text-syn-u">;</span>
 
-  <span class="k">try</span> <span class="u">{</span>
-    <span class="k">const</span> decoded <span class="o">=</span> <span class="f">decodeURIComponent</span><span class="u">(</span>cookieValue<span class="u">);</span>
-    <span class="k">const</span> parsed <span class="o">=</span> JSON<span class="u">.</span><span class="f">parse</span><span class="u">(</span>decoded<span class="u">);</span>
+  <span class="text-syn-k">try</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> decoded <span class="text-syn-o">=</span> <span class="text-syn-f">decodeURIComponent</span><span class="text-syn-u">(</span>cookieValue<span class="text-syn-u">);</span>
+    <span class="text-syn-k">const</span> parsed <span class="text-syn-o">=</span> JSON<span class="text-syn-u">.</span><span class="text-syn-f">parse</span><span class="text-syn-u">(</span>decoded<span class="text-syn-u">);</span>
 
-    <span class="k">return</span> <span class="u">{</span>
-      <span class="p">sidebarCollapsed:</span> parsed<span class="u">.</span><span class="p">sidebarCollapsed</span> <span class="o">===</span> <span class="k">true</span><span class="u">,</span>
-      <span class="p">sidebarWidth:</span> <span class="f">clamp</span><span class="u">(</span><span class="f">Number</span><span class="u">(</span>parsed<span class="u">.</span><span class="p">sidebarWidth</span><span class="u">),</span> <span class="n">192</span><span class="u">,</span> <span class="n">384</span><span class="u">),</span>
-    <span class="u">};</span>
-  <span class="u">}</span> <span class="k">catch</span> <span class="u">{</span>
-    <span class="k">return</span> DEFAULT_PREFS<span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+    <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-p">sidebarCollapsed:</span> parsed<span class="text-syn-u">.</span><span class="text-syn-p">sidebarCollapsed</span> <span class="text-syn-o">===</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+      <span class="text-syn-p">sidebarWidth:</span> <span class="text-syn-f">clamp</span><span class="text-syn-u">(</span><span class="text-syn-f">Number</span><span class="text-syn-u">(</span>parsed<span class="text-syn-u">.</span><span class="text-syn-p">sidebarWidth</span><span class="text-syn-u">),</span> <span class="text-syn-n">192</span><span class="text-syn-u">,</span> <span class="text-syn-n">384</span><span class="text-syn-u">),</span>
+    <span class="text-syn-u">};</span>
+  <span class="text-syn-u">}</span> <span class="text-syn-k">catch</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> DEFAULT_PREFS<span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">persistPrefs</span><span class="u">(</span>prefs<span class="o">:</span> <span class="t">UIPrefs</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  <span class="k">const</span> value <span class="o">=</span> <span class="f">encodeURIComponent</span><span class="u">(</span>JSON<span class="u">.</span><span class="f">stringify</span><span class="u">(</span>prefs<span class="u">));</span>
-  document<span class="u">.</span><span class="p">cookie</span> <span class="o">=</span> <span class="s">`${PREFS_COOKIE}=${value}; Path=/; Max-Age=31536000; SameSite=Lax`</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">persistPrefs</span><span class="text-syn-u">(</span>prefs<span class="text-syn-o">:</span> <span class="text-syn-t">UIPrefs</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> value <span class="text-syn-o">=</span> <span class="text-syn-f">encodeURIComponent</span><span class="text-syn-u">(</span>JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>prefs<span class="text-syn-u">));</span>
+  document<span class="text-syn-u">.</span><span class="text-syn-p">cookie</span> <span class="text-syn-o">=</span> <span class="text-syn-s">`${PREFS_COOKIE}=${value}; Path=/; Max-Age=31536000; SameSite=Lax`</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">clamp</span><span class="u">(</span>n<span class="o">:</span> <span class="t">number</span><span class="u">,</span> min<span class="o">:</span> <span class="t">number</span><span class="u">,</span> max<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
-  <span class="k">if</span> <span class="u">(</span><span class="o">!</span>Number<span class="u">.</span><span class="f">isFinite</span><span class="u">(</span>n<span class="u">))</span> <span class="k">return</span> min<span class="u">;</span>
-  <span class="k">return</span> Math<span class="u">.</span><span class="f">min</span><span class="u">(</span>max<span class="u">,</span> Math<span class="u">.</span><span class="f">max</span><span class="u">(</span>min<span class="u">,</span> n<span class="u">));</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">clamp</span><span class="text-syn-u">(</span>n<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> min<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> max<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>Number<span class="text-syn-u">.</span><span class="text-syn-f">isFinite</span><span class="text-syn-u">(</span>n<span class="text-syn-u">))</span> <span class="text-syn-k">return</span> min<span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">min</span><span class="text-syn-u">(</span>max<span class="text-syn-u">,</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">max</span><span class="text-syn-u">(</span>min<span class="text-syn-u">,</span> n<span class="text-syn-u">));</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h3 id="step-2-the-bootstrap-script">Step 2: The Bootstrap Script</h3>
             <p>
@@ -295,18 +304,18 @@
               per value), otherwise the bootstrap and your client get out of sync.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">export</span> <span class="k">const</span> SIDEBAR_LS_COLLAPSED <span class="o">=</span> <span class="s">&quot;sidebar-collapsed&quot;</span><span class="u">;</span>
-<span class="k">export</span> <span class="k">const</span> SIDEBAR_LS_WIDTH <span class="o">=</span> <span class="s">&quot;sidebar-width&quot;</span><span class="u">;</span>
+            ><code class="language-typescript"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_COLLAPSED <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-collapsed&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_WIDTH <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-width&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">const</span> BOOTSTRAP_SCRIPT <span class="o">=</span> <span class="s">`(function(){try{</span>
-<span class="s">  var c = JSON.parse(localStorage.getItem(${JSON.stringify(</span>
-<span class="s">    SIDEBAR_LS_COLLAPSED,</span>
-<span class="s">  )}) || &quot;false&quot;) === true;</span>
-<span class="s">  var wRaw = JSON.parse(localStorage.getItem(${JSON.stringify(SIDEBAR_LS_WIDTH)}) || &quot;224&quot;);</span>
-<span class="s">  var w = Math.min(384, Math.max(192, Number(wRaw) || 224));</span>
-<span class="s">  var prefs = JSON.stringify({ sidebarCollapsed: c, sidebarWidth: w });</span>
-<span class="s">  document.cookie = &quot;ui_prefs=&quot; + encodeURIComponent(prefs) + &quot;; Path=/; Max-Age=31536000; SameSite=Lax&quot;;</span>
-<span class="s">}catch(e){}})();`</span><span class="u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">const</span> BOOTSTRAP_SCRIPT <span class="text-syn-o">=</span> <span class="text-syn-s">`(function(){try{</span>
+<span class="text-syn-s">  var c = JSON.parse(localStorage.getItem(${JSON.stringify(</span>
+<span class="text-syn-s">    SIDEBAR_LS_COLLAPSED,</span>
+<span class="text-syn-s">  )}) || &quot;false&quot;) === true;</span>
+<span class="text-syn-s">  var wRaw = JSON.parse(localStorage.getItem(${JSON.stringify(SIDEBAR_LS_WIDTH)}) || &quot;224&quot;);</span>
+<span class="text-syn-s">  var w = Math.min(384, Math.max(192, Number(wRaw) || 224));</span>
+<span class="text-syn-s">  var prefs = JSON.stringify({ sidebarCollapsed: c, sidebarWidth: w });</span>
+<span class="text-syn-s">  document.cookie = &quot;ui_prefs=&quot; + encodeURIComponent(prefs) + &quot;; Path=/; Max-Age=31536000; SameSite=Lax&quot;;</span>
+<span class="text-syn-s">}catch(e){}})();`</span><span class="text-syn-u">;</span>
 </code></pre>
             <p>
               This runs synchronously before React. On the user&#39;s
@@ -316,30 +325,30 @@
             <h3 id="step-3-server-layout">Step 3: Server Layout</h3>
             <p>Read the cookie and pass the preferences down:</p>
             <pre
-            ><code class="language-tsx"><span class="k">import</span> <span class="u">{</span> cookies <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;next/headers&quot;</span><span class="u">;</span>
-<span class="k">import</span> Script <span class="k">from</span> <span class="s">&quot;next/script&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> cookies <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/headers&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> Script <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/script&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">export</span> <span class="k">default</span> <span class="k">async</span> <span class="k">function</span> <span class="f">RootLayout</span><span class="u">({</span> children <span class="u">}</span><span class="o">:</span> <span class="u">{</span> children<span class="o">:</span> <span class="t">React</span><span class="u">.</span><span class="t">ReactNode</span> <span class="u">})</span> <span class="u">{</span>
-  <span class="k">const</span> cookieStore <span class="o">=</span> <span class="k">await</span> <span class="f">cookies</span><span class="u">();</span>
-  <span class="k">const</span> prefsCookie <span class="o">=</span> cookieStore<span class="u">.</span><span class="f">get</span><span class="u">(</span>PREFS_COOKIE<span class="u">)?.</span><span class="p">value</span><span class="u">;</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RootLayout</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> cookieStore <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">cookies</span><span class="text-syn-u">();</span>
+  <span class="text-syn-k">const</span> prefsCookie <span class="text-syn-o">=</span> cookieStore<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>PREFS_COOKIE<span class="text-syn-u">)?.</span><span class="text-syn-p">value</span><span class="text-syn-u">;</span>
 
-  <span class="k">const</span> prefsTrusted <span class="o">=</span> <span class="o">typeof</span> prefsCookie <span class="o">===</span> <span class="s">&quot;string&quot;</span> <span class="o">&amp;&amp;</span> prefsCookie<span class="u">.</span>length <span class="o">&gt;</span> <span class="n">0</span><span class="u">;</span>
-  <span class="k">const</span> prefs <span class="o">=</span> <span class="f">parsePrefs</span><span class="u">(</span>prefsCookie<span class="u">);</span>
+  <span class="text-syn-k">const</span> prefsTrusted <span class="text-syn-o">=</span> <span class="text-syn-o">typeof</span> prefsCookie <span class="text-syn-o">===</span> <span class="text-syn-s">&quot;string&quot;</span> <span class="text-syn-o">&amp;&amp;</span> prefsCookie<span class="text-syn-u">.</span>length <span class="text-syn-o">&gt;</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> prefs <span class="text-syn-o">=</span> <span class="text-syn-f">parsePrefs</span><span class="text-syn-u">(</span>prefsCookie<span class="text-syn-u">);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">html</span> <span class="p">suppressHydrationWarning</span><span class="u">&gt;</span>
-      <span class="u">&lt;</span><span class="g">body</span><span class="u">&gt;</span>
-        <span class="u">&lt;</span><span class="g">Script</span> <span class="p">id</span><span class="o">=</span><span class="s">&quot;prefs-bootstrap&quot;</span> <span class="p">strategy</span><span class="o">=</span><span class="s">&quot;beforeInteractive&quot;</span><span class="u">&gt;</span>
-          <span class="u">{</span>BOOTSTRAP_SCRIPT<span class="u">}</span>
-        <span class="u">&lt;/</span><span class="g">Script</span><span class="u">&gt;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">html</span> <span class="text-syn-p">suppressHydrationWarning</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;</span><span class="text-syn-g">body</span><span class="text-syn-u">&gt;</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">Script</span> <span class="text-syn-p">id</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;prefs-bootstrap&quot;</span> <span class="text-syn-p">strategy</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;beforeInteractive&quot;</span><span class="text-syn-u">&gt;</span>
+          <span class="text-syn-u">{</span>BOOTSTRAP_SCRIPT<span class="text-syn-u">}</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">Script</span><span class="text-syn-u">&gt;</span>
 
-        <span class="u">&lt;</span><span class="g">AppShell</span> <span class="p">prefsTrusted</span><span class="o">=</span><span class="u">{</span>prefsTrusted<span class="u">}</span> <span class="p">prefs</span><span class="o">=</span><span class="u">{</span>prefs<span class="u">}&gt;</span>
-          <span class="u">{</span>children<span class="u">}</span>
-        <span class="u">&lt;/</span><span class="g">AppShell</span><span class="u">&gt;</span>
-      <span class="u">&lt;/</span><span class="g">body</span><span class="u">&gt;</span>
-    <span class="u">&lt;/</span><span class="g">html</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+        <span class="text-syn-u">&lt;</span><span class="text-syn-g">AppShell</span> <span class="text-syn-p">prefsTrusted</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>prefsTrusted<span class="text-syn-u">}</span> <span class="text-syn-p">prefs</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>prefs<span class="text-syn-u">}&gt;</span>
+          <span class="text-syn-u">{</span>children<span class="text-syn-u">}</span>
+        <span class="text-syn-u">&lt;/</span><span class="text-syn-g">AppShell</span><span class="text-syn-u">&gt;</span>
+      <span class="text-syn-u">&lt;/</span><span class="text-syn-g">body</span><span class="text-syn-u">&gt;</span>
+    <span class="text-syn-u">&lt;/</span><span class="text-syn-g">html</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               The <code>prefsTrusted</code> flag tells components whether the server had real
@@ -351,48 +360,48 @@
               values, first visit, and subsequent user changes.
             </p>
             <pre
-            ><code class="language-tsx"><span class="s">&quot;use client&quot;</span><span class="u">;</span>
+            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">import</span> <span class="u">{</span> useAtom <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;jotai&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> useHydrateAtoms <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;jotai/utils&quot;</span><span class="u">;</span>
-<span class="k">import</span> <span class="u">{</span> useSyncExternalStore<span class="u">,</span> useEffect <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;react&quot;</span><span class="u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useAtom <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;jotai&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useHydrateAtoms <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;jotai/utils&quot;</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useSyncExternalStore<span class="text-syn-u">,</span> useEffect <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">interface</span> <span class="t">SidebarProps</span> <span class="u">{</span>
-  prefsTrusted<span class="o">:</span> <span class="t">boolean</span><span class="u">;</span>
-  prefs<span class="o">:</span> <span class="t">UIPrefs</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">interface</span> <span class="text-syn-t">SidebarProps</span> <span class="text-syn-u">{</span>
+  prefsTrusted<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
+  prefs<span class="text-syn-o">:</span> <span class="text-syn-t">UIPrefs</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">export</span> <span class="k">function</span> <span class="f">Sidebar</span><span class="u">({</span> prefsTrusted<span class="u">,</span> prefs <span class="u">}</span><span class="o">:</span> <span class="t">SidebarProps</span><span class="u">)</span> <span class="u">{</span>
-  <span class="k">const</span> atomsToHydrate <span class="o">=</span> prefsTrusted
-    <span class="o">?</span> <span class="o">new</span> <span class="f">Map</span><span class="u">([</span>
-        <span class="u">[</span>sidebarCollapsedAtom<span class="u">,</span> prefs<span class="u">.</span><span class="p">sidebarCollapsed</span><span class="u">],</span>
-        <span class="u">[</span>sidebarWidthAtom<span class="u">,</span> prefs<span class="u">.</span><span class="p">sidebarWidth</span><span class="u">],</span>
-      <span class="u">])</span>
-    <span class="o">:</span> <span class="o">new</span> <span class="f">Map</span><span class="u">();</span>
+<span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">Sidebar</span><span class="text-syn-u">({</span> prefsTrusted<span class="text-syn-u">,</span> prefs <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-t">SidebarProps</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> atomsToHydrate <span class="text-syn-o">=</span> prefsTrusted
+    <span class="text-syn-o">?</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">([</span>
+        <span class="text-syn-u">[</span>sidebarCollapsedAtom<span class="text-syn-u">,</span> prefs<span class="text-syn-u">.</span><span class="text-syn-p">sidebarCollapsed</span><span class="text-syn-u">],</span>
+        <span class="text-syn-u">[</span>sidebarWidthAtom<span class="text-syn-u">,</span> prefs<span class="text-syn-u">.</span><span class="text-syn-p">sidebarWidth</span><span class="text-syn-u">],</span>
+      <span class="text-syn-u">])</span>
+    <span class="text-syn-o">:</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
-  <span class="f">useHydrateAtoms</span><span class="u">(</span>atomsToHydrate<span class="u">);</span>
+  <span class="text-syn-f">useHydrateAtoms</span><span class="text-syn-u">(</span>atomsToHydrate<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> <span class="u">[</span>collapsed<span class="u">,</span> setCollapsed<span class="u">]</span> <span class="o">=</span> <span class="f">useAtom</span><span class="u">(</span>sidebarCollapsedAtom<span class="u">);</span>
-  <span class="k">const</span> <span class="u">[</span>width<span class="u">,</span> setWidth<span class="u">]</span> <span class="o">=</span> <span class="f">useAtom</span><span class="u">(</span>sidebarWidthAtom<span class="u">);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">[</span>collapsed<span class="text-syn-u">,</span> setCollapsed<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useAtom</span><span class="text-syn-u">(</span>sidebarCollapsedAtom<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> <span class="text-syn-u">[</span>width<span class="text-syn-u">,</span> setWidth<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useAtom</span><span class="text-syn-u">(</span>sidebarWidthAtom<span class="text-syn-u">);</span>
 
-  <span class="k">const</span> clientReady <span class="o">=</span> <span class="f">useSyncExternalStore</span><span class="u">(</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">()</span> <span class="k">=&gt;</span> <span class="u">{},</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> <span class="k">true</span><span class="u">,</span>
-    <span class="u">()</span> <span class="k">=&gt;</span> <span class="k">false</span><span class="u">,</span>
-  <span class="u">);</span>
+  <span class="text-syn-k">const</span> clientReady <span class="text-syn-o">=</span> <span class="text-syn-f">useSyncExternalStore</span><span class="text-syn-u">(</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{},</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-k">true</span><span class="text-syn-u">,</span>
+    <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-k">false</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">);</span>
 
-  <span class="k">const</span> layoutKnown <span class="o">=</span> prefsTrusted <span class="o">||</span> clientReady<span class="u">;</span>
-  <span class="k">const</span> displayCollapsed <span class="o">=</span> layoutKnown <span class="o">?</span> collapsed <span class="o">:</span> DEFAULT_PREFS<span class="u">.</span><span class="p">sidebarCollapsed</span><span class="u">;</span>
-  <span class="k">const</span> displayWidth <span class="o">=</span> layoutKnown <span class="o">?</span> width <span class="o">:</span> DEFAULT_PREFS<span class="u">.</span><span class="p">sidebarWidth</span><span class="u">;</span>
+  <span class="text-syn-k">const</span> layoutKnown <span class="text-syn-o">=</span> prefsTrusted <span class="text-syn-o">||</span> clientReady<span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> displayCollapsed <span class="text-syn-o">=</span> layoutKnown <span class="text-syn-o">?</span> collapsed <span class="text-syn-o">:</span> DEFAULT_PREFS<span class="text-syn-u">.</span><span class="text-syn-p">sidebarCollapsed</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">const</span> displayWidth <span class="text-syn-o">=</span> layoutKnown <span class="text-syn-o">?</span> width <span class="text-syn-o">:</span> DEFAULT_PREFS<span class="text-syn-u">.</span><span class="text-syn-p">sidebarWidth</span><span class="text-syn-u">;</span>
 
-  <span class="f">useEffect</span><span class="u">(()</span> <span class="k">=&gt;</span> <span class="u">{</span>
-    <span class="f">persistPrefs</span><span class="u">({</span> <span class="p">sidebarCollapsed:</span> collapsed<span class="u">,</span> <span class="p">sidebarWidth:</span> width <span class="u">});</span>
-  <span class="u">},</span> <span class="u">[</span>collapsed<span class="u">,</span> width<span class="u">]);</span>
+  <span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-f">persistPrefs</span><span class="text-syn-u">({</span> <span class="text-syn-p">sidebarCollapsed:</span> collapsed<span class="text-syn-u">,</span> <span class="text-syn-p">sidebarWidth:</span> width <span class="text-syn-u">});</span>
+  <span class="text-syn-u">},</span> <span class="text-syn-u">[</span>collapsed<span class="text-syn-u">,</span> width<span class="text-syn-u">]);</span>
 
-  <span class="k">return</span> <span class="u">(</span>
-    <span class="u">&lt;</span><span class="g">aside</span> <span class="p">style</span><span class="o">=</span><span class="u">{{</span> <span class="p">width:</span> displayCollapsed <span class="o">?</span> <span class="n">68</span> <span class="o">:</span> displayWidth <span class="u">}}&gt;{</span><span class="c">/* sidebar content */</span><span class="u">}&lt;/</span><span class="g">aside</span><span class="u">&gt;</span>
-  <span class="u">);</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
+    <span class="text-syn-u">&lt;</span><span class="text-syn-g">aside</span> <span class="text-syn-p">style</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span> <span class="text-syn-p">width:</span> displayCollapsed <span class="text-syn-o">?</span> <span class="text-syn-n">68</span> <span class="text-syn-o">:</span> displayWidth <span class="text-syn-u">}}&gt;{</span><span class="text-syn-c italic">/* sidebar content */</span><span class="text-syn-u">}&lt;/</span><span class="text-syn-g">aside</span><span class="text-syn-u">&gt;</span>
+  <span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>Let me break down what&#39;s happening:</p>
             <p>
@@ -589,14 +598,16 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/ssg-in-nextjs/">Next.js Build Output Symbols (● ○ ƒ) and SSG</a>
             </li>
-            <li><a href="/blogs/virtualized-list/">React Virtualized List from Scratch</a></li>
-            <li>
+            <li class="my-2">
+              <a href="/blogs/virtualized-list/">React Virtualized List from Scratch</a>
+            </li>
+            <li class="my-2">
               <a href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
@@ -604,15 +615,22 @@
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

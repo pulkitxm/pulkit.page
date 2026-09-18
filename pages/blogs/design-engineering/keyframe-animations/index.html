@@ -61,12 +61,17 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
+  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
+    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          aria-label="Main navigation"
+        >
           <a href="/blogs/">Writing</a>
           <a href="/experience/">Experience</a>
           <a href="/about/">About</a>
@@ -74,9 +79,11 @@
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,11 +91,13 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Choreographing Multi-Step Motion</h1>
-            <p class="detail-meta"><time datetime="2026-03-15">2026-03-15</time></p>
+          <header class="mb-7">
+            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+              Choreographing Multi-Step Motion
+            </h1>
+            <p class="text-sm text-muted"><time datetime="2026-03-15">2026-03-15</time></p>
           </header>
-          <div class="prose">
+          <div class="wrap-anywhere">
             <p>
               CSS transitions get you from A to B. Keyframe animations get you from A to B to C to D
               and back again, on loop, without anyone clicking anything. They are the tool you reach
@@ -162,22 +171,23 @@
               >. Give it a name and a set of stops expressed as percentages.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> fade-in <span class="u">{</span>
-  0% <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">0</span><span class="u">;</span>
-  <span class="u">}</span>
-  100% <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> fade-in <span class="text-syn-u">{</span>
+  0% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Apply it to an element with the <code>animation</code> property. The shorthand takes
               the name, duration, and timing function as its first three values.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> fade-in <span class="n">1s</span> <span class="k">ease</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> fade-in <span class="text-syn-n">1s</span> <span class="text-syn-k">ease</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>That interpolates opacity from 0 to 1 over one second.</p>
             <p>
@@ -207,15 +217,15 @@
               existing styles.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> blink <span class="u">{</span>
-  50% <span class="u">{</span>
-    <span class="p">visibility</span><span class="u">:</span> <span class="k">hidden</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> blink <span class="text-syn-u">{</span>
+  50% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">visibility</span><span class="text-syn-u">:</span> <span class="text-syn-k">hidden</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.cursor</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> <span class="k">blink</span> <span class="n">1s</span> <span class="k">step-end</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.cursor</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> <span class="text-syn-k">blink</span> <span class="text-syn-n">1s</span> <span class="text-syn-k">step-end</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               Notice the <code>step-end</code> timing function. For a blink, you want an instant
@@ -291,14 +301,15 @@
               <code>running</code>
               and it picks up exactly where it left off.
             </p>
-            <pre><code class="language-css"><span class="p">.box</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> bounce-x <span class="n">2s</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.645</span><span class="u">,</span> <span class="n">0.045</span><span class="u">,</span> <span class="n">0.355</span><span class="u">,</span> <span class="n">1</span><span class="u">)</span> <span class="k">infinite</span> <span class="k">alternate</span><span class="u">;</span>
-  <span class="p">animation-play-state</span><span class="u">:</span> <span class="k">paused</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.box</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> bounce-x <span class="text-syn-n">2s</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.645</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.045</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.355</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-k">infinite</span> <span class="text-syn-k">alternate</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">animation-play-state</span><span class="text-syn-u">:</span> <span class="text-syn-k">paused</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.box.playing</span> <span class="u">{</span>
-  <span class="p">animation-play-state</span><span class="u">:</span> <span class="k">running</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.box.playing</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation-play-state</span><span class="text-syn-u">:</span> <span class="text-syn-k">running</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               I am also using <code>animation-direction: alternate</code> here so the element
@@ -319,11 +330,12 @@
               You can apply more than one animation to the same element by comma-separating them.
               Each animation runs independently with its own timing, duration, and iteration count.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span>
-    spin <span class="n">3s</span> <span class="k">linear</span> <span class="k">infinite</span><span class="u">,</span>
-    pulse <span class="n">1s</span> <span class="k">ease-in-out</span> <span class="k">infinite</span> <span class="k">alternate</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+            ><code class="language-css"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span>
+    spin <span class="text-syn-n">3s</span> <span class="text-syn-k">linear</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">,</span>
+    pulse <span class="text-syn-n">1s</span> <span class="text-syn-k">ease-in-out</span> <span class="text-syn-k">infinite</span> <span class="text-syn-k">alternate</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <p>
               This is useful for composing effects. One animation handles rotation while another
@@ -356,18 +368,18 @@
               no state change driving it.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> shimmer <span class="u">{</span>
-  0% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">-100%</span><span class="u">);</span>
-  <span class="u">}</span>
-  100% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">100%</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+            ><code class="language-css"><span class="text-syn-k">@keyframes</span> shimmer <span class="text-syn-u">{</span>
+  0% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">-100%</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">100%</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.skeleton</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> shimmer <span class="n">1.5s</span> <span class="k">ease-in-out</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.skeleton</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> shimmer <span class="text-syn-n">1.5s</span> <span class="text-syn-k">ease-in-out</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
             <h2 id="conclusion">Conclusion</h2>
             <p>
@@ -385,28 +397,39 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="text-[1rem]">Related writing</h2>
           <ul>
-            <li>
+            <li class="my-2">
               <a href="/blogs/design-engineering/offloading-motion-to-the-gpu/"
                 >Offloading Motion to the GPU</a
               >
             </li>
-            <li><a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a></li>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a>
+            </li>
+            <li class="my-2">
+              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
         <div>
           <a href="https://github.com/Pulkitxm">GitHub</a>
           · <a href="https://x.com/_pulkitxm">X</a> ·
           <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

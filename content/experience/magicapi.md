@@ -69,11 +69,15 @@ I redesigned the hero section of the API.market website to enhance user engageme
 
 I redesigned the smart onboarding form to enhance user engagement and provide clearer information hierarchy. The new design featured improved visual flow, better call-to-action placement, and more intuitive navigation elements.
 
+:::carousel
+
 ![Smart onboarding form, step 1](/assets/content/exp/magicapi/smart-onboarding-form/step-1.webp)
 
 ![Smart onboarding form, step 2](/assets/content/exp/magicapi/smart-onboarding-form/step-2.webp)
 
 ![Smart onboarding form, step 3](/assets/content/exp/magicapi/smart-onboarding-form/step-3.webp)
+
+:::
 
 ### Converting full time!!
 
@@ -90,6 +94,8 @@ We didn't build everything in the next.js app from ground app, instead we had pu
 
 I worked on the traces UI to make agent executions easy to inspect. Traces are basically an end-to-end timeline of an agent run (steps, inputs/outputs, errors and latency). So the traces ui included a main trace view, flow visualization, expanded flow graphs, and filters like date ranges so debugging production runs was actually practical.
 
+:::carousel
+
 ![Traces main view](/assets/content/exp/magicapi/noveum.ai/traces/main-view.webp)
 
 ![Trace with an expanded span](/assets/content/exp/magicapi/noveum.ai/traces/with-span.webp)
@@ -98,9 +104,13 @@ I worked on the traces UI to make agent executions easy to inspect. Traces are b
 
 ![Trace date range filter](/assets/content/exp/magicapi/noveum.ai/traces/date-selector.webp)
 
+:::
+
 #### Datasets UI
 
 Datasets are curated collections of examples extracted from traces (inputs, outputs, and selected spans). They’re used to run specific scorers at evaluation time, so you can measure quality, compare changes, and catch regressions in agents/prompts/models.
+
+:::carousel
 
 ![Datasets list](/assets/content/exp/magicapi/noveum.ai/datasets/datasets.webp)
 
@@ -112,6 +122,8 @@ Datasets are curated collections of examples extracted from traces (inputs, outp
 
 ![Dataset item JSON view](/assets/content/exp/magicapi/noveum.ai/datasets/json-view.webp)
 
+:::
+
 #### Completing Six Months
 
 On October 1st 2025, I completed six months at MagicAPI. It had been a remarkable journey, starting with API.Market and evolving into building Noveum AI from the ground up. Beyond just shipping features, I grew a lot as an engineer here. The team's culture of sharing what works, iterating fast, and pushing each other on AI-assisted workflows shaped how I approach building software today.
@@ -121,6 +133,8 @@ I shared my reflections on [LinkedIn](https://www.linkedin.com/posts/pulkitxm_as
 #### ETL Job with Agent
 
 The ETL (Extract, Transform, Load) pipeline converted traces into datasets via an asynchronous background workflow. I built the end-to-end job orchestration using BullMQ workers, deployed it to a Kubernetes cluster, and operated the Redis infrastructure it depended on.
+
+:::carousel
 
 ![ETL jobs list](/assets/content/exp/magicapi/noveum.ai/etl-job/etl-jobs.webp)
 
@@ -135,6 +149,8 @@ The ETL (Extract, Transform, Load) pipeline converted traces into datasets via a
 ![ETL mapper code](/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-code.webp)
 
 ![ETL job runs](/assets/content/exp/magicapi/noveum.ai/etl-job/etl-job-runs.webp)
+
+:::
 
 ### AWS Infrastructure Migration
 

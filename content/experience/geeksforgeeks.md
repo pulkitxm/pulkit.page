@@ -10,6 +10,8 @@ endDate: 2025-04-01
 icon: /assets/experience/geeksforgeeks.webp
 ---
 
+:::carousel
+
 ![GeeksforGeeks campus session 1](/assets/content/exp/geeksforgeeks/geekssForGeeksImages-11.webp)
 
 ![GeeksforGeeks campus session 2](/assets/content/exp/geeksforgeeks/geekssForGeeksImages-3.webp)
@@ -33,6 +35,8 @@ icon: /assets/experience/geeksforgeeks.webp
 ![GeeksforGeeks campus session 11](/assets/content/exp/geeksforgeeks/geekssForGeeksImages-5.webp)
 
 ![GeeksforGeeks campus session 12](/assets/content/exp/geeksforgeeks/geekssForGeeksImages-8.webp)
+
+:::
 
 ## Key Responsibilities
 

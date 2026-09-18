@@ -55,6 +55,7 @@
     <script
       type="application/ld+json"
     >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://pulkit.page/#person","name":"Pulkit","url":"https://pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://pulkit.page/#website","url":"https://pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#image","contentUrl":"https://pulkit.page/og/blogs/design-engineering/moving-things-without-moving-them/card.png","width":1200,"height":630,"caption":"Moving Things Without Moving Them"},{"@type":"BlogPosting","@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#article","headline":"Moving Things Without Moving Them","description":"Understand CSS transforms and why they're the foundation of performant animations. Learn translate, rotate, scale, the order trap that catches everyone, and how to think in 3D.","datePublished":"2026-02-24","author":{"@id":"https://pulkit.page/#person"},"publisher":{"@id":"https://pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#webpage"},"isPartOf":{"@id":"https://pulkit.page/blogs/#webpage"},"image":{"@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#image"},"url":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/","inLanguage":"en","keywords":["CSS","Transforms","3D","Animation","Motion Design"]},{"@type":"BreadcrumbList","@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"Moving Things Without Moving Them","item":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/"}]},{"@type":"WebPage","@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#webpage","url":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/","name":"Moving Things Without Moving Them","description":"Understand CSS transforms and why they're the foundation of performant animations. Learn translate, rotate, scale, the order trap that catches everyone, and how to think in 3D.","isPartOf":{"@id":"https://pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#image"},"inLanguage":"en","mainEntity":{"@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#article"},"breadcrumb":{"@id":"https://pulkit.page/blogs/design-engineering/moving-things-without-moving-them/#breadcrumbs"}}]}</script>
+    <script type="module" src="/assets/image-popup.js"></script>
     <link rel="stylesheet" href="/assets/demos/document.css" />
     <script type="module" src="/assets/demos/index.js"></script>
     <meta name="theme-color" content="#000000" />
@@ -674,20 +675,50 @@
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >rotateX()</code
               >
-              rotates around the horizontal axis (think of a :popup<a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="/assets/content/blogs/moving-things-without-moving-them/garage-door.gif"
-                title="Garage door opening"
-                >garage door opening</a
+              rotates around the horizontal axis (think of a
+              <button
+                type="button"
+                class="cursor-help border-0 border-b border-dashed border-fg/40 bg-transparent p-0 [font:inherit] text-inherit hover:border-fg/60"
+                popovertarget="image-popup-1"
+                data-image-popup
+              >
+                garage door opening
+              </button><span
+                id="image-popup-1"
+                popover
+                class="m-0 w-auto max-w-[min(280px,90vw)] scale-95 overflow-hidden rounded-md border border-line bg-surface p-0 opacity-0 shadow-md transition-[opacity,scale,display,overlay] transition-discrete duration-150 ease-out open:scale-100 open:opacity-100 motion-reduce:transition-none starting:open:scale-95 starting:open:opacity-0"
+                ><img
+                  class="block h-auto max-h-[50vh] w-full object-cover"
+                  src="/assets/content/blogs/moving-things-without-moving-them/garage-door.gif"
+                  alt="Garage door opening"
+                  width="280"
+                  height="200"
+                  loading="lazy"
+                /></span
               >).
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >rotateY()</code
               >
-              rotates around the vertical axis (think of a :popup<a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="/assets/content/blogs/moving-things-without-moving-them/revolving-door.gif"
-                title="Revolving door"
-                >revolving door</a
+              rotates around the vertical axis (think of a
+              <button
+                type="button"
+                class="cursor-help border-0 border-b border-dashed border-fg/40 bg-transparent p-0 [font:inherit] text-inherit hover:border-fg/60"
+                popovertarget="image-popup-2"
+                data-image-popup
+              >
+                revolving door
+              </button><span
+                id="image-popup-2"
+                popover
+                class="m-0 w-auto max-w-[min(280px,90vw)] scale-95 overflow-hidden rounded-md border border-line bg-surface p-0 opacity-0 shadow-md transition-[opacity,scale,display,overlay] transition-discrete duration-150 ease-out open:scale-100 open:opacity-100 motion-reduce:transition-none starting:open:scale-95 starting:open:opacity-0"
+                ><img
+                  class="block h-auto max-h-[50vh] w-full object-cover"
+                  src="/assets/content/blogs/moving-things-without-moving-them/revolving-door.gif"
+                  alt="Revolving door"
+                  width="280"
+                  height="200"
+                  loading="lazy"
+                /></span
               >).
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >rotateZ()</code

@@ -141,9 +141,9 @@ The core concept was introduced in a 1997 MIT paper [Consistent Hashing and Rand
 
 ### Ring Abstraction
 
-A popular way to visualize consistent hashing is as a ring. Let's use SHA-128 as our hash function. It generates a 128-bit number, so our range is 0 to `2^{128} - 1`.
+A popular way to visualize consistent hashing is as a ring. Let's use SHA-128 as our hash function. It generates a 128-bit number, so our range is 0 to :embed[math]{{"formula":"2^{128} - 1"}}.
 
-For simplicity, let's use a smaller range: 0 to 15 (0 to `2^4 - 1`).
+For simplicity, let's use a smaller range: 0 to 15 (0 to :embed[math]{{"formula":"2^4 - 1"}}).
 
 ![Consistent hashing ring with nodes placed at hash positions, keys owned by next clockwise node](/assets/content/blogs/consistent-hashing/ring.webp)
 
@@ -190,7 +190,7 @@ Let's say key k2 hashes to slot 10. The first node clockwise is node 1 at slot 1
 
 This beautifully answers the question: who owns a particular key?
 
-The key insight: **the hash space is huge and constant** (typically `2^{128}` or `2^{256}`). Both nodes and keys map to this same space. The hash function no longer depends on the number of nodes, it's always `hash(key) % HUGE_CONSTANT`. Only the association logic (find next clockwise node) changes when nodes are added or removed.
+The key insight: **the hash space is huge and constant** (typically :embed[math]{{"formula":"2^{128}"}} or :embed[math]{{"formula":"2^{256}"}}). Both nodes and keys map to this same space. The hash function no longer depends on the number of nodes, it's always `hash(key) % HUGE_CONSTANT`. Only the association logic (find next clockwise node) changes when nodes are added or removed.
 
 > **The k/n Rule**: On average, consistent hashing requires only **k/n** keys to be migrated during scale-up or scale-down, where k is the total number of keys and n is the number of nodes. Compare this to traditional hashing where nearly all keys might need to move.
 
@@ -331,7 +331,7 @@ function hash(key: string, totalSlots: number): number {
 }
 ```
 
-The hash function converts any string to a position in the hash space. Since `totalSlots` is huge and constant (like `2^{128}`), this function is completely independent of the number of nodes in your system.
+The hash function converts any string to a position in the hash space. Since `totalSlots` is huge and constant (like :embed[math]{{"formula":"2^{128}"}}), this function is completely independent of the number of nodes in your system.
 
 ## Virtual Nodes
 

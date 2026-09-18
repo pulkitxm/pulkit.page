@@ -70,11 +70,11 @@ You can name the ec2 instance according to you, I am naming it `demo-nodejs`.
 
 ![EC2 instance name configuration](/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/62d86fd2-805f-4b60-be5b-0d1c81b5fecb.webp)
 
-Select any image that suits you best, or you can learn more about these [in the operating systems guide](https://aws.amazon.com/ec2/features/#product-features#ec2-features#operating-systems-and-software). I have selected the basic Ubuntu image, as it is widely used and has good support.
+Select any image that suits you best, or you can learn more about these [here](https://aws.amazon.com/ec2/features/#product-features#ec2-features#operating-systems-and-software). I have selected the basic Ubuntu image, as it is widely used and has good support.
 
-![EC2 Ubuntu illustration selection](/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/4fb4dc83-b7e0-43c1-bec9-70c540e271e8.webp)
+![EC2 Ubuntu image selection](/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/4fb4dc83-b7e0-43c1-bec9-70c540e271e8.webp)
 
-Since I am using this instance for this walkthrough, I have selected a free-tier Instance type, you can choose the instance types according to your need, know more about this [in the instance selection guide](https://repost.aws/knowledge-center/ec2-instance-choose-type-for-workload)
+Since I am using this instance for this walkthrough, I have selected a free-tier Instance type, you can choose the instance types according to your need, know more about this [here](https://repost.aws/knowledge-center/ec2-instance-choose-type-for-workload)
 
 ![EC2 instance type selection showing free tier option](/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f97c6597-38ba-4044-86e9-253a725ac5c4.webp)
 

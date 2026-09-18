@@ -50,7 +50,15 @@ The model chooses **tools** on its own. The app or the user often pulls in **res
 
 A typical session looks like this:
 
-![MCP session sequence: Client and Server exchange initialize, serverInfo, notifications/initialized, tools/list, resources/list, prompts/list, and tools/call with JSON-RPC style messages.](/assets/content/blogs/mcp-server-that-writes-itself/typical-session.webp)
+<center>
+
+:::embed image
+{"src":"/assets/content/blogs/mcp-server-that-writes-itself/typical-session.webp","alt":"MCP session sequence: Client and Server exchange initialize, serverInfo, notifications/initialized, tools/list, resources/list, prompts/list, and tools/call with JSON-RPC style messages.","loading":"lazy","decoding":"async","style":{"borderRadius":"0.5rem","width":"auto","height":"auto","maxWidth":"100%"}}
+:::
+
+</center>
+
+<br>
 
 The spec allows two ways to connect. **stdio** is for a local process the editor starts on your machine. **HTTP** is for a URL on the public internet, which is what you want for a live product. The client `POST`s JSON to something like `https://noveum.ai/api/mcp` and sends your bearer token in a header. No install on the user's laptop. Some setups also use streaming responses for long tasks, but a plain request and response is enough to start.
 

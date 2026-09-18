@@ -1,5 +1,13 @@
 import { execFileSync } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  copyFileSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
@@ -88,4 +96,25 @@ export async function buildDemoAssets(outdir) {
     copyFileSync(fontFile(`poppins-${weight}.woff2`), join(outdir, `poppins-${weight}.woff2`));
   }
   await bundleDemoScripts(outdir);
+}
+
+export async function bundleEmbedScripts(outdir, { minify = true } = {}) {
+  const entrypoints = readdirSync("client/embeds")
+    .filter((file) => file.endsWith(".js"))
+    .map((file) => `client/embeds/${file}`);
+  if (!entrypoints.length) {
+    return;
+  }
+  const result = await Bun.build({
+    entrypoints,
+    outdir,
+    splitting: true,
+    minify,
+    format: "esm",
+    target: "browser",
+    naming: { entry: "[name].[ext]", chunk: "[name]-[hash].[ext]" },
+  });
+  if (!result.success) {
+    throw new AggregateError(result.logs, "Failed to bundle embed scripts");
+  }
 }

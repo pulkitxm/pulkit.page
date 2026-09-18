@@ -268,28 +268,32 @@
               and return a high-dimensional vector (often 1536 or 3072 dimensions) where similar
               texts have similar vectors.
             </p>
-            <p class="mt-0 mb-6"><strong>Sample embedding</strong></p>
-            <p class="mt-0 mb-6"><strong>JSON input</strong></p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
+            <details class="mt-0 mb-6 rounded-lg border border-line p-4 [&>*:last-child]:mb-0">
+              <summary class="cursor-pointer font-bold">Sample embedding</summary>
+              <br />
+              <p class="mt-0 mb-6"><strong>JSON input</strong></p>
+              <pre
+                tabindex="0"
+                class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+              ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
     text<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Hi there&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-u">}</span>;
 </code></pre>
-            <p class="mt-0 mb-6"><strong>Output shape</strong></p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
+              <p class="mt-0 mb-6"><strong>Output shape</strong></p>
+              <pre
+                tabindex="0"
+                class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+              ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;dimensions&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">3072</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">&quot;embedding&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span><span class="text-syn-n">-0.0006984524079598486</span><span class="text-syn-u">,</span><span class="text-syn-n">-0.019356805831193924</span><span class="text-syn-u">,</span><span class="text-syn-n">-0.03219897672533989</span><span class="text-syn-u">,</span><span class="text-syn-n">0.012672074139118195</span><span class="text-syn-u">,</span>............<span class="text-syn-u">]</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p class="mt-0 mb-6">
-              In practice, you would repeat this for every chunk and store the resulting vectors in
-              your vector database.
-            </p>
+              <p class="mt-0 mb-6">
+                In practice, you would repeat this for every chunk and store the resulting vectors
+                in your vector database.
+              </p>
+            </details>
+            <br />
             <p class="mt-0 mb-6">
               For PukBot, I use OpenAI&#39;s text-embedding-3-large model, which produces
               3072-dimensional vectors. The embedding API is straightforward:

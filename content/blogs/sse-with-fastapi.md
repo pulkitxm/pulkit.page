@@ -17,7 +17,7 @@ tags:
 
 During my recent internship, I faced a task where the server needed to run a long-running process. This couldn't be done with just a POST request because the task could take up to 15 minutes to complete. So, we needed an alternative for this use case. And yes, you guessed it right, the solution is server-sent events.
 
-## What exactly is the server-sent event?
+### What exactly is the server-sent event?
 
 It is a standard allowing servers to push updates to the client over a single HTTP connection. This is useful for tasks that take a long time to complete, as it keeps the client informed about the progress without needing to constantly poll the server.
 

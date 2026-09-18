@@ -13,7 +13,7 @@ import {
 import { join } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
-import { buildDemoAssets } from "./demo-assets.mjs";
+import { buildDemoAssets, bundleEmbedScripts } from "./demo-assets.mjs";
 import { logDuration } from "./duration.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
@@ -69,6 +69,20 @@ execFileSync(
 logDuration("Compiled styles", stepStartedAt);
 stepStartedAt = performance.now();
 await buildDemoAssets("dist/assets/demos");
+await bundleEmbedScripts("dist/assets/embeds");
+cpSync(
+  fileURLToPath(new URL("dist/photoswipe.css", import.meta.resolve("photoswipe/package.json"))),
+  "dist/assets/embeds/photoswipe.css",
+);
+cpSync(
+  fileURLToPath(new URL("dist/katex.min.css", import.meta.resolve("katex/package.json"))),
+  "dist/assets/katex/katex.min.css",
+);
+cpSync(
+  fileURLToPath(new URL("dist/fonts", import.meta.resolve("katex/package.json"))),
+  "dist/assets/katex/fonts",
+  { recursive: true },
+);
 logDuration("Built demo assets", stepStartedAt);
 stepStartedAt = performance.now();
 const fingerprinted = new Map();

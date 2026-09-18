@@ -64,7 +64,7 @@ In a normal set, you can add and remove elements. But for tracking watched conte
 
 This constraint lets us relax the data structure. We don't need the full power of a set. We just need to know: "Has this user definitely NOT seen this post?"
 
-If we can answer that question with 100% certainty, we can discard posts the user has seen and only recommend new ones. Even if we occasionally miss recommending something (false positive (A false positive is when the Bloom filter says an element is present, but it actually isn't.)), that's okay. Performance matters more than perfect recall.
+If we can answer that question with 100% certainty, we can discard posts the user has seen and only recommend new ones. Even if we occasionally miss recommending something (:embed[info-tip]{{"text":"false positive","tip":"A false positive is when the Bloom filter says an element is present, but it actually isn't."}}), that's okay. Performance matters more than perfect recall.
 
 This trade-off is the foundation of Bloom filters.
 
@@ -216,21 +216,21 @@ This is the fundamental trade-off. You need to size your Bloom filter based on:
 
 There's a mathematical formula for this:
 
-```math
-m = \frac{-n \cdot \ln(p)}{(\ln 2)^2}
-```
+:::embed math
+{"formula":"m = \\frac{-n \\cdot \\ln(p)}{(\\ln 2)^2}","block":true}
+:::
 
 Where:
 
-- `m` = number of bits needed
-- `n` = expected number of elements
-- `p` = desired false positive probability
+- :embed[math]{{"formula":"m"}} = number of bits needed
+- :embed[math]{{"formula":"n"}} = expected number of elements
+- :embed[math]{{"formula":"p"}} = desired false positive probability
 
 For example, if you expect 1 million keys and want a 1% false positive rate:
 
-```math
-m = \frac{-1,000,000 \cdot \ln(0.01)}{(\ln 2)^2} \approx 9,585,059 \text{ bits} \approx 1.14 \text{ MB}
-```
+:::embed math
+{"formula":"m = \\frac{-1,000,000 \\cdot \\ln(0.01)}{(\\ln 2)^2} \\approx 9,585,059 \\text{ bits} \\approx 1.14 \\text{ MB}","block":true}
+:::
 
 About 1 MB to track a million items with 1% false positives. Not bad.
 
@@ -264,15 +264,15 @@ With multiple hash functions, all k bits must be set for a "might exist" respons
 
 The optimal number of hash functions is:
 
-```math
-k = \frac{m}{n} \cdot \ln 2
-```
+:::embed math
+{"formula":"k = \\frac{m}{n} \\cdot \\ln 2","block":true}
+:::
 
 Where:
 
-- `k` = number of hash functions
-- `m` = number of bits
-- `n` = expected number of elements
+- :embed[math]{{"formula":"k"}} = number of hash functions
+- :embed[math]{{"formula":"m"}} = number of bits
+- :embed[math]{{"formula":"n"}} = expected number of elements
 
 ## The Deletion Problem
 

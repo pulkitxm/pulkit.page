@@ -18,7 +18,7 @@ PhotoSwipe is a powerful, easy-to-use JavaScript library that allows you to crea
 
 Let's make an image gallery in React with the [react-photoswipe-gallery](https://www.npmjs.com/package/react-photoswipe-gallery).
 
-## Let's Start by Bootstrapping a Fresh React-TS App
+### Let's Start by Bootstrapping a Fresh React-TS App
 
 ```bash
 pnpm create vite@latest react-app-gallery -- --template react
@@ -192,6 +192,6 @@ export default function App() {
 
 ### Here's the final version!
 
-[Image gallery demo with PhotoSwipe](https://codesandbox.io/embed/m3x8ct?view=preview\&module=%2Fsrc%2FApp.tsx)
+<iframe src="https://codesandbox.io/embed/m3x8ct?view=preview&amp;module=%2Fsrc%2FApp.tsx" title="Image gallery demo with PhotoSwipe" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
 
 With these changes, your image gallery should now look much cleaner and more user-friendly. The added margin and rounded corners give each image some breathing room and a polished appearance. Enjoy your improved gallery!

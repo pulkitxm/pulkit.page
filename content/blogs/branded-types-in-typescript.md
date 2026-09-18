@@ -253,7 +253,9 @@ function scheduleReminder(seconds: number) {
 
 At the boundary (e.g. controller, API handler), you validate once. After `assertPositiveSeconds`, the compiler treats `seconds` as a `PositiveSeconds` everywhere downstream.
 
-****Wait, what do `asserts` and `is` mean here?****
+<details>
+
+<summary><strong>Wait, what do <code>asserts</code> and <code>is</code> mean here?</strong></summary>
 
 If you’re confused by the `is` and `asserts` keywords in these function signatures, here’s what they do:
 
@@ -280,6 +282,8 @@ assertPositiveSeconds(seconds);
 ```
 
 Type predicates (`value is T`) narrow types inside conditionals, while assertion functions (`asserts value is T`) narrow types for all subsequent code if they return.
+
+</details>
 
 ### Branding trusted values
 
@@ -554,6 +558,8 @@ For a deeper dive into the theory and additional patterns, see Josh Goldberg’s
 
 ## Credits and Further Watching
 
-[Branded Types in TypeScript](https://www.youtube.com/watch?v=aP6w2OzidYM)
+:::embed youtube-embed
+{"videoId":"aP6w2OzidYM","title":"Branded Types in TypeScript","className":"h-[200px] w-full rounded-xl sm:h-[400px]"}
+:::
 
 This post was inspired by the YouTube video [“Branded Types in TypeScript”](https://www.youtube.com/watch?v=aP6w2OzidYM); all credit to [the creator](https://x.com/DevSimplified) for the clear explanation and examples.

@@ -4,6 +4,8 @@
     "theme.js",
     "styles.css",
     "demos/index.js",
+    "assets/image-popup.js",
+    "client/embeds/*.js",
     "demos/styles.css",
     "scripts/import-reference.mjs",
     "scripts/*.test.js",

@@ -116,11 +116,11 @@ Here are some platform-specific docs reference:
 | [**Twitter Cards Documentation**](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started)                       |
 | [**LinkedIn Open Graph Documentation**](https://www.linkedin.com/help/linkedin/answer/a521928/making-your-website-shareable-on-linkedin?lang=en) |
 
-## **Example: Open Graph Image in My** [**Portfolio**](/)
+## **Example: Open Graph Image in My** [**Portfolio**](https://pulkitxm.com)
 
 To demonstrate the process, let's look at how I added an Open Graph image to my portfolio website. For the image, I used **Canva** (which is super easy and fun, by the way) to create a banner that best represents my portfolio. Once I designed the image, I uploaded it to my Next.js project and placed it in the `public` folder.
 
-[![Portfolio website preview with Open Graph illustration](/assets/content/blogs/open-graph-images-in-nextjs/bc65d989-c82d-4ae3-a834-1fb6aa9b642e.webp)](https://x.com/devpulkitt/status/1856714029466608116)
+[![Portfolio website preview with Open Graph image](/assets/content/blogs/open-graph-images-in-nextjs/bc65d989-c82d-4ae3-a834-1fb6aa9b642e.webp)](https://x.com/devpulkitt/status/1856714029466608116)
 
 ### **Why the** `public` folder?
 

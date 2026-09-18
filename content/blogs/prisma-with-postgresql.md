@@ -20,7 +20,7 @@ Content: ORM stands for Object-Relational Mapping. It is a technique that allows
 
 Prisma is a modern ORM that works seamlessly with PostgreSQL, among other databases. It provides a type-safe database client, which means you get autocompletion and type-checking in your code editor, reducing the likelihood of runtime errors. Prisma also includes a powerful migration system to manage your database schema changes.
 
-## Starting with a Fresh Node.js Project
+### Starting with a Fresh Node.js Project
 
 To begin, let's set up a new Node.js project. First, initialize a new Node.js project by running the following command in your terminal:
 

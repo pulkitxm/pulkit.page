@@ -316,7 +316,7 @@ Exactly-once requires coordination between producer, broker, and consumer. Kafka
 
 ## Example: Image Processing
 
-![illustration upload triggers async processing for multiple sizes](/assets/content/blogs/async-processing/image-processing.webp)
+![Image upload triggers async processing for multiple sizes](/assets/content/blogs/async-processing/image-processing.webp)
 
 User uploads a profile picture on your app. You need to create multiple sizes: thumbnail (50x50), medium (200x200), large (800x800). Original might be 5MB, processing takes a few seconds per size.
 

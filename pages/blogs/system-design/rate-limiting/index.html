@@ -490,7 +490,7 @@ X-Ratelimit-Retry-After: 30
               <strong>t = 59</strong>
               seconds inside a <strong>60-second</strong> quota you can still be full while
               <strong>t = 61</strong>
-              drops the earliest stamp so a slot frees up-there is never a sharp calendar-minute
+              drops the earliest stamp so a slot frees up, there is never a sharp calendar-minute
               reset.
             </p>
             <p class="mt-0 mb-6">
@@ -556,7 +556,7 @@ X-Ratelimit-Retry-After: 30
             <p class="mt-0 mb-6">
               The sliding window counter keeps the rolling boundary you get from a log, but avoids
               storing timestamps. Storage is tiny: typically <strong>two keys per client</strong>,
-              one counter for each of the last two aligned fixed windows-the same coarse buckets
+              one counter for each of the last two aligned fixed windows, the same coarse buckets
               fixed-window counters already use.
             </p>
             <p class="mt-0 mb-6">
@@ -616,10 +616,10 @@ X-Ratelimit-Retry-After: 30
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >0.8</code
               >. Requests already counted against <strong>current</strong> enter the estimate in
-              full-they are all inside the horizon with this common (slightly pessimistic) variant.
+              full, they are all inside the horizon with this common (slightly pessimistic) variant.
             </p>
             <p class="mt-0 mb-6">
-              Nothing here is mathematically identical to trimming by timestamp-it’s cheap and
+              Nothing here is mathematically identical to trimming by timestamp, it’s cheap and
               usually close: <strong>counts per bucket</strong>, not per request.
             </p>
             <pre
@@ -659,16 +659,16 @@ X-Ratelimit-Retry-After: 30
               older buckets fall off naturally.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Pros:</strong> <strong>Memory efficient</strong>-two counters, not millions of
-              timestamps. Smooths fixed-window bursts because the overlap weight bleeds quota across
-              boundaries instead of a hard reset stripe. Operators like Cloudflare publish error
-              rates measured on huge traffic (<strong>~0.003% misclassified</strong>
+              <strong>Pros:</strong> <strong>Memory efficient</strong>, two counters, not millions
+              of timestamps. Smooths fixed-window bursts because the overlap weight bleeds quota
+              across boundaries instead of a hard reset stripe. Operators like Cloudflare publish
+              error rates measured on huge traffic (<strong>~0.003% misclassified</strong>
               among hundreds of millions of requests).
             </p>
             <p class="mt-0 mb-6">
               <strong>Cons:</strong> <strong>Approximate</strong>. It assumes traffic is roughly
               uniform inside each fixed window. Real clusters (everyone hits you on the second, or
-              the top of the hour) can skew the estimate-occasionally a bit loose or a bit tight
+              the top of the hour) can skew the estimate, occasionally a bit loose or a bit tight
               compared to a true sliding log. For many APIs that margin is acceptable next to the
               memory win.
             </p>

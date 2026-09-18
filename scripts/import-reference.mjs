@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, extname, join } from "node:path";
+import process from "node:process";
 import { parse as parseJavaScript } from "@babel/parser";
 import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
@@ -92,6 +93,10 @@ function linkUrl(value) {
   if (!value) {
     throw new Error("Missing URL in reference content");
   }
+  const anchored = /^(\/(?:blogs|series)\/[^#?]*?)\/?(#.*)$/.exec(value);
+  if (anchored) {
+    return `${linkUrl(anchored[1])}${anchored[2]}`;
+  }
   if (value.startsWith("/") && /\.(mp4|pdf|webm)(?:[?#]|$)/.test(value)) {
     return `https://www.pulkit.page${value}`;
   }
@@ -149,15 +154,110 @@ const paragraph = (children) => ({
   type: "paragraph",
   children: typeof children === "string" ? [text(children)] : children,
 });
-const link = (label, url) => ({ type: "link", url: linkUrl(url), children: [text(label)] });
-const image = (src, alt) => ({
-  type: "image",
-  url: imageUrl(src),
-  alt: alt || "Illustration",
-  title: null,
-});
+
+const rawTags = new Set([
+  "br",
+  "center",
+  "code",
+  "details",
+  "div",
+  "iframe",
+  "small",
+  "strong",
+  "summary",
+  "track",
+  "u",
+  "video",
+]);
+const voidTags = new Set(["br", "track"]);
+const rawAttributes = new Map([
+  ["src", "src"],
+  ["title", "title"],
+  ["allow", "allow"],
+  ["sandbox", "sandbox"],
+  ["kind", "kind"],
+  ["autoPlay", "autoplay"],
+  ["loop", "loop"],
+  ["muted", "muted"],
+  ["playsInline", "playsinline"],
+  ["controls", "controls"],
+  ["open", "open"],
+]);
+let demoKeys = [];
+
+function escapeAttribute(value) {
+  return String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
+}
+
+function rawHtml(name, attributes, children, inline) {
+  const serialized = [...rawAttributes]
+    .filter(([key]) => attributes[key] !== undefined && attributes[key] !== false)
+    .map(([key, attribute]) => {
+      const value = attributes[key];
+      if (value === true) {
+        return ` ${attribute}`;
+      }
+      const url = key === "src" ? (name === "video" ? imageUrl(value) : value) : value;
+      return ` ${attribute}="${escapeAttribute(url)}"`;
+    })
+    .join("");
+  const open = { type: "html", value: `<${name}${serialized}>`, data: { inline } };
+  if (voidTags.has(name)) {
+    return [open];
+  }
+  const close = { type: "html", value: `</${name}>` };
+  if (inline || ["video", "iframe", "summary", "small"].includes(name)) {
+    const inner = children
+      .map((child) => {
+        if (child.type === "html") {
+          return child.value;
+        }
+        if (child.type === "text") {
+          return child.value.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+        }
+        return writer.stringify(child).trim();
+      })
+      .join(inline ? "" : "\n");
+    return [{ type: "html", value: `${open.value}${inner}${close.value}`, data: { inline } }];
+  }
+  return [open, ...children, close];
+}
+
+function resolveProps(name, value, key = "") {
+  if (Array.isArray(value)) {
+    return value.map((item) => resolveProps(name, item, key));
+  }
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([entry, item]) => [entry, resolveProps(name, item, entry)]),
+    );
+  }
+  if (
+    typeof value === "string" &&
+    ["src", "images", "image", "avatar"].includes(key) &&
+    !/^https?:\/\//.test(value)
+  ) {
+    return imageUrl(value);
+  }
+  return value;
+}
+
+function embed(name, props, inline) {
+  const id = name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+  const json = JSON.stringify(props);
+  return [
+    {
+      type: "html",
+      value: inline ? `:embed[${id}]{${json}}` : `:::embed ${id}\n${json}\n:::`,
+      data: { inline },
+    },
+  ];
+}
 
 function convert(node, originalUrl) {
+  if (node.type === "code" && !node.lang) {
+    return [{ ...node, lang: "text", meta: null }];
+  }
   if (node.type === "image") {
     return [{ ...node, url: imageUrl(node.url) }];
   }
@@ -183,109 +283,25 @@ function convert(node, originalUrl) {
     );
     const children = (node.children ?? []).flatMap((child) => convert(child, originalUrl));
     const inline = node.type === "mdxJsxTextElement";
-    if (["DemoShowcase", "div", "center", "details", "small", "u"].includes(name)) {
-      return children;
-    }
-    if (name === "summary") {
-      return [{ type: "strong", children }];
-    }
-    if (name === "strong") {
-      return [{ type: "strong", children }];
-    }
-    if (name === "code") {
-      return [{ type: "inlineCode", value: children.map((child) => child.value ?? "").join("") }];
-    }
-    if (name === "br") {
-      return [text(" ")];
-    }
-    if (name === "track") {
-      return [];
-    }
-    if (name === "CmdKey") {
-      return [{ type: "inlineCode", value: "⌘" }];
+    if (name === "DemoShowcase") {
+      const key = demoKeys.shift();
+      if (!key) {
+        throw new Error(`No demo directive left for ${originalUrl}`);
+      }
+      return [{ type: "html", value: `:::demo ${key}` }];
     }
     if (name === "CodeQuote") {
-      return [{ type: "blockquote", children }];
+      return rawHtml("code", {}, children, true);
     }
-    if (name === "InfoTip") {
-      return [text(`${attributes.text} (${attributes.tip})`)];
+    if (rawTags.has(name)) {
+      return rawHtml(name, attributes, children, inline);
     }
-    if (name === "Math") {
-      return attributes.block
-        ? [{ type: "code", lang: "math", value: attributes.formula }]
-        : [{ type: "inlineCode", value: attributes.formula }];
-    }
-    if (["Image", "BlogImage", "ImagePopup"].includes(name)) {
-      const result = image(attributes.src, attributes.alt ?? attributes.caption);
-      return inline
-        ? [result]
-        : [paragraph([result]), ...(attributes.caption ? [paragraph(attributes.caption)] : [])];
-    }
-    if (["ImageGrid", "BlogGallery"].includes(name)) {
-      return attributes.images.map((item) =>
-        paragraph([
-          typeof item === "string" ? image(item, "Gallery image") : image(item.src, item.alt),
-        ]),
-      );
-    }
-    if (["DocumentViewer", "VideoPlayer", "video", "iframe"].includes(name)) {
-      return [
-        paragraph([
-          link(
-            attributes.title ??
-              (name === "DocumentViewer" ? "View document" : "Watch demonstration"),
-            attributes.documentUrl ?? attributes.src,
-          ),
-        ]),
-      ];
-    }
-    if (name === "DocumentTabs") {
-      return attributes.documents.map((item) => paragraph([link(item.title, item.documentUrl)]));
-    }
-    if (name === "TechBadges") {
-      return [paragraph(attributes.technologies.join(" · "))];
-    }
-    if (name === "YoutubeEmbed") {
-      return [
-        paragraph([
-          link(
-            attributes.title ?? "Watch video",
-            `https://www.youtube.com/watch?v=${attributes.videoId}`,
-          ),
-        ]),
-      ];
-    }
-    if (["Tweet", "TweetEmbed"].includes(name)) {
-      return [
-        {
-          type: "blockquote",
-          children: [
-            paragraph(attributes.content),
-            paragraph([link("View post on X", attributes.tweetUrl ?? attributes.link)]),
-          ],
-        },
-      ];
-    }
-    if (name === "RepliesCarousel") {
-      return attributes.replies.map((reply) => ({
-        type: "blockquote",
-        children: [paragraph(reply.content), paragraph([link(`${reply.name} on X`, reply.link)])],
-      }));
-    }
-    if (name === "InstallTabs") {
-      return [{ type: "code", lang: "sh", value: `npm install ${attributes.packages}` }];
-    }
-    if (/Demo$|Playground$/.test(name)) {
-      return [
-        paragraph([
-          link(
-            `Interactive example: ${name.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/ Demo$/, "")}`,
-            originalUrl,
-          ),
-        ]),
-      ];
-    }
-    throw new Error(`Unsupported MDX component: ${name}`);
+    const label = children.map((child) => child.value ?? "").join("");
+    return embed(
+      name,
+      resolveProps(name, label ? { ...attributes, children: label } : attributes),
+      inline,
+    );
   }
   if (node.type.startsWith("mdx")) {
     throw new Error(`Unsupported MDX node: ${node.type}`);
@@ -323,7 +339,7 @@ function normalizeBlocks(node) {
       inline = [];
     };
     for (const child of children) {
-      if (inlineTypes.has(child.type)) {
+      if (inlineTypes.has(child.type) || child.data?.inline) {
         inline.push(child);
       } else {
         flush();
@@ -338,7 +354,9 @@ function normalizeBlocks(node) {
       {
         ...node,
         children: children
-          .map((child) => (inlineTypes.has(child.type) ? paragraph([child]) : child))
+          .map((child) =>
+            inlineTypes.has(child.type) || child.data?.inline ? paragraph([child]) : child,
+          )
           .filter(
             (child) =>
               !(
@@ -366,7 +384,8 @@ function codeBlocks(tree) {
   return result;
 }
 
-for (const file of sourceFiles) {
+const blogsOnly = process.argv.includes("--blogs");
+for (const file of sourceFiles.filter((path) => !blogsOnly || path.startsWith("blogs/"))) {
   const input = readFileSync(join(reference, "content", file), "utf8");
   const match = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(input);
   if (!match) {
@@ -376,9 +395,13 @@ for (const file of sourceFiles) {
   const experience = file.startsWith("experiences/");
   const collection = file.endsWith("/index.mdx");
   const output = `content/${file.replace(/^experiences\//, "experience/").replace(/\.mdx$/, ".md")}`;
-  if (existsSync(output)) {
+  if (existsSync(output) && !blogsOnly) {
     throw new Error(`Refusing to replace existing source: ${output}`);
   }
+  const existing = existsSync(output) ? readFileSync(output, "utf8") : "";
+  demoKeys = [...existing.matchAll(/^:::demo ([a-z0-9-]+(?: [a-z0-9-]+)?)$/gm)].map(
+    (entry) => entry[1],
+  );
   const originalUrl = experience
     ? `https://www.pulkit.page/exp/${file.split("/").at(-1).replace(".mdx", "")}`
     : `https://www.pulkit.blog/${file
@@ -408,7 +431,10 @@ for (const file of sourceFiles) {
   if (front.published === false) {
     metadata.draft = true;
   }
-  let body = writer.stringify(converted);
+  if (demoKeys.length) {
+    throw new Error(`Unused demo directives in ${output}: ${demoKeys.join(", ")}`);
+  }
+  let body = writer.stringify(converted).replace(/\s*\u2014\s*/g, ", ");
   const serializedCode = codeBlocks(writer.parse(body));
   if (before.some((code) => !serializedCode.includes(code))) {
     throw new Error(`Serialized code block lost: ${file}`);
@@ -417,7 +443,11 @@ for (const file of sourceFiles) {
     body += `\n:::list ${file.replace(/\/index.mdx$/, "")}\n`;
   }
   mkdirSync(dirname(output), { recursive: true });
-  writeFileSync(output, `---\n${stringify(metadata, { lineWidth: 100 })}---\n\n${body}`);
+  const existingFront = existing.match(/^---\n[\s\S]*?\n---\n/)?.[0];
+  writeFileSync(
+    output,
+    `${existingFront ?? `---\n${stringify(metadata, { lineWidth: 100 })}---\n`}\n${body}`,
+  );
   report.pages.push({ source: file, output, codeBlocks: before.length });
 }
 mkdirSync("docs", { recursive: true });

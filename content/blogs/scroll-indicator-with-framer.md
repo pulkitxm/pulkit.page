@@ -13,9 +13,9 @@ tags:
   - Frontend
 ---
 
-## The Idea
+### The Idea
 
-Creating a visually appealing and functional portfolio website is essential for showcasing your skills and projects. I recently explored website designs from popular examples for my portfolio ([pulkitxm.com](/)) and found one animation that really excites me: the horizontal scroll percentage indicator. It is useful for tracking how much of the webpage you have scrolled.
+Creating a visually appealing and functional portfolio website is essential for showcasing your skills and projects. I recently explored website designs from popular examples for my portfolio ([pulkitxm.com](https://pulkitxm.com)) and found one animation that really excites me: the horizontal scroll percentage indicator. It is useful for tracking how much of the webpage you have scrolled.
 
 ### The concept
 
@@ -133,6 +133,6 @@ So, we use the width as a style prop for the `motion.div`. And that's pretty muc
 
 ## The Output
 
-[Scroll indicator demo with Framer Motion](https://codesandbox.io/embed/6vzzk4?view=preview\&module=%2Fsrc%2FApp.tsx)
+<iframe src="https://codesandbox.io/embed/6vzzk4?view=preview&amp;module=%2Fsrc%2FApp.tsx" title="Scroll indicator demo with Framer Motion" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
 
 And there you have it! You've just created a sleek horizontal scroll percentage indicator with React and Framer Motion. Now your portfolio site is not only functional but also has that extra touch of interactivity. Happy coding, and may your scrolls always be smooth! 🚀✨

@@ -106,7 +106,11 @@ The key is consistency and meaningful boundaries that preserve context, like kee
 
 Once you have chunks, you need to convert them into vectors, numerical representations that capture semantic meaning. This is where embedding models come in. They take text and return a high-dimensional vector (often 1536 or 3072 dimensions) where similar texts have similar vectors.
 
-**Sample embedding**
+<details>
+
+<summary>Sample embedding</summary>
+
+<br>
 
 **JSON input**
 
@@ -127,6 +131,10 @@ Once you have chunks, you need to convert them into vectors, numerical represent
 ```
 
 In practice, you would repeat this for every chunk and store the resulting vectors in your vector database.
+
+</details>
+
+<br>
 
 For PukBot, I use OpenAI's text-embedding-3-large model, which produces 3072-dimensional vectors. The embedding API is straightforward:
 

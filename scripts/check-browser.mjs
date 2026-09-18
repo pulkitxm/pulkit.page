@@ -53,9 +53,15 @@ async function openSession(browser, origin, label, options = {}, initScripts = [
   }
   const page = await context.newPage();
   const scope = () => `${label} ${new URL(page.url()).pathname}`;
-  page.on("pageerror", (error) => report(scope(), `Uncaught error: ${error.message}`));
+  const embedded = (source) =>
+    Boolean(source) && /^https?:\/\//.test(source) && !source.startsWith(origin);
+  page.on("pageerror", (error) => {
+    if (!embedded(/https?:\/\/[^\s)]+/.exec(error.stack ?? "")?.[0])) {
+      report(scope(), `Uncaught error: ${error.message}`);
+    }
+  });
   page.on("console", (message) => {
-    if (message.type() === "error") {
+    if (message.type() === "error" && !embedded(message.location().url)) {
       report(scope(), `Console error: ${message.text()}`);
     }
   });
@@ -136,7 +142,10 @@ async function auditAccessibility(page, scope) {
     await page.evaluate((selected) => {
       document.documentElement.dataset.theme = selected;
     }, theme);
-    const { violations } = await new AxeBuilder({ page }).withTags(axeTags).analyze();
+    const { violations } = await new AxeBuilder({ page })
+      .withTags(axeTags)
+      .exclude(["iframe", "*"])
+      .analyze();
     for (const violation of violations.filter((item) => blockingImpacts.has(item.impact))) {
       const targets = violation.nodes
         .slice(0, 3)

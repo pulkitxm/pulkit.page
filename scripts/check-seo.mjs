@@ -14,8 +14,8 @@ export function validateSeo(html, route, metadata, site, readAsset) {
   const canonical = [...html.matchAll(/<link\s+rel="canonical"\s+href="([^"]+)"/g)];
   require(canonical.length === 1 &&
     canonical[0][1] === url, "canonical must match the configured route");
-  require((html.match(/<h1[ >]/g) ?? []).length === 1, "expected exactly one H1");
-  require((html.match(/<main[ >]/g) ?? []).length === 1, "expected exactly one main landmark");
+  require((html.match(/<h1[\s>]/g) ?? []).length === 1, "expected exactly one H1");
+  require((html.match(/<main[\s>]/g) ?? []).length === 1, "expected exactly one main landmark");
   require(html.includes(
     `<title>${escapeHtml(pageTitle(metadata, site, route))}</title>`,
   ), "incorrect title");

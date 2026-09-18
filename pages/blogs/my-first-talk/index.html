@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,356 +52,528 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li aria-current="page">My First Talk: Claude Directory</li>
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>My First Talk: Claude Directory</h1>
-            <p class="detail-meta"><time datetime="2026-06-13">2026-06-13</time></p>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              My First Talk: Claude Directory
+            </h1>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2026-06-13">2026-06-13</time>
+            </p>
           </header>
-          <div class="prose">
-            <p>Today was, without exaggeration, one of the craziest days I&#39;ve had.</p>
-            <p>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
+              Today was, without exaggeration, one of the craziest days I&#39;ve had.
+            </p>
+            <p class="mt-0 mb-6">
               I launched a project, watched it do numbers I&#39;ve never seen on anything I&#39;ve
               made, and then, completely on impulse, got up in front of a room full of people and
               demoed it for the first time in my life. I work as a software engineer at
-              <a href="https://noveum.ai">Noveum.ai</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://noveum.ai"
+                >Noveum.ai</a
+              >
               and I&#39;ve shipped plenty of things, but I had never once stood up and talked about
               my own work to a crowd. Today I did.
             </p>
-            <h2 id="claude-directory">Claude Directory</h2>
-            <p>
+            <h2
+              id="claude-directory"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Claude Directory
+            </h2>
+            <p class="mt-0 mb-6">
               Last night I put a project live on my GitHub called
-              <a href="https://github.com/pulkitxm/claude-directory">Claude Directory</a>: a
-              directory of landing pages, hero sections, and interactive prototypes, more than 55 of
-              them, every single one built end to end with
-              <a href="https://x.com/claudeai/status/2064394146916229443">Fable 5</a>.
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://github.com/pulkitxm/claude-directory"
+                >Claude Directory</a
+              >: a directory of landing pages, hero sections, and interactive prototypes, more than
+              55 of them, every single one built end to end with
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://x.com/claudeai/status/2064394146916229443"
+                >Fable 5</a
+              >.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The loop was simple. I took prompts from public references, mostly
-              <a href="https://motionsites.ai/">motionsites.ai</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://motionsites.ai/"
+                >motionsites.ai</a
+              >
               and
-              <a href="https://gist.github.com/cnemri/c917e11b3a6936823b509dcff53392aa"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://gist.github.com/cnemri/c917e11b3a6936823b509dcff53392aa"
                 >this gist from cnemri</a
               >, and handed them to Fable 5 to build the demos. Then I had Fable 5 write the
               recording script, captured a clean video of each one, and pulled it all into the
-              <a href="https://www.pulkit.page/claude-directory">Claude Directory page</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.pulkit.page/claude-directory"
+                >Claude Directory page</a
+              >
               on my portfolio. The page itself, the recording scripts, even the
-              <a href="https://youtu.be/mc3AYQplnM8">launch video</a>: all Fable 5, start to finish.
-              Each entry ships with the exact prompt I used, the open code in a single download
-              click, and a demo video, so you can see what you&#39;re getting and just grab it.
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://youtu.be/mc3AYQplnM8"
+                >launch video</a
+              >: all Fable 5, start to finish. Each entry ships with the exact prompt I used, the
+              open code in a single download click, and a demo video, so you can see what you&#39;re
+              getting and just grab it.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               I didn&#39;t do a big launch. I messaged people I know and told them to repost it only
               if they actually liked it. A lot of them did, and it snowballed:
               <strong>75k+ views on X</strong>, <strong>160+ stars</strong>, and
               <strong>100 to 200 new follows</strong>
               in twenty-four hours.
             </p>
-            <blockquote>
-              <p>I spent thousands of dollars building this repo… so you don&#39;t have to</p>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
+                I spent thousands of dollars building this repo… so you don&#39;t have to
+              </p>
+              <p class="mt-0 mb-6">
                 50+ landing pages, hero sections &amp; interactive prototypes: every single one
                 generated with &quot;Claude Fable 5&quot;, with the exact prompt preserved in its
                 folder.
               </p>
-              <p>Steal it. Ship it. Contribute. 👇</p>
-              <p><a href="https://x.com/_pulkitxm/status/2065401748202860896">View post on X</a></p>
+              <p class="mt-0 mb-6">Steal it. Ship it. Contribute. 👇</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/_pulkitxm/status/2065401748202860896"
+                  >View post on X</a
+                >
+              </p>
             </blockquote>
-            <p>
+            <p class="mt-0 mb-6">
               Then came the bittersweet twist: this morning the
-              <a href="https://x.com/AnthropicAI/status/2065597531644743999"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://x.com/AnthropicAI/status/2065597531644743999"
                 >US government blocked Fable 5 everywhere except the US</a
               >, so a chunk of the people who got excited couldn&#39;t even try the tool I&#39;d
               built the whole thing with. The work is open though, and
-              <a href="https://x.com/_pulkitxm/status/2065646268672852448"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://x.com/_pulkitxm/status/2065646268672852448"
                 >at least we have the memories</a
               >.
             </p>
-            <h2 id="my-first-talk">My first talk</h2>
-            <p>
+            <h2 id="my-first-talk" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              My first talk
+            </h2>
+            <p class="mt-0 mb-6">
               All of this was happening online while I was sitting at an event:
               <strong>Localhost Build, at Microsoft</strong>. At some point it hit me that if the
               project was getting this much attention on the internet right now, I should just show
               it to the people in the room. I asked a couple of friends, they said go for it, so I
               threw together a quick, slightly broken slide and presented.
             </p>
-            <p>
-              <a href="https://www.youtube.com/watch?v=fYsE_CJn_rY"
+            <p class="mt-0 mb-6">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.youtube.com/watch?v=fYsE_CJn_rY"
                 >Demoing Claude Directory at Localhost Build, Microsoft</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               I walked through what it was, how I built it, and the part I cared about most: the
               intuition behind building this way. It isn&#39;t magic, it&#39;s a way of working. At
-              <a href="https://noveum.ai">Noveum.ai</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://noveum.ai"
+                >Noveum.ai</a
+              >
               we lean on AI heavily, for planning, for structured workflows, and a huge amount of my
               day runs through
-              <a href="https://code.claude.com">Claude Code</a>. To give you a sense of it,
-              here&#39;s my usage over the last few weeks:
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://code.claude.com"
+                >Claude Code</a
+              >. To give you a sense of it, here&#39;s my usage over the last few weeks:
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/claude-code-usage.webp"
                 alt="My Claude Code activity calendar from May 26 to June 13: 5.76 billion tokens across 19 active days out of 19, with opus-4-8 as the top model and almost all usage coming from Code."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               ~5.76B tokens in about three weeks. opus-4-8 doing most of the heavy lifting, and
               almost all of it from coding work, automations, etc...
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Roughly 5.76 billion tokens in three weeks, nineteen active days out of nineteen. That
               is the honest answer to how I shipped 55+ demos, recorded them, and built a directory
               page in a couple of days.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               And then the part I will remember longest: people liked it. They asked questions, I
               answered, and there was this back-and-forth I genuinely did not expect. A few of them
               said they were proud of me. I was nervous out of my mind, it was my first time
               speaking and my first time demoing anything live, but I got through it, and I think I
               would do it again.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               And the kindness was not only in the room. The replies on X kept coming, and a few of
               them really stuck with me:
             </p>
-            <blockquote>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 good work, most of those were gatekeeped or paid/locked behind. i really wanted
                 these, good work making them free for use
               </p>
-              <p><a href="https://x.com/divikkk1/status/2065730484718690645">Divikkk on X</a></p>
-            </blockquote>
-            <blockquote>
-              <p>you did some god&#39;s work. thank you sir</p>
-              <p><a href="https://x.com/tarat_211/status/2065631990674805026">TaraT on X</a></p>
-            </blockquote>
-            <blockquote>
-              <p>thanks for your service sir</p>
-              <p>
-                <a href="https://x.com/yigitokar/status/2065481860575043849">Yigit Okar on X</a>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/divikkk1/status/2065730484718690645"
+                  >Divikkk on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">you did some god&#39;s work. thank you sir</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/tarat_211/status/2065631990674805026"
+                  >TaraT on X</a
+                >
+              </p>
+            </blockquote>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">thanks for your service sir</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/yigitokar/status/2065481860575043849"
+                  >Yigit Okar on X</a
+                >
+              </p>
+            </blockquote>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 This is looking so good. Would love to use it for my website. But I am a grandpa
                 when it comes to design 😢
               </p>
-              <p>
-                <a href="https://x.com/LatentKush/status/2065493769265226170">Kushal Patil on X</a>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/LatentKush/status/2065493769265226170"
+                  >Kushal Patil on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 This looks amazing, can&#39;t wait to check it out. I build websites for real
                 clients and I&#39;ll have to test this and let you know how well it works!
               </p>
-              <p>
-                <a href="https://x.com/FranzmeierRandy/status/2065627117606367415"
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/FranzmeierRandy/status/2065627117606367415"
                   >Randy Franzmeier on X</a
                 >
               </p>
             </blockquote>
-            <blockquote>
-              <p>these look pretty, thanks.</p>
-              <p>
-                <a href="https://x.com/LibertyAndAI/status/2065633854791266720"
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">these look pretty, thanks.</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/LibertyAndAI/status/2065633854791266720"
                   >Adnan Abbasi on X</a
                 >
               </p>
             </blockquote>
-            <blockquote>
-              <p>Thanks for your service, man!</p>
-              <p>
-                <a href="https://x.com/warrioraashuu/status/2065487533484454372">aashuu ✦ on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">Thanks for your service, man!</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/warrioraashuu/status/2065487533484454372"
+                  >aashuu ✦ on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>ooooo looking good!</p>
-              <p>
-                <a href="https://x.com/GoodEnoughAi/status/2065473545832894623">Good Enough on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">ooooo looking good!</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/GoodEnoughAi/status/2065473545832894623"
+                  >Good Enough on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>Very cool 😎</p>
-              <p>
-                <a href="https://x.com/jasonemkay/status/2065531792233308609">Jason Kay on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">Very cool 😎</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/jasonemkay/status/2065531792233308609"
+                  >Jason Kay on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>Thanks buddy</p>
-              <p>
-                <a href="https://x.com/buildwithumair/status/2065658702682865927">Umair Ali on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">Thanks buddy</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/buildwithumair/status/2065658702682865927"
+                  >Umair Ali on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>This was much needed, found it useful</p>
-              <p>
-                <a href="https://x.com/akshitbhandarix/status/2065777558172598738"
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">This was much needed, found it useful</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/akshitbhandarix/status/2065777558172598738"
                   >Akshit Singh Bhandari on X</a
                 >
               </p>
             </blockquote>
-            <blockquote>
-              <p>cool asf</p>
-              <p>
-                <a href="https://x.com/Simo_Musyimi/status/2065695698759110984">Simo Musyi on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">cool asf</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/Simo_Musyimi/status/2065695698759110984"
+                  >Simo Musyi on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>🔥</p>
-              <p>
-                <a href="https://x.com/mobass/status/2065559415500267623">Sina Mobasser on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">🔥</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/mobass/status/2065559415500267623"
+                  >Sina Mobasser on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>Super thanks Pulkit</p>
-              <p>
-                <a href="https://x.com/AbuKhadeejah/status/2065432128939266293"
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">Super thanks Pulkit</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/AbuKhadeejah/status/2065432128939266293"
                   >Arsalan Shaikh أرسلان on X</a
                 >
               </p>
             </blockquote>
-            <blockquote>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 Hey pullkit i love your website and its been really helpful on my projects! Thank
                 you so much for making this free, you are an awesome developer and person!
               </p>
-              <p>
-                <a href="https://x.com/Krocodile01/status/2065773716450030047">LucasOl1337 on X</a>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/Krocodile01/status/2065773716450030047"
+                  >LucasOl1337 on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 the prompt-preserved-in-the-folder move is the underrated part. anyone can ship a
                 landing page from fable 5. shipping 50 with the exact prompts saved is a textbook
                 for the next ten people who want to learn what good prompts look like in 2026
               </p>
-              <p>
-                <a href="https://x.com/0x1m2m3/status/2065586529289052209"
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/0x1m2m3/status/2065586529289052209"
                   >mitch morales | xp/acc on X</a
                 >
               </p>
             </blockquote>
-            <blockquote>
-              <p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 you won&#39;t get the credit you deserve for this act of generosity. from me to you
                 - THANK YOU SO MUCH!!!
               </p>
-              <p>
-                <a href="https://x.com/AdamLeapN/status/2065534083266990521">Adam Wright on X</a>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/AdamLeapN/status/2065534083266990521"
+                  >Adam Wright on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>this is super useful, thanks!</p>
-              <p>
-                <a href="https://x.com/savar_gupta/status/2065672028481536507">Savar Gupta on X</a>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">this is super useful, thanks!</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/savar_gupta/status/2065672028481536507"
+                  >Savar Gupta on X</a
+                >
               </p>
             </blockquote>
-            <blockquote>
-              <p>Thanks will check it out this weekend</p>
-              <p>
-                <a href="https://x.com/billyvision/status/2065470642237899176"
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">Thanks will check it out this weekend</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/billyvision/status/2065470642237899176"
                   >IMRAN - Zebracross on X</a
                 >
               </p>
             </blockquote>
-            <blockquote>
-              <p>🤜🏼🤛🏼</p>
-              <p><a href="https://x.com/BruceLLP/status/2065539411153199464">Bruce on X</a></p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">🤜🏼🤛🏼</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/BruceLLP/status/2065539411153199464"
+                  >Bruce on X</a
+                >
+              </p>
             </blockquote>
-            <blockquote>
-              <p>Absolute legend. Thanks man</p>
-              <p>
-                <a href="https://x.com/imkaikhalid/status/2065731869828624616"
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">Absolute legend. Thanks man</p>
+              <p class="mt-0 mb-6">
+                <a
+                  class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                  href="https://x.com/imkaikhalid/status/2065731869828624616"
                   >Kai Khalid 🇰🇪 on X</a
                 >
               </p>
             </blockquote>
-            <p>
+            <p class="mt-0 mb-6">
               The best part was not the views or the stars. It was the people I got to meet. What a
               day.
             </p>
-            <h2 id="a-few-moments-from-the-day">A few moments from the day</h2>
-            <p>
+            <h2
+              id="a-few-moments-from-the-day"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              A few moments from the day
+            </h2>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/01.webp"
                 alt="The opening slide of my talk, &#39;Pulkit, Software Engineer @ Noveum.ai&#39;, on the big screen as the session begins."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/02.webp"
                 alt="My X post about Claude Directory up on the screen while I present to the room."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/03.webp"
                 alt="One of the Claude Directory demo landing pages shown live during the talk."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/04.webp"
                 alt="A QR code on screen linking to the Claude Directory GitHub repo, with &#39;Give it a star&#39;."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/05.webp"
                 alt="A QR code linking to pulkitxm.com/claude-directory, captioned &#39;Check it out with live demos here&#39;."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/06.webp"
                 alt="The meeting chat panel projected on screen as people joined the hybrid session."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/07.webp"
                 alt="Pizza and Thums Up on the table after the talk."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/08.webp"
                 alt="The DLF Downtown office complex in Gurugram where the event was held."
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/public/blogs/my-first-talk/09.webp"
                 alt="A walkway between the glass office towers at DLF Downtown, Gurugram."
                 loading="lazy"
@@ -406,24 +581,53 @@
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
-          <ul>
-            <li><a href="/blogs/git-worktrees/">Git Worktrees</a></li>
-            <li><a href="/blogs/kaksha/">Kaksha: The App I Built for My Mother</a></li>
-            <li><a href="/blogs/how-i-use-cursor/">How I Use Cursor to Build at 1000x Speed</a></li>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/git-worktrees/"
+                >Git Worktrees</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/kaksha/"
+                >Kaksha: The App I Built for My Mother</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/how-i-use-cursor/"
+                >How I Use Cursor to Build at 1000x Speed</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

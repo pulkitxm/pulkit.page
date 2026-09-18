@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,22 +61,41 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/system-design/">System Design</a></li>
@@ -81,18 +103,27 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Consistent Hashing</h1>
-            <p class="detail-meta"><time datetime="2026-01-24">2026-01-24</time></p>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              Consistent Hashing
+            </h1>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2026-01-24">2026-01-24</time>
+            </p>
           </header>
-          <div class="prose">
-            <p>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
               Consistent hashing is one of the most popular algorithms in distributed systems. It
               helps you answer one question: <strong>Who owns this data?</strong>
             </p>
-            <p>That&#39;s it. Data ownership. Nothing else.</p>
-            <h2 id="tl-dr">TL;DR</h2>
-            <ul>
+            <p class="mt-0 mb-6">That&#39;s it. Data ownership. Nothing else.</p>
+            <h2 id="tl-dr" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              TL;DR
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Consistent hashing</strong>
                 solves the data ownership problem: which node owns which key?
@@ -131,291 +162,374 @@
                 distributed caches
               </li>
             </ul>
-            <h2 id="hash-based-routing">Hash-Based Routing</h2>
-            <p>Before we understand consistent hashing, let&#39;s see why we need it.</p>
-            <p>
+            <h2
+              id="hash-based-routing"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Hash-Based Routing
+            </h2>
+            <p class="mt-0 mb-6">
+              Before we understand consistent hashing, let&#39;s see why we need it.
+            </p>
+            <p class="mt-0 mb-6">
               Say we have a load balancer with three backend servers. When a user request comes in,
               how does the load balancer decide which server to forward it to?
             </p>
-            <p>One popular approach: <strong>hash-based routing</strong>.</p>
-            <p>
+            <p class="mt-0 mb-6">One popular approach: <strong>hash-based routing</strong>.</p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/consistent-hashing/hash-based-routing.webp"
                 alt="Hash-based routing uses a hash function to determine which server handles each request"
                 loading="lazy"
               />
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">routeRequest</span><span class="u">(</span>userId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> serverCount<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>userId<span class="u">);</span>
-  <span class="k">const</span> serverIndex <span class="o">=</span> hash <span class="o">%</span> serverCount<span class="u">;</span>
-  <span class="k">return</span> serverIndex<span class="u">;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> serverCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">sha256</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> serverIndex <span class="text-syn-o">=</span> hash <span class="text-syn-o">%</span> serverCount<span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> serverIndex<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> server <span class="o">=</span> <span class="f">routeRequest</span><span class="u">(</span><span class="s">&quot;user_123&quot;</span><span class="u">,</span> <span class="n">3</span><span class="u">);</span>
+<span class="text-syn-k">const</span> server <span class="text-syn-o">=</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user_123&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3</span><span class="text-syn-u">);</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               You take the user ID (or request ID, or IP address), pass it through a hash function
               like SHA-256 or SHA-128, take the modulo by the number of servers, and you get a
               server index: 0, 1, or 2.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               When a request comes in, the load balancer extracts the user information, passes it
               through the hash function, gets the value, does the mod, and forwards the request.
             </p>
-            <h3 id="server-failure">Server Failure</h3>
-            <p>
+            <h3 id="server-failure" class="mt-8 text-lg leading-tight tracking-tight">
+              Server Failure
+            </h3>
+            <p class="mt-0 mb-6">
               Let&#39;s say you&#39;re overprovisioned. Traffic dropped, so you want to remove one
               server. What happens?
             </p>
-            <p>The hash function changes from <code>mod 3</code> to <code>mod 2</code>.</p>
+            <p class="mt-0 mb-6">
+              The hash function changes from
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >mod 3</code
+              >
+              to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >mod 2</code
+              >.
+            </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> server <span class="o">=</span> <span class="f">routeRequest</span><span class="u">(</span><span class="s">&quot;user_123&quot;</span><span class="u">,</span> <span class="n">2</span><span class="u">);</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> server <span class="text-syn-o">=</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user_123&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">2</span><span class="text-syn-u">);</span>
 </code></pre>
-            <p>The next request that comes in gets routed correctly. No problem.</p>
-            <p>
+            <p class="mt-0 mb-6">
+              The next request that comes in gets routed correctly. No problem.
+            </p>
+            <p class="mt-0 mb-6">
               Why? Because the <strong>backend servers are stateless</strong>. Every server is
               equally capable of handling any request. It doesn&#39;t matter which server the
               request goes to, they all can handle it.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This is why hash-based routing is one of the most common ways of routing for stateless
               backends. Load balancer + API servers. Round robin works too, but hash-based is more
               common.
             </p>
-            <h2 id="stateful-backends">Stateful Backends</h2>
-            <p>Now, what happens when we have something stateful? Like distributed storage?</p>
-            <p>
+            <h2
+              id="stateful-backends"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Stateful Backends
+            </h2>
+            <p class="mt-0 mb-6">
+              Now, what happens when we have something stateful? Like distributed storage?
+            </p>
+            <p class="mt-0 mb-6">
               Instead of stateless API servers, let&#39;s say you have storage nodes. A distributed
               key-value store. Given a key, store the value. Given a key, get the value.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getStorageNode</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> nodeCount<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
-  <span class="k">const</span> hash <span class="o">=</span> <span class="f">sha256</span><span class="u">(</span>key<span class="u">);</span>
-  <span class="k">return</span> hash <span class="o">%</span> nodeCount<span class="u">;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getStorageNode</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> nodeCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">sha256</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> hash <span class="text-syn-o">%</span> nodeCount<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">await</span> <span class="f">storeKey</span><span class="u">(</span><span class="s">&quot;k1&quot;</span><span class="u">,</span> <span class="s">&quot;value1&quot;</span><span class="u">,</span> <span class="f">getStorageNode</span><span class="u">(</span><span class="s">&quot;k1&quot;</span><span class="u">,</span> <span class="n">3</span><span class="u">));</span>
+<span class="text-syn-k">await</span> <span class="text-syn-f">storeKey</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;k1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;value1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-f">getStorageNode</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;k1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">3</span><span class="text-syn-u">));</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The proxy uses hash-based routing to route requests to the corresponding storage node.
             </p>
-            <p>Let&#39;s say we have 6 keys distributed across 3 nodes:</p>
-            <table>
+            <p class="mt-0 mb-6">Let&#39;s say we have 6 keys distributed across 3 nodes:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Key</th>
-                  <th>Hash % 3</th>
-                  <th>Node</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Key</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Hash % 3</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Node</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>k1</td>
-                  <td>2</td>
-                  <td>node 2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">node 2</td>
                 </tr>
                 <tr>
-                  <td>k2</td>
-                  <td>0</td>
-                  <td>node 0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">node 0</td>
                 </tr>
                 <tr>
-                  <td>k3</td>
-                  <td>1</td>
-                  <td>node 1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k3</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">node 1</td>
                 </tr>
                 <tr>
-                  <td>k4</td>
-                  <td>2</td>
-                  <td>node 2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k4</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">node 2</td>
                 </tr>
                 <tr>
-                  <td>k5</td>
-                  <td>1</td>
-                  <td>node 1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k5</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">node 1</td>
                 </tr>
                 <tr>
-                  <td>k6</td>
-                  <td>0</td>
-                  <td>node 0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k6</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">node 0</td>
                 </tr>
               </tbody>
             </table>
-            <p>Now node 0 owns k2 and k6. Node 1 owns k3 and k5. Node 2 owns k1 and k4.</p>
-            <p>
+            <p class="mt-0 mb-6">
+              Now node 0 owns k2 and k6. Node 1 owns k3 and k5. Node 2 owns k1 and k4.
+            </p>
+            <p class="mt-0 mb-6">
               The proxy knows: all requests for k3 and k5 always go to node 1. All requests for k1
               and k4 always go to node 2. <strong>Statefulness maintained.</strong>
             </p>
-            <p>But what if you need to remove node 2?</p>
-            <h3 id="rehashing-problem">Rehashing Problem</h3>
-            <p>
-              When you remove a node, your hash function changes from <code>mod 3</code> to
-              <code>mod 2</code>. Suddenly, the mapping changes dramatically.
+            <p class="mt-0 mb-6">But what if you need to remove node 2?</p>
+            <h3 id="rehashing-problem" class="mt-8 text-lg leading-tight tracking-tight">
+              Rehashing Problem
+            </h3>
+            <p class="mt-0 mb-6">
+              When you remove a node, your hash function changes from
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >mod 3</code
+              >
+              to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >mod 2</code
+              >. Suddenly, the mapping changes dramatically.
             </p>
-            <p>Let&#39;s recalculate:</p>
-            <table>
+            <p class="mt-0 mb-6">Let&#39;s recalculate:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Key</th>
-                  <th>Old (% 3)</th>
-                  <th>New (% 2)</th>
-                  <th>Moved?</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Key</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Old (% 3)</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">New (% 2)</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Moved?</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>k1</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>Yes</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Yes</td>
                 </tr>
                 <tr>
-                  <td>k2</td>
-                  <td>0</td>
-                  <td>1</td>
-                  <td>Yes</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Yes</td>
                 </tr>
                 <tr>
-                  <td>k3</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>No</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k3</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">No</td>
                 </tr>
                 <tr>
-                  <td>k4</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>Yes</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k4</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">2</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Yes</td>
                 </tr>
                 <tr>
-                  <td>k5</td>
-                  <td>1</td>
-                  <td>0</td>
-                  <td>Yes</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k5</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">1</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Yes</td>
                 </tr>
                 <tr>
-                  <td>k6</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>No</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">k6</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">0</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">No</td>
                 </tr>
               </tbody>
             </table>
-            <p><strong>Four out of six keys need to move.</strong> That&#39;s 67% data movement!</p>
-            <p>
+            <p class="mt-0 mb-6">
+              <strong>Four out of six keys need to move.</strong>
+              That&#39;s 67% data movement!
+            </p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/consistent-hashing/rehashing-problem.webp"
                 alt="The rehashing problem causes massive data movement when nodes change"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               With millions or billions of keys, this is a massive amount of data transfer. Before
               you can serve requests from the new configuration, you have to:
             </p>
-            <ol>
+            <ol class="mt-0 mb-6">
               <li>Calculate new ownership for every key</li>
               <li>Move data between nodes</li>
               <li>Wait for the entire rebalancing to complete</li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               This is the fundamental limitation of hash-based routing. You&#39;ve given your power
               to a hash function. When the hash function changes (because node count changes), your
               entire mapping changes.
             </p>
-            <p><strong>Can we minimize data movement?</strong></p>
-            <p>This is where consistent hashing comes in.</p>
-            <h2 id="consistent-hashing">Consistent Hashing</h2>
-            <p>
+            <p class="mt-0 mb-6"><strong>Can we minimize data movement?</strong></p>
+            <p class="mt-0 mb-6">This is where consistent hashing comes in.</p>
+            <h2
+              id="consistent-hashing"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Consistent Hashing
+            </h2>
+            <p class="mt-0 mb-6">
               Just like hash-based routing helps determine ownership (which node owns which key),
               consistent hashing also answers the same question. But it does so in a way that
               <strong>minimizes data movement</strong>
               when nodes are added or removed.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The core concept was introduced in a 1997 MIT paper
-              <a href="https://www.cs.princeton.edu/courses/archive/fall09/cos518/papers/chash.pdf"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.cs.princeton.edu/courses/archive/fall09/cos518/papers/chash.pdf"
                 >Consistent Hashing and Random Trees</a
               >, but it gained mainstream popularity after Amazon&#39;s famous
-              <a href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
                 >DynamoDB paper</a
               >
               in 2007. Since then, consistent hashing has become foundational in distributed
-              systems. <a href="https://www.bittorrent.com"><strong>BitTorrent</strong></a> uses it
-              for peer-to-peer networks,
-              <a href="https://www.akamai.com"><strong>Akamai</strong></a>
+              systems.
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.bittorrent.com"
+                ><strong>BitTorrent</strong></a
+              >
+              uses it for peer-to-peer networks,
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://www.akamai.com"
+                ><strong>Akamai</strong></a
+              >
               uses it for web caches, and countless databases use it for data partitioning.
             </p>
-            <h3 id="ring-abstraction">Ring Abstraction</h3>
-            <p>
+            <h3 id="ring-abstraction" class="mt-8 text-lg leading-tight tracking-tight">
+              Ring Abstraction
+            </h3>
+            <p class="mt-0 mb-6">
               A popular way to visualize consistent hashing is as a ring. Let&#39;s use SHA-128 as
               our hash function. It generates a 128-bit number, so our range is 0 to
-              <code>2^ { 128} - 1</code>.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >2^ { 128} - 1</code
+              >.
             </p>
-            <p>
-              For simplicity, let&#39;s use a smaller range: 0 to 15 (0 to <code>2^4 - 1</code>).
+            <p class="mt-0 mb-6">
+              For simplicity, let&#39;s use a smaller range: 0 to 15 (0 to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >2^4 - 1</code
+              >).
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/consistent-hashing/ring.webp"
                 alt="Consistent hashing ring with nodes placed at hash positions, keys owned by next clockwise node"
                 loading="lazy"
               />
             </p>
-            <p><strong>Step 1: Place nodes on the ring</strong></p>
-            <p>
+            <p class="mt-0 mb-6"><strong>Step 1: Place nodes on the ring</strong></p>
+            <p class="mt-0 mb-6">
               Each storage node occupies a slot in the ring. How? Pass the node&#39;s identifier (IP
               address, hostname, etc.) through the hash function.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> node0Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node0_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
-<span class="k">const</span> node1Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node1_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
-<span class="k">const</span> node2Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node2_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> node0Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node0_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">const</span> node1Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node1_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
+<span class="text-syn-k">const</span> node2Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node2_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
 </code></pre>
-            <p>Let&#39;s say:</p>
-            <ul>
+            <p class="mt-0 mb-6">Let&#39;s say:</p>
+            <ul class="mt-0 mb-6">
               <li>node 0 hashes to slot 3</li>
               <li>node 1 hashes to slot 12</li>
               <li>node 2 hashes to slot 8</li>
             </ul>
             <pre
-            ><code class="language-text">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
                     ↑                   ↑               ↑
                   node0               node2           node1
 </code></pre>
-            <p><strong>Step 2: Determine key ownership</strong></p>
-            <p>To find which node owns a key:</p>
-            <ol>
+            <p class="mt-0 mb-6"><strong>Step 2: Determine key ownership</strong></p>
+            <p class="mt-0 mb-6">To find which node owns a key:</p>
+            <ol class="mt-0 mb-6">
               <li>Hash the key</li>
               <li>Find the first node clockwise from that position</li>
             </ol>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">getOwner</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Node</span> <span class="u">{</span>
-  <span class="k">const</span> slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
-  <span class="k">return</span> <span class="f">findNextNodeClockwise</span><span class="u">(</span>slot<span class="u">);</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getOwner</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Node</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">findNextNodeClockwise</span><span class="text-syn-u">(</span>slot<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Let&#39;s say key k1 hashes to slot 0. The first node clockwise is node 0 at slot 3.
               So <strong>node 0 owns k1</strong>.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Let&#39;s say key k2 hashes to slot 10. The first node clockwise is node 1 at slot 12.
               So <strong>node 1 owns k2</strong>.
             </p>
-            <p>This beautifully answers the question: who owns a particular key?</p>
-            <p>
-              The key insight: <strong>the hash space is huge and constant</strong> (typically
-              <code>2^ { 128}</code>
-              or <code>2^ { 256}</code>). Both nodes and keys map to this same space. The hash
-              function no longer depends on the number of nodes, it&#39;s always
-              <code>hash(key) % HUGE_CONSTANT</code>. Only the association logic (find next
-              clockwise node) changes when nodes are added or removed.
+            <p class="mt-0 mb-6">
+              This beautifully answers the question: who owns a particular key?
             </p>
-            <blockquote>
-              <p>
+            <p class="mt-0 mb-6">
+              The key insight: <strong>the hash space is huge and constant</strong> (typically
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >2^ { 128}</code
+              >
+              or
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >2^ { 256}</code
+              >). Both nodes and keys map to this same space. The hash function no longer depends on
+              the number of nodes, it&#39;s always
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >hash(key) % HUGE_CONSTANT</code
+              >. Only the association logic (find next clockwise node) changes when nodes are added
+              or removed.
+            </p>
+            <blockquote class="mx-0 mt-0 mb-6 border-l-2 border-line pl-5 text-muted">
+              <p class="mt-0 mb-6">
                 <strong>The k/n Rule</strong>: On average, consistent hashing requires only
                 <strong>k/n</strong>
                 keys to be migrated during scale-up or scale-down, where k is the total number of
@@ -423,59 +537,74 @@ Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
                 all keys might need to move.
               </p>
             </blockquote>
-            <h3 id="array-implementation">Array Implementation</h3>
-            <p>
+            <h3 id="array-implementation" class="mt-8 text-lg leading-tight tracking-tight">
+              Array Implementation
+            </h3>
+            <p class="mt-0 mb-6">
               The ring looks like a ring, but you don&#39;t implement a circular linked list. That
               would be inefficient.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               In reality, it&#39;s a <strong>sorted array</strong> with
               <strong>binary search</strong>.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">Node</span> <span class="u">{</span>
-  id<span class="o">:</span> <span class="t">string</span><span class="u">;</span>
-  slot<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Node</span> <span class="text-syn-u">{</span>
+  id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
+  slot<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">const</span> ring<span class="o">:</span> <span class="t">Node</span><span class="u">[]</span> <span class="o">=</span> <span class="u">[</span>
-  <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;node0&quot;</span><span class="u">,</span> <span class="p">slot:</span> <span class="n">3</span> <span class="u">},</span>
-  <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;node2&quot;</span><span class="u">,</span> <span class="p">slot:</span> <span class="n">8</span> <span class="u">},</span>
-  <span class="u">{</span> <span class="p">id:</span> <span class="s">&quot;node1&quot;</span><span class="u">,</span> <span class="p">slot:</span> <span class="n">12</span> <span class="u">},</span>
-<span class="u">];</span>
+<span class="text-syn-k">const</span> ring<span class="text-syn-o">:</span> <span class="text-syn-t">Node</span><span class="text-syn-u">[]</span> <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
+  <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> <span class="text-syn-s">&quot;node0&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">slot:</span> <span class="text-syn-n">3</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> <span class="text-syn-s">&quot;node2&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">slot:</span> <span class="text-syn-n">8</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">{</span> <span class="text-syn-p">id:</span> <span class="text-syn-s">&quot;node1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">slot:</span> <span class="text-syn-n">12</span> <span class="text-syn-u">},</span>
+<span class="text-syn-u">];</span>
 
-<span class="k">function</span> <span class="f">getOwner</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Node</span> <span class="u">{</span>
-  <span class="k">const</span> slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">getOwner</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Node</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
 
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> ring<span class="u">.</span>length<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">if</span> <span class="u">(</span>ring<span class="u">[</span>i<span class="u">].</span><span class="p">slot</span> <span class="o">&gt;=</span> slot<span class="u">)</span> <span class="u">{</span>
-      <span class="k">return</span> ring<span class="u">[</span>i<span class="u">];</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> ring<span class="text-syn-u">.</span>length<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>ring<span class="text-syn-u">[</span>i<span class="text-syn-u">].</span><span class="text-syn-p">slot</span> <span class="text-syn-o">&gt;=</span> slot<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      <span class="text-syn-k">return</span> ring<span class="text-syn-u">[</span>i<span class="text-syn-u">];</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> ring<span class="u">[</span><span class="n">0</span><span class="u">];</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> ring<span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">];</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               With binary search, finding the owner is O(log n) where n is the number of nodes. For
               1000 nodes, that&#39;s about 10 comparisons.
             </p>
-            <p>The array stays sorted by slot position. One array. Binary search.</p>
-            <h2 id="scaling-up">Scaling Up</h2>
-            <p>Now let&#39;s see how consistent hashing minimizes data movement.</p>
-            <p>
+            <p class="mt-0 mb-6">
+              The array stays sorted by slot position. One array. Binary search.
+            </p>
+            <h2 id="scaling-up" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Scaling Up
+            </h2>
+            <p class="mt-0 mb-6">
+              Now let&#39;s see how consistent hashing minimizes data movement.
+            </p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/consistent-hashing/scale-up.webp"
                 alt="Adding a node only affects keys in a small range between the new node and its left neighbor"
                 loading="lazy"
               />
             </p>
-            <p>We have three nodes at slots 3, 8, and 12. Let&#39;s add a fourth node.</p>
+            <p class="mt-0 mb-6">
+              We have three nodes at slots 3, 8, and 12. Let&#39;s add a fourth node.
+            </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> node3Slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span><span class="s">&quot;node3_ip&quot;</span><span class="u">)</span> <span class="o">%</span> <span class="n">16</span><span class="u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> node3Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node3_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
 </code></pre>
-            <p>Let&#39;s say node 3 hashes to slot 1.</p>
-            <pre><code class="language-text">Before:
+            <p class="mt-0 mb-6">Let&#39;s say node 3 hashes to slot 1.</p>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Before:
         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
 
@@ -485,20 +614,22 @@ Ring:  [ ] [3] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
             ↑
          new node
 </code></pre>
-            <p><strong>Which keys are affected?</strong></p>
-            <p>Only keys in the range (12, 1] , keys that hash to slots 13, 14, 15, 0, or 1.</p>
-            <p>
+            <p class="mt-0 mb-6"><strong>Which keys are affected?</strong></p>
+            <p class="mt-0 mb-6">
+              Only keys in the range (12, 1] , keys that hash to slots 13, 14, 15, 0, or 1.
+            </p>
+            <p class="mt-0 mb-6">
               Before node 3: These keys were owned by node 0 (the next clockwise node from their
               position).
             </p>
-            <p>After node 3: These keys are now owned by node 3.</p>
-            <p>
+            <p class="mt-0 mb-6">After node 3: These keys are now owned by node 3.</p>
+            <p class="mt-0 mb-6">
               <strong>Everything else stays the same.</strong>
               Keys owned by node 1 and node 2 don&#39;t move at all.
             </p>
-            <h3 id="operations">Operations</h3>
-            <p>How do you actually do this operationally?</p>
-            <ol>
+            <h3 id="operations" class="mt-8 text-lg leading-tight tracking-tight">Operations</h3>
+            <p class="mt-0 mb-6">How do you actually do this operationally?</p>
+            <ol class="mt-0 mb-6">
               <li>You know node 3 is slotted at position 1</li>
               <li>Find the node immediately to the right (clockwise): node 0 at slot 3</li>
               <li>Keys that were going to node 0 (from the slot range 13-1) now go to node 3</li>
@@ -507,13 +638,17 @@ Ring:  [ ] [3] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
               <li>Add node 3 to the ring, start serving requests</li>
               <li>Delete the keys from node 0 that now belong to node 3</li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               You&#39;re not touching keys in other nodes. Just the node immediately to the right.
             </p>
-            <h2 id="scaling-down">Scaling Down</h2>
-            <p>Similar process for removing a node.</p>
-            <p>Let&#39;s remove node 0 (at slot 3).</p>
-            <pre><code class="language-text">Before:
+            <h2 id="scaling-down" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Scaling Down
+            </h2>
+            <p class="mt-0 mb-6">Similar process for removing a node.</p>
+            <p class="mt-0 mb-6">Let&#39;s remove node 0 (at slot 3).</p>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Before:
         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 Ring:  [ ] [3] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
 
@@ -523,28 +658,30 @@ Ring:  [ ] [3] [ ] [ ] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
                     ↑
                removed
 </code></pre>
-            <p><strong>Which keys are affected?</strong></p>
-            <p>
+            <p class="mt-0 mb-6"><strong>Which keys are affected?</strong></p>
+            <p class="mt-0 mb-6">
               Keys that were owned by node 0 (slots 2-3). They now go to the next clockwise node:
               node 2 at slot 8.
             </p>
-            <p><strong>How to do it operationally:</strong></p>
-            <ol>
+            <p class="mt-0 mb-6"><strong>How to do it operationally:</strong></p>
+            <ol class="mt-0 mb-6">
               <li>Copy all keys from node 0 to node 2</li>
               <li>Remove node 0 from the ring</li>
               <li>Done</li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               You&#39;re literally copy-pasting everything from node 0 to node 2. No complex routing
               decisions. No partial key movement. Just dump and load.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This is why consistent hashing is so popular. It&#39;s
               <strong>operationally simple</strong>.
             </p>
-            <h2 id="hash-function">Hash Function</h2>
-            <p>A good hash function for consistent hashing has two properties:</p>
-            <ol>
+            <h2 id="hash-function" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Hash Function
+            </h2>
+            <p class="mt-0 mb-6">A good hash function for consistent hashing has two properties:</p>
+            <ol class="mt-0 mb-6">
               <li>
                 <strong>Computationally efficient</strong>: Fast to compute, as it&#39;s called on
                 every read and write
@@ -554,310 +691,402 @@ Ring:  [ ] [3] [ ] [ ] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
                 correlation
               </li>
             </ol>
-            <p>SHA-256 is commonly used:</p>
+            <p class="mt-0 mb-6">SHA-256 is commonly used:</p>
             <pre
-            ><code class="language-typescript"><span class="k">import</span> <span class="u">{</span> createHash <span class="u">}</span> <span class="k">from</span> <span class="s">&quot;crypto&quot;</span><span class="u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> createHash <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;crypto&quot;</span><span class="text-syn-u">;</span>
 
-<span class="k">function</span> <span class="f">hash</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">,</span> totalSlots<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">number</span> <span class="u">{</span>
-  <span class="k">const</span> hsh <span class="o">=</span> <span class="f">createHash</span><span class="u">(</span><span class="s">&quot;sha256&quot;</span><span class="u">);</span>
-  hsh<span class="u">.</span><span class="f">update</span><span class="u">(</span>key<span class="u">);</span>
-  <span class="k">const</span> hexDigest <span class="o">=</span> hsh<span class="u">.</span><span class="f">digest</span><span class="u">(</span><span class="s">&quot;hex&quot;</span><span class="u">);</span>
-  <span class="k">return</span> <span class="f">parseInt</span><span class="u">(</span>hexDigest<span class="u">,</span> <span class="n">16</span><span class="u">)</span> <span class="o">%</span> totalSlots<span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">hash</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> totalSlots<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> hsh <span class="text-syn-o">=</span> <span class="text-syn-f">createHash</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;sha256&quot;</span><span class="text-syn-u">);</span>
+  hsh<span class="text-syn-u">.</span><span class="text-syn-f">update</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> hexDigest <span class="text-syn-o">=</span> hsh<span class="text-syn-u">.</span><span class="text-syn-f">digest</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;hex&quot;</span><span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">parseInt</span><span class="text-syn-u">(</span>hexDigest<span class="text-syn-u">,</span> <span class="text-syn-n">16</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> totalSlots<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The hash function converts any string to a position in the hash space. Since
-              <code>totalSlots</code>
-              is huge and constant (like <code>2^ { 128}</code>), this function is completely
-              independent of the number of nodes in your system.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >totalSlots</code
+              >
+              is huge and constant (like
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >2^ { 128}</code
+              >), this function is completely independent of the number of nodes in your system.
             </p>
-            <h2 id="virtual-nodes">Virtual Nodes</h2>
-            <p>There&#39;s one problem with basic consistent hashing: uneven distribution.</p>
-            <p>
+            <h2 id="virtual-nodes" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Virtual Nodes
+            </h2>
+            <p class="mt-0 mb-6">
+              There&#39;s one problem with basic consistent hashing: uneven distribution.
+            </p>
+            <p class="mt-0 mb-6">
               If nodes hash to unevenly spaced slots, some nodes own much larger key ranges than
               others.
             </p>
             <pre
-            ><code class="language-text">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
                     ↑   ↑                                           ↑
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Node 0 owns slots 16, 0, 1, 2, 3 (5 slots). Node 1 owns slots 4, 5 (2 slots). Node 2
               owns slots 6-15 (10 slots).
             </p>
-            <p>Node 2 handles 5x more keys than node 1!</p>
-            <p>The solution: <strong>virtual nodes</strong>.</p>
-            <p>Instead of placing each physical node once on the ring, place it multiple times.</p>
+            <p class="mt-0 mb-6">Node 2 handles 5x more keys than node 1!</p>
+            <p class="mt-0 mb-6">The solution: <strong>virtual nodes</strong>.</p>
+            <p class="mt-0 mb-6">
+              Instead of placing each physical node once on the ring, place it multiple times.
+            </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">addNodeToRing</span><span class="u">(</span>nodeId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> virtualNodes<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> virtualNodes<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> virtualId <span class="o">=</span> <span class="s">`${nodeId}_${i}`</span><span class="u">;</span>
-    <span class="k">const</span> slot <span class="o">=</span> <span class="f">sha128</span><span class="u">(</span>virtualId<span class="u">)</span> <span class="o">%</span> RING_SIZE<span class="u">;</span>
-    ring<span class="u">.</span><span class="f">push</span><span class="u">({</span> <span class="p">id:</span> nodeId<span class="u">,</span> slot <span class="u">});</span>
-  <span class="u">}</span>
-  ring<span class="u">.</span><span class="f">sort</span><span class="u">((</span>a<span class="u">,</span> b<span class="u">)</span> <span class="k">=&gt;</span> a<span class="u">.</span><span class="p">slot</span> <span class="o">-</span> b<span class="u">.</span><span class="p">slot</span><span class="u">);</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">addNodeToRing</span><span class="text-syn-u">(</span>nodeId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> virtualNodes<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> virtualNodes<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> virtualId <span class="text-syn-o">=</span> <span class="text-syn-s">`${nodeId}_${i}`</span><span class="text-syn-u">;</span>
+    <span class="text-syn-k">const</span> slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span>virtualId<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> RING_SIZE<span class="text-syn-u">;</span>
+    ring<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">({</span> <span class="text-syn-p">id:</span> nodeId<span class="text-syn-u">,</span> slot <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
+  ring<span class="text-syn-u">.</span><span class="text-syn-f">sort</span><span class="text-syn-u">((</span>a<span class="text-syn-u">,</span> b<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> a<span class="text-syn-u">.</span><span class="text-syn-p">slot</span> <span class="text-syn-o">-</span> b<span class="text-syn-u">.</span><span class="text-syn-p">slot</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="f">addNodeToRing</span><span class="u">(</span><span class="s">&quot;node0&quot;</span><span class="u">,</span> <span class="n">100</span><span class="u">);</span>
-<span class="f">addNodeToRing</span><span class="u">(</span><span class="s">&quot;node1&quot;</span><span class="u">,</span> <span class="n">100</span><span class="u">);</span>
-<span class="f">addNodeToRing</span><span class="u">(</span><span class="s">&quot;node2&quot;</span><span class="u">,</span> <span class="n">100</span><span class="u">);</span>
+<span class="text-syn-f">addNodeToRing</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node0&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">100</span><span class="text-syn-u">);</span>
+<span class="text-syn-f">addNodeToRing</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node1&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">100</span><span class="text-syn-u">);</span>
+<span class="text-syn-f">addNodeToRing</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node2&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">100</span><span class="text-syn-u">);</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               With 100 virtual nodes per physical node, the distribution becomes much more even.
               Each physical node owns roughly 1/3 of the key space.
             </p>
-            <h2 id="implementation">Implementation</h2>
-            <p>Here&#39;s a complete, minimal implementation:</p>
+            <h2
+              id="implementation"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Implementation
+            </h2>
+            <p class="mt-0 mb-6">Here&#39;s a complete, minimal implementation:</p>
             <pre
-            ><code class="language-typescript"><span class="k">interface</span> <span class="t">ConsistentHash</span> <span class="u">{</span>
-  ring<span class="o">:</span> <span class="u">{</span> slot<span class="o">:</span> <span class="t">number</span><span class="u">;</span> nodeId<span class="o">:</span> <span class="t">string</span> <span class="u">}[];</span>
-  ringSize<span class="o">:</span> <span class="t">number</span><span class="u">;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">ConsistentHash</span> <span class="text-syn-u">{</span>
+  ring<span class="text-syn-o">:</span> <span class="text-syn-u">{</span> slot<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span> nodeId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">}[];</span>
+  ringSize<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">createRing</span><span class="u">(</span>ringSize<span class="o">:</span> <span class="t">number</span><span class="u">)</span><span class="o">:</span> <span class="t">ConsistentHash</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="u">{</span> <span class="p">ring:</span> <span class="u">[],</span> ringSize <span class="u">};</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">createRing</span><span class="text-syn-u">(</span>ringSize<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">ConsistentHash</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> <span class="text-syn-p">ring:</span> <span class="text-syn-u">[],</span> ringSize <span class="text-syn-u">};</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">addNode</span><span class="u">(</span>ch<span class="o">:</span> <span class="t">ConsistentHash</span><span class="u">,</span> nodeId<span class="o">:</span> <span class="t">string</span><span class="u">,</span> virtualNodes<span class="o">:</span> <span class="t">number</span> <span class="o">=</span> <span class="n">100</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  <span class="k">for</span> <span class="u">(</span><span class="k">let</span> i <span class="o">=</span> <span class="n">0</span><span class="u">;</span> i <span class="o">&lt;</span> virtualNodes<span class="u">;</span> i<span class="o">++</span><span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> slot <span class="o">=</span> <span class="f">hash</span><span class="u">(</span><span class="s">`${nodeId}_${i}`</span><span class="u">)</span> <span class="o">%</span> ch<span class="u">.</span><span class="p">ringSize</span><span class="u">;</span>
-    ch<span class="u">.</span>ring<span class="u">.</span><span class="f">push</span><span class="u">({</span> slot<span class="u">,</span> nodeId <span class="u">});</span>
-  <span class="u">}</span>
-  ch<span class="u">.</span>ring<span class="u">.</span><span class="f">sort</span><span class="u">((</span>a<span class="u">,</span> b<span class="u">)</span> <span class="k">=&gt;</span> a<span class="u">.</span><span class="p">slot</span> <span class="o">-</span> b<span class="u">.</span><span class="p">slot</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">addNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-o">:</span> <span class="text-syn-t">ConsistentHash</span><span class="text-syn-u">,</span> nodeId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> virtualNodes<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-o">=</span> <span class="text-syn-n">100</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> virtualNodes<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> slot <span class="text-syn-o">=</span> <span class="text-syn-f">hash</span><span class="text-syn-u">(</span><span class="text-syn-s">`${nodeId}_${i}`</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> ch<span class="text-syn-u">.</span><span class="text-syn-p">ringSize</span><span class="text-syn-u">;</span>
+    ch<span class="text-syn-u">.</span>ring<span class="text-syn-u">.</span><span class="text-syn-f">push</span><span class="text-syn-u">({</span> slot<span class="text-syn-u">,</span> nodeId <span class="text-syn-u">});</span>
+  <span class="text-syn-u">}</span>
+  ch<span class="text-syn-u">.</span>ring<span class="text-syn-u">.</span><span class="text-syn-f">sort</span><span class="text-syn-u">((</span>a<span class="text-syn-u">,</span> b<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> a<span class="text-syn-u">.</span><span class="text-syn-p">slot</span> <span class="text-syn-o">-</span> b<span class="text-syn-u">.</span><span class="text-syn-p">slot</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">removeNode</span><span class="u">(</span>ch<span class="o">:</span> <span class="t">ConsistentHash</span><span class="u">,</span> nodeId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">void</span> <span class="u">{</span>
-  ch<span class="u">.</span><span class="p">ring</span> <span class="o">=</span> ch<span class="u">.</span>ring<span class="u">.</span><span class="f">filter</span><span class="u">((</span>n<span class="u">)</span> <span class="k">=&gt;</span> n<span class="u">.</span><span class="p">nodeId</span> <span class="o">!==</span> nodeId<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">removeNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-o">:</span> <span class="text-syn-t">ConsistentHash</span><span class="text-syn-u">,</span> nodeId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
+  ch<span class="text-syn-u">.</span><span class="text-syn-p">ring</span> <span class="text-syn-o">=</span> ch<span class="text-syn-u">.</span>ring<span class="text-syn-u">.</span><span class="text-syn-f">filter</span><span class="text-syn-u">((</span>n<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> n<span class="text-syn-u">.</span><span class="text-syn-p">nodeId</span> <span class="text-syn-o">!==</span> nodeId<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="k">function</span> <span class="f">getNode</span><span class="u">(</span>ch<span class="o">:</span> <span class="t">ConsistentHash</span><span class="u">,</span> key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">string</span> <span class="u">{</span>
-  <span class="k">const</span> slot <span class="o">=</span> <span class="f">hash</span><span class="u">(</span>key<span class="u">)</span> <span class="o">%</span> ch<span class="u">.</span><span class="p">ringSize</span><span class="u">;</span>
+<span class="text-syn-k">function</span> <span class="text-syn-f">getNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-o">:</span> <span class="text-syn-t">ConsistentHash</span><span class="text-syn-u">,</span> key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> slot <span class="text-syn-o">=</span> <span class="text-syn-f">hash</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> ch<span class="text-syn-u">.</span><span class="text-syn-p">ringSize</span><span class="text-syn-u">;</span>
 
-  <span class="k">let</span> left <span class="o">=</span> <span class="n">0</span><span class="u">;</span>
-  <span class="k">let</span> right <span class="o">=</span> ch<span class="u">.</span>ring<span class="u">.</span>length <span class="o">-</span> <span class="n">1</span><span class="u">;</span>
+  <span class="text-syn-k">let</span> left <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+  <span class="text-syn-k">let</span> right <span class="text-syn-o">=</span> ch<span class="text-syn-u">.</span>ring<span class="text-syn-u">.</span>length <span class="text-syn-o">-</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
 
-  <span class="k">while</span> <span class="u">(</span>left <span class="o">&lt;</span> right<span class="u">)</span> <span class="u">{</span>
-    <span class="k">const</span> mid <span class="o">=</span> Math<span class="u">.</span><span class="f">floor</span><span class="u">((</span>left <span class="o">+</span> right<span class="u">)</span> <span class="o">/</span> <span class="n">2</span><span class="u">);</span>
-    <span class="k">if</span> <span class="u">(</span>ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span>mid<span class="u">].</span><span class="p">slot</span> <span class="o">&lt;</span> slot<span class="u">)</span> <span class="u">{</span>
-      left <span class="o">=</span> mid <span class="o">+</span> <span class="n">1</span><span class="u">;</span>
-    <span class="u">}</span> <span class="k">else</span> <span class="u">{</span>
-      right <span class="o">=</span> mid<span class="u">;</span>
-    <span class="u">}</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">while</span> <span class="text-syn-u">(</span>left <span class="text-syn-o">&lt;</span> right<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">const</span> mid <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">floor</span><span class="text-syn-u">((</span>left <span class="text-syn-o">+</span> right<span class="text-syn-u">)</span> <span class="text-syn-o">/</span> <span class="text-syn-n">2</span><span class="text-syn-u">);</span>
+    <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>ch<span class="text-syn-u">.</span><span class="text-syn-p">ring</span><span class="text-syn-u">[</span>mid<span class="text-syn-u">].</span><span class="text-syn-p">slot</span> <span class="text-syn-o">&lt;</span> slot<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+      left <span class="text-syn-o">=</span> mid <span class="text-syn-o">+</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span> <span class="text-syn-k">else</span> <span class="text-syn-u">{</span>
+      right <span class="text-syn-o">=</span> mid<span class="text-syn-u">;</span>
+    <span class="text-syn-u">}</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">if</span> <span class="u">(</span>ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span>left<span class="u">].</span><span class="p">slot</span> <span class="o">&gt;=</span> slot<span class="u">)</span> <span class="u">{</span>
-    <span class="k">return</span> ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span>left<span class="u">].</span><span class="p">nodeId</span><span class="u">;</span>
-  <span class="u">}</span>
+  <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>ch<span class="text-syn-u">.</span><span class="text-syn-p">ring</span><span class="text-syn-u">[</span>left<span class="text-syn-u">].</span><span class="text-syn-p">slot</span> <span class="text-syn-o">&gt;=</span> slot<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-k">return</span> ch<span class="text-syn-u">.</span><span class="text-syn-p">ring</span><span class="text-syn-u">[</span>left<span class="text-syn-u">].</span><span class="text-syn-p">nodeId</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
 
-  <span class="k">return</span> ch<span class="u">.</span><span class="p">ring</span><span class="u">[</span><span class="n">0</span><span class="u">].</span><span class="p">nodeId</span><span class="u">;</span>
-<span class="u">}</span>
+  <span class="text-syn-k">return</span> ch<span class="text-syn-u">.</span><span class="text-syn-p">ring</span><span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">].</span><span class="text-syn-p">nodeId</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>Usage:</p>
+            <p class="mt-0 mb-6">Usage:</p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> ch <span class="o">=</span> <span class="f">createRing</span><span class="u">(</span><span class="n">1_000_000</span><span class="u">);</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> ch <span class="text-syn-o">=</span> <span class="text-syn-f">createRing</span><span class="text-syn-u">(</span><span class="text-syn-n">1_000_000</span><span class="text-syn-u">);</span>
 
-<span class="f">addNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;192.168.1.1&quot;</span><span class="u">);</span>
-<span class="f">addNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;192.168.1.2&quot;</span><span class="u">);</span>
-<span class="f">addNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;192.168.1.3&quot;</span><span class="u">);</span>
+<span class="text-syn-f">addNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;192.168.1.1&quot;</span><span class="text-syn-u">);</span>
+<span class="text-syn-f">addNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;192.168.1.2&quot;</span><span class="text-syn-u">);</span>
+<span class="text-syn-f">addNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;192.168.1.3&quot;</span><span class="text-syn-u">);</span>
 
-<span class="k">const</span> owner <span class="o">=</span> <span class="f">getNode</span><span class="u">(</span>ch<span class="u">,</span> <span class="s">&quot;user_123&quot;</span><span class="u">);</span>
+<span class="text-syn-k">const</span> owner <span class="text-syn-o">=</span> <span class="text-syn-f">getNode</span><span class="text-syn-u">(</span>ch<span class="text-syn-u">,</span> <span class="text-syn-s">&quot;user_123&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
-            <p>One array. Binary search. That&#39;s it.</p>
-            <h2 id="use-cases">Use Cases</h2>
-            <h3 id="distributed-databases">Distributed Databases</h3>
-            <p>
+            <p class="mt-0 mb-6">One array. Binary search. That&#39;s it.</p>
+            <h2 id="use-cases" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Use Cases
+            </h2>
+            <h3 id="distributed-databases" class="mt-8 text-lg leading-tight tracking-tight">
+              Distributed Databases
+            </h3>
+            <p class="mt-0 mb-6">
               <strong>DynamoDB</strong>, <strong>Cassandra</strong>, and <strong>Riak</strong> all
               use consistent hashing to determine which node stores which data.
             </p>
-            <p>When you write a key to DynamoDB, it:</p>
-            <ol>
+            <p class="mt-0 mb-6">When you write a key to DynamoDB, it:</p>
+            <ol class="mt-0 mb-6">
               <li>Hashes the partition key</li>
               <li>Uses consistent hashing to find the owning node</li>
               <li>Writes to that node (and replicas)</li>
             </ol>
-            <h3 id="distributed-caches">Distributed Caches</h3>
-            <p>
+            <h3 id="distributed-caches" class="mt-8 text-lg leading-tight tracking-tight">
+              Distributed Caches
+            </h3>
+            <p class="mt-0 mb-6">
               <strong>Memcached</strong>
               clients use consistent hashing to distribute keys across cache servers.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> cacheNodes <span class="o">=</span> <span class="u">[</span><span class="s">&quot;cache1:11211&quot;</span><span class="u">,</span> <span class="s">&quot;cache2:11211&quot;</span><span class="u">,</span> <span class="s">&quot;cache3:11211&quot;</span><span class="u">];</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> cacheNodes <span class="text-syn-o">=</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;cache1:11211&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;cache2:11211&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;cache3:11211&quot;</span><span class="text-syn-u">];</span>
 
-<span class="k">async</span> <span class="k">function</span> <span class="f">getFromCache</span><span class="u">(</span>key<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Promise</span><span class="u">&lt;</span><span class="t">string</span> <span class="o">|</span> <span class="t">null</span><span class="u">&gt;</span> <span class="u">{</span>
-  <span class="k">const</span> node <span class="o">=</span> <span class="f">getNode</span><span class="u">(</span>consistentHash<span class="u">,</span> key<span class="u">);</span>
-  <span class="k">const</span> client <span class="o">=</span> <span class="f">getMemcachedClient</span><span class="u">(</span>node<span class="u">);</span>
-  <span class="k">return</span> <span class="k">await</span> client<span class="u">.</span><span class="f">get</span><span class="u">(</span>key<span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getFromCache</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">const</span> node <span class="text-syn-o">=</span> <span class="text-syn-f">getNode</span><span class="text-syn-u">(</span>consistentHash<span class="text-syn-u">,</span> key<span class="text-syn-u">);</span>
+  <span class="text-syn-k">const</span> client <span class="text-syn-o">=</span> <span class="text-syn-f">getMemcachedClient</span><span class="text-syn-u">(</span>node<span class="text-syn-u">);</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> client<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               When a cache node fails, only keys owned by that node become cache misses. Other nodes
               continue serving their keys.
             </p>
-            <h3 id="load-balancers">Load Balancers</h3>
-            <p>
+            <h3 id="load-balancers" class="mt-8 text-lg leading-tight tracking-tight">
+              Load Balancers
+            </h3>
+            <p class="mt-0 mb-6">
               Consistent hashing enables <strong>sticky sessions</strong> with minimal disruption
               during scaling.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">function</span> <span class="f">routeRequest</span><span class="u">(</span>sessionId<span class="o">:</span> <span class="t">string</span><span class="u">)</span><span class="o">:</span> <span class="t">Server</span> <span class="u">{</span>
-  <span class="k">return</span> <span class="f">getNode</span><span class="u">(</span>consistentHash<span class="u">,</span> sessionId<span class="u">);</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span>sessionId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Server</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-k">return</span> <span class="text-syn-f">getNode</span><span class="text-syn-u">(</span>consistentHash<span class="text-syn-u">,</span> sessionId<span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               All requests for a session go to the same server. When you add or remove servers, most
               sessions stay on their original server.
             </p>
-            <h3 id="content-delivery-networks">Content Delivery Networks</h3>
-            <p>
+            <h3 id="content-delivery-networks" class="mt-8 text-lg leading-tight tracking-tight">
+              Content Delivery Networks
+            </h3>
+            <p class="mt-0 mb-6">
               <strong>Akamai</strong>
               and other CDNs use consistent hashing to route requests to edge servers. This ensures
               content is cached efficiently across the network.
             </p>
-            <h2 id="when-to-use">When to Use</h2>
-            <table>
+            <h2 id="when-to-use" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              When to Use
+            </h2>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Use Case</th>
-                  <th>Consistent Hashing?</th>
-                  <th>Why</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Use Case</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Consistent Hashing?</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Why</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Distributed storage</td>
-                  <td>✅</td>
-                  <td>Minimize data movement during scaling</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Distributed storage</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">✅</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Minimize data movement during scaling
+                  </td>
                 </tr>
                 <tr>
-                  <td>Distributed cache</td>
-                  <td>✅</td>
-                  <td>Minimize cache invalidation during node churn</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Distributed cache</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">✅</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Minimize cache invalidation during node churn
+                  </td>
                 </tr>
                 <tr>
-                  <td>Sticky sessions</td>
-                  <td>✅</td>
-                  <td>Maintain session affinity with graceful change</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Sticky sessions</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">✅</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Maintain session affinity with graceful change
+                  </td>
                 </tr>
                 <tr>
-                  <td>Stateless API load balancing</td>
-                  <td>❌</td>
-                  <td>Simple mod works fine</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Stateless API load balancing
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">❌</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Simple mod works fine
+                  </td>
                 </tr>
                 <tr>
-                  <td>Small, fixed cluster</td>
-                  <td>❌</td>
-                  <td>Overhead not worth it</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Small, fixed cluster</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">❌</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Overhead not worth it
+                  </td>
                 </tr>
                 <tr>
-                  <td>Needs exact even distribution</td>
-                  <td>❌</td>
-                  <td>Use explicit partitioning instead</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Needs exact even distribution
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">❌</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Use explicit partitioning instead
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <h2 id="key-takeaways">Key Takeaways</h2>
-            <ol>
-              <li>
-                <p><strong>Consistent hashing solves one problem</strong>: Who owns this data?</p>
+            <h2 id="key-takeaways" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Key Takeaways
+            </h2>
+            <ol class="mt-0 mb-6">
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
+                  <strong>Consistent hashing solves one problem</strong>: Who owns this data?
+                </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Minimal data movement</strong>: When nodes change, only a fraction of keys
                   move.
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Operationally simple</strong>: Adding a node? Snapshot the right neighbor.
                   Removing a node? Copy to the right neighbor.
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Virtual nodes</strong>: Solve the uneven distribution problem by placing
                   each physical node multiple times on the ring.
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Use it for stateful systems</strong>: Distributed databases, caches,
                   anything where data movement is expensive.
                 </p>
               </li>
             </ol>
-            <h2 id="practice">Practice</h2>
-            <p>
+            <h2 id="practice" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Practice
+            </h2>
+            <p class="mt-0 mb-6">
               I&#39;ve created hands-on demos you can run locally:
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://github.com/pulkitxm/systems/tree/main/data-structures/consistent-hashing"
                 >consistent-hashing</a
               >. TypeScript implementation with demos for basic usage, scaling comparison (simple
               hash vs consistent hash), and virtual nodes.
             </p>
-            <h2 id="conclusion">Conclusion</h2>
-            <p>Consistent hashing answers one question: <strong>Who owns this key?</strong></p>
-            <p>It answers it in a way that minimizes disruption when your cluster changes.</p>
-            <table>
+            <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Conclusion
+            </h2>
+            <p class="mt-0 mb-6">
+              Consistent hashing answers one question: <strong>Who owns this key?</strong>
+            </p>
+            <p class="mt-0 mb-6">
+              It answers it in a way that minimizes disruption when your cluster changes.
+            </p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Aspect</th>
-                  <th>Hash-Based Routing</th>
-                  <th>Consistent Hashing</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Aspect</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Hash-Based Routing</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Consistent Hashing</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Data movement</td>
-                  <td>O(n) keys move</td>
-                  <td>O(n/m) keys move</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Data movement</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">O(n) keys move</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">O(n/m) keys move</td>
                 </tr>
                 <tr>
-                  <td>Implementation</td>
-                  <td>Simple mod</td>
-                  <td>Sorted array + bsearch</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Implementation</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Simple mod</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Sorted array + bsearch
+                  </td>
                 </tr>
                 <tr>
-                  <td>Node addition</td>
-                  <td>Rehash everything</td>
-                  <td>Only affected range</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Node addition</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Rehash everything</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Only affected range</td>
                 </tr>
                 <tr>
-                  <td>Node removal</td>
-                  <td>Rehash everything</td>
-                  <td>Only affected range</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Node removal</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Rehash everything</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Only affected range</td>
                 </tr>
                 <tr>
-                  <td>Best for</td>
-                  <td>Stateless backends</td>
-                  <td>Stateful backends</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Best for</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Stateless backends</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Stateful backends</td>
                 </tr>
               </tbody>
             </table>
-            <p>Where n = total keys and m = number of nodes.</p>
-            <p>Implement it yourself. You&#39;ll have fun.</p>
+            <p class="mt-0 mb-6">Where n = total keys and m = number of nodes.</p>
+            <p class="mt-0 mb-6">Implement it yourself. You&#39;ll have fun.</p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
-          <ul>
-            <li>
-              <a href="/blogs/system-design/big-data-tools/">Introduction to Big Data Tools</a>
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/big-data-tools/"
+                >Introduction to Big Data Tools</a
+              >
             </li>
-            <li><a href="/blogs/system-design/circuit-breakers/">Circuit Breakers</a></li>
-            <li><a href="/blogs/system-design/high-availability/">High Availability</a></li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/circuit-breakers/"
+                >Circuit Breakers</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/system-design/high-availability/"
+                >High Availability</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

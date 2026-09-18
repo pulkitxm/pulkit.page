@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,22 +64,41 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="brand" href="/">Pulkit</a>
-        <nav aria-label="Main navigation">
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
+    <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
+      <header
+        class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
+      >
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
+        <nav
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
+          aria-label="Main navigation"
+        >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
-      <main id="main" class="article">
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <ol>
+      <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
+        <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
+          <ol
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
+          >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
             <li><a href="/blogs/design-engineering/">Design Engineering</a></li>
@@ -84,22 +106,31 @@
           </ol>
         </nav>
         <article>
-          <header class="page-heading">
-            <h1>Offloading Motion to the GPU</h1>
-            <p class="detail-meta"><time datetime="2026-02-03">2026-02-03</time></p>
+          <header class="mb-7">
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
+              Offloading Motion to the GPU
+            </h1>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2026-02-03">2026-02-03</time>
+            </p>
           </header>
-          <div class="prose">
-            <p>
+          <div class="wrap-anywhere">
+            <p class="mt-0 mb-6">
               There&#39;s something special about CSS animations. No dependencies, no JavaScript,
               just HTML and CSS. It feels like you are writing code how it was meant to be written.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               But getting CSS animations right means understanding what happens under the hood. Why
               some properties animate smoothly while others stutter. When the GPU gets involved. And
               most importantly, when to reach for CSS versus when to reach for JavaScript.
             </p>
-            <h2 id="tl-dr">TL;DR</h2>
-            <ul>
+            <h2 id="tl-dr" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              TL;DR
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>60fps is the goal.</strong>
                 Your frame budget is 16.67ms. Miss it and users feel the jank
@@ -125,247 +156,370 @@
                 Hover effects, enter animations, infinite loops, bundle-sensitive projects
               </li>
             </ul>
-            <h2 id="choosing-between-css-and-javascript">Choosing Between CSS and JavaScript</h2>
-            <p>
+            <h2
+              id="choosing-between-css-and-javascript"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Choosing Between CSS and JavaScript
+            </h2>
+            <p class="mt-0 mb-6">
               CSS animations are perfect for simple interactions. A button that scales on hover, a
               card that fades in on load, a loading spinner that rotates forever. For these cases,
               CSS is the obvious choice.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               But here&#39;s where it gets interesting. The best interfaces don&#39;t just move
               things around. They respond to user input in ways that feel physical. Think about
               pulling down to refresh on your phone. The content stretches, bounces back, and
               settles. That&#39;s not a fixed duration animation. That&#39;s physics responding to
               your gesture.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               CSS can&#39;t do that. It can&#39;t track velocity when you interrupt an animation. It
               can&#39;t create true spring physics where the settling time depends on how hard you
               pulled. It can&#39;t coordinate complex sequences that respond to changing state.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Does that mean you should always use JavaScript? No. It means you should understand
               what each tool does well.
             </p>
-            <p><strong>CSS excels at:</strong></p>
-            <ul>
+            <p class="mt-0 mb-6"><strong>CSS excels at:</strong></p>
+            <ul class="mt-0 mb-6">
               <li>Transitions between two known states</li>
               <li>Infinite animations that loop forever</li>
               <li>Hardware-accelerated transforms that never drop frames</li>
               <li>Zero-dependency, zero-bundle-size motion</li>
             </ul>
-            <p><strong>JavaScript excels at:</strong></p>
-            <ul>
+            <p class="mt-0 mb-6"><strong>JavaScript excels at:</strong></p>
+            <ul class="mt-0 mb-6">
               <li>Interruptible animations that preserve momentum</li>
               <li>Spring physics that feel natural</li>
               <li>Complex orchestrations across multiple elements</li>
               <li>Gesture-driven interactions</li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               The goal isn&#39;t to pick a side. It&#39;s to know when each approach makes sense.
               Let&#39;s focus on CSS and explore what it does well and how to squeeze every bit of
               performance out of it.
             </p>
-            <h2 id="let-s-fix-a-broken-animation">Let&#39;s Fix a Broken Animation</h2>
-            <p>
+            <h2
+              id="let-s-fix-a-broken-animation"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Let&#39;s Fix a Broken Animation
+            </h2>
+            <p class="mt-0 mb-6">
               Nothing teaches better than fixing something broken. Here&#39;s a demo with two grids
               animating identically, but using different CSS properties. Click &quot;Block Main
               Thread&quot; to simulate JavaScript doing heavy work.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: Janky Vs Smooth</a
               >
             </p>
-            <p>
-              Both grids animate a pulsing effect. The left grid animates <code>width</code> and
-              <code>height</code>. The right grid animates only <code>transform: scale()</code>.
-              Same visual result, completely different performance.
+            <p class="mt-0 mb-6">
+              Both grids animate a pulsing effect. The left grid animates
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >width</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >height</code
+              >. The right grid animates only
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform: scale()</code
+              >. Same visual result, completely different performance.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               When you block the main thread, the left grid freezes completely. The right grid keeps
               pulsing smoothly. That&#39;s GPU acceleration in action, the transform animation runs
               on a separate thread and doesn&#39;t care what JavaScript is doing.
             </p>
-            <p>Let&#39;s look at the broken code:</p>
+            <p class="mt-0 mb-6">Let&#39;s look at the broken code:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> janky-pulse <span class="u">{</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> janky-pulse <span class="text-syn-u">{</span>
   0%,
-  100% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">100%</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">100%</span><span class="u">;</span>
-  <span class="u">}</span>
-  50% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">40%</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">40%</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">100%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+  50% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">40%</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">40%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.janky-box</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> janky-pulse <span class="n">800ms</span> <span class="k">ease-in-out</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.janky-box</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> janky-pulse <span class="text-syn-n">800ms</span> <span class="text-syn-k">ease-in-out</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>And the fixed version:</p>
+            <p class="mt-0 mb-6">And the fixed version:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> smooth-pulse <span class="u">{</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> smooth-pulse <span class="text-syn-u">{</span>
   0%,
-  100% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-  <span class="u">}</span>
-  50% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.4</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  50% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.4</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.smooth-box</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> smooth-pulse <span class="n">800ms</span> <span class="k">ease-in-out</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.smooth-box</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> smooth-pulse <span class="text-syn-n">800ms</span> <span class="text-syn-k">ease-in-out</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
-              The difference? The first version changes <code>width</code> and <code>height</code>,
-              which trigger layout calculations on the main thread. When the main thread is blocked,
-              the animation freezes. The second version uses <code>transform: scale()</code>, which
-              the GPU handles on a separate compositor thread, completely independent of JavaScript.
+            <p class="mt-0 mb-6">
+              The difference? The first version changes
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >width</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >height</code
+              >, which trigger layout calculations on the main thread. When the main thread is
+              blocked, the animation freezes. The second version uses
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform: scale()</code
+              >, which the GPU handles on a separate compositor thread, completely independent of
+              JavaScript.
             </p>
-            <h2 id="the-rendering-pipeline">The Rendering Pipeline</h2>
-            <p>
+            <h2
+              id="the-rendering-pipeline"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The Rendering Pipeline
+            </h2>
+            <p class="mt-0 mb-6">
               Understanding why some animations are smooth and others aren&#39;t requires
               understanding how browsers render pages. Every frame goes through up to four steps.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/offloading-motion-to-the-gpu/rendering-pipeline.webp"
                 alt="Diagram showing the browser rendering pipeline with four stages: Style, Layout, Paint, and Composite"
                 loading="lazy"
               />
             </p>
-            <ul>
-              <li>
-                <p>
+            <ul class="mt-0 mb-6">
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Style</strong>
                   calculates which CSS rules apply to which elements. This happens on every frame
                   where styles might change.
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Layout</strong>
                   (also called &quot;reflow&quot;) calculates the position and size of every
-                  element. Change <code>width</code>, <code>height</code>, <code>margin</code>,
-                  <code>padding</code>, <code>top</code>, <code>left</code>, <code>right</code>,
-                  <code>bottom</code>, or <code>font-size</code>? Layout runs.
+                  element. Change
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >width</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >height</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >margin</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >padding</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >top</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >left</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >right</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >bottom</code
+                  >, or
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >font-size</code
+                  >? Layout runs.
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Paint</strong>
                   fills in pixels. Text, colors, images, borders, shadows. Change
-                  <code>background</code>, <code>color</code>, <code>border-radius</code>, or
-                  <code>box-shadow</code>? Paint runs.
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >background</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >color</code
+                  >,
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >border-radius</code
+                  >, or
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >box-shadow</code
+                  >? Paint runs.
                 </p>
               </li>
-              <li>
-                <p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
                   <strong>Composite</strong>
                   takes all the painted layers and combines them into the final image. This is where
                   the GPU shines.
                 </p>
               </li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               The key insight is that these steps cascade. If you trigger Layout, you also trigger
               Paint and Composite. If you trigger Paint, you also trigger Composite. But if you only
               trigger Composite, you skip Layout and Paint entirely.
             </p>
             <pre
-            ><code class="language-text">width change:      Style → Layout → Paint → Composite  (slowest)
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">width change:      Style → Layout → Paint → Composite  (slowest)
 background change: Style → Paint → Composite           (slow)
 transform change:  Style → Composite                   (fastest)
 </code></pre>
-            <h2 id="gpu-acceleration">GPU Acceleration</h2>
-            <p>
+            <h2
+              id="gpu-acceleration"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              GPU Acceleration
+            </h2>
+            <p class="mt-0 mb-6">
               Modern browsers have a superpower. They can offload certain animations to the GPU,
               freeing up the main thread to do other work.
             </p>
-            <p>
-              Two properties get this special treatment: <code>transform</code> and
-              <code>opacity</code>.
+            <p class="mt-0 mb-6">
+              Two properties get this special treatment:
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >opacity</code
+              >.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               When you animate these properties, the browser creates a separate layer for the
               element and hands it to the GPU. The GPU can move, rotate, scale, and fade that layer
               without touching the main thread. Your JavaScript can be running expensive
               calculations, and the animation stays smooth.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: GPUAcceleration</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Add some load to the page using the button above. Notice how the transform animation
               keeps running smoothly while the width animation stutters. That&#39;s GPU acceleration
               in action.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This is why you hear &quot;only animate transform and opacity&quot; repeated
               everywhere. It&#39;s not a style preference. It&#39;s a performance reality.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">0</span><span class="u">);</span>
-  <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-  <span class="p">transition</span><span class="u">:</span>
-    transform <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">,</span>
-    opacity <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span>
+    transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">,</span>
+    opacity <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.element:hover</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">translateX</span><span class="u">(</span><span class="n">20px</span><span class="u">)</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.05</span><span class="u">);</span>
-  <span class="p">opacity</span><span class="u">:</span> <span class="n">0.9</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.element:hover</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">20px</span><span class="text-syn-u">)</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.05</span><span class="text-syn-u">);</span>
+  <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.9</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <h3 id="what-about-will-change">What About will-change?</h3>
-            <p>
-              The <code>will-change</code> property tells the browser to prepare a layer in advance.
+            <h3 id="what-about-will-change" class="mt-8 text-lg leading-tight tracking-tight">
+              What About will-change?
+            </h3>
+            <p class="mt-0 mb-6">
+              The
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >will-change</code
+              >
+              property tells the browser to prepare a layer in advance.
             </p>
-            <pre><code class="language-css"><span class="p">.element</span> <span class="u">{</span>
-  <span class="p">will-change</span><span class="u">:</span> transform<span class="u">;</span>
-<span class="u">}</span>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">will-change</span><span class="text-syn-u">:</span> transform<span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               This can help with complex animations, but use it sparingly. Every
-              <code>will-change</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >will-change</code
+              >
               element consumes GPU memory. Applying it everywhere defeats the purpose.
             </p>
-            <p>
-              The rule I follow: don&#39;t add <code>will-change</code> until you&#39;ve measured a
-              problem. If an animation stutters and DevTools shows paint or layout issues, then
-              consider <code>will-change</code>. Otherwise, leave it out.
+            <p class="mt-0 mb-6">
+              The rule I follow: don&#39;t add
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >will-change</code
+              >
+              until you&#39;ve measured a problem. If an animation stutters and DevTools shows paint
+              or layout issues, then consider
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >will-change</code
+              >. Otherwise, leave it out.
             </p>
-            <h2 id="the-60fps-goal">The 60fps Goal</h2>
-            <p>
+            <h2
+              id="the-60fps-goal"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The 60fps Goal
+            </h2>
+            <p class="mt-0 mb-6">
               Your monitor refreshes 60 times per second (or more, but let&#39;s use 60 as the
               baseline). To achieve smooth animation, your browser needs to produce a new frame
               every 16.67 milliseconds.
             </p>
-            <pre><code class="language-text">1 second = 1000ms
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">1 second = 1000ms
 60 frames per second = 1000ms / 60 = 16.67ms per frame
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Miss that budget and you drop a frame. Drop enough frames and users notice. Drop a lot
               and they feel it as jank.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/offloading-motion-to-the-gpu/frame-budget.webp"
                 alt="Diagram showing frame timing with 16.67ms budgets and dropped frames"
                 loading="lazy"
               />
             </p>
-            <p>What eats into your frame budget?</p>
-            <ul>
+            <p class="mt-0 mb-6">What eats into your frame budget?</p>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>JavaScript execution.</strong>
                 Event handlers, framework code, data processing
@@ -375,400 +529,614 @@ transform change:  Style → Composite                   (fastest)
               <li><strong>Paint.</strong> Changes to appearance properties</li>
               <li><strong>Composite.</strong> Merging layers</li>
             </ul>
-            <p>
-              CSS animations that only touch <code>transform</code> and <code>opacity</code> use
-              almost none of this budget. The GPU handles them in parallel. You get smooth 60fps
+            <p class="mt-0 mb-6">
+              CSS animations that only touch
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >opacity</code
+              >
+              use almost none of this budget. The GPU handles them in parallel. You get smooth 60fps
               even while JavaScript does heavy lifting.
             </p>
-            <p>
-              JavaScript animations using <code>requestAnimationFrame</code> compete with other main
-              thread work. They&#39;re still smooth when the thread is idle, but they stutter when
-              it&#39;s busy.
+            <p class="mt-0 mb-6">
+              JavaScript animations using
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >requestAnimationFrame</code
+              >
+              compete with other main thread work. They&#39;re still smooth when the thread is idle,
+              but they stutter when it&#39;s busy.
             </p>
-            <h2 id="when-css-beats-javascript">When CSS Beats JavaScript</h2>
-            <p>CSS animations win in specific scenarios.</p>
-            <h3 id="hover-effects">Hover Effects</h3>
-            <p>A button that scales on hover doesn&#39;t need JavaScript.</p>
-            <pre><code class="language-css"><span class="p">.button</span> <span class="u">{</span>
-  <span class="p">transition</span><span class="u">:</span> transform <span class="n">150ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+            <h2
+              id="when-css-beats-javascript"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              When CSS Beats JavaScript
+            </h2>
+            <p class="mt-0 mb-6">CSS animations win in specific scenarios.</p>
+            <h3 id="hover-effects" class="mt-8 text-lg leading-tight tracking-tight">
+              Hover Effects
+            </h3>
+            <p class="mt-0 mb-6">A button that scales on hover doesn&#39;t need JavaScript.</p>
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.button</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.button:hover</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.05</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.button:hover</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.05</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.button:active</span> <span class="u">{</span>
-  <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">0.98</span><span class="u">);</span>
-<span class="u">}</span>
+<span class="text-syn-p">.button:active</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">0.98</span><span class="text-syn-u">);</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: Hover Button</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This runs at 60fps regardless of what else is happening on your page. No React
               re-renders. No state management. Just CSS doing what CSS does well.
             </p>
-            <h3 id="enter-animations">Enter Animations</h3>
-            <p>When an element appears, CSS can handle the entrance.</p>
+            <h3 id="enter-animations" class="mt-8 text-lg leading-tight tracking-tight">
+              Enter Animations
+            </h3>
+            <p class="mt-0 mb-6">When an element appears, CSS can handle the entrance.</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> fadeSlideIn <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">0</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">translateY</span><span class="u">(</span><span class="n">10px</span><span class="u">);</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">translateY</span><span class="u">(</span><span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> fadeSlideIn <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateY</span><span class="text-syn-u">(</span><span class="text-syn-n">10px</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateY</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.card</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> fadeSlideIn <span class="n">300ms</span> <span class="k">ease-out</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.card</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> fadeSlideIn <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               For simple fades and slides, this is all you need. No JavaScript, no animation
               library, no bundle size.
             </p>
-            <h3 id="infinite-animations">Infinite Animations</h3>
-            <p>
+            <h3 id="infinite-animations" class="mt-8 text-lg leading-tight tracking-tight">
+              Infinite Animations
+            </h3>
+            <p class="mt-0 mb-6">
               Loading spinners, pulsing indicators, scrolling marquees. These should always be CSS.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> spin <span class="u">{</span>
-  from <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">0deg</span><span class="u">);</span>
-  <span class="u">}</span>
-  to <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">rotate</span><span class="u">(</span><span class="n">360deg</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> spin <span class="text-syn-u">{</span>
+  from <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">0deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  to <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">rotate</span><span class="text-syn-u">(</span><span class="text-syn-n">360deg</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 
-<span class="p">.spinner</span> <span class="u">{</span>
-  <span class="p">animation</span><span class="u">:</span> spin <span class="n">1s</span> <span class="k">linear</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+<span class="text-syn-p">.spinner</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> spin <span class="text-syn-n">1s</span> <span class="text-syn-k">linear</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: Infinite Animation</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               A JavaScript spinner would need to run code 60 times per second forever. A CSS spinner
               tells the GPU &quot;rotate this layer continuously&quot; and never touches the main
               thread again.
             </p>
-            <h3 id="bundle-sensitive-projects">Bundle-Sensitive Projects</h3>
-            <p>
+            <h3 id="bundle-sensitive-projects" class="mt-8 text-lg leading-tight tracking-tight">
+              Bundle-Sensitive Projects
+            </h3>
+            <p class="mt-0 mb-6">
               If you&#39;re optimizing for initial load time, every kilobyte counts. Framer Motion
               adds ~30KB to your bundle. React Spring is similar. For landing pages or static sites
               where animation needs are simple, CSS keeps things light.
             </p>
-            <h2 id="when-javascript-beats-css">When JavaScript Beats CSS</h2>
-            <p>JavaScript animations have capabilities CSS can&#39;t match.</p>
-            <h3 id="interruptibility">Interruptibility</h3>
-            <p>
+            <h2
+              id="when-javascript-beats-css"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              When JavaScript Beats CSS
+            </h2>
+            <p class="mt-0 mb-6">JavaScript animations have capabilities CSS can&#39;t match.</p>
+            <h3 id="interruptibility" class="mt-8 text-lg leading-tight tracking-tight">
+              Interruptibility
+            </h3>
+            <p class="mt-0 mb-6">
               When you click rapidly between states, CSS transitions restart from the beginning.
               JavaScript animations can preserve velocity and curve smoothly to new targets.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: Interruptibility Comparison</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Click the targets rapidly. The CSS version jumps. The JavaScript version (using spring
               physics) flows. For interactive UI where users move faster than animations complete,
               JavaScript handles it better.
             </p>
-            <h3 id="spring-physics">Spring Physics</h3>
-            <p>
-              CSS can approximate springs with <code>linear()</code> or cubic-bezier overshoot, but
-              it can&#39;t do true physics simulation. The duration is fixed. Real springs settle
-              based on their physical properties.
+            <h3 id="spring-physics" class="mt-8 text-lg leading-tight tracking-tight">
+              Spring Physics
+            </h3>
+            <p class="mt-0 mb-6">
+              CSS can approximate springs with
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >linear()</code
+              >
+              or cubic-bezier overshoot, but it can&#39;t do true physics simulation. The duration
+              is fixed. Real springs settle based on their physical properties.
             </p>
             <pre
-            ><code class="language-tsx"><span class="u">&lt;</span><span class="g">motion.div</span>
-  <span class="p">animate</span><span class="o">=</span><span class="u">{{</span> <span class="p">x:</span> <span class="n">100</span> <span class="u">}}</span>
-  <span class="p">transition</span><span class="o">=</span><span class="u">{{</span>
-    <span class="p">type:</span> <span class="s">&quot;spring&quot;</span><span class="u">,</span>
-    <span class="p">stiffness:</span> <span class="n">300</span><span class="u">,</span>
-    <span class="p">damping:</span> <span class="n">20</span><span class="u">,</span>
-  <span class="u">}}</span>
-<span class="u">/&gt;;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">&lt;</span><span class="text-syn-g">motion.div</span>
+  <span class="text-syn-p">animate</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span> <span class="text-syn-p">x:</span> <span class="text-syn-n">100</span> <span class="text-syn-u">}}</span>
+  <span class="text-syn-p">transition</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
+    <span class="text-syn-p">type:</span> <span class="text-syn-s">&quot;spring&quot;</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">stiffness:</span> <span class="text-syn-n">300</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">damping:</span> <span class="text-syn-n">20</span><span class="text-syn-u">,</span>
+  <span class="text-syn-u">}}</span>
+<span class="text-syn-u">/&gt;;</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The motion feels different. Springs respond to velocity. They overshoot and settle
               naturally. CSS can fake this for simple cases, but complex interactions need the real
               thing.
             </p>
-            <h3 id="complex-sequences">Complex Sequences</h3>
-            <p>
+            <h3 id="complex-sequences" class="mt-8 text-lg leading-tight tracking-tight">
+              Complex Sequences
+            </h3>
+            <p class="mt-0 mb-6">
               Coordinating multiple elements with precise timing, orchestrating staggered reveals,
               chaining animations based on state. CSS can do some of this with delays, but
               JavaScript gives you programmatic control.
             </p>
             <pre
-            ><code class="language-typescript"><span class="k">const</span> variants <span class="o">=</span> <span class="u">{</span>
-  <span class="p">hidden:</span> <span class="u">{</span> <span class="p">opacity:</span> <span class="n">0</span><span class="u">,</span> <span class="p">y:</span> <span class="n">20</span> <span class="u">},</span>
-  <span class="p">visible:</span> <span class="u">(</span>i<span class="o">:</span> <span class="t">number</span><span class="u">)</span> <span class="k">=&gt;</span> <span class="u">({</span>
-    <span class="p">opacity:</span> <span class="n">1</span><span class="u">,</span>
-    <span class="p">y:</span> <span class="n">0</span><span class="u">,</span>
-    <span class="p">transition:</span> <span class="u">{</span> <span class="p">delay:</span> i <span class="o">*</span> <span class="n">0.1</span> <span class="u">},</span>
-  <span class="u">}),</span>
-<span class="u">};</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> variants <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">hidden:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">opacity:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-p">y:</span> <span class="text-syn-n">20</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-p">visible:</span> <span class="text-syn-u">(</span>i<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">({</span>
+    <span class="text-syn-p">opacity:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">y:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span>
+    <span class="text-syn-p">transition:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">delay:</span> i <span class="text-syn-o">*</span> <span class="text-syn-n">0.1</span> <span class="text-syn-u">},</span>
+  <span class="text-syn-u">}),</span>
+<span class="text-syn-u">};</span>
 </code></pre>
-            <h3 id="state-driven-animation">State-Driven Animation</h3>
-            <p>
+            <h3 id="state-driven-animation" class="mt-8 text-lg leading-tight tracking-tight">
+              State-Driven Animation
+            </h3>
+            <p class="mt-0 mb-6">
               When animation needs to respond to React state, data, or user input beyond simple
               hover/focus, JavaScript integrates more naturally with your application architecture.
             </p>
-            <h2 id="performance-under-pressure">Performance Under Pressure</h2>
-            <p>Here&#39;s where CSS and JavaScript diverge most clearly.</p>
-            <p>
-              CSS animations using <code>transform</code> and <code>opacity</code> get promoted to
-              their own compositor layer. The GPU handles them independently from everything else
-              happening on the page. Your JavaScript could be parsing a massive JSON response, and
-              the CSS animation won&#39;t skip a beat.
+            <h2
+              id="performance-under-pressure"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Performance Under Pressure
+            </h2>
+            <p class="mt-0 mb-6">Here&#39;s where CSS and JavaScript diverge most clearly.</p>
+            <p class="mt-0 mb-6">
+              CSS animations using
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >opacity</code
+              >
+              get promoted to their own compositor layer. The GPU handles them independently from
+              everything else happening on the page. Your JavaScript could be parsing a massive JSON
+              response, and the CSS animation won&#39;t skip a beat.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               JavaScript animations work differently. Framer Motion, React Spring, and similar
-              libraries use <code>requestAnimationFrame</code> to update element positions. Each
-              frame, your code runs on the main thread. If the main thread is busy doing other work,
-              your animation waits its turn. Frames get dropped.
+              libraries use
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >requestAnimationFrame</code
+              >
+              to update element positions. Each frame, your code runs on the main thread. If the
+              main thread is busy doing other work, your animation waits its turn. Frames get
+              dropped.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: Performance Stress Test</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Increase the item count and add some artificial load. The CSS side keeps moving at
               60fps. The JavaScript side starts stuttering. This isn&#39;t a criticism of Framer
               Motion. It&#39;s just physics. You can&#39;t run JavaScript off the main thread.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The bundle size difference matters too. CSS animations ship with the browser. Framer
               Motion adds around 30KB to your bundle. That&#39;s not huge, but it&#39;s not nothing
               either, especially if you&#39;re only using it for a few hover effects.
             </p>
-            <h2 id="building-a-notification-dot">Building a Notification Dot</h2>
-            <p>
+            <h2
+              id="building-a-notification-dot"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Building a Notification Dot
+            </h2>
+            <p class="mt-0 mb-6">
               Let&#39;s put this into practice. We&#39;ll build a pulsing notification dot that runs
               forever without draining batteries.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/offloading-motion-to-the-gpu"
                 >Interactive example: Notification Dot</a
               >
             </p>
-            <p>The bad version:</p>
+            <p class="mt-0 mb-6">The bad version:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> pulse-bad <span class="u">{</span>
-  0% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0.7</span><span class="u">);</span>
-  <span class="u">}</span>
-  70% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">12px</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">12px</span><span class="u">;</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">10px</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-  100% <span class="u">{</span>
-    <span class="p">width</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">height</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> pulse-bad <span class="text-syn-u">{</span>
+  0% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.7</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  70% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">12px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">12px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">10px</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
-              Animating <code>width</code> and <code>height</code> triggers layout on every frame.
-              The browser recalculates the position of everything around the dot 60 times per
-              second. Forever.
+            <p class="mt-0 mb-6">
+              Animating
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >width</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >height</code
+              >
+              triggers layout on every frame. The browser recalculates the position of everything
+              around the dot 60 times per second. Forever.
             </p>
-            <p>The good version:</p>
+            <p class="mt-0 mb-6">The good version:</p>
             <pre
-            ><code class="language-css"><span class="k">@keyframes</span> pulse-good <span class="u">{</span>
-  0% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0.7</span><span class="u">);</span>
-  <span class="u">}</span>
-  70% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1.5</span><span class="u">);</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">10px</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-  100% <span class="u">{</span>
-    <span class="p">transform</span><span class="u">:</span> <span class="f">scale</span><span class="u">(</span><span class="n">1</span><span class="u">);</span>
-    <span class="p">box-shadow</span><span class="u">:</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="f">rgba</span><span class="u">(</span><span class="n">239</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">68</span><span class="u">,</span> <span class="n">0</span><span class="u">);</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> pulse-good <span class="text-syn-u">{</span>
+  0% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.7</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  70% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1.5</span><span class="text-syn-u">);</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">10px</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+  100% <span class="text-syn-u">{</span>
+    <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">scale</span><span class="text-syn-u">(</span><span class="text-syn-n">1</span><span class="text-syn-u">);</span>
+    <span class="text-syn-p">box-shadow</span><span class="text-syn-u">:</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-n">0</span> <span class="text-syn-f">rgba</span><span class="text-syn-u">(</span><span class="text-syn-n">239</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">68</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">);</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
-              Same visual effect. <code>transform: scale()</code> instead of <code>width</code> and
-              <code>height</code>. The GPU handles it. Battery life preserved.
+            <p class="mt-0 mb-6">
+              Same visual effect.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform: scale()</code
+              >
+              instead of
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >width</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >height</code
+              >. The GPU handles it. Battery life preserved.
             </p>
             <pre
-            ><code class="language-css"><span class="p">.notification-dot</span> <span class="u">{</span>
-  <span class="p">width</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-  <span class="p">height</span><span class="u">:</span> <span class="n">8px</span><span class="u">;</span>
-  <span class="p">background-color</span><span class="u">:</span> <span class="u">#</span>ef4444<span class="u">;</span>
-  <span class="p">border-radius</span><span class="u">:</span> <span class="n">50%</span><span class="u">;</span>
-  <span class="p">animation</span><span class="u">:</span> pulse-good <span class="n">2s</span> <span class="f">cubic-bezier</span><span class="u">(</span><span class="n">0.4</span><span class="u">,</span> <span class="n">0</span><span class="u">,</span> <span class="n">0.6</span><span class="u">,</span> <span class="n">1</span><span class="u">)</span> <span class="k">infinite</span><span class="u">;</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.notification-dot</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">background-color</span><span class="text-syn-u">:</span> <span class="text-syn-u">#</span>ef4444<span class="text-syn-u">;</span>
+  <span class="text-syn-p">border-radius</span><span class="text-syn-u">:</span> <span class="text-syn-n">50%</span><span class="text-syn-u">;</span>
+  <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> pulse-good <span class="text-syn-n">2s</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.4</span><span class="text-syn-u">,</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.6</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">)</span> <span class="text-syn-k">infinite</span><span class="text-syn-u">;</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Run this in Chrome DevTools Performance panel. The good version shows almost no main
               thread activity. The bad version shows layout calculations on every frame.
             </p>
-            <h2 id="what-to-animate-in-css">What to Animate in CSS</h2>
-            <p>A quick reference for choosing the right property.</p>
-            <table>
+            <h2
+              id="what-to-animate-in-css"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              What to Animate in CSS
+            </h2>
+            <p class="mt-0 mb-6">A quick reference for choosing the right property.</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Want to...</th>
-                  <th>Use</th>
-                  <th>Avoid</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Want to...</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Use</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Avoid</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Move something</td>
-                  <td><code>transform: translate()</code></td>
-                  <td>
-                    <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code>,
-                    <code>margin</code>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Move something</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >transform: translate()</code
+                    >
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >top</code
+                    >,
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >left</code
+                    >,
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >right</code
+                    >,
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >bottom</code
+                    >,
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >margin</code
+                    >
                   </td>
                 </tr>
                 <tr>
-                  <td>Resize something</td>
-                  <td><code>transform: scale()</code></td>
-                  <td><code>width</code>, <code>height</code></td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Resize something</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >transform: scale()</code
+                    >
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >width</code
+                    >,
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >height</code
+                    >
+                  </td>
                 </tr>
                 <tr>
-                  <td>Rotate something</td>
-                  <td><code>transform: rotate()</code></td>
-                  <td>Nothing to avoid here</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Rotate something</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >transform: rotate()</code
+                    >
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Nothing to avoid here
+                  </td>
                 </tr>
                 <tr>
-                  <td>Fade something</td>
-                  <td><code>opacity</code></td>
-                  <td><code>visibility</code> (can&#39;t transition)</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Fade something</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >opacity</code
+                    >
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >visibility</code
+                    >
+                    (can&#39;t transition)
+                  </td>
                 </tr>
                 <tr>
-                  <td>Change colors</td>
-                  <td><code>background-color</code>, <code>color</code></td>
-                  <td>These are fine but do trigger paint</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Change colors</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >background-color</code
+                    >,
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >color</code
+                    >
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    These are fine but do trigger paint
+                  </td>
                 </tr>
               </tbody>
             </table>
-            <p>
-              The pattern is clear. For spatial changes, always reach for <code>transform</code>.
-              For visibility, always reach for <code>opacity</code>.
+            <p class="mt-0 mb-6">
+              The pattern is clear. For spatial changes, always reach for
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform</code
+              >. For visibility, always reach for
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >opacity</code
+              >.
             </p>
-            <h2 id="respecting-user-preferences">Respecting User Preferences</h2>
-            <p>
+            <h2
+              id="respecting-user-preferences"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Respecting User Preferences
+            </h2>
+            <p class="mt-0 mb-6">
               Not everyone wants animations. Some users experience motion sickness. Others simply
               prefer reduced motion for focus.
             </p>
             <pre
-            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.notification-dot</span> <span class="u">{</span>
-    <span class="p">animation</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.notification-dot</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               For our notification dot, removing the pulse entirely is appropriate. The dot still
               shows there&#39;s a notification. The animation is decorative, not functional.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               For animations that communicate state changes, replace movement with instant
               transitions:
             </p>
             <pre
-            ><code class="language-css"><span class="k">@media</span> <span class="u">(</span>prefers-reduced-motion<span class="u">:</span> reduce<span class="u">)</span> <span class="u">{</span>
-  <span class="p">.modal</span> <span class="u">{</span>
-    <span class="p">animation</span><span class="u">:</span> <span class="k">none</span><span class="u">;</span>
-    <span class="p">opacity</span><span class="u">:</span> <span class="n">1</span><span class="u">;</span>
-  <span class="u">}</span>
-<span class="u">}</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+  <span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>
+    <span class="text-syn-p">animation</span><span class="text-syn-u">:</span> <span class="text-syn-k">none</span><span class="text-syn-u">;</span>
+    <span class="text-syn-p">opacity</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">;</span>
+  <span class="text-syn-u">}</span>
+<span class="text-syn-u">}</span>
 </code></pre>
-            <h2 id="making-the-choice">Making the Choice</h2>
-            <p>After everything we&#39;ve covered, here&#39;s how I think about it.</p>
-            <p><strong>Reach for CSS when:</strong></p>
-            <ul>
+            <h2
+              id="making-the-choice"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Making the Choice
+            </h2>
+            <p class="mt-0 mb-6">
+              After everything we&#39;ve covered, here&#39;s how I think about it.
+            </p>
+            <p class="mt-0 mb-6"><strong>Reach for CSS when:</strong></p>
+            <ul class="mt-0 mb-6">
               <li>The animation runs between two predictable states (hover on, hover off)</li>
               <li>The animation loops continuously without user interaction</li>
               <li>You need guaranteed smoothness regardless of JavaScript load</li>
               <li>Every kilobyte of bundle size matters</li>
             </ul>
-            <p><strong>Reach for JavaScript when:</strong></p>
-            <ul>
+            <p class="mt-0 mb-6"><strong>Reach for JavaScript when:</strong></p>
+            <ul class="mt-0 mb-6">
               <li>Users might interrupt the animation mid-flight</li>
               <li>The animation needs to feel physical and responsive</li>
               <li>You&#39;re orchestrating multiple elements with complex timing</li>
               <li>The animation state depends on application data</li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               Most projects need both. A marketing site might use CSS for scroll-triggered reveals
               and JavaScript for an interactive product demo. A dashboard might use CSS for loading
               indicators and JavaScript for drag-and-drop reordering.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The worst choice is using the wrong tool because you only know one approach. Learn
               both. Then pick based on what the interaction actually needs.
             </p>
-            <h2 id="conclusion">Conclusion</h2>
-            <p>
+            <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Conclusion
+            </h2>
+            <p class="mt-0 mb-6">
               CSS animations are a powerful tool when used correctly. They run on the GPU, stay
               smooth under load, and add zero bytes to your JavaScript bundle.
             </p>
-            <p>
-              The key is knowing what to animate. Stick to <code>transform</code> and
-              <code>opacity</code>. Avoid properties that trigger layout. Test with DevTools.
-              Respect reduced motion preferences.
+            <p class="mt-0 mb-6">
+              The key is knowing what to animate. Stick to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >opacity</code
+              >. Avoid properties that trigger layout. Test with DevTools. Respect reduced motion
+              preferences.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               For hover effects, enter animations, and infinite loops, CSS is the right choice. For
               interruptible state changes, spring physics, and complex sequences, reach for
               JavaScript.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The goal isn&#39;t to animate everything with CSS. It&#39;s to understand when CSS is
               the right tool and use it well.
             </p>
           </div>
         </article>
-        <nav class="related" aria-label="Related writing">
-          <h2>Related writing</h2>
-          <ul>
-            <li>
-              <a href="/blogs/design-engineering/keyframe-animations/"
+        <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/keyframe-animations/"
                 >Choreographing Multi-Step Motion</a
               >
             </li>
-            <li><a href="/blogs/design-engineering/clip-path-reveals/">Invisible Scissors</a></li>
-            <li><a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a></li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/clip-path-reveals/"
+                >Invisible Scissors</a
+              >
+            </li>
+            <li class="my-2">
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/css-transitions/"
+                >Smooth Operators</a
+              >
+            </li>
           </ul>
         </nav>
       </main>
-      <footer class="site-footer">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
-        <div class="footer-bottom">
+        <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
-          ><button type="button" data-theme-toggle aria-label="Switch color theme">Theme</button>
+          ><button
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            type="button"
+            data-theme-toggle
+            aria-label="Switch color theme"
+          >
+            Theme
+          </button>
         </div>
       </footer>
     </div>

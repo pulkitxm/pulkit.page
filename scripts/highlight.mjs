@@ -25,38 +25,38 @@ function tokenRole(scopes) {
   const names = scopes.map((scope) => (typeof scope === "string" ? scope : scope.scopeName));
   const has = (pattern) => names.some((name) => pattern.test(name));
   if (has(/comment/)) {
-    return "c";
+    return "text-syn-c italic";
   }
   if (
     has(
       /entity\.other\.attribute-name|variable\.other\.property|support\.type\.property-name|meta\.object-literal\.key/,
     )
   ) {
-    return "p";
+    return "text-syn-p";
   }
   if (has(/string|regexp|heredoc/)) {
-    return "s";
+    return "text-syn-s";
   }
   if (has(/constant\.numeric|constant\.digit|\.numeric/)) {
-    return "n";
+    return "text-syn-n";
   }
   if (has(/entity\.name\.function|support\.function/)) {
-    return "f";
+    return "text-syn-f";
   }
   if (has(/entity\.name\.tag/)) {
-    return "g";
+    return "text-syn-g";
   }
   if (has(/entity\.name\.type|entity\.name\.class|support\.class|support\.type/)) {
-    return "t";
+    return "text-syn-t";
   }
   if (has(/keyword\.operator/)) {
-    return "o";
+    return "text-syn-o";
   }
   if (has(/storage(?:\.|$)|keyword\.|constant\.language|support\.constant/)) {
-    return "k";
+    return "text-syn-k";
   }
   if (has(/punctuation|meta\.brace/)) {
-    return "u";
+    return "text-syn-u";
   }
   return "";
 }

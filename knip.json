@@ -2,10 +2,11 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
     "theme.js",
+    "styles.css",
     "scripts/import-reference.mjs",
     "scripts/*.test.js",
     "scripts/{build,ci,clean,dev,start,generate,highlight,format-code,check-comments,check-content,check-em-dashes,check-imports,check-layouts,check-repository,check-site}.mjs"
   ],
-  "project": ["**/*.{js,mjs,cjs,ts,tsx,jsx,mdx}", "!extras/**", "!dist/**"],
+  "project": ["**/*.{js,mjs,cjs,ts,tsx,jsx,mdx,css}", "!extras/**", "!dist/**"],
   "includeEntryExports": true
 }

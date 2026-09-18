@@ -32,17 +32,15 @@ function entryTransition(event, otherUrl) {
   const current = new URL(window.location.href);
   const other = new URL(otherUrl);
   const collection = /^\/(blogs|experience)\//.exec(current.pathname)?.[0];
-  const entry = [...document.querySelectorAll(".entry-link")].find(
-    (link) => link.href === other.href,
-  );
-  const title = entry
-    ? entry.querySelector(".entry-title")
-    : collection &&
-        current.pathname !== collection &&
-        (other.pathname === "/" ||
-          (other.pathname.startsWith(collection) && current.pathname.startsWith(other.pathname)))
-      ? document.querySelector(".page-heading h1")
-      : null;
+  const titles = [...document.querySelectorAll("[data-title]")];
+  const title =
+    titles.find((candidate) => candidate.closest("a")?.href === other.href) ??
+    (collection &&
+    current.pathname !== collection &&
+    (other.pathname === "/" ||
+      (other.pathname.startsWith(collection) && current.pathname.startsWith(other.pathname)))
+      ? titles.find((candidate) => candidate.tagName === "H1")
+      : null);
   if (current.origin !== other.origin || current.pathname === other.pathname || !title) {
     transition.skipTransition();
     return;

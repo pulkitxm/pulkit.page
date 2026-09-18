@@ -18,7 +18,7 @@ export async function checkLayouts(directory = "layouts") {
     social: '<a href="https://example.com">Example</a>',
     heading: "Example heading",
     content: "<p>Example content</p>",
-    date: '<p class="detail-meta"><time datetime="2026-01-01">2026-01-01</time></p>',
+    date: '<p class="text-sm text-muted"><time datetime="2026-01-01">2026-01-01</time></p>',
   };
   for (const name of layouts.keys()) {
     const report = await validator.validateString(formatHtml(applyLayout(layouts, name, values)));

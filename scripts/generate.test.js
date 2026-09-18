@@ -123,9 +123,7 @@ test("recursive sources generate routes and deleting a source leaves a detected 
       encoding: "utf8",
     });
   expect(run().status).toBe(0);
-  expect(readFileSync(join(cwd, "pages/notes/example/index.html"), "utf8")).toContain(
-    'class="page-heading"',
-  );
+  expect(readFileSync(join(cwd, "pages/notes/example/index.html"), "utf8")).toContain("data-title");
   expect(run("--check").status).toBe(0);
   rmSync(join(cwd, "pages/notes/example/index.html"));
   expect(run("--check").stderr).toContain("Missing HTML: pages/notes/example/index.html");
@@ -279,7 +277,7 @@ test("metadata is escaped, heading IDs are unique, and code examples stay litera
   expect(html).toContain("&lt;script&gt; &amp; {{heading}}");
   expect(html).toContain('id="same"');
   expect(html).toContain('id="same-1"');
-  expect(html).toContain('class="language-html"');
+  expect(html).toContain('class="language-html ');
   expect(html).toContain("&lt;");
   expect(html).toContain("example");
   expect(html).not.toContain("<div>example</div>");
@@ -511,15 +509,15 @@ test("writing groups years newest first and shows exact publication dates", asyn
   ];
   const markdown = `${source}\n:::list blogs\n`;
   const html = await renderPage(markdown, { pages, route: "/blogs/" });
-  expect(html.match(/class="writing-year"/g)).toHaveLength(2);
-  expect(html.indexOf('class="writing-year">2025')).toBeLessThan(
-    html.indexOf('class="writing-year">2024'),
+  const years = [...html.matchAll(/<h2\s+class="[^"]+"\s*>\s*(\d{4})\s*<\/h2>/g)].map(
+    (match) => match[1],
   );
+  expect(years).toEqual(["2025", "2024"]);
   expect(html).toContain('datetime="2025-01-01">Jan 1, 2025</time>');
   expect(html).toContain('datetime="2024-12-31">Dec 31, 2024</time>');
   expect(html.indexOf('href="/blogs/later/"')).toBeLessThan(html.indexOf('href="/blogs/new/"'));
   const home = await renderPage(markdown, { pages });
-  expect(home).not.toContain('class="writing-year"');
+  expect(home).not.toMatch(/<h2\s+class="[^"]+"\s*>\s*\d{4}\s*<\/h2>/);
   expect(home).toContain('datetime="2025-01-01">Jan 1');
 });
 

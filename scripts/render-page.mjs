@@ -50,14 +50,17 @@ function safeUrl(value) {
   }
   return escapeHtml(value);
 }
-function listingDate(metadata, exact = false) {
+function listingDate(metadata, exact = false, recent = false) {
   if (metadata.period || !metadata.date) {
     return escapeHtml(metadata.period ?? "");
   }
   const month = new Intl.DateTimeFormat("en-US", {
-    day: exact ? "numeric" : undefined,
+    day: exact || recent ? "numeric" : undefined,
     month: "short",
-    year: "numeric",
+    year:
+      recent && Number(metadata.date.slice(0, 4)) === new Date().getUTCFullYear()
+        ? undefined
+        : "numeric",
     timeZone: "UTC",
   }).format(new Date(metadata.date));
   return `<time datetime="${escapeHtml(metadata.date)}">${month}</time>`;
@@ -169,7 +172,7 @@ export async function renderPage(
               .map((page) =>
                 page.metadata.icon
                   ? experienceEntry(page)
-                  : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata, grouped)}</span></a></li>`,
+                  : `<li><a class="entry-link" href="${safeUrl(page.route)}"><span class="entry-title">${escapeHtml(page.metadata.title)}</span><span class="entry-meta">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
               )
               .join("")}</ul>`;
           if (!grouped) {
@@ -320,6 +323,7 @@ function collectionItems(pages, route, collection, limit) {
 
 export function renderDependencies(page, pages, site) {
   return {
+    year: page.route === "/" ? new Date().getUTCFullYear() : undefined,
     seo: seoHead(page.route, page.metadata, site, pages),
     breadcrumbs: breadcrumbs(page.route, pages),
     related: relatedNavigation(page.route, page.metadata, pages),

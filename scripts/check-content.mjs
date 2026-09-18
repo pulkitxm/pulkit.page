@@ -274,7 +274,8 @@ export function checkContent(file, source) {
       if (
         !/^(?::::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?|:::carousel|:::)$/.test(
           text,
-        )
+        ) &&
+        !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text)
       ) {
         fail("invalid or embedded directive", node);
       }

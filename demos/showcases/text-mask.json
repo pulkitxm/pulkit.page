@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/clip-path-reveals",
+  "index": 3,
+  "component": "text-mask",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "text-mask-demo.tsx",
+      "language": "tsx",
+      "code": "\"use client\";\n\nimport {\n  forwardRef,\n  useCallback,\n  useImperativeHandle,\n  useRef,\n  useState,\n} from \"react\";\nimport type { DemoRef } from \"../demo-showcase\";\n\nexport const TextMaskDemo = forwardRef<DemoRef>(\n  function TextMaskDemo(_, ref) {\n    const [key, setKey] = useState(0);\n    const [splitPct, setSplitPct] = useState(50);\n    const containerRef = useRef<HTMLDivElement>(null);\n\n    useImperativeHandle(ref, () => ({\n      replay: () => {\n        setKey((k) => k + 1);\n        setSplitPct(50);\n      },\n    }));\n\n    const onPointerMove = useCallback(\n      (e: React.PointerEvent<HTMLDivElement>) => {\n        const el = containerRef.current;\n        if (!el) {\n          return;\n        }\n        const rect = el.getBoundingClientRect();\n        const y = e.clientY - rect.top;\n        const p = Math.min(\n          Math.max((y / rect.height) * 100, 10),\n          90,\n        );\n        setSplitPct(Math.round(p));\n      },\n      [],\n    );\n\n    const bottomHide = 100 - splitPct;\n    const dashedClip = `inset(0 0 ${bottomHide}% 0)`;\n    const solidClip = `inset(${splitPct}% 0 0 0)`;\n\n    return (\n      <div\n        key={key}\n        className=\"flex size-full flex-col items-center justify-center gap-4 p-6\"\n      >\n        <div\n          ref={containerRef}\n          className=\"relative flex h-40 w-full max-w-md cursor-ns-resize touch-none select-none items-center justify-center overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-950\"\n          onPointerMove={onPointerMove}\n        >\n          <div className=\"relative flex h-24 items-center justify-center\">\n            <span\n              className=\"absolute font-bold text-5xl text-transparent\"\n              style={{\n                clipPath: dashedClip,\n                WebkitTextStroke: \"2px rgb(163 163 163)\",\n              }}\n            >\n              reveal\n            </span>\n            <span\n              className=\"absolute bg-linear-to-r from-sky-500 to-purple-600 bg-clip-text font-bold text-5xl text-transparent\"\n              style={{ clipPath: solidClip }}\n            >\n              reveal\n            </span>\n          </div>\n        </div>\n        <p className=\"max-w-md text-center text-neutral-600 text-sm dark:text-neutral-400\">\n          Move the pointer vertically. The dashed outline\n          uses{\" \"}\n          <code className=\"rounded bg-neutral-200 px-1 dark:bg-neutral-800\">\n            {dashedClip}\n          </code>{\" \"}\n          and the gradient fill uses{\" \"}\n          <code className=\"rounded bg-neutral-200 px-1 dark:bg-neutral-800\">\n            {solidClip}\n          </code>\n          .\n        </p>\n      </div>\n    );\n  },\n);"
+    }
+  ]
+}

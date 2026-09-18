@@ -13,6 +13,7 @@ import {
 import { join } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { buildDemoAssets } from "./demo-assets.mjs";
 import { logDuration } from "./duration.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
@@ -66,6 +67,9 @@ execFileSync(
   { stdio: ["ignore", "ignore", "inherit"] },
 );
 logDuration("Compiled styles", stepStartedAt);
+stepStartedAt = performance.now();
+await buildDemoAssets("dist/assets/demos");
+logDuration("Built demo assets", stepStartedAt);
 stepStartedAt = performance.now();
 const fingerprinted = new Map();
 for (const file of ["styles.css", "theme.js"]) {

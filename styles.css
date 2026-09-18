@@ -1,6 +1,6 @@
 :root {
   color-scheme: light dark;
-  --bg: #f8f7f3;
+  --bg: #faebd7;
   --fg: #292720;
   --muted: #777166;
   --line: #e4e1d9;
@@ -35,7 +35,7 @@
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #f8f7f3;
+  --bg: #faebd7;
   --fg: #292720;
   --muted: #777166;
   --line: #e4e1d9;

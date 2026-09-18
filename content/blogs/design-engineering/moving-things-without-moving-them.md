@@ -219,7 +219,7 @@ For tooltip animations, setting the origin to the side closest to the trigger ma
 
 ## Thinking in 3D
 
-CSS can do 3D transforms too. `rotateX()` rotates around the horizontal axis (think of a :popup[garage door opening](/assets/content/blogs/moving-things-without-moving-them/garage-door.gif "Garage door opening")). `rotateY()` rotates around the vertical axis (think of a :popup[revolving door](/assets/content/blogs/moving-things-without-moving-them/revolving-door.gif "Revolving door")). `rotateZ()` is the same as regular `rotate()`.
+CSS can do 3D transforms too. `rotateX()` rotates around the horizontal axis (think of a :embed[image-popup]{{"src":"/assets/content/blogs/moving-things-without-moving-them/garage-door.gif","alt":"Garage door opening","children":"garage door opening"}}). `rotateY()` rotates around the vertical axis (think of a :embed[image-popup]{{"src":"/assets/content/blogs/moving-things-without-moving-them/revolving-door.gif","alt":"Revolving door","children":"revolving door"}}). `rotateZ()` is the same as regular `rotate()`.
 
 But there's a catch. Without perspective, 3D rotations look flat.
 

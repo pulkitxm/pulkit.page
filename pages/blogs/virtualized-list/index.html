@@ -189,14 +189,15 @@
               <li>Height of the scroll container</li>
               <li>Current scroll position</li>
             </ul>
-            <p class="mt-0 mb-6">
+            <div class="mt-0 mb-6 text-center [&_img]:mx-auto">
               <img
-                class="mx-auto my-7 block h-auto max-w-full rounded-md"
+                class="mx-auto my-7 block rounded-lg w-auto h-auto max-h-[400px]"
                 src="/assets/content/blogs/virtualized-list/example.gif"
                 alt="Virtualized list example"
                 loading="lazy"
+                decoding="async"
               />
-            </p>
+            </div>
             <h2
               id="the-math-that-powers-virtualization"
               class="mt-12 text-xl font-semibold leading-tight tracking-tight"
@@ -404,11 +405,14 @@
                 >
               </li>
             </ul>
-            <p class="mt-0 mb-6"><strong>Complete VirtualList Component Code</strong></p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useRef<span class="text-syn-u">,</span> useState <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span>
+            <details class="mt-0 mb-6 rounded-lg border border-line p-4 [&>*:last-child]:mb-0">
+              <summary class="cursor-pointer font-bold">
+                Complete VirtualList Component Code
+              </summary>
+              <pre
+                tabindex="0"
+                class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+              ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useRef<span class="text-syn-u">,</span> useState <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span>
 
 <span class="text-syn-k">interface</span> <span class="text-syn-t">VirtualListProps</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">T</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   items<span class="text-syn-o">:</span> <span class="text-syn-t">T</span><span class="text-syn-u">[]</span>
@@ -466,6 +470,7 @@
   <span class="text-syn-u">)</span>
 <span class="text-syn-u">}</span>
 </code></pre>
+            </details>
             <h2
               id="using-the-virtualized-list"
               class="mt-12 text-xl font-semibold leading-tight tracking-tight"
@@ -508,13 +513,13 @@
               and normal lists. Try scrolling through both to see how virtualization keeps
               everything smooth even with thousands of items:
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://codesandbox.io/embed/hr8wwf?view=preview&amp;module=%2Fsrc%2FApp.tsx"
-                >Virtualized list demo comparing performance with normal lists</a
-              >
-            </p>
+            <iframe
+              class="mt-0 mb-6 block h-[500px] w-full overflow-hidden rounded border-0"
+              src="https://codesandbox.io/embed/hr8wwf?view=preview&amp;module=%2Fsrc%2FApp.tsx"
+              title="Virtualized list demo comparing performance with normal lists"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+              loading="lazy"
+            ></iframe>
             <h2
               id="when-should-you-use-virtualized-lists"
               class="mt-12 text-xl font-semibold leading-tight tracking-tight"

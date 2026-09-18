@@ -15,7 +15,7 @@ Creating a custom context menu in React can significantly enhance the user exper
 
 I have bootstrapped a new React TypeScript project for this walkthrough.
 
-## Adding react-contexify as a Dependency
+### Adding react-contexify as a Dependency
 
 ```bash
 pnpm add react-contexify

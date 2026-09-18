@@ -1173,14 +1173,14 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
                   </td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">
                     <strong>Scenario 1</strong>: Single database with all data in one
-                    table/collection on one server. <strong>Use case</strong>: Small applications,
-                    prototypes <strong>Max scale</strong>: ~100-200 WPS
+                    table/collection on one server.<br /><br /><strong>Use case</strong>: Small
+                    applications, prototypes<br /><strong>Max scale</strong>: ~100-200 WPS
                   </td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">
                     <strong>Scenario 2</strong>: One database with data logically split into
-                    partitions (by date, region, etc.) on one server. <strong>Use case</strong>:
-                    Medium applications with time-series data <strong>Max scale</strong>: ~500-1000
-                    WPS
+                    partitions (by date, region, etc.) on one server.<br /><br />
+                    <strong>Use case</strong>: Medium applications with time-series data<br />
+                    <strong>Max scale</strong>: ~500-1000 WPS
                   </td>
                 </tr>
                 <tr>
@@ -1189,14 +1189,14 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
                   </td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">
                     <strong>Scenario 3</strong>: Data distributed across multiple database servers.
-                    Each shard holds a portion without internal partitioning.
-                    <strong>Use case</strong>: Large applications needing horizontal scale
+                    Each shard holds a portion without internal partitioning.<br /><br />
+                    <strong>Use case</strong>: Large applications needing horizontal scale<br />
                     <strong>Max scale</strong>: Thousands of WPS per shard
                   </td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">
                     <strong>Scenario 4</strong>: Each shard has partitioned data + read replicas.
-                    The ultimate setup for massive scale. <strong>Use case</strong>: Tech giants,
-                    global applications <strong>Max scale</strong>: Virtually unlimited
+                    The ultimate setup for massive scale.<br /><br /><strong>Use case</strong>: Tech
+                    giants, global applications<br /><strong>Max scale</strong>: Virtually unlimited
                   </td>
                 </tr>
               </tbody>

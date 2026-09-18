@@ -345,7 +345,7 @@ Recovery:
 
 This is expensive. You're paying for infrastructure in two regions. But for businesses where downtime costs more than the infrastructure, it's worth it.
 
-### RPO (Recovery Point Objective - How much data you can afford to lose) and RTO (Recovery Time Objective - How long until service is restored) for Different Strategies
+### :embed[info-tip]{{"text":"RPO","tip":"Recovery Point Objective - How much data you can afford to lose"}} and :embed[info-tip]{{"text":"RTO","tip":"Recovery Time Objective - How long until service is restored"}} for Different Strategies
 
 | Strategy              | RPO             | RTO       | Cost    |
 | --------------------- | --------------- | --------- | ------- |

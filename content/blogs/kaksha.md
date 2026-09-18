@@ -39,9 +39,9 @@ I told her we are building this, and I need you to explain it to me properly. No
 
 And this is what came out of that conversation:
 
-![A handwritten list on school notepaper next to an Android tablet running the Kaksha app. The list reads: 1 Teachers Add/Del, 2 Sub Add/Del, 3 Full Tr. Time Table, 4 Clash of T.T., 5 Sub-Tr (Data feed), 6 Notes, with a boxed mapping of class numbers to section letters underneath.](/assets/content/public/blogs/kaksha/paper-and-tablet.webp)
-
-The actual spec. Six numbered lines on school notepaper, and a boxed list of how many sections each class runs.
+:::embed blog-image
+{"src":"/assets/content/public/blogs/kaksha/paper-and-tablet.webp","width":1200,"height":1600,"maxHeight":620,"alt":"A handwritten list on school notepaper next to an Android tablet running the Kaksha app. The list reads: 1 Teachers Add/Del, 2 Sub Add/Del, 3 Full Tr. Time Table, 4 Clash of T.T., 5 Sub-Tr (Data feed), 6 Notes, with a boxed mapping of class numbers to section letters underneath.","caption":"The actual spec. Six numbered lines on school notepaper, and a boxed list of how many sections each class runs."}
+:::
 
 Six lines. Add and delete teachers. Add and delete subjects. The full per-teacher timetable. Clashes. Subject-to-teacher data feed. Notes. Then a box in the middle mapping each class to how many sections it has: 6 has E, 7 has F, 8 has G, 9 has E, 10 has C, 11 has D, 12 has D.
 
@@ -75,17 +75,17 @@ One note before the screenshots: **every teacher name, class and slot you are ab
 
 ### The grid
 
-![The Kaksha timetable screen on an Android tablet. Sections A and B are shown as rows, periods 0 to 6 as columns, and each cell holds coloured subject chips with teacher names underneath.](/assets/content/public/blogs/kaksha/timetable-grid.webp)
-
-Class VI. Sections down the side, periods across the top, day numbers on each block.
+:::embed blog-image
+{"src":"/assets/content/public/blogs/kaksha/timetable-grid.webp","width":1920,"height":1200,"alt":"The Kaksha timetable screen on an Android tablet. Sections A and B are shown as rows, periods 0 to 6 as columns, and each cell holds coloured subject chips with teacher names underneath.","caption":"Class VI. Sections down the side, periods across the top, day numbers on each block."}
+:::
 
 This is the screen she lives in. Sections down the left, periods across the top, and inside each cell the subject chip, the teacher, and the days that block runs on. Period 0 is the remedial NIPUN slot. Notice the block with `Skt`, `Pnb` and `Urdu` stacked together with three teacher names: that is one elective slot splitting into three streams at once, which is exactly the kind of thing that made the paper version painful.
 
 ### Clashes
 
-![The Kaksha clashes screen listing four teacher overlaps. Each card names a teacher, says 'Booked in two places at once', and lists the conflicting sections, subjects and the period and days involved.](/assets/content/public/blogs/kaksha/clash-detection.webp)
-
-Four teacher overlaps, each one telling you exactly who, which period, and which days.
+:::embed blog-image
+{"src":"/assets/content/public/blogs/kaksha/clash-detection.webp","width":1920,"height":1200,"alt":"The Kaksha clashes screen listing four teacher overlaps. Each card names a teacher, says 'Booked in two places at once', and lists the conflicting sections, subjects and the period and days involved.","caption":"Four teacher overlaps, each one telling you exactly who, which period, and which days."}
+:::
 
 This is the screen that justifies the whole app.
 
@@ -95,9 +95,9 @@ Nothing about it is clever. It is a pure function over the entries. But this is 
 
 ### Teachers
 
-![The Kaksha teachers screen showing a sample staff list. Each row has a teacher's name, their department and slot count, a green load bar, subject chips, and their weekly lecture count on the right.](/assets/content/public/blogs/kaksha/teacher-load.webp)
-
-Every teacher with their weekly load as a bar. Overloading someone becomes visible instead of theoretical.
+:::embed blog-image
+{"src":"/assets/content/public/blogs/kaksha/teacher-load.webp","width":1920,"height":1200,"alt":"The Kaksha teachers screen showing a sample staff list. Each row has a teacher's name, their department and slot count, a green load bar, subject chips, and their weekly lecture count on the right.","caption":"Every teacher with their weekly load as a bar. Overloading someone becomes visible instead of theoretical."}
+:::
 
 The whole staff list, each with their weekly lecture count and a load bar. Fairness in a timetable is mostly about load distribution, and load distribution is basically impossible to eyeball across a stack of paper sheets. Here it is a list you can scan in five seconds.
 
@@ -107,17 +107,17 @@ This is also the screen for the bad mornings. Someone calls in sick, and the que
 
 Then the part she actually cared about most, which I did not see coming.
 
-![The Kaksha share screen. A dropdown selects a teacher, a light and dark style toggle sits below it, a rendered weekly timetable card is previewed, and there are 'Preview illustration' and 'Share as illustration' buttons at the bottom.](/assets/content/public/blogs/kaksha/share-screen.webp)
-
-Pick a teacher, pick light or dark, and it renders their week as a card.
+:::embed blog-image
+{"src":"/assets/content/public/blogs/kaksha/share-screen.webp","width":1920,"height":1200,"alt":"The Kaksha share screen. A dropdown selects a teacher, a light and dark style toggle sits below it, a rendered weekly timetable card is previewed, and there are 'Preview image' and 'Share as image' buttons at the bottom.","caption":"Pick a teacher, pick light or dark, and it renders their week as a card."}
+:::
 
 Every teacher needs their own personal timetable. Not the whole school grid, just their week. And the way that gets distributed in real life is WhatsApp.
 
 So the share tab renders one teacher's week as a proper image and hands it straight to the Android share sheet. `react-native-view-shot` to rasterise the card, `expo-sharing` to fire the intent. One tap, pick the chat, done.
 
-![An exported timetable card for a single teacher, showing 27 lectures per week across classes VI, VII, VIII and X, laid out as periods by weekday with colour-coded subject blocks.](/assets/content/public/blogs/kaksha/teacher-export.webp)
-
-What actually lands in the WhatsApp group. One teacher's whole week, one image.
+:::embed blog-image
+{"src":"/assets/content/public/blogs/kaksha/teacher-export.webp","width":1920,"height":1204,"alt":"An exported timetable card for a single teacher, showing 27 lectures per week across classes VI, VII, VIII and X, laid out as periods by weekday with colour-coded subject blocks.","caption":"What actually lands in the WhatsApp group. One teacher's whole week, one image."}
+:::
 
 This is the feature that made her go from politely humouring me to actually asking for changes. Distribution was never a step in my head, because I was thinking about the data. For her, distributing a personalised timetable to every teacher on the staff list was half the job.
 

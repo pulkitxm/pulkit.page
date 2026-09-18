@@ -1,5 +1,16 @@
 import { execFileSync } from "node:child_process";
-import { copyFileSync, cpSync, existsSync, readdirSync, rmSync } from "node:fs";
+import { createHash } from "node:crypto";
+import {
+  copyFileSync,
+  cpSync,
+  existsSync,
+  readdirSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { join } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { logDuration } from "./duration.mjs";
@@ -55,4 +66,32 @@ execFileSync(
   { stdio: ["ignore", "ignore", "inherit"] },
 );
 logDuration("Compiled styles", stepStartedAt);
+stepStartedAt = performance.now();
+const fingerprinted = new Map();
+for (const file of ["styles.css", "theme.js"]) {
+  const hash = createHash("sha256")
+    .update(readFileSync(`dist/${file}`))
+    .digest("hex")
+    .slice(0, 12);
+  const name = file.replace(/\.(\w+)$/, `.${hash}.$1`);
+  renameSync(`dist/${file}`, `dist/${name}`);
+  fingerprinted.set(`/${file}"`, `/${name}"`);
+}
+function htmlFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      return directory === "dist" && /^dev-[0-9]+$/.test(entry.name) ? [] : htmlFiles(path);
+    }
+    return entry.name.endsWith(".html") ? [path] : [];
+  });
+}
+for (const file of htmlFiles("dist")) {
+  let html = readFileSync(file, "utf8");
+  for (const [from, to] of fingerprinted) {
+    html = html.replaceAll(`="${from}`, `="${to}`);
+  }
+  writeFileSync(file, html);
+}
+logDuration("Fingerprinted styles and theme script", stepStartedAt);
 logDuration(`Built dist for ${origin}`, buildStartedAt);

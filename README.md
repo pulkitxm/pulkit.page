@@ -119,7 +119,9 @@ repository checks, renderer/sync tests, build, local links, and shell syntax.
 
 `bun run build` first requires production sync, then renders `dist/` for the selected
 environment, copies shared assets, and compiles `styles.css` with the Tailwind CLI into a
-minified `dist/styles.css` that contains only the utilities used by layouts and the renderer.
+minified stylesheet that contains only the utilities used by layouts and the renderer.
+The stylesheet and `theme.js` get content-hashed names such as `styles.<hash>.css`, and
+every built page points at them, so CDN caches never pair new HTML with stale assets.
 GitHub Pages deploys `dist/`. Markdown, templates, and reference files are not
 published. Source files are capped at 2 MiB; migrated media at 5 MiB.
 

@@ -3,6 +3,8 @@ title: About
 description: About Pulkit, a software engineer based in India.
 ---
 
+![Portrait of Pulkit](/assets/content/pulkit-portrait.png)
+
 I'm Pulkit, a software engineer based in India, working at **Noveum.ai**. I like turning ideas into useful software, exploring how things work, and sharing what I learn.
 
 My work spans full-stack development, developer tools, and interfaces. I've also led the Deviators developer community and worked with teams at MagicAPI, CrowdVolt, and DatawaveLabs.

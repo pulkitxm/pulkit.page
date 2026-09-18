@@ -33,6 +33,9 @@ function setupLightbox() {
 
 function setupCarousel(root) {
   const viewport = root.querySelector("[data-carousel-viewport]");
+  if (!viewport) {
+    return;
+  }
   const embla = EmblaCarousel(viewport, { align: "start", loop: true });
   const dots = [...root.querySelectorAll("[data-carousel-dot]")];
   const update = () => {

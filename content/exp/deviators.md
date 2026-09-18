@@ -7,7 +7,7 @@ role: Chairperson
 date: 2024-02-16
 period: Feb 2024 – Jul 2025
 endDate: 2025-07-13
-icon: /assets/experience/deviators.svg
+icon: /assets/exp/deviators.svg
 ---
 
 We didn't have any good college clubs or societies. So me and some of my friends came together to start something of our own, an independent club driven by purpose. While many clubs just existed for namesake, we wanted to genuinely improve the coding culture on campus. That's how [Deviators](https://deviatorsdce.tech) was born.
@@ -18,7 +18,7 @@ During our tenure (2024–2025), we organized multiple events, workshops, and a 
 
 My favorite part was organizing the [36-hour hackathon](https://devolympus.deviatorsdce.tech). Not only was it fun and full of energy, but it also gave me my first real taste of managing scale. With 350+ participants and 80+ teams signing up through the platform I built, I was responsible for everything: registrations, fee collection, consent forms, user flow, and support. Yes, there were bugs. Yes, it was chaotic. But it worked. And it saved the team from the nightmare of managing all this through Excel.
 
-I still remember hustling to fix issues live while people were signing up, and weirdly enough, I'm thankful to my [previous (at that time) YC startup](/experience/crowdvolt/) for letting me go. That unexpected turn gave me the time to go all-in on making this work. 🤣
+I still remember hustling to fix issues live while people were signing up, and weirdly enough, I'm thankful to my [previous (at that time) YC startup](/exp/crowdvolt/) for letting me go. That unexpected turn gave me the time to go all-in on making this work. 🤣
 
 ![Devolympus Users](/assets/content/exp/deviators/devolympus-users.webp)
 

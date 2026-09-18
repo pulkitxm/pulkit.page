@@ -12,9 +12,9 @@ I'm Pulkit, a software engineer based in India. I build products for the web at 
 
 ## Experience
 
-:::list experience limit=3
+:::list exp limit=3
 
-[All experience →](/experience/)
+[All experience →](/exp/)
 
 ## Recent writing
 

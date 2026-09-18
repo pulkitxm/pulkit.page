@@ -14,7 +14,7 @@
 | `components`          | Occurrences of each encountered MDX JSX element name                                                      | 99 names, 249 occurrences, including ordinary HTML tags              |
 | `experienceTreatment` | Editorial note about later treatment of experience content                                                | Full original write-ups; article prose and code preserved            |
 
-For example, `blogs/system-design/caching.mdx` maps to [content/blogs/system-design/caching.md](../content/blogs/system-design/caching.md), with 30 original code blocks. `experiences/magicapi.mdx` maps to [content/experience/magicapi.md](../content/experience/magicapi.md): the plural directory becomes singular. The source field is not relative to `docs/` or the repository root.
+For example, `blogs/system-design/caching.mdx` maps to [content/blogs/system-design/caching.md](../content/blogs/system-design/caching.md), with 30 original code blocks. `experiences/magicapi.mdx` maps to [content/exp/magicapi.md](../content/exp/magicapi.md): the plural directory becomes the shorter `exp` route. The source field is not relative to `docs/` or the repository root.
 
 The inventory includes 73 `DemoShowcase` wrappers, eight `ImageGrid` instances, six `EasingCurveDemo` instances, 14 `Math` instances, and numerous HTML tags such as `br`. These counts record encountered elements, not how many live widgets survive. Parent wrappers and nested demonstrations are counted separately because conversion traverses their children.
 
@@ -47,7 +47,7 @@ The importer reads the original asset registry at `extras/pulkitxm.com/src/asset
 | Names ending in `Demo` or `Playground`                   | Link labeled “Interactive example” to the original article                     |
 | `br`, `track`                                            | A space, or no output, respectively                                            |
 
-Unknown components and other unsupported MDX nodes throw instead of silently disappearing. Conversion is not execution of React components. Images referenced through the registry or public directory are copied beneath `assets/content/`; remote HTTP(S) images remain remote. Local PDFs/videos become `https://www.pulkit.page` links. Recognized old blog links are redirected to discovered local blog routes, `/series/` becomes `/blogs/`, and `/exp/` becomes `/experience/`. These are content rewrites, not deployed HTTP redirect rules.
+Unknown components and other unsupported MDX nodes throw instead of silently disappearing. Conversion is not execution of React components. Images referenced through the registry or public directory are copied beneath `assets/content/`; remote HTTP(S) images remain remote. Local PDFs/videos become `https://www.pulkit.page` links. Recognized old blog links are redirected to discovered local blog routes, and `/series/` becomes `/blogs/`. These are content rewrites, not deployed HTTP redirect rules.
 
 `codeBlocks` traverses source and converted trees. The importer checks that each original block's text appears in the converted tree and again after serialization. This tests presence of code text, not exact ordering or multiplicity when duplicate blocks have identical text; it does not prove equivalence of every prose sentence. Components can introduce new code blocks, so final counts need not equal the audit counts.
 

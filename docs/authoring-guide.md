@@ -57,7 +57,7 @@ The renderer promotes body headings to at least H2 and assigns IDs from lowercas
 
 :::list blogs/system-design
 
-:::list experience
+:::list exp
 ```
 
 Place one directive in its own paragraph. The limit must be a positive integer; omission means all items. Selection is recursive by route prefix, excludes indexes and the current page, sorts newest date first then title, and displays period or year. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
@@ -75,6 +75,35 @@ Group two or more related images into a sliding carousel with Previous and Next 
 ```
 
 The block may contain only images, each with alt text. Each slide links to its full-size image, which also makes the scrolling region reachable by keyboard. Without JavaScript it still scrolls horizontally with snap points; [theme.js](../theme.js) wires the buttons and the position counter.
+
+## Components
+
+Richer widgets come from the original site and render at generate time. A block component is an `embed` fence naming the component, whose single line is a JSON object of props. The inline form carries the same name and props inside running text. Unknown names, unknown props, and unsupported prop values fail generation rather than degrading silently.
+
+```md
+:::embed tech-badges
+{"technologies":["TypeScript","Kubernetes","Redis"]}
+:::
+
+Press :embed[cmd-key]{{}} + K to open it.
+```
+
+| Component                     | Purpose                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| `image`, `blog-image`         | A single figure, optionally captioned and zoomable                             |
+| `image-grid`                  | Two images side by side, or a carousel with an optional `label` above two      |
+| `blog-gallery`                | A carousel of captioned photographs                                            |
+| `image-popup`                 | An inline thumbnail that opens the lightbox                                    |
+| `install-tabs`                | One install command per package manager, with copy and a remembered preference |
+| `youtube-embed`               | A click-to-load video frame                                                    |
+| `tweet`, `tweet-embed`        | A rendered post card; `tweet-embed` supplies the site owner as the author      |
+| `replies-carousel`            | A looping marquee of replies, each linking to the original post                |
+| `document-viewer`             | One PDF in a titled card with an open-in-new-tab link                          |
+| `document-tabs`               | Several such cards behind a tab strip, at most four                            |
+| `tech-badges`                 | A wrapped row of technology names                                              |
+| `math`, `info-tip`, `cmd-key` | Inline formula, hover tip, and command-key glyph                               |
+
+Carousels that share a page need distinct accessible names: pass `label` to each `image-grid` so the landmarks stay unique. Components that need behavior load their own script and stylesheet; each one still renders readable markup without JavaScript.
 
 ## Layout semantics and appearance
 

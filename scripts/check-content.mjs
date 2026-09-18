@@ -62,10 +62,10 @@ function metadataErrors(data, file) {
     }
   }
   const required = site ? siteFields : ["title", "description"];
-  if (/^content\/(blogs|experience)\//.test(file) && !file.endsWith("/index.md")) {
+  if (/^content\/(blogs|exp)\//.test(file) && !file.endsWith("/index.md")) {
     required.push("date");
   }
-  if (file.startsWith("content/experience/") && !file.endsWith("/index.md")) {
+  if (file.startsWith("content/exp/") && !file.endsWith("/index.md")) {
     required.push("role", "period");
   }
   for (const field of required) {
@@ -103,7 +103,7 @@ function metadataErrors(data, file) {
   for (const field of ["icon", "secondaryIcon"]) {
     if (
       data[field] &&
-      (!/^\/assets\/experience\/[a-z0-9-]+\.(webp|svg)$/.test(data[field]) ||
+      (!/^\/assets\/exp\/[a-z0-9-]+\.(webp|svg)$/.test(data[field]) ||
         !existsSync(data[field].slice(1)))
     ) {
       errors.push(`${field} must reference an existing experience icon`);
@@ -273,7 +273,7 @@ export function checkContent(file, source) {
       if (page && node.url && !/^(?:https?:\/\/|mailto:|\/(?!\/)|#)/.test(node.url)) {
         fail("page links must be root-relative, HTTPS/HTTP, mailto, or fragments", node);
       }
-      if (node.url?.startsWith("/blogs/") || node.url?.startsWith("/experience/")) {
+      if (node.url?.startsWith("/blogs/") || node.url?.startsWith("/exp/")) {
         if (!node.url.split(/[?#]/)[0].endsWith("/")) {
           fail("page URLs must end with /", node);
         }

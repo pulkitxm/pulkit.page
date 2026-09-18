@@ -7,7 +7,7 @@ role: Full Stack Engineer
 date: 2024-04-01
 period: Apr 2024 – Sep 2024
 endDate: 2024-09-30
-icon: /assets/experience/datawavelabs.webp
+icon: /assets/exp/datawavelabs.webp
 ---
 
 My internship at Datawave Labs provided a hands-on experience as a Full Stack Engineer, immersing me in the development of a scalable, cloud-driven data intelligence platform. Below are detailed insights into the work I accomplished.
@@ -69,7 +69,9 @@ Contributed to the project's scalability and reliability through DevOps practice
 
 My work involved a diverse set of technologies and tools that are integral to modern full-stack development:
 
-ReactJS · Tailwind CSS · Recoil · react-cookie · FastAPI · Redis Pub/Sub · psycopg2 · SQLAlchemy ORM · Docker · Kubernetes · Terraform · AWS SDK (boto3) · Azure SDK · GCP SDK · Postman · Event Source Polyfill
+:::embed tech-badges
+{"technologies":["ReactJS","Tailwind CSS","Recoil","react-cookie","FastAPI","Redis Pub/Sub","psycopg2","SQLAlchemy ORM","Docker","Kubernetes","Terraform","AWS SDK (boto3)","Azure SDK","GCP SDK","Postman","Event Source Polyfill"]}
+:::
 
 ## Conclusion
 
@@ -77,8 +79,6 @@ This internship was a comprehensive learning experience, blending practical deve
 
 ## Documents
 
-[Offer Letter](https://www.pulkit.page/exp/datawavelabs/offer-letter.pdf)
-
-[Relieving Letter](https://www.pulkit.page/exp/datawavelabs/relieving-letter.pdf)
-
-[Practical Report](https://www.pulkit.page/exp/datawavelabs/practical-triaining-report.pdf)
+:::embed document-tabs
+{"documents":[{"title":"Offer Letter","documentUrl":"/assets/content/exp/datawavelabs/offer-letter.pdf"},{"title":"Relieving Letter","documentUrl":"/assets/content/exp/datawavelabs/relieving-letter.pdf"},{"title":"Practical Report","documentUrl":"/assets/content/exp/datawavelabs/practical-training-report.pdf"}]}
+:::

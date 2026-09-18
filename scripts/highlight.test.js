@@ -89,6 +89,6 @@ describe("build-time syntax highlighting", () => {
     const html =
       '<pre><code class="language-js"><span class="k">const</span> x=1; <span class="c">// comment</span></code></pre>';
     expect(await scanText("file.html", html)).toHaveLength(1);
-    expect(await scanText("pages/experience/example/index.html", html)).toHaveLength(1);
+    expect(await scanText("pages/exp/example/index.html", html)).toHaveLength(1);
   });
 });

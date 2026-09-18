@@ -197,6 +197,7 @@
               Markdown with the power of React components. Here&#39;s my content structure:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">/content/blogs/
   ├── content-1.mdx
@@ -211,6 +212,7 @@
               file contains frontmatter metadata and the actual content:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-markdown rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">---</span>
 <span class="text-syn-s">title</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;Your Content Title&quot;</span>
@@ -279,6 +281,7 @@ Your content here...
             </h3>
             <p class="mt-0 mb-6">Here&#39;s how I generate static pages for all my content:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&#39;fs&#39;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> path <span class="text-syn-k">from</span> <span class="text-syn-s">&#39;path&#39;</span><span class="text-syn-u">;</span>
@@ -343,6 +346,7 @@ Your content here...
             </ul>
             <p class="mt-0 mb-6">Here&#39;s the implementation:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Metadata <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">;</span>
@@ -456,6 +460,7 @@ Your content here...
               >, I dynamically map them to generate sitemap entries:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> MetadataRoute <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">;</span>
@@ -576,6 +581,7 @@ Your content here...
             </h3>
             <p class="mt-0 mb-6">Here&#39;s what a complete metadata setup looks like:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> metadata<span class="text-syn-o">:</span> <span class="text-syn-t">Metadata</span> <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">title:</span> <span class="text-syn-s">&quot;Blog Title | Pulkit&quot;</span><span class="text-syn-u">,</span>
@@ -642,6 +648,7 @@ Your content here...
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> securityHeaders <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
   <span class="text-syn-u">{</span>
@@ -731,6 +738,7 @@ Your content here...
               for your content:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> RSS <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;rss&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> fs <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">;</span>
@@ -777,6 +785,7 @@ Your content here...
               Implement a tagging system that creates internal links between related posts:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RelatedPosts</span><span class="text-syn-u">({</span> currentSlug<span class="text-syn-u">,</span> tags <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> currentSlug<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span> tags<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[]</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> relatedPosts <span class="text-syn-o">=</span> <span class="text-syn-f">getAllPosts</span><span class="text-syn-u">()</span>

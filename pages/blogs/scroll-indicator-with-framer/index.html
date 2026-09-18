@@ -153,6 +153,7 @@
               />
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">framer-motion</span>
 </code></pre>
@@ -160,6 +161,7 @@
               To get a good viewport to observe the scroll effect, I am adding a test height.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
@@ -177,6 +179,7 @@
               Now let&#39;s add the main div that&#39;s gonna act like the scroll indicator
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> motion <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 
@@ -225,6 +228,7 @@
               hook from framer-motion.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useScroll <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 
@@ -241,6 +245,7 @@
               hook from framer-motion.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> width <span class="text-syn-o">=</span> <span class="text-syn-f">useTransform</span><span class="text-syn-u">(</span>scrollYProgress<span class="text-syn-u">,</span> <span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">],</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;0%&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;100%&quot;</span><span class="text-syn-u">]);</span>
 </code></pre>
@@ -256,6 +261,7 @@
               values (which range from 0 to 1) to the corresponding width values.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> motion<span class="text-syn-u">,</span> useScroll<span class="text-syn-u">,</span> useTransform <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 

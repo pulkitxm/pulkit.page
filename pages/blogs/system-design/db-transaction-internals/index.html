@@ -206,6 +206,7 @@
             </p>
             <p class="mt-0 mb-6">Here&#39;s a classic example:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span>;
 
@@ -273,6 +274,7 @@
               It&#39;s enforced by constraints, indexes, and triggers.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">accounts</span> (
   id <span class="text-syn-k">INT</span> <span class="text-syn-k">PRIMARY KEY</span>,
@@ -290,6 +292,7 @@
               until commit time:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Default: checked after each statement</span>
 <span class="text-syn-k">BEGIN</span>;
@@ -347,6 +350,7 @@
             </ol>
             <p class="mt-0 mb-6">Here&#39;s how MVCC works in PostgreSQL:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Transaction 1</span>
 <span class="text-syn-k">BEGIN</span>;
@@ -407,6 +411,7 @@
               </li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- PostgreSQL configuration for durability</span>
 <span class="text-syn-k">synchronous_commit</span> <span class="text-syn-o">=</span> <span class="text-syn-k">on</span>  <span class="text-syn-c italic">-- Wait for WAL flush before COMMIT returns</span>
@@ -440,6 +445,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               transaction.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Your transaction</span>
 <span class="text-syn-k">BEGIN</span>;
@@ -464,6 +470,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               same results every time.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span> <span class="text-syn-k">ISOLATION</span> <span class="text-syn-k">LEVEL</span> <span class="text-syn-k">REPEATABLE</span> <span class="text-syn-k">READ</span>;
 <span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> accounts; <span class="text-syn-c italic">-- Snapshot taken here</span>
@@ -475,6 +482,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               your results between queries:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Transaction 1</span>
 <span class="text-syn-k">BEGIN</span>;
@@ -501,6 +509,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               another. Even Repeatable Read can&#39;t prevent all anomalies. Consider this scenario:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Two transactions allocating the last seat on a flight</span>
 
@@ -524,6 +533,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               Both transactions saw 1 seat and both booked it. Serializable prevents this.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">BEGIN</span> <span class="text-syn-k">TRANSACTION</span> <span class="text-syn-k">ISOLATION</span> <span class="text-syn-k">LEVEL</span> <span class="text-syn-k">SERIALIZABLE</span>;
 <span class="text-syn-k">SELECT</span> seats <span class="text-syn-k">FROM</span> flights <span class="text-syn-k">WHERE</span> id <span class="text-syn-o">=</span> <span class="text-syn-n">1</span>;
@@ -569,6 +579,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               <li>Excellent for read-heavy workloads because readers never block</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Check transaction IDs</span>
 <span class="text-syn-k">SELECT</span> xmin, xmax, <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> accounts;
@@ -594,6 +605,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- InnoDB specific transaction</span>
 <span class="text-syn-k">START TRANSACTION</span> <span class="text-syn-k">WITH</span> CONSISTENT <span class="text-syn-k">SNAPSHOT</span>;
@@ -614,6 +626,7 @@ wal_level <span class="text-syn-o">=</span> <span class="text-syn-k">replica</sp
               <li>Uses two-phase commit protocol across shards, which adds latency</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> session <span class="text-syn-o">=</span> client<span class="text-syn-u">.</span><span class="text-syn-f">startSession</span><span class="text-syn-u">();</span>
 
@@ -676,6 +689,7 @@ session<span class="text-syn-u">.</span><span class="text-syn-f">startTransactio
             </ol>
             <p class="mt-0 mb-6"><strong>Deadlock example:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Transaction 1</span>
 <span class="text-syn-k">BEGIN</span>;
@@ -709,6 +723,7 @@ session<span class="text-syn-u">.</span><span class="text-syn-f">startTransactio
               rule of thumb: keep transactions as short as possible.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Bad</span>
 <span class="text-syn-k">BEGIN</span>;
@@ -776,6 +791,7 @@ session<span class="text-syn-u">.</span><span class="text-syn-f">startTransactio
             </p>
             <p class="mt-0 mb-6">You can observe bloat with a simple before/after:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- How many dead tuples are we carrying?</span>
 <span class="text-syn-k">SELECT</span>
@@ -800,6 +816,7 @@ VACUUM (<span class="text-syn-k">VERBOSE</span>) accounts;
               looks like (trimmed):
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">INFO:  vacuuming &quot;transactions_db.public.accounts&quot;
 INFO:  finished vacuuming &quot;transactions_db.public.accounts&quot;: index scans: 0
@@ -878,6 +895,7 @@ WAL usage: 3 records, 1 full page images, 8506 bytes
             </ul>
             <p class="mt-0 mb-6">To make this more concrete, break the size down:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">SELECT</span>
   pg_size_pretty(pg_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>))        <span class="text-syn-k">AS</span> table_only,
@@ -917,6 +935,7 @@ WAL usage: 3 records, 1 full page images, 8506 bytes
             </p>
             <p class="mt-0 mb-6">Here’s what that looks like in outputs (trimmed):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">-- Before VACUUM: size
  total_size
@@ -933,6 +952,7 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
 </code></pre>
             <p class="mt-0 mb-6">If you want to <strong>see the forks directly</strong>, run:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">SELECT</span>
   pg_size_pretty(pg_relation_size(<span class="text-syn-s">&#39;accounts&#39;</span>))                              <span class="text-syn-k">AS</span> heap_main,
@@ -943,6 +963,7 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
 </code></pre>
             <p class="mt-0 mb-6">Sample output (toy table):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"> heap_main |  fsm  |  vm   | indexes | total
 ----------+-------+-------+---------+-------
@@ -982,6 +1003,7 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
               Always implement retry logic:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">transferMoney</span><span class="text-syn-u">(</span>
   from<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span>
@@ -1021,6 +1043,7 @@ tuples: 3 removed, 1 remain, 0 are dead but not yet removable
               even if some items fail validation:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">BEGIN</span>;
 

@@ -219,7 +219,7 @@ No restore from backup needed. The data is already there, current, ready to serv
 
 How does data get to the replica? The short version: asynchronous is faster but risks small data loss windows, synchronous is slower but guarantees zero data loss.
 
-I talked about replication modes in great detail here: [Replication Modes](/blogs/system-design/understanding-database-scaling-sharding/#replication-modes/).
+I talked about replication modes in great detail here: [Replication Modes](/blogs/system-design/understanding-database-scaling-sharding/#replication-modes).
 
 Most systems use asynchronous replication. The performance hit of synchronous isn't worth it for non-critical data. Financial systems, where losing even one transaction is unacceptable, pay the latency cost.
 

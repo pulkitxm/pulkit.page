@@ -210,6 +210,7 @@
               mid-flight on server 3 fail. Users retry, life goes on.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Load Balancer
      │
@@ -230,6 +231,7 @@ Traffic automatically routes to healthy servers.
               payment history. Your entire business.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Single Database
      │
@@ -288,6 +290,7 @@ If this fails catastrophically, you&#39;re done.
               Replicate individual records across databases. Useful for specific high-value data.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createCriticalRecord</span><span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-t">CriticalData</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> primaryDb<span class="text-syn-u">.</span><span class="text-syn-f">insert</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;critical_records&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
@@ -304,6 +307,7 @@ If this fails catastrophically, you&#39;re done.
               important data.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">users</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">orders</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">critical_tables.sql</span>
 </code></pre>
@@ -315,6 +319,7 @@ If this fails catastrophically, you&#39;re done.
               protection.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/postgres</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
 </code></pre>
@@ -382,6 +387,7 @@ If this fails catastrophically, you&#39;re done.
               backup. Small, fast, low overhead.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">--data-only</span> <span class="text-syn-s">--inserts</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">incremental_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span><span class="text-syn-s">.sql</span>
 </code></pre>
@@ -390,6 +396,7 @@ If this fails catastrophically, you&#39;re done.
               but comprehensive.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/full_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
 </code></pre>
@@ -398,6 +405,7 @@ If this fails catastrophically, you&#39;re done.
               floods the building? Your data survives in another continent.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DC (Mumbai)
 ├── Daily incremental (local)
@@ -501,6 +509,7 @@ If this fails catastrophically, you&#39;re done.
               primary is replicated to the standby.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DB                      Standby DB
 ├── users table     ──sync──→   ├── users table
@@ -535,7 +544,7 @@ If this fails catastrophically, you&#39;re done.
               I talked about replication modes in great detail here:
               <a
                 class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="/blogs/system-design/understanding-database-scaling-sharding/#replication-modes/"
+                href="/blogs/system-design/understanding-database-scaling-sharding/#replication-modes"
                 >Replication Modes</a
               >.
             </p>
@@ -560,6 +569,7 @@ If this fails catastrophically, you&#39;re done.
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">wal_level = replica
 max_wal_senders = 3
@@ -595,6 +605,7 @@ wal_keep_size = 1GB
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">host replication replicator replica_ip/32 md5
 </code></pre>
@@ -612,6 +623,7 @@ wal_keep_size = 1GB
               >). Create this user if it doesn&#39;t exist:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">USER</span> <span class="text-syn-f">replicator</span> <span class="text-syn-k">WITH</span> REPLICATION <span class="text-syn-k">ENCRYPTED</span> <span class="text-syn-k">PASSWORD</span> <span class="text-syn-s">&#39;secure_password&#39;</span>;
 </code></pre>
@@ -626,6 +638,7 @@ wal_keep_size = 1GB
               handles this:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-h</span> <span class="text-syn-s">primary_ip</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/var/lib/postgresql/data</span> <span class="text-syn-s">-U</span> <span class="text-syn-s">replicator</span> <span class="text-syn-s">-P</span> <span class="text-syn-s">-R</span>
 </code></pre>
@@ -662,6 +675,7 @@ wal_keep_size = 1GB
             </p>
             <p class="mt-0 mb-6"><strong>Step 4: Start the Replica</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">postgresql</span>
 </code></pre>
@@ -673,6 +687,7 @@ wal_keep_size = 1GB
             <p class="mt-0 mb-6"><strong>Step 5: Verify It&#39;s Working</strong></p>
             <p class="mt-0 mb-6">On the primary, check connected replicas:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">SELECT</span> client_addr, <span class="text-syn-k">state</span>, sent_lsn, replay_lsn
 <span class="text-syn-k">FROM</span> pg_stat_replication;
@@ -731,6 +746,7 @@ wal_keep_size = 1GB
               The minimum: store one copy of your backups in a different geographic region.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DC (Mumbai)
 ├── Production database
@@ -749,6 +765,7 @@ Secondary DC (Singapore)
             </h3>
             <p class="mt-0 mb-6">For faster recovery, run a replica in another region.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Mumbai DC                        Singapore DC
 ├── Primary DB ──────async──────→ DR Replica
@@ -853,6 +870,7 @@ Secondary DC (Singapore)
               A monitoring system continuously checks the primary&#39;s health:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-u">{</span>
   endpoint<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -879,6 +897,7 @@ Secondary DC (Singapore)
               <li><strong>Redirect traffic</strong>: Update connection strings or DNS</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">handlePrimaryFailure</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> confirmed <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">confirmFailure</span><span class="text-syn-u">(</span>primary<span class="text-syn-u">,</span> <span class="text-syn-n">3</span><span class="text-syn-u">);</span>
@@ -931,6 +950,7 @@ Secondary DC (Singapore)
               it&#39;s catastrophic.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Network partition:
 
@@ -955,6 +975,7 @@ Two primaries. Data diverging. Disaster.
               both can&#39;t reach primary, it&#39;s probably really down.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">       Primary ───── Witness
           │            │
@@ -972,6 +993,7 @@ Two primaries. Data diverging. Disaster.
             </h2>
             <p class="mt-0 mb-6">A production-ready setup combines multiple strategies:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────────────────────────────┐
 │                  Mumbai DC                       │
@@ -1080,6 +1102,7 @@ Two primaries. Data diverging. Disaster.
               You have three servers behind a load balancer, handling HTTP requests:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        User
           │
@@ -1160,6 +1183,7 @@ Server  Server  Server
               the top level. The system monitors itself and self-heals.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Traditional approach:
   Component A monitors B
@@ -1218,6 +1242,7 @@ With leader election:
               Scenario 1: Backend Server Dies
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 2 stops responding
      ↓
@@ -1237,6 +1262,7 @@ System recovered ✓
               Scenario 2: Orchestrator Worker Dies
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Worker 1 stops responding
      ↓
@@ -1257,6 +1283,7 @@ System recovered ✓
             </h3>
             <p class="mt-0 mb-6">This is where leader election kicks in:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Leader stops responding
      ↓
@@ -1333,6 +1360,7 @@ System recovered ✓
               <li>The team doesn&#39;t stop functioning because the manager is absent</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Normal day:
   Manager runs standup
@@ -1361,6 +1389,7 @@ Manager returns:
             </h2>
             <p class="mt-0 mb-6">Here&#39;s a simplified view of how this might look:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrchestratorNode</span> <span class="text-syn-u">{</span>
   id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>

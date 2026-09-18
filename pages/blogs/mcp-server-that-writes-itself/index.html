@@ -408,6 +408,7 @@
               service, no extra port. The flow looks like this:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌────────────┐     ┌─────────────┐     ┌────────────────────┐     ┌─────────┐
 │    IDE     │────▶│  Next.js    │────▶│  withMcpAuth       │────▶│  Hono   │
@@ -445,6 +446,7 @@
               whole entry can be six lines:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> mcpHandler <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@repo/api&quot;</span><span class="text-syn-u">;</span>
 
@@ -501,6 +503,7 @@
               runs your auth check first and blocks bad requests:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> createMcpHandler<span class="text-syn-u">,</span> withMcpAuth <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;mcp-handler&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> <span class="text-syn-k">type</span> <span class="text-syn-u">{</span> McpServer <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@modelcontextprotocol/sdk/server/mcp.js&quot;</span><span class="text-syn-u">;</span>
@@ -566,6 +569,7 @@
               swap in whatever your REST middleware does today:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">verifyApiKey</span><span class="text-syn-u">(</span>
   _req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">,</span>
@@ -618,6 +622,7 @@
               function is where the real work lives:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">initializeMcpServer</span><span class="text-syn-u">(</span>server<span class="text-syn-o">:</span> <span class="text-syn-t">McpServer</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> spec <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">loadFilteredOpenApi</span><span class="text-syn-u">(</span>app<span class="text-syn-u">);</span>
@@ -663,6 +668,7 @@
               OpenAPI JSON your app already serves:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">loadFilteredOpenApi</span><span class="text-syn-u">(</span>app<span class="text-syn-o">:</span> <span class="text-syn-t">Hono</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> res <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> app<span class="text-syn-u">.</span><span class="text-syn-f">request</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;http://internal/api/openapi&quot;</span><span class="text-syn-u">);</span>
@@ -689,6 +695,7 @@
               substrings is enough to start:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> DENY_PATH_PREFIXES <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
   <span class="text-syn-s">&quot;/api/auth&quot;</span><span class="text-syn-u">,</span>
@@ -784,6 +791,7 @@
               strings and add a short hash to avoid collisions:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> MCP_TOOL_NAME_MAX_LEN <span class="text-syn-o">=</span> <span class="text-syn-n">48</span><span class="text-syn-u">;</span>
 
@@ -808,6 +816,7 @@
               so a bad spec line does not break every tool at startup:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">jsonSchemaToZod</span><span class="text-syn-u">(</span>schema<span class="text-syn-u">,</span> root<span class="text-syn-u">,</span> required<span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">ZodTypeAny</span> <span class="text-syn-u">{</span>
 <span class="text-syn-c italic">  // ... type switches, $ref resolution ...</span>
@@ -835,6 +844,7 @@
               The tool implementation builds the same URL your REST client would and calls the app:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">server<span class="text-syn-u">.</span><span class="text-syn-f">registerTool</span><span class="text-syn-u">(</span>toolName<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> title<span class="text-syn-u">,</span> description<span class="text-syn-u">,</span> inputSchema <span class="text-syn-u">},</span> <span class="text-syn-k">async</span> <span class="text-syn-u">(</span>args<span class="text-syn-u">,</span> <span class="text-syn-u">{</span> extra <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> <span class="text-syn-u">{</span> url<span class="text-syn-u">,</span> method<span class="text-syn-u">,</span> body <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">buildRequest</span><span class="text-syn-u">(</span>path<span class="text-syn-u">,</span> httpMethod<span class="text-syn-u">,</span> args<span class="text-syn-u">);</span>
@@ -891,6 +901,7 @@
               other call:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">server<span class="text-syn-u">.</span><span class="text-syn-f">registerResource</span><span class="text-syn-u">(</span>
   <span class="text-syn-s">&quot;scorers&quot;</span><span class="text-syn-u">,</span>
@@ -938,6 +949,7 @@
               traces, then open spans for errors.&quot; A tiny example:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">server<span class="text-syn-u">.</span><span class="text-syn-f">registerPrompt</span><span class="text-syn-u">(</span>
   <span class="text-syn-s">&quot;debug_traces&quot;</span><span class="text-syn-u">,</span>
@@ -970,6 +982,7 @@
               that says which GET to poll, how often, and which status values count as done:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> WORKERS_AND_POLLING <span class="text-syn-o">=</span> <span class="text-syn-s">`</span>
 <span class="text-syn-s">---</span>
@@ -1030,6 +1043,7 @@
               everything:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">bun</span> <span class="text-syn-s">dev</span>   <span class="text-syn-c italic"># starts Next.js on :3000</span>
 
@@ -1048,6 +1062,7 @@
             </p>
             <p class="mt-0 mb-6">To wire it up to Cursor for real:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;mcpServers&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>

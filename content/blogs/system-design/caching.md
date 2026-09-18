@@ -561,7 +561,7 @@ Most applications use lazy population for 90% of their caching. Eager population
 
 ![Scaling the cache](/assets/content/blogs/caching/scaling.webp)
 
-Cache is just a faster database. The scaling techniques are identical to how you'd scale any database. I wrote about scaling databases in depth here as well -> "[Before You Scale](/blogs/system-design/understanding-database-scaling-sharding/#before-you-scale/)".
+Cache is just a faster database. The scaling techniques are identical to how you'd scale any database. I wrote about scaling databases in depth here as well -> "[Before You Scale](/blogs/system-design/understanding-database-scaling-sharding/#before-you-scale)".
 
 ### Vertical Scaling
 

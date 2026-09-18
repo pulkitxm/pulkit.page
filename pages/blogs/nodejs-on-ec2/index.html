@@ -127,6 +127,7 @@
               >
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
@@ -142,6 +143,7 @@
               Add express as a dependency
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">express</span>
 </code></pre>
@@ -152,6 +154,7 @@
               Adding a simple / endpoint that returns a hello world object
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> express <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;express&quot;</span><span class="text-syn-u">);</span>
 
@@ -173,6 +176,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
               Start your express application
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">node</span> <span class="text-syn-s">index.js</span>
 </code></pre>
@@ -304,6 +308,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
             </h3>
             <p class="mt-0 mb-6">Update the package lists by running:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">update</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">upgrade</span>
 </code></pre>
@@ -319,6 +324,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
               >
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">curl</span> <span class="text-syn-s">-o-</span> <span class="text-syn-s">https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh</span> <span class="text-syn-o">|</span> <span class="text-syn-f">bash</span>
 </code></pre>
@@ -334,16 +340,19 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
               file:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">source</span> <span class="text-syn-s">~/.bashrc</span>
 </code></pre>
             <p class="mt-0 mb-6">Now let&#39;s install node using the nvm</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">nvm</span> <span class="text-syn-s">install</span> <span class="text-syn-s">node</span>
 </code></pre>
             <p class="mt-0 mb-6">To check if it is installed correctly:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">node</span> <span class="text-syn-s">--version</span>
 </code></pre>
@@ -396,11 +405,13 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
             </p>
             <p class="mt-0 mb-6"><strong>So let&#39;s install pm2</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-g</span> <span class="text-syn-s">pm2</span>
 </code></pre>
             <p class="mt-0 mb-6">Now we&#39;ll start the express app using pm2</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pm2</span> <span class="text-syn-s">start</span> <span class="text-syn-s">index.js</span>
 </code></pre>
@@ -532,6 +543,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                   First, install NGINX on your EC2 instance by running the following commands:
                 </p>
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">update</span>
 <span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">install</span> <span class="text-syn-s">nginx</span>
@@ -541,6 +553,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                 <p class="mt-0 mb-6"><strong>Start and Enable NGINX</strong></p>
                 <p class="mt-0 mb-6">Ensure that NGINX is running and set to start on boot:</p>
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">nginx</span>
 <span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">enable</span> <span class="text-syn-s">nginx</span>
@@ -550,6 +563,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                 <p class="mt-0 mb-6"><strong>Configure NGINX as a Reverse Proxy</strong></p>
                 <p class="mt-0 mb-6">Open the NGINX configuration file for editing:</p>
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">vi</span> <span class="text-syn-s">/etc/nginx/sites-available/default</span>
 </code></pre>
@@ -557,6 +571,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                   Replace the contents of the file with the following configuration:
                 </p>
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-nginx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">server</span> {
    <span class="text-syn-k"> listen </span><span class="text-syn-n">80</span><span class="text-syn-u">;</span>
@@ -589,6 +604,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                       Test the NGINX configuration to ensure there are no syntax errors:
                     </p>
                     <pre
+                      tabindex="0"
                       class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                     ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">nginx</span> <span class="text-syn-s">-t</span>
 </code></pre>
@@ -609,6 +625,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                     <p class="mt-0 mb-6"><strong>Restart NGINX</strong></p>
                     <p class="mt-0 mb-6">Restart NGINX to apply the new configuration:</p>
                     <pre
+                      tabindex="0"
                       class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                     ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">restart</span> <span class="text-syn-s">nginx</span>
 </code></pre>
@@ -632,6 +649,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                       name or public IP address without appending the port number. For example:
                     </p>
                     <pre
+                      tabindex="0"
                       class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                     ><code class="language-http rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">http://your_domain_or_IP
 </code></pre>

@@ -185,6 +185,7 @@
               the client with lightning speed and efficiency!
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">python3</span> <span class="text-syn-s">-m</span> <span class="text-syn-s">venv</span> <span class="text-syn-s">venv</span>
 <span class="text-syn-f">source</span> <span class="text-syn-s">venv/bin/activate</span>
@@ -198,6 +199,7 @@
               />
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pip</span> <span class="text-syn-s">install</span> <span class="text-syn-s">fastapi</span> <span class="text-syn-s">sse-starlette</span> <span class="text-syn-s">uvicorn</span> <span class="text-syn-s">asyncio</span>
 </code></pre>
@@ -211,6 +213,7 @@
             </p>
             <p class="mt-0 mb-6">Let&#39;s set up a basic FastAPI server.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">from</span> fastapi <span class="text-syn-k">import</span> FastAPI<span class="text-syn-u">,</span> Response
 
@@ -229,6 +232,7 @@ app<span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
               />
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">uvicorn</span> <span class="text-syn-s">main:app</span> <span class="text-syn-s">--reload</span>
 </code></pre>
@@ -240,6 +244,7 @@ app<span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
               Adding the SSE (Server-Sent Events)
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">from</span> sse_starlette<span class="text-syn-u">.</span>sse <span class="text-syn-k">import</span> EventSourceResponse
 </code></pre>
@@ -267,6 +272,7 @@ app<span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
               function that works as a long-running task.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">def</span> <span class="text-syn-f">event_generator</span><span class="text-syn-u">():</span>
     i<span class="text-syn-o">=</span> <span class="text-syn-n">1</span>
@@ -285,6 +291,7 @@ app<span class="text-syn-o">=</span> FastAPI<span class="text-syn-u">()</span>
             </p>
             <p class="mt-0 mb-6">So the final code looks like</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">from</span> fastapi <span class="text-syn-k">import</span> FastAPI<span class="text-syn-u">,</span> Response
 <span class="text-syn-k">from</span> sse_starlette<span class="text-syn-u">.</span>sse <span class="text-syn-k">import</span> EventSourceResponse

@@ -185,6 +185,7 @@
               />
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> serverCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">sha256</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
@@ -221,6 +222,7 @@
               >.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> server <span class="text-syn-o">=</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;user_123&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-n">2</span><span class="text-syn-u">);</span>
 </code></pre>
@@ -251,6 +253,7 @@
               key-value store. Given a key, store the value. Given a key, get the value.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getStorageNode</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> nodeCount<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">sha256</span><span class="text-syn-u">(</span>key<span class="text-syn-u">);</span>
@@ -471,6 +474,7 @@
               address, hostname, etc.) through the hash function.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> node0Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node0_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">const</span> node1Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node1_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
@@ -483,6 +487,7 @@
               <li>node 2 hashes to slot 8</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
@@ -496,6 +501,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
               <li>Find the first node clockwise from that position</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getOwner</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Node</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
@@ -549,6 +555,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
               <strong>binary search</strong>.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Node</span> <span class="text-syn-u">{</span>
   id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -598,11 +605,13 @@ Ring:  [ ] [ ] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
               We have three nodes at slots 3, 8, and 12. Let&#39;s add a fourth node.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> node3Slot <span class="text-syn-o">=</span> <span class="text-syn-f">sha128</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;node3_ip&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">%</span> <span class="text-syn-n">16</span><span class="text-syn-u">;</span>
 </code></pre>
             <p class="mt-0 mb-6">Let&#39;s say node 3 hashes to slot 1.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Before:
         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
@@ -647,6 +656,7 @@ Ring:  [ ] [3] [ ] [0] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
             <p class="mt-0 mb-6">Similar process for removing a node.</p>
             <p class="mt-0 mb-6">Let&#39;s remove node 0 (at slot 3).</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Before:
         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
@@ -693,6 +703,7 @@ Ring:  [ ] [3] [ ] [ ] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
             </ol>
             <p class="mt-0 mb-6">SHA-256 is commonly used:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> createHash <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;crypto&quot;</span><span class="text-syn-u">;</span>
 
@@ -724,6 +735,7 @@ Ring:  [ ] [3] [ ] [ ] [ ] [ ] [ ] [ ] [2] [ ] [ ] [ ] [1] [ ] [ ] [ ]
               others.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
@@ -739,6 +751,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
               Instead of placing each physical node once on the ring, place it multiple times.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">addNodeToRing</span><span class="text-syn-u">(</span>nodeId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> virtualNodes<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">void</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">for</span> <span class="text-syn-u">(</span><span class="text-syn-k">let</span> i <span class="text-syn-o">=</span> <span class="text-syn-n">0</span><span class="text-syn-u">;</span> i <span class="text-syn-o">&lt;</span> virtualNodes<span class="text-syn-u">;</span> i<span class="text-syn-o">++</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
@@ -765,6 +778,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
             </h2>
             <p class="mt-0 mb-6">Here&#39;s a complete, minimal implementation:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">ConsistentHash</span> <span class="text-syn-u">{</span>
   ring<span class="text-syn-o">:</span> <span class="text-syn-u">{</span> slot<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span> nodeId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">}[];</span>
@@ -811,6 +825,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
 </code></pre>
             <p class="mt-0 mb-6">Usage:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> ch <span class="text-syn-o">=</span> <span class="text-syn-f">createRing</span><span class="text-syn-u">(</span><span class="text-syn-n">1_000_000</span><span class="text-syn-u">);</span>
 
@@ -845,6 +860,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
               clients use consistent hashing to distribute keys across cache servers.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> cacheNodes <span class="text-syn-o">=</span> <span class="text-syn-u">[</span><span class="text-syn-s">&quot;cache1:11211&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;cache2:11211&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;cache3:11211&quot;</span><span class="text-syn-u">];</span>
 
@@ -866,6 +882,7 @@ Ring:  [ ] [ ] [ ] [0] [ ] [1] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [2]
               during scaling.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">routeRequest</span><span class="text-syn-u">(</span>sessionId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Server</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-f">getNode</span><span class="text-syn-u">(</span>consistentHash<span class="text-syn-u">,</span> sessionId<span class="text-syn-u">);</span>

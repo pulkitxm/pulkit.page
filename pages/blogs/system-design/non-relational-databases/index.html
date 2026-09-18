@@ -240,6 +240,7 @@
             </h3>
             <p class="mt-0 mb-6">Consider this document:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;user_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;u_12345&quot;</span><span class="text-syn-u">,</span>
@@ -255,6 +256,7 @@
               When you want to add a new interest, you can issue a simple update:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">db<span class="text-syn-u">.</span>users<span class="text-syn-u">.</span><span class="text-syn-f">updateOne</span><span class="text-syn-u">({</span> <span class="text-syn-p">user_id:</span> <span class="text-syn-s">&quot;u_12345&quot;</span> <span class="text-syn-u">},</span> <span class="text-syn-u">{</span> <span class="text-syn-p">$push:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">&quot;profile.interests&quot;:</span> <span class="text-syn-s">&quot;cooking&quot;</span> <span class="text-syn-u">}</span> <span class="text-syn-u">});</span>
 </code></pre>
@@ -291,6 +293,7 @@
             </h3>
             <p class="mt-0 mb-6"><strong>In-App Notifications:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;notification_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;n_789&quot;</span><span class="text-syn-u">,</span>
@@ -312,6 +315,7 @@
             </p>
             <p class="mt-0 mb-6"><strong>Product Catalogs:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;product_id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;p_001&quot;</span><span class="text-syn-u">,</span>
@@ -354,6 +358,7 @@
               The Power of Simplicity
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">GET(key) → value
 PUT(key, value) → success
@@ -369,6 +374,7 @@ DEL(key) → success
               trivial.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUserProfile</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Profile</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`profile:${userId}`</span><span class="text-syn-u">);</span>
@@ -466,6 +472,7 @@ DEL(key) → success
               needed.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrderStore</span> <span class="text-syn-u">{</span>
   <span class="text-syn-f">getOrder</span><span class="text-syn-u">(</span>orderId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Order</span> <span class="text-syn-o">|</span> <span class="text-syn-t">null</span><span class="text-syn-u">&gt;;</span>
@@ -500,6 +507,7 @@ DEL(key) → success
               inspecting every value.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// This is NOT how key-value stores work</span>
 <span class="text-syn-k">const</span> highBalanceUsers <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">query</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;SELECT * FROM users WHERE balance &gt; 1000&quot;</span><span class="text-syn-u">);</span>
@@ -529,6 +537,7 @@ DEL(key) → success
               key-value semantics on top of any database:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">kv_store</span> (
   <span class="text-syn-k">key</span> <span class="text-syn-k">VARCHAR</span>(<span class="text-syn-n">255</span>) <span class="text-syn-k">PRIMARY KEY</span>,
@@ -576,6 +585,7 @@ DEL(key) → success
               What Makes Graphs Special
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Emma ──FRIENDS──&gt; Alex
 │                 │
@@ -606,6 +616,7 @@ Los Angeles    Olivia
               Graph Queries with Cypher (Neo4j)
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-cypher rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Find all friends of Emma</span>
 <span class="text-syn-k">MATCH</span> (emma:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(friend)
@@ -633,6 +644,7 @@ Los Angeles    Olivia
             </h3>
             <p class="mt-0 mb-6"><strong>Social Networks:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-cypher rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Mutual friends between Emma and Alex</span>
 <span class="text-syn-k">MATCH</span> (emma:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Emma&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(mutual)<span class="text-syn-f">&lt;-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-</span>(alex:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Alex&quot;</span><span class="text-syn-k">}</span>)
@@ -645,6 +657,7 @@ Los Angeles    Olivia
 </code></pre>
             <p class="mt-0 mb-6"><strong>Recommendation Engines:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-cypher rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// &quot;People like you also like&quot; - find interests based on friends</span>
 <span class="text-syn-k">MATCH</span> (me:Person <span class="text-syn-k">{</span>name<span class="text-syn-k">:</span> <span class="text-syn-s">&quot;Olivia&quot;</span><span class="text-syn-k">}</span>)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:FRIENDS</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(friend)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:LIKES</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(interest)
@@ -661,6 +674,7 @@ Los Angeles    Olivia
 </code></pre>
             <p class="mt-0 mb-6"><strong>Fraud Detection:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-cypher rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Find circular money transfers (potential money laundering)</span>
 <span class="text-syn-k">MATCH</span> path <span class="text-syn-o">=</span> (a:Account)<span class="text-syn-f">-</span><span class="text-syn-o">[</span><span class="text-syn-t">:TRANSFERRED</span><span class="text-syn-f">*3..6</span><span class="text-syn-o">]</span><span class="text-syn-f">-&gt;</span>(a)
@@ -676,6 +690,7 @@ Los Angeles    Olivia
             </p>
             <p class="mt-0 mb-6">You could model users and orders as:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">User ──placed──&gt; Order ──contains──&gt; Product
 </code></pre>

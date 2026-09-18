@@ -217,6 +217,7 @@
               capacity.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> API_BASE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;https://api.pulkitxm.com&quot;</span><span class="text-syn-u">;</span>
 
@@ -277,6 +278,7 @@
             </p>
             <p class="mt-0 mb-6"><strong>Step 2: Client makes a request</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">GET</span> <span class="text-syn-s">https://auth.pulkitxm.com/login</span>
 </code></pre>
@@ -284,6 +286,7 @@
             <p class="mt-0 mb-6"><strong>Step 3: Load balancer picks a backend server</strong></p>
             <p class="mt-0 mb-6">The load balancer has three backend servers registered:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: 10.0.1.10:8080
 Server 2: 10.0.1.11:8080
@@ -299,6 +302,7 @@ Server 3: 10.0.1.12:8080
             <p class="mt-0 mb-6"><strong>Step 4: Load balancer forwards the request</strong></p>
             <p class="mt-0 mb-6">The load balancer makes the exact same request to Server 2:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">GET</span> <span class="text-syn-s">http://10.0.1.11:8080/login</span>
 </code></pre>
@@ -330,6 +334,7 @@ Server 3: 10.0.1.12:8080
               In a microservices architecture, services talk to each other through load balancers:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Order Service → Payment Service Load Balancer → Payment Service Servers
 </code></pre>
@@ -366,6 +371,7 @@ Server 3: 10.0.1.12:8080
             </p>
             <p class="mt-0 mb-6">The simplest algorithm. Requests are distributed in order:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Request 1 → Server 1
 Request 2 → Server 2
@@ -408,6 +414,7 @@ Request 6 → Server 3
             </p>
             <p class="mt-0 mb-6">What if your servers aren&#39;t identical? Maybe you have:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: 4GB RAM
 Server 2: 8GB RAM
@@ -419,6 +426,7 @@ Server 3: 4GB RAM
             </p>
             <p class="mt-0 mb-6">Weighted round robin lets you assign weights:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: weight = 1
 Server 2: weight = 2
@@ -426,6 +434,7 @@ Server 3: weight = 1
 </code></pre>
             <p class="mt-0 mb-6">Now requests are distributed in a 1:2:1 ratio:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Request 1 → Server 1
 Request 2 → Server 2
@@ -448,6 +457,7 @@ Request 8 → Server 3
             </ul>
             <p class="mt-0 mb-6"><strong>Configuration example:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> servers <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>
   <span class="text-syn-u">{</span> <span class="text-syn-p">host:</span> <span class="text-syn-s">&quot;10.0.1.10&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-p">port:</span> <span class="text-syn-n">8080</span><span class="text-syn-u">,</span> <span class="text-syn-p">weight:</span> <span class="text-syn-n">1</span> <span class="text-syn-u">},</span>
@@ -478,6 +488,7 @@ Request 8 → Server 3
               Least connections algorithm picks the server with the fewest active connections:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: 5 connections
 Server 2: 2 connections  ← Pick this one
@@ -526,6 +537,7 @@ Server 3: 8 connections
               it:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getServer</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Server</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashFunction</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
@@ -538,6 +550,7 @@ Server 3: 8 connections
               output. This means:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">User 123 → hash(123) % 3 = 1 → Server 2
 User 456 → hash(456) % 3 = 0 → Server 1
@@ -588,6 +601,7 @@ User 123 → hash(123) % 3 = 1 → Server 2 (same server!)
             </p>
             <p class="mt-0 mb-6"><strong>Without load balancer:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Single server: 100 requests/second capacity
 Traffic: 150 requests/second
@@ -599,6 +613,7 @@ Result: Server overloaded, requests timing out
             </p>
             <p class="mt-0 mb-6"><strong>With load balancer:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: 100 requests/second
 Server 2: 100 requests/second
@@ -610,6 +625,7 @@ Result: Handled easily
               And when traffic grows to 250 requests/second? Add a third server:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: 100 requests/second
 Server 2: 100 requests/second
@@ -638,6 +654,7 @@ Total capacity: 300 requests/second
             <p class="mt-0 mb-6">Even if one server crashes, your system stays up.</p>
             <p class="mt-0 mb-6"><strong>Scenario:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 1: Running
 Server 2: Crashed
@@ -648,6 +665,7 @@ Server 3: Running
               stops sending requests to it:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Request 1 → Server 1
 Request 2 → Server 3
@@ -661,6 +679,7 @@ Request 4 → Server 3
             <p class="mt-0 mb-6"><strong>Health checks:</strong></p>
             <p class="mt-0 mb-6">Load balancers periodically ping each backend server:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">GET</span> <span class="text-syn-s">http://10.0.1.11:8080/health</span>
 </code></pre>
@@ -670,6 +689,7 @@ Request 4 → Server 3
               responding to health checks again, the load balancer adds it back to the pool.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-u">{</span>
   path<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -763,6 +783,7 @@ Request 4 → Server 3
             <p class="mt-0 mb-6">You need intelligent routing based on request content.</p>
             <p class="mt-0 mb-6"><strong>Example:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">/api/users/*    → User Service
 /api/orders/*   → Order Service
@@ -808,6 +829,7 @@ Request 4 → Server 3
             <h3 id="nginx" class="mt-8 text-lg leading-tight tracking-tight">NGINX</h3>
             <p class="mt-0 mb-6">Open-source web server that also functions as a load balancer.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-nginx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">upstream</span> backend {
     <span class="text-syn-k">least_conn</span><span class="text-syn-u">;</span>  <span class="text-syn-c italic"># or: ip_hash, round_robin (default)</span>
@@ -837,6 +859,7 @@ server {
             <h3 id="haproxy" class="mt-8 text-lg leading-tight tracking-tight">HAProxy</h3>
             <p class="mt-0 mb-6">Another popular open-source load balancer.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">frontend http_front
     bind *:80

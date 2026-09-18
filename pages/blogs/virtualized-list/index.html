@@ -212,6 +212,7 @@
             <p class="mt-0 mb-6">Here&#39;s the simple math that makes virtualization work:</p>
             <p class="mt-0 mb-6"><strong>1. Find the first visible item:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">startIndex = floor(scrollTop / itemHeight)
 </code></pre>
@@ -223,6 +224,7 @@
               <strong>2. Calculate how many items fit in the viewport:</strong>
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">visibleCount = ceil(containerHeight / itemHeight)
 </code></pre>
@@ -232,6 +234,7 @@
             </p>
             <p class="mt-0 mb-6"><strong>3. Find the last item to render:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">endIndex = startIndex + visibleCount + overscan
 </code></pre>
@@ -260,6 +263,7 @@
               First, we define the TypeScript interface and set up our component with state:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useRef<span class="text-syn-u">,</span> useState <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 
@@ -332,6 +336,7 @@
               Inside the component, we calculate which items should be visible:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> totalHeight<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-o">=</span> items<span class="text-syn-u">.</span>length <span class="text-syn-o">*</span> itemHeight<span class="text-syn-u">;</span>
 <span class="text-syn-k">const</span> startIndex<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-o">=</span> Math<span class="text-syn-u">.</span><span class="text-syn-f">floor</span><span class="text-syn-u">(</span>scrollTop <span class="text-syn-o">/</span> itemHeight<span class="text-syn-u">);</span>
@@ -355,6 +360,7 @@
               Now we return the JSX with a scrollable container and absolutely positioned items:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-o">&lt;</span>div
   ref<span class="text-syn-o">=</span><span class="text-syn-u">{</span>containerRef<span class="text-syn-u">}</span>
@@ -406,6 +412,7 @@
             </ul>
             <p class="mt-0 mb-6"><strong>Complete VirtualList Component Code</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useRef<span class="text-syn-u">,</span> useState <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span>
 
@@ -473,6 +480,7 @@
             </h2>
             <p class="mt-0 mb-6">Here&#39;s how you can use this component in your app:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> items<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[]</span> <span class="text-syn-o">=</span> Array<span class="text-syn-u">.</span><span class="text-syn-f">from</span><span class="text-syn-u">({</span> <span class="text-syn-p">length:</span> <span class="text-syn-n">100000</span> <span class="text-syn-u">},</span> <span class="text-syn-u">(</span>_<span class="text-syn-u">,</span> i<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`Row ${i}`</span><span class="text-syn-u">)</span>
 

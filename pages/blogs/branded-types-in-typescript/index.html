@@ -164,6 +164,7 @@
               In most TypeScript codebases, IDs and primitive values are just strings or numbers:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">UserId</span> <span class="text-syn-o">=</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">type</span> <span class="text-syn-t">InvoiceId</span> <span class="text-syn-o">=</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -171,6 +172,7 @@
 </code></pre>
             <p class="mt-0 mb-6">This works until your app grows. Then you see code like:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getInvoice</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">InvoiceId</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> id <span class="text-syn-u">};</span>
@@ -246,6 +248,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">declare</span> <span class="text-syn-k">const</span> __brand<span class="text-syn-o">:</span> <span class="text-syn-t">unique</span> <span class="text-syn-t">symbol</span><span class="text-syn-u">;</span>
 
@@ -290,6 +293,7 @@
             </ul>
             <p class="mt-0 mb-6">You can now write:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getInvoice</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">InvoiceId</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-u">{</span> id <span class="text-syn-u">};</span>
@@ -325,6 +329,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> rawId <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;inv_123&quot;</span><span class="text-syn-u">;</span>
 
@@ -352,6 +357,7 @@
               automatically:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> pgTable<span class="text-syn-u">,</span> varchar <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;drizzle-orm/pg-core&quot;</span><span class="text-syn-u">;</span>
 
@@ -404,6 +410,7 @@
               helper:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">declare</span> <span class="text-syn-k">const</span> brand<span class="text-syn-o">:</span> <span class="text-syn-t">unique</span> <span class="text-syn-t">symbol</span><span class="text-syn-u">;</span>
 
@@ -476,6 +483,7 @@
               Once you have branded types, you can make your APIs much clearer:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">UserId</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;UserId&quot;</span><span class="text-syn-u">&gt;;</span>
 <span class="text-syn-k">type</span> <span class="text-syn-t">InvoiceId</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;InvoiceId&quot;</span><span class="text-syn-u">&gt;;</span>
@@ -518,6 +526,7 @@
             <h3 id="type-guards" class="mt-8 text-lg leading-tight tracking-tight">Type guards</h3>
             <p class="mt-0 mb-6">Use a type guard to check a value and narrow it to a brand:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">InvoiceId</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;InvoiceId&quot;</span><span class="text-syn-u">&gt;;</span>
 
@@ -554,6 +563,7 @@
               For cleaner call sites, you can wrap that check in an assertion:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">PositiveSeconds</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;PositiveSeconds&quot;</span><span class="text-syn-u">&gt;;</span>
 
@@ -693,6 +703,7 @@
             </ul>
             <p class="mt-0 mb-6">So:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-f">isPositiveSeconds</span><span class="text-syn-u">(</span>seconds<span class="text-syn-u">))</span> <span class="text-syn-u">{</span>
 <span class="text-syn-c italic">  // inside this block, seconds is PositiveSeconds</span>
@@ -718,6 +729,7 @@
               a tiny helper is enough:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">InvoiceId</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;InvoiceId&quot;</span><span class="text-syn-u">&gt;;</span>
 
@@ -759,6 +771,7 @@
               helper:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> z <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;zod&quot;</span><span class="text-syn-u">;</span>
 
@@ -794,6 +807,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> z <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;zod&quot;</span><span class="text-syn-u">;</span>
 
@@ -808,6 +822,7 @@
 </code></pre>
             <p class="mt-0 mb-6">Usage:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> result <span class="text-syn-o">=</span> InvoiceIdSchema<span class="text-syn-u">.</span><span class="text-syn-f">safeParse</span><span class="text-syn-u">(</span>input<span class="text-syn-u">);</span>
 
@@ -855,6 +870,7 @@
               Units and time
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">Milliseconds</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;Milliseconds&quot;</span><span class="text-syn-u">&gt;;</span>
 <span class="text-syn-k">type</span> <span class="text-syn-t">Seconds</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;Seconds&quot;</span><span class="text-syn-u">&gt;;</span>
@@ -888,6 +904,7 @@
               Currency and other numeric domains
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">InrRupee</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;InrRupee&quot;</span><span class="text-syn-u">&gt;;</span>
 <span class="text-syn-k">type</span> <span class="text-syn-t">UsdCents</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">number</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;UsdCents&quot;</span><span class="text-syn-u">&gt;;</span>
@@ -910,6 +927,7 @@
               Safe vs unsafe content
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">SafeHtml</span> <span class="text-syn-o">=</span> <span class="text-syn-t">Brand</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;SafeHtml&quot;</span><span class="text-syn-u">&gt;;</span>
 
@@ -950,6 +968,7 @@
               If a value can only be one of a few literals, a union is usually clearer:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">TaskStatus</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;pending&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;rejected&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;resolved&quot;</span><span class="text-syn-u">;</span>
 
@@ -975,6 +994,7 @@
               directly:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">type</span> <span class="text-syn-t">ThemeBase</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;dark&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;light&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;system&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">type</span> <span class="text-syn-t">ThemeContrast</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;high&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;low&quot;</span> <span class="text-syn-o">|</span> <span class="text-syn-s">&quot;standard&quot;</span><span class="text-syn-u">;</span>
@@ -1000,6 +1020,7 @@
               enforce invariants at creation:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Positive</span> <span class="text-syn-u">{</span>
   value<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
@@ -1077,6 +1098,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Brand <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ts-brand&quot;</span><span class="text-syn-u">;</span>
 
@@ -1093,6 +1115,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Brand <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;effect&quot;</span><span class="text-syn-u">;</span>
 

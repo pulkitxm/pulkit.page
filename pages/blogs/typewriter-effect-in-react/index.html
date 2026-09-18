@@ -139,6 +139,7 @@
               <li>
                 Create an empty React project
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-plaintext rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">pnpm create vite@latest react-typewiter -- --template react
 </code></pre>
@@ -146,6 +147,7 @@
               <li>
                 Install Dependencies
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-plaintext rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">cd react-typewiter
 yarn
@@ -154,6 +156,7 @@ yarn
               <li>
                 Start the development server:
                 <pre
+                  tabindex="0"
                   class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
                 ><code class="language-plaintext rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">yarn dev
 </code></pre>
@@ -175,6 +178,7 @@ yarn
             </h2>
             <p class="mt-0 mb-6"><em>src/components/Typewriter.jsx</em></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> PropTypes <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;prop-types&quot;</span><span class="text-syn-u">;</span>
 
@@ -189,6 +193,7 @@ Typewriter<span class="text-syn-u">.</span><span class="text-syn-p">propTypes</s
 </code></pre>
             <p class="mt-0 mb-6"><em>Import Typewriter Component</em></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Typewriter <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./src/components/Typewriter&quot;</span><span class="text-syn-u">;</span>
 
@@ -210,6 +215,7 @@ Typewriter<span class="text-syn-u">.</span><span class="text-syn-p">propTypes</s
             </h2>
             <p class="mt-0 mb-6">Initialize a useState index for maintaining the typed words</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>currentIndex<span class="text-syn-u">,</span> setCurrentIndex<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
 </code></pre>
@@ -226,6 +232,7 @@ Typewriter<span class="text-syn-u">.</span><span class="text-syn-p">propTypes</s
               setInterval could do the job.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> interval <span class="text-syn-o">=</span> <span class="text-syn-f">setInterval</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
@@ -245,6 +252,7 @@ Typewriter<span class="text-syn-u">.</span><span class="text-syn-p">propTypes</s
               the string according to the currentIndex.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-jsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">text<span class="text-syn-u">.</span><span class="text-syn-f">substring</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">,</span> currentIndex<span class="text-syn-u">);</span>
 </code></pre>

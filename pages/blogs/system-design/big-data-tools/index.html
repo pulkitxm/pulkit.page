@@ -186,6 +186,7 @@
               <li>When you encounter a space, update an in-memory hash table</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> wordFreq<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
 
@@ -206,6 +207,7 @@
               You can easily parallelize this code. Each thread handles a chunk of the file.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processChunk</span><span class="text-syn-u">(</span>start<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> end<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> localFreq<span class="text-syn-o">:</span> <span class="text-syn-t">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-t">number</span><span class="text-syn-u">&gt;</span> <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">();</span>
@@ -265,6 +267,7 @@
               <li>Return final result</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Partition</span> <span class="text-syn-u">{</span>
   id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
@@ -455,6 +458,7 @@
               dialect of each database. You use simple DataFrames:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">users_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> mysql_url<span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
 orders_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;jdbc&quot;</span><span class="text-syn-u">).</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;url&quot;</span><span class="text-syn-u">,</span> postgres_url<span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
@@ -485,6 +489,7 @@ combined<span class="text-syn-u">.</span>write<span class="text-syn-u">.</span>f
               Elasticsearch? That scales.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">events <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>readStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka&quot;</span><span class="text-syn-u">).</span>load<span class="text-syn-u">()</span>
 
@@ -613,6 +618,7 @@ enriched<span class="text-syn-u">.</span>writeStream<span class="text-syn-u">.</
               </li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">sales_df <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>read<span class="text-syn-u">.</span>csv<span class="text-syn-u">(</span><span class="text-syn-s">&quot;sales.csv&quot;</span><span class="text-syn-u">,</span> header<span class="text-syn-o">=</span><span class="text-syn-k">True</span><span class="text-syn-u">)</span>
 
@@ -627,6 +633,7 @@ sales_df<span class="text-syn-u">.</span>groupBy<span class="text-syn-u">(</span
               </li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-python rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">events <span class="text-syn-o">=</span> spark<span class="text-syn-u">.</span>readStream<span class="text-syn-u">.</span>format<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>
     <span class="text-syn-u">.</span>option<span class="text-syn-u">(</span><span class="text-syn-s">&quot;kafka.bootstrap.servers&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;localhost:9092&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-u">\</span>

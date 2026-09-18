@@ -178,6 +178,7 @@
               Another machine (server) processes them and sends responses.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Client                          Server
   │                                │
@@ -301,6 +302,7 @@
               back an HTTP response.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Client sends:
   GET /profile/123 HTTP/1.1
@@ -328,6 +330,7 @@ Server responds:
               Let&#39;s say you&#39;re building a key-value store. You could define a custom format:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Format: COMMAND KEY\n
 
@@ -345,6 +348,7 @@ Examples:
               >) optimized for its use case.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Redis protocol (RESP):
   *3\r\n$3\r\nSET\r\n$5\r\nmykey\r\n$7\r\nmyvalue\r\n
@@ -427,6 +431,7 @@ Translates to: SET mykey myvalue
               it.&quot;
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">GET /resource HTTP/1.1
 Host: example.com
@@ -437,6 +442,7 @@ Connection: keep-alive
               Subsequent requests reuse the same TCP connection.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Without keep-alive:
   Request 1: [handshake] [request] [response] [teardown]
@@ -508,6 +514,7 @@ With keep-alive:
               persistent TCP connection.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">1. Client sends HTTP upgrade request:
    GET /chat HTTP/1.1
@@ -631,6 +638,7 @@ With keep-alive:
               <strong>Short polling</strong>: Client asks repeatedly at fixed intervals.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">setInterval</span><span class="text-syn-u">(</span><span class="text-syn-k">async</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> messages <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/messages&quot;</span><span class="text-syn-u">);</span>
@@ -645,6 +653,7 @@ With keep-alive:
               there&#39;s data.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">longPoll</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/messages?wait=true&quot;</span><span class="text-syn-u">);</span>
@@ -694,6 +703,7 @@ With keep-alive:
             </h3>
             <p class="mt-0 mb-6">SSE has a simple text-based format:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">event: stock-update
 data: {&quot;symbol&quot;: &quot;AAPL&quot;, &quot;price&quot;: 150.25}
@@ -737,6 +747,7 @@ id: 1002
               API:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> eventSource <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">EventSource</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/stock-updates&quot;</span><span class="text-syn-u">);</span>
 
@@ -759,6 +770,7 @@ eventSource<span class="text-syn-u">.</span><span class="text-syn-f">addEventLis
             </h3>
             <p class="mt-0 mb-6">Here&#39;s a simple SSE endpoint in Node.js:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">app<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/api/events&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>req<span class="text-syn-u">,</span> res<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   res<span class="text-syn-u">.</span><span class="text-syn-f">setHeader</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Content-Type&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;text/event-stream&quot;</span><span class="text-syn-u">);</span>
@@ -885,6 +897,7 @@ eventSource<span class="text-syn-u">.</span><span class="text-syn-f">addEventLis
               HTTP methods to CRUD operations on resources.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">GET    /users          → List all users
 GET    /users/123      → Get user 123
@@ -896,6 +909,7 @@ DELETE /users/123      → Delete user 123
               Resources are nouns. HTTP methods are verbs. URLs are hierarchical.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Fetching a user&#39;s orders</span>
 <span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/users/123/orders&quot;</span><span class="text-syn-u">);</span>
@@ -933,6 +947,7 @@ DELETE /users/123      → Delete user 123
               specifies exactly what data it wants.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-graphql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic"># Single request for user, their orders, and reviews</span>
 <span class="text-syn-k">query</span> <span class="text-syn-u">{</span>
@@ -956,6 +971,7 @@ DELETE /users/123      → Delete user 123
 </code></pre>
             <p class="mt-0 mb-6">One request. Exactly the data you need. No more, no less.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetch</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;/graphql&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">method:</span> <span class="text-syn-s">&quot;POST&quot;</span><span class="text-syn-u">,</span>
@@ -1002,6 +1018,7 @@ DELETE /users/123      → Delete user 123
               file:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-protobuf rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">syntax</span> <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;proto3&quot;</span><span class="text-syn-u">;</span>
 
@@ -1026,6 +1043,7 @@ DELETE /users/123      → Delete user 123
               The protobuf compiler generates client and server code in your language:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Generated client usage</span>
 <span class="text-syn-k">const</span> client <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">UserServiceClient</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;localhost:50051&quot;</span><span class="text-syn-u">);</span>
@@ -1065,6 +1083,7 @@ console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span
             </p>
             <p class="mt-0 mb-6">Define your API on the server:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// server/routers/user.ts</span>
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> router<span class="text-syn-u">,</span> publicProcedure <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;../trpc&quot;</span><span class="text-syn-u">;</span>
@@ -1085,6 +1104,7 @@ console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span
 </code></pre>
             <p class="mt-0 mb-6">Use it on the client with full type inference:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// client/pages/user.tsx</span>
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> trpc <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;../utils/trpc&quot;</span><span class="text-syn-u">;</span>

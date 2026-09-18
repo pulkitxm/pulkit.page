@@ -195,6 +195,7 @@
               limiters return headers that help clients understand their current state:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">X-Ratelimit-Limit: 100
 X-Ratelimit-Remaining: 0
@@ -265,6 +266,7 @@ X-Ratelimit-Retry-After: 30
               never reaches your backend service at all.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">proxyHandler</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> clientIp <span class="text-syn-o">=</span> req<span class="text-syn-u">.</span>headers<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;x-forwarded-for&quot;</span><span class="text-syn-u">)</span> <span class="text-syn-o">??</span> <span class="text-syn-s">&quot;unknown&quot;</span><span class="text-syn-u">;</span>
@@ -297,6 +299,7 @@ X-Ratelimit-Retry-After: 30
               middleware checks the rate limiter before invoking the actual handler.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">rateLimitMiddleware</span><span class="text-syn-u">(</span>req<span class="text-syn-o">:</span> <span class="text-syn-t">Request</span><span class="text-syn-u">,</span> <span class="text-syn-f">next</span><span class="text-syn-o">:</span> <span class="text-syn-u">()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Response</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> userId <span class="text-syn-o">=</span> <span class="text-syn-f">extractUserId</span><span class="text-syn-u">(</span>req<span class="text-syn-u">);</span>
@@ -374,6 +377,7 @@ X-Ratelimit-Retry-After: 30
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">checkRateLimit</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> current <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">incr</span><span class="text-syn-u">(</span><span class="text-syn-s">`ratelimit:${key}`</span><span class="text-syn-u">);</span>
@@ -420,6 +424,7 @@ X-Ratelimit-Retry-After: 30
               counter exceeds the limit. When the window ends, the counter resets.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">fixedWindow</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> windowSeconds<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> windowKey <span class="text-syn-o">=</span> <span class="text-syn-s">`${key}:${Math.floor(Date.now() / 1000 / windowSeconds)}`</span><span class="text-syn-u">;</span>
@@ -498,6 +503,7 @@ X-Ratelimit-Retry-After: 30
               the request:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">slidingWindowLog</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> limit<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> windowMs<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
@@ -591,6 +597,7 @@ X-Ratelimit-Retry-After: 30
               as you reach the next boundary.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">effective_estimate = previous_count × (1 − elapsed) + current_count
 </code></pre>
@@ -615,6 +622,7 @@ X-Ratelimit-Retry-After: 30
               usually close: <strong>counts per bucket</strong>, not per request.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">slidingWindowCounter</span><span class="text-syn-u">(</span>
   key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
@@ -672,6 +680,7 @@ X-Ratelimit-Retry-After: 30
               rejected. The bucket has a maximum capacity, which allows short bursts.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">tokenBucket</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> capacity<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> refillRate<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
@@ -715,6 +724,7 @@ X-Ratelimit-Retry-After: 30
               dropped. Requests are pulled from the queue and processed at a steady rate.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">leakyBucket</span><span class="text-syn-u">(</span>key<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> capacity<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> leakRate<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">boolean</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> now <span class="text-syn-o">=</span> Date<span class="text-syn-u">.</span><span class="text-syn-f">now</span><span class="text-syn-u">();</span>
@@ -853,6 +863,7 @@ X-Ratelimit-Retry-After: 30
               (the algorithm, the Redis commands) as a library that your services import directly.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> createRateLimiter <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@your-org/rate-limiter&quot;</span><span class="text-syn-u">;</span>
 
@@ -983,6 +994,7 @@ X-Ratelimit-Retry-After: 30
               Each user&#39;s counter only lives on one shard. No cross-shard queries needed.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getShardForUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> shards<span class="text-syn-o">:</span> <span class="text-syn-t">Redis</span><span class="text-syn-u">[])</span><span class="text-syn-o">:</span> <span class="text-syn-t">Redis</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashCode</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
@@ -1006,6 +1018,7 @@ X-Ratelimit-Retry-After: 30
               initializes, it reads the config and creates connections to all shards.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">initRateLimiter</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Redis</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> config <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">fetchShardConfig</span><span class="text-syn-u">();</span>
@@ -1047,6 +1060,7 @@ X-Ratelimit-Retry-After: 30
               Lua scripts as a single atomic operation, so no interleaving can happen.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-lua rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">local</span> key <span class="text-syn-o">=</span> KEYS[<span class="text-syn-n">1</span>]
 <span class="text-syn-k">local</span> limit <span class="text-syn-o">=</span> <span class="text-syn-f">tonumber</span>(ARGV[<span class="text-syn-n">1</span>])
@@ -1063,6 +1077,7 @@ X-Ratelimit-Retry-After: 30
 <span class="text-syn-k">return</span> <span class="text-syn-n">1</span>
 </code></pre>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> RATE_LIMIT_SCRIPT <span class="text-syn-o">=</span> <span class="text-syn-s">`</span>
 <span class="text-syn-s">local key = KEYS[1]</span>

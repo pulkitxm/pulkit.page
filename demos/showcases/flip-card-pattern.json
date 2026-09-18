@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/moving-things-without-moving-them",
+  "index": 12,
+  "component": "flip-card-pattern",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": true,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "flip-card.css",
+      "language": "css",
+      "code": ".card-container {\n  perspective: 1000px;\n}\n\n.card {\n  transform-style: preserve-3d;\n  transition: transform 600ms ease-out;\n}\n\n.card.flipped {\n  transform: rotateY(180deg);\n}\n\n.card-back {\n  transform: rotateY(180deg);\n  backface-visibility: hidden;\n}"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/keyframe-animations",
+  "index": 2,
+  "component": "fill-mode",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

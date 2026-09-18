@@ -1,0 +1,13 @@
+{
+  "article": "design-engineering/keyframe-animations",
+  "index": 3,
+  "component": "backwards-fill",
+  "props": {},
+  "frame": {
+    "focusCode": false,
+    "replayButton": false,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": []
+}

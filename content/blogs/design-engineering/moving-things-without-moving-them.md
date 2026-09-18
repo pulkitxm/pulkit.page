@@ -34,7 +34,7 @@ When you position an element with `margin`, `padding`, or `top`/`left`, you're c
 
 Transforms work differently. They're applied after layout is calculated. The browser figures out where everything goes, then transforms are applied visually on top. It's like placing a sticker on a window. The window doesn't change. The sticker just sits there, looking like it's part of the view.
 
-[Interactive example: Transform Vs Margin](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo transform-vs-margin
 
 Watch how the margin change pushes the sibling element down, while the transform leaves it untouched. Both buttons appear to move the same distance, but they have completely different effects on the layout around them.
 
@@ -66,7 +66,7 @@ The single-axis versions are cleaner when you only need to move in one direction
 
 **The percentage trick**: Unlike margin or padding, percentages in translate are relative to the element's own dimensions, not its parent. `translateX(100%)` moves the element to the right by its own width. `translateY(-100%)` moves it up by its own height.
 
-[Interactive example: Translate Percentage](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo translate-percentage
 
 This is incredibly useful for animations where elements need to move based on their own size. Drawer components that slide off-screen use `translateY(100%)` because the drawer always moves by exactly its height, regardless of whether that's 200px or 800px.
 
@@ -90,7 +90,7 @@ This is incredibly useful for animations where elements need to move based on th
 
 Unlike changing `width` and `height`, scaling affects the entire element including its children. Scale a button and its text, icons, and borders all scale proportionally. This is usually what you want for hover effects and enter/exit animations.
 
-[Interactive example: Scale Vs Width Height](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo scale-vs-width-height
 
 Notice how `scale()` keeps everything proportional and doesn't affect layout, while animating `width` and `height` still triggers layout reflow.
 
@@ -129,7 +129,7 @@ Notice how `scale()` keeps everything proportional and doesn't affect layout, wh
 
 You can use degrees, radians, or turns. I stick with degrees because they're the most intuitive.
 
-[Interactive example: Rotate](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo rotate
 
 Rotation is powerful for loading spinners, icon transitions (hamburger to X, arrow to chevron), and decorative effects. It's also essential when combined with translate for more complex animations like items flying into a trash bin or cards being dealt.
 
@@ -149,7 +149,7 @@ Rotation is powerful for loading spinners, icon transitions (hamburger to X, arr
 
 Skew is the least commonly used transform function. It's hard to make skewed elements look good in most UI contexts. But it has its moments for creative effects, italic-like text styling, or building parallelogram shapes without images.
 
-[Interactive example: Skew](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo skew
 
 ## The Order Trap
 
@@ -167,7 +167,7 @@ Here's where transforms get tricky. When you chain multiple transform functions,
 
 These look similar but produce completely different results.
 
-[Interactive example: Transform Order](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo transform-order
 
 **What's happening**: In the first case, the element translates first (moving right), then rotates. After rotation, the element's "right" direction has changed, so the translation already happened along the original axes. In the second case, the element rotates first, then translates, so it moves 100px along the rotated diagonal. The final position is different.
 
@@ -202,7 +202,7 @@ By default, transforms happen from the center of the element. But you can change
 }
 ```
 
-[Interactive example: Transform Origin](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo transform-origin
 
 The origin point matters most for rotation and scaling. A scale from the top-left corner feels different from a scale from the center. A rotation around the bottom edge creates a "door opening" effect.
 
@@ -234,7 +234,7 @@ But there's a catch. Without perspective, 3D rotations look flat.
 }
 ```
 
-[Interactive example: Perspective](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo perspective
 
 Perspective defines how far the viewer is from the z-plane. Smaller values create more dramatic perspective (things closer feel much bigger). Larger values create subtler perspective (more like looking from far away).
 
@@ -257,7 +257,7 @@ Perspective defines how far the viewer is from the z-plane. Smaller values creat
 
 For interactive 3D effects, you'll also want `transform-style: preserve-3d` on containers to maintain 3D positioning of nested elements.
 
-[Interactive example: Tilt Card](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo tilt-card
 
 This card tilts based on mouse position using `rotateX()` and `rotateY()`. The perspective on the container gives the rotation depth, making one edge appear closer than the other.
 
@@ -307,19 +307,19 @@ Here are patterns I use constantly.
 
 **Button press feedback**:
 
-[Interactive example: Button Press Pattern](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo button-press-pattern
 
 **Slide-in from below**:
 
-[Interactive example: Slide In Pattern](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo slide-in-pattern
 
 **Shake for error**:
 
-[Interactive example: Shake Pattern](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo shake-pattern
 
 **Flip card**:
 
-[Interactive example: Flip Card Pattern](https://www.pulkit.blog/series/design-engineering/moving-things-without-moving-them)
+:::demo flip-card-pattern
 
 ## Conclusion
 

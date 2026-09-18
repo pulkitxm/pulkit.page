@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/moving-things-without-moving-them",
+  "index": 10,
+  "component": "slide-in-pattern",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": true,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "slide-up.css",
+      "language": "css",
+      "code": "@keyframes slideUp {\n  from {\n    opacity: 0;\n    transform: translateY(10px);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}"
+    }
+  ]
+}

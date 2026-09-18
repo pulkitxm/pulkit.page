@@ -1,0 +1,19 @@
+{
+  "article": "design-engineering/moving-things-without-moving-them",
+  "index": 11,
+  "component": "shake-pattern",
+  "props": {},
+  "frame": {
+    "focusCode": true,
+    "replayButton": true,
+    "bitBigger": false,
+    "fullHeight": false
+  },
+  "files": [
+    {
+      "filename": "shake.css",
+      "language": "css",
+      "code": "@keyframes shake {\n  0%, 100% {\n    transform: translateX(0);\n  }\n  20%, 60% {\n    transform: translateX(-4px);\n  }\n  40%, 80% {\n    transform: translateX(4px);\n  }\n}\n\n.error {\n  animation: shake 300ms ease-in-out;\n}"
+    }
+  ]
+}

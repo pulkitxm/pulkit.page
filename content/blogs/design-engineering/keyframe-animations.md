@@ -66,7 +66,7 @@ Apply it to an element with the `animation` property. The shorthand takes the na
 
 That interpolates opacity from 0 to 1 over one second.
 
-[Interactive example: Fade In](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo fade-in
 
 I use the `animation` shorthand only for name, duration, and timing function. I declare everything else (`iteration-count`, `fill-mode`, `direction`, `delay`) as separate properties. It keeps things readable when animations get more complex.
 
@@ -92,7 +92,7 @@ A keyframe rule is not limited to a start and end. You can add stops at any perc
 
 Notice the `step-end` timing function. For a blink, you want an instant toggle, not a smooth fade. `step-end` jumps to each keyframe value at the end of each step interval, giving the classic on-off blink.
 
-[Interactive example: Blinking Cursor](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo blinking-cursor
 
 If your multi-step animation has more than three or four stops, or involves coordinated timing across properties, it can get unwieldy in pure CSS. That is usually when I reach for a JavaScript animation library like Motion instead.
 
@@ -106,7 +106,7 @@ The `animation-fill-mode` property controls this.
 - **`backwards`** applies the values from the first keyframe before the animation starts (useful with delays)
 - **`both`** does both
 
-[Interactive example: Fill Mode](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo fill-mode
 
 `forwards` is by far the most common. Any time you animate an element in and want it to stay, set `animation-fill-mode: forwards`.
 
@@ -114,7 +114,7 @@ The `animation-fill-mode` property controls this.
 
 `backwards` solves a specific problem with delayed animations. Say you have an entrance animation that fades from opacity 0 to 1, with a 1s delay. Without `backwards`, the element is fully visible during the delay, then jumps to opacity 0 when the animation starts. With `backwards`, the first keyframe (opacity 0) is applied immediately, so the element is hidden during the delay too.
 
-[Interactive example: Backwards Fill](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo backwards-fill
 
 When you need both behaviors, use `both`. It applies the first keyframe before the animation starts (like `backwards`) and retains the last keyframe after it ends (like `forwards`).
 
@@ -135,7 +135,7 @@ Keyframe animations have a feature transitions lack entirely: you can pause them
 
 I am also using `animation-direction: alternate` here so the element animates back and forth instead of teleporting to the start on each iteration.
 
-[Interactive example: Play State](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo play-state
 
 I have never needed `animation-play-state` in a production project, but it is worth knowing about. If you are choosing between keyframes and transitions and the ability to pause matters, keyframes are the only option.
 
@@ -153,7 +153,7 @@ You can apply more than one animation to the same element by comma-separating th
 
 This is useful for composing effects. One animation handles rotation while another handles scale, each at different speeds.
 
-[Interactive example: Stacked Animations](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo stacked-animations
 
 Keep stacked animations simple. Two or three is fine; beyond that the behavior gets hard to reason about and you are better off reaching for a JavaScript library with a proper timeline API.
 
@@ -161,7 +161,7 @@ Keep stacked animations simple. Two or three is fine; beyond that the behavior g
 
 Skeleton loaders are one of the most common uses of infinite keyframe animations. A gradient slides across placeholder shapes, signaling that content is loading.
 
-[Interactive example: Skeleton Loader](https://www.pulkit.blog/series/design-engineering/keyframe-animations)
+:::demo skeleton-loader
 
 The shimmer is a single `@keyframes` rule that translates a gradient from left to right, running infinitely. Every placeholder element shares the same animation. Simple, effective, and impossible to build with transitions since there is no state change driving it.
 

@@ -55,6 +55,8 @@
     <script
       type="application/ld+json"
     >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#image","contentUrl":"https://new.pulkit.page/og/blogs/design-engineering/keyframe-animations/card.png","width":1200,"height":630,"caption":"Choreographing Multi-Step Motion"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#article","headline":"Choreographing Multi-Step Motion","description":"Keyframe animations let you choreograph multi-step sequences that play automatically, loop forever, or pause mid-flight. Learn when to reach for keyframes over transitions, how fill-mode controls the before and after, and how to stack independent animations on a single element.","datePublished":"2026-03-15","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#image"},"url":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/","inLanguage":"en","keywords":["CSS","Keyframes","Animations","Motion Design"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://new.pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"Choreographing Multi-Step Motion","item":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#webpage","url":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/","name":"Choreographing Multi-Step Motion","description":"Keyframe animations let you choreograph multi-step sequences that play automatically, loop forever, or pause mid-flight. Learn when to reach for keyframes over transitions, how fill-mode controls the before and after, and how to stack independent animations on a single element.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/design-engineering/keyframe-animations/#breadcrumbs"}}]}</script>
+    <link rel="stylesheet" href="/assets/demos/document.css" />
+    <script type="module" src="/assets/demos/index.js"></script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>Choreographing Multi-Step Motion | Pulkit</title>
@@ -260,13 +262,12 @@
 <span class="text-syn-u">}</span>
 </code></pre>
             <p class="mt-0 mb-6">That interpolates opacity from 0 to 1 over one second.</p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Fade In</a
-              >
-            </p>
+            <demo-showcase
+              data-component="fade-in"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               I use the
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
@@ -340,13 +341,12 @@
               jumps to each keyframe value at the end of each step interval, giving the classic
               on-off blink.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Blinking Cursor</a
-              >
-            </p>
+            <demo-showcase
+              data-component="blinking-cursor"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               If your multi-step animation has more than three or four stops, or involves
               coordinated timing across properties, it can get unwieldy in pure CSS. That is usually
@@ -400,13 +400,12 @@
                 does both
               </li>
             </ul>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Fill Mode</a
-              >
-            </p>
+            <demo-showcase
+              data-component="fill-mode"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >forwards</code
@@ -434,13 +433,12 @@
               >, the first keyframe (opacity 0) is applied immediately, so the element is hidden
               during the delay too.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Backwards Fill</a
-              >
-            </p>
+            <demo-showcase
+              data-component="backwards-fill"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               When you need both behaviors, use
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
@@ -494,13 +492,12 @@
               here so the element animates back and forth instead of teleporting to the start on
               each iteration.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Play State</a
-              >
-            </p>
+            <demo-showcase
+              data-component="play-state"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               I have never needed
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
@@ -533,13 +530,12 @@
               This is useful for composing effects. One animation handles rotation while another
               handles scale, each at different speeds.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Stacked Animations</a
-              >
-            </p>
+            <demo-showcase
+              data-component="stacked-animations"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Keep stacked animations simple. Two or three is fine; beyond that the behavior gets
               hard to reason about and you are better off reaching for a JavaScript library with a
@@ -555,13 +551,12 @@
               Skeleton loaders are one of the most common uses of infinite keyframe animations. A
               gradient slides across placeholder shapes, signaling that content is loading.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/keyframe-animations"
-                >Interactive example: Skeleton Loader</a
-              >
-            </p>
+            <demo-showcase
+              data-component="skeleton-loader"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               The shimmer is a single
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"

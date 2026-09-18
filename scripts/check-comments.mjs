@@ -369,6 +369,13 @@ if (import.meta.main) {
       }
       total++;
       for (const comment of await scanText(file, source)) {
+        if (
+          /^<!-- \[html-validate-(?:disable|enable)(?:-next|-block)? [a-z-]+\] -->$/.test(
+            comment.text,
+          )
+        ) {
+          continue;
+        }
         errors.push(`${file}:${comment.line}: forbidden comment: ${comment.text}`);
       }
     } catch (error) {

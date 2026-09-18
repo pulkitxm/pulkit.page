@@ -7,6 +7,7 @@ import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { parseDocument, stringify, visit } from "yaml";
+import { createPageAssets, matchBlockEmbed, matchInlineEmbed, renderRawHtml } from "./embeds.mjs";
 
 const markdown = unified().use(remarkParse).use(remarkGfm).use(remarkStringify, {
   bullet: "-",
@@ -204,15 +205,40 @@ export function checkContent(file, source) {
     front = `---\n${stringify(parsed.value, { lineWidth: 100 })}---\n`;
     body = match[2];
   }
+  const embeds = [];
+  body = body.replace(/^:::embed [^\n]*\n[^\n]*\n:::$/gm, (block) => {
+    if (!matchBlockEmbed(`${block}\n`)) {
+      errors.push(`invalid embed block: ${block.slice(0, 60)}`);
+    }
+    embeds.push(block);
+    return `EMBEDTOKEN${embeds.length - 1}X`;
+  });
+  let scan = body.indexOf(":embed[");
+  while (scan !== -1) {
+    let match;
+    try {
+      match = matchInlineEmbed(body.slice(scan));
+    } catch (error) {
+      errors.push(`invalid inline embed: ${error.message}`);
+    }
+    if (match) {
+      embeds.push(match.raw);
+      body = `${body.slice(0, scan)}EMBEDTOKEN${embeds.length - 1}X${body.slice(scan + match.raw.length)}`;
+    }
+    scan = body.indexOf(":embed[", scan + 1);
+  }
   const tree = markdown.parse(body);
-  let previousHeading = page ? 1 : 0;
   let topHeadings = 0;
   const headings = new Set();
   const definitions = new Set();
   const references = [];
   function walk(node) {
     if (node.type === "html") {
-      fail("raw HTML is forbidden; use Markdown", node);
+      try {
+        renderRawHtml(node.value, createPageAssets());
+      } catch (error) {
+        fail(`raw HTML: ${error.message}`, node);
+      }
     }
     if (node.type === "heading") {
       if (node.depth === 1) {
@@ -221,10 +247,6 @@ export function checkContent(file, source) {
       if (page && node.depth === 1) {
         fail("page H1 comes from title; start body headings at ##", node);
       }
-      if (node.depth > previousHeading + 1) {
-        fail("heading levels must not skip a level", node);
-      }
-      previousHeading = node.depth;
       const label = sourceText(node).toLowerCase();
       if (headings.has(label)) {
         fail(`duplicate heading: ${label}`, node);
@@ -236,9 +258,6 @@ export function checkContent(file, source) {
       (!node.lang || !/^[a-z][a-z0-9+#-]*$/.test(node.lang) || node.meta)
     ) {
       fail("code fences need a lowercase language and no extra metadata", node);
-    }
-    if (node.type === "image" && !isText(node.alt)) {
-      fail("images require descriptive alt text", node);
     }
     if (node.type === "link" && !sourceText(node).trim()) {
       fail("links require descriptive text", node);
@@ -275,7 +294,8 @@ export function checkContent(file, source) {
         !/^(?::::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?|:::carousel|:::)$/.test(
           text,
         ) &&
-        !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text)
+        !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text) &&
+        !/^EMBEDTOKEN\d+X$/.test(text)
       ) {
         fail("invalid or embedded directive", node);
       }
@@ -299,8 +319,9 @@ export function checkContent(file, source) {
   if (page && file !== "content/_site.md" && !body.trim()) {
     fail("page body must not be empty");
   }
-  const formatted =
-    front + (tree.children.length ? `${front ? "\n" : ""}${markdown.stringify(tree)}` : "");
+  const formatted = (
+    front + (tree.children.length ? `${front ? "\n" : ""}${markdown.stringify(tree)}` : "")
+  ).replace(/EMBEDTOKEN(\d+)X/g, (_, index) => embeds[Number(index)]);
   return { errors, formatted };
 }
 

@@ -1,6 +1,13 @@
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
 import { renderDemo } from "./demos.mjs";
+import {
+  createPageAssets,
+  matchBlockEmbed,
+  matchInlineEmbed,
+  renderEmbed,
+  renderRawHtml,
+} from "./embeds.mjs";
 import { formatFence } from "./format-code.mjs";
 import { formatHtml } from "./format-html.mjs";
 import { highlightFence } from "./highlight.mjs";
@@ -120,6 +127,7 @@ export async function renderPage(
       ? "article"
       : "simple");
   const ids = new Set(["main"]);
+  const assets = createPageAssets();
   const markdown = new Marked({
     async: true,
     walkTokens: async (token) => {
@@ -207,7 +215,7 @@ export async function renderPage(
         return withClass(Renderer.prototype.link.call(this, token), link);
       },
       html(token) {
-        return escapeHtml(token.text);
+        return renderRawHtml(token.text, assets);
       },
       image(token) {
         const classes =
@@ -220,6 +228,30 @@ export async function renderPage(
   });
   markdown.use({
     extensions: [
+      {
+        name: "embed",
+        level: "block",
+        start: (src) => src.indexOf(":::embed"),
+        tokenizer(src) {
+          const match = matchBlockEmbed(src);
+          return match ? { type: "embed", ...match } : undefined;
+        },
+        renderer(token) {
+          return renderEmbed(token.name, token.props, assets, false);
+        },
+      },
+      {
+        name: "inlineEmbed",
+        level: "inline",
+        start: (src) => src.indexOf(":embed["),
+        tokenizer(src) {
+          const match = matchInlineEmbed(src);
+          return match ? { type: "inlineEmbed", ...match } : undefined;
+        },
+        renderer(token) {
+          return renderEmbed(token.name, token.props, assets, true);
+        },
+      },
       {
         name: "demo",
         level: "block",
@@ -344,10 +376,11 @@ export async function renderPage(
     metadata.date && !metadata.period
       ? `<time datetime="${metadata.date}">${escapeHtml(metadata.date)}</time>`
       : "";
+  const content = await markdown.parse(body);
   return formatHtml(
     applyLayout(layouts, layout, {
       title: escapeHtml(pageTitle(metadata, site, route)),
-      seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
+      seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${assets.tags()}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages),
       description: escapeHtml(metadata.description ?? site.description ?? metadata.title),
@@ -360,7 +393,7 @@ export async function renderPage(
         detail || metadata.role
           ? `<p class="mt-0 mb-6 text-sm text-muted">${[escapeHtml(metadata.role ?? ""), metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? ""), detail].filter(Boolean).join(" · ")}</p>`
           : "",
-      content: await markdown.parse(body),
+      content,
     }),
   );
 }

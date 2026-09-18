@@ -74,7 +74,7 @@ Group two or more related images into a sliding carousel with Previous and Next 
 :::
 ```
 
-The block may contain only images, each with alt text. Without JavaScript it still scrolls horizontally with snap points; [theme.js](../theme.js) wires the buttons and the position counter.
+The block may contain only images, each with alt text. Each slide links to its full-size image, which also makes the scrolling region reachable by keyboard. Without JavaScript it still scrolls horizontally with snap points; [theme.js](../theme.js) wires the buttons and the position counter.
 
 ## Layout semantics and appearance
 

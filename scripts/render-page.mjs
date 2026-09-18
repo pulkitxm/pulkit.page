@@ -246,7 +246,7 @@ export async function renderPage(
           const slides = token.images
             .map(
               (image) =>
-                `<img class="block h-auto max-h-[70vh] w-full shrink-0 snap-center object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}" loading="lazy">`,
+                `<a class="block w-full shrink-0 snap-center" href="${safeUrl(image.href)}"><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}" loading="lazy"></a>`,
             )
             .join("");
           const button =

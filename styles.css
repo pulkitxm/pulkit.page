@@ -176,7 +176,7 @@ table {
   margin: 28px auto;
   border-radius: 4px;
 }
-.prose img[src="/assets/content/pulkit-portrait.png"] {
+.prose img[src="/assets/content/pulkit-portrait.webp"] {
   width: 144px;
   height: 144px;
   object-fit: cover;

@@ -360,3 +360,28 @@ button {
 .related li {
   margin-block: 0.5rem;
 }
+
+@view-transition {
+  navigation: auto;
+}
+.page-heading h1 {
+  width: fit-content;
+}
+::view-transition-group(entry-title) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(entry-title),
+::view-transition-new(entry-title) {
+  height: 100%;
+  object-fit: fill;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 300ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

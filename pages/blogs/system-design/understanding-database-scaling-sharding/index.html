@@ -205,6 +205,7 @@
               database spends time and memory on connection management instead of queries.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Pool <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;pg&quot;</span><span class="text-syn-u">;</span>
 
@@ -337,6 +338,7 @@
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Pool <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;pg&quot;</span><span class="text-syn-u">;</span>
 
@@ -363,6 +365,7 @@
               the write to the client.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Client → API → Master → Replica
                   ↓         ↓
@@ -390,6 +393,7 @@
               background.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Client → API → Master → (async) → Replica
                   ↓
@@ -437,6 +441,7 @@
               only guarantee <strong>two out of three</strong> properties:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        Consistency
             /\
@@ -530,6 +535,7 @@
               <li>Your application (or a proxy) routes requests to the correct shard</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">                    ┌─────────┐
                     │   API   │
@@ -556,6 +562,7 @@
               <li><strong>Resharding</strong>: Adding/removing shards is complex</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getShardForUser</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Database</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> firstChar <span class="text-syn-o">=</span> userId<span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">].</span><span class="text-syn-f">toLowerCase</span><span class="text-syn-u">();</span>
@@ -676,12 +683,14 @@
             <p class="mt-0 mb-6">Here&#39;s the math:</p>
             <p class="mt-0 mb-6"><strong>Before (Single Server):</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">API Server → Database (1000 WPS max)
 Current load: 1500 WPS needed
 </code></pre>
             <p class="mt-0 mb-6"><strong>After (Two Shards with 50-50 split):</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">            ┌─ Shard 1 (50% data) → 750 WPS
 API Server ─┤
@@ -740,11 +749,13 @@ Total capacity: 1500 WPS
             </p>
             <p class="mt-0 mb-6">Original table (100GB):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">products table: product_id, name, category, price, stock, ...
 </code></pre>
             <p class="mt-0 mb-6">Partition by first letter of product name:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Partition A: Names starting with A-D  → 30GB
 Partition B: Names starting with E-H  → 10GB
@@ -758,6 +769,7 @@ Partition E: Names starting with S-Z  → 10GB
             </p>
             <p class="mt-0 mb-6"><strong>Query example:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Query hits only Partition A (products starting with &#39;A&#39; or &#39;B&#39;)</span>
 <span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> products <span class="text-syn-k">WHERE</span> <span class="text-syn-k">name</span> <span class="text-syn-k">LIKE</span> <span class="text-syn-s">&#39;Apple%&#39;</span>;
@@ -770,6 +782,7 @@ Partition E: Names starting with S-Z  → 10GB
 </code></pre>
             <p class="mt-0 mb-6"><strong>Implementation in code:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getPartitionForProduct</span><span class="text-syn-u">(</span>productName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">string</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> firstChar <span class="text-syn-o">=</span> productName<span class="text-syn-u">[</span><span class="text-syn-n">0</span><span class="text-syn-u">].</span><span class="text-syn-f">toUpperCase</span><span class="text-syn-u">();</span>
@@ -814,11 +827,13 @@ Partition E: Names starting with S-Z  → 10GB
             <p class="mt-0 mb-6"><strong>Example: E-commerce Users Table</strong></p>
             <p class="mt-0 mb-6">Original table (100GB):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">users: user_id, name, email, country, address, preferences, bio, avatar_url, ...
 </code></pre>
             <p class="mt-0 mb-6">Vertical partitioning:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Partition 1 (Hot data - frequently accessed):
   user_id, name, email, country → 20GB
@@ -832,6 +847,7 @@ Partition 2 (Cold data - rarely accessed):
             </p>
             <p class="mt-0 mb-6"><strong>Query example:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Fast: hits only Partition 1</span>
 <span class="text-syn-k">SELECT</span> <span class="text-syn-k">name</span>, email <span class="text-syn-k">FROM</span> users <span class="text-syn-k">WHERE</span> user_id <span class="text-syn-o">=</span> <span class="text-syn-n">500</span>;
@@ -857,6 +873,7 @@ Partition 2 (Cold data - rarely accessed):
               mutually exclusive partitions:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">            100GB Total Data
                   ↓
@@ -871,6 +888,7 @@ Partition 2 (Cold data - rarely accessed):
             </p>
             <p class="mt-0 mb-6"><strong>Option 1: One partition per server (5 shards)</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Shard 1: Partition A [30GB]
 Shard 2: Partition B [10GB]
@@ -887,6 +905,7 @@ Shard 5: Partition E [10GB]
               <strong>Option 2: Multiple partitions per server (2 shards)</strong>
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Shard 1: Partition A [30GB] + Partition C [30GB] → 60GB total
 Shard 2: Partition B [10GB] + Partition D [20GB] + Partition E [10GB] → 40GB total
@@ -898,6 +917,7 @@ Shard 2: Partition B [10GB] + Partition D [20GB] + Partition E [10GB] → 40GB t
             </ul>
             <p class="mt-0 mb-6"><strong>Option 3: Mixed approach (3 shards)</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Shard 1: Partition A [30GB] + Partition B [10GB] → 40GB
 Shard 2: Partition C [30GB]                      → 30GB
@@ -923,6 +943,7 @@ Shard 3: Partition D [20GB] + Partition E [10GB] → 30GB
             </ul>
             <p class="mt-0 mb-6"><strong>3. Access Patterns</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Partition A: 1000 queries/sec  → Needs dedicated shard
 Partition B: 100 queries/sec   → Can share with others
@@ -954,6 +975,7 @@ Partition E: 50 queries/sec    → Can share with others
             </p>
             <p class="mt-0 mb-6"><strong>1. Range-based Sharding</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">User IDs 1-1,000,000     → Shard 1
 User IDs 1,000,001-2M    → Shard 2
@@ -968,6 +990,7 @@ User IDs 2M-3M           → Shard 3
             </ul>
             <p class="mt-0 mb-6"><strong>2. Hash-based Sharding</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getShard</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> hash <span class="text-syn-o">=</span> <span class="text-syn-f">hashFunction</span><span class="text-syn-u">(</span>userId<span class="text-syn-u">);</span>
@@ -984,6 +1007,7 @@ User IDs 2M-3M           → Shard 3
             </ul>
             <p class="mt-0 mb-6"><strong>3. Geographic Sharding</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">US users       → US datacenter shard
 EU users       → EU datacenter shard
@@ -998,6 +1022,7 @@ Asia users     → Asia datacenter shard
             </ul>
             <p class="mt-0 mb-6"><strong>4. Entity-based (Tenant) Sharding</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Company A&#39;s data → Shard 1
 Company B&#39;s data → Shard 2
@@ -1012,6 +1037,7 @@ Company C&#39;s data → Shard 3
             </h3>
             <p class="mt-0 mb-6"><strong>1. Cross-shard Queries</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- This is expensive if users are on different shards</span>
 <span class="text-syn-k">SELECT</span> <span class="text-syn-o">*</span> <span class="text-syn-k">FROM</span> orders
@@ -1030,6 +1056,7 @@ Company C&#39;s data → Shard 3
             <p class="mt-0 mb-6"><strong>3. Referential Integrity</strong></p>
             <p class="mt-0 mb-6">Foreign keys don&#39;t work across shards:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- This won&#39;t work if users and orders are on different shards</span>
 <span class="text-syn-k">ALTER</span> <span class="text-syn-k">TABLE</span> orders
@@ -1079,6 +1106,7 @@ Company C&#39;s data → Shard 3
             </ul>
             <p class="mt-0 mb-6"><strong>Design for Single-Shard Queries</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Good: Query stays within one shard</span>
 <span class="text-syn-k">const</span> user <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>users<span class="text-syn-u">.</span><span class="text-syn-f">findOne</span><span class="text-syn-u">({</span> <span class="text-syn-p">user_id:</span> <span class="text-syn-s">&quot;123&quot;</span> <span class="text-syn-u">});</span>
@@ -1092,6 +1120,7 @@ Company C&#39;s data → Shard 3
             </p>
             <p class="mt-0 mb-6"><strong>Plan for Growth</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Start: 2 shards (can handle current load)
 Year 1: 4 shards
@@ -1106,6 +1135,7 @@ Year 3: 16 shards
             <p class="mt-0 mb-6"><strong>Monitor Shard Health</strong></p>
             <p class="mt-0 mb-6">Keep track of:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Shard 1: 45% storage, 600 WPS, 50ms avg latency
 Shard 2: 78% storage, 1200 WPS, 120ms avg latency (warning: hot spot)
@@ -1175,6 +1205,7 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
               Scenario 1: No Sharding, No Partitioning
             </h4>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────┐
 │   Database      │
@@ -1191,6 +1222,7 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
               Scenario 2: No Sharding, With Partitioning
             </h4>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────┐
 │      Database           │
@@ -1209,6 +1241,7 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
               Scenario 3: With Sharding, No Partitioning
             </h4>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │  Shard 1    │  │  Shard 2    │  │  Shard 3    │
@@ -1228,6 +1261,7 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
               Scenario 4: With Sharding + Partitioning + Read Replicas
             </h4>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────┐     ┌─────────────────────┐
 │  Shard 1 (Master)   │     │  Shard 2 (Master)   │
@@ -1356,6 +1390,7 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
               (Partitioning, not Sharding)
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">-- Create parent table</span>
 <span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">measurements</span> (
@@ -1377,6 +1412,7 @@ Shard 3: 32% storage, 450 WPS, 45ms avg latency
             <p class="mt-0 mb-6">All partitions are on the same PostgreSQL instance.</p>
             <p class="mt-0 mb-6"><strong>MongoDB Sharded Cluster</strong> (True Sharding)</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Enable sharding for a database</span>
 sh<span class="text-syn-u">.</span><span class="text-syn-f">enableSharding</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;myapp&quot;</span><span class="text-syn-u">);</span>

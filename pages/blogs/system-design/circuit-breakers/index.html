@@ -189,6 +189,7 @@
               <li><strong>Wallet Service</strong> checks user&#39;s payment balance</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">User → API Gateway → Ride Service → Driver Service
                           ↓
@@ -301,6 +302,7 @@
               failures.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Service A ──[closed]──→ Service B
            (calls pass)
@@ -311,6 +313,7 @@
               failing service. Instead of waiting for timeouts, calls fail immediately.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Service A ──[open]──✗ Service B
          (instant failure)
@@ -322,6 +325,7 @@
               open.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Service A ──[half-open]──→ Service B
               (limited test calls)
@@ -342,6 +346,7 @@
             </p>
             <p class="mt-0 mb-6">Without circuit breaker:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Surge Pricing is slow
 → Ride Service waits and times out
@@ -350,6 +355,7 @@
 </code></pre>
             <p class="mt-0 mb-6">With circuit breaker:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Surge Pricing is slow
 → Circuit breaker opens after detecting failures
@@ -387,6 +393,7 @@
               not, don&#39;t make the call.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getSurgePricing</span><span class="text-syn-u">(</span>zoneId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">SurgeMultiplier</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> isHealthy <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">checkServiceHealth</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;surge-pricing&quot;</span><span class="text-syn-u">);</span>
@@ -412,6 +419,7 @@
               key-value store works:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">TABLE</span> <span class="text-syn-f">circuit_breaker</span> (
   <span class="text-syn-k">service_name</span> <span class="text-syn-k">VARCHAR</span>(<span class="text-syn-n">255</span>) <span class="text-syn-k">PRIMARY KEY</span>,
@@ -423,6 +431,7 @@
 </code></pre>
             <p class="mt-0 mb-6">Or in Redis:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">CircuitState</span> <span class="text-syn-u">{</span>
   isHealthy<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
@@ -451,6 +460,7 @@
               Every service that calls another service checks the circuit breaker first:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">callWithCircuitBreaker</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">T</span><span class="text-syn-u">&gt;(</span>
   serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span>
@@ -502,6 +512,7 @@
               Using It in Practice
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">calculateRideFare</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-o">:</span> <span class="text-syn-t">RideRequest</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">FareDetails</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> baseDistance <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> mapsService<span class="text-syn-u">.</span><span class="text-syn-f">getDistance</span><span class="text-syn-u">(</span>rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">pickup</span><span class="text-syn-u">,</span> rideRequest<span class="text-syn-u">.</span><span class="text-syn-p">dropoff</span><span class="text-syn-u">);</span>
@@ -553,6 +564,7 @@
             </h3>
             <p class="mt-0 mb-6">If you have recent data cached, return that:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getDriverLocations</span><span class="text-syn-u">(</span>zoneId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">DriverLocation</span><span class="text-syn-u">[]&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> cacheKey <span class="text-syn-o">=</span> <span class="text-syn-s">`drivers:${zoneId}`</span><span class="text-syn-u">;</span>
@@ -577,6 +589,7 @@
             </h3>
             <p class="mt-0 mb-6">Return sensible defaults:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">function</span> <span class="text-syn-f">getDefaultSurge</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">SurgeInfo</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-u">{</span>
@@ -591,6 +604,7 @@
             </h3>
             <p class="mt-0 mb-6">Return what you have, mark what&#39;s missing:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">RideEstimateResponse</span> <span class="text-syn-u">{</span>
   estimate<span class="text-syn-o">:</span> <span class="text-syn-t">RideEstimate</span><span class="text-syn-u">;</span>
@@ -633,6 +647,7 @@
               For non-critical operations, queue the work for when the service recovers:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendRideReceipt</span><span class="text-syn-u">(</span>ride<span class="text-syn-o">:</span> <span class="text-syn-t">CompletedRide</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> circuit <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getCircuitState</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;notification-service&quot;</span><span class="text-syn-u">);</span>
@@ -664,6 +679,7 @@
               above X%, it opens:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">CircuitConfig</span> <span class="text-syn-u">{</span>
   failureThreshold<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
@@ -704,6 +720,7 @@
               maintenance. Maybe you saw alerts. Manual control lets you trip circuits preemptively:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">tripCircuit</span><span class="text-syn-u">(</span>serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> reason<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">hmset</span><span class="text-syn-u">(</span><span class="text-syn-s">`circuit:${serviceName}`</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
@@ -745,6 +762,7 @@
               service queries the circuit breaker database:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Request 1 → Check circuit → Query DB → Make call
 Request 2 → Check circuit → Query DB → Make call
@@ -760,6 +778,7 @@ Request 3 → Check circuit → Query DB → Make call
             </h3>
             <p class="mt-0 mb-6">Cache the circuit state in each API server&#39;s memory:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> circuitCache <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Map</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">string</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span> state<span class="text-syn-o">:</span> <span class="text-syn-t">CircuitState</span><span class="text-syn-u">;</span> expiresAt<span class="text-syn-o">:</span> <span class="text-syn-t">number</span> <span class="text-syn-u">}&gt;();</span>
 
@@ -819,6 +838,7 @@ Request 3 → Check circuit → Query DB → Make call
               Use Redis Pub/Sub to push circuit state changes to all servers immediately:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> subscriber <span class="text-syn-o">=</span> <span class="text-syn-o">new</span> <span class="text-syn-f">Redis</span><span class="text-syn-u">();</span>
 subscriber<span class="text-syn-u">.</span><span class="text-syn-f">subscribe</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;circuit-updates&quot;</span><span class="text-syn-u">);</span>
@@ -872,6 +892,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
             </p>
             <h3 id="key-metrics" class="mt-8 text-lg leading-tight tracking-tight">Key Metrics</h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">CircuitMetrics</span> <span class="text-syn-u">{</span>
   serviceName<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -910,6 +931,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
               <li>Circuit flapping (opening and closing repeatedly)</li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">checkCircuitHealth</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> circuits <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">getAllCircuits</span><span class="text-syn-u">();</span>

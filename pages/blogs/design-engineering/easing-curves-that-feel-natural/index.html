@@ -200,6 +200,7 @@
               feel it.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">/* This feels robotic */</span>
 <span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
@@ -226,6 +227,7 @@
               The element starts fast and slows down as it reaches its destination.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
@@ -268,6 +270,7 @@
               makes buttons feel tactile:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.button</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
@@ -291,6 +294,7 @@
             <h3 id="ease-in" class="mt-8 text-lg leading-tight tracking-tight">Ease In</h3>
             <p class="mt-0 mb-6">The element starts slow and speeds up.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-in</span><span class="text-syn-u">;</span>
@@ -322,6 +326,7 @@
             <h3 id="ease-in-out" class="mt-8 text-lg leading-tight tracking-tight">Ease In Out</h3>
             <p class="mt-0 mb-6">Slow start, fast middle, slow end.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease-in-out</span><span class="text-syn-u">;</span>
@@ -361,6 +366,7 @@
               slower.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-k">ease</span><span class="text-syn-u">;</span>
@@ -417,6 +423,7 @@
               are just presets:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">ease        = cubic-bezier(0<span class="text-syn-p">.25</span><span class="text-syn-u">,</span> 0<span class="text-syn-p">.1</span><span class="text-syn-u">,</span> 0<span class="text-syn-p">.25</span><span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span>)
 <span class="text-syn-g">ease-in</span>     = cubic-bezier(0<span class="text-syn-p">.42</span><span class="text-syn-u">,</span> 0<span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span><span class="text-syn-u">,</span> 1<span class="text-syn-p">.0</span>)
@@ -426,6 +433,7 @@ linear      = cubic-bezier(0<span class="text-syn-u">,</span> 0<span class="text
 </code></pre>
             <p class="mt-0 mb-6">The four numbers define two control points on a curve:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">cubic-bezier(x1, y1, x2, y2)
 
@@ -453,6 +461,7 @@ x2, y2 = second control point
             </h3>
             <p class="mt-0 mb-6"><strong>Snappy ease-out</strong> (faster deceleration):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
@@ -464,6 +473,7 @@ x2, y2 = second control point
             </p>
             <p class="mt-0 mb-6"><strong>Overshoot</strong> (bounce past target and settle):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">400ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.34</span><span class="text-syn-u">,</span> <span class="text-syn-n">1.56</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.64</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
@@ -482,6 +492,7 @@ x2, y2 = second control point
             </p>
             <p class="mt-0 mb-6"><strong>Undershoot first</strong> (pull back before moving):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">400ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.68</span><span class="text-syn-u">,</span> <span class="text-syn-n">-0.6</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.32</span><span class="text-syn-u">,</span> <span class="text-syn-n">1.6</span><span class="text-syn-u">);</span>
@@ -576,6 +587,7 @@ x2, y2 = second control point
               </tbody>
             </table>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> EASING <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">enter:</span> <span class="text-syn-s">&quot;cubic-bezier(0.16, 1, 0.3, 1)&quot;</span><span class="text-syn-u">,</span>
@@ -604,6 +616,7 @@ x2, y2 = second control point
               (300-500ms): Subtler easing works. Too aggressive and it feels cartoonish.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">/* Short duration, aggressive easing */</span>
 <span class="text-syn-p">.tooltip</span> <span class="text-syn-u">{</span>
@@ -669,6 +682,7 @@ x2, y2 = second control point
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">/* Linear is correct for continuous rotation */</span>
 <span class="text-syn-p">.spinner</span> <span class="text-syn-u">{</span>
@@ -690,6 +704,7 @@ x2, y2 = second control point
               the animation should too. Any easing would make the remaining time feel unpredictable.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">/* Linear is correct for time-based progress */</span>
 <span class="text-syn-p">.hold-progress</span> <span class="text-syn-u">{</span>
@@ -743,6 +758,7 @@ x2, y2 = second control point
               to a custom curve:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">/* Built-in: subtle, safe */</span>
 <span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
@@ -761,6 +777,7 @@ x2, y2 = second control point
             </p>
             <p class="mt-0 mb-6">Build a collection of custom curves for different intensities:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> EASING <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">subtle:</span> <span class="text-syn-s">&quot;cubic-bezier(0.4, 0, 0.2, 1)&quot;</span><span class="text-syn-u">,</span>
@@ -800,6 +817,7 @@ x2, y2 = second control point
               The Media Query
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
@@ -824,6 +842,7 @@ x2, y2 = second control point
               position changes. These rarely cause issues and help users understand state changes.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span>
@@ -844,6 +863,7 @@ x2, y2 = second control point
             </h3>
             <p class="mt-0 mb-6"><strong>CSS approach</strong> (best for simple cases):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">300ms</span> <span class="text-syn-f">cubic-bezier</span><span class="text-syn-u">(</span><span class="text-syn-n">0.16</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span> <span class="text-syn-n">0.3</span><span class="text-syn-u">,</span> <span class="text-syn-n">1</span><span class="text-syn-u">);</span>
@@ -858,6 +878,7 @@ x2, y2 = second control point
 </code></pre>
             <p class="mt-0 mb-6"><strong>JavaScript approach</strong> (for complex animations):</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> prefersReducedMotion <span class="text-syn-o">=</span> window<span class="text-syn-u">.</span><span class="text-syn-f">matchMedia</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="text-syn-u">).</span><span class="text-syn-p">matches</span><span class="text-syn-u">;</span>
 
@@ -872,6 +893,7 @@ x2, y2 = second control point
 </code></pre>
             <p class="mt-0 mb-6"><strong>Framer Motion approach</strong>:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useReducedMotion <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;framer-motion&quot;</span><span class="text-syn-u">;</span>
 

@@ -104,6 +104,16 @@
       "javascript": {
         "globals": ["Bun"]
       }
+    },
+    {
+      "includes": ["pages/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noNoninteractiveTabindex": "off"
+          }
+        }
+      }
     }
   ]
 }

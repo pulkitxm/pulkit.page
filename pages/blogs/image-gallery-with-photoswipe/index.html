@@ -148,6 +148,7 @@
               Let&#39;s Start by Bootstrapping a Fresh React-TS App
             </h2>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">create</span> <span class="text-syn-s">vite@latest</span> <span class="text-syn-s">react-app-gallery</span> <span class="text-syn-s">--</span> <span class="text-syn-s">--template</span> <span class="text-syn-s">react</span>
 <span class="text-syn-f">cd</span> <span class="text-syn-s">react-app-gallery</span>
@@ -190,6 +191,7 @@
               >.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">App</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>App<span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;;</span>
@@ -200,6 +202,7 @@
             </h3>
             <p class="mt-0 mb-6">Now let&#39;s start adding the dependencies</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">react-photoswipe-gallery</span> <span class="text-syn-s">photoswipe</span>
 </code></pre>
@@ -213,6 +216,7 @@
               >.)
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-s">&quot;photoswipe/dist/photoswipe.css&quot;</span><span class="text-syn-u">;</span>
 </code></pre>
@@ -231,6 +235,7 @@
             </p>
             <p class="mt-0 mb-6">Add some images and include their links in App.tsx, like this:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Image1 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image1.png&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> Image2 <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;./assets/image2.png&quot;</span><span class="text-syn-u">;</span>
@@ -238,6 +243,7 @@
 </code></pre>
             <p class="mt-0 mb-6">make an array of images(you can use external links as well)</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> images <span class="text-syn-o">=</span> <span class="text-syn-u">[</span>Image1<span class="text-syn-u">,</span> Image2<span class="text-syn-u">,</span> Image3<span class="text-syn-u">];</span>
 </code></pre>
@@ -252,6 +258,7 @@
               >.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Gallery<span class="text-syn-u">,</span> Item <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react-photoswipe-gallery&quot;</span><span class="text-syn-u">;</span>
 
@@ -266,6 +273,7 @@
 </code></pre>
             <p class="mt-0 mb-6">A single image inside the gallery looks like this:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">&lt;</span><span class="text-syn-g">Item</span> <span class="text-syn-p">original</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>image<span class="text-syn-u">}</span> <span class="text-syn-p">width</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;1024&quot;</span> <span class="text-syn-p">height</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;768&quot;</span><span class="text-syn-u">&gt;</span>
   <span class="text-syn-u">{({</span> ref<span class="text-syn-u">,</span> open <span class="text-syn-u">})</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
@@ -329,6 +337,7 @@
             </ul>
             <p class="mt-0 mb-6">But we have an array of images, so we simply map the array</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   images<span class="text-syn-u">.</span><span class="text-syn-f">map</span><span class="text-syn-u">((</span>image<span class="text-syn-u">,</span> index<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">(</span>
@@ -361,6 +370,7 @@
               Just so as to add some breathing space let&#39;s add some styles
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">style<span class="text-syn-o">=</span><span class="text-syn-u">{{</span>
   width<span class="text-syn-u">:</span> <span class="text-syn-s">&quot;200px&quot;</span><span class="text-syn-u">,</span>
@@ -372,6 +382,7 @@
 </code></pre>
             <p class="mt-0 mb-6">And yes, it works fine now, here&#39;s the complete code</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Gallery<span class="text-syn-u">,</span> Item <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react-photoswipe-gallery&quot;</span><span class="text-syn-u">;</span>
 

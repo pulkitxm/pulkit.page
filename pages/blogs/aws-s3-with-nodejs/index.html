@@ -245,6 +245,7 @@
               So let&#39;s kick things off by initializing a new Node.js project!
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
@@ -260,6 +261,7 @@
               as dependencies in your project!
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">@aws-sdk/client-s3</span> <span class="text-syn-s">dotenv</span>
 </code></pre>
@@ -274,6 +276,7 @@
               hands dirty with some code!
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// client.js</span>
 
@@ -293,6 +296,7 @@
               Make sure to save both the AWS keys in the .env file in the following format
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-plaintext rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
@@ -308,6 +312,7 @@ AWS_SECRET_ACCESS_KEY=
               Let&#39;s write some code to list all the S3 buckets in our account.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// index.js</span>
 
@@ -336,6 +341,7 @@ AWS_SECRET_ACCESS_KEY=
             </p>
             <p class="mt-0 mb-6">Let&#39;s create a new method to add a bucket.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> CreateBucketCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
@@ -377,6 +383,7 @@ AWS_SECRET_ACCESS_KEY=
               method too?
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> DeleteBucketCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 
@@ -419,6 +426,7 @@ AWS_SECRET_ACCESS_KEY=
               method provided by the AWS SDK. Here&#39;s how you can use it:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> PutObjectCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
@@ -430,6 +438,7 @@ AWS_SECRET_ACCESS_KEY=
               module. Here&#39;s how you can use it:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> fs <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;fs&quot;</span><span class="text-syn-u">);</span>
 </code></pre>
@@ -441,6 +450,7 @@ AWS_SECRET_ACCESS_KEY=
               method would look like
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">uploadObject</span><span class="text-syn-u">(</span>pathToFile<span class="text-syn-u">,</span> key<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> uploadParams <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
@@ -487,6 +497,7 @@ AWS_SECRET_ACCESS_KEY=
               />
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">deleteObject</span><span class="text-syn-u">(</span>key<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> deleteParams <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
@@ -515,6 +526,7 @@ AWS_SECRET_ACCESS_KEY=
               method provided by the AWS SDK. Here&#39;s how you can use it:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">{</span> ListObjectsCommand <span class="text-syn-u">}</span> <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;@aws-sdk/client-s3&quot;</span><span class="text-syn-u">);</span>
 

@@ -144,6 +144,7 @@
               gap:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────────────────────────────────────────────┐
 │                         SERVER (Node.js)                        │
@@ -206,6 +207,7 @@
               Hide or fade the affected component until the client has resolved the correct state:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>mounted<span class="text-syn-u">,</span> setMounted<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
@@ -237,6 +239,7 @@
             </h3>
             <p class="mt-0 mb-6">Render a placeholder until the client has the real values:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>ready<span class="text-syn-u">,</span> setReady<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
@@ -269,6 +272,7 @@
               from the start. No mismatch, no flash.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌──────────────────────────────────────────────────────────────────────────┐
 │                            REQUEST LIFECYCLE                              │
@@ -315,6 +319,7 @@
               cookie:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> PREFS_COOKIE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;ui_prefs&quot;</span><span class="text-syn-u">;</span>
 
@@ -376,6 +381,7 @@
               per value), otherwise the bootstrap and your client get out of sync.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_COLLAPSED <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-collapsed&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_WIDTH <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-width&quot;</span><span class="text-syn-u">;</span>
@@ -400,6 +406,7 @@
             </h3>
             <p class="mt-0 mb-6">Read the cookie and pass the preferences down:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> cookies <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/headers&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> Script <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/script&quot;</span><span class="text-syn-u">;</span>
@@ -442,6 +449,7 @@
               values, first visit, and subsequent user changes.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -575,6 +583,7 @@
             </h2>
             <p class="mt-0 mb-6">On the first visit, there&#39;s no cookie yet:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────┐
 │   Request   │ ──► │   Server    │ ──► │ No cookie → use defaults    │
@@ -595,6 +604,7 @@
 </code></pre>
             <p class="mt-0 mb-6">On subsequent visits, the cookie exists:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────┐
 │   Request   │ ──► │   Server    │ ──► │ Cookie found → parse prefs  │

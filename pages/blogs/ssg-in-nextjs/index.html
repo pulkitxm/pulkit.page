@@ -200,6 +200,7 @@
             </p>
             <p class="mt-0 mb-6">Which returns:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;userId&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
@@ -221,6 +222,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">Todo</span> <span class="text-syn-u">{</span>
   userId<span class="text-syn-o">:</span> <span class="text-syn-t">number</span>
@@ -336,6 +338,7 @@
               >, you&#39;ll see logs like this in your terminal:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Fetching todo with ID: 1 at 2025-12-13T17:17:15.184Z
 <span class="text-syn-u">[</span>SSR<span class="text-syn-u">]</span> Successfully fetched todo: delectus aut autem
@@ -388,6 +391,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// same code as above</span>
 
@@ -420,11 +424,13 @@
             <h4 id="ssg-build-logs" class="leading-tight tracking-tight">SSG Build Logs</h4>
             <p class="mt-0 mb-6">Now when you build your application with:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">build</span>
 </code></pre>
             <p class="mt-0 mb-6">You&#39;ll see logs like this during the build process:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">Route</span> (app)                              Size     First Load JS
 <span class="text-syn-f">┌</span> <span class="text-syn-s">○</span> <span class="text-syn-s">/</span>                                    <span class="text-syn-s">5.42</span> <span class="text-syn-s">kB</span>        <span class="text-syn-s">92.4</span> <span class="text-syn-s">kB</span>
@@ -494,6 +500,7 @@
             </ol>
             <p class="mt-0 mb-6">After the build completes, when you run:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">start</span>
 </code></pre>
@@ -548,6 +555,7 @@
             </p>
             <p class="mt-0 mb-6"><strong>SSR (Development):</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">dev</span>
 <span class="text-syn-c italic"># Visit /todos/1</span>
@@ -564,6 +572,7 @@
 </code></pre>
             <p class="mt-0 mb-6"><strong>SSG (Build + Production):</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">build</span>
 <span class="text-syn-u">[</span>SSG<span class="text-syn-u">]</span> Generating static params at build <span class="text-syn-k">time</span>
@@ -616,6 +625,7 @@
               value in your page file, like this:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic">// Enable ISR - revalidate every hour to check for newly published blogs</span>
 <span class="text-syn-k">export</span> <span class="text-syn-k">const</span> revalidate <span class="text-syn-o">=</span> <span class="text-syn-n">3600</span><span class="text-syn-u">;</span> <span class="text-syn-c italic">// 1 hour in seconds</span>

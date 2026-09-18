@@ -136,11 +136,13 @@
               project by running the following command in your terminal:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
             <p class="mt-0 mb-6">Next, install TypeScript and the necessary type definitions:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">typescript</span> <span class="text-syn-s">@types/node</span>
 </code></pre>
@@ -152,6 +154,7 @@
               file to configure TypeScript:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;compilerOptions&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">{</span>
@@ -166,12 +169,14 @@
 </code></pre>
             <p class="mt-0 mb-6">Now, let&#39;s add Prisma as a dependency:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">@prisma/client</span>
 <span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">prisma</span>
 </code></pre>
             <p class="mt-0 mb-6">Initialize Prisma in your project:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">npx</span> <span class="text-syn-s">prisma</span> <span class="text-syn-s">init</span>
 </code></pre>
@@ -204,6 +209,7 @@
               file. Open the file and add the following user schema:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">datasource db <span class="text-syn-u">{</span>
   provider <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;postgresql&quot;</span>
@@ -233,10 +239,12 @@ model User <span class="text-syn-u">{</span>
             </p>
             <p class="mt-0 mb-6">You can run a postgres instance using docker also</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">docker</span> <span class="text-syn-s">run</span> <span class="text-syn-s">--name</span> <span class="text-syn-s">some-postgres</span> <span class="text-syn-s">-e</span> <span class="text-syn-s">POSTGRES_PASSWORD=mysecretpassword</span> <span class="text-syn-s">-p</span> <span class="text-syn-s">5432:5432</span> <span class="text-syn-s">-d</span> <span class="text-syn-s">postgres</span>
 </code></pre>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">DATABASE_URL<span class="text-syn-o">=</span><span class="text-syn-s">&quot;postgresql://postgres:mysecretpassword@localhost:5432/postgres&quot;</span>
 </code></pre>
@@ -247,6 +255,7 @@ model User <span class="text-syn-u">{</span>
               To apply this schema to the database, let&#39;s create a migration:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">npx</span> <span class="text-syn-s">prisma</span> <span class="text-syn-s">migrate</span> <span class="text-syn-s">dev</span> <span class="text-syn-s">--name</span> <span class="text-syn-s">init</span>
 </code></pre>
@@ -272,6 +281,7 @@ model User <span class="text-syn-u">{</span>
             </p>
             <p class="mt-0 mb-6">You can also generate the Prisma Client manually using:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">npx</span> <span class="text-syn-s">prisma</span> <span class="text-syn-s">generate</span>
 </code></pre>
@@ -289,6 +299,7 @@ model User <span class="text-syn-u">{</span>
               file:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> PrismaClient <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@prisma/client&quot;</span><span class="text-syn-u">;</span>
 
@@ -321,6 +332,7 @@ model User <span class="text-syn-u">{</span>
               function:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getUsers</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">findMany</span><span class="text-syn-u">();</span>
@@ -333,6 +345,7 @@ model User <span class="text-syn-u">{</span>
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;scripts&quot;</span>: <span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;start&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;ts-node src/index.ts&quot;</span> or <span class="text-syn-s">&quot;tsc -b &amp;&amp; node dist/index.js&quot;</span>
@@ -354,6 +367,7 @@ model User <span class="text-syn-u">{</span>
               function:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createUser</span><span class="text-syn-u">(</span>name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> email<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span>
@@ -371,6 +385,7 @@ model User <span class="text-syn-u">{</span>
               >, we see the following output:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;id&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-n">1</span><span class="text-syn-u">,</span>
@@ -380,6 +395,7 @@ model User <span class="text-syn-u">{</span>
 </code></pre>
             <p class="mt-0 mb-6">We can also update user details:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">updateUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">,</span> name<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">update</span><span class="text-syn-u">({</span>
@@ -390,6 +406,7 @@ model User <span class="text-syn-u">{</span>
 </code></pre>
             <p class="mt-0 mb-6">To delete a user, we can simply use:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">deleteUser</span><span class="text-syn-u">(</span>id<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-k">await</span> prisma<span class="text-syn-u">.</span>user<span class="text-syn-u">.</span><span class="text-syn-f">delete</span><span class="text-syn-u">({</span>

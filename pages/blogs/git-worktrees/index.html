@@ -285,6 +285,7 @@
               >
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        ┌──────────────────────────────────────────┐
         │   ONE repository (.git)                  │
@@ -339,6 +340,7 @@
               and you run:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">feat-auth</span>
 </code></pre>
@@ -428,6 +430,7 @@
               is a <strong>plain text file</strong>. Its entire contents are a single line:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">gitdir: /Users/you/code/myapp/.git/worktrees/feat-auth
 </code></pre>
@@ -479,6 +482,7 @@
             </h3>
             <p class="mt-0 mb-6">This is the command you&#39;ll use 95% of the time.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic"># Create a NEW branch and check it out in a new directory (most common)</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-s">-b</span> <span class="text-syn-s">feat-auth</span>
@@ -498,6 +502,7 @@
               >: see what you&#39;ve got
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">list</span>
 <span class="text-syn-c italic"># /Users/you/code/myapp                  abcd123 [main]</span>
@@ -515,6 +520,7 @@
               >: clean one up
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span>        <span class="text-syn-c italic"># refuses if there are uncommitted changes</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">--force</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span> <span class="text-syn-c italic"># remove anyway</span>
@@ -541,6 +547,7 @@
               >: sweep the ghosts
             </h3>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span> <span class="text-syn-s">-n</span>              <span class="text-syn-c italic"># dry run: show what would be pruned</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">prune</span> <span class="text-syn-s">-v</span>              <span class="text-syn-c italic"># verbose: report each removal</span>
@@ -565,6 +572,7 @@
               This is the cardinal rule and it confuses everyone the first time:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">$</span> <span class="text-syn-s">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">add</span> <span class="text-syn-s">../second</span> <span class="text-syn-s">main</span>
 <span class="text-syn-f">fatal:</span> <span class="text-syn-s">&#39;main&#39;</span> <span class="text-syn-s">is</span> <span class="text-syn-s">already</span> <span class="text-syn-s">checked</span> <span class="text-syn-s">out</span> <span class="text-syn-s">at</span> <span class="text-syn-s">&#39;/Users/you/code/myapp&#39;</span>
@@ -778,6 +786,7 @@
               >.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">~/code/myapp/                 # main checkout (your normal clone)
 ~/code/myapp-worktrees/
@@ -823,6 +832,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic"># wt &lt;branch&gt; [base]: create a worktree, copy common config, install deps</span>
 <span class="text-syn-f">wt</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
@@ -873,6 +883,7 @@
               of erroring, and it detects Bun.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">wt</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-f">emulate</span> <span class="text-syn-s">-L</span> <span class="text-syn-s">bash</span> <span class="text-syn-o">2&gt;</span><span class="text-syn-s">/dev/null</span> <span class="text-syn-o">||</span> <span class="text-syn-f">true</span>
@@ -1029,6 +1040,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic"># in each worktree</span>
 <span class="text-syn-f">echo</span> <span class="text-syn-s">&quot;PORT=3001&quot;</span> <span class="text-syn-o">&gt;&gt;</span> <span class="text-syn-s">.env.local</span>        <span class="text-syn-c italic"># 3002, 3003, ... per worktree</span>
@@ -1149,6 +1161,7 @@
               Start an isolated session in one command:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">claude</span> <span class="text-syn-s">--worktree</span> <span class="text-syn-s">feat-auth</span>      <span class="text-syn-c italic"># creates an isolated worktree + branch, starts Claude in it</span>
 <span class="text-syn-f">claude</span> <span class="text-syn-s">-w</span> <span class="text-syn-s">bugfix-123</span>             <span class="text-syn-c italic"># second isolated session, its own branch</span>
@@ -1252,6 +1265,7 @@
               >.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"># .worktreeinclude  (project root, .gitignore syntax)
 
@@ -1348,6 +1362,7 @@ certs/localhost-key.pem
               work with agents anyway. One worktree, one branch, one PR.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-c italic"># inside the worktree</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-A</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">git</span> <span class="text-syn-s">commit</span> <span class="text-syn-s">-m</span> <span class="text-syn-s">&quot;feat: add auth flow&quot;</span>
@@ -1361,6 +1376,7 @@ certs/localhost-key.pem
               matters:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">cd</span> <span class="text-syn-s">~/code/myapp</span>                                       <span class="text-syn-c italic"># back to the main checkout</span>
 <span class="text-syn-f">git</span> <span class="text-syn-s">worktree</span> <span class="text-syn-s">remove</span> <span class="text-syn-s">../myapp-worktrees/feat-auth</span>      <span class="text-syn-c italic"># add --force if there&#39;s leftover junk</span>

@@ -172,7 +172,7 @@ export async function renderPage(
           .replace(
             /^<pre><code(?: class="([^"]*)")?>/,
             (_, language) =>
-              `<pre class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"><code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
+              `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"><code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
           );
       },
       codespan(token) {

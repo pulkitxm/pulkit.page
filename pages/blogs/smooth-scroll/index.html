@@ -133,6 +133,7 @@
               to a stop instead of snapping.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Native scroll:   Jump → Jump → Jump → Stop
 Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
@@ -266,6 +267,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
             </h2>
             <p class="mt-0 mb-6">Lenis is the simplest to get running. Install it:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">lenis</span>
 </code></pre>
@@ -274,6 +276,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               your app:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -309,6 +312,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
 </code></pre>
             <p class="mt-0 mb-6">Then wrap your layout:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> SmoothScrollProvider <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/smooth-scroll-provider&quot;</span><span class="text-syn-u">;</span>
 
@@ -326,6 +330,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               And add the required CSS. Lenis needs the html element to be set up correctly:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span><span class="text-syn-u">,</span>
 <span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span> <span class="text-syn-g">body</span> <span class="text-syn-u">{</span>
@@ -363,6 +368,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
             </h2>
             <p class="mt-0 mb-6">Locomotive Scroll is just as straightforward. Install it:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">locomotive-scroll</span>
 </code></pre>
@@ -374,6 +380,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               object, you need to import it dynamically in Next.js:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -406,6 +413,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               attributes for quick parallax effects:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">data-scroll</span> <span class="text-syn-p">data-scroll-speed</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.5&quot;</span><span class="text-syn-u">&gt;</span>
   This element scrolls at half speed
@@ -436,6 +444,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
             </p>
             <p class="mt-0 mb-6">First, install GSAP:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">gsap</span>
 </code></pre>
@@ -444,6 +453,7 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               knows about the smooth scroll position:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -490,6 +500,7 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
             </p>
             <p class="mt-0 mb-6">Now you can create scroll-triggered animations:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -541,6 +552,7 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
             </p>
             <p class="mt-0 mb-6">Here&#39;s a parallax hero section using GSAP and Lenis:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -610,6 +622,7 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
               scroll by.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -675,6 +688,7 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
               sections. The user scrolls vertically, but a section moves horizontally.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
@@ -787,6 +801,7 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
               requested reduced motion:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> mediaQuery <span class="text-syn-o">=</span> window<span class="text-syn-u">.</span><span class="text-syn-f">matchMedia</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="text-syn-u">);</span>

@@ -330,6 +330,7 @@
               moves on.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Order Service ──→ Queue ──→ Notification Service
       │                            │
@@ -356,6 +357,7 @@
               &quot;Order Confirmed&quot; text eventually.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrderPlaced</span> <span class="text-syn-u">{</span>
   orderId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -408,6 +410,7 @@
               timeout, it reappears. Another consumer picks it up.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processSmsNotifications</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">while</span> <span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
@@ -461,6 +464,7 @@
               operations, make consumers <strong>idempotent</strong>:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processSmsNotification</span><span class="text-syn-u">(</span>notification<span class="text-syn-o">:</span> <span class="text-syn-t">OrderPlaced</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> alreadySent <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">get</span><span class="text-syn-u">(</span><span class="text-syn-s">`sms_sent:${notification.</span><span class="text-syn-p">orderId</span><span class="text-syn-s">}`</span><span class="text-syn-u">);</span>
@@ -490,6 +494,7 @@
               message moves to a separate queue for inspection.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Main Queue ──→ Consumer ──→ Success ──→ Delete
                   │
@@ -502,6 +507,7 @@
 </code></pre>
             <p class="mt-0 mb-6">SQS configuration:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> mainQueue <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">createQueue</span><span class="text-syn-u">({</span>
   <span class="text-syn-p">QueueName:</span> <span class="text-syn-s">&quot;image-processing&quot;</span><span class="text-syn-u">,</span>
@@ -537,6 +543,7 @@
               Fast, but you might lose messages.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
 </code></pre>
@@ -545,6 +552,7 @@
               Safe, but you might get duplicates.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">while</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>acknowledged<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> queue<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">(</span>message<span class="text-syn-u">);</span>
@@ -617,6 +625,7 @@
             <p class="mt-0 mb-6">Should the upload API wait 15 seconds? No.</p>
             <p class="mt-0 mb-6"><strong>Step 1: Upload</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">uploadProfilePic</span><span class="text-syn-u">(</span>file<span class="text-syn-o">:</span> <span class="text-syn-t">File</span><span class="text-syn-u">,</span> userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">Image</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> imageId <span class="text-syn-o">=</span> <span class="text-syn-f">generateId</span><span class="text-syn-u">();</span>
@@ -659,6 +668,7 @@
             </p>
             <p class="mt-0 mb-6"><strong>Step 2: Processing</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">ImageTask</span> <span class="text-syn-u">{</span>
   imageId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -714,6 +724,7 @@
             </p>
             <p class="mt-0 mb-6">Managed queue. No servers. Auto-scales. Pay per request.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span>
   SQSClient<span class="text-syn-u">,</span>
@@ -780,6 +791,7 @@
               Open-source. Self-hosted or managed. More features, more control, more ops overhead.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> amqp <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;amqplib&quot;</span><span class="text-syn-u">;</span>
 
@@ -882,6 +894,7 @@
             </h3>
             <p class="mt-0 mb-6">Add more workers. Each pulls from the same queue independently.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Queue (1000 messages)
   ├── Worker 1 (processing)
@@ -904,6 +917,7 @@
             </p>
             <p class="mt-0 mb-6">AWS example with CloudWatch:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> scalingPolicy <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">PolicyName:</span> <span class="text-syn-s">&quot;scale-on-queue-depth&quot;</span><span class="text-syn-u">,</span>
@@ -950,6 +964,7 @@
               Instead of one message at a time:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> response <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> sqs<span class="text-syn-u">.</span><span class="text-syn-f">receiveMessage</span><span class="text-syn-u">({</span>
   <span class="text-syn-p">QueueUrl:</span> QUEUE_URL<span class="text-syn-u">,</span>
@@ -1001,6 +1016,7 @@
             </p>
             <p class="mt-0 mb-6">Single RabbitMQ queue. Consumer handles all three:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">onProductListed</span><span class="text-syn-u">(</span>event<span class="text-syn-o">:</span> <span class="text-syn-t">ProductListedEvent</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> elasticsearch<span class="text-syn-u">.</span><span class="text-syn-f">index</span><span class="text-syn-u">({</span>
@@ -1033,6 +1049,7 @@
             </p>
             <p class="mt-0 mb-6">Three separate queues. API writes to all three:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">listProduct</span><span class="text-syn-u">(</span>product<span class="text-syn-o">:</span> <span class="text-syn-t">Product</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>product<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> product <span class="text-syn-u">});</span>
@@ -1091,6 +1108,7 @@
               />
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">listProduct</span><span class="text-syn-u">(</span>product<span class="text-syn-o">:</span> <span class="text-syn-t">Product</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>product<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> product <span class="text-syn-u">});</span>
@@ -1249,6 +1267,7 @@
               <li><strong>Without a key</strong>: Round-robin across partitions.</li>
             </ol>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">await</span> kafka<span class="text-syn-u">.</span><span class="text-syn-f">send</span><span class="text-syn-u">({</span>
   <span class="text-syn-p">topic:</span> <span class="text-syn-s">&quot;product-listed&quot;</span><span class="text-syn-u">,</span>
@@ -1275,6 +1294,7 @@
               partitions and different consumers process them, the count might be wrong.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Without key:
   Product A → Partition 0 → Consumer 1 → count = 1
@@ -1295,6 +1315,7 @@ With category key:
               A <strong>consumer group</strong> is a set of consumers sharing work on a topic:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Topic: product-listed (3 partitions)
 
@@ -1319,6 +1340,7 @@ Category Counter Group:
               position in the partition:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> consumer <span class="text-syn-o">=</span> kafka<span class="text-syn-u">.</span><span class="text-syn-f">consumer</span><span class="text-syn-u">({</span> <span class="text-syn-p">groupId:</span> <span class="text-syn-s">&quot;search-indexer&quot;</span> <span class="text-syn-u">});</span>
 
@@ -1356,6 +1378,7 @@ Category Counter Group:
               </li>
             </ul>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Retention: 7 days
 
@@ -1468,6 +1491,7 @@ Day 8: [msg200, ..., msg700]  ← Old messages deleted
             </p>
             <p class="mt-0 mb-6"><strong>Publisher:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
@@ -1479,6 +1503,7 @@ Day 8: [msg200, ..., msg700]  ← Old messages deleted
 </code></pre>
             <p class="mt-0 mb-6"><strong>Subscriber:</strong></p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> Redis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;ioredis&quot;</span><span class="text-syn-u">;</span>
 
@@ -1500,6 +1525,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
               server to poll for changes, push the update to all of them immediately.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Admin Dashboard → Redis Pub/Sub → All 50 API Servers
                                   (instantly updated)
@@ -1510,6 +1536,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
               clients subscribed to that channel receive it in real-time.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">sendChatMessage</span><span class="text-syn-u">(</span>roomId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> message<span class="text-syn-o">:</span> <span class="text-syn-t">ChatMessage</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>message<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> message <span class="text-syn-u">});</span>
@@ -1525,6 +1552,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
               User gets a new follower. Push notification to their active sessions immediately.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">notifyNewFollower</span><span class="text-syn-u">(</span>userId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">,</span> follower<span class="text-syn-o">:</span> <span class="text-syn-t">User</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> redis<span class="text-syn-u">.</span><span class="text-syn-f">publish</span><span class="text-syn-u">(</span>
@@ -1545,6 +1573,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
             </p>
             <p class="mt-0 mb-6">Pub/Sub doesn&#39;t buffer anything.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Timeline:
   t=0: Subscriber A connects
@@ -1623,6 +1652,7 @@ subscriber<span class="text-syn-u">.</span><span class="text-syn-f">on</span><sp
             </h3>
             <p class="mt-0 mb-6">Common pattern: use both.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">processOrder</span><span class="text-syn-u">(</span>order<span class="text-syn-o">:</span> <span class="text-syn-t">Order</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> db<span class="text-syn-u">.</span>order<span class="text-syn-u">.</span><span class="text-syn-f">create</span><span class="text-syn-u">({</span> <span class="text-syn-p">data:</span> order <span class="text-syn-u">});</span>

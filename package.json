@@ -33,6 +33,7 @@
     "browser:check": "bun scripts/check-browser.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@babel/parser": "8.0.6",
     "@biomejs/biome": "2.5.14",
     "@resvg/resvg-js": "2.6.2",

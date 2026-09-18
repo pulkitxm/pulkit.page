@@ -240,6 +240,7 @@
             </p>
             <p class="mt-0 mb-6">Let&#39;s look at the broken code:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> janky-pulse <span class="text-syn-u">{</span>
   0%,
@@ -259,6 +260,7 @@
 </code></pre>
             <p class="mt-0 mb-6">And the fixed version:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> smooth-pulse <span class="text-syn-u">{</span>
   0%,
@@ -394,6 +396,7 @@
               trigger Composite, you skip Layout and Paint entirely.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">width change:      Style → Layout → Paint → Composite  (slowest)
 background change: Style → Paint → Composite           (slow)
@@ -442,6 +445,7 @@ transform change:  Style → Composite                   (fastest)
               everywhere. It&#39;s not a style preference. It&#39;s a performance reality.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transform</span><span class="text-syn-u">:</span> <span class="text-syn-f">translateX</span><span class="text-syn-u">(</span><span class="text-syn-n">0</span><span class="text-syn-u">);</span>
@@ -467,6 +471,7 @@ transform change:  Style → Composite                   (fastest)
               property tells the browser to prepare a layer in advance.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.element</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">will-change</span><span class="text-syn-u">:</span> transform<span class="text-syn-u">;</span>
@@ -502,6 +507,7 @@ transform change:  Style → Composite                   (fastest)
               every 16.67 milliseconds.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">1 second = 1000ms
 60 frames per second = 1000ms / 60 = 16.67ms per frame
@@ -561,6 +567,7 @@ transform change:  Style → Composite                   (fastest)
             </h3>
             <p class="mt-0 mb-6">A button that scales on hover doesn&#39;t need JavaScript.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.button</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">transition</span><span class="text-syn-u">:</span> transform <span class="text-syn-n">150ms</span> <span class="text-syn-k">ease-out</span><span class="text-syn-u">;</span>
@@ -590,6 +597,7 @@ transform change:  Style → Composite                   (fastest)
             </h3>
             <p class="mt-0 mb-6">When an element appears, CSS can handle the entrance.</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> fadeSlideIn <span class="text-syn-u">{</span>
   from <span class="text-syn-u">{</span>
@@ -617,6 +625,7 @@ transform change:  Style → Composite                   (fastest)
               Loading spinners, pulsing indicators, scrolling marquees. These should always be CSS.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> spin <span class="text-syn-u">{</span>
   from <span class="text-syn-u">{</span>
@@ -689,6 +698,7 @@ transform change:  Style → Composite                   (fastest)
               is fixed. Real springs settle based on their physical properties.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">&lt;</span><span class="text-syn-g">motion.div</span>
   <span class="text-syn-p">animate</span><span class="text-syn-o">=</span><span class="text-syn-u">{{</span> <span class="text-syn-p">x:</span> <span class="text-syn-n">100</span> <span class="text-syn-u">}}</span>
@@ -713,6 +723,7 @@ transform change:  Style → Composite                   (fastest)
               JavaScript gives you programmatic control.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> variants <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">hidden:</span> <span class="text-syn-u">{</span> <span class="text-syn-p">opacity:</span> <span class="text-syn-n">0</span><span class="text-syn-u">,</span> <span class="text-syn-p">y:</span> <span class="text-syn-n">20</span> <span class="text-syn-u">},</span>
@@ -796,6 +807,7 @@ transform change:  Style → Composite                   (fastest)
             </p>
             <p class="mt-0 mb-6">The bad version:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> pulse-bad <span class="text-syn-u">{</span>
   0% <span class="text-syn-u">{</span>
@@ -829,6 +841,7 @@ transform change:  Style → Composite                   (fastest)
             </p>
             <p class="mt-0 mb-6">The good version:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@keyframes</span> pulse-good <span class="text-syn-u">{</span>
   0% <span class="text-syn-u">{</span>
@@ -860,6 +873,7 @@ transform change:  Style → Composite                   (fastest)
               >. The GPU handles it. Battery life preserved.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-p">.notification-dot</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">width</span><span class="text-syn-u">:</span> <span class="text-syn-n">8px</span><span class="text-syn-u">;</span>
@@ -1005,6 +1019,7 @@ transform change:  Style → Composite                   (fastest)
               prefer reduced motion for focus.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">.notification-dot</span> <span class="text-syn-u">{</span>
@@ -1021,6 +1036,7 @@ transform change:  Style → Composite                   (fastest)
               transitions:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">.modal</span> <span class="text-syn-u">{</span>

@@ -135,6 +135,7 @@
               Redis, no workers. For simple periodic tasks, it&#39;s perfect.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;crons&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-u">[</span>
@@ -203,6 +204,7 @@
               string with five fields:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌───────────── minute (0–59)
 │ ┌───────────── hour (0–23)
@@ -528,6 +530,7 @@
             </h2>
             <p class="mt-0 mb-6">Install BullMQ:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-sh rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">npm</span> <span class="text-syn-s">install</span> <span class="text-syn-s">bullmq</span>
 </code></pre>
@@ -537,6 +540,7 @@
             </p>
             <p class="mt-0 mb-6">First, set up the Redis connection:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-k">type</span> <span class="text-syn-u">{</span> ConnectionOptions <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
@@ -571,6 +575,7 @@
             </p>
             <p class="mt-0 mb-6">Now create a queue:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Queue <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
@@ -655,6 +660,7 @@
               option:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">ScheduledJobData</span> <span class="text-syn-u">{</span>
   jobId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
@@ -743,6 +749,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">getSchedules</span><span class="text-syn-u">()</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> jobs <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">getRepeatableJobs</span><span class="text-syn-u">();</span>
@@ -765,6 +772,7 @@
               >:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">removeSchedule</span><span class="text-syn-u">(</span>repeatJobKey<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">removeRepeatableByKey</span><span class="text-syn-u">(</span>repeatJobKey<span class="text-syn-u">);</span>
@@ -774,6 +782,7 @@
               You can also find and remove by scanning through repeatable jobs:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">removeScheduleById</span><span class="text-syn-u">(</span>scheduleId<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> repeatableJobs <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> scheduledQueue<span class="text-syn-u">.</span><span class="text-syn-f">getRepeatableJobs</span><span class="text-syn-u">();</span>
@@ -799,6 +808,7 @@
               them according to the cron schedule.
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Worker<span class="text-syn-u">,</span> <span class="text-syn-k">type</span> Job<span class="text-syn-u">,</span> UnrecoverableError <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
@@ -896,6 +906,7 @@
             </h3>
             <p class="mt-0 mb-6">Hook into worker events to log failures:</p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">worker<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;completed&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">(</span>job<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;Job completed&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-u">{</span>
@@ -925,6 +936,7 @@ worker<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span c
               of killing them mid-execution. Here&#39;s the pattern:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">let</span> isShuttingDown <span class="text-syn-o">=</span> <span class="text-syn-k">false</span><span class="text-syn-u">;</span>
 
@@ -994,6 +1006,7 @@ process<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span 
               says against what Redis has, and brings them in line:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> Queue <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;bullmq&quot;</span><span class="text-syn-u">;</span>
 
@@ -1106,6 +1119,7 @@ process<span class="text-syn-u">.</span><span class="text-syn-f">on</span><span 
               container runs the sync script to reconcile the database with Redis:
             </p>
             <pre
+              tabindex="0"
               class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
             ><code class="language-yaml rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">initContainers</span><span class="text-syn-u">:</span>
   <span class="text-syn-u">-</span> <span class="text-syn-s">name</span><span class="text-syn-u">:</span> <span class="text-syn-s">sync-schedules</span>

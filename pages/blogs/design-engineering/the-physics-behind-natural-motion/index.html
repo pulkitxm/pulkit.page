@@ -55,6 +55,8 @@
     <script
       type="application/ld+json"
     >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://new.pulkit.page/#person","name":"Pulkit","url":"https://new.pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://new.pulkit.page/#website","url":"https://new.pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://new.pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#image","contentUrl":"https://new.pulkit.page/og/blogs/design-engineering/the-physics-behind-natural-motion/card.png","width":1200,"height":630,"caption":"The Physics Behind Natural Motion"},{"@type":"BlogPosting","@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#article","headline":"The Physics Behind Natural Motion","description":"Move beyond duration-based animations. Learn how spring physics creates motion that responds, adapts, and feels genuinely natural. The secret behind iOS's fluid interactions.","datePublished":"2026-01-28","author":{"@id":"https://new.pulkit.page/#person"},"publisher":{"@id":"https://new.pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#webpage"},"isPartOf":{"@id":"https://new.pulkit.page/blogs/#webpage"},"image":{"@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#image"},"url":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/","inLanguage":"en","keywords":["Spring Physics","Framer Motion","Motion Design","UI Animation","React"]},{"@type":"BreadcrumbList","@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://new.pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://new.pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"Design Engineering","item":"https://new.pulkit.page/blogs/design-engineering/"},{"@type":"ListItem","position":4,"name":"The Physics Behind Natural Motion","item":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/"}]},{"@type":"WebPage","@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#webpage","url":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/","name":"The Physics Behind Natural Motion","description":"Move beyond duration-based animations. Learn how spring physics creates motion that responds, adapts, and feels genuinely natural. The secret behind iOS's fluid interactions.","isPartOf":{"@id":"https://new.pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#image"},"inLanguage":"en","mainEntity":{"@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#article"},"breadcrumb":{"@id":"https://new.pulkit.page/blogs/design-engineering/the-physics-behind-natural-motion/#breadcrumbs"}}]}</script>
+    <link rel="stylesheet" href="/assets/demos/document.css" />
+    <script type="module" src="/assets/demos/index.js"></script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>The Physics Behind Natural Motion | Pulkit</title>
@@ -124,13 +126,12 @@
               a cool demo. It was physics-based animation at its finest, rigid body simulation with
               damping, gravity, and joint constraints creating motion that feels genuinely real.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Vercel Badge</a
-              >
-            </p>
+            <demo-showcase
+              data-component="vercel-badge"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Based on
               <a
@@ -216,13 +217,12 @@
             >
               Seeing the Difference
             </h2>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Spring Vs Easing</a
-              >
-            </p>
+            <demo-showcase
+              data-component="spring-vs-easing"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               The bottom ball uses spring physics. Notice how it overshoots slightly and settles
               into position. The top ball moves with a fixed duration ease-out. Both technically
@@ -267,13 +267,22 @@
               is how heavy the object is. Heavier objects take longer to accelerate and decelerate.
               They have more inertia.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Spring Config Playground</a
-              >
-            </p>
+            <demo-showcase
+              data-component="spring-config-playground"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+              data-files
+              ><script type="application/json">
+              [
+                {
+                  "filename": "spring-config.tsx",
+                  "code": "import { motion } from \"motion/react\";\n\nfunction SpringDemo() {\n  return (\n    \u003cmotion.div\n      animate={{ x: 200 }}\n      transition={{\n        type: \"spring\",\n        stiffness: 300,\n        damping: 20,\n        mass: 1,\n      }}\n    />\n  );\n}\n\n// Higher stiffness = snappier\n// Higher damping = less bounce\n// Higher mass = more inertia",
+                  "html": "\u003cpre>\u003ccode class=\"[tab-size:2] [font:0.84em/1.65_var(--site-font-mono)]\">\u003cspan class=\"text-syn-k\">import\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span> motion \u003cspan class=\"text-syn-u\">}\u003c/span> \u003cspan class=\"text-syn-k\">from\u003c/span> \u003cspan class=\"text-syn-s\">&quot;motion/react&quot;\u003c/span>\u003cspan class=\"text-syn-u\">;\u003c/span>\n\n\u003cspan class=\"text-syn-k\">function\u003c/span> \u003cspan class=\"text-syn-f\">SpringDemo\u003c/span>\u003cspan class=\"text-syn-u\">()\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span>\n  \u003cspan class=\"text-syn-k\">return\u003c/span> \u003cspan class=\"text-syn-u\">(\u003c/span>\n    \u003cspan class=\"text-syn-u\">&lt;\u003c/span>\u003cspan class=\"text-syn-g\">motion.div\u003c/span>\n      \u003cspan class=\"text-syn-p\">animate\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{{\u003c/span> \u003cspan class=\"text-syn-p\">x:\u003c/span> \u003cspan class=\"text-syn-n\">200\u003c/span> \u003cspan class=\"text-syn-u\">}}\u003c/span>\n      \u003cspan class=\"text-syn-p\">transition\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{{\u003c/span>\n        \u003cspan class=\"text-syn-p\">type:\u003c/span> \u003cspan class=\"text-syn-s\">&quot;spring&quot;\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-p\">stiffness:\u003c/span> \u003cspan class=\"text-syn-n\">300\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-p\">damping:\u003c/span> \u003cspan class=\"text-syn-n\">20\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-p\">mass:\u003c/span> \u003cspan class=\"text-syn-n\">1\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n      \u003cspan class=\"text-syn-u\">}}\u003c/span>\n    \u003cspan class=\"text-syn-u\">/&gt;\u003c/span>\n  \u003cspan class=\"text-syn-u\">);\u003c/span>\n\u003cspan class=\"text-syn-u\">}\u003c/span>\n\n\u003cspan class=\"text-syn-c italic\">// Higher stiffness = snappier\u003c/span>\n\u003cspan class=\"text-syn-c italic\">// Higher damping = less bounce\u003c/span>\n\u003cspan class=\"text-syn-c italic\">// Higher mass = more inertia\u003c/span>\u003c/code>\u003c/pre>"
+                }
+              ]
+              </script></demo-showcase
+            >
             <p class="mt-0 mb-6">
               These properties are unintuitive at first. There&#39;s no actual mass or spring in
               your interface. But the mental model helps: if you want something to feel heavy and
@@ -327,13 +336,22 @@ a = acceleration
               moving right and you change its target to the left, it doesn&#39;t stop and restart.
               It curves naturally toward the new target, using its existing momentum.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Interruptibility</a
-              >
-            </p>
+            <demo-showcase
+              data-component="interruptibility"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+              data-files
+              ><script type="application/json">
+              [
+                {
+                  "filename": "interruptible.tsx",
+                  "code": "import { motion } from \"motion/react\";\nimport { useState } from \"react\";\n\nfunction InterruptibleDemo() {\n  const [position, setPosition] = useState({ x: 0, y: 0 });\n\n  return (\n    \u003cdiv\n      onClick={(e) => {\n        const rect = e.currentTarget.getBoundingClientRect();\n        setPosition({\n          x: e.clientX - rect.left - 24,\n          y: e.clientY - rect.top - 24,\n        });\n      }}\n    >\n      \u003cmotion.div\n        className=\"ball\"\n        animate={position}\n        transition={{\n          type: \"spring\",\n          stiffness: 200,\n          damping: 20,\n        }}\n      />\n    \u003c/div>\n  );\n}",
+                  "html": "\u003cpre>\u003ccode class=\"[tab-size:2] [font:0.84em/1.65_var(--site-font-mono)]\">\u003cspan class=\"text-syn-k\">import\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span> motion \u003cspan class=\"text-syn-u\">}\u003c/span> \u003cspan class=\"text-syn-k\">from\u003c/span> \u003cspan class=\"text-syn-s\">&quot;motion/react&quot;\u003c/span>\u003cspan class=\"text-syn-u\">;\u003c/span>\n\u003cspan class=\"text-syn-k\">import\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span> useState \u003cspan class=\"text-syn-u\">}\u003c/span> \u003cspan class=\"text-syn-k\">from\u003c/span> \u003cspan class=\"text-syn-s\">&quot;react&quot;\u003c/span>\u003cspan class=\"text-syn-u\">;\u003c/span>\n\n\u003cspan class=\"text-syn-k\">function\u003c/span> \u003cspan class=\"text-syn-f\">InterruptibleDemo\u003c/span>\u003cspan class=\"text-syn-u\">()\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span>\n  \u003cspan class=\"text-syn-k\">const\u003c/span> \u003cspan class=\"text-syn-u\">[\u003c/span>position\u003cspan class=\"text-syn-u\">,\u003c/span> setPosition\u003cspan class=\"text-syn-u\">]\u003c/span> \u003cspan class=\"text-syn-o\">=\u003c/span> \u003cspan class=\"text-syn-f\">useState\u003c/span>\u003cspan class=\"text-syn-u\">({\u003c/span> \u003cspan class=\"text-syn-p\">x:\u003c/span> \u003cspan class=\"text-syn-n\">0\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span> \u003cspan class=\"text-syn-p\">y:\u003c/span> \u003cspan class=\"text-syn-n\">0\u003c/span> \u003cspan class=\"text-syn-u\">});\u003c/span>\n\n  \u003cspan class=\"text-syn-k\">return\u003c/span> \u003cspan class=\"text-syn-u\">(\u003c/span>\n    \u003cspan class=\"text-syn-u\">&lt;\u003c/span>\u003cspan class=\"text-syn-g\">div\u003c/span>\n      \u003cspan class=\"text-syn-p\">onClick\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{(\u003c/span>e\u003cspan class=\"text-syn-u\">)\u003c/span> \u003cspan class=\"text-syn-k\">=&gt;\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span>\n        \u003cspan class=\"text-syn-k\">const\u003c/span> rect \u003cspan class=\"text-syn-o\">=\u003c/span> e\u003cspan class=\"text-syn-u\">.\u003c/span>currentTarget\u003cspan class=\"text-syn-u\">.\u003c/span>\u003cspan class=\"text-syn-f\">getBoundingClientRect\u003c/span>\u003cspan class=\"text-syn-u\">();\u003c/span>\n        \u003cspan class=\"text-syn-f\">setPosition\u003c/span>\u003cspan class=\"text-syn-u\">({\u003c/span>\n          \u003cspan class=\"text-syn-p\">x:\u003c/span> e\u003cspan class=\"text-syn-u\">.\u003c/span>\u003cspan class=\"text-syn-p\">clientX\u003c/span> \u003cspan class=\"text-syn-o\">-\u003c/span> rect\u003cspan class=\"text-syn-u\">.\u003c/span>\u003cspan class=\"text-syn-p\">left\u003c/span> \u003cspan class=\"text-syn-o\">-\u003c/span> \u003cspan class=\"text-syn-n\">24\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n          \u003cspan class=\"text-syn-p\">y:\u003c/span> e\u003cspan class=\"text-syn-u\">.\u003c/span>\u003cspan class=\"text-syn-p\">clientY\u003c/span> \u003cspan class=\"text-syn-o\">-\u003c/span> rect\u003cspan class=\"text-syn-u\">.\u003c/span>\u003cspan class=\"text-syn-p\">top\u003c/span> \u003cspan class=\"text-syn-o\">-\u003c/span> \u003cspan class=\"text-syn-n\">24\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-u\">});\u003c/span>\n      \u003cspan class=\"text-syn-u\">}}\u003c/span>\n    \u003cspan class=\"text-syn-u\">&gt;\u003c/span>\n      \u003cspan class=\"text-syn-u\">&lt;\u003c/span>\u003cspan class=\"text-syn-g\">motion.div\u003c/span>\n        \u003cspan class=\"text-syn-p\">className\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-s\">&quot;ball&quot;\u003c/span>\n        \u003cspan class=\"text-syn-p\">animate\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{\u003c/span>position\u003cspan class=\"text-syn-u\">}\u003c/span>\n        \u003cspan class=\"text-syn-p\">transition\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{{\u003c/span>\n          \u003cspan class=\"text-syn-p\">type:\u003c/span> \u003cspan class=\"text-syn-s\">&quot;spring&quot;\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n          \u003cspan class=\"text-syn-p\">stiffness:\u003c/span> \u003cspan class=\"text-syn-n\">200\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n          \u003cspan class=\"text-syn-p\">damping:\u003c/span> \u003cspan class=\"text-syn-n\">20\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-u\">}}\u003c/span>\n      \u003cspan class=\"text-syn-u\">/&gt;\u003c/span>\n    \u003cspan class=\"text-syn-u\">&lt;/\u003c/span>\u003cspan class=\"text-syn-g\">div\u003c/span>\u003cspan class=\"text-syn-u\">&gt;\u003c/span>\n  \u003cspan class=\"text-syn-u\">);\u003c/span>\n\u003cspan class=\"text-syn-u\">}\u003c/span>\u003c/code>\u003c/pre>"
+                }
+              ]
+              </script></demo-showcase
+            >
             <p class="mt-0 mb-6">
               Click around rapidly. Notice how the ball curves toward each new position, never
               losing its momentum. This is impossible with CSS transitions. It&#39;s why libraries
@@ -362,13 +380,12 @@ a = acceleration
               transitions. The problem? If you trigger two toasts quickly, the first toast jumps to
               its new position because CSS animations can&#39;t be interrupted smoothly.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Toast Interrupt</a
-              >
-            </p>
+            <demo-showcase
+              data-component="toast-interrupt"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               This is a trade-off. Sonner prioritizes bundle size over perfectly smooth
               interruptions. For most use cases, it&#39;s fine. But it illustrates why spring
@@ -406,13 +423,12 @@ a = acceleration
               </li>
               <li><strong>Professional apps.</strong> Banking, medical, enterprise software</li>
             </ul>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Bounce Comparison</a
-              >
-            </p>
+            <demo-showcase
+              data-component="bounce-comparison"
+              data-props="{}"
+              data-frame='{"focusCode":false,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               The rule I follow: if the user physically interacted (drag, swipe, throw), bounce can
               make sense. If the system initiated the motion (show modal, display toast, load
@@ -509,25 +525,33 @@ a = acceleration
               around as you change other spring parameters. It&#39;s roughly how long until the
               animation is &quot;mostly done,&quot; even if subtle settling continues after.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Perceptual Duration</a
-              >
-            </p>
+            <demo-showcase
+              data-component="perceptual-duration"
+              data-props="{}"
+              data-frame='{"focusCode":true,"replayButton":false,"bitBigger":false,"fullHeight":false}'
+              data-height="default"
+              data-files
+              ><script type="application/json">
+              [
+                {
+                  "filename": "perceptual-duration.tsx",
+                  "code": "import { motion } from \"motion/react\";\n\nfunction PerceptualDuration() {\n  return (\n    \u003cmotion.div\n      animate={{ scale: 1 }}\n      transition={{\n        type: \"spring\",\n        duration: 0.5,\n        bounce: 0.2,\n      }}\n    />\n  );\n}\n\n// duration: perceptual duration in seconds\n// bounce: 0 = no bounce, 1 = maximum bounce",
+                  "html": "\u003cpre>\u003ccode class=\"[tab-size:2] [font:0.84em/1.65_var(--site-font-mono)]\">\u003cspan class=\"text-syn-k\">import\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span> motion \u003cspan class=\"text-syn-u\">}\u003c/span> \u003cspan class=\"text-syn-k\">from\u003c/span> \u003cspan class=\"text-syn-s\">&quot;motion/react&quot;\u003c/span>\u003cspan class=\"text-syn-u\">;\u003c/span>\n\n\u003cspan class=\"text-syn-k\">function\u003c/span> \u003cspan class=\"text-syn-f\">PerceptualDuration\u003c/span>\u003cspan class=\"text-syn-u\">()\u003c/span> \u003cspan class=\"text-syn-u\">{\u003c/span>\n  \u003cspan class=\"text-syn-k\">return\u003c/span> \u003cspan class=\"text-syn-u\">(\u003c/span>\n    \u003cspan class=\"text-syn-u\">&lt;\u003c/span>\u003cspan class=\"text-syn-g\">motion.div\u003c/span>\n      \u003cspan class=\"text-syn-p\">animate\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{{\u003c/span> \u003cspan class=\"text-syn-p\">scale:\u003c/span> \u003cspan class=\"text-syn-n\">1\u003c/span> \u003cspan class=\"text-syn-u\">}}\u003c/span>\n      \u003cspan class=\"text-syn-p\">transition\u003c/span>\u003cspan class=\"text-syn-o\">=\u003c/span>\u003cspan class=\"text-syn-u\">{{\u003c/span>\n        \u003cspan class=\"text-syn-p\">type:\u003c/span> \u003cspan class=\"text-syn-s\">&quot;spring&quot;\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-p\">duration:\u003c/span> \u003cspan class=\"text-syn-n\">0.5\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n        \u003cspan class=\"text-syn-p\">bounce:\u003c/span> \u003cspan class=\"text-syn-n\">0.2\u003c/span>\u003cspan class=\"text-syn-u\">,\u003c/span>\n      \u003cspan class=\"text-syn-u\">}}\u003c/span>\n    \u003cspan class=\"text-syn-u\">/&gt;\u003c/span>\n  \u003cspan class=\"text-syn-u\">);\u003c/span>\n\u003cspan class=\"text-syn-u\">}\u003c/span>\n\n\u003cspan class=\"text-syn-c italic\">// duration: perceptual duration in seconds\u003c/span>\n\u003cspan class=\"text-syn-c italic\">// bounce: 0 = no bounce, 1 = maximum bounce\u003c/span>\u003c/code>\u003c/pre>"
+                }
+              ]
+              </script></demo-showcase
+            >
             <p class="mt-0 mb-6">
               This approach gives you the natural feel of spring physics while letting you think in
               familiar timing terms. A 300ms spring with no bounce behaves similarly to a 300ms
               ease-out, but handles interruptions better.
             </p>
-            <p class="mt-0 mb-6">
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="https://www.pulkit.blog/series/design-engineering/the-physics-behind-natural-motion"
-                >Interactive example: Easing Curve</a
-              >
-            </p>
+            <demo-showcase
+              data-component="easing-curve"
+              data-props='{"easeOut":true,"spring":true,"allowBounce":true}'
+              data-frame='{"focusCode":false,"replayButton":true,"bitBigger":true,"fullHeight":false}'
+              data-height="bigger"
+            ></demo-showcase>
             <p class="mt-0 mb-6">
               Notice how at
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"

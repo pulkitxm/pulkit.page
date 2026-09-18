@@ -18,7 +18,7 @@ This is a static publishing system for a portfolio and a substantial writing arc
 
 ## Scope of this explanation
 
-This explanation was refreshed on September 18, 2026 against clean commit `d0e897b` after the SEO, environment handling, and repository policy changes were merged. It describes current implemented behavior, not the earlier migration-only snapshot. Local Bun is 1.4.2; GitHub Actions pins 1.3.14. The validation record is in [maintenance and snapshot](maintenance-and-snapshot.md).
+This explanation was refreshed on September 18, 2026 against clean commit `d0e897b` after the SEO, environment handling, and repository policy changes were merged. It describes current implemented behavior, not the earlier migration-only snapshot. Local development and GitHub Actions both use Bun 1.4.2. The validation record is in [maintenance and snapshot](maintenance-and-snapshot.md).
 
 Canonical URLs, Open Graph and Twitter metadata, JSON-LD, social-card PNGs, sitemap, breadcrumbs, and related writing are implemented. Production uses the root CNAME; development and custom environments use their resolved origin in isolated output. See [SEO and environments](seo-and-environments.md) for the complete behavior and limitations.
 

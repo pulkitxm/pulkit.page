@@ -67,7 +67,7 @@ Lists are automatic, including nested articles, ordered newest first:
 ```md
 :::list blogs limit=5
 
-:::list experience
+:::list exp
 
 :::list blogs/system-design
 ```

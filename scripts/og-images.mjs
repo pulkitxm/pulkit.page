@@ -25,7 +25,7 @@ export function renderCard(page, site) {
   const size = lines.length > 4 ? 44 : 54;
   const category = page.route.startsWith("/blogs/")
     ? "Writing"
-    : page.route.startsWith("/experience/")
+    : page.route.startsWith("/exp/")
       ? "Experience"
       : "Portfolio";
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#0b0b0b"/><g fill="#f2f2ef" font-family="IBM Plex Mono"><text x="72" y="96" font-size="26">${xml(site.brand)} / ${category}</text><path d="M72 135H1128" stroke="#414141"/>${lines.map((line, index) => `<text x="72" y="${225 + index * 64}" font-size="${size}">${xml(line)}</text>`).join("")}<text x="72" y="565" font-size="22" fill="#aaa">${xml(new URL(site.url).host)}</text><text x="1128" y="565" text-anchor="end" font-size="22" fill="#aaa">${xml(page.metadata.period ?? page.metadata.date ?? "Software engineer")}</text></g></svg>`;

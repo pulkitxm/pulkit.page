@@ -12,4 +12,4 @@ I help turn ideas into useful web and mobile products.
 
 We start with a conversation, agree on a small scope, then design, build, and iterate.
 
-[Explore my experience](/experience/) or [tell me what you're building](/contact/).
+[Explore my experience](/exp/) or [tell me what you're building](/contact/).

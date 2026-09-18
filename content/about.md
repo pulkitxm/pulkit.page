@@ -9,7 +9,7 @@ I'm Pulkit, a software engineer based in India, working at **Noveum.ai**. I like
 
 My work spans full-stack development, developer tools, and interfaces. I've also led the Deviators developer community and worked with teams at MagicAPI, CrowdVolt, and DatawaveLabs.
 
-You can find my projects on [GitHub](https://github.com/Pulkitxm), read my [writing](/blogs/), or explore my [experience](/experience/).
+You can find my projects on [GitHub](https://github.com/Pulkitxm), read my [writing](/blogs/), or explore my [experience](/exp/).
 
 Outside of work, I'm usually experimenting with a new idea or talking to people who are building something interesting.
 

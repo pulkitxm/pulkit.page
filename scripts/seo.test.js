@@ -35,7 +35,7 @@ test("graphs distinguish collections, posts, contact and experience without inve
     ["/blogs/", "CollectionPage"],
     ["/contact/", "ContactPage"],
     ["/about/", "AboutPage"],
-    ["/experience/example/", "WebPage"],
+    ["/exp/example/", "WebPage"],
   ]) {
     const graph = structuredData(route, metadata, site, pages)["@graph"];
     expect(graph.at(-1)["@type"]).toBe(type);

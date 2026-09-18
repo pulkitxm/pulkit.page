@@ -6,7 +6,7 @@ navigation:
   - label: Writing
     href: /blogs/
   - label: Experience
-    href: /experience/
+    href: /exp/
   - label: About
     href: /about/
   - label: Contact

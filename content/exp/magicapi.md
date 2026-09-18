@@ -6,7 +6,7 @@ description: Working as a Software Engineer at API.market (MagicAPI), responsibl
 role: Software Engineer
 date: 2025-03-25
 period: Mar 2025 – present
-icon: /assets/experience/noveum.webp
+icon: /assets/exp/noveum.webp
 ---
 
 After my sudden departure from the previous company, I was going through a rough patch. One of my most trusted mentors recommended me to API.market, and I couldn't be more grateful. The referral led me to a team I genuinely admire. The work, culture, and people here have been incredibly motivating and fulfilling. I had a lot of ownership of the platform. Things like revenue, databases etc. were shared transparently.
@@ -55,28 +55,22 @@ During our product launch, we had a plan to give 100 vouchers worth $5 each to a
 
 We implemented two distinct types of vouchers to meet different use cases. The first type was a targeted voucher system where we could could claim the voucher by mentioning specific email addresses. This allowed for precise control over voucher distribution for specific events or user groups. The second type was a where people could freely claim it once per account, with a maximum limit of 100 people. This system provided provided flexibility for both controlled distribution and open public access while maintaining security and preventing abuse.
 
-![Targeted vouchers claimed by specific emails](/assets/content/exp/magicapi/user-specific-vouchers.webp)
-
-![Public vouchers with a claim limit](/assets/content/exp/magicapi/public-vouchers.webp)
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/user-specific-vouchers.webp","/assets/content/exp/magicapi/public-vouchers.webp"]}
+:::
 
 ### New Hero Section Design
 
 I redesigned the hero section of the API.market website to enhance user engagement and provide clearer information hierarchy. The new design featured improved visual flow, better call-to-action placement, and more intuitive navigation elements.
 
-[New Hero Section](https://www.pulkit.page/exp/magicapi/new-hero-section.mp4)
+<video src="/assets/content/exp/magicapi/new-hero-section.mp4" title="New Hero Section" autoplay loop muted playsinline controls><track kind="captions"></video>
 
 ### Smart Onboarding form
 
 I redesigned the smart onboarding form to enhance user engagement and provide clearer information hierarchy. The new design featured improved visual flow, better call-to-action placement, and more intuitive navigation elements.
 
-:::carousel
-
-![Smart onboarding form, step 1](/assets/content/exp/magicapi/smart-onboarding-form/step-1.webp)
-
-![Smart onboarding form, step 2](/assets/content/exp/magicapi/smart-onboarding-form/step-2.webp)
-
-![Smart onboarding form, step 3](/assets/content/exp/magicapi/smart-onboarding-form/step-3.webp)
-
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/smart-onboarding-form/step-1.webp","/assets/content/exp/magicapi/smart-onboarding-form/step-2.webp","/assets/content/exp/magicapi/smart-onboarding-form/step-3.webp"],"columns":3,"label":"Smart onboarding form"}
 :::
 
 ### Converting full time!!
@@ -94,34 +88,16 @@ We didn't build everything in the next.js app from ground app, instead we had pu
 
 I worked on the traces UI to make agent executions easy to inspect. Traces are basically an end-to-end timeline of an agent run (steps, inputs/outputs, errors and latency). So the traces ui included a main trace view, flow visualization, expanded flow graphs, and filters like date ranges so debugging production runs was actually practical.
 
-:::carousel
-
-![Traces main view](/assets/content/exp/magicapi/noveum.ai/traces/main-view.webp)
-
-![Trace with an expanded span](/assets/content/exp/magicapi/noveum.ai/traces/with-span.webp)
-
-![Trace flow visualization](/assets/content/exp/magicapi/noveum.ai/traces/flow-chart.webp)
-
-![Trace date range filter](/assets/content/exp/magicapi/noveum.ai/traces/date-selector.webp)
-
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/noveum.ai/traces/main-view.webp","/assets/content/exp/magicapi/noveum.ai/traces/with-span.webp","/assets/content/exp/magicapi/noveum.ai/traces/flow-chart.webp","/assets/content/exp/magicapi/noveum.ai/traces/date-selector.webp"],"columns":2,"label":"Traces UI"}
 :::
 
 #### Datasets UI
 
 Datasets are curated collections of examples extracted from traces (inputs, outputs, and selected spans). They’re used to run specific scorers at evaluation time, so you can measure quality, compare changes, and catch regressions in agents/prompts/models.
 
-:::carousel
-
-![Datasets list](/assets/content/exp/magicapi/noveum.ai/datasets/datasets.webp)
-
-![Example dataset items](/assets/content/exp/magicapi/noveum.ai/datasets/example-dataset-items.webp)
-
-![Dataset chat view](/assets/content/exp/magicapi/noveum.ai/datasets/chat-ui.webp)
-
-![Dataset scorer view](/assets/content/exp/magicapi/noveum.ai/datasets/scorer-ui.webp)
-
-![Dataset item JSON view](/assets/content/exp/magicapi/noveum.ai/datasets/json-view.webp)
-
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/noveum.ai/datasets/datasets.webp","/assets/content/exp/magicapi/noveum.ai/datasets/example-dataset-items.webp","/assets/content/exp/magicapi/noveum.ai/datasets/chat-ui.webp","/assets/content/exp/magicapi/noveum.ai/datasets/scorer-ui.webp","/assets/content/exp/magicapi/noveum.ai/datasets/json-view.webp"],"columns":2,"label":"Datasets UI"}
 :::
 
 #### Completing Six Months
@@ -134,22 +110,8 @@ I shared my reflections on [LinkedIn](https://www.linkedin.com/posts/pulkitxm_as
 
 The ETL (Extract, Transform, Load) pipeline converted traces into datasets via an asynchronous background workflow. I built the end-to-end job orchestration using BullMQ workers, deployed it to a Kubernetes cluster, and operated the Redis infrastructure it depended on.
 
-:::carousel
-
-![ETL jobs list](/assets/content/exp/magicapi/noveum.ai/etl-job/etl-jobs.webp)
-
-![ETL mapper agent](/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-agent.webp)
-
-![ETL trace picker](/assets/content/exp/magicapi/noveum.ai/etl-job/trace-picker.webp)
-
-![Complete trace view for an ETL job](/assets/content/exp/magicapi/noveum.ai/etl-job/complete-trace-view.webp)
-
-![Creating an ETL job](/assets/content/exp/magicapi/noveum.ai/etl-job/create-job.webp)
-
-![ETL mapper code](/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-code.webp)
-
-![ETL job runs](/assets/content/exp/magicapi/noveum.ai/etl-job/etl-job-runs.webp)
-
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/noveum.ai/etl-job/etl-jobs.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-agent.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/trace-picker.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/complete-trace-view.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/create-job.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-code.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/etl-job-runs.webp"],"columns":2,"label":"ETL job"}
 :::
 
 ### AWS Infrastructure Migration
@@ -173,10 +135,12 @@ This migration improved our deployment reliability and gave us proper separation
 
 ## Technologies & Skills
 
-TypeScript · JavaScript · Nextjs (Pages Router) · Next Auth (Auth.js) · Stripe · Tailwind CSS · Elasticsearch · PostgreSQL · Kubernetes · Turborepo · Docker · Git · AWS · EKS · S3 · ECR · CodeBuild · WAF · IAM · VPC · Redis · BullMQ
+:::embed tech-badges
+{"technologies":["TypeScript","JavaScript","Nextjs (Pages Router)","Next Auth (Auth.js)","Stripe","Tailwind CSS","Elasticsearch","PostgreSQL","Kubernetes","Turborepo","Docker","Git","AWS","EKS","S3","ECR","CodeBuild","WAF","IAM","VPC","Redis","BullMQ"]}
+:::
 
 ## Documents
 
-[Offer Letter](https://www.pulkit.page/exp/magicapi/offer-letter.pdf)
-
-[Internship Completion Letter](https://www.pulkit.page/exp/magicapi/internship-completion-letter.pdf)
+:::embed document-tabs
+{"documents":[{"title":"Offer Letter","documentUrl":"/assets/content/exp/magicapi/offer-letter.pdf"},{"title":"Internship Completion Letter","documentUrl":"/assets/content/exp/magicapi/internship-completion-letter.pdf"}]}
+:::

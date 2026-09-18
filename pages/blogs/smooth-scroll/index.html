@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,28 +52,40 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
-    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
     <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
       <header
         class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
       >
-        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
         <nav
-          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
           aria-label="Main navigation"
         >
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
       <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
         <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
           <ol
-            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
           >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
@@ -79,58 +94,79 @@
         </nav>
         <article>
           <header class="mb-7">
-            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
               Smooth Scrolling in Next.js
             </h1>
-            <p class="text-sm text-muted"><time datetime="2026-03-03">2026-03-03</time></p>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2026-03-03">2026-03-03</time>
+            </p>
           </header>
           <div class="wrap-anywhere">
-            <p>
+            <p class="mt-0 mb-6">
               You&#39;ve visited those websites. The ones where scrolling feels like gliding through
               silk. Every section flows into the next, parallax layers shift at different speeds,
               and the whole page feels like it has weight and momentum. Then you go back to your own
               project and it feels like dragging a cardboard box across concrete.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               That&#39;s the gap smooth scrolling fills. And it&#39;s not as complicated as it
               looks.
             </p>
-            <h2 id="what-is-smooth-scrolling">What Is Smooth Scrolling?</h2>
-            <p>
+            <h2
+              id="what-is-smooth-scrolling"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              What Is Smooth Scrolling?
+            </h2>
+            <p class="mt-0 mb-6">
               By default, the browser scrolls in discrete steps. On most systems, each scroll tick
               jumps a fixed number of pixels. It&#39;s fast and functional, but it feels mechanical.
               There&#39;s no easing, no momentum, no interpolation between positions.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Smooth scrolling replaces the browser&#39;s native scroll with a virtual one. Instead
               of jumping, the page lerps (linearly interpolates) toward the target scroll position
               over time. The result is that buttery, weighted feeling where the page seems to coast
               to a stop instead of snapping.
             </p>
-            <pre><code class="language-text">Native scroll:   Jump → Jump → Jump → Stop
+            <pre
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Native scroll:   Jump → Jump → Jump → Stop
 Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
 </code></pre>
-            <p>Under the hood, most smooth scroll libraries do the same thing:</p>
-            <ol>
+            <p class="mt-0 mb-6">Under the hood, most smooth scroll libraries do the same thing:</p>
+            <ol class="mt-0 mb-6">
               <li>Hijack the native scroll event</li>
               <li>Track the target scroll position</li>
               <li>On each animation frame, interpolate the current position toward the target</li>
               <li>
-                Apply the interpolated position via <code>transform: translateY()</code> or similar
+                Apply the interpolated position via
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >transform: translateY()</code
+                >
+                or similar
               </li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               That last part is important. Good libraries use transforms instead of actually
               scrolling the page, which means the animation stays on the GPU compositor thread and
               doesn&#39;t trigger layout recalculations.
             </p>
-            <h2 id="when-you-actually-need-it">When You Actually Need It</h2>
-            <p>
+            <h2
+              id="when-you-actually-need-it"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              When You Actually Need It
+            </h2>
+            <p class="mt-0 mb-6">
               Before we get into implementation, let&#39;s be honest: you don&#39;t always need
               smooth scrolling.
             </p>
-            <p><strong>Use it when:</strong></p>
-            <ul>
+            <p class="mt-0 mb-6"><strong>Use it when:</strong></p>
+            <ul class="mt-0 mb-6">
               <li>
                 You&#39;re building a portfolio, landing page, or marketing site where the scroll
                 experience is part of the design
@@ -141,8 +177,8 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               </li>
               <li>You want consistent scroll behavior across all browsers and devices</li>
             </ul>
-            <p><strong>Skip it when:</strong></p>
-            <ul>
+            <p class="mt-0 mb-6"><strong>Skip it when:</strong></p>
+            <ul class="mt-0 mb-6">
               <li>
                 You&#39;re building a content-heavy app (docs, dashboards, long-form text) where
                 users just want to get to their content
@@ -152,73 +188,94 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
               </li>
               <li>Performance on low-end devices matters more than polish</li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               Smooth scroll libraries intercept the native scroll, which means they can break
               expected behaviors: browser find-in-page, anchor links, keyboard navigation, and
               accessibility tools. The good libraries handle most of these edge cases, but it&#39;s
               still a tradeoff.
             </p>
-            <h2 id="the-libraries">The Libraries</h2>
-            <p>There are three main options in the ecosystem right now:</p>
-            <table>
+            <h2 id="the-libraries" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              The Libraries
+            </h2>
+            <p class="mt-0 mb-6">There are three main options in the ecosystem right now:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Library</th>
-                  <th>Approach</th>
-                  <th>Bundle Size</th>
-                  <th>Active</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Library</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Approach</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Bundle Size</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Active</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Lenis</strong></td>
-                  <td>requestAnimationFrame lerp</td>
-                  <td>~4KB gzip</td>
-                  <td>Yes</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Lenis</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    requestAnimationFrame lerp
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">~4KB gzip</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Yes</td>
                 </tr>
                 <tr>
-                  <td><strong>GSAP ScrollTrigger + ScrollSmoother</strong></td>
-                  <td>GSAP-powered with pin/parallax</td>
-                  <td>Part of GSAP (~24KB)</td>
-                  <td>Yes</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>GSAP ScrollTrigger + ScrollSmoother</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    GSAP-powered with pin/parallax
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Part of GSAP (~24KB)</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Yes</td>
                 </tr>
                 <tr>
-                  <td><strong>Locomotive Scroll v5</strong></td>
-                  <td>Virtual scroll with data attributes</td>
-                  <td>~12KB gzip</td>
-                  <td>Maintained</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    <strong>Locomotive Scroll v5</strong>
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Virtual scroll with data attributes
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">~12KB gzip</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Maintained</td>
                 </tr>
               </tbody>
             </table>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Lenis</strong>
               is the current go-to. It&#39;s lightweight, works well with any animation library, and
               has first-class React/Next.js support. Studio Freight (now Darkroom) built it and
               it&#39;s used on a ton of awwwards-winning sites.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>GSAP ScrollSmoother</strong>
               is the premium option. If you&#39;re already using GSAP for animations (and you
               probably should be), ScrollSmoother integrates seamlessly. The catch: it requires a
               GSAP Club membership for production use.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Locomotive Scroll</strong>
               was the king for a while. v5 is a rewrite that&#39;s much lighter than v4. It&#39;s
               still solid but Lenis has largely taken over its mindshare.
             </p>
-            <p>I&#39;ll show you how to set up each one.</p>
-            <h2 id="setting-up-lenis-in-next-js">Setting Up Lenis in Next.js</h2>
-            <p>Lenis is the simplest to get running. Install it:</p>
+            <p class="mt-0 mb-6">I&#39;ll show you how to set up each one.</p>
+            <h2
+              id="setting-up-lenis-in-next-js"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Setting Up Lenis in Next.js
+            </h2>
+            <p class="mt-0 mb-6">Lenis is the simplest to get running. Install it:</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">lenis</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">lenis</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Create a provider component that initializes Lenis and makes it available throughout
               your app:
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> ReactNode<span class="text-syn-u">,</span> useEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> Lenis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;lenis&quot;</span><span class="text-syn-u">;</span>
@@ -250,9 +307,10 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
   <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;&gt;{</span>children<span class="text-syn-u">}&lt;/&gt;;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>Then wrap your layout:</p>
+            <p class="mt-0 mb-6">Then wrap your layout:</p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> SmoothScrollProvider <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/smooth-scroll-provider&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> SmoothScrollProvider <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;@/components/smooth-scroll-provider&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RootLayout</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">return</span> <span class="text-syn-u">(</span>
@@ -264,9 +322,12 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
   <span class="text-syn-u">);</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>And add the required CSS. Lenis needs the html element to be set up correctly:</p>
+            <p class="mt-0 mb-6">
+              And add the required CSS. Lenis needs the html element to be set up correctly:
+            </p>
             <pre
-            ><code class="language-css"><span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span><span class="text-syn-u">,</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span><span class="text-syn-u">,</span>
 <span class="text-syn-g">html</span><span class="text-syn-p">.lenis</span> <span class="text-syn-g">body</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">height</span><span class="text-syn-u">:</span> <span class="text-syn-k">auto</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
@@ -283,24 +344,38 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
   <span class="text-syn-p">overflow</span><span class="text-syn-u">:</span> <span class="text-syn-k">hidden</span><span class="text-syn-u">;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               That&#39;s it. Your entire app now has smooth scrolling. The
-              <code>duration</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >duration</code
+              >
               controls how long it takes for the scroll to catch up (higher = more floaty), and the
-              <code>easing</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >easing</code
+              >
               function controls the deceleration curve.
             </p>
-            <h2 id="setting-up-locomotive-scroll-v5">Setting Up Locomotive Scroll v5</h2>
-            <p>Locomotive Scroll is just as straightforward. Install it:</p>
+            <h2
+              id="setting-up-locomotive-scroll-v5"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Setting Up Locomotive Scroll v5
+            </h2>
+            <p class="mt-0 mb-6">Locomotive Scroll is just as straightforward. Install it:</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">locomotive-scroll</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">locomotive-scroll</span>
 </code></pre>
-            <p>
-              Since Locomotive Scroll relies on the <code>window</code> object, you need to import
-              it dynamically in Next.js:
+            <p class="mt-0 mb-6">
+              Since Locomotive Scroll relies on the
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >window</code
+              >
+              object, you need to import it dynamically in Next.js:
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useEffect <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 
@@ -315,18 +390,24 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
   <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;{</span><span class="text-syn-c italic">/* your content */</span><span class="text-syn-u">}&lt;/</span><span class="text-syn-g">main</span><span class="text-syn-u">&gt;;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The async import is necessary because Locomotive Scroll accesses
-              <code>window</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >window</code
+              >
               on initialization. Without it, you&#39;ll get a &quot;window is not defined&quot;
               error during server-side rendering.
             </p>
-            <p>
-              Locomotive also gives you <code>data-scroll</code> attributes for quick parallax
-              effects:
+            <p class="mt-0 mb-6">
+              Locomotive also gives you
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >data-scroll</code
+              >
+              attributes for quick parallax effects:
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">data-scroll</span> <span class="text-syn-p">data-scroll-speed</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.5&quot;</span><span class="text-syn-u">&gt;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">data-scroll</span> <span class="text-syn-p">data-scroll-speed</span><span class="text-syn-o">=</span><span class="text-syn-s">&quot;0.5&quot;</span><span class="text-syn-u">&gt;</span>
   This element scrolls at half speed
 <span class="text-syn-u">&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;</span>
 
@@ -334,27 +415,37 @@ Smooth scroll:   Ease ~~~~ Glide ~~~~ Coast → Settle
   This one is a bit faster
 <span class="text-syn-u">&lt;/</span><span class="text-syn-g">h1</span><span class="text-syn-u">&gt;</span>
 </code></pre>
-            <p>
-              The <code>data-scroll-speed</code> attribute controls how fast an element moves
-              relative to the scroll. Values less than 1 make it slower (parallax effect), values
-              greater than 1 make it faster.
+            <p class="mt-0 mb-6">
+              The
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >data-scroll-speed</code
+              >
+              attribute controls how fast an element moves relative to the scroll. Values less than
+              1 make it slower (parallax effect), values greater than 1 make it faster.
             </p>
-            <h2 id="integrating-with-gsap-scrolltrigger">Integrating with GSAP ScrollTrigger</h2>
-            <p>
+            <h2
+              id="integrating-with-gsap-scrolltrigger"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Integrating with GSAP ScrollTrigger
+            </h2>
+            <p class="mt-0 mb-6">
               This is where smooth scrolling gets really powerful. GSAP&#39;s ScrollTrigger lets you
               trigger animations based on scroll position, and when combined with smooth scrolling,
               the animations feel incredibly fluid.
             </p>
-            <p>First, install GSAP:</p>
+            <p class="mt-0 mb-6">First, install GSAP:</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">gsap</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">gsap</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               If you&#39;re using Lenis, you need to sync it with GSAP&#39;s ticker so ScrollTrigger
               knows about the smooth scroll position:
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> Lenis <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;lenis&quot;</span><span class="text-syn-u">;</span>
@@ -385,17 +476,22 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
   <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;&gt;{</span>children<span class="text-syn-u">}&lt;/&gt;;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The key lines here are
-              <code>lenis.on(&quot;scroll&quot;, ScrollTrigger.update)</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >lenis.on(&quot;scroll&quot;, ScrollTrigger.update)</code
+              >
               which tells ScrollTrigger to recalculate whenever Lenis scrolls, and hooking Lenis
               into GSAP&#39;s ticker instead of using a separate
-              <code>requestAnimationFrame</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >requestAnimationFrame</code
+              >
               loop. This keeps everything in sync on the same frame.
             </p>
-            <p>Now you can create scroll-triggered animations:</p>
+            <p class="mt-0 mb-6">Now you can create scroll-triggered animations:</p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
@@ -423,20 +519,30 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
   <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">div</span> <span class="text-syn-p">ref</span><span class="text-syn-o">=</span><span class="text-syn-u">{</span>ref<span class="text-syn-u">}&gt;{</span>children<span class="text-syn-u">}&lt;/</span><span class="text-syn-g">div</span><span class="text-syn-u">&gt;;</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
-              The <code>scrub: true</code> ties the animation directly to scroll progress instead of
-              playing it once. As you scroll through the trigger zone, the animation progresses
-              proportionally. With smooth scrolling, this scrubbing feels incredibly smooth because
-              the scroll position itself is being interpolated.
+            <p class="mt-0 mb-6">
+              The
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >scrub: true</code
+              >
+              ties the animation directly to scroll progress instead of playing it once. As you
+              scroll through the trigger zone, the animation progresses proportionally. With smooth
+              scrolling, this scrubbing feels incredibly smooth because the scroll position itself
+              is being interpolated.
             </p>
-            <h2 id="parallax-sections">Parallax Sections</h2>
-            <p>
+            <h2
+              id="parallax-sections"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Parallax Sections
+            </h2>
+            <p class="mt-0 mb-6">
               Parallax is the most common thing people build with smooth scrolling. The idea is
               simple: different layers move at different speeds to create a sense of depth.
             </p>
-            <p>Here&#39;s a parallax hero section using GSAP and Lenis:</p>
+            <p class="mt-0 mb-6">Here&#39;s a parallax hero section using GSAP and Lenis:</p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> Image <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/image&quot;</span><span class="text-syn-u">;</span>
@@ -479,20 +585,33 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
   <span class="text-syn-u">);</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The background moves down at 150px while the title moves up at 80px over the same
-              scroll distance. The <code>0</code> at the end of each <code>.to()</code> means both
-              animations start at the same position in the timeline. Combined with smooth scrolling,
-              the depth effect is very convincing.
+              scroll distance. The
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >0</code
+              >
+              at the end of each
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >.to()</code
+              >
+              means both animations start at the same position in the timeline. Combined with smooth
+              scrolling, the depth effect is very convincing.
             </p>
-            <h2 id="pinned-sections">Pinned Sections</h2>
-            <p>
+            <h2
+              id="pinned-sections"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Pinned Sections
+            </h2>
+            <p class="mt-0 mb-6">
               Another popular pattern: pinning a section in place while content scrolls past it.
               Think of a product showcase where the image stays fixed while feature descriptions
               scroll by.
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
@@ -540,18 +659,24 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
   <span class="text-syn-u">);</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The image stays pinned while the right column scrolls past. The pin starts when the
               image reaches 100px from the top of the viewport and ends when the container&#39;s
               content has been fully scrolled through.
             </p>
-            <h2 id="horizontal-scroll-sections">Horizontal Scroll Sections</h2>
-            <p>
+            <h2
+              id="horizontal-scroll-sections"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Horizontal Scroll Sections
+            </h2>
+            <p class="mt-0 mb-6">
               One more pattern that works beautifully with smooth scrolling: horizontal scroll
               sections. The user scrolls vertically, but a section moves horizontally.
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useLayoutEffect<span class="text-syn-u">,</span> useRef <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;react&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> gsap <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;gsap&quot;</span><span class="text-syn-u">;</span>
@@ -597,38 +722,73 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
   <span class="text-syn-u">);</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               The container is pinned, and the inner track translates left as the user scrolls down.
               The total scroll distance equals the overflow width of the track, so each horizontal
               panel maps to an equivalent amount of vertical scroll.
             </p>
-            <h2 id="performance-considerations">Performance Considerations</h2>
-            <p>Smooth scrolling is GPU work. A few things to keep in mind:</p>
-            <p>
-              <strong>Use <code>will-change: transform</code> sparingly.</strong>
+            <h2
+              id="performance-considerations"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Performance Considerations
+            </h2>
+            <p class="mt-0 mb-6">Smooth scrolling is GPU work. A few things to keep in mind:</p>
+            <p class="mt-0 mb-6">
+              <strong
+                >Use
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >will-change: transform</code
+                >
+                sparingly.</strong
+              >
               It promotes elements to their own compositor layer, which helps with animation
               performance but uses more memory. Apply it to elements that are actively animating,
               not everything on the page.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Avoid animating layout properties.</strong>
-              Stick to <code>transform</code> and <code>opacity</code>. Animating <code>top</code>,
-              <code>left</code>, <code>width</code>, or <code>height</code> triggers layout
-              recalculations on every frame, which kills performance.
+              Stick to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >transform</code
+              >
+              and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >opacity</code
+              >. Animating
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >top</code
+              >,
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >left</code
+              >,
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >width</code
+              >, or
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >height</code
+              >
+              triggers layout recalculations on every frame, which kills performance.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Test on real devices.</strong>
               Smooth scrolling feels great on a MacBook Pro. It might stutter on a 3-year-old
               Android phone. Use Chrome DevTools performance tab to profile and watch for dropped
               frames.
             </p>
-            <p>
-              <strong>Respect <code>prefers-reduced-motion</code>.</strong>
+            <p class="mt-0 mb-6">
+              <strong
+                >Respect
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >prefers-reduced-motion</code
+                >.</strong
+              >
               Some users have motion sensitivity. Disable smooth scrolling when the user has
               requested reduced motion:
             </p>
             <pre
-            ><code class="language-tsx"><span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> mediaQuery <span class="text-syn-o">=</span> window<span class="text-syn-u">.</span><span class="text-syn-f">matchMedia</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;(prefers-reduced-motion: reduce)&quot;</span><span class="text-syn-u">);</span>
   <span class="text-syn-k">if</span> <span class="text-syn-u">(</span>mediaQuery<span class="text-syn-u">.</span><span class="text-syn-p">matches</span><span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
@@ -636,53 +796,73 @@ gsap<span class="text-syn-u">.</span><span class="text-syn-f">registerPlugin</sp
 <span class="text-syn-c italic">  // ... setup</span>
 <span class="text-syn-u">},</span> <span class="text-syn-u">[]);</span>
 </code></pre>
-            <h2 id="wrapping-up">Wrapping Up</h2>
-            <p>
+            <h2 id="wrapping-up" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Wrapping Up
+            </h2>
+            <p class="mt-0 mb-6">
               Smooth scrolling transforms how a page feels. It takes the same content and makes
               scrolling through it feel intentional and crafted instead of mechanical.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Start with Lenis if you want something lightweight. Add GSAP ScrollTrigger if you need
               scroll-driven animations. Use Locomotive Scroll if you like the data-attribute API for
               quick parallax. And always, always test on actual devices.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The best smooth scroll implementations are the ones you barely notice. The page just
               feels good. That&#39;s the goal.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               If you have questions or want to share what you built, reach out on any of my
-              <a href="/contact/">socials</a>. Happy scrolling!
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/contact/"
+                >socials</a
+              >. Happy scrolling!
             </p>
           </div>
         </article>
         <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
-          <h2 class="text-[1rem]">Related writing</h2>
-          <ul>
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
             <li class="my-2">
-              <a href="/blogs/contact-form-with-resend/"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/contact-form-with-resend/"
                 >Build a Contact Form with Resend in Next.js</a
               >
             </li>
             <li class="my-2">
-              <a href="/blogs/og-images-in-nextjs/">Open Graph Images in Next.js</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/og-images-in-nextjs/"
+                >Open Graph Images in Next.js</a
+              >
             </li>
             <li class="my-2">
-              <a href="/blogs/seo-for-nextjs-portfolio/">SEO for Next.js Portfolio</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/seo-for-nextjs-portfolio/"
+                >SEO for Next.js Portfolio</a
+              >
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
         <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
           ><button
-            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
             type="button"
             data-theme-toggle
             aria-label="Switch color theme"

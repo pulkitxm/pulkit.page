@@ -277,7 +277,7 @@ test("metadata is escaped, heading IDs are unique, and code examples stay litera
   expect(html).toContain("&lt;script&gt; &amp; {{heading}}");
   expect(html).toContain('id="same"');
   expect(html).toContain('id="same-1"');
-  expect(html).toContain('class="language-html"');
+  expect(html).toContain('class="language-html ');
   expect(html).toContain("&lt;");
   expect(html).toContain("example");
   expect(html).not.toContain("<div>example</div>");

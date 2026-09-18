@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,28 +52,40 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
-    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
     <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
       <header
         class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
       >
-        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
         <nav
-          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
           aria-label="Main navigation"
         >
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
       <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
         <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
           <ol
-            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
           >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
@@ -79,13 +94,18 @@
         </nav>
         <article>
           <header class="mb-7">
-            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
               Node.js on EC2 with PM2 and NGINX
             </h1>
-            <p class="text-sm text-muted"><time datetime="2024-08-05">2024-08-05</time></p>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2024-08-05">2024-08-05</time>
+            </p>
           </header>
           <div class="wrap-anywhere">
-            <p>
+            <p class="mt-0 mb-6">
               Deploying Node.js applications can be a daunting task, especially when aiming for a
               robust and scalable production environment. However, with the right tools and a clear
               process, it becomes much more manageable. In this guide, I will walk you through the
@@ -94,32 +114,46 @@
               manage your application processes, and configure a reverse proxy to handle incoming
               traffic efficiently. Let&#39;s dive in!
             </p>
-            <h2 id="initializing-the-node-project">Initializing the Node project</h2>
-            <p>
+            <h2
+              id="initializing-the-node-project"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Initializing the Node project
+            </h2>
+            <p class="mt-0 mb-6">
               <strong
                 >For this walkthrough, I will be deploying a simple Express hello-world application
                 on EC2. Let&#39;s start by initialize a simple express app</strong
               >
             </p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">init</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/90d8aa96-dad8-4b4e-abaf-14e859a8b118.webp"
                 alt="Terminal showing npm init command output"
                 loading="lazy"
               />
             </p>
-            <h3 id="add-express-as-a-dependency">Add express as a dependency</h3>
+            <h3 id="add-express-as-a-dependency" class="mt-8 text-lg leading-tight tracking-tight">
+              Add express as a dependency
+            </h3>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">express</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">express</span>
 </code></pre>
-            <h3 id="adding-a-simple-endpoint-that-returns-a-hello-world-object">
+            <h3
+              id="adding-a-simple-endpoint-that-returns-a-hello-world-object"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
               Adding a simple / endpoint that returns a hello world object
             </h3>
             <pre
-            ><code class="language-javascript"><span class="text-syn-k">const</span> express <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;express&quot;</span><span class="text-syn-u">);</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> express <span class="text-syn-o">=</span> <span class="text-syn-f">require</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;express&quot;</span><span class="text-syn-u">);</span>
 
 <span class="text-syn-k">const</span> app <span class="text-syn-o">=</span> <span class="text-syn-f">express</span><span class="text-syn-u">();</span>
 
@@ -132,280 +166,399 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
   console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;app is listening on port &quot;</span> <span class="text-syn-o">+</span> PORT<span class="text-syn-u">);</span>
 <span class="text-syn-u">});</span>
 </code></pre>
-            <h3 id="start-your-express-application">Start your express application</h3>
+            <h3
+              id="start-your-express-application"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Start your express application
+            </h3>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">node</span> <span class="text-syn-s">index.js</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">node</span> <span class="text-syn-s">index.js</span>
 </code></pre>
-            <p>and you see a / endpoint like this</p>
-            <p>
+            <p class="mt-0 mb-6">and you see a / endpoint like this</p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/e4c258cd-a01a-4dc5-8339-c79f74ac4a04.webp"
                 alt="Browser showing Hello World JSON response from Express app"
                 loading="lazy"
               />
             </p>
-            <h2 id="deploying-the-app-on-aws-ec2">Deploying the app on AWS EC2</h2>
-            <h3 id="let-s-bootstrap-an-ec2-instance">Let&#39;s bootstrap an EC2 instance</h3>
-            <p>
+            <h2
+              id="deploying-the-app-on-aws-ec2"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Deploying the app on AWS EC2
+            </h2>
+            <h3
+              id="let-s-bootstrap-an-ec2-instance"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Let&#39;s bootstrap an EC2 instance
+            </h3>
+            <p class="mt-0 mb-6">
               You can directly head over to
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://us-east-1.console.aws.amazon.com/ec2/home?region=us-east-1#LaunchInstances"
                 >AWS EC2 create instance page</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/ea5f89a4-48a0-4fa0-8e17-ad1b8977ae74.webp"
                 alt="AWS EC2 launch instance page"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               You can name the ec2 instance according to you, I am naming it
-              <code>demo-nodejs</code>.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >demo-nodejs</code
+              >.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/62d86fd2-805f-4b60-be5b-0d1c81b5fecb.webp"
                 alt="EC2 instance name configuration"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Select any image that suits you best, or you can learn more about these
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://aws.amazon.com/ec2/features/#product-features#ec2-features#operating-systems-and-software"
                 >in the operating systems guide</a
               >. I have selected the basic Ubuntu image, as it is widely used and has good support.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/4fb4dc83-b7e0-43c1-bec9-70c540e271e8.webp"
                 alt="EC2 Ubuntu illustration selection"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Since I am using this instance for this walkthrough, I have selected a free-tier
               Instance type, you can choose the instance types according to your need, know more
               about this
-              <a href="https://repost.aws/knowledge-center/ec2-instance-choose-type-for-workload"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="https://repost.aws/knowledge-center/ec2-instance-choose-type-for-workload"
                 >in the instance selection guide</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f97c6597-38ba-4044-86e9-253a725ac5c4.webp"
                 alt="EC2 instance type selection showing free tier option"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               And finally launch the instance, I am going to access this instance from AWS connect,
               If you want to ssh into the instance you can create a key-pair and do that
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/1b308264-6a14-4ca7-a363-63c5969f226c.webp"
                 alt="EC2 instance connect button"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong
                 >Click on connect to access your instance and start setting up your
                 environment.</strong
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/caa0cfbf-2bab-468c-8cb2-c5f784a7fc9f.webp"
                 alt="AWS EC2 connect interface"
                 loading="lazy"
               />
             </p>
-            <p>Now you have access to you ec2 instance from your brower</p>
-            <p>
+            <p class="mt-0 mb-6">Now you have access to you ec2 instance from your brower</p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/f8750e50-0ff3-4a07-965f-4879ca537887.webp"
                 alt="Terminal connected to EC2 instance"
                 loading="lazy"
               />
             </p>
-            <h3 id="setting-up-the-environment-in-the-instance">
+            <h3
+              id="setting-up-the-environment-in-the-instance"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
               Setting up the Environment in the instance
             </h3>
-            <p>Update the package lists by running:</p>
+            <p class="mt-0 mb-6">Update the package lists by running:</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">update</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">upgrade</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">update</span> <span class="text-syn-u">&amp;&amp;</span> <span class="text-syn-f">sudo</span> <span class="text-syn-s">apt-get</span> <span class="text-syn-s">upgrade</span>
 </code></pre>
-            <p><strong>Installing node using the NVM(Node Version Manager)</strong></p>
-            <p>
+            <p class="mt-0 mb-6">
+              <strong>Installing node using the NVM(Node Version Manager)</strong>
+            </p>
+            <p class="mt-0 mb-6">
               Reference:
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04#option-3-installing-node-using-the-node-version-manager"
                 >How To Install Node.js on Ubuntu 20.04</a
               >
             </p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">curl</span> <span class="text-syn-s">-o-</span> <span class="text-syn-s">https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh</span> <span class="text-syn-o">|</span> <span class="text-syn-f">bash</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">curl</span> <span class="text-syn-s">-o-</span> <span class="text-syn-s">https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh</span> <span class="text-syn-o">|</span> <span class="text-syn-f">bash</span>
 </code></pre>
-            <p>
-              This will install the <code>nvm</code> script to your user account. To use it, you
-              must first source your <code>.bashrc</code> file:
+            <p class="mt-0 mb-6">
+              This will install the
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >nvm</code
+              >
+              script to your user account. To use it, you must first source your
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >.bashrc</code
+              >
+              file:
             </p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">source</span> <span class="text-syn-s">~/.bashrc</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">source</span> <span class="text-syn-s">~/.bashrc</span>
 </code></pre>
-            <p>Now let&#39;s install node using the nvm</p>
+            <p class="mt-0 mb-6">Now let&#39;s install node using the nvm</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">nvm</span> <span class="text-syn-s">install</span> <span class="text-syn-s">node</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">nvm</span> <span class="text-syn-s">install</span> <span class="text-syn-s">node</span>
 </code></pre>
-            <p>To check if it is installed correctly:</p>
+            <p class="mt-0 mb-6">To check if it is installed correctly:</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">node</span> <span class="text-syn-s">--version</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">node</span> <span class="text-syn-s">--version</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/e2fbe875-ea75-4c8e-863f-0bd37b5509b9.webp"
                 alt="Terminal showing Node.js version check"
                 loading="lazy"
               />
             </p>
-            <h3 id="starting-the-server-on-ec2">Starting the server on EC2</h3>
-            <p>
+            <h3 id="starting-the-server-on-ec2" class="mt-8 text-lg leading-tight tracking-tight">
+              Starting the server on EC2
+            </h3>
+            <p class="mt-0 mb-6">
               You can either upload your code on GitHub and then clone it in Ec2 or use any other
               viable method to get your code on the instance.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/77ce1c50-d9de-48e7-898d-ae795e410d17.webp"
                 alt="Terminal showing Node.js server running on EC2"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               If you are able to see this or whatever log you added in the
-              <code>app.listen()</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >app.listen()</code
+              >
               you are good to go.
             </p>
-            <h3 id="starting-the-server-with-pm2">Starting the server with pm2</h3>
-            <p>
-              Now we can do a <code>node index.js</code> and we&#39;re good to go, but this approach
-              has its limitations. Running your application this way means it won&#39;t
-              automatically restart if it crashes, and it won&#39;t start again if the server
-              reboots. This is where PM2 comes in. PM2 is a production process manager for Node.js
-              applications that ensures your application stays online, even in the face of
-              unexpected issues. It provides features like process monitoring, automatic restarts,
-              and load balancing, making it an essential tool for managing Node.js applications in a
-              production environment. Let&#39;s explore how to set up and use PM2 to manage our
-              Node.js application on EC2.
+            <h3 id="starting-the-server-with-pm2" class="mt-8 text-lg leading-tight tracking-tight">
+              Starting the server with pm2
+            </h3>
+            <p class="mt-0 mb-6">
+              Now we can do a
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >node index.js</code
+              >
+              and we&#39;re good to go, but this approach has its limitations. Running your
+              application this way means it won&#39;t automatically restart if it crashes, and it
+              won&#39;t start again if the server reboots. This is where PM2 comes in. PM2 is a
+              production process manager for Node.js applications that ensures your application
+              stays online, even in the face of unexpected issues. It provides features like process
+              monitoring, automatic restarts, and load balancing, making it an essential tool for
+              managing Node.js applications in a production environment. Let&#39;s explore how to
+              set up and use PM2 to manage our Node.js application on EC2.
             </p>
-            <p><strong>So let&#39;s install pm2</strong></p>
+            <p class="mt-0 mb-6"><strong>So let&#39;s install pm2</strong></p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-g</span> <span class="text-syn-s">pm2</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pnpm</span> <span class="text-syn-s">add</span> <span class="text-syn-s">-g</span> <span class="text-syn-s">pm2</span>
 </code></pre>
-            <p>Now we&#39;ll start the express app using pm2</p>
+            <p class="mt-0 mb-6">Now we&#39;ll start the express app using pm2</p>
             <pre
-            ><code class="language-bash"><span class="text-syn-f">pm2</span> <span class="text-syn-s">start</span> <span class="text-syn-s">index.js</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pm2</span> <span class="text-syn-s">start</span> <span class="text-syn-s">index.js</span>
 </code></pre>
-            <p>
+            <p class="mt-0 mb-6">
               Now we have deployed the app, but it won&#39;t be accessible on the internet yet. To
               make it accessible, let&#39;s configure the necessary security groups and open the
               required ports. This will allow external traffic to reach our application.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/5e20e499-617c-40b1-833b-cf2fea46af60.webp"
                 alt="EC2 instance security tab"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Navigate to the Security tab on the Instance page. and click on the Security group
-              which is <code>sg-09f5337d4845d84fb (launch-wizard-1)</code> here.
+              which is
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >sg-09f5337d4845d84fb (launch-wizard-1)</code
+              >
+              here.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8b2d346c-a515-4df3-aee8-7f526afea3c9.webp"
                 alt="Security group edit inbound rules button"
                 loading="lazy"
               />
             </p>
-            <p>Click on <code>Edit inbound rules</code></p>
-            <p>
+            <p class="mt-0 mb-6">
+              Click on
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >Edit inbound rules</code
+              >
+            </p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8c98a4d5-0b95-499b-9892-21589eac283a.webp"
                 alt="Edit inbound rules page"
                 loading="lazy"
               />
             </p>
-            <p>
-              Add a new Inbound rue with Type of <code>Custom TCP</code> and PORT <code>3000</code>.
-              To make it accessible add <code>0.0.0.0/0</code> from the CIDR block.
+            <p class="mt-0 mb-6">
+              Add a new Inbound rue with Type of
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >Custom TCP</code
+              >
+              and PORT
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >3000</code
+              >. To make it accessible add
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >0.0.0.0/0</code
+              >
+              from the CIDR block.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/274c4781-394f-495a-9c05-5d573867df6a.webp"
                 alt="Adding custom TCP rule for port 3000"
                 loading="lazy"
               />
             </p>
-            <p>Now get the Ip from the home page of your instance</p>
-            <p>
-              My Instance&#39;s Ip is <code>ec2-54-242-52-243.compute-1.amazonaws.com</code>, Now
-              the app is deployed on port 300, So to access the app navigate to
+            <p class="mt-0 mb-6">Now get the Ip from the home page of your instance</p>
+            <p class="mt-0 mb-6">
+              My Instance&#39;s Ip is
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >ec2-54-242-52-243.compute-1.amazonaws.com</code
+              >, Now the app is deployed on port 300, So to access the app navigate to
             </p>
-            <p><code>http://ec2-54-242-52-243.compute-1.amazonaws.com:3000</code></p>
-            <p>And voilà! Your application is now accessible on the internet.</p>
-            <p>
+            <p class="mt-0 mb-6">
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >http://ec2-54-242-52-243.compute-1.amazonaws.com:3000</code
+              >
+            </p>
+            <p class="mt-0 mb-6">And voilà! Your application is now accessible on the internet.</p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/ae71dec0-4c28-4348-b407-8c4a3258477c.webp"
                 alt="Browser showing Hello World response from deployed app"
                 loading="lazy"
               />
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               But wait the url for the application is
-              <a href="http://ec2-54-242-52-243.compute-1.amazonaws.com:3000"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="http://ec2-54-242-52-243.compute-1.amazonaws.com:3000"
                 >https://ec2-54-242-52-243.compute-1.amazonaws.com:3000</a
-              >, prettly ugly to add <code>:3000</code> in the url. Have you ever seen we go to
-              <a href="http://google.com">http://google.com:5173</a>. No! right, So let&#39;s fix
-              this next
+              >, prettly ugly to add
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >:3000</code
+              >
+              in the url. Have you ever seen we go to
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="http://google.com"
+                >http://google.com:5173</a
+              >. No! right, So let&#39;s fix this next
             </p>
-            <h2 id="configuring-nginx">Configuring Nginx</h2>
-            <p>
+            <h2
+              id="configuring-nginx"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Configuring Nginx
+            </h2>
+            <p class="mt-0 mb-6">
               To make your application accessible without appending the port number to the URL, we
               will set up NGINX as a reverse proxy. This will allow NGINX to handle incoming traffic
               on the default HTTP port (80) and forward it to your Node.js application running on
               port 3000.
             </p>
-            <h3 id="steps-to-add-and-install-nginx">Steps to add and Install nginx</h3>
-            <ol>
-              <li>
-                <p><strong>Install NGINX</strong></p>
-                <p>First, install NGINX on your EC2 instance by running the following commands:</p>
+            <h3
+              id="steps-to-add-and-install-nginx"
+              class="mt-8 text-lg leading-tight tracking-tight"
+            >
+              Steps to add and Install nginx
+            </h3>
+            <ol class="mt-0 mb-6">
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6"><strong>Install NGINX</strong></p>
+                <p class="mt-0 mb-6">
+                  First, install NGINX on your EC2 instance by running the following commands:
+                </p>
                 <pre
-                ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">update</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">update</span>
 <span class="text-syn-f">sudo</span> <span class="text-syn-s">apt</span> <span class="text-syn-s">install</span> <span class="text-syn-s">nginx</span>
 </code></pre>
               </li>
-              <li>
-                <p><strong>Start and Enable NGINX</strong></p>
-                <p>Ensure that NGINX is running and set to start on boot:</p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6"><strong>Start and Enable NGINX</strong></p>
+                <p class="mt-0 mb-6">Ensure that NGINX is running and set to start on boot:</p>
                 <pre
-                ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">nginx</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">nginx</span>
 <span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">enable</span> <span class="text-syn-s">nginx</span>
 </code></pre>
               </li>
-              <li>
-                <p><strong>Configure NGINX as a Reverse Proxy</strong></p>
-                <p>Open the NGINX configuration file for editing:</p>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6"><strong>Configure NGINX as a Reverse Proxy</strong></p>
+                <p class="mt-0 mb-6">Open the NGINX configuration file for editing:</p>
                 <pre
-                ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">vi</span> <span class="text-syn-s">/etc/nginx/sites-available/default</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">vi</span> <span class="text-syn-s">/etc/nginx/sites-available/default</span>
 </code></pre>
-                <p>Replace the contents of the file with the following configuration:</p>
-                <pre><code class="language-nginx"><span class="text-syn-k">server</span> {
+                <p class="mt-0 mb-6">
+                  Replace the contents of the file with the following configuration:
+                </p>
+                <pre
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-nginx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">server</span> {
    <span class="text-syn-k"> listen </span><span class="text-syn-n">80</span><span class="text-syn-u">;</span>
    <span class="text-syn-k"> server_name </span>ec2-54-242-52-243.compute-1.amazonaws.com<span class="text-syn-u">;</span>
 
@@ -419,42 +572,52 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
     }
 }
 </code></pre>
-                <ol start="4">
-                  <li>
-                    <p>
+                <ol class="mt-0 mb-6" start="4">
+                  <li class="[&>p]:mb-2">
+                    <p class="mt-0 mb-6">
                       Make sure to replace
-                      <code>ec2-54-242-52-243.compute-1.amazonaws.com</code>
+                      <code
+                        class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                        >ec2-54-242-52-243.compute-1.amazonaws.com</code
+                      >
                       with your actual domain name or public IP address.
                     </p>
                   </li>
-                  <li>
-                    <p><strong>Test the NGINX Configuration</strong></p>
-                    <p>Test the NGINX configuration to ensure there are no syntax errors:</p>
+                  <li class="[&>p]:mb-2">
+                    <p class="mt-0 mb-6"><strong>Test the NGINX Configuration</strong></p>
+                    <p class="mt-0 mb-6">
+                      Test the NGINX configuration to ensure there are no syntax errors:
+                    </p>
                     <pre
-                    ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">nginx</span> <span class="text-syn-s">-t</span>
+                      class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                    ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">nginx</span> <span class="text-syn-s">-t</span>
 </code></pre>
-                    <p>
+                    <p class="mt-0 mb-6">
                       If the test is successful, you should see a message indicating that the
                       configuration file is okay.
                     </p>
-                    <p>
+                    <p class="mt-0 mb-6">
                       <img
+                        class="mx-auto my-7 block h-auto max-w-full rounded-md"
                         src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/8f6847e8-3efe-454e-969a-fa65b23e37b0.webp"
                         alt="Terminal showing nginx configuration test success"
                         loading="lazy"
                       />
                     </p>
                   </li>
-                  <li>
-                    <p><strong>Restart NGINX</strong></p>
-                    <p>Restart NGINX to apply the new configuration:</p>
+                  <li class="[&>p]:mb-2">
+                    <p class="mt-0 mb-6"><strong>Restart NGINX</strong></p>
+                    <p class="mt-0 mb-6">Restart NGINX to apply the new configuration:</p>
                     <pre
-                    ><code class="language-bash"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">restart</span> <span class="text-syn-s">nginx</span>
+                      class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                    ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">restart</span> <span class="text-syn-s">nginx</span>
 </code></pre>
                   </li>
-                  <li>
-                    <p><strong>Update Security Group to Allow HTTP Traffic</strong></p>
-                    <p>
+                  <li class="[&>p]:mb-2">
+                    <p class="mt-0 mb-6">
+                      <strong>Update Security Group to Allow HTTP Traffic</strong>
+                    </p>
+                    <p class="mt-0 mb-6">
                       Ensure that your EC2 instance&#39;s security group allows inbound traffic on
                       port 80. Navigate to the Security Groups section in the AWS Management
                       Console, select your instance&#39;s security group, and add a rule to allow
@@ -462,22 +625,25 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                       <strong>and you may remove the 3000 port that&#39;s no more needed</strong>
                     </p>
                   </li>
-                  <li>
-                    <p><strong>Access Your Application</strong></p>
-                    <p>
+                  <li class="[&>p]:mb-2">
+                    <p class="mt-0 mb-6"><strong>Access Your Application</strong></p>
+                    <p class="mt-0 mb-6">
                       Now, you should be able to access your Node.js application using your domain
                       name or public IP address without appending the port number. For example:
                     </p>
-                    <pre><code class="language-http">http://your_domain_or_IP
+                    <pre
+                      class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                    ><code class="language-http rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">http://your_domain_or_IP
 </code></pre>
-                    <p>
+                    <p class="mt-0 mb-6">
                       Your application should be accessible, and NGINX will forward the traffic to
                       your Node.js application running on port 3000.
                     </p>
                   </li>
                 </ol>
-                <p>
+                <p class="mt-0 mb-6">
                   <img
+                    class="mx-auto my-7 block h-auto max-w-full rounded-md"
                     src="/assets/content/blogs/deploying-nodejs-applications-on-ec2-with-pm2-and-nginx/c162d6ac-1631-4780-b34e-b90301392655.webp"
                     alt="Browser showing app accessible without port number"
                     loading="lazy"
@@ -485,7 +651,7 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
                 </p>
               </li>
             </ol>
-            <p>
+            <p class="mt-0 mb-6">
               By following this guide, you have successfully deployed a Node.js application on an
               EC2 instance using PM2 and NGINX. This setup not only ensures that your application
               remains robust and scalable but also provides a clean and professional URL for your
@@ -496,32 +662,46 @@ app<span class="text-syn-u">.</span><span class="text-syn-f">listen</span><span 
           </div>
         </article>
         <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
-          <h2 class="text-[1rem]">Related writing</h2>
-          <ul>
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
             <li class="my-2">
-              <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/aws-s3-with-nodejs/"
+                >AWS S3 with Node.js: Upload Files with SDK v3</a
+              >
             </li>
             <li class="my-2">
-              <a href="/blogs/deploying-on-coolify/"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/deploying-on-coolify/"
                 >Coolify: Self-Host Postgres, Redis &amp; Next.js</a
               >
             </li>
             <li class="my-2">
-              <a href="/blogs/branded-types-in-typescript/">Branded Types in TypeScript</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/branded-types-in-typescript/"
+                >Branded Types in TypeScript</a
+              >
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
         <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
           ><button
-            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
             type="button"
             data-theme-toggle
             aria-label="Switch color theme"

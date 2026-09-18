@@ -87,7 +87,8 @@ The homepage uses `home`; blog detail pages default to `article`; other pages
 use `simple`. Set `layout` to override. Templates live in `layouts/`, with shared
 head, header, and footer partials. Their placeholder names are checked. Adding a
 layout never adds content. Markup uses Tailwind utility classes; `styles.css` holds the
-theme tokens and base styles for Markdown elements. Theme behavior lives in `theme.js`.
+theme tokens, the dark palette, and view transitions. The renderer adds utility classes to
+every Markdown element. Theme behavior lives in `theme.js`.
 
 ## Sync and CI
 

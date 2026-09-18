@@ -9,7 +9,9 @@ function page(body) {
 }
 
 function codeInner(html) {
-  const match = html.match(/<pre\s*>\s*<code class="language-[^"]+">([\s\S]*?)<\/code>\s*<\/pre>/);
+  const match = html.match(
+    /<pre[^>]*>\s*<code class="language-[^"]+">([\s\S]*?)<\/code>\s*<\/pre>/,
+  );
   expect(match).toBeTruthy();
   return match[1];
 }
@@ -65,7 +67,7 @@ describe("generate-time fence formatting", () => {
       page(["```js", "   const value =   ", "", "", "```", ""].join("\n")),
     );
     expect(visibleText(html)).toBe("const value =");
-    expect(html).toContain('<code class="language-js">');
+    expect(html).toContain('<code class="language-js ');
   });
 
   test("text fences keep inner blank lines and indent", async () => {

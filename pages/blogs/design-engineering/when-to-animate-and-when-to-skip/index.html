@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,28 +64,40 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
-    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
     <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
       <header
         class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
       >
-        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
         <nav
-          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
           aria-label="Main navigation"
         >
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
       <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
         <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
           <ol
-            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
           >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
@@ -92,25 +107,32 @@
         </nav>
         <article>
           <header class="mb-7">
-            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
               When to Animate and When to Skip
             </h1>
-            <p class="text-sm text-muted"><time datetime="2026-01-28">2026-01-28</time></p>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2026-01-28">2026-01-28</time>
+            </p>
           </header>
           <div class="wrap-anywhere">
-            <p>Animation can transform an interface. It can also ruin one.</p>
-            <p>
+            <p class="mt-0 mb-6">Animation can transform an interface. It can also ruin one.</p>
+            <p class="mt-0 mb-6">
               The difference comes down to intent. Every animation you add creates a tradeoff
               between expressiveness and efficiency. Get it right and your product feels polished,
               responsive, alive. Get it wrong and users feel like they&#39;re wading through
               molasses.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The goal isn&#39;t to animate everything. It&#39;s to know when motion serves the
               experience and when it gets in the way.
             </p>
-            <h2 id="tl-dr">TL;DR</h2>
-            <ul>
+            <h2 id="tl-dr" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              TL;DR
+            </h2>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Every animation needs a reason.</strong>
                 If you can&#39;t articulate why something animates, remove it
@@ -137,10 +159,17 @@
                 No animation beats bad animation
               </li>
             </ul>
-            <h2 id="the-purpose-test">The Purpose Test</h2>
-            <p>Before adding any animation, ask one question: what does this accomplish?</p>
-            <p>Animation serves four purposes in interfaces:</p>
-            <ul>
+            <h2
+              id="the-purpose-test"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The Purpose Test
+            </h2>
+            <p class="mt-0 mb-6">
+              Before adding any animation, ask one question: what does this accomplish?
+            </p>
+            <p class="mt-0 mb-6">Animation serves four purposes in interfaces:</p>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Feedback</strong>
                 confirms user actions. A button that slightly compresses on press tells users their
@@ -162,104 +191,135 @@
                 flow leaves a positive impression.
               </li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Purpose</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               A simple like button can demonstrate two purposes at once. The scale down on press
               provides feedback. The bounce and color fill create delight. Neither animation is
               strictly necessary, but together they make the interaction feel satisfying.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               But delight has a shelf life. That bouncy heart feels great the first few times. On a
               social feed where you might like dozens of posts, the same animation would become
               exhausting.
             </p>
-            <h2 id="frequency-changes-everything">Frequency Changes Everything</h2>
-            <p>How often users encounter an animation determines whether it helps or hurts.</p>
-            <p>
+            <h2
+              id="frequency-changes-everything"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Frequency Changes Everything
+            </h2>
+            <p class="mt-0 mb-6">
+              How often users encounter an animation determines whether it helps or hurts.
+            </p>
+            <p class="mt-0 mb-6">
               Open Spotlight on your Mac. Notice there&#39;s no entrance animation. It just appears.
               Apple made this choice deliberately. Power users invoke Spotlight hundreds of times
               daily. Any animation, even a fast one, would accumulate into noticeable friction.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Frequency Toggle</a
               >
             </p>
-            <p>
-              Toggle the menu above using <code>J</code> (animated) and <code>K</code> (instant).
-              After a few toggles, the difference becomes clear. The animated version feels fluid in
-              isolation. But imagine using it every minute of your workday. Suddenly instant feels
-              better.
+            <p class="mt-0 mb-6">
+              Toggle the menu above using
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >J</code
+              >
+              (animated) and
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >K</code
+              >
+              (instant). After a few toggles, the difference becomes clear. The animated version
+              feels fluid in isolation. But imagine using it every minute of your workday. Suddenly
+              instant feels better.
             </p>
-            <p>This principle applies across your interface:</p>
-            <table>
+            <p class="mt-0 mb-6">This principle applies across your interface:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Frequency</th>
-                  <th>Animation Approach</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Frequency</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Animation Approach</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Once per session</td>
-                  <td>Elaborate, expressive</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Once per session</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Elaborate, expressive
+                  </td>
                 </tr>
                 <tr>
-                  <td>A few times per session</td>
-                  <td>Subtle, purposeful</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    A few times per session
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Subtle, purposeful</td>
                 </tr>
                 <tr>
-                  <td>Many times per hour</td>
-                  <td>Minimal or none</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Many times per hour</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Minimal or none</td>
                 </tr>
                 <tr>
-                  <td>Continuous/repeated</td>
-                  <td>None</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Continuous/repeated</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">None</td>
                 </tr>
               </tbody>
             </table>
-            <p>
+            <p class="mt-0 mb-6">
               The mistake I see most often: treating every interaction as if users will only see it
               once. Your welcome modal can be expressive. Your navigation can&#39;t.
             </p>
-            <h2 id="keyboard-users-are-different">Keyboard Users Are Different</h2>
-            <p>
+            <h2
+              id="keyboard-users-are-different"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Keyboard Users Are Different
+            </h2>
+            <p class="mt-0 mb-6">
               When someone reaches for their keyboard instead of their mouse, they&#39;re signaling
               intent. They want speed. They&#39;ve committed the shortcut to muscle memory and
               expect the interface to keep up.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Keyboard Nav</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Focus the list above and navigate with arrow keys. Toggle animation with Shift. Feel
               how the animated highlight creates a disconnect between your keystrokes and the visual
               response?
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Keyboard-initiated actions should generally skip animation entirely. The user&#39;s
               mental model is &quot;I pressed down, I&#39;m now on the next item.&quot; Any delay
               between input and outcome creates cognitive dissonance.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This extends beyond list navigation. Command palettes, tab switching, menu traversal.
               Anywhere users can operate through keyboard shortcuts, animation becomes a liability.
             </p>
-            <h2 id="the-300ms-ceiling">The 300ms Ceiling</h2>
-            <p>
+            <h2
+              id="the-300ms-ceiling"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The 300ms Ceiling
+            </h2>
+            <p class="mt-0 mb-6">
               Most UI animations should complete in 300 milliseconds or less. This isn&#39;t
               arbitrary. It&#39;s based on human perception thresholds.
             </p>
-            <ul>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Under 100ms</strong>
                 feels instantaneous. Good for micro-interactions like button presses.
@@ -277,44 +337,51 @@
                 feels slow. Reserve for intentional dramatic moments.
               </li>
             </ul>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Duration Comparison</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Click both dropdowns. The 180ms version feels snappy. The 400ms version feels
               sluggish. Same easing, same elements, but the duration changes the entire character of
               the interaction.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               When you find yourself thinking &quot;this animation needs to be longer,&quot;
               question that instinct. Usually the solution is to adjust the easing curve, not extend
               the duration.
             </p>
-            <h2 id="perceived-speed">Perceived Speed</h2>
-            <p>
+            <h2
+              id="perceived-speed"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Perceived Speed
+            </h2>
+            <p class="mt-0 mb-6">
               Animation doesn&#39;t just affect feel. It affects how fast your application seems to
               perform.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Spinner Speed</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Both spinners represent the same wait time. But the faster rotation creates an
               illusion of activity. Users perceive the application as working harder, even though
               nothing changed about the actual load time.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This works in the other direction too. A slow, laggy animation makes users feel like
               your entire application is slow, even when the underlying performance is fine.
             </p>
-            <p>Three ways animation affects perceived performance:</p>
-            <ul>
+            <p class="mt-0 mb-6">Three ways animation affects perceived performance:</p>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Skeleton screens</strong>
                 that pulse suggest content is arriving, making waits feel shorter than blank loading
@@ -331,112 +398,141 @@
                 anything.
               </li>
             </ul>
-            <h2 id="tooltips-and-the-delay-pattern">Tooltips and the Delay Pattern</h2>
-            <p>
+            <h2
+              id="tooltips-and-the-delay-pattern"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Tooltips and the Delay Pattern
+            </h2>
+            <p class="mt-0 mb-6">
               Tooltips need special handling. They require a delay before appearing to prevent
               accidental triggers, but once one tooltip is open, switching between tooltips should
               be instant.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Tooltip Delay</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Hover over the icons. The first tooltip waits 400ms. After that, moving between icons
               shows tooltips immediately with no animation.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This pattern exists because the contexts are different. Initial trigger: user might be
               just passing through, so wait. Subsequent triggers: user is actively exploring, so
               respond instantly.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The same logic applies to nested menus, tab groups, and any interface where users scan
               across multiple elements.
             </p>
-            <h2 id="element-size-affects-duration">Element Size Affects Duration</h2>
-            <p>
+            <h2
+              id="element-size-affects-duration"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Element Size Affects Duration
+            </h2>
+            <p class="mt-0 mb-6">
               Bigger elements need longer animations. This feels counterintuitive until you think
               about physics.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Element Size</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               A small indicator moving quickly feels natural. A large modal moving at the same speed
               feels weightless and artificial. Visual weight creates expectations of physical
               weight.
             </p>
-            <p>General guidelines:</p>
-            <table>
+            <p class="mt-0 mb-6">General guidelines:</p>
+            <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
-                  <th>Element Size</th>
-                  <th>Duration Range</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Element Size</th>
+                  <th class="border-b border-line px-3.5 py-2.5 text-left">Duration Range</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Small (icons, badges)</td>
-                  <td>100ms to 200ms</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Small (icons, badges)
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">100ms to 200ms</td>
                 </tr>
                 <tr>
-                  <td>Medium (buttons, cards)</td>
-                  <td>150ms to 300ms</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Medium (buttons, cards)
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">150ms to 300ms</td>
                 </tr>
                 <tr>
-                  <td>Large (modals, panels)</td>
-                  <td>200ms to 400ms</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">
+                    Large (modals, panels)
+                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">200ms to 400ms</td>
                 </tr>
                 <tr>
-                  <td>Full screen</td>
-                  <td>300ms to 500ms</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Full screen</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">300ms to 500ms</td>
                 </tr>
               </tbody>
             </table>
-            <p>
+            <p class="mt-0 mb-6">
               These aren&#39;t rules, they&#39;re starting points. The specific duration depends on
               the easing curve, the distance traveled, and the overall tone of your interface.
             </p>
-            <h2 id="product-vs-marketing">Product vs Marketing</h2>
-            <p>
+            <h2
+              id="product-vs-marketing"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Product vs Marketing
+            </h2>
+            <p class="mt-0 mb-6">
               Your marketing site and your product serve different purposes. Animation should
               reflect this.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.pulkit.blog/series/design-engineering/when-to-animate-and-when-to-skip"
                 >Interactive example: Product Vs Marketing</a
               >
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Product UI</strong>
               optimizes for repeated use. Users have tasks to complete. They&#39;ve already bought
               into your product. Animation should enhance efficiency, not demonstrate creativity.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <strong>Marketing pages</strong>
               optimize for first impressions. Users are evaluating whether to engage. Animation can
               create wow moments that make your product memorable.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               The same component might animate differently in these contexts. A card expanding could
               have a subtle 200ms transition in your dashboard and a dramatic 500ms spring-based
               animation on your landing page.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This extends to specific sections too. Your pricing page is marketing. Your checkout
               flow is product. Even on a marketing site, once users enter a functional flow, dial
               back the expression.
             </p>
-            <h2 id="when-animation-hurts">When Animation Hurts</h2>
-            <p>Some situations call for removing animation entirely:</p>
-            <ul>
+            <h2
+              id="when-animation-hurts"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              When Animation Hurts
+            </h2>
+            <p class="mt-0 mb-6">Some situations call for removing animation entirely:</p>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Error states.</strong>
                 When something goes wrong, users want information, not flourish. A shake animation
@@ -447,7 +543,9 @@
                 <strong>Accessibility contexts.</strong>
                 Users who enable reduced motion preferences have reasons. Vestibular disorders,
                 motion sensitivity, or simply preference. Respect the
-                <code>prefers-reduced-motion</code>
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                  >prefers-reduced-motion</code
+                >
                 media query.
               </li>
               <li>
@@ -463,19 +561,25 @@
               </li>
             </ul>
             <pre
-            ><code class="language-css"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
+              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+            ><code class="language-css rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">@media</span> <span class="text-syn-u">(</span>prefers-reduced-motion<span class="text-syn-u">:</span> reduce<span class="text-syn-u">)</span> <span class="text-syn-u">{</span>
   <span class="text-syn-g">*</span> <span class="text-syn-u">{</span>
     <span class="text-syn-p">animation-duration</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.01ms</span> <span class="text-syn-k">!important</span><span class="text-syn-u">;</span>
     <span class="text-syn-p">transition-duration</span><span class="text-syn-u">:</span> <span class="text-syn-n">0.01ms</span> <span class="text-syn-k">!important</span><span class="text-syn-u">;</span>
   <span class="text-syn-u">}</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <h2 id="building-intuition">Building Intuition</h2>
-            <p>
+            <h2
+              id="building-intuition"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              Building Intuition
+            </h2>
+            <p class="mt-0 mb-6">
               Reading about animation timing only gets you so far. You develop judgment through
               practice.
             </p>
-            <ul>
+            <ul class="mt-0 mb-6">
               <li>
                 <strong>Slow things down.</strong>
                 Screen record your animations and play back at 0.25x speed. Details invisible at
@@ -498,33 +602,42 @@
                 animation that users have grown accustomed to is harder.
               </li>
             </ul>
-            <h2 id="the-restraint-principle">The Restraint Principle</h2>
-            <p>The best animated interfaces don&#39;t feel animated. They feel natural.</p>
-            <p>
+            <h2
+              id="the-restraint-principle"
+              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
+            >
+              The Restraint Principle
+            </h2>
+            <p class="mt-0 mb-6">
+              The best animated interfaces don&#39;t feel animated. They feel natural.
+            </p>
+            <p class="mt-0 mb-6">
               Animation should be invisible in the sense that users don&#39;t notice it. They notice
               when it&#39;s missing (something feels off) or when it&#39;s excessive (something
               feels slow). But well-executed animation simply makes the interface feel right without
               calling attention to itself.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               This requires restraint. The temptation is to animate because you can. The skill is
               knowing when animation serves the user and when it serves your desire to show off.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Build interfaces that users want to use every day. Sometimes that means elaborate
               motion. More often, it means getting out of the way and letting people accomplish
               their goals without friction.
             </p>
-            <h2 id="conclusion">Conclusion</h2>
-            <p>
+            <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Conclusion
+            </h2>
+            <p class="mt-0 mb-6">
               Animation is a tool, not a goal. It should make interfaces more understandable, more
               responsive, and more pleasant. When it does the opposite, it doesn&#39;t belong.
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Remember the core questions: What purpose does this serve? How often will users see
               it? Does the duration feel right for the context?
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               Start with no animation. Add it only when you can articulate why. And when you do add
               it, keep it fast, keep it subtle, and keep it purposeful. That&#39;s how animation
               becomes invisible infrastructure rather than visible decoration.
@@ -532,34 +645,46 @@
           </div>
         </article>
         <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
-          <h2 class="text-[1rem]">Related writing</h2>
-          <ul>
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
             <li class="my-2">
-              <a href="/blogs/design-engineering/css-transitions/">Smooth Operators</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/css-transitions/"
+                >Smooth Operators</a
+              >
             </li>
             <li class="my-2">
-              <a href="/blogs/design-engineering/easing-curves-that-feel-natural/"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/easing-curves-that-feel-natural/"
                 >Easing Curves That Feel Natural</a
               >
             </li>
             <li class="my-2">
-              <a href="/blogs/design-engineering/moving-things-without-moving-them/"
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/design-engineering/moving-things-without-moving-them/"
                 >Moving Things Without Moving Them</a
               >
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
         <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
           ><button
-            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
             type="button"
             data-theme-toggle
             aria-label="Switch color theme"

@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,28 +58,40 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body class="m-0 bg-bg font-sans text-[16px]/[1.75] text-fg antialiased">
-    <a class="absolute -top-25 focus:top-2" href="#main">Skip to content</a>
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg"
+  >
+    <a
+      class="absolute -top-25 text-inherit decoration-muted underline-offset-4 hover:decoration-current focus:top-2"
+      href="#main"
+      >Skip to content</a
+    >
     <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
       <header
         class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
       >
-        <a class="font-[650] no-underline" href="/">Pulkit</a>
+        <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
         <nav
-          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5 [&_a]:no-underline [&_[aria-current=page]]:text-fg"
+          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
           aria-label="Main navigation"
         >
-          <a href="/blogs/">Writing</a>
-          <a href="/experience/">Experience</a>
-          <a href="/about/">About</a>
-          <a href="/contact/">Contact</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
+            >Writing</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/experience/"
+            >Experience</a
+          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
+            >Contact</a
+          >
         </nav>
       </header>
 
       <main id="main" class="min-h-[56vh] pt-12 pb-18 max-sm:pt-7">
         <nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb">
           <ol
-            class="flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/']"
+            class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current"
           >
             <li><a href="/">Home</a></li>
             <li><a href="/blogs/">Writing</a></li>
@@ -85,40 +100,68 @@
         </nav>
         <article>
           <header class="mb-7">
-            <h1 class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-[550]" data-title>
+            <h1
+              class="mt-0 mb-5 w-fit text-[clamp(30px,5vw,40px)] font-semibold leading-tight tracking-tight"
+              data-title
+            >
               Creating Your Own npx Command
             </h1>
-            <p class="text-sm text-muted"><time datetime="2024-07-27">2024-07-27</time></p>
+            <p class="mt-0 mb-6 text-sm text-muted">
+              <time datetime="2024-07-27">2024-07-27</time>
+            </p>
           </header>
           <div class="wrap-anywhere">
-            <p>
+            <p class="mt-0 mb-6">
               Creating a personalized command-line tool can be a fun and efficient way to share your
               details with others. In this article, I&#39;ll walk you through how I created
-              <code>npx devpulkit</code>. Whether you&#39;re a developer looking to showcase your
-              portfolio or someone who wants to share their contact details effortlessly, this guide
-              will provide you with the steps and insights needed to build your own
-              <code>npx</code>
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >npx devpulkit</code
+              >. Whether you&#39;re a developer looking to showcase your portfolio or someone who
+              wants to share their contact details effortlessly, this guide will provide you with
+              the steps and insights needed to build your own
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >npx</code
+              >
               command. Let&#39;s dive in!
             </p>
-            <p>
+            <p class="mt-0 mb-6">
               <img
+                class="mx-auto my-7 block h-auto max-w-full rounded-md"
                 src="/assets/content/blogs/how-i-created-npx-devpulkit/c7e73998-b9bf-4bc1-aafb-e743296c1f7a.webp"
                 alt="Terminal showing npx devpulkit command output"
                 loading="lazy"
               />
             </p>
-            <p>I also added this on my portfolio.</p>
-            <h2 id="let-s-start">Let&#39;s Start</h2>
-            <p>To create your own <code>npx</code> command, follow these steps:</p>
-            <ol>
-              <li>
-                <p><strong>Set Up Your Project</strong>:</p>
-                <ul>
+            <p class="mt-0 mb-6">I also added this on my portfolio.</p>
+            <h2 id="let-s-start" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
+              Let&#39;s Start
+            </h2>
+            <p class="mt-0 mb-6">
+              To create your own
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >npx</code
+              >
+              command, follow these steps:
+            </p>
+            <ol class="mt-0 mb-6">
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6"><strong>Set Up Your Project</strong>:</p>
+                <ul class="mt-0 mb-6">
                   <li>Create a new directory for your project and navigate into it.</li>
                   <li>
-                    Initialize a new Node.js project by running <code>pnpm init</code>. This will
-                    create a <code>package.json</code> file.
-                    <pre><code class="language-json"><span class="text-syn-u">{</span>
+                    Initialize a new Node.js project by running
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >pnpm init</code
+                    >. This will create a
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >package.json</code
+                    >
+                    file.
+                    <pre
+                      class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                    ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;name&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;bash-script&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">&quot;version&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;1.0.0&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">&quot;main&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;cli.js&quot;</span><span class="text-syn-u">,</span>
@@ -134,14 +177,23 @@
                   </li>
                 </ul>
               </li>
-              <li>
-                <p><strong>Create the Script</strong>:</p>
-                <p>
-                  Inside your project directory, create a new file named <code>cli.js</code>. Inside
-                  the <code>cli.js</code> explain about yourself/ I chose the js object for this
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6"><strong>Create the Script</strong>:</p>
+                <p class="mt-0 mb-6">
+                  Inside your project directory, create a new file named
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >cli.js</code
+                  >. Inside the
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >cli.js</code
+                  >
+                  explain about yourself/ I chose the js object for this
                 </p>
                 <pre
-                ><code class="language-javascript"><span class="text-syn-k">const</span> info <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> info <span class="text-syn-o">=</span> <span class="text-syn-u">{</span>
   <span class="text-syn-p">name:</span> <span class="text-syn-s">&quot;Pulkit&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">status:</span> <span class="text-syn-s">&quot;CS student&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">web:</span> <span class="text-syn-s">&quot;https://pulkitxm.com&quot;</span><span class="text-syn-u">,</span>
@@ -164,26 +216,39 @@
   <span class="text-syn-u">},</span>
 <span class="text-syn-u">};</span>
 </code></pre>
-                <p>Now you can simply do a <code>console.log()</code>.</p>
+                <p class="mt-0 mb-6">
+                  Now you can simply do a
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >console.log()</code
+                  >.
+                </p>
                 <pre
-                ><code class="language-javascript">console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>info<span class="text-syn-u">);</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span>info<span class="text-syn-u">);</span>
 </code></pre>
-                <p>To get those colors, we can do this</p>
+                <p class="mt-0 mb-6">To get those colors, we can do this</p>
                 <pre
-                ><code class="language-javascript"><span class="text-syn-k">const</span> <span class="text-syn-f">greenStr</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>str<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`\x1b[32m${str}\x1b[32m`</span><span class="text-syn-u">;</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-f">greenStr</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>str<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`\x1b[32m${str}\x1b[32m`</span><span class="text-syn-u">;</span>
 </code></pre>
-                <p>
+                <p class="mt-0 mb-6">
                   This functions colorize strings in green using ANSI escape codes. The
-                  <code>\x1b[0m</code>
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >\x1b[0m</code
+                  >
                   at the end of each function resets the color back to default. Now to get the
                   colorful text logged, we can do this
                 </p>
                 <pre
-                ><code class="language-javascript">console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-f">greenStr</span><span class="text-syn-u">(</span>JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>info<span class="text-syn-u">)));</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-f">greenStr</span><span class="text-syn-u">(</span>JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>info<span class="text-syn-u">)));</span>
 </code></pre>
-                <p>So, the final code looks like</p>
+                <p class="mt-0 mb-6">So, the final code looks like</p>
                 <pre
-                ><code class="language-javascript">console<span class="text-syn-u">.</span><span class="text-syn-f">clear</span><span class="text-syn-u">();</span>
+                  class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                ><code class="language-javascript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">console<span class="text-syn-u">.</span><span class="text-syn-f">clear</span><span class="text-syn-u">();</span>
 console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;\n\x1b[36m&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;Hi I am Pulkit 👋&quot;</span><span class="text-syn-u">,</span> <span class="text-syn-s">&quot;\x1b[0m\n&quot;</span><span class="text-syn-u">);</span>
 
 <span class="text-syn-k">const</span> <span class="text-syn-f">greenStr</span> <span class="text-syn-o">=</span> <span class="text-syn-u">(</span>str<span class="text-syn-u">)</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-s">`\x1b[32m${str}\x1b[32m`</span><span class="text-syn-u">;</span>
@@ -214,14 +279,31 @@ console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span
 console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span class="text-syn-u">(</span><span class="text-syn-f">greenStr</span><span class="text-syn-u">(</span>JSON<span class="text-syn-u">.</span><span class="text-syn-f">stringify</span><span class="text-syn-u">(</span>info<span class="text-syn-u">,</span> <span class="text-syn-k">null</span><span class="text-syn-u">,</span> <span class="text-syn-n">2</span><span class="text-syn-u">)));</span>
 </code></pre>
               </li>
-              <li>
-                <p><strong>Update</strong> <code>package.json</code>:</p>
-                <ul>
+              <li class="[&>p]:mb-2">
+                <p class="mt-0 mb-6">
+                  <strong>Update</strong>
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >package.json</code
+                  >:
+                </p>
+                <ul class="mt-0 mb-6">
                   <li>
-                    Open the <code>package.json</code> file and add a <code>bin</code> field to
-                    specify the command name and the script file. It should look something like
-                    this:
-                    <pre><code class="language-json"><span class="text-syn-u">{</span>
+                    Open the
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >package.json</code
+                    >
+                    file and add a
+                    <code
+                      class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                      >bin</code
+                    >
+                    field to specify the command name and the script file. It should look something
+                    like this:
+                    <pre
+                      class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
+                    ><code class="language-json rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-u">{</span>
   <span class="text-syn-p">&quot;name&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;devpulkit&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">&quot;version&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;0.1.1&quot;</span><span class="text-syn-u">,</span>
   <span class="text-syn-p">&quot;description&quot;</span><span class="text-syn-u">:</span> <span class="text-syn-s">&quot;just my intro&quot;</span><span class="text-syn-u">,</span>
@@ -232,44 +314,70 @@ console<span class="text-syn-u">.</span><span class="text-syn-f">log</span><span
 </code></pre>
                   </li>
                 </ul>
-                <p>
-                  Now you can publish the package to npm using <code>npm publish</code>. Once
-                  published, you can test your command by running <code>npx devpulkit</code> in your
-                  terminal.
+                <p class="mt-0 mb-6">
+                  Now you can publish the package to npm using
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >npm publish</code
+                  >. Once published, you can test your command by running
+                  <code
+                    class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                    >npx devpulkit</code
+                  >
+                  in your terminal.
                 </p>
               </li>
             </ol>
-            <p>
-              By following these steps, you can create a personalized <code>npx</code> command to
-              share your details effortlessly. I also added this on my portfolio.
+            <p class="mt-0 mb-6">
+              By following these steps, you can create a personalized
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
+                >npx</code
+              >
+              command to share your details effortlessly. I also added this on my portfolio.
             </p>
           </div>
         </article>
         <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
-          <h2 class="text-[1rem]">Related writing</h2>
-          <ul>
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
+            Related writing
+          </h2>
+          <ul class="mt-0 mb-6">
             <li class="my-2">
-              <a href="/blogs/aws-s3-with-nodejs/">AWS S3 with Node.js: Upload Files with SDK v3</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/aws-s3-with-nodejs/"
+                >AWS S3 with Node.js: Upload Files with SDK v3</a
+              >
             </li>
             <li class="my-2">
-              <a href="/blogs/cron-jobs-with-bullmq/">BullMQ Cron Jobs with Redis in Node.js</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/cron-jobs-with-bullmq/"
+                >BullMQ Cron Jobs with Redis in Node.js</a
+              >
             </li>
             <li class="my-2">
-              <a href="/blogs/prisma-with-postgresql/">Prisma ORM with PostgreSQL</a>
+              <a
+                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+                href="/blogs/prisma-with-postgresql/"
+                >Prisma ORM with PostgreSQL</a
+              >
             </li>
           </ul>
         </nav>
       </main>
-      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted [&_a]:no-underline">
+      <footer class="border-t border-line pt-6 pb-10 text-xs text-muted">
         <div>
-          <a href="https://github.com/Pulkitxm">GitHub</a>
-          · <a href="https://x.com/_pulkitxm">X</a> ·
-          <a href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
+          <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
+          · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
+            >LinkedIn</a
+          >
         </div>
         <div class="mt-4.5 flex items-center justify-between">
           <small>© 2026 Pulkit</small
           ><button
-            class="cursor-pointer rounded-[4px] border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
             type="button"
             data-theme-toggle
             aria-label="Switch color theme"

@@ -9,7 +9,7 @@
 | [content/](../content/)                  | 66 page sources plus `_site.md` shared configuration             | Edit Markdown/frontmatter here                          |
 | [content/\_site.md](../content/_site.md) | Brand, description fallback, navigation, social links, copyright | Regenerate all pages after edits                        |
 | [layouts/](../layouts/)                  | `home`, `simple`, `article` HTML shells and shared partials      | Edit templates, validate, regenerate                    |
-| [styles.css](../styles.css)              | Tailwind entry: theme tokens and base styles for Markdown output | Compiled and minified into `dist/` by the build         |
+| [styles.css](../styles.css)              | Tailwind entry: theme tokens, dark palette, view transitions     | Compiled and minified into `dist/` by the build         |
 | [theme.js](../theme.js)                  | Small browser-only theme preference and button handler           | Edit directly; no bundle step                           |
 | [assets/content/](../assets/content/)    | Article images and résumé PDF                                    | Refer to public root-relative paths                     |
 | [assets/fonts/](../assets/fonts/)        | Four font binaries and two licenses                              | TTF renders social cards; browser CSS uses system fonts |

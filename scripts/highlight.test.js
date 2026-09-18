@@ -8,7 +8,9 @@ import { renderPage } from "./render-page.mjs";
 const styles = readFileSync(resolve(import.meta.dir, "../styles.css"), "utf8");
 
 function codeInner(html) {
-  const match = html.match(/<pre\s*>\s*<code class="language-[^"]+">([\s\S]*?)<\/code>\s*<\/pre>/);
+  const match = html.match(
+    /<pre[^>]*>\s*<code class="language-[^"]+">([\s\S]*?)<\/code>\s*<\/pre>/,
+  );
   expect(match).toBeTruthy();
   return match[1];
 }
@@ -69,7 +71,7 @@ describe("build-time syntax highlighting", () => {
 
   test("inline backtick code stays unhighlighted", async () => {
     const html = await renderPage("---\ntitle: Inline\n---\n\nUse `const` in prose.\n");
-    expect(html).toContain("<code>const</code>");
+    expect(html).toMatch(/<code class="[^"]*"\s*>const<\/code/);
     expect(html).not.toContain('<span class="text-syn-k">const</span>');
   });
 
@@ -77,11 +79,10 @@ describe("build-time syntax highlighting", () => {
     for (const name of ["k", "s", "c", "n", "f", "t", "p", "o", "u", "g"]) {
       expect(styles).toContain(`--color-syn-${name}:`);
     }
-    expect(styles).toContain(':root[data-theme="light"]');
-    expect(styles).toContain(':root[data-theme="dark"]');
+    expect(styles).toContain('&:not([data-theme="light"])');
+    expect(styles).toContain('&[data-theme="dark"]');
     expect(styles).toContain("@media (prefers-color-scheme: dark)");
-    expect(styles).toMatch(/:root\[data-theme="dark"\][\s\S]*--color-syn-k:/);
-    expect(styles).toMatch(/prefers-color-scheme: dark\)[\s\S]*--color-syn-k:/);
+    expect(styles).toMatch(/@variant dark \{[\s\S]*--color-syn-k:/);
   });
 
   test("comment scanner still sees comments through classed spans", async () => {

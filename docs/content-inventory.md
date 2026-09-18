@@ -41,13 +41,13 @@ Collections are directory-prefix selections, not explicit membership arrays or t
 
 ## Experience details
 
-| Source                                                     | Role and period                                       | Sorting date | Selected contributions                                                                               |
-| ---------------------------------------------------------- | ----------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
-| [magicapi.md](../content/experience/magicapi.md)           | Software Engineer, MagicAPI & Noveum.ai; 2025–present | 2025-03-01   | API.market dashboard/onboarding, wallet/vouchers, Noveum traces/datasets/ETL, AWS migration          |
-| [crowdvolt.md](../content/experience/crowdvolt.md)         | Software Engineer, CrowdVolt (YC W24); 2025           | 2025-02-03   | Web features, fixes, performance, lint/format consistency, design collaboration                      |
-| [datawavelabs.md](../content/experience/datawavelabs.md)   | Full Stack Engineer; 2024                             | 2024-04-01   | Cloud data platform, auth/access, storage integration, infrastructure workflows, Redis notifications |
-| [geeksforgeeks.md](../content/experience/geeksforgeeks.md) | Campus Mantri; 2024–2025                              | 2024-04-01   | Workshops, learning resources, competitions, campus community; external certificate link             |
-| [deviators.md](../content/experience/deviators.md)         | Chairperson; 2024–2025                                | 2024-02-01   | Coding community, 36-hour hackathon, registration/payment platform, event infrastructure             |
+| Source                                                     | Role and period                             | Sorting date | Selected contributions                                                                               |
+| ---------------------------------------------------------- | ------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| [magicapi.md](../content/experience/magicapi.md)           | Software Engineer, MagicAPI; 2025–present   | 2025-03-01   | API.market dashboard/onboarding, wallet/vouchers, Noveum traces/datasets/ETL, AWS migration          |
+| [crowdvolt.md](../content/experience/crowdvolt.md)         | Software Engineer, CrowdVolt (YC W24); 2025 | 2025-02-03   | Web features, fixes, performance, lint/format consistency, design collaboration                      |
+| [datawavelabs.md](../content/experience/datawavelabs.md)   | Full Stack Engineer; 2024                   | 2024-04-01   | Cloud data platform, auth/access, storage integration, infrastructure workflows, Redis notifications |
+| [geeksforgeeks.md](../content/experience/geeksforgeeks.md) | Campus Mantri; 2024–2025                    | 2024-04-01   | Workshops, learning resources, competitions, campus community; external certificate link             |
+| [deviators.md](../content/experience/deviators.md)         | Chairperson; 2024–2025                      | 2024-02-01   | Coding community, 36-hour hackathon, registration/payment platform, event infrastructure             |
 
 Each page carries the original site's full write-up: prose, screenshots and photos under `assets/content/exp/`, technology lists, and links to offer letters and other documents, which remain hosted at the original site's URLs. Image grids, document viewers, the video, and the embedded post became standard images, links, and a quote. Dates are sorting keys; displayed periods are independent human-readable strings.
 

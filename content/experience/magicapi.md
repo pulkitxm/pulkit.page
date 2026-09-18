@@ -4,8 +4,10 @@ description: Working as a Software Engineer at API.market (MagicAPI), responsibl
   experience, implementing new features, code quality improvements, wallet system, voucher system,
   and redesigning key platform components.
 role: Software Engineer
-date: 2025-03-01
-period: 2025–present
+date: 2025-03-25
+period: Mar 2025 – present
+icon: /assets/experience/magicapi.webp
+secondaryIcon: /assets/experience/noveum.webp
 ---
 
 I joined MagicAPI in March 2025, working on API.market before moving to Noveum.ai.

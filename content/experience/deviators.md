@@ -4,8 +4,10 @@ description: Chairperson of Deviators, an independent college coding club. Led t
   organized events and workshops, and managed a 36-hour hackathon with 350+ participants using a
   custom-built platform.
 role: Chairperson
-date: 2024-02-01
-period: 2024–2025
+date: 2024-02-16
+period: Feb 2024 – Jul 2025
+endDate: 2025-07-13
+icon: /assets/experience/deviators.svg
 ---
 
 Co-founded and led an independent coding community to make it easier for students to learn and build together.

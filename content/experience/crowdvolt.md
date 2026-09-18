@@ -5,7 +5,9 @@ description: Worked at CrowdVolt, a YC-backed startup, as a Software Engineer fo
   with ESLint and Prettier.
 role: Software Engineer
 date: 2025-02-03
-period: "2025"
+period: Feb 2025 – Mar 2025
+endDate: 2025-03-14
+icon: /assets/experience/crowdvolt.webp
 ---
 
 Worked on the web platform at CrowdVolt, a YC-backed startup.

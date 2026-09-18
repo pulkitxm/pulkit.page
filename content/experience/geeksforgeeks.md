@@ -5,7 +5,9 @@ description: Campus Mantri at GeeksforGeeks, bridging the platform and students,
   environment on campus.
 role: Campus Mantri
 date: 2024-04-01
-period: 2024–2025
+period: Apr 2024 – Apr 2025
+endDate: 2025-04-01
+icon: /assets/experience/geeksforgeeks.webp
 ---
 
 Represented GeeksforGeeks on campus and helped students discover learning resources and coding opportunities.

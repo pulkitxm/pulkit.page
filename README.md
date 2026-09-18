@@ -246,7 +246,7 @@ The same commands run in the staged-snapshot pre-commit hook. Read
 ## SEO and social cards
 
 The root `CNAME` is the single source of the production hostname. Generation uses
-HTTPS with that hostname; the current file contains `new.pulkit.page`. Change
+HTTPS with that hostname; the current file contains `pulkit.page`. Change
 `CNAME` when changing the production domain. No domain is duplicated in Markdown.
 
 `bun run dev` uses Vite with request-time Markdown rendering and the actual server origin.

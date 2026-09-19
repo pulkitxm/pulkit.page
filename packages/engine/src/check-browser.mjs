@@ -32,7 +32,7 @@ const workersPerViewport = Math.max(
   1,
   Math.floor(availableParallelism() / auditedViewports.length),
 );
-const blockingImpacts = new Set(["serious", "critical"]);
+const blockingImpacts = new Set(["moderate", "serious", "critical"]);
 const { pages, site } = readSite("http://localhost");
 const collections = pages.filter((page) => page.index).map((page) => page.route);
 const navigationTarget =

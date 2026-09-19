@@ -37,7 +37,7 @@ Then came the bittersweet twist: this morning the [US government blocked Fable 5
 All of this was happening online while I was sitting at an event: **Localhost Build, at Microsoft**. At some point it hit me that if the project was getting this much attention on the internet right now, I should just show it to the people in the room. I asked a couple of friends, they said go for it, so I threw together a quick, slightly broken slide and presented.
 
 :::embed youtube-embed
-{"className":"my-8","videoId":"fYsE_CJn_rY","title":"Demoing Claude Directory at Localhost Build, Microsoft"}
+{"className":"my-8","videoId":"fYsE_CJn_rY","title":"Demoing Claude Directory at Localhost Build, Microsoft","imgLink":"/assets/content/public/blogs/my-first-talk/video-thumbnail.webp"}
 :::
 
 I walked through what it was, how I built it, and the part I cared about most: the intuition behind building this way. It isn't magic, it's a way of working. At [Noveum.ai](https://noveum.ai) we lean on AI heavily, for planning, for structured workflows, and a huge amount of my day runs through [Claude Code](https://code.claude.com). To give you a sense of it, here's my usage over the last few weeks:

@@ -8,6 +8,7 @@ date: 2024-02-16
 period: Feb 2024 – Jul 2025
 endDate: 2025-07-13
 icon: /assets/exp/deviators.svg
+darkIcon: /assets/exp/deviators-dark.svg
 ---
 
 We didn't have any good college clubs or societies. So me and some of my friends came together to start something of our own, an independent club driven by purpose. While many clubs just existed for namesake, we wanted to genuinely improve the coding culture on campus. That's how [Deviators](https://deviatorsdce.tech) was born.

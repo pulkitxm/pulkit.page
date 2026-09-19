@@ -47,7 +47,6 @@ if (existsSync("assets")) {
   cpSync("assets", "dist/assets", { recursive: true });
 }
 copyFileSync(themeFile("assets/favicon-32.png"), "dist/favicon.ico");
-copyFileSync(themeFile("theme.js"), "dist/theme.js");
 if (production) {
   copyFileSync("CNAME", "dist/CNAME");
 }
@@ -67,7 +66,7 @@ await buildEmbedAssets("dist/assets");
 logDuration("Built demo assets", stepStartedAt);
 stepStartedAt = performance.now();
 const fingerprinted = new Map();
-for (const file of ["styles.css", "theme.js"]) {
+for (const file of ["styles.css"]) {
   const hash = createHash("sha256")
     .update(readFileSync(`dist/${file}`))
     .digest("hex")
@@ -92,5 +91,5 @@ for (const file of htmlFiles("dist")) {
   }
   writeFileSync(file, html);
 }
-logDuration("Fingerprinted styles and theme script", stepStartedAt);
+logDuration("Fingerprinted styles", stepStartedAt);
 logDuration(`Built dist for ${origin}`, buildStartedAt);

@@ -160,7 +160,10 @@ post, embeds, demos, layouts, and appearance.
 
 Each app's `CNAME` is the single source of its production hostname:
 `apps/page/CNAME` contains `pulkit.page` and `apps/blog/CNAME` contains
-`pulkit.blog`. The CI workflow builds and checks both apps; its GitHub Pages step
-deploys `apps/page/dist` from `main` after every CI job passes. Generated HTML,
+`pulkit.blog`. Both sites are served by GitHub Pages: after every CI job passes
+on `main`, the workflow deploys `apps/page/dist` to this repository's Pages and
+pushes `apps/blog/dist` to the `gh-pages` branch of pulkitxm/pulkit.blog, which
+only hosts the built site. The [deployment guide](docs/deployment.md) covers the
+one-time setup and DNS. Generated HTML,
 social cards, sitemap, feed, and robots output are never committed. See [SEO and environments](docs/seo-and-environments.md) for preview
 origins and `SITE_URL`.

@@ -138,6 +138,9 @@ export function mount(root) {
 
   function resize() {
     const rect = inner.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) {
+      return;
+    }
     size.width = rect.width;
     size.height = rect.height;
     renderer.setSize(size.width, size.height);
@@ -357,7 +360,7 @@ export function mount(root) {
         const clampedDistance = Math.max(0.1, Math.min(1, current.distanceTo(body.translation())));
         current.lerp(
           body.translation(),
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
+          Math.min(1, delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))),
         );
       }
       curve.points[0].copy(j3.translation());
@@ -400,7 +403,7 @@ export function mount(root) {
 
     let last = performance.now();
     function loop(now) {
-      const delta = (now - last) / 1000;
+      const delta = Math.min(Math.max((now - last) / 1000, 0), 0.1);
       last = now;
       updateBand(delta);
       stepPhysics(delta);

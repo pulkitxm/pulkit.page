@@ -33,6 +33,7 @@ function setupLightbox() {
         return;
       }
       event.preventDefault();
+      lightbox.options.returnFocus = event.detail === 0;
       lightbox.loadAndOpen(index);
     });
   });

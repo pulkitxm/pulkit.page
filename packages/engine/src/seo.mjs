@@ -1,3 +1,6 @@
+export function markdownPath(route) {
+  return route === "/" ? "/index.md" : `${route.slice(0, -1)}.md`;
+}
 export function imagePath(route) {
   return `/og/${route === "/" ? "home" : route.slice(1, -1)}/card.png`;
 }

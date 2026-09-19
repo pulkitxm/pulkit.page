@@ -66,11 +66,19 @@ Experience pages remain WebPage about the person; role and period do not become 
 
 Title wrapping is greedy at 29 characters per line; font size drops from 54 to 44 if there are more than four lines. The function retains words, but neither generation nor tests prove every long title fits visually. PNG signature/dimensions and deterministic bytes are tested; actual typography/clipping still merits visual review. The current monochrome design is provisional: the requested `pulkitdixon.com` reference could not be located locally and must be supplied before matching it.
 
-Sitemap includes every discovered page exactly once with its canonical URL, without invented lastmod timestamps. Robots allows crawling and advertises that sitemap.
+Sitemap includes every discovered page exactly once with its canonical URL. Articles carry `lastmod` from their publication `date`; other pages have no trustworthy date and stay undated rather than getting an invented one. Robots allows crawling and advertises that sitemap.
 
 A site with an `articles` field also gets `/feed.xml`, an Atom feed of all its posts, newest first. The feed carries the site brand as its title, the site description as its subtitle, self and site links, the author name and profile URL, and one entry per post with title, canonical link and ID, the post's date as both published and updated time (midnight UTC), and its description as the summary. The feed's updated time is the newest post's date. The development server serves it as `application/atom+xml`, pulkit.blog's head partial advertises it with an alternate link, and the RSS entry appended to the site's social links points at it. pulkit.page has no articles and therefore no feed.
 
-pulkit.page's output comprises 12 HTML files, 12 cards, sitemap, and robots; pulkit.blog's comprises 54 HTML files, 54 cards, sitemap, robots, and `feed.xml`. Cards are generation outputs, not part of the historical copied-image audit.
+pulkit.page's output comprises 12 HTML files, 12 cards, 12 Markdown copies, `llms.txt`, sitemap, and robots; pulkit.blog's comprises 54 HTML files, 54 cards, 54 Markdown copies, `llms.txt`, sitemap, robots, and `feed.xml`. Cards are generation outputs, not part of the historical copied-image audit.
+
+## Markdown copies and llms.txt
+
+[markdown-export.mjs](../packages/engine/src/markdown-export.mjs) writes every page of both sites a second time as GitHub-flavored Markdown beside its HTML: `/` becomes `/index.md`, `/about/` becomes `/about.md`, and `/system-design/caching/` becomes `/system-design/caching.md`. GitHub Pages serves them as static files, so no routing is involved. Each copy opens with the title as H1, the description as a quote, and a short fact list (canonical URL, publication date for articles, role and period, tags, parent collection), followed by the body, collection and related-writing lists, and footnotes.
+
+The body is the authored Markdown with site-specific syntax resolved into portable Markdown. Lists become link lists (grouped under year headings for `by-year`), images and carousels become images, math becomes `$…$` and `$$…$$`, info tips become footnotes, tweets and replies become quotes, documents and videos become links, and demos become a note linking to the page plus the demo's source files as fences. Raw `<code>`, `<strong>`, and `<br>` become Markdown; `<details>` stays as HTML; wrapper tags are dropped. Code fences are never rewritten. Every link is absolute, and links to the site's own pages point at their Markdown copies so agents can crawl Markdown only. An embed or HTML tag without a Markdown fallback fails the build.
+
+`llms.txt` follows the llmstxt.org shape: the site brand as H1, the site description as a quote, a note on the `.md` convention, then sections for top-level pages, root-level articles (Writing), and each collection, every entry linking to its Markdown copy with its date or role and description. An Elsewhere section points at the `llms.txt` of each external site in the navigation, so pulkit.page and pulkit.blog lead agents to each other. Every HTML page links to its copy with `<link rel="alternate" type="text/markdown">` and a View as Markdown footer link. The development server renders both on request.
 
 ## Validation and limitations
 

@@ -19,6 +19,7 @@ export async function checkLayouts(directory = "layouts") {
     authorUrl: "https://example.com/",
     navigation: '<a href="/">Home</a>',
     copyright: "Example copyright",
+    markdown: "/example.md",
     social: '<a href="https://example.com">Example</a>',
     heading: "Example heading",
     content: "<p>Example content</p>",

@@ -28,7 +28,7 @@ Files are capped at 2 MiB except selected gif/webp/png/jpg/pdf media beneath `ap
 
 ## Rendered output and HTML
 
-Generated HTML, PNG cards, sitemap, robots, and feed output are never committed. `bun run build` renders them into each app's `dist/` from the current sources, so there is no committed output to drift out of date. Route collisions and unsupported MDX fail the build. URL existence and metadata validation are separate post-build checks.
+Generated HTML, PNG cards, Markdown copies, llms.txt, sitemap, robots, and feed output are never committed. `bun run build` renders them into each app's `dist/` from the current sources, so there is no committed output to drift out of date. Route collisions and unsupported MDX fail the build. URL existence and metadata validation are separate post-build checks.
 
 `check:layouts` expands every app layout with representative values and applies html-validate. `check:html` runs html-validate on the built `dist/**/*.html` of each app; Turbo runs it after `build`. [.htmlvalidate.json](../.htmlvalidate.json) extends recommended validation, requires lowercase doctype, forbids inline style, prefers self-closing void tags, and disables SRI requirements. Sample layout validation does not cover every possible metadata/body combination, and static HTML rules are not a browser accessibility audit.
 

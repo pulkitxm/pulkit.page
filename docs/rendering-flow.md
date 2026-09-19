@@ -11,7 +11,7 @@ flowchart TD
   B --> C
   L[Layouts and partials] --> C
   C --> D[Biome-stable HTML]
-  B --> E[PNG cards, sitemap, robots, feed]
+  B --> E[PNG cards, Markdown copies, llms.txt, sitemap, robots, feed]
   O --> E
   D --> F[Rendered output in dist]
   E --> F
@@ -69,7 +69,7 @@ The custom list is resolved during Marked parsing/rendering. The same Marked set
 
 `renderPage` uses explicit `layout` first; otherwise article pages (non-index pages under the site's `articles` prefix, excluding home) use `article`, and collection indexes/other pages use `simple`. Both homes explicitly request `home`. All layouts include a page H1 and shared head/header/footer and place related/collection navigation after the content; pulkit.page's layouts also insert breadcrumbs before it.
 
-[loadLayouts](../packages/engine/src/layouts.mjs) reads layout and partial HTML, expands includes recursively, rejects missing partials/cycles/unknown or malformed placeholders, and requires exactly one content and heading placeholder in every expanded layout. Allowed values are title, description, brand, navigation, copyright, social, heading, content, date, seo, breadcrumbs, and related. `applyLayout` substitutes values in one pass, so user text resembling a placeholder is not evaluated again.
+[loadLayouts](../packages/engine/src/layouts.mjs) reads layout and partial HTML, expands includes recursively, rejects missing partials/cycles/unknown or malformed placeholders, and requires exactly one content and heading placeholder in every expanded layout. Allowed values are title, description, brand, navigation, copyright, markdown, social, heading, content, date, seo, breadcrumbs, and related. `applyLayout` substitutes values in one pass, so user text resembling a placeholder is not evaluated again.
 
 The full document title is `page title | brand`, or only the page title when that would exceed 70 characters. H1 is the full page title. Metadata and generated navigation labels are HTML-escaped. Description has renderer fallbacks, but strict content validation requires it on every page. Dates are validated by ISO parse-and-round-trip. On article pages the `date` placeholder holds a meta line: the long date in a `time` element, the reading time (words outside fenced code divided by 230, rounded, at least one minute), and a link to the parent category index when one exists, separated by middle dots. Elsewhere, date without period produces a `time` element; experience role/period produce the detail line. A period alone without a role suppresses the date but does not trigger the paragraph.
 

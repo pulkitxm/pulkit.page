@@ -10,7 +10,7 @@ function escapeAttribute(value) {
     .replaceAll(">", "&gt;");
 }
 
-function showcase(key) {
+export function showcase(key) {
   try {
     return JSON.parse(readFileSync(new URL(`../showcases/${key}.json`, import.meta.url), "utf8"));
   } catch (error) {

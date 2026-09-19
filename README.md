@@ -172,3 +172,8 @@ only hosts the built site. The [deployment guide](docs/deployment.md) covers the
 one-time setup and DNS. Generated HTML,
 social cards, sitemap, feed, and robots output are never committed. See [SEO and environments](docs/seo-and-environments.md) for preview
 origins and `SITE_URL`.
+
+Every page on both sites is also published as Markdown beside its HTML:
+`/about/` has `/about.md`, and `/` has `/index.md`. Each site's `/llms.txt`
+indexes those copies. See
+[Markdown copies and llms.txt](docs/seo-and-environments.md#markdown-copies-and-llmstxt).

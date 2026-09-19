@@ -75,7 +75,7 @@ export function developmentRenderer(origin) {
       }
       if (["/robots.txt", "/sitemap.xml"].includes(pathname)) {
         return {
-          body: crawlerOutputs(pages, site).get(`pages${pathname}`),
+          body: crawlerOutputs(pages, site).get(pathname.slice(1)),
           type: pathname.endsWith(".xml") ? "application/xml" : "text/plain",
           description: "generated",
         };

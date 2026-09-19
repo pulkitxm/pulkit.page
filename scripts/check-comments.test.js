@@ -94,9 +94,6 @@ describe("repository policies", () => {
       "<!-- forbidden -->",
     ].join("\n");
     expect(await scanText("content/blogs/example.md", article)).toHaveLength(2);
-    const page =
-      '<pre><code class="language-js">// example</code></pre><script>/* forbidden */</script><!-- forbidden -->';
-    expect(await scanText("pages/blogs/example/index.html", page)).toHaveLength(2);
     expect(await scanText("scripts/example.js", "// forbidden")).toHaveLength(1);
   });
 

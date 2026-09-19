@@ -42,7 +42,7 @@ Introduce the problem in plain language.
 Link to [related writing](/blogs/) and explain the result.
 ```
 
-Use labeled lowercase fences such as `js`, `sh`, `text`, or `mermaid`, without fence metadata. Tutorial code is content, not executable repository code; Markdown formatting preserves code text. Generation does not rewrite `content/**` fences. It normalizes and, for Biome-supported languages, formats those fences for display, then highlights the formatted text. Article examples under `content/blogs/` and their rendered code elements under `pages/blogs/` are explicitly exempt from comment scanning: preserve explanatory comments and source-file labels. Other documentation examples are scanned by language. The separate U+2014 text check still applies everywhere. See [repository policies](repository-policies.md) for exact boundaries.
+Use labeled lowercase fences such as `js`, `sh`, `text`, or `mermaid`, without fence metadata. Tutorial code is content, not executable repository code; Markdown formatting preserves code text. Generation does not rewrite `content/**` fences. It normalizes and, for Biome-supported languages, formats those fences for display, then highlights the formatted text. Article examples under `content/blogs/` are explicitly exempt from comment scanning: preserve explanatory comments and source-file labels. Other documentation examples are scanned by language. The separate U+2014 text check still applies everywhere. See [repository policies](repository-policies.md) for exact boundaries.
 
 Raw HTML fails strict checking and is escaped by the renderer. MDX is unsupported and never executes JSX. Standard Markdown supports paragraphs, emphasis, lists, blockquotes, tables, images, links, and code. Fenced blocks are formatted then highlighted at generate time from the language label: published HTML wraps tokens in `text-syn-*` Tailwind color utilities whose tokens live in `styles.css`. `text`, `plaintext`, `math`, `mermaid`, unlabeled, and unknown labels stay escaped plain text. Mermaid diagrams and math are not rendered. Inline backtick code is not highlighted or reformatted.
 
@@ -118,16 +118,15 @@ Styling uses Tailwind CSS v4. [styles.css](../styles.css) is the Tailwind entry:
 
 ## Safe editing recipes
 
-For an existing page, edit Markdown, format it, generate HTML, inspect the resulting diff and browser view, then run CI. Shared metadata/template edits can legitimately update all 66 HTML files; date/title changes can update listing pages too.
+For an existing page, edit Markdown, format it, inspect the result in the development server, then run CI. Shared metadata/template edits can legitimately change all 66 rendered pages; date/title changes can change listing pages too.
 
 ```sh
 bun run format
-bun run generate
 bun run ci
 ```
 
 For a new article, create a correctly named file in `content/blogs/` or a series directory with title, description, and date. Add assets if needed. Generation creates its route and updates existing applicable lists. Generation also creates its card, canonical metadata, JSON-LD, and sitemap entry. No registry edit or migration-audit update is needed. Add an explicit link or listing for a new standalone page, since route generation alone does not make it discoverable through navigation.
 
-For a rename/removal, update internal links, remove/rename the source, then run `bun run generate --clean`. Review deleted outputs and list changes. This removes orphan HTML and generated assets under the selected output directory, normally `pages/`; no redirect is generated for an old route. Removing the last item in a collection also requires changing/removing its directive to avoid an empty-collection error.
+For a rename/removal, update internal links and remove/rename the source. The next build clears `dist/`, so the old route disappears; no redirect is generated for it. Removing the last item in a collection also requires changing/removing its directive to avoid an empty-collection error.
 
-Before a commit, stage the intended Markdown, generated HTML, social cards, crawler files, assets, and related templates together. Partial staging must preserve the source/output relationship because the hook checks the index. A documentation-only edit does not require regenerating site output. Development preview does not update committed production pages; run normal generation before staging page edits.
+Before a commit, stage the intended Markdown, assets, and related templates together. HTML, social cards, and crawler files are build output and are never committed. The hook checks the staged index, so unstaged repairs do not count.

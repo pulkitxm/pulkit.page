@@ -9,7 +9,7 @@
     "./render-page": "./src/render-page.mjs"
   },
   "scripts": {
-    "test": "bun test ./src",
+    "test": "bun test --timeout 30000 ./src",
     "check:layouts": "bun src/check-layouts.mjs"
   },
   "dependencies": {

@@ -6,6 +6,15 @@ try {
 if (selectedTheme === "light" || selectedTheme === "dark") {
   document.documentElement.dataset.theme = selectedTheme;
 }
+try {
+  const arrivedFromOtherSite =
+    document.referrer &&
+    new URL(document.referrer).origin !== globalThis.location.origin &&
+    performance.getEntriesByType("navigation")[0]?.type === "navigate";
+  if (arrivedFromOtherSite) {
+    document.documentElement.dataset.entry = "cross-site";
+  }
+} catch {}
 document.addEventListener("DOMContentLoaded", () => {
   const button = document.querySelector("[data-theme-toggle]");
   button?.addEventListener("click", () => {

@@ -1,10 +1,11 @@
 import { readFileSync } from "node:fs";
-import { Biome } from "@biomejs/js-api/nodejs";
+import { createRequire } from "node:module";
 
 const configuration = {
   ...JSON.parse(readFileSync(new URL("../../../biome.json", import.meta.url), "utf8")),
   vcs: { enabled: false },
 };
+const require = createRequire(import.meta.url);
 let workspace;
 const literal = new Set(["", "text", "plaintext", "txt", "math", "mermaid"]);
 const biomeFiles = new Map([
@@ -75,6 +76,7 @@ function hygiene(code, structural) {
 
 function biomeFormat(code, fileName) {
   if (!workspace) {
+    const { Biome } = require("@biomejs/js-api/nodejs");
     const biome = new Biome();
     const { projectKey } = biome.openProject();
     biome.applyConfiguration(projectKey, configuration);

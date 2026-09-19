@@ -1,9 +1,11 @@
-import { execFileSync } from "node:child_process";
-import process from "node:process";
-import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import { Biome } from "@biomejs/js-api/nodejs";
 
-const cli = fileURLToPath(import.meta.resolve("@biomejs/biome/bin/biome"));
-const config = fileURLToPath(new URL("../../../biome.json", import.meta.url));
+const configuration = {
+  ...JSON.parse(readFileSync(new URL("../../../biome.json", import.meta.url), "utf8")),
+  vcs: { enabled: false },
+};
+let workspace;
 const literal = new Set(["", "text", "plaintext", "txt", "math", "mermaid"]);
 const biomeFiles = new Map([
   ["js", "snippet.js"],
@@ -72,24 +74,19 @@ function hygiene(code, structural) {
 }
 
 function biomeFormat(code, fileName) {
+  if (!workspace) {
+    const biome = new Biome();
+    const { projectKey } = biome.openProject();
+    biome.applyConfiguration(projectKey, configuration);
+    workspace = { biome, projectKey };
+  }
   try {
-    return execFileSync(
-      process.execPath,
-      [
-        cli,
-        "format",
-        "--write",
-        "--vcs-enabled=false",
-        `--stdin-file-path=${fileName}`,
-        `--config-path=${config}`,
-      ],
-      {
-        input: code,
-        encoding: "utf8",
-        maxBuffer: 4 * 1024 * 1024,
-        stdio: ["pipe", "pipe", "pipe"],
-      },
-    );
+    const { content, diagnostics } = workspace.biome.formatContent(workspace.projectKey, code, {
+      filePath: fileName,
+    });
+    return diagnostics.some((diagnostic) => ["error", "fatal"].includes(diagnostic.severity))
+      ? undefined
+      : content;
   } catch {}
 }
 

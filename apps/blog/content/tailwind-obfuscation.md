@@ -1,5 +1,5 @@
 ---
-title: Renaming Tailwind Classes at Build Time
+title: Tailwind Obfuscation
 description: I wanted to rename every Tailwind class on my site so nobody could read my CSS. It
   didn't hide anything, but it did make every page smaller. Here's what I built and what I learned.
 date: 2026-09-20
@@ -37,7 +37,7 @@ So my original goal was a dead end, but the size win was real, and I kept it. If
 
 <details>
 
-<summary>Prompt: rename Tailwind classes at build time</summary>
+<summary>Prompt: obfuscate Tailwind classes at build time</summary>
 
 ```text
 Add a production-only build step that renames every class in my compiled

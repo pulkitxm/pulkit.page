@@ -54,7 +54,7 @@ function visitClasses(css: string, filename: string, rename: Rename): string {
   }).code.toString();
 }
 
-function stylesheetClasses(css: string, filename: string): Set<string> {
+export function stylesheetClasses(css: string, filename: string): Set<string> {
   const classes = new Set<string>();
   visitClasses(css, filename, (name) => {
     classes.add(name);

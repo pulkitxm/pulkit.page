@@ -1,0 +1,24 @@
+{
+  "name": "@pulkit/checks",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./content": "./src/check-content.mjs",
+    "./comments": "./src/check-comments.mjs"
+  },
+  "scripts": {
+    "test": "bun test ./src"
+  },
+  "dependencies": {
+    "@pulkit/embeds": "workspace:*",
+    "@babel/parser": "8.0.6",
+    "parse5": "8.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "remark-stringify": "11.0.0",
+    "tree-sitter-wasm": "2.0.1",
+    "unified": "11.0.5",
+    "web-tree-sitter": "0.27.0",
+    "yaml": "2.9.1"
+  }
+}

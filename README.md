@@ -6,7 +6,8 @@ Markdown in each app's `content/`; a small static site generator in
 `packages/engine` renders them into that app's `dist/`. Both sites use Tailwind CSS
 compiled at build time and a small theme script, without a client framework.
 
-For a detailed walkthrough, start with the [documentation index](docs/index.md).
+For a detailed walkthrough, start with the [architecture overview](docs/architecture.md)
+or the [documentation index](docs/index.md).
 
 ## Workspace layout
 
@@ -16,13 +17,15 @@ apps/
   blog/               @pulkit/blog: the pulkit.blog writing (content, assets, styles.css, CNAME)
 packages/
   engine/             @pulkit/engine: the static site generator and its `site` CLI
-  code/               @pulkit/code: build-time syntax highlighting and Biome formatting
+  theme/              @pulkit/theme: the shared stylesheet, layouts, assets, and theme script
+  shared/             @pulkit/shared: HTML escaping and built-site walkers used across workspaces
+  code/               @pulkit/code: build-time syntax highlighting and code formatting
   embeds/             @pulkit/embeds: Markdown embed renderers and their browser scripts
-  demos/              @pulkit/demos: interactive motion demos rendered by `:::demo`
-  theme/              @pulkit/theme: shared stylesheet, layouts, assets, and theme script
+  demos/              @pulkit/demos: interactive motion demos rendered by demo directives
   profile/            @pulkit/profile: shared author name, profile URL, site domains, and social links
 tooling/
   checks/             @pulkit/checks: repository-wide content, comment, text, and import gates
+  lighthouse/         @pulkit/lighthouse: parallel Lighthouse reports for both sites
   benchmarks/         development server benchmark runner
 docs/                 guides and the historical migration audit
 ```
@@ -73,7 +76,14 @@ Run these from the repository root:
 | `bun run test`                             | Run every package's tests                                         |
 | `bun run ci`                               | Run every gate: tests, build, post-build checks, repository gates |
 | `bun run format`                           | Apply Biome fixes and canonical Markdown/YAML formatting          |
+| `bun run lint`                             | Run Biome without writing, failing on warnings                    |
+| `bun run lighthouse`                       | Build both sites, then audit every route with Lighthouse          |
 | `bun run clean`                            | Remove each app's `dist/`, `.cache/`, `.turbo/`, and Vite caches  |
+
+The root `check:*` scripts run the individual repository gates that
+`bun run ci` aggregates: `check:content`, `check:comments`,
+`check:repository`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
+`check:shell`.
 
 A single app script can also run directly with `bun run --cwd apps/page <script>`,
 for example `bun run --cwd apps/blog check:seo`. Unlike the Turbo tasks, direct app
@@ -85,23 +95,28 @@ reuse a locally installed Chrome instead of the Playwright Chromium download.
 [turbo.json](turbo.json) describes the task graph. Package workspaces have no build
 step, so a `transit` task links them: `build`, `test`, and `check:layouts` depend on
 `^transit`, which makes Turbo hash the source of every package the app depends on. An edit in
-`packages/engine`, `packages/embeds`, or any other dependency therefore invalidates
+`packages/engine`, `packages/theme`, or any other dependency therefore invalidates
 the builds of the apps that use it. `biome.json`, `.htmlvalidate.json`, `NODE_ENV`,
-and `SITE_URL` are global inputs.
+and `SITE_URL` are global inputs. [apps/page/turbo.json](apps/page/turbo.json) adds
+`apps/blog/content` to the inputs of the portfolio build, because its home page lists
+the newest posts.
 
 `build` caches `dist/**`, so an unchanged app restores its output instead of
 rendering again. `check:seo`, `check:site`, `check:html`, and `check:browser` depend on
 `build`. The `verify` task aggregates tests, layout checks, post-build checks, and the
-root repository gates, and `bun run ci` is `turbo run verify`. `dev`, `start`, and
+root repository gates, and `bun run ci` is `turbo run verify`; `check:browser` stays
+outside it because it needs a browser. `dev`, `start`, and
 `clean` are never cached. Inside a build, the engine keeps a separate checksummed
 render cache under `apps/<app>/.cache/generate/`, so a real rebuild re-renders only
-the pages whose inputs changed.
+the pages whose inputs changed. [Architecture](docs/architecture.md#three-layers-of-caching)
+explains all three caching layers.
 
 The pre-commit hook checks out the staged index into a temporary directory, installs
 dependencies there with `bun install --frozen-lockfile --ignore-scripts`, and runs
 `bun run ci` with `TURBO_CACHE_DIR` pointing at the repository's `.turbo/cache`, so
 unchanged tasks replay from cache. GitHub Actions runs the same `bun run ci` and then a
-separate browser smoke job against the uploaded build.
+separate browser smoke job against the uploaded build, and deploys both sites from the
+same run; see [continuous integration](docs/continuous-integration.md).
 
 ## Authoring
 
@@ -118,7 +133,8 @@ I'm Pulkit. I build products for the web.
 
 Optional metadata: `date: YYYY-MM-DD`, `role`, `period`, `tags`, and
 `layout: home|simple|article`. The title supplies the H1; use `##` for sections.
-Raw HTML is displayed as text and MDX is not supported. Images belong in the app's
+MDX is not supported, and raw HTML is limited to a small reviewed set of tags.
+Images belong in the app's
 `assets/`, for example `apps/blog/assets/content/`, and each app's navigation and
 footer links live in its `content/_site.md`. Social links default to the shared
 `@pulkit/profile` list.

@@ -25,5 +25,5 @@ I'm Pulkit, a software engineer based in India. I build products for the web at 
 ## Podcast
 
 :::embed youtube-embed
-{"className":"my-8","videoId":"tmITb7u662M","title":"My Podcast with Harkirat Singh"}
+{"className":"my-8","videoId":"tmITb7u662M","title":"My Podcast with Harkirat Singh","imgLink":"/assets/content/podcast-harkirat-singh.webp"}
 :::

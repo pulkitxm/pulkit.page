@@ -1,10 +1,10 @@
 # pulkit.page
 
-A small static portfolio and writing archive, built as a Bun and Turborepo
-monorepo. Pages are Markdown in `apps/page/content/`; a small static site
-generator in `packages/engine` renders them into `apps/page/dist/`. The site uses
-Tailwind CSS compiled at build time and a small theme script, without a client
-framework.
+Two small static sites built as a Bun and Turborepo monorepo: the pulkit.page
+portfolio in `apps/page` and the pulkit.blog writing in `apps/blog`. Pages are
+Markdown in each app's `content/`; a small static site generator in
+`packages/engine` renders them into that app's `dist/`. Both sites use Tailwind CSS
+compiled at build time and a small theme script, without a client framework.
 
 For a detailed walkthrough, start with the [documentation index](docs/index.md).
 
@@ -12,13 +12,15 @@ For a detailed walkthrough, start with the [documentation index](docs/index.md).
 
 ```text
 apps/
-  page/               @pulkit/page: the pulkit.page site (content, layouts, assets, styles.css, CNAME)
+  page/               @pulkit/page: the pulkit.page portfolio (content, layouts, assets, styles.css, CNAME)
+  blog/               @pulkit/blog: the pulkit.blog writing (content, layouts, assets, styles.css, CNAME)
 packages/
   engine/             @pulkit/engine: the static site generator and its `site` CLI
   code/               @pulkit/code: build-time syntax highlighting and Biome formatting
   embeds/             @pulkit/embeds: Markdown embed renderers and their browser scripts
   demos/              @pulkit/demos: interactive motion demos rendered by `:::demo`
   theme/              @pulkit/theme: shared Tailwind base, theme script, fonts, and icons
+  profile/            @pulkit/profile: shared author name, profile URL, site domains, and social links
 tooling/
   checks/             @pulkit/checks: repository-wide content, comment, text, and import gates
   benchmarks/         development server benchmark runner
@@ -35,10 +37,11 @@ bun install
 bun run dev
 ```
 
-`bun install` also installs the pre-commit hook. `bun run dev` starts every app's
-development server; open the URL printed in the terminal. The server prefers
-`http://localhost:3000/` and tries higher ports until one binds. Set `PORT=3001` to
-require a specific port or `PORT=0` to ask the OS for one. Vite renders HTML and
+`bun install` also installs the pre-commit hook. `bun run dev` starts both
+development servers side by side; open the URLs printed in the terminal. pulkit.page
+prefers `http://localhost:3000/` and pulkit.blog prefers `http://localhost:3001/`
+(its `dev` script sets `SITE_DEV_PORT=3001`); each tries higher ports until one
+binds. Set `PORT` to require a specific port or `PORT=0` to ask the OS for one. Vite renders HTML and
 social cards only when requested, reloads the browser after content and layout
 edits, and uses hot replacement for CSS.
 
@@ -61,6 +64,7 @@ Run these from the repository root:
 | ------------------------------------------ | ----------------------------------------------------------------- |
 | `bun run dev`                              | Start the development server of every app                         |
 | `bunx turbo run dev --filter=@pulkit/page` | Start only the pulkit.page development server                     |
+| `bunx turbo run dev --filter=@pulkit/blog` | Start only the pulkit.blog development server                     |
 | `bun run build`                            | Build every app into its `dist/`                                  |
 | `bun run start`                            | Build, then preview each built app on loopback                    |
 | `bun run test`                             | Run every package's tests                                         |
@@ -69,7 +73,7 @@ Run these from the repository root:
 | `bun run clean`                            | Remove each app's `dist/`, `.cache/`, `.turbo/`, and Vite caches  |
 
 A single app script can also run directly with `bun run --cwd apps/page <script>`,
-for example `bun run --cwd apps/page check:seo`. Unlike the Turbo tasks, direct app
+for example `bun run --cwd apps/blog check:seo`. Unlike the Turbo tasks, direct app
 scripts do not build first. Set `PLAYWRIGHT_CHANNEL=chrome` to let `check:browser`
 reuse a locally installed Chrome instead of the Playwright Chromium download.
 
@@ -111,34 +115,52 @@ I'm Pulkit. I build products for the web.
 
 Optional metadata: `date: YYYY-MM-DD`, `role`, `period`, `tags`, and
 `layout: home|simple|article`. The title supplies the H1; use `##` for sections.
-Raw HTML is displayed as text and MDX is not supported. Images belong in
-`apps/page/assets/`, and shared navigation and footer links live in
-`apps/page/content/_site.md`.
+Raw HTML is displayed as text and MDX is not supported. Images belong in the app's
+`assets/`, for example `apps/blog/assets/content/`, and each app's navigation and
+footer links live in its `content/_site.md`. Social links default to the shared
+`@pulkit/profile` list.
 
-Lists are automatic, including nested articles, ordered newest first:
+The optional `articles` field in `_site.md` is a root-relative prefix such as `/`
+or `/notes/` that marks which non-index pages are posts. pulkit.page has none;
+pulkit.blog sets `articles: /`. Posts get the article layout, a meta line with the
+date, reading time, and category, related writing, BlogPosting JSON-LD, and an Atom
+feed at `/feed.xml`, and the site's social links gain an RSS entry. Every post
+needs a `date`.
+
+Lists are automatic, including nested entries, ordered newest first. A list
+directive names a collection, an optional limit, and an optional year grouping:
+
+```text
+:::list <collection> [limit=N] [by-year]
+```
 
 ```md
-:::list blogs limit=5
+:::list exp limit=3
 
-:::list exp
+:::list system-design
 
-:::list blogs/system-design
+:::list all by-year
 ```
+
+The collection `all` lists every post of the site, and `by-year` groups the list
+under year headings with day and month dates; ungrouped lists show month and year.
 
 Routes come from file paths:
 
-- `apps/page/content/home.md` becomes `/`
-- `apps/page/content/about.md` becomes `/about/`
-- `apps/page/content/blogs/index.md` becomes `/blogs/`
-- `apps/page/content/blogs/system-design/caching.md` becomes `/blogs/system-design/caching/`
+- `apps/page/content/home.md` becomes `/` on pulkit.page
+- `apps/page/content/exp/magicapi.md` becomes `/exp/magicapi/` on pulkit.page
+- `apps/blog/content/git-worktrees.md` becomes `/git-worktrees/` on pulkit.blog
+- `apps/blog/content/system-design/index.md` becomes the `/system-design/` category
+- `apps/blog/content/system-design/caching.md` becomes `/system-design/caching/`
 
-The [authoring guide](docs/authoring-guide.md) covers the full schema, embeds,
-demos, layouts, and appearance.
+The [authoring guide](docs/authoring-guide.md) covers the full schema, adding a
+post, embeds, demos, layouts, and appearance.
 
 ## Deployment
 
-The app's `CNAME` is the single source of the production hostname; it currently
-contains `pulkit.page`. GitHub Pages deploys `apps/page/dist` from `main` after every
-CI job passes. Generated HTML, social cards, sitemap, and robots output are never
-committed. See [SEO and environments](docs/seo-and-environments.md) for preview
+Each app's `CNAME` is the single source of its production hostname:
+`apps/page/CNAME` contains `pulkit.page` and `apps/blog/CNAME` contains
+`pulkit.blog`. The CI workflow builds and checks both apps; its GitHub Pages step
+deploys `apps/page/dist` from `main` after every CI job passes. Generated HTML,
+social cards, sitemap, feed, and robots output are never committed. See [SEO and environments](docs/seo-and-environments.md) for preview
 origins and `SITE_URL`.

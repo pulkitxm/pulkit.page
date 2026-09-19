@@ -73,6 +73,19 @@ function itemLabel(item) {
   return typeof value === "string" ? value : undefined;
 }
 
+function detailLabels(details) {
+  const items = details?.items;
+  if (Array.isArray(items)) {
+    return items.map(itemLabel).filter(Boolean);
+  }
+  if (details?.type === "checklist" && items) {
+    return Object.values(items)
+      .filter((check) => check.value === false)
+      .map((check) => check.label);
+  }
+  return [];
+}
+
 function failingAudits(lhr, category) {
   return lhr.categories[category].auditRefs
     .filter((reference) => reference.group !== "metrics")
@@ -143,7 +156,7 @@ function pageReport(site, route, pageRuns) {
         lines.push(
           `- **${cell(failing.title)}** (score ${Math.round(failing.score * 100)})${detail}`,
         );
-        const items = (failing.details?.items ?? []).map(itemLabel).filter(Boolean);
+        const items = detailLabels(failing.details);
         for (const item of items.slice(0, 5)) {
           lines.push(`  - \`${cell(item).slice(0, 160).replaceAll("`", "'")}\``);
         }

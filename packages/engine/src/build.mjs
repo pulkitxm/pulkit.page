@@ -15,10 +15,10 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { buildDemoAssets } from "@pulkit/demos/assets";
 import { buildEmbedAssets } from "@pulkit/embeds/bundle";
+import { themeFile } from "@pulkit/theme/files";
 import { logDuration } from "./duration.mjs";
 import { generateSite } from "./generate.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
-import { themeFile } from "./theme-files.mjs";
 
 const tailwind = fileURLToPath(
   new URL("dist/index.mjs", import.meta.resolve("@tailwindcss/cli/package.json")),
@@ -42,10 +42,11 @@ stepStartedAt = performance.now();
 const pages = await generateSite("dist", origin);
 logDuration("Rendered pages", stepStartedAt);
 stepStartedAt = performance.now();
-cpSync("assets", "dist/assets", { recursive: true });
-cpSync(themeFile("fonts"), "dist/assets/fonts", { recursive: true });
-cpSync(themeFile("icons"), "dist/assets", { recursive: true });
-copyFileSync(themeFile("icons/favicon-32.png"), "dist/favicon.ico");
+cpSync(themeFile("assets"), "dist/assets", { recursive: true });
+if (existsSync("assets")) {
+  cpSync("assets", "dist/assets", { recursive: true });
+}
+copyFileSync(themeFile("assets/favicon-32.png"), "dist/favicon.ico");
 copyFileSync(themeFile("theme.js"), "dist/theme.js");
 if (production) {
   copyFileSync("CNAME", "dist/CNAME");
@@ -55,7 +56,7 @@ stepStartedAt = performance.now();
 execFileSync(
   process.execPath,
   [tailwind, "--input", "styles.css", "--output", "dist/styles.css", "--minify"],
-  { stdio: ["ignore", "ignore", "inherit"] },
+  { stdio: ["ignore", "ignore", "pipe"] },
 );
 logDuration("Compiled styles", stepStartedAt);
 stepStartedAt = performance.now();

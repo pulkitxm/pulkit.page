@@ -447,7 +447,7 @@ export async function renderPage(
   return formatHtml(
     applyLayout(layouts, layout, {
       title: escapeHtml(pageTitle(metadata, site, route)),
-      seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${assets.tags()}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
+      seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${site.articles ? `<link rel="alternate" type="application/atom+xml" title="${escapeHtml(site.brand ?? "Feed")}" href="/feed.xml">` : ""}${assets.tags()}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages, site),
       description: escapeHtml(metadata.description ?? site.description ?? metadata.title),

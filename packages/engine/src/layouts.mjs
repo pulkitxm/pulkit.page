@@ -1,5 +1,6 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { themeFile } from "@pulkit/theme/files";
 
 const placeholderNames = [
   "title",
@@ -34,7 +35,11 @@ function readTemplates(directory) {
   return templates;
 }
 
-export function loadLayouts(directory = "layouts") {
+export function layoutDirectory() {
+  return existsSync("layouts") ? "layouts" : themeFile("layouts");
+}
+
+export function loadLayouts(directory = layoutDirectory()) {
   const layouts = readTemplates(directory);
   const partials = readTemplates(join(directory, "partials"));
   function expand(template, stack) {

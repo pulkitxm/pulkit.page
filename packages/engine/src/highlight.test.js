@@ -6,7 +6,7 @@ import { highlightFence } from "@pulkit/code/highlight";
 import { renderPage } from "./render-page.mjs";
 
 const repository = resolve(import.meta.dir, "../../..");
-const base = readFileSync(join(repository, "packages/theme/base.css"), "utf8");
+const theme = readFileSync(join(repository, "packages/theme/styles.css"), "utf8");
 const appStyles = readdirSync(join(repository, "apps")).map((app) =>
   readFileSync(join(repository, "apps", app, "styles.css"), "utf8"),
 );
@@ -84,15 +84,16 @@ describe("build-time syntax highlighting", () => {
     expect(html).not.toContain('<span class="text-syn-k">const</span>');
   });
 
-  test("every app theme defines token colors for light and dark", () => {
-    expect(base).toContain(':root:not([data-theme="light"])');
-    expect(base).toContain('[data-theme="dark"] *');
-    expect(base).toContain("@media (prefers-color-scheme: dark)");
+  test("the shared theme defines token colors for light and dark and every app uses it", () => {
+    expect(theme).toContain(':root:not([data-theme="light"])');
+    expect(theme).toContain('[data-theme="dark"] *');
+    expect(theme).toContain("@media (prefers-color-scheme: dark)");
+    for (const name of ["k", "s", "c", "n", "f", "t", "p", "o", "u", "g"]) {
+      expect(theme).toContain(`--color-syn-${name}:`);
+    }
+    expect(theme).toMatch(/@variant dark \{[\s\S]*--color-syn-k:/);
     for (const styles of appStyles) {
-      for (const name of ["k", "s", "c", "n", "f", "t", "p", "o", "u", "g"]) {
-        expect(styles).toContain(`--color-syn-${name}:`);
-      }
-      expect(styles).toMatch(/@variant dark \{[\s\S]*--color-syn-k:/);
+      expect(styles).toBe('@import "@pulkit/theme/styles.css";\n');
     }
   });
 

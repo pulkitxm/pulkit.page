@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { assetFile } from "@pulkit/theme/files";
 import { imageSize } from "image-size";
 
 export const lightboxScript = "/assets/embeds/lightbox.js";
@@ -6,11 +7,12 @@ export const lightboxStyle = "/assets/embeds/photoswipe.css";
 const sizes = new Map();
 
 export function localImageSize(src) {
-  if (!src.startsWith("/assets/") || !existsSync(src.slice(1))) {
+  const file = assetFile(src);
+  if (!file) {
     return;
   }
   if (!sizes.has(src)) {
-    const { width, height } = imageSize(readFileSync(src.slice(1)));
+    const { width, height } = imageSize(readFileSync(file));
     sizes.set(src, { width, height });
   }
   return sizes.get(src);

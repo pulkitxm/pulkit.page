@@ -120,7 +120,7 @@ def benchmark(source, repetitions):
                 marker = f"Benchmark title {iteration}"
                 changed = re.sub(r"(?m)^title:.*$", f"title: {marker}", article.read_text())
                 row["metadata_edit_ms"] = edit(root, url + route.rsplit("/", 2)[0] + "/", article, changed, marker)
-                layout = root / "layouts/partials/footer.html"
+                layout = CLI.parents[2] / "theme/layouts/partials/footer.html"
                 originals[layout] = layout.read_text()
                 marker = f"benchmark layout {iteration}"
                 row["layout_edit_ms"] = edit(root, url + "/", layout,

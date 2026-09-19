@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 import { formatHtml } from "@pulkit/code/format-html";
 import { HtmlValidate } from "html-validate";
-import { applyLayout, loadLayouts } from "./layouts.mjs";
+import { applyLayout, layoutDirectory, loadLayouts } from "./layouts.mjs";
 
-export async function checkLayouts(directory = "layouts") {
+export async function checkLayouts(directory = layoutDirectory()) {
   const layouts = loadLayouts(directory);
   const validator = new HtmlValidate(
     JSON.parse(readFileSync(new URL("../../../.htmlvalidate.json", import.meta.url), "utf8")),

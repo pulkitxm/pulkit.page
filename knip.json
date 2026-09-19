@@ -27,7 +27,8 @@
       "project": ["**/*.{js,mjs,css}"]
     },
     "packages/theme": {
-      "project": ["*.{js,css}"]
+      "entry": ["theme.js"],
+      "project": ["*.{js,css}", "src/**/*.mjs"]
     },
     "packages/code": {
       "project": ["src/**/*.mjs"]

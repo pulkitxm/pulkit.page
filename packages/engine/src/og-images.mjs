@@ -1,7 +1,7 @@
+import { themeFile } from "@pulkit/theme/files";
 import { Resvg } from "@resvg/resvg-js";
 import { markdownOutputs } from "./markdown-export.mjs";
 import { articles, categoryOf, imagePath, isArticle } from "./seo.mjs";
-import { themeFile } from "./theme-files.mjs";
 
 const xml = (value) =>
   String(value).replace(
@@ -37,7 +37,7 @@ export function renderCard(page, site, category) {
   return new Resvg(svg, {
     font: {
       loadSystemFonts: false,
-      fontFiles: [themeFile("fonts/ibm-plex-mono-regular.ttf")],
+      fontFiles: [themeFile("assets/fonts/ibm-plex-mono-regular.ttf")],
       defaultFontFamily: "IBM Plex Mono",
     },
   })

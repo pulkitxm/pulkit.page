@@ -5,23 +5,27 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { bundleDemoScripts, compileDemoStyles, fontFile } from "@pulkit/demos/assets";
 import { bundleEmbedScripts, katexDirectory, photoswipeStyles } from "@pulkit/embeds/bundle";
+import { assetFile, themeFile } from "@pulkit/theme/files";
 import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
 import { developmentLog } from "./dev-log.mjs";
 import { developmentRenderer } from "./dev-renderer.mjs";
 import { formatDuration } from "./duration.mjs";
 import { serverPort } from "./server-port.mjs";
-import { themeFile } from "./theme-files.mjs";
 
 const sharedTypes = {
   ".js": "text/javascript",
   ".svg": "image/svg+xml",
   ".png": "image/png",
+  ".webp": "image/webp",
+  ".woff2": "font/woff2",
   ".ttf": "font/ttf",
+  ".txt": "text/plain",
 };
 
 const packages = fileURLToPath(new URL("../../", import.meta.url));
 const repository = resolve(packages, "..");
+const appAssets = resolve("assets");
 const { port, explicit } = serverPort();
 let origin;
 const demoOutput = ".cache/demos-dev";
@@ -80,7 +84,7 @@ const server = await createServer({
             ? file.slice(`${process.cwd()}/`.length)
             : `/${file.slice(`${repository}/`.length)}`;
           const reset =
-            /^\/(?:packages\/[a-z-]+\/src\/|bun.lock$|biome.json$|packages\/theme\/fonts\/|packages\/demos\/showcases\/)/.test(
+            /^\/(?:packages\/[a-z-]+\/src\/|bun.lock$|biome.json$|packages\/theme\/assets\/fonts\/|packages\/demos\/showcases\/)/.test(
               path,
             );
           if (/^\/packages\/demos\//.test(path) && !reset) {
@@ -89,7 +93,7 @@ const server = await createServer({
             vite.ws.send({ type: "full-reload" });
             return;
           }
-          if (reset || /^(?:content\/|layouts\/|CNAME$)/.test(path)) {
+          if (reset || /^(?:content\/|layouts\/|CNAME$|\/packages\/theme\/layouts\/)/.test(path)) {
             renderer.invalidate(reset);
             developmentLog(`Changed ${path}. Pages rebuild when requested.`);
             vite.ws.send({ type: "full-reload" });
@@ -186,40 +190,34 @@ const server = await createServer({
               response.end(request.method === "HEAD" ? undefined : demo.body);
               return;
             }
-            let shared;
-            if (pathname === "/favicon.ico") {
-              shared = themeFile("icons/favicon-32.png");
-            } else if (pathname === "/theme.js") {
-              shared = themeFile("theme.js");
-            } else if (pathname.startsWith("/assets/fonts/")) {
-              shared = themeFile(`fonts/${pathname.slice("/assets/fonts/".length)}`);
-            } else if (/^\/assets\/[\w.-]+\.(?:png|svg)$/.test(pathname)) {
-              shared = themeFile(`icons/${pathname.slice("/assets/".length)}`);
-            }
-            if (shared) {
+            if (pathname === "/styles.css") {
               asset = true;
-              const root = themeFile("./");
-              const file = resolve(shared);
-              if (!file.startsWith(root) || !existsSync(file)) {
+              next();
+              return;
+            }
+            if (
+              pathname === "/theme.js" ||
+              pathname === "/favicon.ico" ||
+              pathname.startsWith("/assets/")
+            ) {
+              asset = true;
+              const file =
+                pathname === "/theme.js"
+                  ? themeFile("theme.js")
+                  : assetFile(pathname === "/favicon.ico" ? "/assets/favicon-32.png" : pathname);
+              if (!file) {
                 response.writeHead(404).end("Not found");
+                return;
+              }
+              if (realpathSync(file).startsWith(`${appAssets}${sep}`)) {
+                next();
                 return;
               }
               response.writeHead(200, {
-                "Content-Type": sharedTypes[extname(file)] ?? "font/woff2",
+                "Content-Type": sharedTypes[extname(file)] ?? "application/octet-stream",
                 "Cache-Control": "no-store",
               });
               response.end(request.method === "HEAD" ? undefined : readFileSync(file));
-              return;
-            }
-            if (pathname === "/styles.css" || pathname.startsWith("/assets/")) {
-              asset = true;
-              const root = resolve(pathname.startsWith("/assets/") ? "assets" : ".");
-              const file = realpathSync(resolve(`.${pathname}`));
-              if (!file.startsWith(`${root}${sep}`)) {
-                response.writeHead(404).end("Not found");
-                return;
-              }
-              next();
               return;
             }
             const result = await renderer.render(pathname);

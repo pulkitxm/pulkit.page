@@ -21,7 +21,9 @@ export function validateSeo(html, route, metadata, site, readAsset) {
     `<title>${escapeHtml(pageTitle(metadata, site, route))}</title>`,
   ), "incorrect title");
   const metas = new Map();
-  for (const match of html.matchAll(/<meta\s+(?:name|property)="([^"]+)"\s+content="([^"]*)"/g)) {
+  for (const match of html.matchAll(
+    /<meta\s+(?:name|property)="([^"]+)"\s+content="([^"]*)"(?!\s+media=)/g,
+  )) {
     require(!metas.has(match[1]), `duplicate metadata: ${match[1]}`);
     metas.set(match[1], match[2]);
   }

@@ -9,7 +9,8 @@
     "./render-page": "./src/render-page.mjs"
   },
   "scripts": {
-    "test": "bun test ./src"
+    "test": "bun test ./src",
+    "check:layouts": "bun src/check-layouts.mjs"
   },
   "dependencies": {
     "@axe-core/playwright": "4.13.0",

@@ -1,5 +1,7 @@
 # Deployment
 
+[Documentation index](index.md) · [Continuous integration](continuous-integration.md)
+
 Both sites are served by GitHub Pages. A repository can publish only one Pages
 site, so each site uses its own repository while all code stays here:
 
@@ -25,16 +27,22 @@ run even while it deploys; both deploys are all or nothing, so the previous site
 stays live and the newer run deploys the newer commit.
 
 - **Deploy pulkit.page** uploads `apps/page/dist` as this repository's Pages
-  artifact and deploys it in the `github-pages` environment.
+  artifact and deploys it in the `github-pages` environment. It is the only job
+  that gets `pages: write` and `id-token: write`.
 - **Deploy pulkit.blog** takes the same build, adds `.nojekyll`, and pushes
   `apps/blog/dist` as one new commit on top of the `gh-pages` branch of
-  pulkitxm/pulkit.blog. Only changed files are uploaded, and an unchanged build
-  pushes nothing. It authenticates with a deploy key and pins GitHub's published
-  SSH host key. Without the `BLOG_DEPLOY_KEY` secret the job succeeds with a
-  warning and publishes nothing.
+  pulkitxm/pulkit.blog, in the `pulkit-blog` environment. It initializes a
+  repository inside the downloaded `dist`, shallow-fetches the existing
+  `gh-pages` and resets onto it so the branch keeps its history, stages
+  everything, and stops without a commit when nothing changed. It authenticates
+  with a deploy key written to the runner's temporary directory and pins
+  GitHub's published SSH host key with strict host key checking. Without the
+  `BLOG_DEPLOY_KEY` secret the job succeeds with a warning and publishes
+  nothing.
 
 Production builds copy each app's `CNAME` into `dist/`, which keeps both custom
-domains attached to their Pages sites. Old pulkit.page `/blogs/` URLs are not
+domains attached to their Pages sites. A preview build for another origin leaves
+it out, so a preview cannot claim a production domain. Old pulkit.page `/blogs/` URLs are not
 redirected; they return 404.
 
 ## One-time setup for pulkit.blog

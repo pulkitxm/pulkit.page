@@ -1,0 +1,9 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_DEFAULT$", "!.cache/**", "$TURBO_ROOT$/apps/blog/content/**"]
+    }
+  }
+}

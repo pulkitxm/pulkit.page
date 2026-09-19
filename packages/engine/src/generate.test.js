@@ -299,3 +299,27 @@ test("sites with articles list every post, render article meta and publish a fee
   expect(feed).toContain("<id>https://example.com/topic/second/</id>");
   expect(crawlerOutputs(pages, { ...site, articles: undefined }).has("feed.xml")).toBe(false);
 });
+
+test("lists from another site link to that site and show recent dates", async () => {
+  const year = new Date().getUTCFullYear();
+  const site = {
+    external: {
+      blog: [
+        {
+          route: "https://blog.example/old/",
+          metadata: { title: "Old", date: `${year - 1}-12-31` },
+        },
+        { route: "https://blog.example/new/", metadata: { title: "New", date: `${year}-08-14` } },
+      ],
+    },
+  };
+  const html = await renderPage(`${source}\n:::list blog:all limit=5\n`, { site });
+  expect(html.indexOf('href="https://blog.example/new/"')).toBeLessThan(
+    html.indexOf('href="https://blog.example/old/"'),
+  );
+  expect(html).toContain(`datetime="${year}-08-14">Aug 14</time>`);
+  expect(html).toContain(`datetime="${year - 1}-12-31">Dec 31, ${year - 1}</time>`);
+  await expect(renderPage(`${source}\n:::list notes:all\n`, { site })).rejects.toThrow(
+    "Unknown site in list directive: notes",
+  );
+});

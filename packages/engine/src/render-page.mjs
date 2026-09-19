@@ -345,6 +345,7 @@ export async function renderPage(
           return { type: "carousel", raw: match[0], images };
         },
         renderer(token) {
+          assets.script("/assets/embeds/image-carousel.js");
           const slides = token.images
             .map(
               (image) =>

@@ -14,6 +14,8 @@
     "start": "turbo run start",
     "test": "turbo run test",
     "clean": "turbo run clean",
+    "lighthouse": "turbo run build --filter=\"./apps/*\" && bun tooling/lighthouse/src/lighthouse.mjs",
+    "lighthouse:prod": "bun tooling/lighthouse/src/lighthouse.mjs --prod",
     "ci": "turbo run verify",
     "format": "biome check --write . && bun tooling/checks/src/check-content.mjs --write",
     "format:check": "biome format . && bun tooling/checks/src/check-content.mjs",

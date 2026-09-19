@@ -20,7 +20,11 @@ const auditedViewports = viewports.filter(
 if (auditedViewports.length === 0) {
   throw new Error(`Unknown BROWSER_VIEWPORT ${selectedViewport}`);
 }
-const auditsSiteFlows = auditedViewports.includes(viewports[0]);
+const [shardIndex, shardCount] = (process.env.BROWSER_SHARD ?? "1/1").split("/").map(Number);
+if (!(shardIndex >= 1 && shardIndex <= shardCount)) {
+  throw new Error(`Invalid BROWSER_SHARD ${process.env.BROWSER_SHARD}`);
+}
+const auditsSiteFlows = auditedViewports.includes(viewports.at(-1)) && shardIndex === shardCount;
 const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const themeDependentRules = ["color-contrast", "link-in-text-block"];
 const workersPerViewport = Math.max(
@@ -174,12 +178,15 @@ async function auditAccessibility(page, scope) {
   }
 }
 
-async function auditPage(page, viewport, path, origin) {
+async function auditPage(page, viewport, path, origin, owned) {
   const scope = `${viewport.name} ${path}`;
   const response = await page.goto(new URL(path, origin).href);
   if (response?.status() !== 200) {
     report(scope, `Page returned HTTP ${response?.status()}`);
     return null;
+  }
+  if (!owned) {
+    return page.evaluate(inspectDocument);
   }
   await waitForImages(page);
   const result = await page.evaluate(inspectDocument);
@@ -209,18 +216,19 @@ async function auditPage(page, viewport, path, origin) {
 }
 
 async function auditViewport(browser, origin, paths, viewport) {
+  const owned = new Set(paths.filter((_, index) => index % shardCount === shardIndex - 1));
   const queue = [...paths];
   const results = new Map();
   await Promise.all(
     Array.from({ length: Math.min(workersPerViewport, paths.length) }, async () => {
       const { context, page } = await openSession(browser, origin, viewport.name, { viewport });
       for (let path = queue.shift(); path; path = queue.shift()) {
-        results.set(path, await auditPage(page, viewport, path, origin));
+        results.set(path, await auditPage(page, viewport, path, origin, owned.has(path)));
       }
       await context.close();
     }),
   );
-  console.log(`Audited ${paths.length} pages at ${viewport.width}px`);
+  console.log(`Audited ${owned.size} of ${paths.length} pages at ${viewport.width}px`);
   return results;
 }
 

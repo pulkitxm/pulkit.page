@@ -35,7 +35,7 @@
     "check:browser": {
       "dependsOn": ["build"],
       "outputs": [],
-      "env": ["BROWSER_VIEWPORT", "PLAYWRIGHT_CHANNEL"]
+      "env": ["BROWSER_SHARD", "BROWSER_VIEWPORT", "PLAYWRIGHT_CHANNEL"]
     },
     "dev": {
       "cache": false,

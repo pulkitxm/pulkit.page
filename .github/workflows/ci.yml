@@ -101,7 +101,7 @@ jobs:
           tool: shellcheck
       - run: shellcheck tooling/checks/install-hooks.sh .githooks/pre-commit
   browser:
-    name: Browser smoke (${{ matrix.viewport }})
+    name: Browser smoke (${{ matrix.viewport }} ${{ matrix.shard }})
     needs: verify
     runs-on: ubuntu-26.04
     timeout-minutes: 10
@@ -111,6 +111,9 @@ jobs:
         viewport:
           - desktop
           - mobile
+        shard:
+          - 1/2
+          - 2/2
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -126,6 +129,7 @@ jobs:
       - name: Run browser check
         env:
           BROWSER_VIEWPORT: ${{ matrix.viewport }}
+          BROWSER_SHARD: ${{ matrix.shard }}
           PLAYWRIGHT_CHANNEL: chrome
         run: bunx turbo run check:browser --only
   ci:

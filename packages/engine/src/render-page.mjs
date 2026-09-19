@@ -145,14 +145,6 @@ export async function renderPage(
   const layout = metadata.layout ?? (article ? "article" : "simple");
   const ids = new Set(["main"]);
   const assets = createPageAssets();
-  let eagerImageUsed = false;
-  const loadingAttributes = () => {
-    if (eagerImageUsed) {
-      return ' loading="lazy"';
-    }
-    eagerImageUsed = true;
-    return ' loading="eager" fetchpriority="high"';
-  };
   const sizeAttributes = (href) => {
     const size = localImageSize(href);
     return size ? ` width="${size.width}" height="${size.height}"` : "";
@@ -273,7 +265,7 @@ export async function renderPage(
           token.href === portrait
             ? "mx-0 mt-0 mb-7 block size-36 max-w-full rounded-[50%] object-cover"
             : "mx-auto my-7 block h-auto max-w-full rounded-md";
-        const image = `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}"${sizeAttributes(token.href)}${loadingAttributes()}>`;
+        const image = `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}"${sizeAttributes(token.href)} loading="lazy">`;
         return token.href === portrait || token.linked
           ? image
           : zoomable({
@@ -357,7 +349,7 @@ export async function renderPage(
           const slides = token.images
             .map(
               (image) =>
-                `<a class="block w-full shrink-0 cursor-zoom-in snap-center" href="${safeUrl(image.href)}"${zoomAttributes(image.href)}><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}"${sizeAttributes(image.href)}${loadingAttributes()}></a>`,
+                `<a class="block w-full shrink-0 cursor-zoom-in snap-center" href="${safeUrl(image.href)}"${zoomAttributes(image.href)}><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}"${sizeAttributes(image.href)} loading="lazy"></a>`,
             )
             .join("");
           const button =

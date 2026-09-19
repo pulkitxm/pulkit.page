@@ -60,20 +60,20 @@ export function seoOutputs(pages, site, cache) {
           "base64",
         )
       : renderCard(page, site);
-    output.set(`pages${imagePath(page.route)}`, bytes);
+    output.set(imagePath(page.route).slice(1), bytes);
   }
   return new Map([...output, ...crawlerOutputs(pages, site)]);
 }
 export function crawlerOutputs(pages, site) {
   const output = new Map();
   output.set(
-    "pages/sitemap.xml",
+    "sitemap.xml",
     Buffer.from(
       `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((page) => `  <url><loc>${xml(site.url + page.route)}</loc></url>`).join("\n")}\n</urlset>\n`,
     ),
   );
   output.set(
-    "pages/robots.txt",
+    "robots.txt",
     Buffer.from(`User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`),
   );
   return output;

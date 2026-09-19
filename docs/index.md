@@ -1,6 +1,6 @@
 # Understanding pulkit.page
 
-This is a static publishing system for a portfolio and a substantial writing archive. Markdown defines the pages. Production HTML, social cards, sitemap, and robots output are committed and verified; build assembles verified production output or renders a preview origin. Visitors need no application server or JavaScript framework; the only executable site JavaScript changes the color theme.
+This is a static publishing system for a portfolio and a substantial writing archive. Markdown defines the pages. Nothing generated is committed; build renders HTML, social cards, sitemap, and robots output into `dist/` for the production or a preview origin. Visitors need no application server or JavaScript framework; the only executable site JavaScript changes the color theme.
 
 ## Suggested reading order
 

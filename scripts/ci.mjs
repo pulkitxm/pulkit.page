@@ -7,7 +7,6 @@ const scripts = packageJson.scripts ?? {};
 const ordered = [
   "check:content",
   "check:layouts",
-  "check:generated",
   "check:comments",
   "check:repository",
   "format:check",

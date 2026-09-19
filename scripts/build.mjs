@@ -15,6 +15,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { buildDemoAssets, bundleEmbedScripts } from "./demo-assets.mjs";
 import { logDuration } from "./duration.mjs";
+import { generateSite } from "./generate.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
 const tailwind = fileURLToPath(
@@ -24,12 +25,6 @@ const buildStartedAt = performance.now();
 const origin = resolveSiteOrigin();
 
 let stepStartedAt = performance.now();
-execFileSync("sh", ["scripts/check-sync.sh"], {
-  stdio: "inherit",
-  env: { ...process.env, NODE_ENV: "production", SITE_URL: "", SITE_OUTPUT_DIR: "pages" },
-});
-logDuration("Verified production pages", stepStartedAt);
-stepStartedAt = performance.now();
 if (existsSync("dist")) {
   for (const entry of readdirSync("dist")) {
     if (!/^dev-[0-9]+$/.test(entry)) {
@@ -42,15 +37,8 @@ const production =
   (!process.env.NODE_ENV || process.env.NODE_ENV === "production") &&
   origin === resolveSiteOrigin({ NODE_ENV: "production" });
 stepStartedAt = performance.now();
-if (production) {
-  cpSync("pages", "dist", { recursive: true });
-} else {
-  execFileSync(process.execPath, ["scripts/generate.mjs"], {
-    stdio: "inherit",
-    env: { ...process.env, SITE_OUTPUT_DIR: "dist" },
-  });
-}
-logDuration(production ? "Copied production pages" : "Rendered preview pages", stepStartedAt);
+await generateSite("dist", origin);
+logDuration("Rendered pages", stepStartedAt);
 stepStartedAt = performance.now();
 cpSync("assets", "dist/assets", { recursive: true });
 for (const file of ["theme.js", ".nojekyll"]) {

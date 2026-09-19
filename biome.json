@@ -106,18 +106,6 @@
       }
     },
     {
-      "includes": ["pages/**"],
-      "linter": {
-        "rules": {
-          "a11y": {
-            "noNoninteractiveTabindex": "off",
-            "noRedundantAlt": "off",
-            "noAmbiguousAnchorText": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": ["demos/**/*.js", "scripts/embeds/**"],
       "linter": {
         "rules": {

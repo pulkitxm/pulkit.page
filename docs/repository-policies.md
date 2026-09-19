@@ -6,11 +6,11 @@ The repository rejects source-code comments, literal em dash characters, and unu
 
 The inventory comes from `git ls-files --cached --others --exclude-standard --deduplicate`. It includes every existing tracked file, even files force-tracked inside ignored folders, and nonignored new files. Deleted working-tree paths are omitted. The pre-commit hook runs the same checks on a temporary staged snapshot, so unstaged repairs cannot hide staged violations.
 
-Known binary media and fonts have no source-code comment syntax and are excluded from text parsing. Other files must be valid UTF-8; unexpected binary data and repository symlinks fail. There is no directory exclusion for tracked documentation, generated pages, or fixtures.
+Known binary media and fonts have no source-code comment syntax and are excluded from text parsing. Other files must be valid UTF-8; unexpected binary data and repository symlinks fail. There is no directory exclusion for tracked documentation or fixtures.
 
 ## No em dashes
 
-[check-em-dashes.mjs](../scripts/check-em-dashes.mjs) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, code examples, and generated HTML. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
+[check-em-dashes.mjs](../scripts/check-em-dashes.mjs) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, HTML templates, and code examples. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
 
 ## No source-code comments
 
@@ -19,7 +19,7 @@ Known binary media and fonts have no source-code comment syntax and are excluded
 - Tree-sitter handles JavaScript, TypeScript, JSX/TSX, CSS, shell, Python, Ruby, Lua, Swift, Rust, C/C++, Java, Kotlin, Go, TOML, JSON/JSONC, and other explicitly registered languages.
 - YAML concrete-syntax tokens distinguish comments from quoted and block scalars.
 - Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except article examples under `content/blogs/`, which preserve their original comments.
-- parse5 finds HTML/SVG/XML comments, embedded scripts/styles, JSON-LD, and generated code examples. HTML entities in code examples are decoded before scanning, except rendered article examples under `pages/blogs/`. Actual HTML comments and embedded scripts/styles remain checked everywhere.
+- parse5 finds HTML/SVG/XML comments, embedded scripts/styles, JSON-LD, and generated code examples. HTML entities in code examples are decoded before scanning. Actual HTML comments and embedded scripts/styles remain checked everywhere.
 - Small syntax-aware lexers handle SQL comments and quoted/dollar-quoted strings, hash-comment configuration languages, and Mermaid comments.
 - Python docstrings count as documentation comments. All lint directives, coverage directives, documentation comments, and license comments count as comments. Third-party plain-text license files remain ordinary text.
 
@@ -33,7 +33,7 @@ Unknown source types and unknown fence languages cause a failure requesting an e
 
 `bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. The manual importer has a real `import:reference` package command and remains intentional tooling. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
 
-Knip is static analysis, not a guarantee about runtime reachability or a CSS/image/Markdown garbage collector. Dynamic use must be modeled with an explicit legitimate entry point. Do not add every source file as an entry to silence unused-file findings. The existing generated-page sync check independently rejects orphan HTML.
+Knip is static analysis, not a guarantee about runtime reachability or a CSS/image/Markdown garbage collector. Dynamic use must be modeled with an explicit legitimate entry point. Do not add every source file as an entry to silence unused-file findings.
 
 ## Commands
 
@@ -44,7 +44,7 @@ bun run check:dead-code
 bun run ci
 ```
 
-For fixes, edit the source Markdown or code, run `bun run format`, regenerate with `bun run generate`, and rerun CI. Never fix generated HTML independently of its source.
+For fixes, edit the source Markdown or code, run `bun run format`, and rerun CI. Generated HTML is build output in `dist/` and is never edited or committed.
 
 ## Regression coverage
 

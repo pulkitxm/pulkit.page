@@ -24,8 +24,6 @@ jobs:
             command: check:content
           - name: Layouts
             command: check:layouts
-          - name: Generated pages
-            command: check:generated
           - name: Comments
             command: check:comments
           - name: Repository
@@ -94,6 +92,8 @@ jobs:
             command: check:site
           - name: SEO
             command: check:seo
+          - name: HTML
+            command: check:html
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:

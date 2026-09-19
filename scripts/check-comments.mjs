@@ -348,9 +348,7 @@ export async function scanText(file, source) {
   const ranges =
     file.startsWith("content/blogs/") && extension === "md"
       ? await markdownRanges(source, true)
-      : file.startsWith("pages/blogs/") && extension === "html"
-        ? await htmlRanges(source, true)
-        : await commentRanges(language, source);
+      : await commentRanges(language, source);
   return ranges.map((range) => ({
     ...range,
     line: source.slice(0, range.start).split("\n").length,

@@ -44,18 +44,3 @@ export function resolveSiteOrigin(
   }
   return url.origin;
 }
-
-export function generationDirectory(env = process.env) {
-  const directory =
-    env.SITE_OUTPUT_DIR ||
-    (env.SITE_URL || (env.NODE_ENV && env.NODE_ENV !== "production") ? "dist" : "pages");
-  if (directory !== "pages" && !/^dist(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*$/.test(directory)) {
-    throw new Error("SITE_OUTPUT_DIR must be pages, dist, or a directory under dist");
-  }
-  if (directory === "pages" && (env.SITE_URL || (env.NODE_ENV && env.NODE_ENV !== "production"))) {
-    throw new Error(
-      "Environment-specific output must stay under dist; pages is reserved for production CNAME output",
-    );
-  }
-  return directory;
-}

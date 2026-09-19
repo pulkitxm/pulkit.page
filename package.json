@@ -17,24 +17,27 @@
     "serve:clean": "turbo run clean && turbo run start --force",
     "test": "turbo run test",
     "clean": "turbo run clean",
-    "lighthouse": "turbo run build --filter=\"./apps/*\" && bun tooling/lighthouse/src/lighthouse.mjs",
-    "lighthouse:prod": "bun tooling/lighthouse/src/lighthouse.mjs --prod",
+    "lighthouse": "turbo run build --filter=\"./apps/*\" && bun tooling/lighthouse/src/commands/lighthouse.ts",
+    "lighthouse:prod": "bun tooling/lighthouse/src/commands/lighthouse.ts --prod",
     "ci": "turbo run verify",
-    "format": "biome check --write . && bun tooling/checks/src/check-content.mjs --write",
-    "format:check": "biome format . && bun tooling/checks/src/check-content.mjs",
+    "format": "biome check --write . && bun tooling/checks/src/commands/check-content.ts --write",
+    "format:check": "biome format . && bun tooling/checks/src/commands/check-content.ts",
     "lint": "biome check --error-on-warnings .",
-    "check:content": "bun tooling/checks/src/check-content.mjs",
-    "check:comments": "bun tooling/checks/src/check-comments.mjs",
-    "check:repository": "bun tooling/checks/src/check-repository.mjs",
-    "check:em-dashes": "bun tooling/checks/src/check-em-dashes.mjs",
-    "check:imports": "bun tooling/checks/src/check-imports.mjs",
+    "check:content": "bun tooling/checks/src/commands/check-content.ts",
+    "check:comments": "bun tooling/checks/src/commands/check-comments.ts",
+    "check:repository": "bun tooling/checks/src/commands/check-repository.ts",
+    "check:em-dashes": "bun tooling/checks/src/commands/check-em-dashes.ts",
+    "check:imports": "bun tooling/checks/src/commands/check-imports.ts",
+    "check:types": "tsc -p tsconfig.json",
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "check:shell": "sh -n tooling/checks/install-hooks.sh && sh -n .githooks/pre-commit",
     "postinstall": "sh tooling/checks/install-hooks.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
+    "@types/bun": "1.4.2",
     "knip": "6.37.0",
-    "turbo": "2.11.2"
+    "turbo": "2.11.2",
+    "typescript": "7.0.2"
   }
 }

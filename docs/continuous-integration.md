@@ -4,7 +4,7 @@
 
 One workflow, [.github/workflows/ci.yml](../.github/workflows/ci.yml), runs every
 check and both deployments. There is no second workflow file, and
-[policy-ci.test.js](../tooling/checks/src/policy-ci.test.js) fails if one
+[policy-ci.test.ts](../tooling/checks/src/commands/policy-ci.test.ts) fails if one
 appears without being accounted for.
 
 ## The same checks in three places
@@ -26,7 +26,7 @@ the Git based scanners see the same file list, installs with
 replay from cache. Because it checks the index rather than the worktree, a fix
 that is only unstaged still fails. [Scripts and commands](scripts-and-commands.md#staged-snapshot-pre-commit)
 describes the hook in detail, and a
-[test](../tooling/checks/src/pre-commit.test.js) pins that behavior.
+[test](../tooling/checks/src/commands/pre-commit.test.ts) pins that behavior.
 
 ## Triggers and concurrency
 
@@ -79,7 +79,7 @@ publishes the exact bytes that were checked.
 
 The browser matrix has four jobs: `desktop` and `mobile` crossed with shards
 `1/2` and `2/2`, with `fail-fast: false`.
-[check-browser.mjs](../packages/engine/src/check-browser.mjs) reads
+[check-browser.ts](../packages/engine/src/commands/check-browser.ts) reads
 `BROWSER_VIEWPORT` and `BROWSER_SHARD`, audits every route but owns only the
 shard's share of the assertions, and runs the whole-site flows (rendering without
 JavaScript, the theme toggle, blocked storage, keyboard navigation and view
@@ -97,7 +97,7 @@ them.
 
 Every `uses:` reference is pinned to a 40 character commit SHA, and every job
 sets `timeout-minutes`. Those are not conventions to remember:
-[policy-ci.test.js](../tooling/checks/src/policy-ci.test.js) runs in
+[policy-ci.test.ts](../tooling/checks/src/commands/policy-ci.test.ts) runs in
 `bun run ci` and asserts them, along with the concurrency settings, the deploy
 conditions, the absence of a second workflow file, and that every root and
 workspace `check:*`, `lint`, `format:check` and `test` script is reachable from

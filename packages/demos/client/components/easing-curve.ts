@@ -1,0 +1,343 @@
+import { listenWindow, optionalRef, query, queryAll, ref } from "../lib/dom.ts";
+import { type CubicBezier, cubicBezierEase } from "../lib/easing.ts";
+import { createScheduler } from "../lib/scheduler.ts";
+import { tween } from "../lib/tween.ts";
+import { buttonClass, html } from "../runtime/ui.ts";
+import type { DemoMount } from "../types.ts";
+
+interface EasingConfig {
+  color: string;
+  cubicBezier: CubicBezier;
+  label: string;
+}
+
+const easingConfigs = {
+  ease: { color: "#8b5cf6", cubicBezier: [0.25, 0.1, 0.25, 1], label: "ease" },
+  easeIn: { color: "#f472b6", cubicBezier: [0.42, 0, 1, 1], label: "ease-in" },
+  easeInOut: { color: "#06b6d4", cubicBezier: [0.42, 0, 0.58, 1], label: "ease-in-out" },
+  easeOut: { color: "#34d399", cubicBezier: [0, 0, 0.58, 1], label: "ease-out" },
+  linear: { color: "#94a3b8", cubicBezier: [0, 0, 1, 1], label: "linear" },
+  spring: { color: "#fb923c", cubicBezier: [0.2, 1.1, 0.4, 1], label: "spring" },
+} satisfies Record<string, EasingConfig>;
+
+type EasingType = keyof typeof easingConfigs;
+
+const easingOrder: readonly EasingType[] = [
+  "linear",
+  "easeIn",
+  "easeOut",
+  "easeInOut",
+  "ease",
+  "spring",
+];
+const pathLength = 1;
+const animationDuration = 2;
+const resetDuration = 0.5;
+const size = 200;
+const padding = 12;
+
+function isEasingType(value: string | undefined): value is EasingType {
+  return easingOrder.some((easingType) => easingType === value);
+}
+
+function getCubicBezierPath([x1, y1, x2, y2]: CubicBezier): string {
+  const graphSize = size - padding * 2;
+  const startX = padding;
+  const startY = size - padding;
+  const endX = size - padding;
+  const endY = padding;
+  const cp1x = startX + x1 * graphSize;
+  const cp1y = startY - y1 * graphSize;
+  const cp2x = startX + x2 * graphSize;
+  const cp2y = startY - y2 * graphSize;
+  return `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+}
+
+function springValue(time: number, bounce: number): number {
+  const stiffness = 100;
+  const mass = 1;
+  const omega0 = Math.sqrt(stiffness / mass);
+  const criticalDamping = 2 * Math.sqrt(stiffness * mass);
+  const damping = criticalDamping * (1 - bounce * 0.9);
+  const zeta = damping / criticalDamping;
+  if (zeta >= 1) {
+    const decay = Math.exp(-omega0 * time);
+    return 1 - decay * (1 + omega0 * time);
+  }
+  const omegaD = omega0 * Math.sqrt(1 - zeta * zeta);
+  const decay = Math.exp(-zeta * omega0 * time);
+  return (
+    1 -
+    decay *
+      (Math.cos(omegaD * time) + (zeta / Math.sqrt(1 - zeta * zeta)) * Math.sin(omegaD * time))
+  );
+}
+
+const settleTime = 1.2;
+
+function getSpringPath(bounce: number, maxY: number): string {
+  const steps = 100;
+  const graphWidth = size - padding * 2;
+  const graphHeight = size - padding * 2;
+  const segments: string[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const y = Math.max(0, springValue(t * settleTime, bounce));
+    const x = padding + t * graphWidth;
+    const py = size - padding - (y / maxY) * graphHeight;
+    segments.push(`${i === 0 ? "M" : "L"} ${x} ${py}`);
+  }
+  return segments.join(" ");
+}
+
+function applySpringEasing(progress: number, bounce: number): number {
+  return Math.max(0, Math.min(1, springValue(progress * settleTime, bounce)));
+}
+
+function legendButtonClass(isHidden: boolean): string {
+  return buttonClass({
+    variant: "ghost",
+    size: "sm",
+    className: `flex items-center gap-1.5 transition-opacity sm:gap-2 ${isHidden ? "opacity-40" : "opacity-100"}`,
+  });
+}
+
+function legendLabelClass(isHidden: boolean): string {
+  return `font-mono text-xs sm:text-sm ${isHidden ? "text-neutral-400 line-through dark:text-neutral-500" : "text-neutral-600 dark:text-neutral-400"}`;
+}
+
+export const mount: DemoMount = (root, props) => {
+  const spring = Boolean(props.spring);
+  const allowBounce = Boolean(props.allowBounce);
+  const activeEasings = easingOrder.filter((easingType) => Boolean(props[easingType]));
+  if (activeEasings.length === 0) {
+    activeEasings.push("easeOut");
+  }
+  const hiddenEasings = new Set<EasingType>();
+  const showLegend = activeEasings.length > 1;
+  const clipPathId = `graph-clip-${Math.random().toString(36).slice(2)}`;
+  let progress = 0;
+  let isDragging = false;
+  let bounce = 0.45;
+  const scheduler = createScheduler();
+  const animation = scheduler.slot();
+
+  root.innerHTML = html`<div class="flex size-full flex-col items-center justify-center p-4 sm:p-6">
+    <div class="flex w-full max-w-md items-stretch justify-center gap-4 sm:gap-6">
+      <div class="flex min-w-0 flex-1 items-center justify-center">
+        <svg viewBox="0 0 ${size} ${size}" class="aspect-square h-auto w-full max-w-60 overflow-visible sm:max-w-72" role="img" aria-label="Easing curve visualization">
+          <defs>
+            <clipPath id="${clipPathId}">
+              <rect x="0" y="${-size * 2}" width="${size * 2}" height="${size * 2 + size - padding - 1}"></rect>
+            </clipPath>
+          </defs>
+          <line data-ref="bounceLine" x1="${padding}" x2="${size - padding}" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" class="text-neutral-400 dark:text-neutral-600"></line>
+          <g data-ref="group">
+            ${activeEasings.map(
+              (easingType) =>
+                `<path data-easing="${easingType}" fill="none" stroke="${easingConfigs[easingType].color}" stroke-width="2.5" pathLength="${pathLength}" stroke-dasharray="${pathLength}"><title>${easingConfigs[easingType].label}</title></path>`,
+            )}
+          </g>
+          <line x1="${padding}" y1="${size - padding}" x2="${size - padding}" y2="${size - padding}" stroke="currentColor" stroke-width="1" class="text-neutral-600 dark:text-neutral-400"></line>
+          <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${size - padding}" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="text-neutral-600 dark:text-neutral-400"></line>
+        </svg>
+      </div>
+      <div class="flex shrink-0 flex-col items-center gap-2 py-2">
+        <span class="mb-1.5 text-neutral-600 text-xs dark:text-neutral-300">100%</span>
+        <div data-ref="slider" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-label="Animation progress" aria-orientation="vertical" class="relative w-6 flex-1 cursor-pointer touch-none sm:w-7">
+          <div class="absolute left-1/2 h-full w-1 -translate-x-1/2 rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
+          <div data-ref="fill" class="absolute bottom-0 left-1/2 w-1 -translate-x-1/2 rounded-full bg-neutral-400 dark:bg-neutral-500"></div>
+          <div data-ref="thumb" class="absolute left-1/2 size-4 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-neutral-400 bg-white shadow-sm transition-transform hover:scale-110 sm:size-5 dark:border-neutral-500 dark:bg-neutral-800"></div>
+        </div>
+        <span class="mt-1.5 text-neutral-600 text-xs dark:text-neutral-300">0%</span>
+      </div>
+    </div>
+    ${
+      showLegend
+        ? `<div class="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:mt-5 sm:gap-x-5">${activeEasings
+            .map(
+              (easingType) =>
+                `<button type="button" data-legend="${easingType}"><div class="h-2 w-4 rounded-sm transition-opacity sm:h-2.5 sm:w-5" style="background-color: ${easingConfigs[easingType].color}"></div><span></span></button>`,
+            )
+            .join("")}</div>`
+        : ""
+    }
+    ${
+      allowBounce && spring
+        ? `<div class="mt-4 flex items-center justify-center gap-3"><label for="bounce-slider" class="text-neutral-600 text-xs sm:text-sm dark:text-neutral-400">Bounce</label><input data-ref="bounceInput" id="bounce-slider" type="range" min="0" max="0.5" step="0.05" value="${bounce}" class="h-1.5 w-28 cursor-pointer appearance-none rounded-full bg-neutral-200 sm:w-36 dark:bg-neutral-700 [&::-webkit-slider-thumb]:size-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500" /><span data-ref="bounceValue" class="w-10 text-right font-mono text-neutral-600 text-xs dark:text-neutral-400"></span></div>`
+        : ""
+    }
+  </div>`;
+  const bounceLine = ref(root, "bounceLine", SVGLineElement);
+  const group = ref(root, "group", SVGGElement);
+  const slider = ref(root, "slider", HTMLDivElement);
+  const fill = ref(root, "fill", HTMLDivElement);
+  const thumb = ref(root, "thumb", HTMLDivElement);
+  const bounceInput = optionalRef(root, "bounceInput", HTMLInputElement);
+  const bounceValue = optionalRef(root, "bounceValue", HTMLSpanElement);
+  const paths = new Map(
+    queryAll(root, "[data-easing]", SVGPathElement).flatMap((element) => {
+      const easingType = element.dataset.easing;
+      return isEasingType(easingType) ? [[easingType, element] as const] : [];
+    }),
+  );
+  const legendButtons = queryAll(root, "[data-legend]", HTMLButtonElement);
+
+  function renderLegend() {
+    for (const element of legendButtons) {
+      const easingType = element.dataset.legend;
+      if (!isEasingType(easingType)) {
+        continue;
+      }
+      const isHidden = hiddenEasings.has(easingType);
+      element.className = legendButtonClass(isHidden);
+      const label = query(element, "span", HTMLSpanElement);
+      label.className = legendLabelClass(isHidden);
+      label.textContent =
+        easingType === "spring" && allowBounce
+          ? `spring (${bounce.toFixed(2)} bounce)`
+          : easingConfigs[easingType].label;
+    }
+  }
+
+  function renderShape() {
+    const hasBounce = spring && bounce > 0;
+    const maxY = hasBounce ? 1 + bounce * 0.5 : 1;
+    bounceLine.style.display = hasBounce ? "" : "none";
+    const lineY = String(padding + ((maxY - 1) / maxY) * (size - padding * 2));
+    bounceLine.setAttribute("y1", lineY);
+    bounceLine.setAttribute("y2", lineY);
+    if (hasBounce) {
+      group.removeAttribute("clip-path");
+    } else {
+      group.setAttribute("clip-path", `url(#${clipPathId})`);
+    }
+    for (const [easingType, path] of paths) {
+      path.setAttribute(
+        "d",
+        easingType === "spring"
+          ? getSpringPath(bounce, maxY)
+          : getCubicBezierPath(easingConfigs[easingType].cubicBezier),
+      );
+    }
+    renderLegend();
+    if (bounceInput && bounceValue) {
+      bounceInput.value = String(bounce);
+      bounceValue.textContent = bounce.toFixed(2);
+    }
+  }
+
+  function renderProgress() {
+    for (const [easingType, path] of paths) {
+      const easedProgress =
+        easingType === "spring"
+          ? applySpringEasing(progress, bounce)
+          : cubicBezierEase(progress, easingConfigs[easingType].cubicBezier);
+      const dashOffset = hiddenEasings.has(easingType)
+        ? pathLength
+        : pathLength * (1 - easedProgress);
+      path.setAttribute("stroke-dashoffset", String(dashOffset));
+    }
+    slider.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+    fill.style.height = `${progress * 100}%`;
+    thumb.style.bottom = `${progress * 100}%`;
+  }
+
+  function startAnimation(
+    fromProgress: number,
+    toProgress: number,
+    duration: number,
+    onComplete?: () => void,
+  ) {
+    tween(animation, {
+      duration: duration * 1000,
+      onUpdate(t) {
+        progress = t >= 1 ? toProgress : fromProgress + t * (toProgress - fromProgress);
+        renderProgress();
+      },
+      onComplete,
+    });
+  }
+
+  function handleSliderInteraction(clientY: number) {
+    const rect = slider.getBoundingClientRect();
+    const y = Math.max(0, Math.min(rect.bottom - clientY, rect.height));
+    progress = y / rect.height;
+    renderProgress();
+  }
+
+  const onEnd = () => {
+    isDragging = false;
+  };
+
+  slider.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+    animation.cancel();
+    isDragging = true;
+    handleSliderInteraction(event.clientY);
+  });
+  slider.addEventListener(
+    "touchstart",
+    (event) => {
+      animation.cancel();
+      isDragging = true;
+      const touch = event.touches[0];
+      if (touch) {
+        handleSliderInteraction(touch.clientY);
+      }
+    },
+    { passive: true },
+  );
+  scheduler.add(
+    listenWindow("mousemove", (event) => {
+      if (isDragging) {
+        handleSliderInteraction(event.clientY);
+      }
+    }),
+  );
+  scheduler.add(listenWindow("mouseup", onEnd));
+  scheduler.add(
+    listenWindow("touchmove", (event) => {
+      const touch = event.touches[0];
+      if (isDragging && touch) {
+        handleSliderInteraction(touch.clientY);
+      }
+    }),
+  );
+  scheduler.add(listenWindow("touchend", onEnd));
+
+  for (const element of legendButtons) {
+    element.addEventListener("click", () => {
+      const easingType = element.dataset.legend;
+      if (!isEasingType(easingType)) {
+        return;
+      }
+      if (hiddenEasings.has(easingType)) {
+        hiddenEasings.delete(easingType);
+      } else {
+        hiddenEasings.add(easingType);
+      }
+      renderShape();
+      renderProgress();
+    });
+  }
+  bounceInput?.addEventListener("input", () => {
+    bounce = Number(bounceInput.value);
+    renderShape();
+    renderProgress();
+  });
+
+  renderShape();
+  renderProgress();
+  startAnimation(0, 1, animationDuration);
+
+  return {
+    replay() {
+      animation.cancel();
+      startAnimation(progress, 0, resetDuration, () => {
+        startAnimation(0, 1, animationDuration);
+      });
+    },
+    destroy: scheduler.dispose,
+  };
+};

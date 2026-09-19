@@ -147,7 +147,7 @@
       }
     },
     {
-      "includes": ["packages/demos/**/*.js", "packages/embeds/src/**"],
+      "includes": ["packages/demos/**/*.ts", "packages/embeds/src/**"],
       "linter": {
         "rules": {
           "security": {

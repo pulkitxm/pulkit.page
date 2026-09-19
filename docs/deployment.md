@@ -56,6 +56,9 @@ links keep working.
    Optional: set the `TURBO_TOKEN` secret and `TURBO_TEAM` variable to let CI
    share Vercel's remote Turborepo cache.
 
+   The deploy jobs are skipped while `VERCEL_ORG_ID` is unset, so CI stays green
+   before this setup.
+
 5. Run CI once on `main` (merge a pull request or use **Run workflow**) so both
    projects have a production deployment.
 

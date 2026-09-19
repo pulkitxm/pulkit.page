@@ -16,7 +16,7 @@ export function mount(root) {
           label: `<div data-ref="cssBall" class="absolute rounded-full bg-red-500" style="height: ${BALL_SIZE}px; left: 80px; top: 48px; transition: left 400ms ease-out, top 400ms ease-out; width: ${BALL_SIZE}px"></div>`,
           attrs: 'data-ref="cssBox"',
         })}
-        <span class="text-neutral-500 text-xs">CSS Transition</span>
+        <span class="text-neutral-600 dark:text-neutral-400 text-xs">CSS Transition</span>
       </div>
       <div class="flex flex-col items-center gap-2">
         ${button({
@@ -26,7 +26,7 @@ export function mount(root) {
           label: `<div data-ref="springBall" class="absolute rounded-full bg-green-500" style="height: ${BALL_SIZE}px; left: 0px; top: 0px; width: ${BALL_SIZE}px"></div>`,
           attrs: 'data-ref="springBox"',
         })}
-        <span class="text-neutral-500 text-xs">Spring Animation</span>
+        <span class="text-neutral-600 dark:text-neutral-400 text-xs">Spring Animation</span>
       </div>
     </div>
     <p class="max-w-md text-center text-neutral-500 text-xs dark:text-neutral-400">CSS transitions restart from scratch when interrupted. Spring animations preserve velocity and curve naturally to the new target.</p>

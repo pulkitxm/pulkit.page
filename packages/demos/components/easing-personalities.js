@@ -26,8 +26,8 @@ const personalities = [
 
 const cardClass = buttonClass({
   variant: "outline",
-  className:
-    "h-auto cursor-pointer rounded-lg border-neutral-200 bg-white p-4 text-left font-normal sm:p-6 dark:border-neutral-700 dark:bg-neutral-900",
+  size: "card",
+  className: "rounded-lg border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900",
 });
 
 export function mount(root) {
@@ -38,7 +38,7 @@ export function mount(root) {
           card,
         ) => `<button type="button" class="${cardClass}" data-ref="${card.id}" style="transform: translateY(0); transition: transform ${card.duration} ${card.easing}">
         <h4 class="font-medium text-neutral-900 dark:text-neutral-100">${card.title}</h4>
-        <code class="mt-1 block text-neutral-600 text-xs dark:text-neutral-300">${card.easing}</code>
+        <code class="mt-1 block break-words text-neutral-600 text-xs dark:text-neutral-300">${card.easing}</code>
         <p class="mt-2 text-neutral-600 text-sm dark:text-neutral-300">${card.description}</p>
       </button>`,
       )}

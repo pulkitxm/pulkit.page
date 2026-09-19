@@ -18,7 +18,7 @@ export function mount(root) {
             </svg>
           </div>
           <span class="text-neutral-600 text-xs dark:text-neutral-400">${spinner.label}</span>
-          <span class="text-neutral-400 text-xs">${spinner.feel}</span>
+          <span class="text-neutral-500 dark:text-neutral-400 text-xs">${spinner.feel}</span>
         </div>`,
       )}
     </div>

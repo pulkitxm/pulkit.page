@@ -4,11 +4,6 @@ import { buttonClass, html, refs } from "../runtime/ui.js";
 const BALL_SIZE = 48;
 const transition = { damping: 20, mass: 1, stiffness: 200, type: "spring" };
 
-function mountsBehindCodePanel(root) {
-  const frame = JSON.parse(root.getRootNode().host?.dataset.frame ?? "{}");
-  return (frame.focusCode ?? true) && window.innerWidth < 1024;
-}
-
 export function mount(root) {
   root.innerHTML = html`<div class="flex h-full w-full flex-col items-center justify-center gap-4 p-6">
     <button
@@ -25,18 +20,31 @@ export function mount(root) {
         class="absolute rounded-full bg-orange-500 shadow-lg"
         style="height: ${BALL_SIZE}px; left: 0px; top: 0px; width: ${BALL_SIZE}px"
       ></div>
-      <span class="absolute bottom-3 left-1/2 -translate-x-1/2 text-neutral-400 text-xs">Click anywhere to move</span>
+      <span class="absolute bottom-3 left-1/2 -translate-x-1/2 text-neutral-500 dark:text-neutral-400 text-xs">Click anywhere to move</span>
     </button>
     <p class="max-w-sm text-center text-neutral-600 text-xs dark:text-neutral-300">Click rapidly. The ball preserves its velocity when redirected, no abrupt stops or restarts.</p>
   </div>`;
   const { container, ball } = refs(root);
 
-  const hidden = mountsBehindCodePanel(root);
-  const width = hidden ? 0 : container.offsetWidth;
-  const height = hidden ? 0 : container.offsetHeight;
-  animate(ball, { x: width / 2 - BALL_SIZE / 2, y: height / 2 - BALL_SIZE / 2 }, { duration: 0 });
+  let moved = false;
+  const center = () => {
+    if (moved || container.offsetWidth === 0) {
+      return;
+    }
+    animate(
+      ball,
+      {
+        x: container.clientWidth / 2 - BALL_SIZE / 2,
+        y: container.clientHeight / 2 - BALL_SIZE / 2,
+      },
+      { duration: 0 },
+    );
+  };
+  new ResizeObserver(center).observe(container);
+  center();
 
   container.addEventListener("click", (event) => {
+    moved = true;
     const rect = container.getBoundingClientRect();
     animate(
       ball,

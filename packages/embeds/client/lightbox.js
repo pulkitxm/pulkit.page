@@ -1,10 +1,26 @@
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 
+function styleReady() {
+  const link = document.querySelector("[data-lightbox-style]");
+  if (!link) {
+    return Promise.resolve();
+  }
+  link.media = "all";
+  if (link.sheet) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    link.addEventListener("load", resolve, { once: true });
+    link.addEventListener("error", resolve, { once: true });
+  });
+}
+
 function setupLightbox() {
   const links = [...document.querySelectorAll("[data-media-zoom]")];
   if (links.length === 0) {
     return;
   }
+  const ready = styleReady();
   const dataSource = links.map((link) => ({
     src: link.getAttribute("href"),
     msrc: link.getAttribute("href"),
@@ -33,7 +49,7 @@ function setupLightbox() {
         return;
       }
       event.preventDefault();
-      lightbox.loadAndOpen(index);
+      ready.then(() => lightbox.loadAndOpen(index));
     });
   });
 }

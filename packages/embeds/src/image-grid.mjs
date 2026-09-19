@@ -1,5 +1,5 @@
 import { renderCarousel } from "./blog-gallery.mjs";
-import { mediaScript, mediaStyle, zoomLink } from "./blog-image.mjs";
+import { loadingAttributes, mediaScript, mediaStyle, zoomLink } from "./blog-image.mjs";
 import { lightboxScript, localImageSize } from "./lightbox.mjs";
 
 const gridColumns = {
@@ -24,13 +24,14 @@ export function render({ images, columns = 2, label = "Image carousel" }, contex
   assets.style(mediaStyle);
   assets.script(lightboxScript);
   assets.script(mediaScript);
+  const leading = assets.claim("gallery-lcp");
   const items = resolved
     .map((image, index) =>
       zoomLink(
         {
           ...image,
           className: "mx-auto block w-full max-w-[48rem]",
-          image: `<img src="${escapeHtml(image.src)}" alt="Image ${index + 1}" width="${image.width}" height="${image.height}" class="mx-auto block h-auto w-full max-w-[48rem] cursor-zoom-in rounded-lg" loading="lazy" decoding="async">`,
+          image: `<img src="${escapeHtml(image.src)}" alt="Image ${index + 1}" width="${image.width}" height="${image.height}" class="mx-auto block h-auto w-full max-w-[48rem] cursor-zoom-in rounded-lg"${loadingAttributes(index === 0 && leading)} decoding="async">`,
         },
         escapeHtml,
       ),

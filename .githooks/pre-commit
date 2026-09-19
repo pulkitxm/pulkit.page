@@ -6,7 +6,7 @@ if ! command -v bun >/dev/null 2>&1 || [ ! -d node_modules ]; then
   printf '%s\n' 'Pre-commit requires Bun and dependencies. Run bun install first.' >&2
   exit 1
 fi
-snapshot=$(mktemp -d "${TMPDIR:-/tmp}/pulkit-page-pre-commit.XXXXXX")
+snapshot=$(mktemp -d "${TMPDIR:-/tmp}/pulkit-pre-commit.XXXXXX")
 trap 'rm -rf "$snapshot"' EXIT
 trap 'exit 1' HUP INT TERM
 git checkout-index --all --prefix="$snapshot/"
@@ -15,7 +15,9 @@ git checkout-index --all --prefix="$snapshot/"
   cd "$snapshot"
   git init --quiet
   git add --all
-  ln -s "$root/node_modules" node_modules
+  if [ -f bun.lock ]; then
+    bun install --frozen-lockfile --ignore-scripts >/dev/null
+  fi
   printf '%s\n' 'Checking the staged snapshot...'
-  bun run ci
+  TURBO_CACHE_DIR="$root/.turbo/cache" bun run ci
 )

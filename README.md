@@ -12,14 +12,14 @@ For a detailed walkthrough, start with the [documentation index](docs/index.md).
 
 ```text
 apps/
-  page/               @pulkit/page: the pulkit.page portfolio (content, layouts, assets, styles.css, CNAME)
-  blog/               @pulkit/blog: the pulkit.blog writing (content, layouts, assets, styles.css, CNAME)
+  page/               @pulkit/page: the pulkit.page portfolio (content, assets, styles.css, CNAME)
+  blog/               @pulkit/blog: the pulkit.blog writing (content, assets, styles.css, CNAME)
 packages/
   engine/             @pulkit/engine: the static site generator and its `site` CLI
   code/               @pulkit/code: build-time syntax highlighting and Biome formatting
   embeds/             @pulkit/embeds: Markdown embed renderers and their browser scripts
   demos/              @pulkit/demos: interactive motion demos rendered by `:::demo`
-  theme/              @pulkit/theme: shared Tailwind base, theme script, fonts, and icons
+  theme/              @pulkit/theme: shared stylesheet, layouts, assets, and theme script
   profile/            @pulkit/profile: shared author name, profile URL, site domains, and social links
 tooling/
   checks/             @pulkit/checks: repository-wide content, comment, text, and import gates

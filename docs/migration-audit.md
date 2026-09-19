@@ -18,7 +18,7 @@ For example, `blogs/system-design/caching.mdx` was imported as `content/blogs/sy
 
 The inventory includes 73 `DemoShowcase` wrappers, eight `ImageGrid` instances, six `EasingCurveDemo` instances, 14 `Math` instances, and numerous HTML tags such as `br`. These counts record encountered elements, not how many live widgets survive. Parent wrappers and nested demonstrations are counted separately because conversion traverses their children.
 
-The audit omits the separately supplied résumé PDF, the fonts now kept in `packages/theme/fonts/`, and media added when the experience write-ups were restored. It is therefore unsuitable as an exhaustive current asset manifest. Build copies each app's entire `assets/` tree without consulting it. The generated social cards are rendered into each app's `dist/og/` by the build, outside this copied-source inventory.
+The audit omits the separately supplied résumé PDF, the fonts now kept in `packages/theme/assets/fonts/`, and media added when the experience write-ups were restored. It is therefore unsuitable as an exhaustive current asset manifest. Build copies each app's entire `assets/` tree without consulting it. The generated social cards are rendered into each app's `dist/og/` by the build, outside this copied-source inventory.
 
 ## Who reads it
 

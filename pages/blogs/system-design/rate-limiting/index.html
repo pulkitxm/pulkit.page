@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Learn how rate limiters protect your systems from being overwhelmed. Understand where to place them, why Redis is the go-to database, five popular algorithms, and how to scale with sharding. Includes the practical insight of building rate limiters as libraries instead of services."

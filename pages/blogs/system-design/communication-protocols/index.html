@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Understand how clients and servers communicate over the network. TCP fundamentals, HTTP, WebSockets, Server-Sent Events, and API paradigms like REST, GraphQL, gRPC, and tRPC."

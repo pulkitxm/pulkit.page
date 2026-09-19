@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta name="description" content="The hardware and software in my everyday setup." />
     <link rel="canonical" href="https://pulkit.page/gears/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />

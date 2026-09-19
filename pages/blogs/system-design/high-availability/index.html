@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery."

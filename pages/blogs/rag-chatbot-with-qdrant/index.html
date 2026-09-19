@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Learn how to build an intelligent chatbot using Retrieval-Augmented Generation (RAG) with Qdrant vector database, OpenAI embeddings, and Next.js. A complete guide to creating context-aware AI assistants."

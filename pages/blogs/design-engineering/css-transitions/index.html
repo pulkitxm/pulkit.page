@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="CSS transitions interpolate between UI states so changes feel intentional. Learn the four transition properties, why to avoid &#39;all&#39;, when transitions beat keyframes, and how to keep hover effects off touch devices."

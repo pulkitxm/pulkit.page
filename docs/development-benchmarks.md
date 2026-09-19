@@ -1,6 +1,6 @@
 # Development benchmarks
 
-Vite 8.3.0 serves Markdown pages and social cards when requested. Production still verifies and assembles every page for static deployment. Bun remains the runtime and package-script launcher.
+Vite 8.3.0 serves Markdown pages and social cards when requested. Production builds still render every page into `dist/` for static deployment. Bun remains the runtime and package-script launcher.
 
 ## Method
 

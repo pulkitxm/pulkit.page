@@ -6,30 +6,32 @@
 
 [resolveSiteOrigin](../scripts/site-origin.mjs) supplies the origin used by canonical URLs, JSON-LD entity IDs, social-image URLs, sitemap locations, robots, and card hostname branding. `_site.md` does not allow a `url` field, preventing a second production-domain configuration source.
 
-| Environment                           | Origin without override                                 | Default generation output |
-| ------------------------------------- | ------------------------------------------------------- | ------------------------- |
-| Unset or production                   | HTTPS plus root CNAME (`https://pulkit.page` currently) | `pages/`                  |
-| Development                           | `http://127.0.0.1:<PORT>`, default 3000                 | `dist/`                   |
-| Other NODE\_ENV                       | Fails unless SITE\_URL is supplied                      | `dist/`                   |
-| Explicit SITE\_URL in any environment | Validated override                                      | `dist/`                   |
+| Environment                           | Origin without override                                 |
+| ------------------------------------- | ------------------------------------------------------- |
+| Unset or production                   | HTTPS plus root CNAME (`https://pulkit.page` currently) |
+| Development                           | `http://127.0.0.1:<PORT>`, default 3000                 |
+| Other NODE\_ENV                       | Fails unless SITE\_URL is supplied                      |
+| Explicit SITE\_URL in any environment | Validated override                                      |
 
-SITE\_URL must be an absolute HTTP(S) origin without credentials, non-root path, query, or fragment. Trailing slash is normalized. CNAME must be one hostname matching the local validation pattern. SITE\_OUTPUT\_DIR allows `pages`, `dist`, or lowercase kebab-case nested directories under dist; it rejects traversal and arbitrary paths. Explicit SITE\_URL or nonproduction NODE\_ENV cannot target pages. Production with no override can explicitly target dist.
+Every build writes to `dist/`.
+
+SITE\_URL must be an absolute HTTP(S) origin without credentials, non-root path, query, or fragment. Trailing slash is normalized. CNAME must be one hostname matching the local validation pattern.
 
 ```sh
-bun run generate
+bun run build
 NODE_ENV=staging SITE_URL=https://preview.example.com bun run build
 NODE_ENV=staging SITE_URL=https://preview.example.com bun run check:seo
 ```
 
-Use matching environment variables for build and SEO validation. `check:seo` reads dist and resolves the current environment again; it does not infer the build origin from generated files. `check:generated` honors the caller's environment, while build explicitly forces its prerequisite sync to production. No environment-specific output should be committed under pages.
+Use matching environment variables for build and SEO validation. `check:seo` reads dist and resolves the current environment again; it does not infer the build origin from generated files. Production builds copy CNAME into dist; custom-origin builds omit it. No build output is committed.
 
 ## Development preview and port selection
 
 [dev.mjs](../scripts/dev.mjs) runs Vite on loopback. It prefers port 3000 and tries higher ports when busy. An occupied explicit PORT fails; `PORT=0` requests an available port. The actual bound origin supplies development canonicals, social metadata, sitemap, and robots.
 
-[dev-renderer.mjs](../scripts/dev-renderer.mjs) discovers Markdown metadata lazily and renders only requested HTML and social cards. It never writes development HTML into dist or committed pages. Content and layout changes invalidate the inventory and trigger browser reloads. Dependency keys preserve unaffected pages and fences. Source CSS uses Vite hot replacement; other served assets use Vite's file watching. Bun watches imported server modules and restarts the server when they change. Configuration and font changes invalidate cached work.
+[dev-renderer.mjs](../scripts/dev-renderer.mjs) discovers Markdown metadata lazily and renders only requested HTML and social cards. It never writes development HTML into dist. Content and layout changes invalidate the inventory and trigger browser reloads. Dependency keys preserve unaffected pages and fences. Source CSS uses Vite hot replacement; other served assets use Vite's file watching. Bun watches imported server modules and restarts the server when they change. Configuration and font changes invalidate cached work.
 
-Standalone generation with development PORT=0 still needs SITE\_URL because no listening server exists to resolve an origin. Production assembly verifies the full production snapshot; preview builds render their selected origin. Full static builds remain independent of the request-time dev server.
+A build with development PORT=0 still needs SITE\_URL because no listening server exists to resolve an origin. Production and preview builds both render their selected origin. Full static builds remain independent of the request-time dev server.
 
 ## Page metadata and graphs
 

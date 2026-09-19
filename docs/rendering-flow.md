@@ -13,30 +13,28 @@ flowchart TD
   C --> D[Biome-stable HTML]
   B --> E[PNG cards, sitemap, robots]
   O --> E
-  D --> F[Production pages or isolated dist output]
+  D --> F[Rendered output in dist]
   E --> F
-  F --> G[Exact byte sync check]
-  G --> H[Copy production snapshot or render preview in dist]
-  H --> I[Copy shared assets and theme script, compile Tailwind CSS]
+  F --> I[Copy shared assets and theme script, compile Tailwind CSS]
   I --> J[Site and SEO validation]
   J --> K[GitHub Pages artifact]
 ```
 
-These are related operations rather than a single implicit pipeline. Default generation writes committed production output; check mode recomputes expected output without writing; development writes a separate directory. Build verifies committed production output first, then copies that snapshot into dist for the production origin. Other environments render their own output into dist.
+Build runs this path for the production origin or a preview origin and writes everything into `dist/`; nothing generated is committed. Development renders the same pages on request instead of writing a full build.
 
 ## Discovery and routes
 
-[generate.mjs](../scripts/generate.mjs) resolves the output directory, walks `content/`, rejects symlinks and MDX, and selects Markdown files except `_site.md`. `readPage` parses YAML/body; `_site.md` supplies shared metadata, augmented with an origin from [site-origin.mjs](../scripts/site-origin.mjs). Origin is not a frontmatter field.
+[site-inventory.mjs](../scripts/site-inventory.mjs) walks `content/`, rejects symlinks and MDX, and selects Markdown files except `_site.md`. `readPage` parses YAML/body; `_site.md` supplies shared metadata, augmented with an origin from [site-origin.mjs](../scripts/site-origin.mjs). Origin is not a frontmatter field.
 
-| Source                                   | Default production output                      | Route                           |
-| ---------------------------------------- | ---------------------------------------------- | ------------------------------- |
-| `content/home.md`                        | `pages/index.html`                             | `/`                             |
-| `content/about.md`                       | `pages/about/index.html`                       | `/about/`                       |
-| `content/blogs/index.md`                 | `pages/blogs/index.html`                       | `/blogs/`                       |
-| `content/blogs/system-design/caching.md` | `pages/blogs/system-design/caching/index.html` | `/blogs/system-design/caching/` |
-| `content/blogs/system-design/index.md`   | `pages/blogs/system-design/index.html`         | `/blogs/system-design/`         |
+| Source                                   | Build output                                  | Route                           |
+| ---------------------------------------- | --------------------------------------------- | ------------------------------- |
+| `content/home.md`                        | `dist/index.html`                             | `/`                             |
+| `content/about.md`                       | `dist/about/index.html`                       | `/about/`                       |
+| `content/blogs/index.md`                 | `dist/blogs/index.html`                       | `/blogs/`                       |
+| `content/blogs/system-design/caching.md` | `dist/blogs/system-design/caching/index.html` | `/blogs/system-design/caching/` |
+| `content/blogs/system-design/index.md`   | `dist/blogs/system-design/index.html`         | `/blogs/system-design/`         |
 
-`outputFor` also understands `content/index.md`, but strict authoring forbids it. Output paths are normalized to NFC and lowercase to reject collisions. A root output is required. Each discovered page carries source, metadata, body, route, and an index flag based on `/index.md`. Discovery finishes before rendering, so lists, breadcrumbs, related links, schema, and sitemap share the same page inventory.
+Discovery also understands `content/index.md`, but strict authoring forbids it. Routes are normalized to NFC and lowercase to reject collisions, and root `dev-<port>` routes are reserved for development output. A root page is required. Each discovered page carries source, metadata, body, route, and an index flag based on `/index.md`. Discovery finishes before rendering, so lists, breadcrumbs, related links, schema, and sitemap share the same page inventory.
 
 ## Markdown and collection rendering
 
@@ -58,30 +56,26 @@ The full document title is `page title | brand`; there is no previous 55-charact
 
 Ordinary Markdown links use Marked's default link renderer; strict content checking is therefore part of the safety boundary. `safeUrl` is specifically applied to images, collection links, navigation, and social URLs. JSON-LD uses a separate escaping function to keep data from terminating its script element.
 
-## Formatting, generated assets, and synchronization
+## Formatting and generated assets
 
-[formatHtml](../scripts/format-html.mjs) invokes the installed Biome CLI on stdin with HTML filename and repository configuration, VCS disabled. It repeats until output is unchanged, with a five-pass limit, stopping immediately at convergence. A single pass does not produce stable HTML for the current templates, so the convergence guard is retained. Check marks use numeric HTML references to avoid a pinned Biome Unicode substitution. Failure to converge throws. The generator renders all expected HTML before writes, then [seoOutputs](../scripts/og-images.mjs) computes cards/sitemap/robots into buffers. Rendering failures occur before output mutation.
+[formatHtml](../scripts/format-html.mjs) invokes the installed Biome CLI on stdin with HTML filename and repository configuration, VCS disabled. It repeats until output is unchanged, with a five-pass limit, stopping immediately at convergence. A single pass does not produce stable HTML for the current templates, so the convergence guard is retained. Check marks use numeric HTML references to avoid a pinned Biome Unicode substitution. Failure to converge throws. [generate.mjs](../scripts/generate.mjs) renders all expected HTML, then [seoOutputs](../scripts/og-images.mjs) computes cards/sitemap/robots into buffers, and only then writes files. Rendering failures occur before any page is written.
 
-The selected output directory is owned entirely by generation. Any non-HTML file not in expected SEO assets is an extra, regardless of extension. In check mode, missing/stale generated assets are compared as buffers and HTML as exact strings. All PNGs are recomputed for a read-only sync check. Normal generation reuses verified cache entries for HTML, fences, and cards. Changes to titles, dates, tags, brand, origin, card font, or layouts can affect several outputs.
-
-Default production inventories HTML across the repository, excluding the root `.git`, `node_modules`, `extras`, `dist`, and `layouts` directories. Nested similarly named folders under pages are not excluded. For environment-specific output, HTML inventory is limited to that selected directory.
-
-Normal generation compares bytes and writes only changed or missing expected output but does not delete extras and ultimately fails if extras exist. `--clean` removes extra non-HTML output and orphan HTML within the selected output directory; empty HTML parent directories are pruned. Legacy HTML outside production pages still fails and must be reviewed manually. It is not an atomic filesystem transaction: extra-file failures occur after some writes, and I/O errors can interrupt progress.
+Rendering reuses verified cache entries for HTML, fences, and cards. Changes to titles, dates, tags, brand, origin, card font, or layouts can affect several outputs. Because build clears `dist/` first, removed or renamed pages leave no stale output behind. A failed build can leave `dist/` partially written; rerun the build after fixing the error.
 
 ## Build and publication
 
-[build.mjs](../scripts/build.mjs) resolves the requested environment origin, then runs sync with production forced: `NODE_ENV=production`, empty `SITE_URL`, and `SITE_OUTPUT_DIR=pages`. Thus preview builds cannot bypass a stale production snapshot. After success it clears the deployment root while preserving reserved `dist/dev-<port>/` directories. In a production/default environment with the production origin, it copies verified `pages/` into `dist/`, including when SITE\_URL explicitly names that origin. Other environments invoke generation with `SITE_OUTPUT_DIR=dist`. Both paths copy source assets, theme JS, and `.nojekyll`, then the Tailwind CLI compiles `styles.css` into minified `dist/styles.css`. Only the production assembly includes CNAME.
+[build.mjs](../scripts/build.mjs) resolves the requested environment origin, clears the deployment root while preserving reserved `dist/dev-<port>/` directories, and calls `generateSite("dist", origin)` to render every page, card, sitemap, and robots file. It then copies source assets, theme JS, and `.nojekyll`, builds demo and embed assets, and the Tailwind CLI compiles `styles.css` into minified `dist/styles.css`; the stylesheet and theme script are fingerprinted. Only a production build with the production origin includes CNAME, including when SITE\_URL explicitly names that origin.
 
-No minification, browser bundling, source-image optimization, redirects, RSS/Atom feed, or search service is generated. SEO assets are generated, not copied from production for a preview. In default production, assembled dist output matches committed page output byte for byte; custom-origin output intentionally differs in canonicals, cards, schema, and crawler files.
+No minification, browser bundling, source-image optimization, redirects, RSS/Atom feed, or search service is generated. SEO assets are rendered for the selected origin; custom-origin output intentionally differs from production in canonicals, cards, schema, and crawler files.
 
 The [GitHub workflow](../.github/workflows/ci.yml) runs quality and workflow-analysis jobs, then the CI gate. Main push or main manual dispatch uploads dist and deploys it to Pages after the gate. Pull requests and merge groups validate without deployment. Local CI rebuilds ignored dist but does not deploy. Live DNS, GitHub settings, and remote health require separate verification.
 
 ## Incremental development and caches
 
-Vite serves HTML and social cards on demand using the same validated inventory, templates, renderer, and SEO helpers as production generation. Discovery and metadata parsing cover the source tree, but only requested pages are rendered. Keys include route, source text, expanded layouts, shared metadata, and actual SEO, breadcrumb, related-navigation, and listing inputs. Body edits invalidate their page; metadata changes also invalidate affected listings and navigation. Route additions and deletions update inventory and crawler responses.
+Vite serves HTML and social cards on demand using the same validated inventory, templates, renderer, and SEO helpers as the build. Discovery and metadata parsing cover the source tree, but only requested pages are rendered. Keys include route, source text, expanded layouts, shared metadata, and actual SEO, breadcrumb, related-navigation, and listing inputs. Body edits invalidate their page; metadata changes also invalidate affected listings and navigation. Route additions and deletions update inventory and crawler responses.
 
 `.cache/generate/` stores disposable, checksummed entries isolated by absolute output identity, including the development port. HTML, code fences, and cards persist across restarts. Script contents, Biome configuration, dependency lockfile, and the bundled card font invalidate the cache conservatively. Up to 4,096 prior entries are retained when loading. Missing or corrupt entries recompute. Failed asynchronous renders are removed from pending work so subsequent requests can retry.
 
-`--check` never reads or writes the persistent cache and remains the full source-of-truth comparison. Default generation retains extra-file diagnostics; `--clean` renders every HTML page and removes orphan output. Production builds still verify all pages because the deployment is static.
+Builds use the same cache, so a rebuild re-renders only what changed. Every build still writes all pages because the deployment is static. Delete `.cache/generate/` to force a cold render.
 
 Shiki is shared within the development process and loads requested languages. Bun watches imported server code for restarts. Vite injects its development client for browser reloads, and the Tailwind Vite plugin compiles `styles.css` with CSS hot replacement; production output has no Vite client. Biome convergence remains checked. See [development benchmarks](development-benchmarks.md) for measurements and limitations.

@@ -1,7 +1,7 @@
 # pulkit.page
 
-A small, static portfolio. Edit Markdown in `content/`; HTML is generated into
-`pages/`. The site uses Tailwind CSS compiled at build time and a small theme toggle,
+A small, static portfolio. Edit Markdown in `content/`; `bun run build` renders
+HTML into `dist/`. The site uses Tailwind CSS compiled at build time and a small theme toggle,
 without a client framework.
 
 For a detailed walkthrough, start with the [documentation index](docs/index.md).
@@ -38,12 +38,11 @@ notice. Successful CSS, script, and internal requests stay quiet; failures remai
 ```sh
 bun install
 bun run format
-bun run generate
 bun run ci
 ```
 
-`bun install` installs the pre-commit hook. Edit a page, format, regenerate, and
-stage both its Markdown and generated HTML. Shared navigation and footer links
+`bun install` installs the pre-commit hook. Edit a page, format, and commit its
+Markdown. Generated HTML is never committed. Shared navigation and footer links
 live in `content/_site.md`. This configuration file does not generate a page.
 
 A page needs a title, description, and ordinary Markdown:
@@ -74,13 +73,13 @@ Lists are automatic, including nested articles, ordered newest first:
 
 Omit `limit` to include every entry. Collection index pages are excluded from lists.
 The title, date, and period come from each page's metadata, so adding an article
-updates its archive and the homepage when regenerated.
+updates its archive and the homepage on the next render.
 
 ## Routes and layouts
 
-- `content/home.md` → `pages/index.html` → `/`
-- `content/about.md` → `pages/about/index.html` → `/about/`
-- `content/blogs/index.md` → `pages/blogs/index.html` → `/blogs/`
+- `content/home.md` → `dist/index.html` → `/`
+- `content/about.md` → `dist/about/index.html` → `/about/`
+- `content/blogs/index.md` → `dist/blogs/index.html` → `/blogs/`
 - `content/blogs/system-design/caching.md` → `/blogs/system-design/caching/`
 
 The homepage uses `home`; blog detail pages default to `article`; other pages
@@ -90,39 +89,31 @@ layout never adds content. Markup uses Tailwind utility classes; `styles.css` ho
 theme tokens, the dark palette, and view transitions. The renderer adds utility classes to
 every Markdown element. Theme behavior lives in `theme.js`.
 
-## Sync and CI
+## Build and CI
 
 ```sh
-bun run generate
-bun run check:generated
-bun run generate --clean
+bun run build
+bun run check:html
 bun run ci
 ```
 
-The shell entry points are `scripts/generate.sh` and `scripts/check-sync.sh`.
-They invoke the same renderer and inventory, avoiding two competing definitions
-of the site. All sources and templates are rendered successfully before output
-is changed. Shared metadata and layout edits participate in the exact-byte check.
-Conflicting routes, symlinks, malformed metadata, and unsupported MDX fail.
+The build and the development server share one renderer and inventory, avoiding
+two competing definitions of the site. Conflicting routes, symlinks, malformed
+metadata, and unsupported MDX fail. Nothing generated is committed.
 
-Extra HTML is checked across the repository, including root and nested legacy
-pages, case-insensitively. Only `.git/`, `node_modules/`, `extras/`, `dist/`, and
-`layouts/` are excluded; templates are validated separately. In default production mode, `--clean`
-removes orphan HTML and extra generated assets under `pages/`, and prunes empty
-HTML parent directories. Environment-specific generation cleans its selected output directory. It never removes
-legacy HTML elsewhere. Normal generation and sync checks do not delete files.
+The pre-commit hook runs CI on a temporary copy of the **staged index**, checking
+exactly what will be committed without changing your worktree or index.
+GitHub Actions runs the same checks: strict Biome, formatting, repository checks,
+renderer tests, build, HTML validation of `dist/`, local links, and shell syntax.
 
-The pre-commit hook runs CI on a temporary copy of the **staged index**, catching
-partially staged Markdown/HTML mismatches without changing your worktree or index.
-GitHub Actions runs the same checks: strict Biome, HTML validation, formatting,
-repository checks, renderer/sync tests, build, local links, and shell syntax.
-
-`bun run build` first requires production sync, then renders `dist/` for the selected
+`bun run build` clears `dist/` (keeping development `dist/dev-*` directories), renders
+every Markdown page, the sitemap, robots file, and social cards for the selected
 environment, copies shared assets, and compiles `styles.css` with the Tailwind CLI into a
 minified stylesheet that contains only the utilities used by layouts and the renderer.
 The stylesheet and `theme.js` get content-hashed names such as `styles.<hash>.css`, and
 every built page points at them, so CDN caches never pair new HTML with stale assets.
-GitHub Pages deploys `dist/`. Markdown, templates, and reference files are not
+The checksummed render cache in `.cache/generate/` lets rebuilds re-render only
+what changed. GitHub Pages deploys `dist/`. Markdown, templates, and reference files are not
 published. Source files are capped at 2 MiB; migrated media at 5 MiB.
 
 ```sh
@@ -147,7 +138,7 @@ bun serve:clean
 The `:clean` variants first remove `dist/`, `.cache/`, `node_modules/.vite/`, and
 `node_modules/.vite-temp/` completely, then run their normal command. This includes
 all development outputs and persistent renderer and Vite caches. `bun clean` performs
-only the cleanup. Source files, committed `pages/`, and installed packages are kept.
+only the cleanup. Source files and installed packages are kept.
 
 ## Migration
 
@@ -155,7 +146,7 @@ The articles and experience content come from `extras/pulkitxm.com`. Every refer
 MDX file has a corresponding Markdown file; `docs/content-migration.json` records
 the source mapping, code-block counts, copied assets, and converted components.
 
-`scripts/import-reference.mjs` is a one-time importer, not part of generation or
+`scripts/import-reference.mjs` is a one-time importer, not part of the build or
 CI. It parses MDX as an AST, preserves fenced code, and refuses to overwrite
 existing Markdown. Complex widgets become standard images, quotes, or links.
 Interactive examples and embedded videos link to their original pages; they are
@@ -164,7 +155,7 @@ screenshots, and document links. Landing, About, Contact, résumé, tools, and s
 deliberately short. Backend features such as the guestbook
 are outside this static portfolio.
 
-The ignored reference directory is unnecessary for normal editing, generation,
+The ignored reference directory is unnecessary for normal editing, builds,
 checks, and deployment. Edit the migrated Markdown going forward.
 
 ## Strict quality rules
@@ -173,8 +164,8 @@ Biome is the only code and HTML formatter. Prettier is not installed. The pinned
 Biome version does not support Markdown or YAML, so `scripts/check-content.mjs`
 uses the existing Remark/YAML parsers for strict validation and deterministic
 formatting. Fenced example code is preserved byte-for-byte, not reformatted as
-repository JavaScript. Generation formats HTML with Biome until its experimental
-HTML formatter reaches a stable result; failure to stabilize aborts generation.
+repository JavaScript. Rendering formats HTML with Biome until its experimental
+HTML formatter reaches a stable result; failure to stabilize aborts the build.
 
 - Code: all accessibility, security, and correctness rules, plus explicit strict
   style rules. Warnings fail. Unused variables/imports, explicit `any`, `var`,
@@ -198,7 +189,7 @@ HTML formatter reaches a stable result; failure to stabilize aborts generation.
   metadata, and YAML. Checks never write. Only `bun run format` fixes formatting;
   invalid metadata is reported without being silently rewritten.
 - Repository: no symlinks, temporary/merge artifacts, case-colliding paths,
-  oversized files, or generated HTML without a Markdown source.
+  oversized files, or tracked build output.
 
 There are explicit environment exceptions: CLI scripts may log and import Node
 modules; only CLI scripts know the Bun global. The Qwik-only lexical-scope rule
@@ -208,7 +199,6 @@ uses the runtime resolver to verify static imports instead. Comment-based suppre
 
 ```sh
 bun run format
-bun run generate
 bun run check:content
 bun run lint
 bun run ci
@@ -221,7 +211,7 @@ CI and the staged-snapshot pre-commit hook run these same checks. Adding a new
 
 All tracked text files, plus nonignored new files, must contain no literal em dash
 characters. Source-code comments are rejected except in article examples under
-`content/blogs/` and their rendered code under `pages/blogs/`. Preserve those
+`content/blogs/`. Preserve those
 examples and their explanatory comments. Other Markdown examples and embedded
 scripts/styles in HTML are checked. Shebangs are executable interpreter
 metadata, so only a shebang at the start of a source is accepted. Comment-based
@@ -245,32 +235,29 @@ The same commands run in the staged-snapshot pre-commit hook. Read
 
 ## SEO and social cards
 
-The root `CNAME` is the single source of the production hostname. Generation uses
+The root `CNAME` is the single source of the production hostname. The build uses
 HTTPS with that hostname; the current file contains `pulkit.page`. Change
 `CNAME` when changing the production domain. No domain is duplicated in Markdown.
 
 `bun run dev` uses Vite with request-time Markdown rendering and the actual server origin.
 HTML, social cards, sitemap, and robots are served on demand without writing development
-files into `dist/`. Committed `pages/` stays untouched. Checksummed render caches live
-in `.cache/generate/`. Content and template edits invalidate dependencies and reload
+files into `dist/`. Checksummed render caches live in `.cache/generate/`. Content and template edits invalidate dependencies and reload
 the browser. Bun watches imported server code and restarts it after changes.
 See [development benchmarks](docs/development-benchmarks.md) for timings and reproduction.
 
-`bun run generate` defaults to production and writes committed `pages/`.
-`bun run build` verifies that production output is synchronized, then renders the
-selected environment into `dist/` and copies shared assets. For another deployment:
+`bun run build` defaults to production, then renders the selected environment into
+`dist/` and copies shared assets. For another deployment:
 
 ```sh
 NODE_ENV=staging SITE_URL=https://preview.example.com bun run build
 NODE_ENV=staging SITE_URL=https://preview.example.com bun run check:seo
 ```
 
-`SITE_URL` overrides the origin for builds and standalone generation. It must be
+`SITE_URL` overrides the origin for builds. It must be
 an absolute HTTP(S) origin without credentials, a path, query, or fragment. A
-trailing slash is normalized. `NODE_ENV=development` standalone generation uses
+trailing slash is normalized. `NODE_ENV=development` builds use
 `http://127.0.0.1:<PORT>` (3000 by default); other nonproduction environments require
-`SITE_URL`. Environment-specific generation defaults to `dist/` and cannot write
-`pages/`. Production builds include `CNAME`; custom-origin builds omit it so previews
+`SITE_URL`. Production builds include `CNAME`; custom-origin builds omit it so previews
 do not claim the production custom domain. Sitemap, robots, canonical URLs, social
 metadata, JSON-LD and card branding all use the same resolved origin.
 
@@ -291,16 +278,15 @@ archives; related writing selects up to three articles by shared tags and series
 Historical code examples remain unchanged. Links to external interactive demos
 remain external because this static site does not reproduce those interactions.
 
-Generation also writes `pages/sitemap.xml`, `pages/robots.txt`, and one 1200×630 PNG
-per page under `pages/og/`. `scripts/og-images.mjs` renders cards using pinned resvg
+The build also writes `dist/sitemap.xml`, `dist/robots.txt`, and one 1200×630 PNG
+per page under `dist/og/`. `scripts/og-images.mjs` renders cards using pinned resvg
 and the bundled, licensed IBM Plex Mono TTF, with system fonts disabled. Titles,
 category, brand, production hostname and existing dates/periods derive from content.
 The current monochrome card design is provisional: the requested `pulkitdixon.com`
 reference could not be located locally and must be supplied before matching it.
 
-Stage these generated assets with the HTML. Sync compares PNG bytes and crawler
-files, detecting missing, stale and extra assets. `--clean` removes orphan generated
-assets inside the selected output directory, normally `pages/`. Build renders them into `dist/`; development renders requested assets on demand. `check:seo` validates every built page's metadata, JSON-LD, canonical
+These assets are build output and are never committed; development renders
+requested assets on demand. `check:seo` validates every built page's metadata, JSON-LD, canonical
 links, PNG dimensions and exact sitemap coverage. CI and staged-snapshot hooks
 include this check automatically. New source metadata must still pass strict schema
 validation; no hand edits to generated files are needed.

@@ -4,7 +4,7 @@
 
 ## What the JSON records
 
-[content-migration.json](content-migration.json) is a historical migration audit. It records the conversion of the old site's MDX into ordinary Markdown. It is not a runtime manifest, route registry, asset bundler input, or current synchronization source of truth.
+[content-migration.json](content-migration.json) is a historical migration audit. It records the conversion of the old site's MDX into ordinary Markdown. It is not a runtime manifest, route registry, asset bundler input, or current source of truth.
 
 | Field                 | Meaning                                                                                                   | Snapshot evidence                                                    |
 | --------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
@@ -18,13 +18,13 @@ For example, `blogs/system-design/caching.mdx` maps to [content/blogs/system-des
 
 The inventory includes 73 `DemoShowcase` wrappers, eight `ImageGrid` instances, six `EasingCurveDemo` instances, 14 `Math` instances, and numerous HTML tags such as `br`. These counts record encountered elements, not how many live widgets survive. Parent wrappers and nested demonstrations are counted separately because conversion traverses their children.
 
-All 197 listed assets exist in the current checkout. The current `assets/` tree contains 204 files: the audit omits the separately supplied résumé PDF and six font/license files, including the IBM Plex Mono TTF now used by social-card generation. It is therefore unsuitable as an exhaustive current asset manifest. Build copies the entire asset tree without consulting it. The 66 generated social cards live under `pages/og/`, outside this copied-source inventory.
+All 197 listed assets exist in the current checkout. The current `assets/` tree contains 204 files: the audit omits the separately supplied résumé PDF and six font/license files, including the IBM Plex Mono TTF now used by social-card generation. It is therefore unsuitable as an exhaustive current asset manifest. Build copies the entire asset tree without consulting it. The 66 generated social cards are rendered into `dist/og/` by the build, outside this copied-source inventory.
 
 ## Who creates it and who reads it
 
 The top-level execution of [scripts/import-reference.mjs](../scripts/import-reference.mjs) builds `report.pages`, `report.assets`, and `report.components`, then writes the JSON. Its manual package command is `bun run import:reference`; the ignored reference checkout must be present. Do not run it as an editing or refresh command.
 
-The importer is the only application code that references the audit path. Generation discovers files in `content/`; sync runs that generator; build verifies production output and renders the selected environment. CI invokes those scripts without reading audit fields. Generic JSON formatting, repository path/size checks, and text-policy checks inspect the audit as ordinary repository data, but never use its contents to select routes or verify migration completeness.
+The importer is the only application code that references the audit path. Build discovers files in `content/` and renders the selected environment into `dist/`. CI invokes those scripts without reading audit fields. Generic JSON formatting, repository path/size checks, and text-policy checks inspect the audit as ordinary repository data, but never use its contents to select routes or verify migration completeness.
 
 The current importer does not write `experienceTreatment`. That field is present in the committed audit at `c055301`; it describes the editorial state beyond the importer's report schema. Similarly, current experience pages contain required `period` metadata that the importer does not produce. The import is one historical phase, not a recipe for recreating today's entire tree.
 

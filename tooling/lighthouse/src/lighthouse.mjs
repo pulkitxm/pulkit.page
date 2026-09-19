@@ -1,5 +1,5 @@
 import { execFileSync, fork } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
@@ -37,7 +37,12 @@ if (!formFactors.every((formFactor) => formFactor === "mobile" || formFactor ===
   throw new Error("--form-factor must be mobile, desktop, or both");
 }
 process.chdir(fileURLToPath(new URL("../../../", import.meta.url)));
-const outputDirectory = values.output;
+const reportsDirectory = values.output;
+const runId = `${new Date()
+  .toISOString()
+  .replaceAll(":", "-")
+  .replace(/\.\d+Z$/, "Z")}-${values.prod ? "prod" : "local"}`;
+const outputDirectory = join(reportsDirectory, runId);
 const concurrency = Number(values.concurrency);
 if (!Number.isInteger(concurrency) || concurrency < 1) {
   throw new Error("--concurrency must be a positive integer");
@@ -71,6 +76,19 @@ function itemLabel(item) {
     item.label ??
     item.description;
   return typeof value === "string" ? value : undefined;
+}
+
+function detailLabels(details) {
+  const items = details?.items;
+  if (Array.isArray(items)) {
+    return items.map(itemLabel).filter(Boolean);
+  }
+  if (details?.type === "checklist" && items) {
+    return Object.values(items)
+      .filter((check) => check.value === false)
+      .map((check) => check.label);
+  }
+  return [];
 }
 
 function failingAudits(lhr, category) {
@@ -143,7 +161,7 @@ function pageReport(site, route, pageRuns) {
         lines.push(
           `- **${cell(failing.title)}** (score ${Math.round(failing.score * 100)})${detail}`,
         );
-        const items = (failing.details?.items ?? []).map(itemLabel).filter(Boolean);
+        const items = detailLabels(failing.details);
         for (const item of items.slice(0, 5)) {
           lines.push(`  - \`${cell(item).slice(0, 160).replaceAll("`", "'")}\``);
         }
@@ -195,10 +213,34 @@ function siteSummary(site, results) {
   return lines;
 }
 
+function runIndex() {
+  const entries = readdirSync(reportsDirectory, { withFileTypes: true })
+    .filter(
+      (entry) => entry.isDirectory() && existsSync(join(reportsDirectory, entry.name, "run.json")),
+    )
+    .map((entry) =>
+      JSON.parse(readFileSync(join(reportsDirectory, entry.name, "run.json"), "utf8")),
+    )
+    .toSorted((left, right) => right.id.localeCompare(left.id));
+  const lines = [
+    "# Lighthouse reports",
+    "",
+    "Newest first. Each run keeps its own folder.",
+    "",
+    "| Run | Sites | Pages | Form factors | Failed audits |",
+    "| --- | --- | --- | --- | --- |",
+    ...entries.map(
+      (entry) =>
+        `| [${entry.id}](${entry.id}/README.md) | ${entry.sites} | ${entry.pages} | ${entry.formFactors.join(", ")} | ${entry.failed} |`,
+    ),
+  ];
+  return `${lines.join("\n")}\n`;
+}
+
 function summaryReport(siteSections) {
   const commit = execFileSync("git", ["rev-parse", "--short", "HEAD"], { encoding: "utf8" }).trim();
   const lines = [
-    "# Lighthouse summary",
+    `# Lighthouse report ${runId}`,
     "",
     `Generated ${new Date().toISOString()} ${values.prod ? "against production" : "against local builds"} at commit \`${commit}\`. Scores below 90 are bold.`,
     "",
@@ -285,7 +327,9 @@ if (jobs.length === 0) {
 const total = jobs.length;
 const workers = Array.from({ length: Math.min(concurrency, total) }, startWorker);
 
-rmSync(outputDirectory, { recursive: true, force: true });
+if (existsSync(outputDirectory)) {
+  throw new Error(`Report ${runId} already exists; wait a second and run again`);
+}
 for (const site of sites) {
   mkdirSync(join(outputDirectory, "pages", site.domain), { recursive: true });
   mkdirSync(join(outputDirectory, "html", site.domain), { recursive: true });
@@ -333,7 +377,7 @@ try {
   await Promise.all(servers.map((server) => server.close()));
 }
 
-const sections = sites.map((site) => {
+const sections = sites.flatMap((site) => {
   const results = site.routes
     .filter((route) => runs.has(`${site.domain}${route}`))
     .sort()
@@ -349,9 +393,11 @@ const sections = sites.map((site) => {
       pageReport(site, route, pageRuns),
     );
   }
-  return { site, results };
+  return results.length === 0 ? [] : [{ site, results }];
 });
 writeFileSync(join(outputDirectory, "README.md"), summaryReport(sections));
+const pageCount = sections.reduce((sum, { results }) => sum + results.length, 0);
+const siteNames = sections.map(({ site }) => site.domain).join(" and ");
 const failed = sections.flatMap(({ site, results }) =>
   results.flatMap(({ route, runs: pageRuns }) =>
     pageRuns
@@ -368,6 +414,13 @@ for (const failure of failed) {
 if (failed.length > 0) {
   process.exitCode = 1;
 }
-console.log(
-  `Audited ${total / formFactors.length} pages across ${sites.map((site) => site.domain).join(" and ")} in ${Math.round((performance.now() - startedAt) / 1000)}s. Summary: ${join(outputDirectory, "README.md")}`,
+writeFileSync(
+  join(outputDirectory, "run.json"),
+  `${JSON.stringify({ id: runId, sites: siteNames, pages: pageCount, formFactors, failed: failed.length }, null, 2)}\n`,
 );
+writeFileSync(join(reportsDirectory, "README.md"), runIndex());
+console.log(
+  `Audited ${pageCount} pages on ${siteNames} in ${Math.round((performance.now() - startedAt) / 1000)}s.`,
+);
+console.log(`Report ${runId}: ${join(outputDirectory, "README.md")}`);
+console.log(`All reports: ${join(reportsDirectory, "README.md")}`);

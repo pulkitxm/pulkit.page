@@ -51,7 +51,6 @@ Use [SEO and environments](seo-and-environments.md) for URL constraints and CNAM
 
 | Symptom                                | Cause or diagnostic                                                    | Action                                                                                        |
 | -------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Extra dev HTML during build            | Active preview recreates a subdirectory while build renders dist       | Avoid concurrent build and preview in the same checkout; restart preview after build          |
 | Unknown metadata field url             | Origin is not configured in frontmatter                                | Use CNAME or SITE\_URL                                                                        |
 | SEO canonical mismatch                 | Validator environment differs from build environment                   | Supply the same NODE\_ENV and SITE\_URL                                                       |
 | Hook fails despite local fixes         | Correct sources are only unstaged                                      | Review the index and stage matching intended versions                                         |
@@ -63,7 +62,7 @@ Use [SEO and environments](seo-and-environments.md) for URL constraints and CNAM
 
 ## Known limits and recommendations
 
-Build now preserves reserved `dist/dev-<port>/` roots while replacing deployment files. Build cleanup and deployment reference validation exclude these local preview roots. The earlier shared-build race described in this audit is addressed by that separation; development servers no longer need to stop for production assembly.
+The development server no longer writes HTML into `dist/` at all: it renders in memory and stores cache entries under the app's `.cache/generate/`, keyed by a `dist/dev-<port>` identity string that is never created on disk. The reservation of `dist/dev-<port>/` roots therefore survives only as insurance: build cleanup preserves them, the built-site walkers skip them, and route discovery rejects them, but nothing writes them. A build and a development server can run in the same checkout without interfering.
 
 Preview origins are isolated, but robots still allows indexing. Public preview protection needs a deliberate policy; no noindex mode is implemented. Social-card wrapping retains text but has no bounds/visual-fit test. Long titles should be visually checked. SEO validation confirms selected local relationships, not search-engine acceptance or remote availability.
 

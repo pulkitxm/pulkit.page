@@ -18,6 +18,7 @@ import {
   categoryOf,
   imagePath,
   isArticle,
+  markdownPath,
   pageTitle,
   relatedPages,
   safeJson,
@@ -418,6 +419,7 @@ export async function renderPage(
       navigation: links(site.navigation, true),
       social: links(site.social),
       copyright: escapeHtml(site.copyright ?? ""),
+      markdown: escapeHtml(markdownPath(route)),
       heading: escapeHtml(metadata.title),
       date:
         detail || metadata.role
@@ -466,6 +468,7 @@ function seoHead(route, metadata, site, pages) {
   const meta = (name, content, property = false) =>
     `<meta ${property ? "property" : "name"}="${name}" content="${escapeHtml(content)}" />`;
   return `<link rel="canonical" href="${escapeHtml(url)}" />
+<link rel="alternate" type="text/markdown" href="${escapeHtml(site.url + markdownPath(route))}" />
 ${meta("robots", "index, follow, max-image-preview:large")}
 ${[
   ["og:type", article ? "article" : "website"],
@@ -496,7 +499,7 @@ ${[
 <script type="application/ld+json">${safeJson(structuredData(route, metadata, site, pages))}</script>`;
 }
 
-function collectionItems(pages, route, collection, limit, site) {
+export function collectionItems(pages, route, collection, limit, site) {
   const external = /^([a-z0-9-]+):all$/.exec(collection)?.[1];
   if (external && !site?.external?.[external]) {
     throw new Error(`Unknown site in list directive: ${external}`);

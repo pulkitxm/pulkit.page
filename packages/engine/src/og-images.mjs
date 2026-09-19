@@ -1,4 +1,5 @@
 import { Resvg } from "@resvg/resvg-js";
+import { markdownOutputs } from "./markdown-export.mjs";
 import { articles, categoryOf, imagePath, isArticle } from "./seo.mjs";
 import { themeFile } from "./theme-files.mjs";
 
@@ -67,14 +68,14 @@ export function seoOutputs(pages, site, cache) {
       : renderCard(page, site, cardCategory(page, pages, site));
     output.set(imagePath(page.route).slice(1), bytes);
   }
-  return new Map([...output, ...crawlerOutputs(pages, site)]);
+  return new Map([...output, ...crawlerOutputs(pages, site), ...markdownOutputs(pages, site)]);
 }
 export function crawlerOutputs(pages, site) {
   const output = new Map();
   output.set(
     "sitemap.xml",
     Buffer.from(
-      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((page) => `  <url><loc>${xml(site.url + page.route)}</loc></url>`).join("\n")}\n</urlset>\n`,
+      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((page) => `  <url><loc>${xml(site.url + page.route)}</loc>${isArticle(page.route, pages, site) && page.metadata.date ? `<lastmod>${page.metadata.date}</lastmod>` : ""}</url>`).join("\n")}\n</urlset>\n`,
     ),
   );
   if (site.articles) {

@@ -1,7 +1,14 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "files": {
-    "includes": ["**", "!!dist", "!!extras", "!!node_modules", "!assets/fonts"]
+    "includes": [
+      "**",
+      "!!**/dist",
+      "!!extras",
+      "!!**/node_modules",
+      "!!**/.turbo",
+      "!packages/theme/fonts"
+    ]
   },
   "formatter": {
     "indentStyle": "space",
@@ -90,7 +97,7 @@
   },
   "overrides": [
     {
-      "includes": ["scripts/**"],
+      "includes": ["packages/*/src/**", "packages/*/test/**", "tooling/*/src/**"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -106,7 +113,7 @@
       }
     },
     {
-      "includes": ["demos/**/*.js", "scripts/embeds/**"],
+      "includes": ["packages/demos/**/*.js", "packages/embeds/src/**"],
       "linter": {
         "rules": {
           "security": {
@@ -116,7 +123,7 @@
       }
     },
     {
-      "includes": ["demos/styles.css"],
+      "includes": ["packages/demos/styles.css"],
       "linter": {
         "rules": {
           "complexity": {

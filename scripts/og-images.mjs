@@ -70,7 +70,7 @@ export function crawlerOutputs(pages, site) {
   output.set(
     "pages/sitemap.xml",
     Buffer.from(
-      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((page) => `  <url><loc>${xml(site.url + page.route)}</loc></url>`).join("\n")}\n</urlset>\n`,
+      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map((page) => `  <url><loc>${xml(site.url + page.route)}</loc>${page.route.startsWith("/blogs/") && !page.index && page.metadata.date ? `<lastmod>${page.metadata.date}</lastmod>` : ""}</url>`).join("\n")}\n</urlset>\n`,
     ),
   );
   output.set(

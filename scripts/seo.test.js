@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { checkContent } from "./check-content.mjs";
 import { validateSeo } from "./check-seo.mjs";
-import { renderCard, titleLines } from "./og-images.mjs";
+import { crawlerOutputs, renderCard, titleLines } from "./og-images.mjs";
 import { readPage, renderPage } from "./render-page.mjs";
 import { ancestors, relatedPages, safeJson, structuredData } from "./seo.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
@@ -87,4 +87,13 @@ test("shared metadata rejects a second source of domain configuration", () => {
   expect(checkContent("content/_site.md", source).errors.join(" ")).toContain(
     "unknown metadata field: url",
   );
+});
+
+test("sitemap dates articles by publication and leaves other pages undated", () => {
+  const sitemap = crawlerOutputs(pages, site).get("pages/sitemap.xml").toString();
+  expect(sitemap).toContain(
+    `<url><loc>${site.url}/blogs/example/</loc><lastmod>2025-01-02</lastmod></url>`,
+  );
+  expect(sitemap).toContain(`<url><loc>${site.url}/blogs/</loc></url>`);
+  expect(sitemap).toContain(`<url><loc>${site.url}/</loc></url>`);
 });

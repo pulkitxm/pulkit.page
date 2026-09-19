@@ -1,0 +1,17 @@
+{
+  "name": "@pulkit/embeds",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./bundle": "./src/bundle.mjs",
+    "./lightbox": "./src/lightbox.mjs"
+  },
+  "dependencies": {
+    "embla-carousel": "8.6.0",
+    "image-size": "2.0.4",
+    "katex": "0.18.7",
+    "lucide": "1.47.0",
+    "photoswipe": "5.4.4"
+  }
+}

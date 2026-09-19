@@ -76,9 +76,18 @@ function linkFiles(markup, filenames) {
 
 export function mountFrame(shadow, { frame, files, id }) {
   const hasFiles = files.length > 0;
-  const heightClass = frame.fullHeight
-    ? fullHeightClass
-    : cn("h-80", frame.bitBigger ? "sm:h-102 lg:h-128" : "sm:h-96 lg:h-112");
+  const desktopHeightClass = frame.bitBigger ? "lg:h-128" : "lg:h-112";
+  const heightClass = frame.fullHeight ? fullHeightClass : desktopHeightClass;
+  const codeHeightClass = frame.fullHeight
+    ? "h-full"
+    : cn("h-80 lg:h-full", frame.bitBigger ? "sm:h-102" : "sm:h-96");
+  const previewClass = frame.fullHeight
+    ? "relative flex min-h-0 flex-1 items-stretch overflow-auto"
+    : cn(
+        "relative grid min-h-80 flex-1 grid-cols-[minmax(0,1fr)] place-items-center overflow-auto lg:min-h-0",
+        frame.bitBigger ? "sm:min-h-102" : "sm:min-h-96",
+        frame.replayButton && !hasFiles && "pb-14",
+      );
   const fileButtons = files
     .map((file, index) =>
       button({
@@ -91,12 +100,12 @@ export function mountFrame(shadow, { frame, files, id }) {
     )
     .join("");
   const codePanel = hasFiles
-    ? `<div data-ref="code" class="relative h-full min-w-0 border-(--frame-border) border-b bg-(--code-bg) lg:border-b-0"><div class="flex w-full flex-1 flex-col overflow-hidden"><div class="flex items-center justify-between border-(--frame-border) border-b"><div class="flex flex-1 items-center overflow-hidden">${button({ variant: "ghost", size: "icon", className: "hidden shrink-0 rounded-none border-(--frame-border) border-r lg:flex", label: icon(SidebarClose, "size-4"), attrs: 'data-action="hide-code" title="Hide code panel"' })}<div class="flex w-full items-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">${fileButtons}</div></div><div class="flex shrink-0 items-center">${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(WrapText, "size-4")}${icon(Menu, "size-4")}`, attrs: 'data-action="wrap"' })}${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(Check, "size-4")}${icon(Copy, "size-4")}`, attrs: 'data-action="copy" title="Copy code"' })}</div></div><div data-ref="scroller" tabindex="0" class="flex-1 overflow-auto p-4 [scrollbar-width:none]"><div data-ref="highlighted"></div></div></div></div>`
+    ? `<div data-ref="code" class="${cn("relative min-w-0", codeHeightClass)} border-(--frame-border) border-b bg-(--code-bg) lg:border-b-0"><div class="flex w-full flex-1 flex-col overflow-hidden"><div class="flex items-center justify-between border-(--frame-border) border-b"><div class="flex flex-1 items-center overflow-hidden">${button({ variant: "ghost", size: "icon", className: "hidden shrink-0 rounded-none border-(--frame-border) border-r lg:flex", label: icon(SidebarClose, "size-4"), attrs: 'data-action="hide-code" title="Hide code panel"' })}<div class="flex w-full items-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">${fileButtons}</div></div><div class="flex shrink-0 items-center">${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(WrapText, "size-4")}${icon(Menu, "size-4")}`, attrs: 'data-action="wrap"' })}${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(Check, "size-4")}${icon(Copy, "size-4")}`, attrs: 'data-action="copy" title="Copy code"' })}</div></div><div data-ref="scroller" tabindex="0" class="flex-1 overflow-auto p-4 [scrollbar-width:none]"><div data-ref="highlighted"></div></div></div></div>`
     : "";
   const previewBar = hasFiles
     ? `<div class="hidden items-center justify-between border-(--frame-border) border-b lg:flex">${button({ variant: "ghost", size: "icon", className: "rounded-none transition-none", label: icon(SidebarOpen, "size-4"), attrs: 'data-action="show-code" title="Show code"' })}${frame.replayButton ? replayButton("rounded-none") : ""}</div>`
     : "";
-  shadow.innerHTML = `<div class="relative my-6 overflow-hidden rounded-md border border-(--frame-border) bg-(--frame-bg)">${frame.replayButton && !hasFiles ? replayButton("absolute right-4 bottom-4 z-2 rounded-md", "secondary") : ""}${hasFiles ? tabs(id) : ""}<div data-ref="container" class="${cn("flex flex-col lg:flex-row", heightClass)}">${codePanel}<button type="button" data-ref="handle" aria-label="Resize panels" class="group hidden h-full w-6 cursor-col-resize items-center justify-center border-(--frame-border) border-l hover:bg-(--handle-hover)">${icon(GripVertical, "size-4 text-(--grip) group-hover:text-(--grip-hover)")}</button><div data-ref="previewColumn">${previewBar}<div data-ref="preview" class="${cn("relative flex flex-1 overflow-auto", frame.fullHeight ? "min-h-0 items-stretch" : "items-center justify-center")}"></div></div></div></div>`;
+  shadow.innerHTML = `<div class="relative my-6 overflow-hidden rounded-md border border-(--frame-border) bg-(--frame-bg)">${frame.replayButton && !hasFiles ? replayButton("absolute right-4 bottom-4 z-2 rounded-md", "secondary") : ""}${hasFiles ? tabs(id) : ""}<div data-ref="container" class="${cn("flex flex-col lg:flex-row", heightClass)}">${codePanel}<button type="button" data-ref="handle" aria-label="Resize panels" class="group hidden h-full w-6 cursor-col-resize items-center justify-center border-(--frame-border) border-l hover:bg-(--handle-hover)">${icon(GripVertical, "size-4 text-(--grip) group-hover:text-(--grip-hover)")}</button><div data-ref="previewColumn">${previewBar}<div data-ref="preview" class="${previewClass}"></div></div></div></div>`;
 
   const find = (name) => shadow.querySelector(`[data-ref="${name}"]`);
   const container = find("container");
@@ -140,7 +149,8 @@ export function mountFrame(shadow, { frame, files, id }) {
   function render() {
     if (hasFiles) {
       code.className = cn(
-        "relative h-full min-w-0 border-(--frame-border) border-b bg-(--code-bg) lg:border-b-0",
+        "relative min-w-0 border-(--frame-border) border-b bg-(--code-bg) lg:border-b-0",
+        codeHeightClass,
         !state.expanded && "hidden",
         state.expanded && "flex flex-col lg:border-r",
       );

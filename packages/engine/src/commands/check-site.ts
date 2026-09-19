@@ -3,6 +3,8 @@ import { dirname, extname, join, normalize, resolve } from "node:path";
 import process from "node:process";
 import { builtFiles } from "@pulkit/shared/built-site";
 import { errorMessage, reportFailures } from "@pulkit/shared/failures";
+import { unescapeHtml } from "@pulkit/shared/html";
+import { stylesheetClasses } from "../lib/mangle-classes.ts";
 
 const root = resolve(process.argv[2] ?? "dist");
 const failures: string[] = [];
@@ -48,11 +50,23 @@ function localTarget(file: string, value: string): string | null {
 }
 
 const files = builtFiles(root);
+const definedClasses = new Set(
+  files
+    .filter((file) => extname(file) === ".css")
+    .flatMap((file) => [...stylesheetClasses(readFileSync(file, "utf8"), file)]),
+);
 for (const file of files) {
   if (![".css", ".htm", ".html"].includes(extname(file))) {
     continue;
   }
   const text = readFileSync(file, "utf8");
+  for (const [, attribute = "", value = ""] of text.matchAll(/\s(data-[\w-]+-class)="([^"]*)"/g)) {
+    for (const token of value.split(/\s+/).filter(Boolean)) {
+      if (!definedClasses.has(unescapeHtml(token))) {
+        failures.push(`${file}: ${attribute} uses ${token}, which no stylesheet defines`);
+      }
+    }
+  }
   for (const value of references(file, text)) {
     let target: string | null;
     try {

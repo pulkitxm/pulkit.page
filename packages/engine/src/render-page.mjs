@@ -9,6 +9,7 @@ import {
   renderEmbed,
   renderRawHtml,
 } from "@pulkit/embeds";
+import { codeCopyScript, copyButton } from "@pulkit/embeds/copy-button";
 import { lightboxScript, lightboxStyle, localImageSize, zoomable } from "@pulkit/embeds/lightbox";
 import { escapeHtml } from "@pulkit/shared/html";
 import { Marked, Renderer } from "marked";
@@ -222,7 +223,8 @@ export async function renderPage(
               `<span class="block leading-(--pre-line) whitespace-pre">${line || "<br>"}</span>`,
           )
           .join("");
-        return `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5 whitespace-normal [--pre-line:1lh]"><code class="${[language, "block w-max min-w-full rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">${lines}</code></pre>\n`;
+        assets.script(codeCopyScript);
+        return `<div class="relative mt-0 mb-6" data-code-block><pre tabindex="0" class="m-0 overflow-x-auto rounded-lg border border-line bg-surface p-5 whitespace-normal [--pre-line:1lh]"><code class="${[language, "block w-max min-w-full rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">${lines}</code></pre><div class="pointer-events-none absolute inset-0 flex items-start justify-end p-3">${copyButton("pointer-events-auto sticky top-3", "data-code-copy")}</div></div>\n`;
       },
       codespan(token) {
         return withClass(

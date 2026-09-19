@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="A deep dive into git&#39;s three cloning knobs: how partial clone, shallow clone, and sparse checkout actually work under the hood, and the exact recipe that turns a multi-gigabyte clone into a few seconds of download when you only need to touch one file."

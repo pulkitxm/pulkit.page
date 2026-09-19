@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="How to add buttery smooth scrolling to a Next.js app using Lenis, GSAP ScrollTrigger, and Locomotive Scroll. The tradeoffs, the setup, and when you actually need it."

@@ -1,6 +1,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+  @view-transition {
+    navigation: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition {
+      navigation: none;
+    }
+  }
+  </style>
   <meta name="description" content="{{description}}" />
   {{ seo }}
   <link rel="alternate" type="application/atom+xml" title="{{ brand }}" href="/feed.xml" />

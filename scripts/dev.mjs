@@ -59,7 +59,7 @@ const server = await createServer({
     host: "127.0.0.1",
     port,
     strictPort: explicit,
-    watch: { ignored: ["**/pages/**", "**/dist/**", "**/.cache/**", "**/extras/**"] },
+    watch: { ignored: ["**/dist/**", "**/.cache/**", "**/extras/**"] },
     fs: { strict: true, allow: [process.cwd()] },
   },
   plugins: [

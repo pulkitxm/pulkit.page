@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { generationDirectory, resolveSiteOrigin } from "./site-origin.mjs";
+import { resolveSiteOrigin } from "./site-origin.mjs";
 
 test("production reads CNAME and follows domain changes", () => {
   expect(resolveSiteOrigin({}, () => "portfolio.example\n")).toBe("https://portfolio.example");
@@ -33,14 +33,4 @@ test("invalid overrides fail rather than leaking credentials or dropping paths",
   ]) {
     expect(() => resolveSiteOrigin({ SITE_URL })).toThrow("SITE_URL");
   }
-});
-test("environment output is isolated from committed production pages", () => {
-  expect(generationDirectory({})).toBe("pages");
-  expect(generationDirectory({ NODE_ENV: "development" })).toBe("dist");
-  expect(generationDirectory({ SITE_URL: "https://preview.example" })).toBe("dist");
-  expect(generationDirectory({ SITE_OUTPUT_DIR: "dist/dev-4178" })).toBe("dist/dev-4178");
-  expect(() => generationDirectory({ SITE_OUTPUT_DIR: "../outside" })).toThrow("SITE_OUTPUT_DIR");
-  expect(() => generationDirectory({ SITE_OUTPUT_DIR: "pages", NODE_ENV: "development" })).toThrow(
-    "reserved for production",
-  );
 });

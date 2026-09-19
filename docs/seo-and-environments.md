@@ -27,7 +27,7 @@ Use matching environment variables for build and SEO validation. Through Turbo, 
 
 ## Development preview and port selection
 
-[dev.mjs](../packages/engine/src/dev.mjs) runs Vite on loopback from the app directory. It prefers port 3000, or the port in `SITE_DEV_PORT` when set, and tries higher ports when busy. pulkit.blog's `dev` script sets `SITE_DEV_PORT=3001`, so `bun run dev` runs both sites side by side. An occupied explicit PORT fails; `PORT=0` requests an available port. The actual bound origin supplies development canonicals, social metadata, sitemap, feed, and robots.
+[dev.mjs](../packages/engine/src/dev.mjs) runs Vite on loopback from the app directory. It prefers port 3000, or the port in `SITE_PORT` when set, and tries higher ports when busy. pulkit.blog's `dev` script sets `SITE_PORT=3001`, so `bun run dev` runs both sites side by side. An occupied explicit PORT fails; `PORT=0` requests an available port. The actual bound origin supplies development canonicals, social metadata, sitemap, feed, and robots.
 
 [dev-renderer.mjs](../packages/engine/src/dev-renderer.mjs) discovers Markdown metadata lazily and renders only requested HTML and social cards. It never writes development HTML into dist. Content and layout changes invalidate the inventory and trigger browser reloads. Dependency keys preserve unaffected pages and fences. Source CSS uses Vite hot replacement; other served assets use Vite's file watching. Bun watches imported server modules and restarts the server when they change. Configuration and font changes invalidate cached work.
 

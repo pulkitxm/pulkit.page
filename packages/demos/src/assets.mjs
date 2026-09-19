@@ -44,7 +44,7 @@ export function compileDemoStyles({ minify = true } = {}) {
         output,
         ...(minify ? ["--minify"] : []),
       ],
-      { stdio: ["ignore", "ignore", "inherit"] },
+      { stdio: ["ignore", "ignore", "pipe"] },
     );
     const css = readFileSync(output, "utf8");
     const properties = css.match(/@property\s+[^{]+\{[^}]*\}/g) ?? [];

@@ -40,7 +40,7 @@ bun run dev
 `bun install` also installs the pre-commit hook. `bun run dev` starts both
 development servers side by side; open the URLs printed in the terminal. pulkit.page
 prefers `http://localhost:3000/` and pulkit.blog prefers `http://localhost:3001/`
-(its `dev` script sets `SITE_DEV_PORT=3001`); each tries higher ports until one
+(its `dev` and `start` scripts set `SITE_PORT=3001`); each tries higher ports until one
 binds. Set `PORT` to require a specific port or `PORT=0` to ask the OS for one. Vite renders HTML and
 social cards only when requested, reloads the browser after content and layout
 edits, and uses hot replacement for CSS.
@@ -65,8 +65,11 @@ Run these from the repository root:
 | `bun run dev`                              | Start the development server of every app                         |
 | `bunx turbo run dev --filter=@pulkit/page` | Start only the pulkit.page development server                     |
 | `bunx turbo run dev --filter=@pulkit/blog` | Start only the pulkit.blog development server                     |
+| `bun run dev:clean`                        | Clean every app, then start the development servers               |
 | `bun run build`                            | Build every app into its `dist/`                                  |
-| `bun run start`                            | Build, then preview each built app on loopback                    |
+| `bun run build:clean`                      | Clean every app, then build without the Turbo cache               |
+| `bun run serve`                            | Build, then preview each built app on loopback                    |
+| `bun run serve:clean`                      | Clean every app, then build without cache and preview             |
 | `bun run test`                             | Run every package's tests                                         |
 | `bun run ci`                               | Run every gate: tests, build, post-build checks, repository gates |
 | `bun run format`                           | Apply Biome fixes and canonical Markdown/YAML formatting          |

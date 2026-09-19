@@ -10,8 +10,11 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
+    "dev:clean": "turbo run clean && turbo run dev",
     "build": "turbo run build",
-    "start": "turbo run start",
+    "build:clean": "turbo run clean && turbo run build --force",
+    "serve": "turbo run start",
+    "serve:clean": "turbo run clean && turbo run start --force",
     "test": "turbo run test",
     "clean": "turbo run clean",
     "lighthouse": "turbo run build --filter=\"./apps/*\" && bun tooling/lighthouse/src/lighthouse.mjs",

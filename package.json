@@ -30,7 +30,8 @@
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "import:reference": "bun scripts/import-reference.mjs",
     "check:seo": "bun scripts/check-seo.mjs",
-    "browser:check": "bun scripts/check-browser.mjs"
+    "browser:check": "bun scripts/check-browser.mjs",
+    "lighthouse": "bun run build && bun scripts/lighthouse.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -41,10 +42,12 @@
     "@resvg/resvg-js": "2.6.2",
     "@tailwindcss/cli": "4.3.3",
     "@tailwindcss/vite": "4.3.3",
+    "chrome-launcher": "1.2.1",
     "embla-carousel": "8.6.0",
     "html-validate": "11.16.0",
     "katex": "0.18.7",
     "knip": "6.37.0",
+    "lighthouse": "13.5.0",
     "lucide": "1.47.0",
     "marked": "18.0.13",
     "meshline": "3.3.1",

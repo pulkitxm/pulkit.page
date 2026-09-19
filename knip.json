@@ -9,7 +9,7 @@
     "demos/styles.css",
     "scripts/import-reference.mjs",
     "scripts/*.test.js",
-    "scripts/{build,ci,clean,dev,start,generate,highlight,format-code,check-comments,check-content,check-em-dashes,check-imports,check-layouts,check-repository,check-site}.mjs"
+    "scripts/{build,ci,clean,dev,start,generate,highlight,format-code,check-comments,check-content,check-em-dashes,check-imports,check-layouts,check-repository,check-site,lighthouse}.mjs"
   ],
   "project": ["**/*.{js,mjs,cjs,ts,tsx,jsx,mdx,css}", "!extras/**", "!dist/**"],
   "includeEntryExports": true

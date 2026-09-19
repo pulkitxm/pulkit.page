@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./render": "./src/render.mjs",
-    "./assets": "./src/assets.mjs"
+    "./render": "./src/render.ts",
+    "./assets": "./src/assets.ts"
   },
   "dependencies": {
     "@pulkit/code": "workspace:*",

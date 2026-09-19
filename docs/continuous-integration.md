@@ -79,7 +79,7 @@ publishes the exact bytes that were checked.
 
 The browser matrix has four jobs: `desktop` and `mobile` crossed with shards
 `1/2` and `2/2`, with `fail-fast: false`.
-[check-browser.mjs](../packages/engine/src/check-browser.mjs) reads
+[check-browser.ts](../packages/engine/src/commands/check-browser.ts) reads
 `BROWSER_VIEWPORT` and `BROWSER_SHARD`, audits every route but owns only the
 shard's share of the assertions, and runs the whole-site flows (rendering without
 JavaScript, the theme toggle, blocked storage, keyboard navigation and view

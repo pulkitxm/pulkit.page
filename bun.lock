@@ -68,7 +68,7 @@
     "packages/engine": {
       "name": "@pulkit/engine",
       "bin": {
-        "site": "./src/cli.mjs",
+        "site": "./src/cli.ts",
       },
       "dependencies": {
         "@axe-core/playwright": "4.13.0",

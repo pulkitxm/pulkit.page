@@ -12,19 +12,16 @@
       "ignoreDependencies": ["@pulkit/theme"]
     },
     "packages/engine": {
-      "entry": [
-        "src/{build,dev,start,clean,check-layouts,check-seo,check-site,check-browser}.mjs",
-        "test/setup.mjs"
-      ],
-      "project": ["**/*.{mjs,css}"]
+      "entry": ["src/commands/*.ts", "test/setup.ts"],
+      "project": ["src/**/*.{ts,css}", "test/**/*.ts"]
     },
     "packages/embeds": {
       "entry": ["client/entries/*.ts"],
       "project": ["src/**/*.ts", "client/**/*.ts"]
     },
     "packages/demos": {
-      "entry": ["index.js"],
-      "project": ["**/*.{js,mjs,css}"]
+      "entry": ["client/index.ts"],
+      "project": ["client/**/*.{ts,js}", "src/**/*.ts", "*.css"]
     },
     "packages/theme": {
       "entry": ["src/client/theme.ts"],

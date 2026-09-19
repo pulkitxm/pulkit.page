@@ -3,14 +3,11 @@
   "private": true,
   "type": "module",
   "bin": {
-    "site": "./src/cli.mjs"
-  },
-  "exports": {
-    "./render-page": "./src/render-page.mjs"
+    "site": "./src/cli.ts"
   },
   "scripts": {
     "test": "bun test --timeout 30000 ./src",
-    "check:layouts": "bun src/check-layouts.mjs"
+    "check:layouts": "bun src/commands/check-layouts.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.13.0",

@@ -4,7 +4,7 @@
 
 ## One origin for every output
 
-[resolveSiteOrigin](../packages/engine/src/site-origin.mjs) supplies the origin used by canonical URLs, JSON-LD entity IDs, social-image URLs, sitemap locations, feed links, robots, and card hostname branding. `_site.md` does not allow a `url` field, preventing a second production-domain configuration source.
+[resolveSiteOrigin](../packages/engine/src/site/site-origin.ts) supplies the origin used by canonical URLs, JSON-LD entity IDs, social-image URLs, sitemap locations, feed links, robots, and card hostname branding. `_site.md` does not allow a `url` field, preventing a second production-domain configuration source.
 
 | Environment                           | Origin without override                                                                                  |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -27,15 +27,15 @@ Use matching environment variables for build and SEO validation. Through Turbo, 
 
 ## Development preview and port selection
 
-[dev.mjs](../packages/engine/src/dev.mjs) runs Vite on loopback from the app directory. It prefers port 3000, or the port in `SITE_PORT` when set, and tries higher ports when busy. pulkit.blog's `dev` script sets `SITE_PORT=3001`, so `bun run dev` runs both sites side by side. An occupied explicit PORT fails; `PORT=0` requests an available port. The actual bound origin supplies development canonicals, social metadata, sitemap, feed, and robots.
+[dev.ts](../packages/engine/src/commands/dev.ts) runs Vite on loopback from the app directory. It prefers port 3000, or the port in `SITE_PORT` when set, and tries higher ports when busy. pulkit.blog's `dev` script sets `SITE_PORT=3001`, so `bun run dev` runs both sites side by side. An occupied explicit PORT fails; `PORT=0` requests an available port. The actual bound origin supplies development canonicals, social metadata, sitemap, feed, and robots.
 
-[dev-renderer.mjs](../packages/engine/src/dev-renderer.mjs) discovers Markdown metadata lazily and renders only requested HTML and social cards. It never writes development HTML into dist. Content and layout changes invalidate the inventory and trigger browser reloads. Dependency keys preserve unaffected pages and fences. Source CSS uses Vite hot replacement; other served assets use Vite's file watching. Bun watches imported server modules and restarts the server when they change. Configuration and font changes invalidate cached work.
+[dev-renderer.ts](../packages/engine/src/dev/dev-renderer.ts) discovers Markdown metadata lazily and renders only requested HTML and social cards. It never writes development HTML into dist. Content and layout changes invalidate the inventory and trigger browser reloads. Dependency keys preserve unaffected pages and fences. Source CSS uses Vite hot replacement; other served assets use Vite's file watching. Bun watches imported server modules and restarts the server when they change. Configuration and font changes invalidate cached work.
 
 A build with development PORT=0 still needs SITE\_URL because no listening server exists to resolve an origin. Production and preview builds both render their selected origin. Full static builds remain independent of the request-time dev server.
 
 ## Page metadata and graphs
 
-[seo.mjs](../packages/engine/src/seo.mjs) and `seoHead` in [render-page.mjs](../packages/engine/src/render-page.mjs) derive metadata from existing content. The document title is the page title followed by `|` and the site's brand (` | Pulkit` or ` | pulkit.blog`); when that would exceed 70 characters, only the page title is used. Home uses the brand alone. Each generated page receives a canonical, index/follow robots instruction, Open Graph fields, Twitter large-card fields, and one JSON-LD graph. Article pages, the non-index pages under a site's `articles` prefix (every post on pulkit.blog), use article Open Graph type with publication-date metadata and `article:author` pointing at the profile URL `https://pulkit.page/`; other pages use website type.
+[routes.ts](../packages/engine/src/seo/routes.ts) and `seoHead` in [seo-head.ts](../packages/engine/src/seo/seo-head.ts) derive metadata from existing content. The document title is the page title followed by `|` and the site's brand (` | Pulkit` or ` | pulkit.blog`); when that would exceed 70 characters, only the page title is used. Home uses the brand alone. Each generated page receives a canonical, index/follow robots instruction, Open Graph fields, Twitter large-card fields, and one JSON-LD graph. Article pages, the non-index pages under a site's `articles` prefix (every post on pulkit.blog), use article Open Graph type with publication-date metadata and `article:author` pointing at the profile URL `https://pulkit.page/`; other pages use website type.
 
 | JSON-LD entity               | What it represents                                                                                                                    |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -60,7 +60,7 @@ Experience pages remain WebPage about the person; role and period do not become 
 
 ## Cards and crawler files
 
-[og-images.mjs](../packages/engine/src/og-images.mjs) creates one 1200 by 630 PNG per route. Home maps to `/og/home/card.png`; pulkit.blog's caching post maps to `/og/system-design/caching/card.png`. Cards contain brand/category, title, resolved hostname, and period or date, falling back to “Software engineer”.
+[og-images.ts](../packages/engine/src/seo/og-images.ts) creates one 1200 by 630 PNG per route. Home maps to `/og/home/card.png`; pulkit.blog's caching post maps to `/og/system-design/caching/card.png`. Cards contain brand/category, title, resolved hostname, and period or date, falling back to “Software engineer”.
 
 `cardCategory` picks the category text. An index page uses its own title, so `/system-design/` reads System Design and `/exp/` reads Experience. Any other page uses the title of its parent collection index when one exists, so the caching post also reads System Design and an experience detail reads Experience. Otherwise article pages and the articles root read Writing (the blog home and standalone posts), and everything else reads Portfolio. They use a dark monochrome SVG rasterized by pinned resvg, with bundled IBM Plex Mono TTF and system fonts disabled.
 
@@ -74,7 +74,7 @@ pulkit.page's output comprises 12 HTML files, 12 cards, 12 Markdown copies, `llm
 
 ## Markdown copies and llms.txt
 
-[markdown-export.mjs](../packages/engine/src/markdown-export.mjs) writes every page of both sites a second time as GitHub-flavored Markdown beside its HTML: `/` becomes `/index.md`, `/about/` becomes `/about.md`, and `/system-design/caching/` becomes `/system-design/caching.md`. GitHub Pages serves them as static files, so no routing is involved. Each copy opens with the title as H1, the description as a quote, and a short fact list (canonical URL, publication date for articles, role and period, tags, parent collection), followed by the body, collection and related-writing lists, and footnotes.
+[markdown-export.ts](../packages/engine/src/markdown/markdown-export.ts) writes every page of both sites a second time as GitHub-flavored Markdown beside its HTML: `/` becomes `/index.md`, `/about/` becomes `/about.md`, and `/system-design/caching/` becomes `/system-design/caching.md`. GitHub Pages serves them as static files, so no routing is involved. Each copy opens with the title as H1, the description as a quote, and a short fact list (canonical URL, publication date for articles, role and period, tags, parent collection), followed by the body, collection and related-writing lists, and footnotes.
 
 The body is the authored Markdown with site-specific syntax resolved into portable Markdown. Lists become link lists (grouped under year headings for `by-year`), images and carousels become images, math becomes `$…$` and `$$…$$`, info tips become footnotes, tweets and replies become quotes, documents and videos become links, and demos become a note linking to the page plus the demo's source files as fences. Raw `<code>`, `<strong>`, and `<br>` become Markdown; `<details>` stays as HTML; wrapper tags are dropped. Code fences are never rewritten. Every link is absolute, and links to the site's own pages point at their Markdown copies so agents can crawl Markdown only. An embed or HTML tag without a Markdown fallback fails the build.
 
@@ -82,7 +82,7 @@ The body is the authored Markdown with site-specific syntax resolved into portab
 
 ## Validation and limitations
 
-[check-seo.mjs](../packages/engine/src/check-seo.mjs) validates dist against source metadata and the resolved origin. It loads the site configuration through the same `readSiteConfig` as the build, including the shared profile. It checks one matching canonical, one H1/main, full title, selected unique meta fields (a meta carrying a `media` attribute, such as the light and dark `theme-color` pair, is exempt), one parseable graph with expected context, unique top-level entity IDs, page/website linkage, BlogPosting facts when present, PNG signature/dimensions, same-origin absolute href existence, exact sitemap membership, robots sitemap advertisement, and, on sites with `articles`, that `feed.xml` lists every article exactly once. It also rejects duplicate page titles/descriptions globally.
+[check-seo.ts](../packages/engine/src/commands/check-seo.ts) validates dist against source metadata and the resolved origin. It loads the site configuration through the same `readSiteConfig` as the build, including the shared profile. It checks one matching canonical, one H1/main, full title, selected unique meta fields (a meta carrying a `media` attribute, such as the light and dark `theme-color` pair, is exempt), one parseable graph with expected context, unique top-level entity IDs, page/website linkage, BlogPosting facts when present, PNG signature/dimensions, same-origin absolute href existence, exact sitemap membership, robots sitemap advertisement, and, on sites with `articles`, that `feed.xml` lists every article exactly once. It also rejects duplicate page titles/descriptions globally.
 
 This is not full Schema.org validation. It does not require every possible graph entity/type, exhaustively validate breadcrumb/ItemList members, prove every @id resolves, verify all Open Graph fields, or inspect card appearance. It does not fetch external URLs or establish Google indexing/rich-result eligibility. Its regular expressions depend on the generator's HTML shape. Source metadata correctness remains an editorial responsibility.
 

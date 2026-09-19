@@ -101,6 +101,7 @@ Press :embed[cmd-key]{{}} + K to open it.
 | `document-viewer`             | One PDF in a titled card with an open-in-new-tab link                          |
 | `document-tabs`               | Several such cards behind a tab strip, at most four                            |
 | `tech-badges`                 | A wrapped row of technology names                                              |
+| `contact-links`               | One row per contact channel, with an optional copy button                      |
 | `math`, `info-tip`, `cmd-key` | Inline formula, hover tip, and command-key glyph                               |
 
 Carousels that share a page need distinct accessible names: pass `label` to each `image-grid` so the landmarks stay unique. Components that need behavior load their own script and stylesheet; each one still renders readable markup without JavaScript.

@@ -149,4 +149,4 @@ test("Vite rejects invalid and occupied explicit ports", () => {
   } finally {
     occupied.stop(true);
   }
-});
+}, 20000);

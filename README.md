@@ -160,7 +160,10 @@ post, embeds, demos, layouts, and appearance.
 
 Each app's `CNAME` is the single source of its production hostname:
 `apps/page/CNAME` contains `pulkit.page` and `apps/blog/CNAME` contains
-`pulkit.blog`. The CI workflow builds and checks both apps; its GitHub Pages step
-deploys `apps/page/dist` from `main` after every CI job passes. Generated HTML,
-social cards, sitemap, feed, and robots output are never committed. See [SEO and environments](docs/seo-and-environments.md) for preview
+`pulkit.blog`. After every CI job passes, the workflow uploads each app's built
+`dist/` to its own Vercel project: previews for pull requests, production from
+`main`. Each app's `vercel.json` holds its routing, including permanent redirects
+from the old `pulkit.page/blogs/*` URLs to pulkit.blog. Generated HTML, social
+cards, sitemap, feed, and robots output are never committed. The
+[deployment guide](docs/deployment.md) covers the one-time Vercel and domain setup. See [SEO and environments](docs/seo-and-environments.md) for preview
 origins and `SITE_URL`.

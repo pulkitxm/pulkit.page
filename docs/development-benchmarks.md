@@ -39,7 +39,7 @@ See [all raw samples](development-benchmarks.json). The benchmark measures HTTP 
 
 Vite supplies the maintained development server, file watching, HTML transforms, browser reload client, and CSS hot replacement. A small middleware adapter connects the existing Markdown renderer, preserving its layouts, formatting, highlighting, route validation, and SEO behavior. Migrating the content system to another framework was unnecessary for this change. See the [Vite plugin API](https://vite.dev/guide/api-plugin.html).
 
-Production generation stays complete because GitHub Pages serves static output and cannot render an unbuilt URL. Vite does not replace formatting, linting, or repository checks. `bun run` remains the package-script launcher. In the workspace layout, root `bun run dev` starts the app's Vite-backed `site dev` script through Turbo.
+Production generation stays complete because Vercel serves the uploaded static output and cannot render an unbuilt URL. Vite does not replace formatting, linting, or repository checks. `bun run` remains the package-script launcher. In the workspace layout, root `bun run dev` starts the app's Vite-backed `site dev` script through Turbo.
 
 ## Reproduction
 

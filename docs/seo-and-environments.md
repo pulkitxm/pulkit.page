@@ -23,7 +23,7 @@ NODE_ENV=staging SITE_URL=https://preview.example.com bun run build
 NODE_ENV=staging SITE_URL=https://preview.example.com bunx turbo run check:seo --filter=@pulkit/blog
 ```
 
-Use matching environment variables for build and SEO validation. Through Turbo, `check:seo` depends on `build`, so the filtered command above rebuilds for that environment first unless a matching cached build exists. `check:seo` reads dist and resolves the current environment again; it does not infer the build origin from generated files. Production builds copy CNAME into dist; custom-origin builds omit it. No build output is committed.
+Use matching environment variables for build and SEO validation. Through Turbo, `check:seo` depends on `build`, so the filtered command above rebuilds for that environment first unless a matching cached build exists. `check:seo` reads dist and resolves the current environment again; it does not infer the build origin from generated files. CNAME only sets the origin and is never copied into dist; each build copies the app's `vercel.json` instead. No build output is committed.
 
 ## Development preview and port selection
 
@@ -78,4 +78,4 @@ pulkit.page's output comprises 12 HTML files, 12 cards, sitemap, and robots; pul
 
 This is not full Schema.org validation. It does not require every possible graph entity/type, exhaustively validate breadcrumb/ItemList members, prove every @id resolves, verify all Open Graph fields, or inspect card appearance. It does not fetch external URLs or establish Google indexing/rich-result eligibility. Its regular expressions depend on the generator's HTML shape. Source metadata correctness remains an editorial responsibility.
 
-Previews currently emit the same index/follow robots metadata and allow-all robots file as production. Custom-origin isolation avoids production canonical leakage but does not make a publicly hosted preview non-indexable. Decide deliberately how to protect public previews; no preview noindex feature is implemented. Redirects from the old pulkit.page `/blogs/` routes and remote search-console integration remain absent. The [CI workflow](../.github/workflows/ci.yml) builds and checks both apps, but its GitHub Pages step uploads only `apps/page/dist`; deploying `apps/blog/dist` to pulkit.blog is not configured in this repository.
+Previews currently emit the same index/follow robots metadata and allow-all robots file as production. Custom-origin isolation avoids production canonical leakage but does not make a publicly hosted preview non-indexable. Decide deliberately how to protect public previews; no preview noindex feature is implemented. Old pulkit.page `/blogs/` routes permanently redirect to the same paths on pulkit.blog through [apps/page/vercel.json](../apps/page/vercel.json). Remote search-console integration remains absent. [Deployment](deployment.md) describes how both sites reach Vercel.

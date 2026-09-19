@@ -17,7 +17,7 @@ flowchart TD
   E --> F
   F --> I[Copy app assets and theme files, bundle embeds and demos, compile Tailwind CSS]
   I --> J[Site and SEO validation]
-  J --> K[GitHub Pages artifact]
+  J --> K[Vercel deployment per app]
 ```
 
 Build runs this path once per app, for the production origin or a preview origin, and writes everything into that app's `dist/` (`apps/page/dist/` or `apps/blog/dist/`); nothing generated is committed. Development renders the same pages on request instead of writing a full build.
@@ -83,9 +83,9 @@ Rendering reuses verified cache entries for HTML, fences, and cards. Changes to 
 
 ## Build and publication
 
-[build.mjs](../packages/engine/src/build.mjs) resolves the requested environment origin, clears the deployment root while preserving reserved `dist/dev-<port>/` directories, and calls `generateSite("dist", origin)` to render every page, card, sitemap, robots file, and feed. It then copies the app's `assets/` into `dist/assets/`, copies `fonts/` and `icons/` from `@pulkit/theme` into `dist/assets/fonts/` and `dist/assets/`, and copies the theme's `theme.js`. The Tailwind CLI compiles the app's `styles.css`, which imports `@pulkit/theme/base.css`, into minified `dist/styles.css`. When any page body contains a demo directive, `buildDemoAssets` from `@pulkit/demos` writes `dist/assets/demos/` (so pulkit.blog gets it and pulkit.page skips it), and `buildEmbedAssets` from `@pulkit/embeds` writes `dist/assets/embeds/` plus KaTeX and PhotoSwipe assets. Finally the stylesheet and theme script are fingerprinted and every page is rewritten to point at the hashed names. Only a production build with the production origin includes CNAME, including when SITE\_URL explicitly names that origin.
+[build.mjs](../packages/engine/src/build.mjs) resolves the requested environment origin, clears the deployment root while preserving reserved `dist/dev-<port>/` directories, and calls `generateSite("dist", origin)` to render every page, card, sitemap, robots file, and feed. It then copies the app's `assets/` into `dist/assets/`, copies `fonts/` and `icons/` from `@pulkit/theme` into `dist/assets/fonts/` and `dist/assets/`, and copies the theme's `theme.js`. The Tailwind CLI compiles the app's `styles.css`, which imports `@pulkit/theme/base.css`, into minified `dist/styles.css`. When any page body contains a demo directive, `buildDemoAssets` from `@pulkit/demos` writes `dist/assets/demos/` (so pulkit.blog gets it and pulkit.page skips it), and `buildEmbedAssets` from `@pulkit/embeds` writes `dist/assets/embeds/` plus KaTeX and PhotoSwipe assets. Finally the stylesheet and theme script are fingerprinted and every page is rewritten to point at the hashed names. When the app has a `vercel.json`, the build copies it into `dist/` so the Vercel deployment carries its routing.
 
-Only the stylesheet and the embed and demo bundles are minified; no source-image optimization, redirects, or search service is generated. SEO assets are rendered for the selected origin; custom-origin output intentionally differs from production in canonicals, cards, schema, and crawler files.
+Only the stylesheet and the embed and demo bundles are minified; no source-image optimization or search service is generated; redirects come only from each app's `vercel.json`. SEO assets are rendered for the selected origin; custom-origin output intentionally differs from production in canonicals, cards, schema, and crawler files.
 
 The [GitHub workflow](../.github/workflows/ci.yml) runs quality and workflow-analysis jobs, then the CI gate. It builds and checks both apps; main push or main manual dispatch uploads only `apps/page/dist` and deploys it to Pages after the gate, so no deployment of `apps/blog/dist` is configured here. Pull requests and merge groups validate without deployment. Local CI rebuilds ignored dist but does not deploy. Live DNS, GitHub settings, and remote health require separate verification.
 

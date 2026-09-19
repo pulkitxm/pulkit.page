@@ -44,7 +44,7 @@ NODE_ENV=staging SITE_URL=https://preview.example.com bun run build
 NODE_ENV=staging SITE_URL=https://preview.example.com bunx turbo run check:seo --filter=@pulkit/page
 ```
 
-Use [SEO and environments](seo-and-environments.md) for URL constraints and CNAME inclusion. Changing production CNAME takes effect on the next production build; no committed output needs updating. `bun run clean` removes each app's output and caches when a cold build is needed.
+Use [SEO and environments](seo-and-environments.md) for URL constraints and origin selection. Changing production CNAME takes effect on the next production build; no committed output needs updating. `bun run clean` removes each app's output and caches when a cold build is needed.
 
 ## Troubleshooting
 

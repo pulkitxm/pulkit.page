@@ -30,10 +30,12 @@ Both apps have the same shape and no code of their own. pulkit.page is the portf
 | [apps/page/content/\_site.md](../apps/page/content/_site.md) | Brand, description fallback, navigation (Writing points to pulkit.blog), copyright | Edits change every pulkit.page page      |
 | [apps/page/assets/](../apps/page/assets/)                    | Experience images, company logos, portrait, and résumé PDF                         | Refer to public root-relative `/assets/` |
 | [apps/page/CNAME](../apps/page/CNAME)                        | Production hostname `pulkit.page`                                                  | Change only when the domain changes      |
+| [apps/page/vercel.json](../apps/page/vercel.json)            | Vercel routing: trailing slashes and `/blogs/*` redirects to pulkit.blog           | Change when routing changes              |
 | [apps/blog/content/](../apps/blog/content/)                  | 54 page sources (home, posts, two series categories) plus `_site.md`               | Add and edit posts here                  |
 | [apps/blog/content/\_site.md](../apps/blog/content/_site.md) | Brand `pulkit.blog`, `articles: /`, navigation, copyright                          | Edits change every pulkit.blog page      |
 | [apps/blog/assets/](../apps/blog/assets/)                    | Post images and video under `assets/content/`, plus a portrait                     | Refer to public root-relative `/assets/` |
 | [apps/blog/CNAME](../apps/blog/CNAME)                        | Production hostname `pulkit.blog`                                                  | Change only when the domain changes      |
+| [apps/blog/vercel.json](../apps/blog/vercel.json)            | Vercel routing: trailing slashes                                                   | Change when routing changes              |
 | `apps/<app>/layouts/`                                        | `home`, `simple`, `article` HTML shells and shared partials                        | Edit templates, validate, rebuild        |
 | `apps/<app>/styles.css`                                      | Imports the shared base, defines the app's fonts and color tokens                  | Compiled and minified into `dist/`       |
 | `apps/<app>/package.json`                                    | App scripts that call the `site` CLI                                               | Add app tasks here and in `turbo.json`   |

@@ -1,5 +1,7 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { walkFiles } from "@pulkit/shared/files";
+import { siteConfigFile } from "@pulkit/shared/frontmatter";
 import { escapeHtml } from "@pulkit/shared/html";
 import { readPage } from "./render-page.mjs";
 import { imagePath, isArticle, pageTitle } from "./seo.mjs";
@@ -74,18 +76,13 @@ export function validateSeo(html, route, metadata, site, readAsset) {
   require(png.readUInt32BE(16) === 1200 &&
     png.readUInt32BE(20) === 630, "incorrect image dimensions");
 }
-function walk(directory) {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) =>
-    entry.isDirectory() ? walk(join(directory, entry.name)) : [join(directory, entry.name)],
-  );
-}
 function checkSeo(root = "dist") {
   const site = readSiteConfig(resolveSiteOrigin());
   const titles = new Set();
   const descriptions = new Set();
   const routes = [];
-  for (const file of walk("content").filter(
-    (path) => path.endsWith(".md") && path !== "content/_site.md",
+  for (const file of walkFiles("content").filter(
+    (path) => path.endsWith(".md") && path !== siteConfigFile,
   )) {
     const { metadata } = readPage(readFileSync(file, "utf8"));
     const route =
@@ -124,8 +121,8 @@ function checkSeo(root = "dist") {
   }
   const feedPath = join(root, "feed.xml");
   if (site.articles) {
-    const pages = walk("content")
-      .filter((path) => path.endsWith(".md") && path !== "content/_site.md")
+    const pages = walkFiles("content")
+      .filter((path) => path.endsWith(".md") && path !== siteConfigFile)
       .map((path) => ({
         route:
           path === "content/home.md" ? "/" : `/${path.slice(8).replace(/(?:\/index)?\.md$/, "")}/`,

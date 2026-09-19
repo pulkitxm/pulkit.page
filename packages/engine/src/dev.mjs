@@ -2,15 +2,15 @@ import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSyn
 import { rm } from "node:fs/promises";
 import { extname, resolve, sep } from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
 import { bundleDemoScripts, compileDemoStyles, fontFile } from "@pulkit/demos/assets";
 import { bundleEmbedScripts, katexDirectory, photoswipeStyles } from "@pulkit/embeds/bundle";
+import { formatDuration } from "@pulkit/shared/duration";
+import { repositoryRoot as repository } from "@pulkit/shared/repository";
 import { assetFile } from "@pulkit/theme/files";
 import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
 import { developmentLog } from "./dev-log.mjs";
 import { developmentOriginFile, developmentRenderer } from "./dev-renderer.mjs";
-import { formatDuration } from "./duration.mjs";
 import { serverPort } from "./server-port.mjs";
 
 const sharedTypes = {
@@ -23,8 +23,6 @@ const sharedTypes = {
   ".txt": "text/plain",
 };
 
-const packages = fileURLToPath(new URL("../../", import.meta.url));
-const repository = resolve(packages, "..");
 const appAssets = resolve("assets");
 const { port, explicit } = serverPort();
 let origin;

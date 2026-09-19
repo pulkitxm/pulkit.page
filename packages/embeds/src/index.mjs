@@ -1,4 +1,4 @@
-import { escapeHtml } from "@pulkit/shared/html";
+import { unescapeHtml as decode, escapeHtml } from "@pulkit/shared/html";
 import { lightboxStyle } from "./lightbox.mjs";
 import { components } from "./registry.mjs";
 import { localVideoSize } from "./video-size.mjs";
@@ -56,14 +56,6 @@ const allowedTags = new Set([
 ]);
 const trustedFrames = /^https:\/\/codesandbox\.io\/embed\//;
 let facades = 0;
-
-function decode(value) {
-  return value
-    .replaceAll("&quot;", '"')
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&amp;", "&");
-}
 
 function readJson(source, start) {
   let depth = 0;

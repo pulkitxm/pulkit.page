@@ -110,7 +110,7 @@ prints the duration of each one.
    `embed`, `demo`, `carousel` and `list` extensions, collects the styles and
    scripts the page actually used, builds the SEO head, fills a layout, and
    returns HTML formatted by
-   [formatHtml](../packages/code/src/format-html.mjs).
+   [formatHtml](../packages/code/src/format/format-html.ts).
 5. **Generated assets.** [og-images.mjs](../packages/engine/src/og-images.mjs)
    rasterizes one 1200 by 630 PNG card per route with resvg, then adds
    `sitemap.xml`, `robots.txt`, `feed.xml` on sites with articles, and the
@@ -199,7 +199,7 @@ Both sites look identical because both take their entire presentation from
 
 - [styles.css](../packages/theme/styles.css) sets up the Tailwind theme and
   utilities layers without Preflight, declares `@source` entries for the theme's
-  `layouts/`, the engine's `render-page.mjs`, the code package's `highlight.mjs`
+  `layouts/`, the engine's `render-page.mjs`, the code package's `highlight/token-role.ts`
   and the embed renderers, defines the `dark` variant for both the system
   preference and the `data-theme` override, declares the Comic Relief web fonts,
   replaces the default Tailwind theme with the site tokens, including the
@@ -210,10 +210,10 @@ Both sites look identical because both take their entire presentation from
   by adding its own `layouts/` directory; neither does.
 - `assets/` holds the favicons, the Comic Relief web fonts, the IBM Plex Mono
   TTF used only for social cards, and the author portrait.
-- [theme.js](../packages/theme/theme.js) is loaded without `defer` in the head so
+- [theme.ts](../packages/theme/src/client/theme.ts) is loaded without `defer` in the head so
   a stored theme applies before the body renders. It also names the shared
   element for view transitions and skips the animation under reduced motion.
-- [src/files.mjs](../packages/theme/src/files.mjs) resolves paths inside the
+- [src/lib/files.ts](../packages/theme/src/lib/files.ts) resolves paths inside the
   package (`themeFile`) and maps a public `/assets/...` path to the app's own
   asset first and the shared asset second (`assetFile`).
 

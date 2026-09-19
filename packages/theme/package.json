@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./files": "./src/files.mjs",
+    "./files": "./src/lib/files.ts",
     "./styles.css": "./styles.css"
   },
   "scripts": {

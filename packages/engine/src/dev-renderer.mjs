@@ -1,7 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import profile from "@pulkit/profile";
-import { formatDuration } from "./duration.mjs";
+import { developmentOutputName } from "@pulkit/shared/built-site";
+import { formatDuration } from "@pulkit/shared/duration";
 import { generationCache, generationVersion } from "./generation-cache.mjs";
 import { llmsText, renderMarkdown } from "./markdown-export.mjs";
 import { cardCategory, crawlerOutputs, renderCard } from "./og-images.mjs";
@@ -52,7 +53,10 @@ export function developmentRenderer(origin) {
     },
     async render(pathname) {
       inventory ??= readSite(origin());
-      cache ??= generationCache(`dist/dev-${new URL(origin()).port}`, generationVersion());
+      cache ??= generationCache(
+        `dist/${developmentOutputName(new URL(origin()).port)}`,
+        generationVersion(),
+      );
       const { pages, layouts, site } = inventory;
       let action;
       function access(state) {

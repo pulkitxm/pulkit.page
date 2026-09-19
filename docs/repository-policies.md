@@ -12,11 +12,11 @@ Known binary media and fonts have no source-code comment syntax and are excluded
 
 ## No em dashes
 
-[check-em-dashes.mjs](../tooling/checks/src/check-em-dashes.mjs) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, HTML templates, and code examples. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
+[check-em-dashes.ts](../tooling/checks/src/commands/check-em-dashes.ts) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, HTML templates, and code examples. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
 
 ## No source-code comments
 
-[check-comments.mjs](../tooling/checks/src/check-comments.mjs) parses syntax rather than searching every slash or hash as a comment.
+[check-comments.ts](../tooling/checks/src/commands/check-comments.ts) parses syntax rather than searching every slash or hash as a comment.
 
 - Tree-sitter handles JavaScript, TypeScript, JSX/TSX, CSS, shell, Python, Ruby, Lua, Swift, Rust, C/C++, Java, Kotlin, Go, TOML, JSON/JSONC, and other explicitly registered languages.
 - YAML concrete-syntax tokens distinguish comments from quoted and block scalars.
@@ -41,15 +41,15 @@ Knip is static analysis, not a guarantee about runtime reachability or a CSS/ima
 
 These are enforced too, and every one of them runs inside `bun run ci`:
 
-| Gate                          | Tool                                                               | Rule                                                                                       |
-| ----------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `format:check`, `lint`        | Biome with the root [biome.json](../biome.json)                    | Space indentation, 100 columns, LF, and the strict lint presets; warnings fail `lint`      |
-| `check:content`               | [check-content.mjs](../tooling/checks/src/check-content.mjs)       | The content schema plus canonical Markdown and YAML formatting for every tracked document  |
-| `check:repository`            | [check-repository.mjs](../tooling/checks/src/check-repository.mjs) | Lowercase kebab-case source paths, no symlinks, size limits, LF endings, trailing newlines |
-| `check:imports`               | [check-imports.mjs](../tooling/checks/src/check-imports.mjs)       | Every static import in `apps/`, `packages/`, and `tooling/` resolves at runtime            |
-| `check:dead-code`             | Knip with [knip.json](../knip.json)                                | No unused files, exports, or dependencies, with no tolerated issues                        |
-| `check:layouts`, `check:html` | html-validate with [.htmlvalidate.json](../.htmlvalidate.json)     | Valid HTML in the layout templates and in every built page                                 |
-| `check:shell`                 | `sh -n`                                                            | The hook and its installer parse                                                           |
+| Gate                          | Tool                                                                      | Rule                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `format:check`, `lint`        | Biome with the root [biome.json](../biome.json)                           | Space indentation, 100 columns, LF, and the strict lint presets; warnings fail `lint`      |
+| `check:content`               | [check-content.ts](../tooling/checks/src/commands/check-content.ts)       | The content schema plus canonical Markdown and YAML formatting for every tracked document  |
+| `check:repository`            | [check-repository.ts](../tooling/checks/src/commands/check-repository.ts) | Lowercase kebab-case source paths, no symlinks, size limits, LF endings, trailing newlines |
+| `check:imports`               | [check-imports.ts](../tooling/checks/src/commands/check-imports.ts)       | Every static import in `apps/`, `packages/`, and `tooling/` resolves at runtime            |
+| `check:dead-code`             | Knip with [knip.json](../knip.json)                                       | No unused files, exports, or dependencies, with no tolerated issues                        |
+| `check:layouts`, `check:html` | html-validate with [.htmlvalidate.json](../.htmlvalidate.json)            | Valid HTML in the layout templates and in every built page                                 |
+| `check:shell`                 | `sh -n`                                                                   | The hook and its installer parse                                                           |
 
 Documentation files follow the same content rules as pages, minus the frontmatter:
 lowercase kebab-case names except `README.md`, exactly one H1, no duplicate heading

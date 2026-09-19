@@ -3,10 +3,28 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./html": "./src/html.mjs",
-    "./built-site": "./src/built-site.mjs"
+    "./html": "./src/browser/html.ts",
+    "./motion": "./src/browser/motion.ts",
+    "./storage": "./src/browser/storage.ts",
+    "./frontmatter": "./src/content/frontmatter.ts",
+    "./markdown": "./src/content/markdown.ts",
+    "./built-site": "./src/node/built-site.ts",
+    "./bundle": "./src/node/bundle.ts",
+    "./duration": "./src/node/duration.ts",
+    "./failures": "./src/node/failures.ts",
+    "./files": "./src/node/files.ts",
+    "./hash": "./src/node/hash.ts",
+    "./repository": "./src/node/repository.ts",
+    "./tailwind": "./src/node/tailwind.ts"
   },
   "scripts": {
     "test": "bun test ./src"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "remark-stringify": "11.0.0",
+    "unified": "11.0.5"
   }
 }

@@ -30,14 +30,6 @@ export function buttonClass({ variant = "default", size = "default", className =
   return cn(buttonBase, buttonVariants[variant], buttonSizes[size], className);
 }
 
-export function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
 export function button({ variant, size, className, label = "", attrs = "" } = {}) {
   return `<button type="button" class="${buttonClass({ variant, size, className })}" ${attrs}>${label}</button>`;
 }
@@ -48,10 +40,6 @@ export function icon(node, className = "") {
   svg.setAttribute("class", cn(name, className));
   svg.setAttribute("aria-hidden", "true");
   return svg.outerHTML;
-}
-
-export function prefersReducedMotion() {
-  return matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export function html(strings, ...values) {

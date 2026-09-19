@@ -1,19 +1,15 @@
+import { readStoredJson, writeStoredJson } from "@pulkit/shared/storage";
+
 const storageKey = "preferred-package-manager";
 const managers = ["bun", "pnpm", "npm", "yarn"];
 
 function readPreference() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(storageKey) ?? "null");
-    return managers.includes(stored) ? stored : "bun";
-  } catch {
-    return "bun";
-  }
+  const stored = readStoredJson(storageKey);
+  return managers.includes(stored) ? stored : "bun";
 }
 
 function writePreference(manager) {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(manager));
-  } catch {}
+  writeStoredJson(storageKey, manager);
 }
 
 const roots = [...document.querySelectorAll("[data-install-tabs]")];

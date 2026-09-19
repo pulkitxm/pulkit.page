@@ -1,14 +1,9 @@
+import { escapeXml as xml } from "@pulkit/shared/html";
 import { themeFile } from "@pulkit/theme/files";
 import { Resvg } from "@resvg/resvg-js";
 import { markdownOutputs } from "./markdown-export.mjs";
 import { articles, categoryOf, imagePath, isArticle } from "./seo.mjs";
 
-const xml = (value) =>
-  String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[character],
-  );
 export function titleLines(title, width = 29) {
   const lines = [];
   for (const word of title.split(/\s+/)) {

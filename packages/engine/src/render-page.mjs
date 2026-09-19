@@ -11,6 +11,7 @@ import {
 } from "@pulkit/embeds";
 import { codeCopyScript, copyButton } from "@pulkit/embeds/copy-button";
 import { lightboxScript, lightboxStyle, localImageSize, zoomable } from "@pulkit/embeds/lightbox";
+import { splitFrontmatter, textFields } from "@pulkit/shared/frontmatter";
 import { escapeHtml } from "@pulkit/shared/html";
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
@@ -44,29 +45,15 @@ function withClass(html, classes) {
   return html.replace(/^<(\w+)/, `<$1 class="${classes}"`);
 }
 export function readPage(source) {
-  const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(source);
-  if (!match) {
+  const frontmatter = splitFrontmatter(source, { crlf: true });
+  if (!frontmatter) {
     throw new Error("Markdown must start with YAML frontmatter");
   }
-  const metadata = parse(match[1]);
+  const metadata = parse(frontmatter.yaml);
   if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
     throw new Error("YAML frontmatter must be a mapping");
   }
-  for (const field of [
-    "title",
-    "description",
-    "date",
-    "role",
-    "period",
-    "endDate",
-    "icon",
-    "darkIcon",
-    "secondaryIcon",
-    "layout",
-    "brand",
-    "articles",
-    "copyright",
-  ]) {
+  for (const field of textFields) {
     if (
       metadata[field] !== undefined &&
       (typeof metadata[field] !== "string" || !metadata[field].trim())
@@ -74,7 +61,7 @@ export function readPage(source) {
       throw new Error(`${field} must be a nonempty string`);
     }
   }
-  return { metadata, body: match[2] };
+  return { metadata, body: frontmatter.body };
 }
 function safeUrl(value) {
   if (typeof value !== "string" || !/^(?:\/(?!\/)|https:\/\/|mailto:|#)/.test(value)) {

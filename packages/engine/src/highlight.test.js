@@ -1,11 +1,12 @@
 import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { scanText } from "@pulkit/checks/comments";
 import { highlightFence } from "@pulkit/code/highlight";
+import { unescapeHtml } from "@pulkit/shared/html";
+import { repositoryRoot as repository } from "@pulkit/shared/repository";
 import { renderPage } from "./render-page.mjs";
 
-const repository = resolve(import.meta.dir, "../../..");
 const theme = readFileSync(join(repository, "packages/theme/styles.css"), "utf8");
 const appStyles = readdirSync(join(repository, "apps")).map((app) =>
   readFileSync(join(repository, "apps", app, "styles.css"), "utf8"),
@@ -20,20 +21,18 @@ function codeInner(html) {
 }
 
 function visibleText(html) {
-  return codeInner(html)
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => line.replace(/^<span class="block [^"]+">|<\/span>$/g, "").replace("<br />", ""))
-    .join("\n")
-    .replace(/<span class="[^"]+">/g, "")
-    .replace(/<\/span>/g, "")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\n$/, "");
+  return unescapeHtml(
+    codeInner(html)
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) =>
+        line.replace(/^<span class="block [^"]+">|<\/span>$/g, "").replace("<br />", ""),
+      )
+      .join("\n")
+      .replace(/<span class="[^"]+">/g, "")
+      .replace(/<\/span>/g, ""),
+  ).replace(/\n$/, "");
 }
 
 describe("build-time syntax highlighting", () => {

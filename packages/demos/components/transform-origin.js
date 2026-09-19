@@ -1,6 +1,7 @@
+import { escapeAttribute } from "@pulkit/shared/html";
 import { Check, ChevronDown } from "lucide";
 import { createSlider } from "../runtime/slider.js";
-import { cn, escapeHtml, html, icon, refs } from "../runtime/ui.js";
+import { cn, html, icon, refs } from "../runtime/ui.js";
 
 const origins = [
   { label: "Center", name: "center", value: "center" },
@@ -183,7 +184,7 @@ export function mount(root) {
       wrapper.innerHTML = `<div role="listbox" data-select-content data-slot="select-content" data-state="open" data-side="bottom" data-align="start" dir="ltr" tabindex="-1" class="${contentClass}" style="box-sizing: border-box; display: flex; flex-direction: column; outline: none; pointer-events: auto;"><div role="presentation" data-radix-select-viewport class="${viewportClass}" style="position: relative; flex: 1 1 0%; overflow: hidden auto;">${origins
         .map((origin) => {
           const checked = origin.value === trigger.dataset.value;
-          return `<div role="option" data-slot="select-item" data-value="${escapeHtml(origin.value)}" aria-selected="${checked}" data-state="${checked ? "checked" : "unchecked"}" tabindex="-1" class="${itemClass}"><span class="absolute right-2 flex size-3.5 items-center justify-center">${checked ? `<span aria-hidden="true">${icon(Check, "size-4")}</span>` : ""}</span><span>${escapeHtml(origin.label)}</span></div>`;
+          return `<div role="option" data-slot="select-item" data-value="${escapeAttribute(origin.value)}" aria-selected="${checked}" data-state="${checked ? "checked" : "unchecked"}" tabindex="-1" class="${itemClass}"><span class="absolute right-2 flex size-3.5 items-center justify-center">${checked ? `<span aria-hidden="true">${icon(Check, "size-4")}</span>` : ""}</span><span>${escapeAttribute(origin.label)}</span></div>`;
         })
         .join("")}</div></div>`;
       content = wrapper.firstElementChild;

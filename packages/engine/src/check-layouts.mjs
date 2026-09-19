@@ -1,13 +1,13 @@
-import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { formatHtml } from "@pulkit/code/format-html";
+import { readJson } from "@pulkit/shared/files";
+import { repositoryRoot } from "@pulkit/shared/repository";
 import { HtmlValidate } from "html-validate";
 import { applyLayout, layoutDirectory, loadLayouts, themeScript } from "./layouts.mjs";
 
 export async function checkLayouts(directory = layoutDirectory()) {
   const layouts = loadLayouts(directory);
-  const validator = new HtmlValidate(
-    JSON.parse(readFileSync(new URL("../../../.htmlvalidate.json", import.meta.url), "utf8")),
-  );
+  const validator = new HtmlValidate(readJson(join(repositoryRoot, ".htmlvalidate.json")));
   const values = {
     seo: "",
     themeScript: themeScript(),

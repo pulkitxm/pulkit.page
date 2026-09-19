@@ -1,3 +1,5 @@
+import { escapeAttribute } from "@pulkit/shared/html";
+import { readStoredJson, writeStoredJson } from "@pulkit/shared/storage";
 import {
   Check,
   Code,
@@ -10,7 +12,7 @@ import {
   SidebarOpen,
   WrapText,
 } from "lucide";
-import { button, cn, escapeHtml, icon } from "./ui.js";
+import { button, cn, icon } from "./ui.js";
 
 const fullHeightClass = "min-h-[min(92svh,52rem)] h-[min(92svh,52rem)]";
 const minCodeWidth = 200;
@@ -21,17 +23,11 @@ const desktopQuery = matchMedia("(min-width: 1024px)");
 const wideQuery = matchMedia("(min-width: 1200px)");
 
 function readWrap() {
-  try {
-    return JSON.parse(localStorage.getItem(wrapKey) ?? "false") === true;
-  } catch {
-    return false;
-  }
+  return readStoredJson(wrapKey) === true;
 }
 
 function writeWrap(value) {
-  try {
-    localStorage.setItem(wrapKey, JSON.stringify(value));
-  } catch {}
+  writeStoredJson(wrapKey, value);
   for (const listener of wrapListeners) {
     listener(value);
   }
@@ -96,7 +92,7 @@ export function mountFrame(shadow, { frame, files, id }) {
         variant: index === 0 ? "secondary" : "ghost",
         className:
           "whitespace-nowrap rounded-none border-(--frame-border) border-r font-mono text-xs",
-        label: escapeHtml(file.filename),
+        label: escapeAttribute(file.filename),
         attrs: `data-file="${index}"`,
       }),
     )

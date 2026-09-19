@@ -1,6 +1,7 @@
 import { cpSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { bundleBrowserScripts } from "@pulkit/shared/bundle";
 
 export const photoswipeStyles = fileURLToPath(
   new URL("dist/photoswipe.css", import.meta.resolve("photoswipe/package.json")),
@@ -14,18 +15,7 @@ export async function bundleEmbedScripts(outdir, { minify = true } = {}) {
   const entrypoints = readdirSync(client)
     .filter((file) => file.endsWith(".js"))
     .map((file) => join(client, file));
-  const result = await Bun.build({
-    entrypoints,
-    outdir,
-    splitting: true,
-    minify,
-    format: "esm",
-    target: "browser",
-    naming: { entry: "[name].[ext]", chunk: "[name]-[hash].[ext]" },
-  });
-  if (!result.success) {
-    throw new AggregateError(result.logs, "Failed to bundle embed scripts");
-  }
+  await bundleBrowserScripts({ entrypoints, outdir, minify, label: "embed scripts" });
 }
 
 export async function buildEmbedAssets(outdir) {

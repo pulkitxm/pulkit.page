@@ -27,22 +27,22 @@
       "project": ["**/*.{js,mjs,css}"]
     },
     "packages/theme": {
-      "entry": ["theme.js"],
-      "project": ["*.{js,css}", "src/**/*.mjs"]
+      "entry": ["src/client/theme.ts"],
+      "project": ["src/**/*.ts", "*.css"]
     },
     "packages/code": {
-      "project": ["src/**/*.mjs"]
+      "project": ["src/**/*.ts"]
     },
     "tooling/checks": {
-      "entry": ["src/check-*.mjs"],
-      "project": ["src/**/*.mjs"]
+      "entry": ["src/commands/check-*.ts"],
+      "project": ["src/**/*.ts"]
     },
     "tooling/lighthouse": {
-      "entry": ["src/lighthouse.mjs", "src/worker.mjs"],
-      "project": ["src/**/*.mjs"]
+      "entry": ["src/commands/lighthouse.ts", "src/commands/worker.ts"],
+      "project": ["src/**/*.ts"]
     },
     "packages/shared": {
-      "project": ["src/**/*.mjs"]
+      "project": ["src/**/*.{ts,css}"]
     }
   }
 }

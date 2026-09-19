@@ -3,7 +3,7 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @source "./layouts";
 @source "../engine/src/render-page.mjs";
-@source "../code/src/highlight.mjs";
+@source "../code/src/highlight/token-role.ts";
 @source "../embeds/src";
 
 @custom-variant dark {

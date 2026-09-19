@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, extname, join, normalize, resolve } from "node:path";
 import process from "node:process";
 import { builtFiles } from "@pulkit/shared/built-site";
+import { reportFailures } from "@pulkit/shared/failures";
 
 const root = resolve(process.argv[2] ?? "dist");
 const failures = [];
@@ -70,11 +71,4 @@ for (const file of files) {
   }
 }
 
-if (failures.length > 0) {
-  for (const failure of failures) {
-    console.error(failure);
-  }
-  process.exit(1);
-}
-
-console.log(`validated local references across ${files.length} build files`);
+reportFailures(failures, `validated local references across ${files.length} build files`);

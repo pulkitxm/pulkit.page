@@ -1,15 +1,15 @@
 import { existsSync } from "node:fs";
 import process from "node:process";
+import { formatDuration } from "@pulkit/shared/duration";
+import { failWith } from "@pulkit/shared/failures";
 import { preview } from "vite";
 import { developmentLog } from "./dev-log.mjs";
-import { formatDuration } from "./duration.mjs";
 import { serverPort } from "./server-port.mjs";
 
 if (!existsSync("dist/index.html")) {
-  console.error(
+  failWith(
     "No built site found. Run `bun run build` first, or `bun run serve` to build and serve.",
   );
-  process.exit(1);
 }
 const { port, explicit } = serverPort();
 const server = await preview({

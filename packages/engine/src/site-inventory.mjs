@@ -1,6 +1,9 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { lstatSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import profile from "@pulkit/profile";
+import { developmentOutput } from "@pulkit/shared/built-site";
+import { walkFiles } from "@pulkit/shared/files";
+import { siteConfigFile } from "@pulkit/shared/frontmatter";
 import { loadLayouts } from "./layouts.mjs";
 import { readPage } from "./render-page.mjs";
 import { articles } from "./seo.mjs";
@@ -8,7 +11,7 @@ import { articles } from "./seo.mjs";
 const externalList = /^:::list ([a-z0-9-]+):all\b/gm;
 
 export function readSiteConfig(url, root = ".") {
-  const config = readPage(readFileSync(join(root, "content/_site.md"), "utf8")).metadata;
+  const config = readPage(readFileSync(join(root, siteConfigFile), "utf8")).metadata;
   return {
     author: profile.name,
     authorUrl: profile.url,
@@ -24,23 +27,19 @@ export function readSiteConfig(url, root = ".") {
 function readPages(root) {
   const content = join(root, "content");
   function sources(directory) {
-    return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-      const path = join(directory, entry.name);
-      if (entry.isSymbolicLink()) {
+    return walkFiles(directory).filter((path) => {
+      if (lstatSync(path).isSymbolicLink()) {
         throw new Error(`Symlinks are not supported in page trees: ${path}`);
-      }
-      if (entry.isDirectory()) {
-        return sources(path);
       }
       if (/\.mdx$/i.test(path)) {
         throw new Error(`MDX is not supported; use Markdown: ${path}`);
       }
-      return /\.md$/i.test(path) && path !== join(content, "_site.md") ? [path] : [];
+      return /\.md$/i.test(path) && path !== join(root, siteConfigFile);
     });
   }
   const routes = new Set();
   const pages = sources(content)
-    .sort()
+    .sort((left, right) => Number(left > right) - Number(left < right))
     .map((source) => {
       const name = relative(content, source).replace(/\.md$/i, "");
       const route = name === "home" || name === "index" ? "/" : `/${name.replace(/\/index$/, "")}/`;
@@ -48,7 +47,7 @@ function readPages(root) {
       if (routes.has(key)) {
         throw new Error(`Multiple Markdown sources map to ${route}`);
       }
-      if (/^\/dev-[0-9]+\//.test(route)) {
+      if (developmentOutput.test(route.split("/")[1])) {
         throw new Error("Root dev-<port> routes are reserved for development output");
       }
       routes.add(key);

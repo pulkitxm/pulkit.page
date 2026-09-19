@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import {
   existsSync,
   mkdirSync,
@@ -9,14 +8,11 @@ import {
 } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
+import { readJson } from "@pulkit/shared/files";
+import { sha256Hex as digest } from "@pulkit/shared/hash";
+import { repositoryRoot as repository } from "@pulkit/shared/repository";
 
-function digest(value) {
-  return createHash("sha256").update(value).digest("hex");
-}
-
-const packages = fileURLToPath(new URL("../../", import.meta.url));
-const repository = join(packages, "..");
+const packages = join(repository, "packages");
 
 export function generationVersion() {
   const files = [
@@ -24,13 +20,13 @@ export function generationVersion() {
       .filter(
         (path) =>
           !path.includes("node_modules") &&
-          (/\/src\/.+\.mjs$/.test(path) || /^demos\/showcases\/.+\.json$/.test(path)),
+          (/\/src\/.+(?<!\.test)\.(?:mjs|ts)$/.test(path) ||
+            /^demos\/showcases\/.+\.json$/.test(path)),
       )
       .map((path) => join(packages, path)),
     join(repository, "biome.json"),
     join(repository, "bun.lock"),
     join(packages, "theme/assets/fonts/ibm-plex-mono-regular.ttf"),
-    join(packages, "theme/theme.js"),
   ];
   return digest(
     files
@@ -46,7 +42,7 @@ export function generationCache(outputDirectory, version, enabled = true) {
   let previous = {};
   if (enabled) {
     try {
-      const stored = JSON.parse(readFileSync(path, "utf8"));
+      const stored = readJson(path);
       if (stored.version === version) {
         previous = stored.entries;
       }

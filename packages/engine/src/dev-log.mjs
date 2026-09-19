@@ -1,4 +1,4 @@
-import { formatDuration } from "./duration.mjs";
+import { formatDuration } from "@pulkit/shared/duration";
 
 export function developmentLog(message, startedAt) {
   const now = new Date();

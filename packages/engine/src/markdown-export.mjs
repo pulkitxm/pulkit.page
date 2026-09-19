@@ -1,23 +1,10 @@
 import { formatFence } from "@pulkit/code/format-code";
 import { showcase } from "@pulkit/demos/render";
 import { matchBlockEmbed, matchInlineEmbed } from "@pulkit/embeds";
-import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
-import remarkStringify from "remark-stringify";
-import { unified } from "unified";
+import { unescapeHtml } from "@pulkit/shared/html";
+import { markdownProcessor as markdown } from "@pulkit/shared/markdown";
 import { collectionItems } from "./render-page.mjs";
 import { isArticle, markdownPath, relatedPages } from "./seo.mjs";
-
-const markdown = unified().use(remarkParse).use(remarkGfm).use(remarkStringify, {
-  bullet: "-",
-  emphasis: "*",
-  strong: "*",
-  fence: "`",
-  fences: true,
-  listItemIndent: "one",
-  rule: "-",
-  ruleRepetition: 3,
-});
 
 export function markdownOutputs(pages, site) {
   const output = new Map();
@@ -236,11 +223,7 @@ function tokenize(body, context) {
 
 function attribute(html, name) {
   const value = new RegExp(`\\s${name}="([^"]*)"`).exec(html)?.[1];
-  return value
-    ?.replaceAll("&quot;", '"')
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&amp;", "&");
+  return value === undefined ? undefined : unescapeHtml(value);
 }
 
 function textOf(node) {

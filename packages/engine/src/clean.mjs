@@ -1,5 +1,5 @@
 import { rmSync } from "node:fs";
-import { logDuration } from "./duration.mjs";
+import { logDuration } from "@pulkit/shared/duration";
 
 const startedAt = performance.now();
 for (const directory of [

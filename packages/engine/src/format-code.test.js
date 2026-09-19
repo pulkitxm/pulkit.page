@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { checkContent } from "@pulkit/checks/content";
 import { formatFence } from "@pulkit/code/format-code";
 import { highlightFence } from "@pulkit/code/highlight";
+import { unescapeHtml } from "@pulkit/shared/html";
 import { renderPage } from "./render-page.mjs";
 
 function page(body) {
@@ -17,20 +18,18 @@ function codeInner(html) {
 }
 
 function visibleText(html) {
-  return codeInner(html)
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => line.replace(/^<span class="block [^"]+">|<\/span>$/g, "").replace("<br />", ""))
-    .join("\n")
-    .replace(/<span class="[^"]+">/g, "")
-    .replace(/<\/span>/g, "")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\n$/, "");
+  return unescapeHtml(
+    codeInner(html)
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) =>
+        line.replace(/^<span class="block [^"]+">|<\/span>$/g, "").replace("<br />", ""),
+      )
+      .join("\n")
+      .replace(/<span class="[^"]+">/g, "")
+      .replace(/<\/span>/g, ""),
+  ).replace(/\n$/, "");
 }
 
 describe("generate-time fence formatting", () => {
@@ -108,15 +107,8 @@ describe("generate-time fence formatting", () => {
     );
     expect(formatted).toBe('const value = "ready";\n\nconsole.log(value);');
     const html = await highlightFence("typescript", formatted);
-    expect(
-      html
-        .replace(/<span class="[^"]+">/g, "")
-        .replace(/<\/span>/g, "")
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'"),
-    ).toBe(formatted);
+    expect(unescapeHtml(html.replace(/<span class="[^"]+">/g, "").replace(/<\/span>/g, ""))).toBe(
+      formatted,
+    );
   });
 });

@@ -1,4 +1,6 @@
-const reducedMotion = globalThis.matchMedia("(prefers-reduced-motion: reduce)");
+import { reducedMotionQuery } from "@pulkit/shared/motion";
+
+const reducedMotion = reducedMotionQuery();
 
 for (const root of document.querySelectorAll("[data-replies-carousel]")) {
   const track = root.querySelector("[data-replies-track]");

@@ -1,18 +1,11 @@
-import { readFileSync } from "node:fs";
 import { formatFence } from "@pulkit/code/format-code";
 import { highlightFence } from "@pulkit/code/highlight";
-
-function escapeAttribute(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
+import { readJson } from "@pulkit/shared/files";
+import { escapeAttribute } from "@pulkit/shared/html";
 
 export function showcase(key) {
   try {
-    return JSON.parse(readFileSync(new URL(`../showcases/${key}.json`, import.meta.url), "utf8"));
+    return readJson(new URL(`../showcases/${key}.json`, import.meta.url));
   } catch (error) {
     if (error.code === "ENOENT") {
       throw new Error(`Unknown demo: ${key}`, { cause: error });

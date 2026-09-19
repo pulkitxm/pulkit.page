@@ -39,7 +39,9 @@ function readTemplates(directory) {
 let themeSource;
 
 export function themeScript() {
-  themeSource ??= `<script>${readFileSync(themeFile("theme.js"), "utf8").trim()}</script>`;
+  themeSource ??= `<script>${new Bun.Transpiler({ loader: "ts" })
+    .transformSync(readFileSync(themeFile("src/client/theme.ts"), "utf8"))
+    .trim()}</script>`;
   return themeSource;
 }
 

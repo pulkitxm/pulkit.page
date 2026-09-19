@@ -1,13 +1,10 @@
-import { execFileSync } from "node:child_process";
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { bundleBrowserScripts } from "@pulkit/shared/bundle";
+import { compileTailwind } from "@pulkit/shared/tailwind";
 
-const tailwind = fileURLToPath(
-  new URL("dist/index.mjs", import.meta.resolve("@tailwindcss/cli/package.json")),
-);
 const fonts = fileURLToPath(
   new URL("files/", import.meta.resolve("@fontsource/poppins/package.json")),
 );
@@ -34,18 +31,11 @@ export function compileDemoStyles({ minify = true } = {}) {
   const directory = mkdtempSync(join(tmpdir(), "demo-styles-"));
   try {
     const output = join(directory, "demos.css");
-    execFileSync(
-      process.execPath,
-      [
-        tailwind,
-        "--input",
-        fileURLToPath(new URL("../styles.css", import.meta.url)),
-        "--output",
-        output,
-        ...(minify ? ["--minify"] : []),
-      ],
-      { stdio: ["ignore", "ignore", "pipe"] },
-    );
+    compileTailwind({
+      input: fileURLToPath(new URL("../styles.css", import.meta.url)),
+      output,
+      minify,
+    });
     const css = readFileSync(output, "utf8");
     const properties = css.match(/@property\s+[^{]+\{[^}]*\}/g) ?? [];
     return {
@@ -58,18 +48,12 @@ export function compileDemoStyles({ minify = true } = {}) {
 }
 
 export async function bundleDemoScripts(outdir, { minify = true } = {}) {
-  const result = await Bun.build({
+  await bundleBrowserScripts({
     entrypoints: [fileURLToPath(new URL("../index.js", import.meta.url))],
     outdir,
-    splitting: true,
     minify,
-    format: "esm",
-    target: "browser",
-    naming: { entry: "[name].[ext]", chunk: "[name]-[hash].[ext]" },
+    label: "demo scripts",
   });
-  if (!result.success) {
-    throw new AggregateError(result.logs, "Failed to bundle demo scripts");
-  }
 }
 
 export function fontFile(name) {

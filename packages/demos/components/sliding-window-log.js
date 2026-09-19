@@ -1,14 +1,7 @@
+import { escapeAttribute } from "@pulkit/shared/html";
+import { prefersReducedMotion } from "@pulkit/shared/motion";
 import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from "lucide";
-import {
-  button,
-  buttonClass,
-  cn,
-  escapeHtml,
-  html,
-  icon,
-  prefersReducedMotion,
-  refs,
-} from "../runtime/ui.js";
+import { button, buttonClass, cn, html, icon, refs } from "../runtime/ui.js";
 
 const WINDOW_SEC = 10;
 const LIMIT = 3;
@@ -307,8 +300,8 @@ export function mount(root) {
         ${badge("outline", "font-mono text-[11px] tabular-nums", `Log size after cleanup ${step.logAfterCleanup.length}`)}
       </div>
       <div>
-        <h4 class="mb-1.5 font-semibold text-sm sm:text-base">${escapeHtml(step.title)}</h4>
-        <p class="text-pretty text-neutral-600 text-xs leading-relaxed sm:text-sm dark:text-neutral-400">${escapeHtml(step.detail)}</p>
+        <h4 class="mb-1.5 font-semibold text-sm sm:text-base">${escapeAttribute(step.title)}</h4>
+        <p class="text-pretty text-neutral-600 text-xs leading-relaxed sm:text-sm dark:text-neutral-400">${escapeAttribute(step.detail)}</p>
       </div>
       ${
         step.evicted.length > 0

@@ -1,5 +1,3 @@
-import { execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
 import {
   copyFileSync,
   cpSync,
@@ -10,86 +8,66 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
-import { join } from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
 import { buildDemoAssets } from "@pulkit/demos/assets";
 import { buildEmbedAssets } from "@pulkit/embeds/bundle";
+import { builtFiles, developmentOutput } from "@pulkit/shared/built-site";
+import { logDuration, timed, timedAsync } from "@pulkit/shared/duration";
+import { sha256Hex } from "@pulkit/shared/hash";
+import { compileTailwind } from "@pulkit/shared/tailwind";
 import { themeFile } from "@pulkit/theme/files";
-import { logDuration } from "./duration.mjs";
 import { generateSite } from "./generate.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
-const tailwind = fileURLToPath(
-  new URL("dist/index.mjs", import.meta.resolve("@tailwindcss/cli/package.json")),
-);
 const buildStartedAt = performance.now();
 const origin = resolveSiteOrigin();
 
-let stepStartedAt = performance.now();
-if (existsSync("dist")) {
-  for (const entry of readdirSync("dist")) {
-    if (!/^dev-[0-9]+$/.test(entry)) {
-      rmSync(`dist/${entry}`, { force: true, recursive: true });
+timed("Cleared previous build", () => {
+  if (existsSync("dist")) {
+    for (const entry of readdirSync("dist")) {
+      if (!developmentOutput.test(entry)) {
+        rmSync(`dist/${entry}`, { force: true, recursive: true });
+      }
     }
   }
-}
-logDuration("Cleared previous build", stepStartedAt);
+});
 const production =
   (!process.env.NODE_ENV || process.env.NODE_ENV === "production") &&
   origin === resolveSiteOrigin({ NODE_ENV: "production" });
-stepStartedAt = performance.now();
-const pages = await generateSite("dist", origin);
-logDuration("Rendered pages", stepStartedAt);
-stepStartedAt = performance.now();
-cpSync(themeFile("assets"), "dist/assets", { recursive: true });
-if (existsSync("assets")) {
-  cpSync("assets", "dist/assets", { recursive: true });
-}
-copyFileSync(themeFile("assets/favicon-32.png"), "dist/favicon.ico");
-if (production) {
-  copyFileSync("CNAME", "dist/CNAME");
-}
-logDuration("Copied shared assets", stepStartedAt);
-stepStartedAt = performance.now();
-execFileSync(
-  process.execPath,
-  [tailwind, "--input", "styles.css", "--output", "dist/styles.css", "--minify"],
-  { stdio: ["ignore", "ignore", "pipe"] },
-);
-logDuration("Compiled styles", stepStartedAt);
-stepStartedAt = performance.now();
-if (pages.some((page) => page.body.includes(":::demo "))) {
-  await buildDemoAssets("dist/assets/demos");
-}
-await buildEmbedAssets("dist/assets");
-logDuration("Built demo assets", stepStartedAt);
-stepStartedAt = performance.now();
-const fingerprinted = new Map();
-for (const file of ["styles.css"]) {
-  const hash = createHash("sha256")
-    .update(readFileSync(`dist/${file}`))
-    .digest("hex")
-    .slice(0, 12);
-  const name = file.replace(/\.(\w+)$/, `.${hash}.$1`);
-  renameSync(`dist/${file}`, `dist/${name}`);
-  fingerprinted.set(`/${file}"`, `/${name}"`);
-}
-function htmlFiles(directory) {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(directory, entry.name);
-    if (entry.isDirectory()) {
-      return directory === "dist" && /^dev-[0-9]+$/.test(entry.name) ? [] : htmlFiles(path);
-    }
-    return entry.name.endsWith(".html") ? [path] : [];
-  });
-}
-for (const file of htmlFiles("dist")) {
-  let html = readFileSync(file, "utf8");
-  for (const [from, to] of fingerprinted) {
-    html = html.replaceAll(`="${from}`, `="${to}`);
+const pages = await timedAsync("Rendered pages", () => generateSite("dist", origin));
+timed("Copied shared assets", () => {
+  cpSync(themeFile("assets"), "dist/assets", { recursive: true });
+  if (existsSync("assets")) {
+    cpSync("assets", "dist/assets", { recursive: true });
   }
-  writeFileSync(file, html);
-}
-logDuration("Fingerprinted styles", stepStartedAt);
+  copyFileSync(themeFile("assets/favicon-32.png"), "dist/favicon.ico");
+  if (production) {
+    copyFileSync("CNAME", "dist/CNAME");
+  }
+});
+timed("Compiled styles", () =>
+  compileTailwind({ input: "styles.css", output: "dist/styles.css", minify: true }),
+);
+await timedAsync("Built demo assets", async () => {
+  if (pages.some((page) => page.body.includes(":::demo "))) {
+    await buildDemoAssets("dist/assets/demos");
+  }
+  await buildEmbedAssets("dist/assets");
+});
+timed("Fingerprinted styles", () => {
+  const fingerprinted = new Map();
+  for (const file of ["styles.css"]) {
+    const hash = sha256Hex(readFileSync(`dist/${file}`)).slice(0, 12);
+    const name = file.replace(/\.(\w+)$/, `.${hash}.$1`);
+    renameSync(`dist/${file}`, `dist/${name}`);
+    fingerprinted.set(`/${file}"`, `/${name}"`);
+  }
+  for (const file of builtFiles("dist").filter((path) => path.endsWith(".html"))) {
+    let html = readFileSync(file, "utf8");
+    for (const [from, to] of fingerprinted) {
+      html = html.replaceAll(`="${from}`, `="${to}`);
+    }
+    writeFileSync(file, html);
+  }
+});
 logDuration(`Built dist for ${origin}`, buildStartedAt);

@@ -13,6 +13,7 @@ import {
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import process from "node:process";
+import { parse } from "yaml";
 
 const checks = resolve(import.meta.dir);
 const repository = resolve(import.meta.dir, "../../..");
@@ -119,4 +120,43 @@ test("turbo verify runs every check, lint, format and test script", () => {
     ),
   ];
   expect(missing).toEqual([]);
+});
+
+const workflow = (name) => parse(readFileSync(join(repository, ".github/workflows", name), "utf8"));
+const workflows = readdirSync(join(repository, ".github/workflows")).map((name) => ({
+  name,
+  ...workflow(name),
+}));
+
+test("a newer CI run cancels the older one on every branch, including main", () => {
+  const { concurrency } = workflow("ci.yml");
+  expect(concurrency["cancel-in-progress"]).toBe(true);
+  expect(concurrency.group).toContain("github.event.pull_request.number");
+  expect(concurrency.group).toContain("github.ref");
+});
+
+test("deploys run after a successful main CI run and never cancel a running deploy", () => {
+  const deploy = workflow("deploy.yml");
+  expect(deploy.on.workflow_run.workflows).toEqual(["CI"]);
+  expect(deploy.on.workflow_run.branches).toEqual(["main"]);
+  expect(deploy.concurrency["cancel-in-progress"]).toBe(false);
+  expect(deploy.permissions).toEqual({});
+  for (const job of Object.values(deploy.jobs)) {
+    expect(job.if).toContain("github.event.workflow_run.conclusion == 'success'");
+    expect(job.if).toContain("github.event.workflow_run.head_branch == 'main'");
+  }
+  expect(JSON.stringify(workflow("ci.yml").jobs)).not.toContain("deploy-pages");
+});
+
+test("every workflow job has a timeout and pins actions to a commit", () => {
+  for (const { name, jobs } of workflows) {
+    for (const [id, job] of Object.entries(jobs)) {
+      expect(`${name}:${id}:${typeof job["timeout-minutes"]}`).toBe(`${name}:${id}:number`);
+      for (const step of job.steps ?? []) {
+        if (step.uses) {
+          expect(step.uses).toMatch(/^[\w.-]+\/[\w.-]+@[0-9a-f]{40}$/);
+        }
+      }
+    }
+  }
 });

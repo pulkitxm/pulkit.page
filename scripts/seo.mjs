@@ -42,7 +42,7 @@ export function structuredData(route, metadata, site, pages) {
   const person = `${origin}/#person`;
   const website = `${origin}/#website`;
   const pageId = `${url}#webpage`;
-  const index = pages.find((page) => page.route === route)?.index;
+  const index = pages.find((entry) => entry.route === route)?.index;
   const blog = route.startsWith("/blogs/") && !index;
   const image = `${url}#image`;
   const graph = [
@@ -74,11 +74,7 @@ export function structuredData(route, metadata, site, pages) {
   const page = {
     "@type": index
       ? "CollectionPage"
-      : route === "/about/"
-        ? "AboutPage"
-        : route === "/contact/"
-          ? "ContactPage"
-          : "WebPage",
+      : ({ "/about/": "AboutPage", "/contact/": "ContactPage" }[route] ?? "WebPage"),
     "@id": pageId,
     url,
     name: metadata.title,
@@ -130,7 +126,7 @@ export function structuredData(route, metadata, site, pages) {
     page.about = ref(person);
   }
   const parents = ancestors(route, pages);
-  if (parents.length) {
+  if (parents.length > 0) {
     page.breadcrumb = ref(`${url}#breadcrumbs`);
     graph.push({
       "@type": "BreadcrumbList",

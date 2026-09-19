@@ -98,7 +98,7 @@ const generatedAssets = new Map(
 logDuration("Rendered generated assets", stepStartedAt);
 stepStartedAt = performance.now();
 const failures = [];
-for (const file of filesUnder(outputDirectory).filter((file) => !/\.html?$/i.test(file))) {
+for (const file of filesUnder(outputDirectory).filter((path) => !/\.html?$/i.test(path))) {
   if (!generatedAssets.has(file)) {
     if (clean) {
       rmSync(file);
@@ -122,7 +122,7 @@ for (const [file, buffer] of generatedAssets) {
 for (const file of (outputDirectory === "pages"
   ? filesUnder(".", true)
   : filesUnder(outputDirectory)
-).filter((file) => /\.html?$/i.test(file))) {
+).filter((path) => /\.html?$/i.test(path))) {
   if (!expected.has(file)) {
     if (clean && file.startsWith(`${outputDirectory}/`)) {
       rmSync(file);
@@ -153,7 +153,7 @@ for (const [output, { source, html }] of expected) {
   }
 }
 logDuration(check ? "Checked generated output" : "Synchronized generated output", stepStartedAt);
-if (failures.length) {
+if (failures.length > 0) {
   console.error(`Pages are out of sync:\n${failures.map((failure) => `  ${failure}`).join("\n")}`);
   console.error(
     "Run `bun run generate` for missing/stale output. Remove extra HTML or migrate it into content/. Use `bun run generate --clean` to remove orphan HTML inside pages/. HTML outside pages/ must be removed manually.",

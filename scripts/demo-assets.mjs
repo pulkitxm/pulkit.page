@@ -102,7 +102,7 @@ export async function bundleEmbedScripts(outdir, { minify = true } = {}) {
   const entrypoints = readdirSync("client/embeds")
     .filter((file) => file.endsWith(".js"))
     .map((file) => `client/embeds/${file}`);
-  if (!entrypoints.length) {
+  if (entrypoints.length === 0) {
     return;
   }
   const result = await Bun.build({

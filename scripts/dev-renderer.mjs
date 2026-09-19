@@ -31,14 +31,11 @@ export function developmentRenderer(origin) {
       const { pages, layouts, site } = inventory;
       let action;
       function access(state) {
-        action =
-          state === "miss"
-            ? attempted.has(pathname)
-              ? "rebuilt"
-              : "compiled"
-            : state === "pending"
-              ? "waited for compilation"
-              : "cached";
+        const outcomes = {
+          miss: attempted.has(pathname) ? "rebuilt" : "compiled",
+          pending: "waited for compilation",
+        };
+        action = outcomes[state] ?? "cached";
         attempted.add(pathname);
       }
       function summary(startedAt) {
@@ -83,7 +80,6 @@ export function developmentRenderer(origin) {
       if (!pathname.endsWith("/") && pages.some((entry) => entry.route === `${pathname}/`)) {
         return { redirect: `${pathname}/` };
       }
-      return undefined;
     },
   };
 }

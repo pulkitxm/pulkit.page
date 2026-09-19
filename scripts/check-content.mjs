@@ -43,7 +43,7 @@ function yaml(source) {
       errors.push("YAML aliases, anchors, and explicit tags are forbidden");
     }
   });
-  if (errors.length) {
+  if (errors.length > 0) {
     throw new Error(errors.join("; "));
   }
   return { value: document.toJS({ maxAliasCount: 0 }), errors };
@@ -112,7 +112,7 @@ function metadataErrors(data, file) {
   if (
     data.tags !== undefined &&
     (!Array.isArray(data.tags) ||
-      !data.tags.length ||
+      data.tags.length === 0 ||
       !data.tags.every(isText) ||
       new Set(data.tags).size !== data.tags.length)
   ) {
@@ -123,7 +123,7 @@ function metadataErrors(data, file) {
       continue;
     }
     const links = data[field];
-    if (!Array.isArray(links) || !links.length) {
+    if (!Array.isArray(links) || links.length === 0) {
       errors.push(`${field} must be a nonempty list`);
       continue;
     }
@@ -273,10 +273,11 @@ export function checkContent(file, source) {
       if (page && node.url && !/^(?:https?:\/\/|mailto:|\/(?!\/)|#)/.test(node.url)) {
         fail("page links must be root-relative, HTTPS/HTTP, mailto, or fragments", node);
       }
-      if (node.url?.startsWith("/blogs/") || node.url?.startsWith("/exp/")) {
-        if (!node.url.split(/[?#]/)[0].endsWith("/")) {
-          fail("page URLs must end with /", node);
-        }
+      if (
+        (node.url?.startsWith("/blogs/") || node.url?.startsWith("/exp/")) &&
+        !node.url.split(/[?#]/)[0].endsWith("/")
+      ) {
+        fail("page URLs must end with /", node);
       }
     }
     if (node.type === "definition") {
@@ -320,7 +321,7 @@ export function checkContent(file, source) {
     fail("page body must not be empty");
   }
   const formatted = (
-    front + (tree.children.length ? `${front ? "\n" : ""}${markdown.stringify(tree)}` : "")
+    front + (tree.children.length > 0 ? `${front ? "\n" : ""}${markdown.stringify(tree)}` : "")
   ).replace(/EMBEDTOKEN(\d+)X/g, (_, index) => embeds[Number(index)]);
   return { errors, formatted };
 }
@@ -353,7 +354,7 @@ if (import.meta.main) {
       const { errors, formatted } = checkContent(file, source);
       failures.push(...errors.map((error) => `${file}:${error}`));
       if (formatted !== source) {
-        if (args.includes("--write") && !errors.length) {
+        if (args.includes("--write") && errors.length === 0) {
           writeFileSync(file, formatted);
         } else {
           failures.push(`${file}: noncanonical formatting; run bun run format`);
@@ -363,7 +364,7 @@ if (import.meta.main) {
       failures.push(`${file}: ${error.message}`);
     }
   }
-  if (failures.length) {
+  if (failures.length > 0) {
     console.error(failures.join("\n"));
     process.exit(1);
   }

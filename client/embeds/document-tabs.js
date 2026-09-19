@@ -2,7 +2,7 @@ for (const root of document.querySelectorAll("[data-document-tabs]")) {
   const tabs = [...root.querySelectorAll("[data-document-tab]")];
   const panels = [...root.querySelectorAll("[data-document-panel]")];
   const indicator = root.querySelector("[data-document-indicator]");
-  if (!tabs.length) {
+  if (tabs.length === 0) {
     continue;
   }
   const select = (index, focus) => {

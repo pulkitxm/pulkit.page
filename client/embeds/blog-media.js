@@ -3,7 +3,7 @@ import PhotoSwipeLightbox from "photoswipe/lightbox";
 
 function setupLightbox() {
   const links = [...document.querySelectorAll("[data-media-zoom]")];
-  if (!links.length) {
+  if (links.length === 0) {
     return;
   }
   const dataSource = links.map((link) => ({

@@ -45,7 +45,8 @@ const viewportClass = cn(
 const itemClass =
   "relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2";
 
-const presenceStyles = `@keyframes select-enter{from{opacity:0;transform:translate3d(0,var(--select-enter-y,0),0) scale3d(.95,.95,.95)}}@keyframes select-exit{to{opacity:0;transform:translate3d(0,var(--select-enter-y,0),0) scale3d(.95,.95,.95)}}[data-select-content][data-state=open]{animation:select-enter .15s ease}[data-select-content][data-state=closed]{animation:select-exit .15s ease}[data-select-content][data-side=bottom]{--select-enter-y:-.5rem}[data-select-content][data-side=top]{--select-enter-y:.5rem}`;
+const presenceStyles =
+  "@keyframes select-enter{from{opacity:0;transform:translate3d(0,var(--select-enter-y,0),0) scale3d(.95,.95,.95)}}@keyframes select-exit{to{opacity:0;transform:translate3d(0,var(--select-enter-y,0),0) scale3d(.95,.95,.95)}}[data-select-content][data-state=open]{animation:select-enter .15s ease}[data-select-content][data-state=closed]{animation:select-exit .15s ease}[data-select-content][data-side=bottom]{--select-enter-y:-.5rem}[data-select-content][data-side=top]{--select-enter-y:.5rem}";
 
 export function mount(root) {
   let selectedOrigin = "center";

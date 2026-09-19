@@ -44,7 +44,7 @@ afterEach(() => {
   }
 });
 
-test("pre-commit checks the staged snapshot, not unstaged repairs", async () => {
+test("pre-commit checks the staged snapshot, not unstaged repairs", () => {
   const cwd = workspace();
   const git = (...args) => execFileSync("git", args, { env: fixtureEnv, cwd, stdio: "pipe" });
   git("init", "--quiet");
@@ -80,7 +80,7 @@ test("pre-commit checks the staged snapshot, not unstaged repairs", async () => 
   expect(run().status).toBe(1);
 });
 
-test("sync rejects every extra HTML page, including legacy and nested pages", async () => {
+test("sync rejects every extra HTML page, including legacy and nested pages", () => {
   const cwd = workspace();
   writeFileSync(join(cwd, "content/home.md"), source);
   execFileSync("bun", [join(root, "scripts/generate.mjs")], { env: fixtureEnv, cwd });
@@ -150,7 +150,7 @@ test("conflicting routes and unsupported MDX fail explicitly", () => {
   expect(run().stderr).toContain("MDX is not supported");
 });
 
-test("reference projects and build artifacts are excluded from the published page inventory", async () => {
+test("reference projects and build artifacts are excluded from the published page inventory", () => {
   const cwd = workspace();
   writeFileSync(join(cwd, "content/home.md"), source);
   execFileSync("bun", [join(root, "scripts/generate.mjs")], { env: fixtureEnv, cwd });
@@ -553,4 +553,10 @@ test("recent writing omits the current year and retains older years", async () =
   const html = await renderPage(`${source}\n:::list blogs\n`, { pages });
   expect(html).toContain(`datetime="${year}-08-14">Aug 14</time>`);
   expect(html).toContain(`datetime="${year - 1}-12-31">Dec 31, ${year - 1}</time>`);
+});
+
+test("code blocks open on their own line so the formatter never hangs a bracket before code", async () => {
+  const html = await renderPage(`${source}\n\`\`\`ts\nconst answer = 42;\n\`\`\`\n`);
+  expect(html).toMatch(/<pre [^>]*>\n<code class="language-ts /);
+  expect(html).not.toMatch(/^\s*><code/m);
 });

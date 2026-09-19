@@ -33,7 +33,7 @@ function linesOf(code) {
 
 function trimTrailingBlanks(lines) {
   const next = [...lines];
-  while (next.length && next.at(-1) === "") {
+  while (next.length > 0 && next.at(-1) === "") {
     next.pop();
   }
   return next;
@@ -53,7 +53,7 @@ function hygiene(code, structural) {
   if (!structural) {
     return lines.join("\n");
   }
-  while (lines.length && lines[0] === "") {
+  while (lines.length > 0 && lines[0] === "") {
     lines.shift();
   }
   const collapsed = [];
@@ -67,7 +67,7 @@ function hygiene(code, structural) {
   const indents = expanded
     .filter((line) => line !== "")
     .map((line) => /^( *)/.exec(line)?.[1].length ?? 0);
-  const indent = indents.length ? Math.min(...indents) : 0;
+  const indent = indents.length > 0 ? Math.min(...indents) : 0;
   return expanded.map((line) => (line === "" ? "" : line.slice(indent))).join("\n");
 }
 
@@ -90,9 +90,7 @@ function biomeFormat(code, fileName) {
         stdio: ["pipe", "pipe", "pipe"],
       },
     );
-  } catch {
-    return undefined;
-  }
+  } catch {}
 }
 
 export function formatFence(language, code) {

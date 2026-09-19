@@ -111,8 +111,8 @@ function checkSeo(root = "dist") {
   const sitemap = readFileSync(join(root, "sitemap.xml"), "utf8");
   const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   if (
-    JSON.stringify(locations.sort()) !==
-    JSON.stringify(routes.map((route) => site.url + route).sort())
+    JSON.stringify(locations.toSorted((a, b) => a.localeCompare(b))) !==
+    JSON.stringify(routes.map((route) => site.url + route).toSorted((a, b) => a.localeCompare(b)))
   ) {
     throw new Error("Sitemap must contain every canonical page exactly once");
   }

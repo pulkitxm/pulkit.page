@@ -32,7 +32,7 @@ function literal(node) {
   if (["Literal", "StringLiteral", "NumericLiteral", "BooleanLiteral"].includes(node.type)) {
     return node.value;
   }
-  if (node.type === "TemplateLiteral" && !node.expressions.length) {
+  if (node.type === "TemplateLiteral" && node.expressions.length === 0) {
     return node.quasis.map((part) => part.value.cooked).join("");
   }
   if (node.type === "Identifier" && identifiers.has(node.name)) {
@@ -132,13 +132,13 @@ function imageUrl(value) {
   if (/^https?:\/\//.test(value)) {
     return value;
   }
-  if (!value.startsWith("/")) {
+  if (value.startsWith("/")) {
+    path = `${reference}/public${value}`;
+  } else {
     path = value.split(".").reduce((object, key) => object?.[key], assets);
     if (!path) {
       throw new Error(`Unresolved reference image: ${value}`);
     }
-  } else {
-    path = `${reference}/public${value}`;
   }
   if (!existsSync(path)) {
     throw new Error(`Missing reference image: ${path}`);
@@ -197,7 +197,7 @@ function rawHtml(name, attributes, children, inline) {
       if (value === true) {
         return ` ${attribute}`;
       }
-      const url = key === "src" ? (name === "video" ? imageUrl(value) : value) : value;
+      const url = key === "src" && name === "video" ? imageUrl(value) : value;
       return ` ${attribute}="${escapeAttribute(url)}"`;
     })
     .join("");
@@ -223,13 +223,13 @@ function rawHtml(name, attributes, children, inline) {
   return [open, ...children, close];
 }
 
-function resolveProps(name, value, key = "") {
+function resolveProps(value, key = "") {
   if (Array.isArray(value)) {
-    return value.map((item) => resolveProps(name, item, key));
+    return value.map((item) => resolveProps(item, key));
   }
   if (value && typeof value === "object") {
     return Object.fromEntries(
-      Object.entries(value).map(([entry, item]) => [entry, resolveProps(name, item, entry)]),
+      Object.entries(value).map(([entry, item]) => [entry, resolveProps(item, entry)]),
     );
   }
   if (
@@ -299,7 +299,7 @@ function convert(node, originalUrl) {
     const label = children.map((child) => child.value ?? "").join("");
     return embed(
       name,
-      resolveProps(name, label ? { ...attributes, children: label } : attributes),
+      resolveProps(label ? { ...attributes, children: label } : attributes),
       inline,
     );
   }
@@ -333,7 +333,7 @@ function normalizeBlocks(node) {
     const result = [];
     let inline = [];
     const flush = () => {
-      if (inline.length) {
+      if (inline.length > 0) {
         result.push(paragraph(inline));
       }
       inline = [];
@@ -431,7 +431,7 @@ for (const file of sourceFiles.filter((path) => !blogsOnly || path.startsWith("b
   if (front.published === false) {
     metadata.draft = true;
   }
-  if (demoKeys.length) {
+  if (demoKeys.length > 0) {
     throw new Error(`Unused demo directives in ${output}: ${demoKeys.join(", ")}`);
   }
   let body = writer.stringify(converted).replace(/\s*\u2014\s*/g, ", ");

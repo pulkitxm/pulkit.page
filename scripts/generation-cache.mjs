@@ -67,9 +67,9 @@ export function generationCache(outputDirectory, version, enabled = true) {
       }
       onAccess?.("miss");
       counts[kind] = (counts[kind] ?? 0) + 1;
-      const record = (value) => {
-        entries[key] = { value, hash: digest(value) };
-        return value;
+      const record = (created) => {
+        entries[key] = { value: created, hash: digest(created) };
+        return created;
       };
       const value = create();
       if (value instanceof Promise) {

@@ -22,7 +22,7 @@ function readLink(link) {
 }
 
 export function render({ links, ...rest }, { assets, escapeHtml }) {
-  if (Object.keys(rest).length || !Array.isArray(links) || !links.length) {
+  if (Object.keys(rest).length > 0 || !Array.isArray(links) || links.length === 0) {
     throw new Error("contact-links takes a nonempty links array only");
   }
   const rows = links.map(readLink).map(({ label, value, href, copy }) => {

@@ -17,7 +17,7 @@ function showcase(key) {
     );
   } catch (error) {
     if (error.code === "ENOENT") {
-      throw new Error(`Unknown demo: ${key}`);
+      throw new Error(`Unknown demo: ${key}`, { cause: error });
     }
     throw error;
   }
@@ -38,9 +38,13 @@ export async function renderDemo(name, variant) {
   const sources = await Promise.all(
     files.map(async (file) => ({ filename: file.filename, ...(await highlight(file)) })),
   );
-  const data = files.length
-    ? `<script type="application/json">${JSON.stringify(sources).replaceAll("<", "\\u003c")}</script>`
-    : "";
-  const height = frame.fullHeight ? "full" : frame.bitBigger ? "bigger" : "default";
-  return `<demo-showcase data-component="${component}" data-props="${escapeAttribute(JSON.stringify(props))}" data-frame="${escapeAttribute(JSON.stringify(frame))}" data-height="${height}"${files.length ? " data-files" : ""}>${data}</demo-showcase>`;
+  const data =
+    files.length > 0
+      ? `<script type="application/json">${JSON.stringify(sources).replaceAll("<", "\\u003c")}</script>`
+      : "";
+  let height = frame.bitBigger ? "bigger" : "default";
+  if (frame.fullHeight) {
+    height = "full";
+  }
+  return `<demo-showcase data-component="${component}" data-props="${escapeAttribute(JSON.stringify(props))}" data-frame="${escapeAttribute(JSON.stringify(frame))}" data-height="${height}"${files.length > 0 ? " data-files" : ""}>${data}</demo-showcase>`;
 }

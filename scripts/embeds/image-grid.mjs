@@ -21,7 +21,6 @@ function webpSize(bytes) {
   if (chunk === "VP8X") {
     return { width: bytes.readUIntLE(24, 3) + 1, height: bytes.readUIntLE(27, 3) + 1 };
   }
-  return undefined;
 }
 
 function imageSize(src) {

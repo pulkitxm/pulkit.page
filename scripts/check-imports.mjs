@@ -32,7 +32,7 @@ for (const file of files) {
     }
   }
 }
-if (failures.length) {
+if (failures.length > 0) {
   console.error(failures.join("\n"));
   process.exit(1);
 }

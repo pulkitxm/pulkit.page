@@ -37,7 +37,7 @@ async function demoAsset(name) {
     return { type: "font/woff2", body: readFileSync(font) };
   }
   if (!/^[\w.-]+\.js$/.test(name)) {
-    return undefined;
+    return;
   }
   if (name === "index.js" || !demoBundle) {
     demoBundle = rm(demoOutput, { force: true, recursive: true }).then(() =>
@@ -219,7 +219,10 @@ const server = await createServer({
             response.end(request.method === "HEAD" ? undefined : body);
           } catch (error) {
             description = `failed: ${error.message}`;
-            const status = error instanceof URIError ? 400 : error.code === "ENOENT" ? 404 : 500;
+            let status = error.code === "ENOENT" ? 404 : 500;
+            if (error instanceof URIError) {
+              status = 400;
+            }
             response.writeHead(status, { "Content-Type": "text/plain" }).end(error.message);
           }
         });

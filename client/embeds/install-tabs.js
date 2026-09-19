@@ -53,7 +53,7 @@ for (const root of roots) {
   });
 }
 
-window.addEventListener("storage", (event) => {
+globalThis.addEventListener("storage", (event) => {
   if (event.key === storageKey) {
     select(readPreference());
   }

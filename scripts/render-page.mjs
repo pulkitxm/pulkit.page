@@ -324,7 +324,7 @@ export async function renderPage(
         },
         renderer(token) {
           const items = collectionItems(pages, route, token.collection, token.limit);
-          if (!items.length) {
+          if (items.length === 0) {
             throw new Error(`Empty or unknown collection: ${token.collection}`);
           }
           const grouped = route === "/blogs/" && token.collection === "blogs";
@@ -400,7 +400,7 @@ export async function renderPage(
 
 function breadcrumbs(route, pages) {
   const parents = ancestors(route, pages);
-  return parents.length
+  return parents.length > 0
     ? `<nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb"><ol class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current">${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
     : "";
 }
@@ -427,7 +427,7 @@ function relatedNavigation(route, metadata, pages) {
           `<li class="my-2"><a class="${link}" href="${escapeHtml(page.route)}">${escapeHtml(page.metadata.title)}</a></li>`,
       )
       .join("");
-  return `${collections.length && route !== "/" ? `<nav class="mt-12 text-[0.9rem]" aria-label="Collections"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Explore collections</h2><ul class="mt-0 mb-6">${links(collections)}</ul></nav>` : ""}${related.length ? `<nav class="mt-12 text-[0.9rem]" aria-label="Related writing"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2><ul class="mt-0 mb-6">${links(related)}</ul></nav>` : ""}`;
+  return `${collections.length > 0 && route !== "/" ? `<nav class="mt-12 text-[0.9rem]" aria-label="Collections"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Explore collections</h2><ul class="mt-0 mb-6">${links(collections)}</ul></nav>` : ""}${related.length > 0 ? `<nav class="mt-12 text-[0.9rem]" aria-label="Related writing"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2><ul class="mt-0 mb-6">${links(related)}</ul></nav>` : ""}`;
 }
 function seoHead(route, metadata, site, pages) {
   const url = site.url + route;

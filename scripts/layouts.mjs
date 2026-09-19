@@ -68,7 +68,7 @@ export function loadLayouts(directory = "layouts") {
     }
     layouts.set(name, expanded);
   }
-  if (!layouts.size) {
+  if (layouts.size === 0) {
     throw new Error("No HTML layouts found");
   }
   return layouts;

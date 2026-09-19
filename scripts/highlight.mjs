@@ -117,6 +117,7 @@ export async function highlightFence(language, code) {
     } catch (error) {
       throw new Error(
         `Failed to load highlighter grammar for ${id}: ${error instanceof Error ? error.message : error}`,
+        { cause: error },
       );
     }
     loaded.add(id);

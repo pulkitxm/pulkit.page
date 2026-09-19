@@ -246,7 +246,7 @@ async function auditWithoutJavaScript(browser, origin, paths) {
 function recordThemeAtBody() {
   const observer = new MutationObserver(() => {
     if (document.body) {
-      window.themeAtBody = document.documentElement.dataset.theme ?? null;
+      globalThis.themeAtBody = document.documentElement.dataset.theme ?? null;
       observer.disconnect();
     }
   });
@@ -280,7 +280,7 @@ async function auditThemeFlow(browser, origin, systemScheme) {
   expect(label, (await readTheme(page)) === other, "Choice did not survive a reload");
   expect(
     label,
-    (await page.evaluate(() => window.themeAtBody)) === other,
+    (await page.evaluate(() => globalThis.themeAtBody)) === other,
     "Stored theme was applied after the body started rendering",
   );
   await page.locator('a[href="/blogs/"]').first().click();
@@ -302,7 +302,7 @@ async function auditThemes(browser, origin) {
 }
 
 function blockStorage() {
-  Object.defineProperty(window, "localStorage", {
+  Object.defineProperty(globalThis, "localStorage", {
     configurable: true,
     get() {
       throw new DOMException("Storage is blocked", "SecurityError");
@@ -356,23 +356,25 @@ async function auditKeyboard(browser, origin) {
 }
 
 function recordTransition() {
-  window.addEventListener("pagereveal", (event) => {
+  globalThis.addEventListener("pagereveal", (event) => {
     const transition = event.viewTransition;
-    window.transitionState = transition ? "pending" : "none";
+    globalThis.transitionState = transition ? "pending" : "none";
     transition?.ready.then(
       () => {
-        window.transitionState = "animated";
+        globalThis.transitionState = "animated";
       },
       () => {
-        window.transitionState = "skipped";
+        globalThis.transitionState = "skipped";
       },
     );
   });
 }
 
 async function settledTransition(page) {
-  await page.waitForFunction(() => window.transitionState && window.transitionState !== "pending");
-  return page.evaluate(() => window.transitionState);
+  await page.waitForFunction(
+    () => globalThis.transitionState && globalThis.transitionState !== "pending",
+  );
+  return page.evaluate(() => globalThis.transitionState);
 }
 
 async function auditTransitions(browser, origin) {
@@ -410,23 +412,23 @@ const server = await preview({
   logLevel: "silent",
   preview: { host: "127.0.0.1", port: 0 },
 });
-let browser;
+let chromiumBrowser;
 try {
-  browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
+  chromiumBrowser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
   const origin = server.resolvedUrls.local[0].replace(/\/$/, "");
   const paths = routes(buildDirectory);
   if (paths.length === 0) {
     report("build", "The build must contain pages");
   }
-  const documents = await auditPages(browser, origin, paths);
+  const documents = await auditPages(chromiumBrowser, origin, paths);
   auditLinks(documents, origin);
-  await auditWithoutJavaScript(browser, origin, paths);
-  await auditThemes(browser, origin);
-  await auditBlockedStorage(browser, origin);
-  await auditKeyboard(browser, origin);
-  await auditTransitions(browser, origin);
+  await auditWithoutJavaScript(chromiumBrowser, origin, paths);
+  await auditThemes(chromiumBrowser, origin);
+  await auditBlockedStorage(chromiumBrowser, origin);
+  await auditKeyboard(chromiumBrowser, origin);
+  await auditTransitions(chromiumBrowser, origin);
 } finally {
-  await browser?.close();
+  await chromiumBrowser?.close();
   await server.close();
 }
 if (problems.size > 0) {

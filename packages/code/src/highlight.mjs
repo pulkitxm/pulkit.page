@@ -11,7 +11,8 @@ const theme = {
   settings: [{ settings: { foreground: "#111111" } }],
 };
 const highlighter = await createHighlighter({ themes: [theme], langs: [] });
-const loaded = new Set();
+const grammars = new Map();
+let loading = Promise.resolve();
 
 function escapeHtml(value) {
   return String(value).replace(
@@ -111,15 +112,16 @@ export async function highlightFence(language, code) {
   if (plain.has(id) || !(id in bundledLanguages)) {
     return escapeHtml(code);
   }
-  if (!loaded.has(id)) {
-    try {
-      await highlighter.loadLanguage(id);
-    } catch (error) {
-      throw new Error(
-        `Failed to load highlighter grammar for ${id}: ${error instanceof Error ? error.message : error}`,
-      );
-    }
-    loaded.add(id);
+  if (!grammars.has(id)) {
+    loading = loading.then(() => highlighter.loadLanguage(id));
+    grammars.set(id, loading);
+  }
+  try {
+    await grammars.get(id);
+  } catch (error) {
+    throw new Error(
+      `Failed to load highlighter grammar for ${id}: ${error instanceof Error ? error.message : error}`,
+    );
   }
   const result = highlighter.codeToTokens(code, {
     lang: id,

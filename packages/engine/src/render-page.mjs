@@ -10,6 +10,7 @@ import {
   renderRawHtml,
 } from "@pulkit/embeds";
 import { lightboxScript, lightboxStyle, localImageSize, zoomable } from "@pulkit/embeds/lightbox";
+import { escapeHtml } from "@pulkit/shared/html";
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
 import { applyLayout, loadLayouts } from "./layouts.mjs";
@@ -73,13 +74,6 @@ export function readPage(source) {
     }
   }
   return { metadata, body: match[2] };
-}
-export function escapeHtml(value) {
-  return String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character],
-  );
 }
 function safeUrl(value) {
   if (typeof value !== "string" || !/^(?:\/(?!\/)|https:\/\/|mailto:|#)/.test(value)) {

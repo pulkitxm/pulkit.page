@@ -1,3 +1,4 @@
+import { escapeHtml } from "@pulkit/shared/html";
 import { bundledLanguages, createHighlighter } from "shiki";
 
 const plain = new Set(["", "text", "plaintext", "txt", "math", "mermaid"]);
@@ -13,14 +14,6 @@ const theme = {
 const highlighter = await createHighlighter({ themes: [theme], langs: [] });
 const grammars = new Map();
 let loading = Promise.resolve();
-
-function escapeHtml(value) {
-  return String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character],
-  );
-}
 
 function tokenRole(scopes) {
   const names = scopes.map((scope) => (typeof scope === "string" ? scope : scope.scopeName));

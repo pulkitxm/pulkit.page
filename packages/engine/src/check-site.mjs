@@ -1,19 +1,10 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { dirname, extname, join, normalize, resolve } from "node:path";
 import process from "node:process";
+import { builtFiles } from "@pulkit/shared/built-site";
 
 const root = resolve(process.argv[2] ?? "dist");
 const failures = [];
-
-function walk(directory) {
-  return readdirSync(directory).flatMap((name) => {
-    if (directory === root && /^dev-[0-9]+$/.test(name)) {
-      return [];
-    }
-    const path = join(directory, name);
-    return statSync(path).isDirectory() ? walk(path) : [path];
-  });
-}
 
 function references(file, text) {
   const values = [];
@@ -55,7 +46,7 @@ function localTarget(file, value) {
   return normalize(target);
 }
 
-const files = walk(root);
+const files = builtFiles(root);
 for (const file of files) {
   if (![".css", ".htm", ".html"].includes(extname(file))) {
     continue;

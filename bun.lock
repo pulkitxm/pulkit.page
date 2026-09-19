@@ -10,6 +10,14 @@
         "turbo": "2.11.2",
       },
     },
+    "apps/blog": {
+      "name": "@pulkit/blog",
+      "dependencies": {
+        "@pulkit/engine": "workspace:*",
+        "@pulkit/theme": "workspace:*",
+        "html-validate": "11.16.0",
+      },
+    },
     "apps/page": {
       "name": "@pulkit/page",
       "dependencies": {
@@ -59,6 +67,7 @@
         "@pulkit/code": "workspace:*",
         "@pulkit/demos": "workspace:*",
         "@pulkit/embeds": "workspace:*",
+        "@pulkit/profile": "workspace:*",
         "@pulkit/theme": "workspace:*",
         "@resvg/resvg-js": "2.6.2",
         "@tailwindcss/cli": "4.3.3",
@@ -72,6 +81,9 @@
       "devDependencies": {
         "@pulkit/checks": "workspace:*",
       },
+    },
+    "packages/profile": {
+      "name": "@pulkit/profile",
     },
     "packages/theme": {
       "name": "@pulkit/theme",
@@ -254,6 +266,8 @@
 
     "@parcel/watcher-win32-x64": ["@parcel/watcher-win32-x64@2.5.1", "", { "os": "win32", "cpu": "x64" }, "sha512-9lHBdJITeNR++EvSQVUcaZoWupyHfXe1jZvGZ06O/5MflPcuPLtEphScIBL+AiCWBO46tDSHzWyD0uDmmZqsgA=="],
 
+    "@pulkit/blog": ["@pulkit/blog@workspace:apps/blog"],
+
     "@pulkit/checks": ["@pulkit/checks@workspace:tooling/checks"],
 
     "@pulkit/code": ["@pulkit/code@workspace:packages/code"],
@@ -265,6 +279,8 @@
     "@pulkit/engine": ["@pulkit/engine@workspace:packages/engine"],
 
     "@pulkit/page": ["@pulkit/page@workspace:apps/page"],
+
+    "@pulkit/profile": ["@pulkit/profile@workspace:packages/profile"],
 
     "@pulkit/theme": ["@pulkit/theme@workspace:packages/theme"],
 

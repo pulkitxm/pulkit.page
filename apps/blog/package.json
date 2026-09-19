@@ -1,0 +1,21 @@
+{
+  "name": "@pulkit/blog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "SITE_DEV_PORT=3001 site dev",
+    "build": "site build",
+    "start": "site start",
+    "clean": "site clean",
+    "check:layouts": "site check-layouts",
+    "check:seo": "site check-seo",
+    "check:site": "site check-site",
+    "check:html": "html-validate \"dist/**/*.html\"",
+    "check:browser": "site check-browser"
+  },
+  "dependencies": {
+    "@pulkit/engine": "workspace:*",
+    "@pulkit/theme": "workspace:*",
+    "html-validate": "11.16.0"
+  }
+}

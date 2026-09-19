@@ -1,11 +1,32 @@
 export function imagePath(route) {
   return `/og/${route === "/" ? "home" : route.slice(1, -1)}/card.png`;
 }
+export function isArticle(route, pages, site) {
+  return (
+    typeof site?.articles === "string" &&
+    route !== "/" &&
+    route.startsWith(site.articles) &&
+    !pages.find((page) => page.route === route)?.index
+  );
+}
+export function articles(pages, site) {
+  return pages.filter((page) => isArticle(page.route, pages, site));
+}
+export function categoryOf(route, pages) {
+  const parent = route.slice(0, route.lastIndexOf("/", route.length - 2) + 1);
+  return parent === "/" ? undefined : pages.find((page) => page.index && page.route === parent);
+}
+function newestFirst(a, b) {
+  return (
+    (b.metadata.date ?? "").localeCompare(a.metadata.date ?? "") || a.route.localeCompare(b.route)
+  );
+}
 export function pageTitle(metadata, site, route) {
   if (route === "/") {
     return site.brand ?? "Pulkit";
   }
-  return `${metadata.title} | ${site.brand ?? "Pulkit"}`;
+  const branded = `${metadata.title} | ${site.brand ?? "Pulkit"}`;
+  return branded.length > 70 ? metadata.title : branded;
 }
 export function ancestors(route, pages) {
   return pages
@@ -16,19 +37,19 @@ export function ancestors(route, pages) {
     )
     .sort((a, b) => a.route.length - b.route.length);
 }
-export function relatedPages(route, metadata, pages) {
-  if (!route.startsWith("/blogs/") || pages.find((page) => page.route === route)?.index) {
+export function relatedPages(route, metadata, pages, site) {
+  if (!isArticle(route, pages, site)) {
     return [];
   }
   const tags = new Set((metadata.tags ?? []).map((tag) => tag.toLowerCase()));
   const parent = route.slice(0, route.lastIndexOf("/", route.length - 2) + 1);
-  return pages
-    .filter((page) => !page.index && page.route !== route && page.route.startsWith("/blogs/"))
+  return articles(pages, site)
+    .filter((page) => page.route !== route)
     .map((page) => ({
       page,
       score:
         (page.metadata.tags ?? []).filter((tag) => tags.has(tag.toLowerCase())).length +
-        (parent !== "/blogs/" && page.route.startsWith(parent) ? 3 : 0),
+        (parent !== site.articles && page.route.startsWith(parent) ? 3 : 0),
     }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || a.page.route.localeCompare(b.page.route))
@@ -43,14 +64,15 @@ export function structuredData(route, metadata, site, pages) {
   const website = `${origin}/#website`;
   const pageId = `${url}#webpage`;
   const index = pages.find((page) => page.route === route)?.index;
-  const blog = route.startsWith("/blogs/") && !index;
+  const blog = isArticle(route, pages, site);
+  const collection = index || route === site.articles;
   const image = `${url}#image`;
   const graph = [
     {
       "@type": "Person",
       "@id": person,
-      name: site.brand,
-      url: `${origin}/`,
+      name: site.author ?? site.brand,
+      url: site.authorUrl ?? `${origin}/`,
       sameAs: (site.social ?? []).map((item) => item.href),
     },
     {
@@ -72,7 +94,7 @@ export function structuredData(route, metadata, site, pages) {
     },
   ];
   const page = {
-    "@type": index
+    "@type": collection
       ? "CollectionPage"
       : route === "/about/"
         ? "AboutPage"
@@ -87,18 +109,17 @@ export function structuredData(route, metadata, site, pages) {
     primaryImageOfPage: ref(image),
     inLanguage: "en",
   };
-  if (index) {
-    const entries = pages
-      .filter(
-        (entry) =>
-          !entry.index &&
-          entry.route.slice(0, entry.route.lastIndexOf("/", entry.route.length - 2) + 1) === route,
-      )
-      .sort(
-        (a, b) =>
-          (b.metadata.date ?? "").localeCompare(a.metadata.date ?? "") ||
-          a.route.localeCompare(b.route),
-      );
+  if (collection) {
+    const entries = (
+      route === site.articles
+        ? articles(pages, site)
+        : pages.filter(
+            (entry) =>
+              !entry.index &&
+              entry.route.slice(0, entry.route.lastIndexOf("/", entry.route.length - 2) + 1) ===
+                route,
+          )
+    ).sort(newestFirst);
     page.mainEntity = {
       "@type": "ItemList",
       "@id": `${url}#list`,
@@ -120,7 +141,7 @@ export function structuredData(route, metadata, site, pages) {
       author: ref(person),
       publisher: ref(person),
       mainEntityOfPage: ref(pageId),
-      isPartOf: ref(`${origin}/blogs/#webpage`),
+      isPartOf: ref(`${origin}${categoryOf(route, pages)?.route ?? site.articles}#webpage`),
       image: ref(image),
       url,
       inLanguage: "en",

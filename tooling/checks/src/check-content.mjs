@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { extname } from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import { createPageAssets, matchBlockEmbed, matchInlineEmbed, renderRawHtml } from "@pulkit/embeds";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
@@ -31,8 +32,10 @@ const pageFields = [
   "secondaryIcon",
   "tags",
 ];
-const siteFields = ["brand", "description", "copyright", "navigation", "social"];
+const siteFields = ["brand", "description", "copyright", "navigation", "social", "articles"];
+const requiredSiteFields = ["brand", "description", "copyright", "navigation"];
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const repository = fileURLToPath(new URL("../../../", import.meta.url));
 const siteRoot = /^((?:apps\/[a-z0-9-]+|packages\/[a-z0-9-]+\/test\/fixture)\/)(content\/.*)$/;
 
 function sitePath(path) {
@@ -55,6 +58,16 @@ function yaml(source) {
   return { value: document.toJS({ maxAliasCount: 0 }), errors };
 }
 
+const articleRoots = new Map();
+function articleRoot(root) {
+  if (!articleRoots.has(root)) {
+    const path = `${repository}${root}content/_site.md`;
+    const match = existsSync(path) && /^---\n([\s\S]*?)\n---\n/.exec(readFileSync(path, "utf8"));
+    articleRoots.set(root, match ? parseDocument(match[1]).toJS()?.articles : undefined);
+  }
+  return articleRoots.get(root);
+}
+
 function metadataErrors(data, file, root) {
   if (!data || typeof data !== "object" || Array.isArray(data)) {
     return ["frontmatter must be a YAML mapping"];
@@ -67,8 +80,15 @@ function metadataErrors(data, file, root) {
       errors.push(`unknown metadata field: ${field}`);
     }
   }
-  const required = site ? siteFields : ["title", "description"];
-  if (/^content\/(blogs|exp)\//.test(file) && !file.endsWith("/index.md")) {
+  const required = site ? [...requiredSiteFields] : ["title", "description"];
+  const articles = articleRoot(root);
+  const route = `/${file.slice(8, -3).replace(/(?:^|\/)index$/, "")}/`.replace(/\/+/g, "/");
+  if (
+    !site &&
+    !file.endsWith("/index.md") &&
+    file !== "content/home.md" &&
+    ((articles && route.startsWith(articles)) || file.startsWith("content/exp/"))
+  ) {
     required.push("date");
   }
   if (file.startsWith("content/exp/") && !file.endsWith("/index.md")) {
@@ -84,6 +104,9 @@ function metadataErrors(data, file, root) {
       errors.push(`${field} must be a trimmed, nonempty string`);
     }
   }
+  if (data.articles !== undefined && !/^\/(?:[a-z0-9-]+\/)*$/.test(data.articles)) {
+    errors.push("articles must be a root-relative directory such as / or /notes/");
+  }
   if (data.title?.length > 120) {
     errors.push("title must be at most 120 characters");
   }
@@ -92,7 +115,8 @@ function metadataErrors(data, file, root) {
   }
   if (
     data.layout &&
-    (!slug.test(data.layout) || !existsSync(`${root}layouts/${data.layout}.html`))
+    (!slug.test(data.layout) ||
+      !existsSync(`${repository}${root || "apps/page/"}layouts/${data.layout}.html`))
   ) {
     errors.push("layout must name an existing layout");
   }
@@ -113,7 +137,7 @@ function metadataErrors(data, file, root) {
     if (
       data[field] &&
       (!/^\/assets\/exp\/[a-z0-9-]+\.(webp|svg)$/.test(data[field]) ||
-        !existsSync(`${root}${data[field].slice(1)}`))
+        !existsSync(`${repository}${root || "apps/page/"}${data[field].slice(1)}`))
     ) {
       errors.push(`${field} must reference an existing experience icon`);
     }
@@ -283,10 +307,9 @@ export function checkContent(path, source) {
       if (page && node.url && !/^(?:https?:\/\/|mailto:|\/(?!\/)|#)/.test(node.url)) {
         fail("page links must be root-relative, HTTPS/HTTP, mailto, or fragments", node);
       }
-      if (node.url?.startsWith("/blogs/") || node.url?.startsWith("/exp/")) {
-        if (!node.url.split(/[?#]/)[0].endsWith("/")) {
-          fail("page URLs must end with /", node);
-        }
+      const path = node.url?.startsWith("/") ? node.url.split(/[?#]/)[0] : "";
+      if (path && !path.endsWith("/") && !/\.[a-z0-9]+$/i.test(path)) {
+        fail("page URLs must end with /", node);
       }
     }
     if (node.type === "definition") {
@@ -301,7 +324,7 @@ export function checkContent(path, source) {
     if (node.type === "paragraph" && sourceText(node).includes(":::")) {
       const text = sourceText(node);
       if (
-        !/^(?::::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?|:::carousel|:::)$/.test(
+        !/^(?::::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?(?: by-year)?|:::carousel|:::)$/.test(
           text,
         ) &&
         !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text) &&

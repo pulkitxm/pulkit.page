@@ -346,7 +346,7 @@ export async function scanText(file, source) {
     language = /\b(node|bun|deno)\b/.test(source.split("\n")[0]) ? "javascript" : "bash";
   }
   const ranges =
-    /^apps\/[a-z0-9-]+\/content\/blogs\//.test(file) && extension === "md"
+    /^apps\/[a-z0-9-]+\/content\//.test(file) && extension === "md"
       ? await markdownRanges(source, true)
       : await commentRanges(language, source);
   return ranges.map((range) => ({

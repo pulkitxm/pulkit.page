@@ -15,7 +15,7 @@ import { themeFile } from "./theme-files.mjs";
 const packages = fileURLToPath(new URL("../../", import.meta.url));
 const repository = resolve(packages, "..");
 const explicit = process.env.PORT !== undefined && process.env.PORT !== "";
-const port = explicit ? Number(process.env.PORT) : 3000;
+const port = explicit ? Number(process.env.PORT) : Number(process.env.SITE_DEV_PORT || 3000);
 if (!Number.isInteger(port) || port < 0 || port > 65535) {
   throw new Error("PORT must be an integer between 0 and 65535 (0 selects an available port)");
 }

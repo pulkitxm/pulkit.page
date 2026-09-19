@@ -17,6 +17,8 @@ const minCodeWidth = 200;
 const minPreviewWidth = 200;
 const wrapKey = "code-wrap-enabled";
 const wrapListeners = new Set();
+const desktopQuery = matchMedia("(min-width: 1024px)");
+const wideQuery = matchMedia("(min-width: 1200px)");
 
 function readWrap() {
   try {
@@ -122,6 +124,12 @@ export function mountFrame(shadow, { frame, files, id }) {
     modifier: false,
   };
   const filenames = files.map((file) => file.filename);
+  const teardown = [];
+
+  function listen(target, type, handler) {
+    target.addEventListener(type, handler);
+    teardown.push(() => target.removeEventListener(type, handler));
+  }
 
   function renderCode() {
     if (!hasFiles) {
@@ -194,20 +202,22 @@ export function mountFrame(shadow, { frame, files, id }) {
   }
 
   function measure() {
-    state.desktop = innerWidth >= 1024;
-    state.expanded = innerWidth >= 1200 && hasFiles && frame.focusCode;
+    state.desktop = desktopQuery.matches;
+    state.expanded = wideQuery.matches && hasFiles && frame.focusCode;
     render();
   }
 
-  addEventListener("resize", measure);
+  listen(desktopQuery, "change", measure);
+  listen(wideQuery, "change", measure);
   const onWrap = (value) => {
     state.wrap = value;
     render();
   };
   wrapListeners.add(onWrap);
+  teardown.push(() => wrapListeners.delete(onWrap));
   measure();
 
-  shadow.addEventListener("click", async (event) => {
+  listen(shadow, "click", async (event) => {
     const target = event.target;
     const tab = target.closest("[data-tab]");
     if (tab) {
@@ -252,7 +262,7 @@ export function mountFrame(shadow, { frame, files, id }) {
     }
   });
 
-  shadow.addEventListener("keydown", (event) => {
+  listen(shadow, "keydown", (event) => {
     const tab = event.target.closest?.("[data-tab]");
     if (!tab || (event.key !== "ArrowLeft" && event.key !== "ArrowRight")) {
       return;
@@ -285,12 +295,12 @@ export function mountFrame(shadow, { frame, files, id }) {
     }
   };
   if (files.length > 1) {
-    addEventListener("keydown", modifierDown);
-    addEventListener("keyup", modifierUp);
-    addEventListener("blur", blur);
+    listen(globalThis, "keydown", modifierDown);
+    listen(globalThis, "keyup", modifierUp);
+    listen(globalThis, "blur", blur);
   }
 
-  handle.addEventListener("mousedown", () => {
+  listen(handle, "mousedown", () => {
     const move = (event) => {
       const rect = container.getBoundingClientRect();
       const next = ((event.clientX - rect.left) / rect.width) * 100;
@@ -311,5 +321,12 @@ export function mountFrame(shadow, { frame, files, id }) {
     document.body.style.userSelect = "none";
   });
 
-  return find("preview");
+  return {
+    preview: find("preview"),
+    destroy() {
+      for (const remove of teardown.splice(0)) {
+        remove();
+      }
+    },
+  };
 }

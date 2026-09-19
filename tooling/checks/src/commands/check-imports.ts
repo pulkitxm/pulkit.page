@@ -5,8 +5,8 @@ import { parse } from "@babel/parser";
 import { reportFailures } from "@pulkit/shared/failures";
 import { repositoryFiles } from "@pulkit/shared/repository";
 
-const moduleSource = /^(?:apps|packages|tooling)\/.+\.(?:m?js|ts)$/;
-const testFile = /\.test\.(?:js|ts)$/;
+const moduleSource = /^(?:apps|packages|tooling)\/.+\.ts$/;
+const testFile = /\.test\.ts$/;
 const files = repositoryFiles().filter(
   (file) => moduleSource.test(file) && !file.includes("/node_modules/"),
 );

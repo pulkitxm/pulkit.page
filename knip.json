@@ -21,7 +21,7 @@
     },
     "packages/demos": {
       "entry": ["client/index.ts"],
-      "project": ["client/**/*.{ts,js}", "src/**/*.ts", "*.css"]
+      "project": ["client/**/*.ts", "src/**/*.ts", "*.css"]
     },
     "packages/theme": {
       "entry": ["src/client/theme.ts"],

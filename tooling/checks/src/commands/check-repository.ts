@@ -4,6 +4,8 @@ import { siteConfigFile } from "@pulkit/shared/frontmatter";
 import { repositoryFiles } from "@pulkit/shared/repository";
 
 const maximumBytes = 2 * 1024 * 1024;
+const maximumSourceLines = 400;
+const javaScriptSource = /\.(?:c|m)?jsx?$/;
 const forbidden = [/(^|\/)\.DS_Store$/, /(^|\/)dist\//, /(^|\/)node_modules\//, /(^|\/)\.env$/];
 const sourcePath =
   /^(?:apps\/[a-z0-9-]+\/(?:content|layouts)|packages\/[a-z0-9-]+\/src|tooling\/[a-z0-9-]+\/src|docs)\//;
@@ -26,6 +28,9 @@ function textFailures(file: string): string[] {
   return [
     ...(text.includes("\r\n") ? [`${file}: CRLF line endings are not allowed`] : []),
     ...(text.endsWith("\n") ? [] : [`${file}: missing trailing newline`]),
+    ...(file.endsWith(".ts") && text.split("\n").length - 1 > maximumSourceLines
+      ? [`${file}: exceeds ${maximumSourceLines} lines`]
+      : []),
   ];
 }
 
@@ -40,6 +45,9 @@ for (const file of files) {
     !file.split("/").every((part) => /^[a-z0-9]+(?:[-.][a-z0-9]+)*$/.test(part))
   ) {
     failures.push(`${file}: source paths must use lowercase ASCII kebab-case`);
+  }
+  if (javaScriptSource.test(file)) {
+    failures.push(`${file}: write TypeScript instead of JavaScript`);
   }
   if (/\.(?:log|tmp|bak|orig|rej)$/.test(file)) {
     failures.push(`${file}: temporary or merge artifact is forbidden`);

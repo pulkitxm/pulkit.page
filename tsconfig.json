@@ -13,8 +13,6 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "skipLibCheck": true,
-    "allowJs": true,
-    "checkJs": false,
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,

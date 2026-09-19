@@ -119,7 +119,7 @@ flowchart LR
 
 The [hook](../.githooks/pre-commit) requires Bun and an existing root `node_modules`. It exports the entire Git index using `git checkout-index`, clears inherited Git-location variables in a subshell, initializes a temporary repository, and stages its files for Git-based scanners. It then runs `bun install --frozen-lockfile --ignore-scripts` in the snapshot and `bun run ci` with `TURBO_CACHE_DIR` set to the repository's `.turbo/cache`, so tasks whose inputs match an earlier run replay from cache. Traps remove the temporary directory on exit/signals.
 
-It neither stages repairs nor changes the original index/worktree. If a correction exists only unstaged, the staged version still fails; the [pre-commit test](../tooling/checks/src/pre-commit.test.js) covers this. Untracked documentation is checked by local CI but will not be in a commit snapshot until staged. Installation can fail rather than overwrite a different `core.hooksPath`; integrate deliberately if using another hook manager.
+It neither stages repairs nor changes the original index/worktree. If a correction exists only unstaged, the staged version still fails; the [pre-commit test](../tooling/checks/src/commands/pre-commit.test.ts) covers this. Untracked documentation is checked by local CI but will not be in a commit snapshot until staged. Installation can fail rather than overwrite a different `core.hooksPath`; integrate deliberately if using another hook manager.
 
 ## GitHub Actions
 

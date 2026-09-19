@@ -31,7 +31,7 @@ Unknown source types and unknown fence languages cause a failure requesting an e
 
 ## Knip
 
-[knip.json](../knip.json) configures each workspace separately. The engine declares its CLI modules and test setup as entries, embeds declare their `client/entries/*.ts` browser scripts, demos declare `index.js`, and checks declare their `check-*.mjs` CLIs; package `exports` and `bin` fields supply the rest. Apps have no JavaScript of their own and ignore their `@pulkit/theme` dependency, which is consumed through CSS. `includeEntryExports` also checks unnecessary public exports in entry points.
+[knip.json](../knip.json) configures each workspace separately. The engine declares its CLI modules and test setup as entries, embeds declare their `client/entries/*.ts` browser scripts, demos declare `client/index.ts`, and checks declare their `commands/check-*.ts` CLIs; package `exports` and `bin` fields supply the rest. Apps have no scripts of their own and ignore their `@pulkit/theme` dependency, which is consumed through CSS. `includeEntryExports` also checks unnecessary public exports in entry points.
 
 `bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
 
@@ -41,15 +41,15 @@ Knip is static analysis, not a guarantee about runtime reachability or a CSS/ima
 
 These are enforced too, and every one of them runs inside `bun run ci`:
 
-| Gate                          | Tool                                                                      | Rule                                                                                       |
-| ----------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `format:check`, `lint`        | Biome with the root [biome.json](../biome.json)                           | Space indentation, 100 columns, LF, and the strict lint presets; warnings fail `lint`      |
-| `check:content`               | [check-content.ts](../tooling/checks/src/commands/check-content.ts)       | The content schema plus canonical Markdown and YAML formatting for every tracked document  |
-| `check:repository`            | [check-repository.ts](../tooling/checks/src/commands/check-repository.ts) | Lowercase kebab-case source paths, no symlinks, size limits, LF endings, trailing newlines |
-| `check:imports`               | [check-imports.ts](../tooling/checks/src/commands/check-imports.ts)       | Every static import in `apps/`, `packages/`, and `tooling/` resolves at runtime            |
-| `check:dead-code`             | Knip with [knip.json](../knip.json)                                       | No unused files, exports, or dependencies, with no tolerated issues                        |
-| `check:layouts`, `check:html` | html-validate with [.htmlvalidate.json](../.htmlvalidate.json)            | Valid HTML in the layout templates and in every built page                                 |
-| `check:shell`                 | `sh -n`                                                                   | The hook and its installer parse                                                           |
+| Gate                          | Tool                                                                      | Rule                                                                                                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format:check`, `lint`        | Biome with the root [biome.json](../biome.json)                           | Space indentation, 100 columns, LF, and the strict lint presets; warnings fail `lint`                                                                    |
+| `check:content`               | [check-content.ts](../tooling/checks/src/commands/check-content.ts)       | The content schema plus canonical Markdown and YAML formatting for every tracked document                                                                |
+| `check:repository`            | [check-repository.ts](../tooling/checks/src/commands/check-repository.ts) | Lowercase kebab-case source paths, no symlinks, no JavaScript sources, TypeScript files of at most 400 lines, size limits, LF endings, trailing newlines |
+| `check:imports`               | [check-imports.ts](../tooling/checks/src/commands/check-imports.ts)       | Every static import in `apps/`, `packages/`, and `tooling/` resolves at runtime                                                                          |
+| `check:dead-code`             | Knip with [knip.json](../knip.json)                                       | No unused files, exports, or dependencies, with no tolerated issues                                                                                      |
+| `check:layouts`, `check:html` | html-validate with [.htmlvalidate.json](../.htmlvalidate.json)            | Valid HTML in the layout templates and in every built page                                                                                               |
+| `check:shell`                 | `sh -n`                                                                   | The hook and its installer parse                                                                                                                         |
 
 Documentation files follow the same content rules as pages, minus the frontmatter:
 lowercase kebab-case names except `README.md`, exactly one H1, no duplicate heading
@@ -83,6 +83,6 @@ For fixes, edit the source Markdown or code, run `bun run format`, and rerun CI.
 
 ## Regression coverage
 
-[check-comments.test.js](../tooling/checks/src/check-comments.test.js) covers quotes, regex URLs, JavaScript template interpolation, JSX, Python docstrings and multiline strings, shell parameter expansion and heredocs, YAML block scalars, JSONC, nested SQL/Swift comments, Lua block comments, embedded HTML languages, Markdown fences, generated code blocks, unsupported languages, offsets, and em dashes.
+[comment-ranges.test.ts](../tooling/checks/src/lib/comments/comment-ranges.test.ts) covers quotes, regex URLs, JavaScript template interpolation, JSX, Python docstrings and multiline strings, shell parameter expansion and heredocs, YAML block scalars, JSONC, nested SQL/Swift comments, Lua block comments, embedded HTML languages, Markdown fences, generated code blocks, unsupported languages, offsets, and em dashes.
 
-[policy-ci.test.js](../tooling/checks/src/policy-ci.test.js) verifies read-only failures for force-tracked ignored files and demonstrates that Knip fails on unused files, exports, and dependencies, then passes after those problems are removed.
+[policy-ci.test.ts](../tooling/checks/src/commands/policy-ci.test.ts) verifies read-only failures for force-tracked ignored files and demonstrates that Knip fails on unused files, exports, and dependencies, then passes after those problems are removed.

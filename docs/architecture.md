@@ -326,7 +326,7 @@ Two files extend the root configuration:
 - [tooling/checks/turbo.json](../tooling/checks/turbo.json) adds `.github/`,
   `.githooks/`, the root `turbo.json`, `package.json`, `knip.json` and every
   workspace manifest to the inputs of its `test`, because
-  [policy-ci.test.js](../tooling/checks/src/policy-ci.test.js) asserts facts
+  [policy-ci.test.ts](../tooling/checks/src/commands/policy-ci.test.ts) asserts facts
   about those files.
 
 `biome.json` and `.htmlvalidate.json` are global dependencies, and `NODE_ENV`

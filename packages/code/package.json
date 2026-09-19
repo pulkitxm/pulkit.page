@@ -1,0 +1,14 @@
+{
+  "name": "@pulkit/code",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./format-code": "./src/format-code.mjs",
+    "./format-html": "./src/format-html.mjs",
+    "./highlight": "./src/highlight.mjs"
+  },
+  "dependencies": {
+    "@biomejs/biome": "2.5.14",
+    "shiki": "4.4.3"
+  }
+}

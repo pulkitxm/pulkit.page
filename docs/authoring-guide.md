@@ -2,9 +2,11 @@
 
 [Documentation index](index.md)
 
+Paths in this guide are relative to the site app, `apps/page/`, unless they start with `packages/`, `tooling/`, or `docs/`. Run the development server with `bun run dev` from the repository root.
+
 ## Page schema
 
-[check-content.mjs](../scripts/check-content.mjs) defines the strict schema; `readPage` in the renderer performs a smaller subset of checks. A successful standalone render is not proof that a source passes CI.
+[check-content.mjs](../tooling/checks/src/check-content.mjs) defines the strict schema; `readPage` in the renderer performs a smaller subset of checks. A successful standalone render is not proof that a source passes CI.
 
 | Field         | Requirement                                                     | Effect                                                       |
 | ------------- | --------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -74,11 +76,11 @@ Group two or more related images into a sliding carousel with Previous and Next 
 :::
 ```
 
-The block may contain only images, each with alt text. Each slide links to its full-size image, which also makes the scrolling region reachable by keyboard. Without JavaScript it still scrolls horizontally with snap points; [theme.js](../theme.js) wires the buttons and the position counter.
+The block may contain only images, each with alt text. Each slide links to its full-size image, which also makes the scrolling region reachable by keyboard. Without JavaScript it still scrolls horizontally with snap points; the shared [theme.js](../packages/theme/theme.js) wires the buttons and the position counter.
 
 ## Components
 
-Richer widgets come from the original site and render at generate time. A block component is an `embed` fence naming the component, whose single line is a JSON object of props. The inline form carries the same name and props inside running text. Unknown names, unknown props, and unsupported prop values fail generation rather than degrading silently.
+Richer widgets come from the original site and render at generate time through `@pulkit/embeds` in `packages/embeds`. A block component is an `embed` fence naming the component, whose single line is a JSON object of props. The inline form carries the same name and props inside running text. Unknown names, unknown props, and unsupported prop values fail generation rather than degrading silently.
 
 ```md
 :::embed tech-badges
@@ -104,17 +106,29 @@ Press :embed[cmd-key]{{}} + K to open it.
 | `contact-links`               | One row per contact channel, with an optional copy button                      |
 | `math`, `info-tip`, `cmd-key` | Inline formula, hover tip, and command-key glyph                               |
 
-Carousels that share a page need distinct accessible names: pass `label` to each `image-grid` so the landmarks stay unique. Components that need behavior load their own script and stylesheet; each one still renders readable markup without JavaScript.
+Carousels that share a page need distinct accessible names: pass `label` to each `image-grid` so the landmarks stay unique. Components that need behavior load their own script and stylesheet; each one still renders readable markup without JavaScript. Renderers live in `packages/embeds/src/` and are registered in `registry.mjs`; their browser scripts live in `packages/embeds/client/` and are bundled to `/assets/embeds/` by the build, so `image-popup` loads `/assets/embeds/image-popup.js`.
+
+## Interactive demos
+
+Motion articles embed live demos from `@pulkit/demos`. Place one directive in its own paragraph, naming a showcase and an optional variant:
+
+```md
+:::demo transition-basics
+
+:::demo easing-curve spring
+```
+
+The name and variant select `packages/demos/showcases/<name>-<variant>.json` (or `<name>.json` without a variant), which names the component, its props, and any highlighted source files shown beside it. Unknown showcases fail rendering. A page with a demo loads `/assets/demos/document.css` and `/assets/demos/index.js`; the build compiles the demo CSS and Poppins fonts and bundles the component scripts from `packages/demos/components/` into `/assets/demos/`. Add a new demo by adding its component, registering it in `registry.js`, and writing a showcase file.
 
 ## Layout semantics and appearance
 
-[home.html](../layouts/home.html), [simple.html](../layouts/simple.html), and [article.html](../layouts/article.html) share the same semantic structure: English HTML document, skip link to `main`, site header/nav, main containing an article, one page H1, prose container, and footer. Home's main element adds utilities for smaller H2 headings; article/simple currently share most styling. Changing a template never creates a route.
+[home.html](../apps/page/layouts/home.html), [simple.html](../apps/page/layouts/simple.html), and [article.html](../apps/page/layouts/article.html) share the same semantic structure: English HTML document, skip link to `main`, site header/nav, main containing an article, one page H1, prose container, and footer. Home's main element adds utilities for smaller H2 headings; article/simple currently share most styling. Changing a template never creates a route.
 
-The [head partial](../layouts/partials/head.html) loads theme JS before the body, then the page title and stylesheet. [header](../layouts/partials/header.html) contains the brand and navigation; [footer](../layouts/partials/footer.html) contains social links, copyright, and a theme button. Templates use checked placeholders and partial includes, not a general expression language. See [rendering flow](rendering-flow.md) for escaping and full page titles.
+The [head partial](../apps/page/layouts/partials/head.html) loads theme JS before the body, then the page title and stylesheet. [header](../apps/page/layouts/partials/header.html) contains the brand and navigation; [footer](../apps/page/layouts/partials/footer.html) contains social links, copyright, and a theme button. Templates use checked placeholders and partial includes, not a general expression language. See [rendering flow](rendering-flow.md) for escaping and full page titles.
 
-Styling uses Tailwind CSS v4. [styles.css](../styles.css) is the Tailwind entry: it replaces the default theme with the site's tokens (warm light/dark colors, syntax colors, font sizes, weights, line heights, radii, and a 560-pixel `sm` breakpoint), defines a `dark` variant for the system preference and the `data-theme` override, redefines the palette under that variant and keeps the view-transition animation rules, which have no utility equivalent. The `@view-transition` opt-in itself is an inline `<style>` at the top of [head.html](../layouts/partials/head.html), so a new page opts in before any stylesheet or script has loaded. It has no element or class selectors and skips Preflight. Layouts and [render-page.mjs](../scripts/render-page.mjs) put utility classes on every element: the centered 760-pixel shell, fluid H1 sizing, header, footer, listings, breadcrumbs, the skip link, and each Markdown element (headings, paragraphs, lists, quotes, code, tables, rules, links, images) through marked renderer overrides. Below 560 pixels (`max-sm:`) the header stacks and padding tightens. Tailwind scans only `layouts/`, `render-page.mjs`, and `highlight.mjs`, so classes must appear as complete literal strings there. Browser CSS has no `@font-face` rules. Social-card generation separately uses the bundled IBM Plex Mono TTF with system fonts disabled. There is no component library or animation runtime in the active site.
+Styling uses Tailwind CSS v4 and is split between the shared theme and the app. [base.css](../packages/theme/base.css) in `@pulkit/theme` sets up the Tailwind theme and utilities layers without Preflight, declares `@source` entries for the engine's `render-page.mjs`, the code package's `highlight.mjs`, and the embed renderers, defines a `dark` variant for the system preference and the `data-theme` override, and keeps the view-transition animation rules, which have no utility equivalent. The `@view-transition` opt-in itself is an inline `<style>` at the top of the app's [head.html](../apps/page/layouts/partials/head.html), so a new page opts in before any stylesheet or script has loaded. The app's [styles.css](../apps/page/styles.css) imports that base, adds `@source "./layouts"`, declares the Comic Relief `@font-face` rules, and replaces the default theme with the site's tokens (warm light/dark colors, syntax colors, font sizes, weights, line heights, radii, and a 560-pixel `sm` breakpoint), redefining the palette under the dark variant. Neither file has element or class selectors. Layouts and [render-page.mjs](../packages/engine/src/render-page.mjs) put utility classes on every element: the centered 760-pixel shell, fluid H1 sizing, header, footer, listings, breadcrumbs, the skip link, and each Markdown element (headings, paragraphs, lists, quotes, code, tables, rules, links, images) through marked renderer overrides. Below 560 pixels (`max-sm:`) the header stacks and padding tightens. Tailwind scans only the app's `layouts/`, `render-page.mjs`, `highlight.mjs`, and `packages/embeds/src/`, so classes must appear as complete literal strings there. Font files live in `packages/theme/fonts/` and are copied to `/assets/fonts/`. Social-card generation separately uses the bundled IBM Plex Mono TTF with system fonts disabled. Demos carry their own stylesheet and animation runtime; the rest of the site has no component library.
 
-[theme.js](../theme.js) reads `portfolio-theme` from localStorage and applies only `light` or `dark`. Otherwise CSS follows the system preference. After DOM readiness, the button toggles the effective theme and tries to persist it; storage failures are swallowed. With JavaScript disabled the site remains readable and follows system colors, but the button cannot change them. There is no explicit reset-to-system control or theme-specific button state text.
+[theme.js](../packages/theme/theme.js) reads `portfolio-theme` from localStorage and applies only `light` or `dark`. Otherwise CSS follows the system preference. After DOM readiness, the button toggles the effective theme and tries to persist it; storage failures are swallowed. With JavaScript disabled the site remains readable and follows system colors, but the button cannot change them. There is no explicit reset-to-system control or theme-specific button state text.
 
 ## Safe editing recipes
 
@@ -125,8 +139,8 @@ bun run format
 bun run ci
 ```
 
-For a new article, create a correctly named file in `content/blogs/` or a series directory with title, description, and date. Add assets if needed. Generation creates its route and updates existing applicable lists. Generation also creates its card, canonical metadata, JSON-LD, and sitemap entry. No registry edit or migration-audit update is needed. Add an explicit link or listing for a new standalone page, since route generation alone does not make it discoverable through navigation.
+For a new article, create a correctly named file in `apps/page/content/blogs/` or a series directory with title, description, and date. Add assets under `apps/page/assets/content/` if needed. Generation creates its route and updates existing applicable lists. Generation also creates its card, canonical metadata, JSON-LD, and sitemap entry. No registry edit or migration-audit update is needed. Add an explicit link or listing for a new standalone page, since route generation alone does not make it discoverable through navigation.
 
-For a rename/removal, update internal links and remove/rename the source. The next build clears `dist/`, so the old route disappears; no redirect is generated for it. Removing the last item in a collection also requires changing/removing its directive to avoid an empty-collection error.
+For a rename/removal, update internal links and remove/rename the source. The next build clears `apps/page/dist/`, so the old route disappears; no redirect is generated for it. Removing the last item in a collection also requires changing/removing its directive to avoid an empty-collection error.
 
 Before a commit, stage the intended Markdown, assets, and related templates together. HTML, social cards, and crawler files are build output and are never committed. The hook checks the staged index, so unstaged repairs do not count.

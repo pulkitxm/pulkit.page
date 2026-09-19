@@ -1,0 +1,99 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "stream",
+  "globalDependencies": ["biome.json", ".htmlvalidate.json"],
+  "globalEnv": ["NODE_ENV", "SITE_URL"],
+  "tasks": {
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
+    "build": {
+      "dependsOn": ["^transit"],
+      "inputs": ["$TURBO_DEFAULT$", "!.cache/**"],
+      "outputs": ["dist/**"]
+    },
+    "test": {
+      "dependsOn": ["^transit"],
+      "outputs": []
+    },
+    "check:layouts": {
+      "dependsOn": ["^transit"],
+      "outputs": []
+    },
+    "check:seo": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "check:site": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "check:html": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "check:browser": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "env": ["PLAYWRIGHT_CHANNEL"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#format:check": {
+      "outputs": []
+    },
+    "//#lint": {
+      "outputs": []
+    },
+    "//#check:content": {
+      "outputs": []
+    },
+    "//#check:comments": {
+      "outputs": []
+    },
+    "//#check:repository": {
+      "outputs": []
+    },
+    "//#check:em-dashes": {
+      "outputs": []
+    },
+    "//#check:imports": {
+      "outputs": []
+    },
+    "//#check:dead-code": {
+      "outputs": []
+    },
+    "//#check:shell": {
+      "outputs": []
+    },
+    "verify": {
+      "dependsOn": [
+        "test",
+        "check:layouts",
+        "check:seo",
+        "check:site",
+        "check:html",
+        "//#format:check",
+        "//#lint",
+        "//#check:content",
+        "//#check:comments",
+        "//#check:repository",
+        "//#check:em-dashes",
+        "//#check:imports",
+        "//#check:dead-code",
+        "//#check:shell"
+      ],
+      "outputs": []
+    }
+  }
+}

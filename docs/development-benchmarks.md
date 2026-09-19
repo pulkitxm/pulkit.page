@@ -4,7 +4,7 @@ Vite 8.3.0 serves Markdown pages and social cards when requested. Production bui
 
 ## Method
 
-Run `python3 scripts/benchmark-dev.py SOURCE --runs 3 --output RESULT.json` against a source checkout with installed dependencies. The runner copies sources into a temporary directory, links individual dependency packages into a private node\_modules directory, and removes only that temporary copy afterward. Vite optimizer caches remain inside the temporary directory. It never edits the supplied checkout. Each iteration clears renderer caches, Vite optimizer caches, and dist, requests a fixed available port, measures server readiness, then measures first homepage, first code-heavy article, and repeated article requests. It restarts without edits to measure warm readiness and first homepage latency, then checks body edits, metadata-driven collection updates, and a shared footer edit. Edits are reverted before timing a production build.
+Run `python3 tooling/benchmarks/benchmark-dev.py APP --runs 3 --output RESULT.json`, where `APP` is a site directory such as `apps/page` in a checkout with installed dependencies. The runner copies that app into a temporary directory, links its workspace dependencies into a private node\_modules directory, and drives it with the `site` CLI from `packages/engine` in the same checkout, so shared packages resolve from the workspace. Vite optimizer caches stay inside the temporary copy. The results below were measured on the single-package layout before the workspace split. It never edits the supplied checkout. Each iteration clears renderer caches, Vite optimizer caches, and dist, requests a fixed available port, measures server readiness, then measures first homepage, first code-heavy article, and repeated article requests. It restarts without edits to measure warm readiness and first homepage latency, then checks body edits, metadata-driven collection updates, and a shared footer edit. Edits are reverted before timing a production build.
 
 The article is selected by the highest fenced-code-block count. Edit latency runs from file write until an HTTP response contains the changed text, using 10 ms polling. This includes watcher delay and rendering, but excludes browser painting. Readiness ends when the server announces its bound URL; it does not imply every page has been rendered. First-request timings are reported separately to expose deferred work. Cold means renderer and Vite optimizer caches cleared, not an OS disk-cache flush. Runs are sequential on one machine with no concurrent test or build commands.
 
@@ -39,15 +39,15 @@ See [all raw samples](development-benchmarks.json). The benchmark measures HTTP 
 
 Vite supplies the maintained development server, file watching, HTML transforms, browser reload client, and CSS hot replacement. A small middleware adapter connects the existing Markdown renderer, preserving its layouts, formatting, highlighting, route validation, and SEO behavior. Migrating the content system to another framework was unnecessary for this change. See the [Vite plugin API](https://vite.dev/guide/api-plugin.html).
 
-Production generation stays complete because GitHub Pages serves static output and cannot render an unbuilt URL. Vite does not replace formatting, linting, or repository checks. `bun run` remains the package-script launcher; `bun dev` and `bun run dev` invoke the same Vite-backed script.
+Production generation stays complete because GitHub Pages serves static output and cannot render an unbuilt URL. Vite does not replace formatting, linting, or repository checks. `bun run` remains the package-script launcher. In the workspace layout, root `bun run dev` starts the app's Vite-backed `site dev` script through Turbo.
 
 ## Reproduction
 
-Create a separate baseline directory from commit `f3c6682`, install its dependencies or link the same dependency tree, then run these commands sequentially from the updated checkout:
+Create separate checkouts of the baseline commit `f3c6682` and the implementation commit `8abe11e`, install their dependencies or link the same dependency tree, then run these commands sequentially from the repository root:
 
 ```sh
-python3 scripts/benchmark-dev.py /path/to/baseline --runs 3 --output /tmp/before.json
-python3 scripts/benchmark-dev.py . --runs 3 --output /tmp/after.json
+python3 tooling/benchmarks/benchmark-dev.py /path/to/baseline/apps/page --runs 3 --output /tmp/before.json
+python3 tooling/benchmarks/benchmark-dev.py /path/to/implementation/apps/page --runs 3 --output /tmp/after.json
 ```
 
 Use the same machine and power settings, close competing workloads, and compare medians alongside the full samples. The runner's temporary copies isolate its content and template edits from both source checkouts. It stops its own server processes and restores fixture edits even when a request fails.

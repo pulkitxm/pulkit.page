@@ -43,6 +43,7 @@
     "@tailwindcss/vite": "4.3.3",
     "embla-carousel": "8.6.0",
     "html-validate": "11.16.0",
+    "image-size": "2.0.4",
     "katex": "0.18.7",
     "knip": "6.37.0",
     "lucide": "1.47.0",

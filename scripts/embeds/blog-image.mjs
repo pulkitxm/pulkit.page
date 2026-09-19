@@ -1,7 +1,9 @@
+import { lightboxScript, lightboxStyle } from "../lightbox.mjs";
+
 const maxHeightClasses = { 620: "max-h-[620px]" };
 
 export const mediaScript = "/assets/embeds/blog-media.js";
-export const mediaStyle = "/assets/embeds/photoswipe.css";
+export const mediaStyle = lightboxStyle;
 
 export function zoomLink({ src, width, height, className, image }, escapeHtml) {
   return `<a href="${escapeHtml(src)}" class="${className}" data-media-zoom data-width="${width}" data-height="${height}">${image}</a>`;
@@ -9,7 +11,7 @@ export function zoomLink({ src, width, height, className, image }, escapeHtml) {
 
 export function render({ src, width, height, alt, caption, maxHeight }, { assets, escapeHtml }) {
   assets.style(mediaStyle);
-  assets.script(mediaScript);
+  assets.script(lightboxScript);
   const heightClass = maxHeight === undefined ? undefined : maxHeightClasses[maxHeight];
   if (maxHeight !== undefined && !heightClass) {
     throw new Error(`Unsupported blog-image maxHeight: ${maxHeight}`);

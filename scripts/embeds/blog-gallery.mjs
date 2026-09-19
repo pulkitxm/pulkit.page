@@ -1,3 +1,4 @@
+import { lightboxScript } from "../lightbox.mjs";
 import { mediaScript, mediaStyle, zoomLink } from "./blog-image.mjs";
 
 const iconAttributes =
@@ -19,6 +20,7 @@ const backdropClasses = {
 
 export function renderCarousel(images, { frame, label }, { assets, escapeHtml }) {
   assets.style(mediaStyle);
+  assets.script(lightboxScript);
   assets.script(mediaScript);
   const slides = images
     .map((image, index) => {

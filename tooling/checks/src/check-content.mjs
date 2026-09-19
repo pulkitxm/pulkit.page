@@ -324,7 +324,7 @@ export function checkContent(path, source) {
     if (node.type === "paragraph" && sourceText(node).includes(":::")) {
       const text = sourceText(node);
       if (
-        !/^(?::::list [a-z0-9]+(?:[-/][a-z0-9]+)*(?: limit=[1-9][0-9]*)?(?: by-year)?|:::carousel|:::)$/.test(
+        !/^(?::::list (?:[a-z0-9-]+:all|[a-z0-9]+(?:[-/][a-z0-9]+)*)(?: limit=[1-9][0-9]*)?(?: by-year)?|:::carousel|:::)$/.test(
           text,
         ) &&
         !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text) &&

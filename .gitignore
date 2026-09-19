@@ -4,4 +4,5 @@ dist
 extras/
 
 .cache/
+.turbo/
 reports/

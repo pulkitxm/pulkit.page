@@ -1,0 +1,81 @@
+# Deployment
+
+Both sites are served by GitHub Pages. A repository can publish only one Pages
+site, so each site uses its own repository while all code stays here:
+
+| Site        | Built from                 | Served by                                                       | Pages source          |
+| ----------- | -------------------------- | --------------------------------------------------------------- | --------------------- |
+| pulkit.page | [apps/page](../apps/page/) | this repository                                                 | GitHub Actions        |
+| pulkit.blog | [apps/blog](../apps/blog/) | [pulkitxm/pulkit.blog](https://github.com/pulkitxm/pulkit.blog) | the `gh-pages` branch |
+
+The pulkit.blog repository is only a publishing target. Never edit it by hand;
+every deployment replaces its `gh-pages` branch contents.
+
+## What runs when
+
+The [CI workflow](../.github/workflows/ci.yml) builds and checks both apps on
+every pull request and push. On a push to `main` or a manual run on `main`, once
+every required job has passed:
+
+- **Deploy pulkit.page** uploads `apps/page/dist` as this repository's Pages
+  artifact and deploys it in the `github-pages` environment.
+- **Deploy pulkit.blog** downloads the same build, adds `.nojekyll`, and pushes
+  `apps/blog/dist` as one new commit on top of the `gh-pages` branch of
+  pulkitxm/pulkit.blog. Only changed files are uploaded, and an unchanged build
+  pushes nothing. It authenticates with a deploy key and pins GitHub's published
+  SSH host key. Without the `BLOG_DEPLOY_KEY` secret the job succeeds with a
+  warning and publishes nothing.
+
+Production builds copy each app's `CNAME` into `dist/`, which keeps both custom
+domains attached to their Pages sites. Old pulkit.page `/blogs/` URLs are not
+redirected; they return 404.
+
+## One-time setup for pulkit.blog
+
+1. Create a deploy key pair locally. Keep the private half out of the
+   repository and delete it after step 3.
+
+   ```sh
+   ssh-keygen -t ed25519 -C "pulkit.blog publish" -N "" -f pulkit-blog-deploy
+   ```
+
+2. In **pulkitxm/pulkit.blog**, open **Settings, Deploy keys, Add deploy key**.
+   Paste the contents of `pulkit-blog-deploy.pub` and tick **Allow write
+   access**. The key can push to that one repository and nothing else.
+
+3. In **pulkitxm/pulkit.page**, open **Settings, Secrets and variables,
+   Actions** and add a repository secret named `BLOG_DEPLOY_KEY` containing the
+   whole private key file `pulkit-blog-deploy`.
+
+4. Merge to `main` or run the CI workflow on `main` so the first publish creates
+   the `gh-pages` branch.
+
+5. In **pulkitxm/pulkit.blog**, open **Settings, Pages**. Set **Source** to
+   **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`. Set the
+   custom domain to `pulkit.blog` and enable **Enforce HTTPS** once the
+   certificate is issued.
+
+Both repositories are private, which GitHub Pages supports on paid plans. The
+published site is public either way.
+
+## Domains
+
+pulkit.page keeps its current Pages configuration in this repository. For
+pulkit.blog, create these records at the registrar:
+
+| Type    | Name  | Value                                                                                      |
+| ------- | ----- | ------------------------------------------------------------------------------------------ |
+| `A`     | `@`   | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`                 |
+| `AAAA`  | `@`   | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| `CNAME` | `www` | `pulkitxm.github.io`                                                                       |
+
+To stop anyone else from claiming the domain on GitHub Pages, verify it under
+your account's **Settings, Pages, Add a domain** and add the `TXT` record that
+page shows.
+
+## Changing a domain
+
+Each app's `CNAME` file is the single source of its production hostname. The
+engine reads it for canonical URLs, social metadata, the sitemap and the feed,
+and production builds publish it for Pages. Change the file, update DNS, and
+update the custom domain in that site's Pages settings.

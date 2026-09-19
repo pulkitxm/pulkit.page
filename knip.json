@@ -1,16 +1,44 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": [
-    "theme.js",
-    "styles.css",
-    "demos/index.js",
-    "assets/image-popup.js",
-    "client/embeds/*.js",
-    "demos/styles.css",
-    "scripts/import-reference.mjs",
-    "scripts/*.test.js",
-    "scripts/{build,ci,clean,dev,start,generate,highlight,format-code,check-comments,check-content,check-em-dashes,check-imports,check-layouts,check-repository,check-site,lighthouse,lighthouse-worker}.mjs"
-  ],
-  "project": ["**/*.{js,mjs,cjs,ts,tsx,jsx,mdx,css}", "!extras/**", "!dist/**"],
-  "includeEntryExports": true
+  "includeEntryExports": true,
+  "workspaces": {
+    ".": {
+      "entry": [],
+      "project": []
+    },
+    "apps/*": {
+      "entry": [],
+      "project": [],
+      "ignoreDependencies": ["@pulkit/theme"]
+    },
+    "packages/engine": {
+      "entry": [
+        "src/{build,dev,start,clean,check-layouts,check-seo,check-site,check-browser}.mjs",
+        "test/setup.mjs"
+      ],
+      "project": ["**/*.{mjs,css}"]
+    },
+    "packages/embeds": {
+      "entry": ["client/*.js"],
+      "project": ["src/**/*.mjs", "client/**/*.js"]
+    },
+    "packages/demos": {
+      "entry": ["index.js"],
+      "project": ["**/*.{js,mjs,css}"]
+    },
+    "packages/theme": {
+      "project": ["*.{js,css}"]
+    },
+    "packages/code": {
+      "project": ["src/**/*.mjs"]
+    },
+    "tooling/checks": {
+      "entry": ["src/check-*.mjs"],
+      "project": ["src/**/*.mjs"]
+    },
+    "tooling/lighthouse": {
+      "entry": ["src/lighthouse.mjs", "src/worker.mjs"],
+      "project": ["src/**/*.mjs"]
+    }
+  }
 }

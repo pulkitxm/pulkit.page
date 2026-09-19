@@ -89,12 +89,3 @@ export function html(strings: TemplateStringsArray, ...values: HtmlValue[]): str
     return result + part + (index < values.length ? flattenHtml(values[index]) : "");
   }, "");
 }
-
-export function refs(root: ParentNode): Record<string, HTMLElement> {
-  return Object.fromEntries(
-    [...root.querySelectorAll<HTMLElement>("[data-ref]")].map((element) => [
-      element.dataset.ref ?? "",
-      element,
-    ]),
-  );
-}

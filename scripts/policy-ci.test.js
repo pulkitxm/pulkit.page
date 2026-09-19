@@ -4,6 +4,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSyn
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import process from "node:process";
+import { parse } from "yaml";
 
 const root = resolve(import.meta.dir, "..");
 
@@ -77,4 +78,18 @@ test("Knip rejects unused files, exports, and dependencies", () => {
   } finally {
     rmSync(cwd, { recursive: true, force: true });
   }
+});
+
+test("every check script runs in the GitHub workflow", () => {
+  const scripts = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).scripts;
+  const workflow = parse(readFileSync(join(root, ".github/workflows/ci.yml"), "utf8"));
+  const commands = new Set(
+    Object.values(workflow.jobs).flatMap((job) =>
+      (job.strategy?.matrix?.include ?? []).map((entry) => entry.command),
+    ),
+  );
+  const required = Object.keys(scripts).filter(
+    (name) => name.startsWith("check:") || ["format:check", "lint", "test"].includes(name),
+  );
+  expect(required.filter((name) => !commands.has(name))).toEqual([]);
 });

@@ -1,8 +1,16 @@
 {
-  "extends": ["html-validate:recommended"],
+  "extends": ["html-validate:recommended", "html-validate:document"],
   "rules": {
+    "attr-pattern": "error",
     "doctype-style": ["error", { "style": "lowercase" }],
+    "heading-level": "off",
+    "id-pattern": ["error", { "pattern": "kebabcase" }],
+    "input-missing-label": "error",
+    "missing-doctype": "error",
+    "name-pattern": ["error", { "pattern": "kebabcase" }],
     "no-inline-style": "error",
+    "no-missing-references": "error",
+    "no-style-tag": "error",
     "require-sri": "off",
     "void-style": ["error", { "style": "selfclosing" }]
   }

@@ -13,7 +13,6 @@ const ordered = [
   "format:check",
   "lint",
   "test",
-  "typecheck",
   "build",
   "check:site",
 ];

@@ -30,7 +30,8 @@
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "import:reference": "bun scripts/import-reference.mjs",
     "check:seo": "bun scripts/check-seo.mjs",
-    "browser:check": "bun scripts/check-browser.mjs"
+    "browser:check": "bun scripts/check-browser.mjs",
+    "check:html": "html-validate \"dist/**/*.html\""
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

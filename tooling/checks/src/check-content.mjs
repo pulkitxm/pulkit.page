@@ -117,7 +117,7 @@ function metadataErrors(data, file, root) {
   if (
     data.layout &&
     (!slug.test(data.layout) ||
-      !existsSync(`${repository}${root || "apps/page/"}layouts/${data.layout}.html`))
+      !existsSync(`${repository}packages/theme/layouts/${data.layout}.html`))
   ) {
     errors.push("layout must name an existing layout");
   }

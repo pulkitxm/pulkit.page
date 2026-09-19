@@ -29,7 +29,7 @@ export function generationVersion() {
       .map((path) => join(packages, path)),
     join(repository, "biome.json"),
     join(repository, "bun.lock"),
-    join(packages, "theme/fonts/ibm-plex-mono-regular.ttf"),
+    join(packages, "theme/assets/fonts/ibm-plex-mono-regular.ttf"),
   ];
   return digest(
     files

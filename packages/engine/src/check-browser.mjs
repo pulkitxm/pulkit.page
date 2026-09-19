@@ -1,4 +1,5 @@
 import { existsSync, readdirSync, statSync } from "node:fs";
+import { availableParallelism } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
 import AxeBuilder from "@axe-core/playwright";
@@ -12,7 +13,24 @@ const viewports = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "mobile", width: 390, height: 844 },
 ];
+const selectedViewport = process.env.BROWSER_VIEWPORT;
+const auditedViewports = viewports.filter(
+  (viewport) => !selectedViewport || viewport.name === selectedViewport,
+);
+if (auditedViewports.length === 0) {
+  throw new Error(`Unknown BROWSER_VIEWPORT ${selectedViewport}`);
+}
+const [shardIndex, shardCount] = (process.env.BROWSER_SHARD ?? "1/1").split("/").map(Number);
+if (!(shardIndex >= 1 && shardIndex <= shardCount)) {
+  throw new Error(`Invalid BROWSER_SHARD ${process.env.BROWSER_SHARD}`);
+}
+const auditsSiteFlows = auditedViewports.includes(viewports.at(-1)) && shardIndex === shardCount;
 const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
+const themeDependentRules = ["color-contrast", "link-in-text-block"];
+const workersPerViewport = Math.max(
+  1,
+  Math.floor(availableParallelism() / auditedViewports.length),
+);
 const blockingImpacts = new Set(["serious", "critical"]);
 const { pages, site } = readSite("http://localhost");
 const collections = pages.filter((page) => page.index).map((page) => page.route);
@@ -145,10 +163,11 @@ async function auditAccessibility(page, scope) {
     await page.evaluate((selected) => {
       document.documentElement.dataset.theme = selected;
     }, theme);
-    const { violations } = await new AxeBuilder({ page })
-      .withTags(axeTags)
-      .exclude(["iframe", "*"])
-      .analyze();
+    const builder = new AxeBuilder({ page }).exclude(["iframe", "*"]).setLegacyMode(true);
+    const { violations } = await (theme === "light"
+      ? builder.withTags(axeTags)
+      : builder.withRules(themeDependentRules)
+    ).analyze();
     for (const violation of violations.filter((item) => blockingImpacts.has(item.impact))) {
       const targets = violation.nodes
         .slice(0, 3)
@@ -159,47 +178,67 @@ async function auditAccessibility(page, scope) {
   }
 }
 
-async function auditPages(browser, origin, paths) {
-  const documents = new Map();
-  for (const viewport of viewports) {
-    const { context, page } = await openSession(browser, origin, viewport.name, { viewport });
-    for (const path of paths) {
-      const scope = `${viewport.name} ${path}`;
-      const response = await page.goto(new URL(path, origin).href);
-      if (response?.status() !== 200) {
-        report(scope, `Page returned HTTP ${response?.status()}`);
-        continue;
-      }
-      await waitForImages(page);
-      const result = await page.evaluate(inspectDocument);
-      expect(scope, result.mains === 1, `Expected one main, found ${result.mains}`);
-      expect(scope, result.headings === 1, `Expected one h1, found ${result.headings}`);
-      expect(scope, result.lang, "Missing html lang");
-      expect(scope, result.title, "Missing title");
-      expect(scope, result.viewportMeta.includes("width=device-width"), "Missing viewport meta");
-      expect(
-        scope,
-        result.overflow <= 0,
-        `Page scrolls horizontally by ${result.overflow}px (${result.overflowing.join(", ")})`,
-      );
-      for (const href of result.unsafeBlankLinks) {
-        report(scope, `New-tab link without noopener: ${href}`);
-      }
-      for (const href of result.emptyLinks) {
-        report(scope, `Link without an accessible name: ${href}`);
-      }
-      for (const id of new Set(result.duplicateIds)) {
-        report(scope, `Duplicate id: ${id}`);
-      }
-      const toggle = await page.locator("[data-theme-toggle]").boundingBox();
-      expect(scope, toggle && toggle.width > 0 && toggle.height > 0, "Theme toggle is not visible");
-      await auditAccessibility(page, scope);
-      documents.set(path, result);
-    }
-    await context.close();
-    console.log(`Audited ${paths.length} pages at ${viewport.width}px`);
+async function auditPage(page, viewport, path, origin, owned) {
+  const scope = `${viewport.name} ${path}`;
+  const response = await page.goto(new URL(path, origin).href);
+  if (response?.status() !== 200) {
+    report(scope, `Page returned HTTP ${response?.status()}`);
+    return null;
   }
-  return documents;
+  if (!owned) {
+    return page.evaluate(inspectDocument);
+  }
+  await waitForImages(page);
+  const result = await page.evaluate(inspectDocument);
+  expect(scope, result.mains === 1, `Expected one main, found ${result.mains}`);
+  expect(scope, result.headings === 1, `Expected one h1, found ${result.headings}`);
+  expect(scope, result.lang, "Missing html lang");
+  expect(scope, result.title, "Missing title");
+  expect(scope, result.viewportMeta.includes("width=device-width"), "Missing viewport meta");
+  expect(
+    scope,
+    result.overflow <= 0,
+    `Page scrolls horizontally by ${result.overflow}px (${result.overflowing.join(", ")})`,
+  );
+  for (const href of result.unsafeBlankLinks) {
+    report(scope, `New-tab link without noopener: ${href}`);
+  }
+  for (const href of result.emptyLinks) {
+    report(scope, `Link without an accessible name: ${href}`);
+  }
+  for (const id of new Set(result.duplicateIds)) {
+    report(scope, `Duplicate id: ${id}`);
+  }
+  const toggle = await page.locator("[data-theme-toggle]").boundingBox();
+  expect(scope, toggle && toggle.width > 0 && toggle.height > 0, "Theme toggle is not visible");
+  await auditAccessibility(page, scope);
+  return result;
+}
+
+async function auditViewport(browser, origin, paths, viewport) {
+  const owned = new Set(paths.filter((_, index) => index % shardCount === shardIndex - 1));
+  const queue = [...paths];
+  const results = new Map();
+  await Promise.all(
+    Array.from({ length: Math.min(workersPerViewport, paths.length) }, async () => {
+      const { context, page } = await openSession(browser, origin, viewport.name, { viewport });
+      for (let path = queue.shift(); path; path = queue.shift()) {
+        results.set(path, await auditPage(page, viewport, path, origin, owned.has(path)));
+      }
+      await context.close();
+    }),
+  );
+  console.log(`Audited ${owned.size} of ${paths.length} pages at ${viewport.width}px`);
+  return results;
+}
+
+async function auditPages(browser, origin, paths) {
+  const [primary] = await Promise.all(
+    auditedViewports.map((viewport) => auditViewport(browser, origin, paths, viewport)),
+  );
+  return new Map(
+    paths.filter((path) => primary.get(path)).map((path) => [path, primary.get(path)]),
+  );
 }
 
 function auditLinks(documents, origin) {
@@ -423,11 +462,13 @@ try {
   }
   const documents = await auditPages(browser, origin, paths);
   auditLinks(documents, origin);
-  await auditWithoutJavaScript(browser, origin, paths);
-  await auditThemes(browser, origin);
-  await auditBlockedStorage(browser, origin);
-  await auditKeyboard(browser, origin);
-  await auditTransitions(browser, origin);
+  if (auditsSiteFlows) {
+    await auditWithoutJavaScript(browser, origin, paths);
+    await auditThemes(browser, origin);
+    await auditBlockedStorage(browser, origin);
+    await auditKeyboard(browser, origin);
+    await auditTransitions(browser, origin);
+  }
 } finally {
   await browser?.close();
   await server.close();

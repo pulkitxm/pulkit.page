@@ -1,5 +1,6 @@
 import { formatDuration } from "./duration.mjs";
 import { generationCache, generationVersion } from "./generation-cache.mjs";
+import { llmsText, markdownPath, renderMarkdown } from "./markdown-export.mjs";
 import { crawlerOutputs, renderCard } from "./og-images.mjs";
 import { renderDependencies, renderPage } from "./render-page.mjs";
 import { imagePath } from "./seo.mjs";
@@ -77,6 +78,14 @@ export function developmentRenderer(origin) {
         return {
           body: crawlerOutputs(pages, site).get(`pages${pathname}`),
           type: pathname.endsWith(".xml") ? "application/xml" : "text/plain",
+          description: "generated",
+        };
+      }
+      const markdownPage = pages.find((entry) => markdownPath(entry.route) === pathname);
+      if (markdownPage || pathname === "/llms.txt") {
+        return {
+          body: markdownPage ? renderMarkdown(markdownPage, pages, site) : llmsText(pages, site),
+          type: markdownPage ? "text/markdown; charset=utf-8" : "text/plain; charset=utf-8",
           description: "generated",
         };
       }

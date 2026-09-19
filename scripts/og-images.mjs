@@ -1,5 +1,6 @@
 import { resolve } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
+import { markdownOutputs } from "./markdown-export.mjs";
 import { imagePath } from "./seo.mjs";
 
 const xml = (value) =>
@@ -62,7 +63,7 @@ export function seoOutputs(pages, site, cache) {
       : renderCard(page, site);
     output.set(`pages${imagePath(page.route)}`, bytes);
   }
-  return new Map([...output, ...crawlerOutputs(pages, site)]);
+  return new Map([...output, ...crawlerOutputs(pages, site), ...markdownOutputs(pages, site)]);
 }
 export function crawlerOutputs(pages, site) {
   const output = new Map();

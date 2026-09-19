@@ -344,6 +344,7 @@ if (import.meta.main) {
       (file) =>
         file &&
         existsSync(file) &&
+        !file.startsWith("pages/") &&
         (/\.(md|mdx|ya?ml)$/i.test(file) || file.startsWith("content/")),
     );
   const failures = [];

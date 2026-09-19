@@ -346,7 +346,7 @@ export async function scanText(file, source) {
     language = /\b(node|bun|deno)\b/.test(source.split("\n")[0]) ? "javascript" : "bash";
   }
   const ranges =
-    file.startsWith("content/blogs/") && extension === "md"
+    (file.startsWith("content/blogs/") || file.startsWith("pages/blogs/")) && extension === "md"
       ? await markdownRanges(source, true)
       : file.startsWith("pages/blogs/") && extension === "html"
         ? await htmlRanges(source, true)

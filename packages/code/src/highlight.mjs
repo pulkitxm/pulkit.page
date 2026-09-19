@@ -127,6 +127,7 @@ export async function highlightFence(language, code) {
     lang: id,
     theme: "roles",
     includeExplanation: "scopeName",
+    tokenizeTimeLimit: 0,
   });
   if (reconstruct(result.tokens) !== code) {
     throw new Error(`Highlighter changed ${id} fence text`);

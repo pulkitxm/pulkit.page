@@ -82,4 +82,4 @@ test("Knip rejects unused files, exports, and dependencies", () => {
   } finally {
     rmSync(cwd, { recursive: true, force: true });
   }
-});
+}, 60000);

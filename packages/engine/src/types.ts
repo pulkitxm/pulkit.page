@@ -35,6 +35,7 @@ export interface Page extends PageRecord {
 
 export interface SiteSettings {
   brand?: string;
+  wordmark?: string;
   description?: string;
   copyright?: string;
   navigation?: SiteLink[];

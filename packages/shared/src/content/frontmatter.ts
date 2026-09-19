@@ -16,6 +16,7 @@ export const pageFields = [
 
 export const siteFields = [
   "brand",
+  "wordmark",
   "description",
   "copyright",
   "navigation",
@@ -28,6 +29,7 @@ export const requiredSiteFields = ["brand", "description", "copyright", "navigat
 export const textFields = [
   ...pageFields.filter((field) => field !== "tags"),
   "brand",
+  "wordmark",
   "articles",
   "copyright",
 ] as const;

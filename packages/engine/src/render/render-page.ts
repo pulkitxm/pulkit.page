@@ -109,7 +109,7 @@ export async function renderPage(
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages, site),
       description: escapeHtml(metadata.description ?? site.description ?? metadata.title),
-      brand: escapeHtml(site.brand ?? "Pulkit"),
+      brand: site.wordmark ?? escapeHtml(site.brand ?? "Pulkit"),
       author: escapeHtml(site.author ?? ""),
       authorUrl: site.authorUrl ? safeUrl(site.authorUrl) : "/",
       navigation: siteLinks(site.navigation ?? [], route, true),

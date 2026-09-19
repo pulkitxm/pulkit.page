@@ -25,7 +25,7 @@ const optionalPageText = [
   "secondaryIcon",
 ] as const;
 
-const siteText = ["brand", "description", "copyright", "articles"] as const;
+const siteText = ["brand", "wordmark", "description", "copyright", "articles"] as const;
 
 export function readFrontmatter(source: string): Frontmatter {
   const frontmatter = splitFrontmatter(source, { crlf: true });

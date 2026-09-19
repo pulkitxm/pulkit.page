@@ -109,8 +109,8 @@ function checkSeo(root = "dist") {
   const sitemap = readFileSync(join(root, "sitemap.xml"), "utf8");
   const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   if (
-    JSON.stringify(locations.sort()) !==
-    JSON.stringify(routes.map((route) => site.url + route).sort())
+    JSON.stringify(locations.toSorted((a, b) => a.localeCompare(b))) !==
+    JSON.stringify(routes.map((route) => site.url + route).toSorted((a, b) => a.localeCompare(b)))
   ) {
     throw new Error("Sitemap must contain every canonical page exactly once");
   }
@@ -131,11 +131,11 @@ function checkSeo(root = "dist") {
     const expected = pages
       .filter((page) => isArticle(page.route, pages, site))
       .map((page) => site.url + page.route)
-      .sort();
+      .toSorted((a, b) => a.localeCompare(b));
     const feed = existsSync(feedPath) ? readFileSync(feedPath, "utf8") : "";
     const ids = [...feed.matchAll(/<entry>\s*<title>[^<]*<\/title>\s*<id>([^<]+)<\/id>/g)]
       .map((match) => match[1])
-      .sort();
+      .toSorted((a, b) => a.localeCompare(b));
     if (JSON.stringify(ids) !== JSON.stringify(expected)) {
       throw new Error("Feed must contain every article exactly once");
     }

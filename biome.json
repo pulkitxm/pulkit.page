@@ -30,18 +30,12 @@
         "noUnresolvedImports": "off"
       },
       "suspicious": {
-        "noExplicitAny": "error",
-        "noDebugger": "error",
-        "noDoubleEquals": "error",
-        "noFocusedTests": "error",
-        "noSkippedTests": "error",
-        "noVar": "error",
-        "noImplicitAnyLet": "error",
+        "preset": "all",
+        "noUnnecessaryConditions": "off",
+        "noMisplacedAssertion": "off",
         "noConsole": "error",
-        "noTsIgnore": "error",
-        "noExportsInTest": "error",
-        "noDuplicateTestHooks": "error",
-        "useErrorMessage": "error"
+        "noBitwiseOperators": "off",
+        "noEmptyBlockStatements": "off"
       },
       "style": {
         "useConst": "error",
@@ -64,7 +58,26 @@
             "filenameCases": ["kebab-case"],
             "requireAscii": true
           }
-        }
+        },
+        "noNestedTernary": "error",
+        "useCollapsedIf": "error",
+        "noNegationElse": "error",
+        "useGlobalThis": "error",
+        "useErrorCause": "error",
+        "useExplicitLengthCheck": "error",
+        "noUselessElse": "error",
+        "useShorthandAssign": "error",
+        "useConsistentArrayType": "error",
+        "useForOf": "error",
+        "useArrayLiterals": "error",
+        "noYodaExpression": "error",
+        "useConsistentBuiltinInstantiation": "error",
+        "useAtIndex": "error",
+        "useCollapsedElseIf": "error",
+        "noInferrableTypes": "error",
+        "useSelfClosingElements": "error",
+        "useFragmentSyntax": "error",
+        "noUnusedTemplateLiteral": "error"
       },
       "a11y": {
         "preset": "all"
@@ -72,6 +85,22 @@
       "security": {
         "preset": "all",
         "noSecrets": "error"
+      },
+      "complexity": {
+        "preset": "all",
+        "noExcessiveCognitiveComplexity": "off",
+        "noExcessiveLinesPerFunction": "off",
+        "useMaxParams": "off",
+        "useSimplifiedLogicExpression": "off",
+        "noVoid": "off"
+      },
+      "performance": {
+        "preset": "recommended",
+        "noBarrelFile": "error",
+        "noReExportAll": "error",
+        "noNamespaceImport": "error",
+        "noDelete": "error",
+        "noAccumulatingSpread": "error"
       }
     }
   },
@@ -92,6 +121,11 @@
     "experimentalFullSupportEnabled": true,
     "formatter": {
       "enabled": true,
+      "lineWidth": 320,
+      "whitespaceSensitivity": "css",
+      "attributePosition": "auto",
+      "bracketSameLine": false,
+      "indentScriptAndStyle": false,
       "selfCloseVoidElements": "always"
     }
   },

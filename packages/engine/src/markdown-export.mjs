@@ -67,11 +67,10 @@ function resolver(pages, site) {
 
 function entryLine(page, resolve) {
   const { metadata } = page;
+  const dated = metadata.date ? shortDate(metadata.date) : "";
   const detail = metadata.role
     ? [metadata.role, metadata.period].filter(Boolean).join(", ")
-    : metadata.date
-      ? shortDate(metadata.date)
-      : "";
+    : dated;
   const href = /^https?:\/\//.test(page.route)
     ? page.route.replace(/\/$/, ".md")
     : resolve(page.route);
@@ -346,7 +345,7 @@ function header(page, pages, site, resolve) {
         candidate.index && candidate.route !== page.route && page.route.startsWith(candidate.route),
     )
     .sort((a, b) => b.route.length - a.route.length);
-  if (parents.length) {
+  if (parents.length > 0) {
     facts.push(`- Part of: ${linkTo(parents[0].metadata.title, resolve(parents[0].route))}`);
   }
   return `# ${metadata.title}\n\n${quote(metadata.description)}\n\n${facts.join("\n")}`;
@@ -369,13 +368,13 @@ function footer(page, pages, site, resolve) {
           parent.route.startsWith(page.route),
       ),
   );
-  if (collections.length) {
+  if (collections.length > 0) {
     sections.push(
       `## Explore collections\n\n${collections.map((entry) => `- ${linkTo(entry.metadata.title, resolve(entry.route))}`).join("\n")}`,
     );
   }
   const related = relatedPages(page.route, page.metadata, pages, site);
-  if (related.length) {
+  if (related.length > 0) {
     sections.push(
       `## Related writing\n\n${related.map((entry) => entryLine(entry, resolve)).join("\n")}`,
     );
@@ -410,11 +409,9 @@ export function llmsText(pages, site) {
   const home = pages.find((page) => page.route === "/");
   const describe = (page) => {
     const { metadata } = page;
-    const detail = metadata.role
-      ? `${metadata.role}, ${metadata.period}. `
-      : isArticle(page.route, pages, site) && metadata.date
-        ? `${shortDate(metadata.date)}. `
-        : "";
+    const dated =
+      isArticle(page.route, pages, site) && metadata.date ? `${shortDate(metadata.date)}. ` : "";
+    const detail = metadata.role ? `${metadata.role}, ${metadata.period}. ` : dated;
     return `- ${linkTo(metadata.title, resolve(page.route))}: ${detail}${metadata.description.replace(/\s+/g, " ")}`;
   };
   const parentOf = (route) => route.slice(0, route.lastIndexOf("/", route.length - 2) + 1);
@@ -440,12 +437,14 @@ export function llmsText(pages, site) {
   const elsewhere = (site.navigation ?? []).filter((item) => /^https?:\/\//.test(item.href));
   const sections = [
     `## Pages\n\n${[home, ...standalone].map(describe).join("\n")}`,
-    writing.length ? `## Writing\n\n${writing.map(describe).join("\n")}` : "",
+
+    writing.length > 0 ? `## Writing\n\n${writing.map(describe).join("\n")}` : "",
     ...collections.map(
       ({ collection, entries }) =>
         `## ${collection.metadata.title}\n\n${[collection, ...entries].map(describe).join("\n")}`,
     ),
-    elsewhere.length
+
+    elsewhere.length > 0
       ? `## Elsewhere\n\n${elsewhere.map((item) => `- ${linkTo(item.label, item.href)}: ${linkTo("llms.txt", new URL("/llms.txt", item.href).href)}`).join("\n")}`
       : "",
   ];

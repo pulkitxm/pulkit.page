@@ -82,7 +82,7 @@ function readJson(source, start) {
 export function matchInlineEmbed(source) {
   const head = /^:embed\[([a-z][a-z0-9-]*)\]\{/.exec(source);
   if (!head) {
-    return undefined;
+    return;
   }
   const { value, end } = readJson(source, head[0].length);
   if (source[end] !== "}") {
@@ -143,7 +143,7 @@ function attributesFor(tag, source) {
 export function renderRawHtml(source, assets) {
   let output = "";
   let rest = source;
-  while (rest.length) {
+  while (rest.length > 0) {
     const embed = rest.startsWith(":embed[") ? matchInlineEmbed(rest) : undefined;
     if (embed) {
       output += renderEmbed(embed.name, embed.props, assets, true);

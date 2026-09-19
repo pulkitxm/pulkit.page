@@ -81,7 +81,7 @@ export function mount(root) {
     const blockFor = 2000;
     const start = performance.now();
     while (performance.now() - start < blockFor) {
-      Math.random() * Math.random();
+      void (Math.random() * Math.random());
     }
     block.disabled = false;
     block.textContent = "Block Main Thread";

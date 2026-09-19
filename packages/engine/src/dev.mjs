@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { rm } from "node:fs/promises";
-import { resolve, sep } from "node:path";
+import { extname, resolve, sep } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { bundleDemoScripts, compileDemoStyles, fontFile } from "@pulkit/demos/assets";
@@ -11,6 +11,13 @@ import { developmentLog } from "./dev-log.mjs";
 import { developmentRenderer } from "./dev-renderer.mjs";
 import { formatDuration } from "./duration.mjs";
 import { themeFile } from "./theme-files.mjs";
+
+const sharedTypes = {
+  ".js": "text/javascript",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".ttf": "font/ttf",
+};
 
 const packages = fileURLToPath(new URL("../../", import.meta.url));
 const repository = resolve(packages, "..");
@@ -35,7 +42,7 @@ async function demoAsset(name) {
     return { type: "font/woff2", body: readFileSync(font) };
   }
   if (!/^[\w.-]+\.js$/.test(name)) {
-    return undefined;
+    return;
   }
   if (name === "index.js" || !demoBundle) {
     demoBundle = rm(demoOutput, { force: true, recursive: true }).then(() =>
@@ -178,14 +185,14 @@ const server = await createServer({
               response.end(request.method === "HEAD" ? undefined : demo.body);
               return;
             }
-            const shared =
-              pathname === "/theme.js"
-                ? themeFile("theme.js")
-                : pathname.startsWith("/assets/fonts/")
-                  ? themeFile(`fonts/${pathname.slice("/assets/fonts/".length)}`)
-                  : /^\/assets\/[\w.-]+\.(?:png|svg)$/.test(pathname)
-                    ? themeFile(`icons/${pathname.slice("/assets/".length)}`)
-                    : undefined;
+            let shared;
+            if (pathname === "/theme.js") {
+              shared = themeFile("theme.js");
+            } else if (pathname.startsWith("/assets/fonts/")) {
+              shared = themeFile(`fonts/${pathname.slice("/assets/fonts/".length)}`);
+            } else if (/^\/assets\/[\w.-]+\.(?:png|svg)$/.test(pathname)) {
+              shared = themeFile(`icons/${pathname.slice("/assets/".length)}`);
+            }
             if (shared) {
               asset = true;
               const root = themeFile("./");
@@ -195,15 +202,7 @@ const server = await createServer({
                 return;
               }
               response.writeHead(200, {
-                "Content-Type": file.endsWith(".js")
-                  ? "text/javascript"
-                  : file.endsWith(".svg")
-                    ? "image/svg+xml"
-                    : file.endsWith(".png")
-                      ? "image/png"
-                      : file.endsWith(".ttf")
-                        ? "font/ttf"
-                        : "font/woff2",
+                "Content-Type": sharedTypes[extname(file)] ?? "font/woff2",
                 "Cache-Control": "no-store",
               });
               response.end(request.method === "HEAD" ? undefined : readFileSync(file));
@@ -238,7 +237,10 @@ const server = await createServer({
             response.end(request.method === "HEAD" ? undefined : body);
           } catch (error) {
             description = `failed: ${error.message}`;
-            const status = error instanceof URIError ? 400 : error.code === "ENOENT" ? 404 : 500;
+            let status = error.code === "ENOENT" ? 404 : 500;
+            if (error instanceof URIError) {
+              status = 400;
+            }
             response.writeHead(status, { "Content-Type": "text/plain" }).end(error.message);
           }
         });

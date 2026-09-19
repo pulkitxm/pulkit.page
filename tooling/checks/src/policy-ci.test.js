@@ -1,6 +1,15 @@
 import { expect, test } from "bun:test";
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import process from "node:process";
@@ -83,3 +92,31 @@ test("Knip rejects unused files, exports, and dependencies", () => {
     rmSync(cwd, { recursive: true, force: true });
   }
 }, 60000);
+
+test("turbo verify runs every check, lint, format and test script", () => {
+  const read = (file) => JSON.parse(readFileSync(join(repository, file), "utf8"));
+  const verify = new Set(read("turbo.json").tasks.verify.dependsOn);
+  const workflow = readFileSync(join(repository, ".github/workflows/ci.yml"), "utf8");
+  const rootScripts = Object.keys(read("package.json").scripts).filter(
+    (name) => name.startsWith("check:") || ["format:check", "lint"].includes(name),
+  );
+  const workspaceScripts = read("package.json")
+    .workspaces.flatMap((pattern) => {
+      const directory = pattern.replace("/*", "");
+      return readdirSync(join(repository, directory)).map(
+        (name) => `${directory}/${name}/package.json`,
+      );
+    })
+    .filter((file) => existsSync(join(repository, file)))
+    .flatMap((file) => Object.keys(read(file).scripts ?? {}))
+    .filter((name) => name.startsWith("check:") || name === "test");
+  const missing = [
+    ...rootScripts.filter((name) => !verify.has(`//#${name}`)),
+    ...new Set(
+      workspaceScripts.filter(
+        (name) => !verify.has(name) && !workflow.includes(`turbo run ${name}`),
+      ),
+    ),
+  ];
+  expect(missing).toEqual([]);
+});

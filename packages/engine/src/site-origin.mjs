@@ -27,8 +27,8 @@ export function resolveSiteOrigin(
   let url;
   try {
     url = new URL(candidate);
-  } catch {
-    throw new Error("SITE_URL must be an absolute HTTP(S) origin");
+  } catch (error) {
+    throw new Error("SITE_URL must be an absolute HTTP(S) origin", { cause: error });
   }
   if (
     !["https:", "http:"].includes(url.protocol) ||

@@ -23,7 +23,7 @@ if (import.meta.main) {
       errors.push(error.message);
     }
   }
-  if (errors.length) {
+  if (errors.length > 0) {
     console.error(errors.join("\n"));
     process.exit(1);
   }

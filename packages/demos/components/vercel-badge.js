@@ -173,9 +173,9 @@ export function mount(root) {
     world.integrationParameters.normalizedAllowedLinearError = 0.001 / LENGTH_UNIT;
     world.integrationParameters.normalizedPredictionDistance = 0.002 / LENGTH_UNIT;
 
-    function createBody(type, position) {
+    function createBody(type, translation) {
       const desc = new RigidBodyDesc(type)
-        .setTranslation(position[0], position[1] + 4, position[2])
+        .setTranslation(translation[0], translation[1] + 4, translation[2])
         .setLinearDamping(2)
         .setAngularDamping(2)
         .setCanSleep(true);
@@ -265,7 +265,8 @@ export function mount(root) {
     let captured = null;
 
     function syncCursor() {
-      document.body.style.cursor = hovered ? (dragged ? "grabbing" : "grab") : "auto";
+      const dragCursor = dragged ? "grabbing" : "grab";
+      document.body.style.cursor = hovered ? dragCursor : "auto";
     }
 
     function setHovered(value) {

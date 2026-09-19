@@ -29,7 +29,8 @@ export function createSwapButton({
   let current = swapped;
 
   function render() {
-    const currentIcon = icon === undefined ? "" : current ? (iconSwapped ?? icon) : icon;
+    const activeIcon = current ? (iconSwapped ?? icon) : icon;
+    const currentIcon = icon === undefined ? "" : activeIcon;
     first.className = cn(
       spanBase,
       !label1IsLonger && "absolute",

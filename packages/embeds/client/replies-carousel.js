@@ -1,4 +1,4 @@
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const reducedMotion = globalThis.matchMedia("(prefers-reduced-motion: reduce)");
 
 for (const root of document.querySelectorAll("[data-replies-carousel]")) {
   const track = root.querySelector("[data-replies-track]");

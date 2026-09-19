@@ -129,11 +129,11 @@ export function mount(root) {
       select(Number(target.dataset.index));
     }
   });
-  window.addEventListener("keydown", handleKeyDown);
+  globalThis.addEventListener("keydown", handleKeyDown);
 
   return {
     destroy() {
-      window.removeEventListener("keydown", handleKeyDown);
+      globalThis.removeEventListener("keydown", handleKeyDown);
       layoutAnimation?.stop();
     },
   };

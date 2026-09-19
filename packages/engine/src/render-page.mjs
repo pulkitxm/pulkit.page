@@ -211,13 +211,19 @@ export async function renderPage(
         );
       },
       code(token) {
-        return Renderer.prototype.code
-          .call(this, token)
-          .replace(
-            /^<pre><code(?: class="([^"]*)")?>/,
-            (_, language) =>
-              `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"><code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
+        const [, language, highlighted] =
+          /^<pre><code(?: class="([^"]*)")?>([\s\S]*)<\/code><\/pre>\n?$/.exec(
+            Renderer.prototype.code.call(this, token),
           );
+        const lines = highlighted
+          .replace(/\n$/, "")
+          .split("\n")
+          .map(
+            (line) =>
+              `<span class="block leading-(--pre-line) whitespace-pre">${line || "<br>"}</span>`,
+          )
+          .join("");
+        return `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5 whitespace-normal [--pre-line:1lh]"><code class="${[language, "block w-max min-w-full rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">${lines}</code></pre>\n`;
       },
       codespan(token) {
         return withClass(
@@ -366,7 +372,7 @@ export async function renderPage(
         },
         renderer(token) {
           const items = collectionItems(pages, route, token.collection, token.limit, site);
-          if (!items.length) {
+          if (items.length === 0) {
             throw new Error(`Empty or unknown collection: ${token.collection}`);
           }
           const { grouped } = token;
@@ -415,6 +421,10 @@ export async function renderPage(
       )
       .join(navigation ? "\n" : " · ");
   const category = categoryOf(route, pages);
+  const plainDate =
+    metadata.date && !metadata.period
+      ? `<time datetime="${metadata.date}">${escapeHtml(metadata.date)}</time>`
+      : "";
   const detail = article
     ? [
         metadata.date
@@ -427,9 +437,7 @@ export async function renderPage(
       ]
         .filter(Boolean)
         .join(" · ")
-    : metadata.date && !metadata.period
-      ? `<time datetime="${metadata.date}">${escapeHtml(metadata.date)}</time>`
-      : "";
+    : plainDate;
   const content = await markdown.parse(body);
   return formatHtml(
     applyLayout(layouts, layout, {
@@ -457,7 +465,7 @@ export async function renderPage(
 
 function breadcrumbs(route, pages) {
   const parents = ancestors(route, pages);
-  return parents.length
+  return parents.length > 0
     ? `<nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb"><ol class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current">${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
     : "";
 }
@@ -484,7 +492,7 @@ function relatedNavigation(route, metadata, pages, site) {
           `<li class="my-2"><a class="${link}" href="${escapeHtml(page.route)}">${escapeHtml(page.metadata.title)}</a></li>`,
       )
       .join("");
-  return `${collections.length && route !== "/" ? `<nav class="mt-12 text-[0.9rem]" aria-label="Collections"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Explore collections</h2><ul class="mt-0 mb-6">${links(collections)}</ul></nav>` : ""}${related.length ? `<nav class="mt-12 text-[0.9rem]" aria-label="Related writing"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2><ul class="mt-0 mb-6">${links(related)}</ul></nav>` : ""}`;
+  return `${collections.length > 0 && route !== "/" ? `<nav class="mt-12 text-[0.9rem]" aria-label="Collections"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Explore collections</h2><ul class="mt-0 mb-6">${links(collections)}</ul></nav>` : ""}${related.length > 0 ? `<nav class="mt-12 text-[0.9rem]" aria-label="Related writing"><h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2><ul class="mt-0 mb-6">${links(related)}</ul></nav>` : ""}`;
 }
 function seoHead(route, metadata, site, pages) {
   const url = site.url + route;
@@ -529,18 +537,20 @@ export function collectionItems(pages, route, collection, limit, site) {
   if (external && !site?.external?.[external]) {
     throw new Error(`Unknown site in list directive: ${external}`);
   }
-  return (
-    external
-      ? site.external[external]
-      : collection === "all"
-        ? articles(pages, site)
-        : pages.filter(
-            (page) =>
-              !page.index &&
-              page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
-                `/${collection}/`,
-          )
-  )
+  let entries;
+  if (external) {
+    entries = site.external[external];
+  } else if (collection === "all") {
+    entries = articles(pages, site);
+  } else {
+    entries = pages.filter(
+      (page) =>
+        !page.index &&
+        page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
+          `/${collection}/`,
+    );
+  }
+  return entries
     .filter((page) => page.route !== route)
     .sort(
       (a, b) =>

@@ -323,3 +323,11 @@ test("lists from another site link to that site and show recent dates", async ()
     "Unknown site in list directive: notes",
   );
 });
+
+test("code blocks indent line by line while keeping blank lines copyable", async () => {
+  const html = await renderPage(`${source}\n\`\`\`text\nfirst\n\n  second\n\`\`\`\n`);
+  expect(html).toMatch(
+    /\n( +)<pre [^>]*whitespace-normal[^>]*>\n\1 {2}<code class="language-text [^"]*">\n\1 {4}<span class="block leading-\(--pre-line\) whitespace-pre">first<\/span>\n\1 {4}<span class="block leading-\(--pre-line\) whitespace-pre"><br \/><\/span>\n\1 {4}<span class="block leading-\(--pre-line\) whitespace-pre"> {2}second<\/span>\n\1 {2}<\/code>\n\1<\/pre>\n/,
+  );
+  expect(html).not.toMatch(/^\s*>|<\/[a-z]+$/m);
+});

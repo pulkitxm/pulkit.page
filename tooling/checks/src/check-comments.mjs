@@ -215,8 +215,10 @@ async function htmlRanges(source, preserveExamples = false) {
       const start = location.startTag.endOffset;
       const body = source.slice(start, location.endTag.startOffset);
       const type = node.attrs.find((attr) => attr.name === "type")?.value;
-      const language =
-        node.tagName === "style" ? "css" : type?.includes("json") ? "json" : "javascript";
+      let language = type?.includes("json") ? "json" : "javascript";
+      if (node.tagName === "style") {
+        language = "css";
+      }
       ranges.push(
         ...(await commentRanges(language, body)).map((range) => ({
           start: start + range.start,
@@ -232,7 +234,7 @@ async function htmlRanges(source, preserveExamples = false) {
         const raw = source.slice(location.startTag.endOffset, location.endTag.startOffset);
         const decoded = nodeText(parseFragment(raw));
         const comments = await commentRanges(language, decoded);
-        if (comments.length) {
+        if (comments.length > 0) {
           ranges.push({ start: location.startOffset, end: location.endOffset });
         }
       }
@@ -304,7 +306,7 @@ async function markdownRanges(source, preserveExamples = false) {
   return ranges;
 }
 
-export async function commentRanges(language, source) {
+export function commentRanges(language, source) {
   const normalized = aliases[language] ?? language;
   if (plain.has(normalized)) {
     return [];
@@ -380,7 +382,7 @@ if (import.meta.main) {
       errors.push(`${file}: ${error.message}`);
     }
   }
-  if (errors.length) {
+  if (errors.length > 0) {
     console.error(errors.join("\n"));
     process.exit(1);
   }

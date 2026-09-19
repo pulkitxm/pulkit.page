@@ -7,7 +7,7 @@ const sizes = new Map();
 
 export function localImageSize(src) {
   if (!src.startsWith("/assets/") || !existsSync(src.slice(1))) {
-    return undefined;
+    return;
   }
   if (!sizes.has(src)) {
     const { width, height } = imageSize(readFileSync(src.slice(1)));

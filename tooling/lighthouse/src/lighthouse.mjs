@@ -115,14 +115,14 @@ function startWorker() {
   };
 }
 
-function pageReport(site, route, runs) {
+function pageReport(site, route, pageRuns) {
   const lines = [
     `# Lighthouse: \`${site.domain}${route}\``,
     "",
     "[Back to summary](../../README.md)",
     "",
   ];
-  for (const { formFactor, lhr } of runs) {
+  for (const { formFactor, lhr } of pageRuns) {
     lines.push(
       `## ${formFactor}`,
       "",
@@ -180,9 +180,9 @@ function siteSummary(site, results) {
     for (const { route, runs } of results) {
       const { lhr } = runs.find((run) => run.formFactor === formFactor);
       const scores = categories.map((category) => score(lhr.categories[category].score));
-      const values = metrics.map(([id]) => cell(lhr.audits[id]?.displayValue));
+      const displayValues = metrics.map(([id]) => cell(lhr.audits[id]?.displayValue));
       lines.push(
-        `| [\`${route}\`](pages/${site.domain}/${slug(route)}.md) | ${[...scores, ...values].join(" | ")} |`,
+        `| [\`${route}\`](pages/${site.domain}/${slug(route)}.md) | ${[...scores, ...displayValues].join(" | ")} |`,
       );
       for (const category of categories) {
         for (const failing of failingAudits(lhr, category)) {
@@ -205,14 +205,14 @@ function siteSummary(site, results) {
   return lines;
 }
 
-function summaryReport(sections) {
+function summaryReport(siteSections) {
   const commit = execFileSync("git", ["rev-parse", "--short", "HEAD"], { encoding: "utf8" }).trim();
   const lines = [
     "# Lighthouse summary",
     "",
     `Generated ${new Date().toISOString()} ${values.prod ? "against production" : "against local builds"} at commit \`${commit}\`. Scores below 90 are bold.`,
     "",
-    ...sections.flatMap(({ site, results }) => siteSummary(site, results)),
+    ...siteSections.flatMap(({ site, results }) => siteSummary(site, results)),
   ];
   return `${lines.join("\n").trimEnd()}\n`;
 }
@@ -285,7 +285,7 @@ try {
 const jobs = sites.flatMap((site) =>
   [...new Set(site.routes)]
     .filter((route) => positionals.length === 0 || positionals.includes(route))
-    .sort()
+    .toSorted((a, b) => a.localeCompare(b))
     .flatMap((route) => formFactors.map((formFactor) => ({ site, route, formFactor }))),
 );
 if (jobs.length === 0) {

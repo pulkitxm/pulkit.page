@@ -30,6 +30,7 @@
       "name": "@pulkit/code",
       "dependencies": {
         "@biomejs/biome": "2.5.14",
+        "parse5": "8.0.1",
         "shiki": "4.4.3",
       },
     },

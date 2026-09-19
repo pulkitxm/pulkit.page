@@ -21,6 +21,11 @@ function codeInner(html) {
 
 function visibleText(html) {
   return codeInner(html)
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => line.replace(/^<span class="block [^"]+">|<\/span>$/g, "").replace("<br />", ""))
+    .join("\n")
     .replace(/<span class="[^"]+">/g, "")
     .replace(/<\/span>/g, "")
     .replace(/&amp;/g, "&")

@@ -293,10 +293,10 @@ export function mount(root, props = {}) {
     },
     { passive: true },
   );
-  window.addEventListener("mousemove", onMouseMove);
-  window.addEventListener("mouseup", onEnd);
-  window.addEventListener("touchmove", onTouchMove);
-  window.addEventListener("touchend", onEnd);
+  globalThis.addEventListener("mousemove", onMouseMove);
+  globalThis.addEventListener("mouseup", onEnd);
+  globalThis.addEventListener("touchmove", onTouchMove);
+  globalThis.addEventListener("touchend", onEnd);
 
   for (const element of legendButtons) {
     element.addEventListener("click", () => {
@@ -329,10 +329,10 @@ export function mount(root, props = {}) {
     },
     destroy() {
       stopAnimation();
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onEnd);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onEnd);
+      globalThis.removeEventListener("mousemove", onMouseMove);
+      globalThis.removeEventListener("mouseup", onEnd);
+      globalThis.removeEventListener("touchmove", onTouchMove);
+      globalThis.removeEventListener("touchend", onEnd);
     },
   };
 }

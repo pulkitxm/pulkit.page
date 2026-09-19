@@ -23,7 +23,7 @@ function syncTheme() {
     if (host.hasAttribute("data-dark") !== dark) {
       host.toggleAttribute("data-theme-switching", true);
       host.toggleAttribute("data-dark", dark);
-      getComputedStyle(host.shadowRoot?.firstElementChild ?? host).color;
+      void getComputedStyle(host.shadowRoot?.firstElementChild ?? host).color;
       requestAnimationFrame(() => host.toggleAttribute("data-theme-switching", false));
     }
   }

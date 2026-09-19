@@ -6,6 +6,13 @@ import { renderDependencies, renderPage } from "./render-page.mjs";
 import { imagePath, markdownPath } from "./seo.mjs";
 import { readSite } from "./site-inventory.mjs";
 
+function crawlerType(pathname) {
+  if (pathname.endsWith(".txt")) {
+    return "text/plain";
+  }
+  return pathname === "/feed.xml" ? "application/atom+xml" : "application/xml";
+}
+
 export function developmentRenderer(origin) {
   let inventory;
   let cache;
@@ -32,14 +39,11 @@ export function developmentRenderer(origin) {
       const { pages, layouts, site } = inventory;
       let action;
       function access(state) {
-        action =
-          state === "miss"
-            ? attempted.has(pathname)
-              ? "rebuilt"
-              : "compiled"
-            : state === "pending"
-              ? "waited for compilation"
-              : "cached";
+        const outcomes = {
+          miss: attempted.has(pathname) ? "rebuilt" : "compiled",
+          pending: "waited for compilation",
+        };
+        action = outcomes[state] ?? "cached";
         attempted.add(pathname);
       }
       function summary(startedAt) {
@@ -78,11 +82,7 @@ export function developmentRenderer(origin) {
       if (crawler) {
         return {
           body: crawler,
-          type: pathname.endsWith(".txt")
-            ? "text/plain"
-            : pathname === "/feed.xml"
-              ? "application/atom+xml"
-              : "application/xml",
+          type: crawlerType(pathname),
           description: "generated",
         };
       }
@@ -97,7 +97,6 @@ export function developmentRenderer(origin) {
       if (!pathname.endsWith("/") && pages.some((entry) => entry.route === `${pathname}/`)) {
         return { redirect: `${pathname}/` };
       }
-      return undefined;
     },
   };
 }

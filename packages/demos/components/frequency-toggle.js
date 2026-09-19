@@ -115,11 +115,11 @@ export function mount(root) {
     }
   }
 
-  window.addEventListener("keydown", handleKeyDown);
+  globalThis.addEventListener("keydown", handleKeyDown);
 
   return {
     destroy() {
-      window.removeEventListener("keydown", handleKeyDown);
+      globalThis.removeEventListener("keydown", handleKeyDown);
       panelAnimation?.stop();
     },
   };

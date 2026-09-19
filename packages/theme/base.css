@@ -33,3 +33,9 @@
 ::view-transition-new(root) {
   animation-duration: 150ms;
 }
+
+@property --pre-line {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}

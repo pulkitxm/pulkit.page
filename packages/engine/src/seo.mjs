@@ -66,7 +66,7 @@ export function structuredData(route, metadata, site, pages) {
   const person = `${origin}/#person`;
   const website = `${origin}/#website`;
   const pageId = `${url}#webpage`;
-  const index = pages.find((page) => page.route === route)?.index;
+  const index = pages.find((entry) => entry.route === route)?.index;
   const blog = isArticle(route, pages, site);
   const collection = index || route === site.articles;
   const image = `${url}#image`;
@@ -99,11 +99,7 @@ export function structuredData(route, metadata, site, pages) {
   const page = {
     "@type": collection
       ? "CollectionPage"
-      : route === "/about/"
-        ? "AboutPage"
-        : route === "/contact/"
-          ? "ContactPage"
-          : "WebPage",
+      : ({ "/about/": "AboutPage", "/contact/": "ContactPage" }[route] ?? "WebPage"),
     "@id": pageId,
     url,
     name: metadata.title,
@@ -154,7 +150,7 @@ export function structuredData(route, metadata, site, pages) {
     page.about = ref(person);
   }
   const parents = ancestors(route, pages);
-  if (parents.length) {
+  if (parents.length > 0) {
     page.breadcrumb = ref(`${url}#breadcrumbs`);
     graph.push({
       "@type": "BreadcrumbList",
@@ -171,7 +167,7 @@ export function structuredData(route, metadata, site, pages) {
   return { "@context": "https://schema.org", "@graph": graph };
 }
 export function safeJson(value) {
-  return JSON.stringify(value)
+  return JSON.stringify(value, null, 2)
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026")

@@ -4,19 +4,17 @@ const DURATION = 700;
 const INITIAL_DELAY = 300;
 
 function transformA(step) {
-  return step === 0
-    ? "translateX(0) rotate(0deg)"
-    : step === 1
-      ? "translateX(60px) rotate(0deg)"
-      : "translateX(60px) rotate(45deg)";
+  return (
+    ["translateX(0) rotate(0deg)", "translateX(60px) rotate(0deg)"][step] ??
+    "translateX(60px) rotate(45deg)"
+  );
 }
 
 function transformB(step) {
-  return step === 0
-    ? "translateX(0) rotate(0deg)"
-    : step === 1
-      ? "translateX(0) rotate(45deg)"
-      : "rotate(45deg) translateX(60px)";
+  return (
+    ["translateX(0) rotate(0deg)", "translateX(0) rotate(45deg)"][step] ??
+    "rotate(45deg) translateX(60px)"
+  );
 }
 
 function axes() {

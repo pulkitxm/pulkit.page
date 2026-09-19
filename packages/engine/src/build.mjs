@@ -17,6 +17,7 @@ import { sha256Hex } from "@pulkit/shared/hash";
 import { compileTailwind } from "@pulkit/shared/tailwind";
 import { themeFile } from "@pulkit/theme/files";
 import { generateSite } from "./generate.mjs";
+import { mangleClasses } from "./mangle-classes.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
 const buildStartedAt = performance.now();
@@ -54,6 +55,11 @@ await timedAsync("Built demo assets", async () => {
   }
   await buildEmbedAssets("dist/assets");
 });
+timed(
+  ({ renamed, kept }) =>
+    `Renamed ${renamed} classes, kept ${kept} referenced by scripts or other styles`,
+  () => mangleClasses("dist", "styles.css"),
+);
 timed("Fingerprinted styles", () => {
   const fingerprinted = new Map();
   for (const file of ["styles.css"]) {

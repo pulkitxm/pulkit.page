@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164 46" fill="currentColor" role="img" aria-label="Pulkit" data-wordmark>
+  <mask id="wordmark-fold" maskUnits="userSpaceOnUse" x="-1" y="-1" width="166" height="48">
+    <rect x="-1" y="-1" width="166" height="48" fill="#fff" />
+    <path d="M21 -1H36V14H25Q21 14 21 10Z" fill="#000" data-fold />
+  </mask>
+  <path d="M5 0H35V26C35 33 30 38 23 38H13V31H17C23 31 26 27 26 22C26 17 22 14 17 14C12 14 9 18 9 23V46H0V5Q0 0 5 0Z" mask="url(#wordmark-fold)" />
+  <path d="M24 0L35 11H26Q24 11 24 9Z" data-fold />
+  <path d="M40 16H49V31A6 6 0 0 0 61 31V16H70V46H55A15 15 0 0 1 40 31Z" />
+  <path d="M80 0H84V46H75V5Q75 0 80 0Z" />
+  <path d="M94 0H98V46H89V5Q89 0 94 0Z" />
+  <path d="M108.27 16H121L98 39V26.27Z" />
+  <path d="M99.65 37.35L106 31L121 46H108.27Z" />
+  <rect x="126" width="9" height="9" rx="1.5" />
+  <rect x="126" y="16" width="9" height="30" />
+  <path d="M151 4H155V46H146V9Q146 4 151 4Z" />
+  <rect x="140" y="16" width="24" height="9" />
+</svg>

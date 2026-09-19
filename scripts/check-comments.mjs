@@ -336,7 +336,7 @@ export async function scanText(file, source) {
   if (name === "bun.lock") {
     language = "json";
   }
-  if ([".gitignore", ".npmrc", ".env"].includes(name)) {
+  if ([".gitattributes", ".gitignore", ".npmrc", ".env"].includes(name)) {
     language = "hash";
   }
   if (["CNAME", ".nojekyll"].includes(name)) {

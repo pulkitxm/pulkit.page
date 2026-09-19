@@ -1,6 +1,6 @@
 import { formatDuration } from "./duration.mjs";
 import { generationCache, generationVersion } from "./generation-cache.mjs";
-import { crawlerOutputs, renderCard } from "./og-images.mjs";
+import { cardCategory, crawlerOutputs, renderCard } from "./og-images.mjs";
 import { renderDependencies, renderPage } from "./render-page.mjs";
 import { imagePath } from "./seo.mjs";
 import { readSite } from "./site-inventory.mjs";
@@ -65,18 +65,23 @@ export function developmentRenderer(origin) {
         const startedAt = performance.now();
         const body = cache.get(
           "card",
-          [card.metadata, card.route, site],
-          () => renderCard(card, site).toString("base64"),
+          [card.metadata, card.route, site, cardCategory(card, pages, site)],
+          () => renderCard(card, site, cardCategory(card, pages, site)).toString("base64"),
           access,
         );
         const description = summary(startedAt);
         save();
         return { body: Buffer.from(body, "base64"), type: "image/png", description };
       }
-      if (["/robots.txt", "/sitemap.xml"].includes(pathname)) {
+      const crawler = crawlerOutputs(pages, site).get(pathname.slice(1));
+      if (crawler) {
         return {
-          body: crawlerOutputs(pages, site).get(pathname.slice(1)),
-          type: pathname.endsWith(".xml") ? "application/xml" : "text/plain",
+          body: crawler,
+          type: pathname.endsWith(".txt")
+            ? "text/plain"
+            : pathname === "/feed.xml"
+              ? "application/atom+xml"
+              : "application/xml",
           description: "generated",
         };
       }

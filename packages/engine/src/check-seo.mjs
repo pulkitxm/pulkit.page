@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { escapeHtml, readPage } from "./render-page.mjs";
 import { imagePath, pageTitle } from "./seo.mjs";
+import { readSiteConfig } from "./site-inventory.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
 export function validateSeo(html, route, metadata, site, readAsset) {
@@ -76,10 +77,7 @@ function walk(directory) {
   );
 }
 function checkSeo(root = "dist") {
-  const site = {
-    ...readPage(readFileSync("content/_site.md", "utf8")).metadata,
-    url: resolveSiteOrigin(),
-  };
+  const site = readSiteConfig(resolveSiteOrigin());
   const titles = new Set();
   const descriptions = new Set();
   const routes = [];

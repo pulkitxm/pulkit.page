@@ -12,8 +12,8 @@ const presets = [
 ];
 
 const graphSize = 176;
-const padding = 32;
-const extraSpace = graphSize * 0.5;
+const padding = 24;
+const extraSpace = graphSize * 0.35;
 const svgSize = graphSize + padding * 2 + extraSpace * 2;
 const offsetX = padding + extraSpace;
 const offsetY = padding + extraSpace;
@@ -48,7 +48,7 @@ function cubicBezier(t, p1, p2) {
 function presetClass(active) {
   return buttonClass({
     className: cn(
-      "rounded-md px-2.5 py-1 font-mono text-xs transition-colors",
+      "h-8 rounded-md px-2.5 py-1 font-mono text-xs transition-colors",
       active
         ? "bg-violet-100 text-violet-700 dark:bg-violet-900/50 dark:text-violet-300"
         : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700",
@@ -72,9 +72,9 @@ export function mount(root) {
   let replayTimer = null;
 
   root.innerHTML = html`<div class="flex size-full flex-col items-center justify-center p-4 sm:p-6">
-    <div class="flex h-full w-full max-w-3xl flex-1 flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8 lg:gap-10">
-      <div class="flex h-full flex-1 items-center justify-center">
-        <svg data-ref="svg" viewBox="0 0 ${svgSize} ${svgSize}" class="h-full max-h-45 w-auto cursor-crosshair touch-none sm:max-h-65 lg:max-h-80" role="img" aria-label="Interactive cubic bezier curve editor">
+    <div class="flex w-full max-w-3xl flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
+      <div class="flex w-full min-w-0 flex-1 items-center justify-center">
+        <svg data-ref="svg" viewBox="0 0 ${svgSize} ${svgSize}" class="aspect-square h-auto w-full max-w-64 cursor-crosshair touch-none overflow-visible lg:max-w-80" role="img" aria-label="Interactive cubic bezier curve editor">
           <title>Cubic Bezier Curve Editor</title>
           <defs>
             <pattern id="grid" width="${graphSize / 4}" height="${graphSize / 4}" patternUnits="userSpaceOnUse" x="${offsetX}" y="${offsetY}">
@@ -97,7 +97,7 @@ export function mount(root) {
           <text x="${offsetX - 8}" y="${endY + 4}" class="${labelClass}" text-anchor="end">1</text>
         </svg>
       </div>
-      <div class="flex h-full max-h-45 w-full shrink-0 flex-col justify-between gap-4 sm:max-h-65 sm:w-auto sm:min-w-65 lg:max-h-80 lg:min-w-70">
+      <div class="flex w-full shrink-0 flex-col gap-4 sm:w-64 lg:w-72">
         <div class="flex flex-col gap-4">
           <div class="flex flex-wrap justify-center gap-1.5 sm:justify-start">
             ${presets.map((preset, index) => `<button type="button" data-preset="${index}">${preset.name}</button>`)}
@@ -125,7 +125,7 @@ export function mount(root) {
           </div>
         </div>
         <div class="flex w-full items-center gap-2">
-          <code data-ref="code" class="flex-1 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2 text-center font-mono text-neutral-700 text-xs dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></code>
+          <code data-ref="code" class="min-w-0 flex-1 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2 text-center font-mono text-neutral-700 text-xs dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></code>
           ${button({ variant: "outline", size: "icon", label: icon(Copy, "size-4"), attrs: 'data-ref="copy" title="Copy to clipboard"' })}
         </div>
       </div>

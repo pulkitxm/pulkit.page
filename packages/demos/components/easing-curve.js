@@ -123,10 +123,10 @@ export function mount(root, props = {}) {
   let bounce = 0.45;
   let animationFrame = null;
 
-  root.innerHTML = html`<div class="flex size-full flex-col items-center justify-center p-4 pb-12 sm:p-6 sm:pb-6">
-    <div class="flex h-full w-full max-w-md flex-1 items-center justify-center gap-4 sm:gap-6">
-      <div class="flex h-full flex-1 items-center justify-center">
-        <svg viewBox="0 0 ${size} ${size}" class="h-full max-h-55 w-auto overflow-visible sm:max-h-80 lg:max-h-95" role="img" aria-label="Easing curve visualization">
+  root.innerHTML = html`<div class="flex size-full flex-col items-center justify-center p-4 sm:p-6">
+    <div class="flex w-full max-w-md items-stretch justify-center gap-4 sm:gap-6">
+      <div class="flex min-w-0 flex-1 items-center justify-center">
+        <svg viewBox="0 0 ${size} ${size}" class="aspect-square h-auto w-full max-w-60 overflow-visible sm:max-w-72" role="img" aria-label="Easing curve visualization">
           <defs>
             <clipPath id="${clipPathId}">
               <rect x="0" y="${-size * 2}" width="${size * 2}" height="${size * 2 + size - padding - 1}"></rect>
@@ -143,9 +143,9 @@ export function mount(root, props = {}) {
           <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${size - padding}" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="text-neutral-600 dark:text-neutral-400"></line>
         </svg>
       </div>
-      <div class="flex h-full max-h-55 shrink-0 flex-col items-center gap-2 py-2 sm:max-h-80 lg:max-h-95">
+      <div class="flex shrink-0 flex-col items-center gap-2 py-2">
         <span class="mb-1.5 text-neutral-600 text-xs dark:text-neutral-300">100%</span>
-        <div data-ref="slider" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-label="Animation progress" aria-orientation="vertical" class="relative h-full w-6 cursor-pointer touch-none sm:w-7">
+        <div data-ref="slider" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-label="Animation progress" aria-orientation="vertical" class="relative w-6 flex-1 cursor-pointer touch-none sm:w-7">
           <div class="absolute left-1/2 h-full w-1 -translate-x-1/2 rounded-full bg-neutral-200 dark:bg-neutral-700"></div>
           <div data-ref="fill" class="absolute bottom-0 left-1/2 w-1 -translate-x-1/2 rounded-full bg-neutral-400 dark:bg-neutral-500"></div>
           <div data-ref="thumb" class="absolute left-1/2 size-4 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-neutral-400 bg-white shadow-sm transition-transform hover:scale-110 sm:size-5 dark:border-neutral-500 dark:bg-neutral-800"></div>

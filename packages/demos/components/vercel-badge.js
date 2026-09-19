@@ -112,7 +112,7 @@ function renderEnvironment(renderer) {
 export function mount(root) {
   root.innerHTML = html`<div class="h-full w-full">
     <div data-ref="wrapper" style="position: relative; width: 100%; height: 100%; overflow: hidden; pointer-events: auto">
-      <div data-ref="inner" style="width: 100%; height: 100%"><canvas data-ref="canvas" style="display: block"></canvas></div>
+      <div data-ref="inner" style="position: absolute; inset: 0"><canvas data-ref="canvas" style="position: absolute; inset: 0; display: block"></canvas></div>
     </div>
   </div>`;
   const { wrapper, inner, canvas } = refs(root);

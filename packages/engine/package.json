@@ -1,0 +1,33 @@
+{
+  "name": "@pulkit/engine",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "site": "./src/cli.mjs"
+  },
+  "exports": {
+    "./render-page": "./src/render-page.mjs"
+  },
+  "scripts": {
+    "test": "bun test ./src"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@pulkit/code": "workspace:*",
+    "@pulkit/demos": "workspace:*",
+    "@pulkit/embeds": "workspace:*",
+    "@pulkit/profile": "workspace:*",
+    "@pulkit/theme": "workspace:*",
+    "@resvg/resvg-js": "2.6.2",
+    "@tailwindcss/cli": "4.3.3",
+    "@tailwindcss/vite": "4.3.3",
+    "html-validate": "11.16.0",
+    "marked": "18.0.13",
+    "playwright": "1.63.0",
+    "vite": "8.3.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@pulkit/checks": "workspace:*"
+  }
+}

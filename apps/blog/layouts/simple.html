@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light">
+  {{ > head }}
+  <body
+    class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-4 **:focus-visible:outline-fg"
+  >
+    <a class="absolute -top-25 left-4 bg-bg px-2 py-1 text-inherit focus:top-2" href="#main">Skip to content</a>
+    <div class="mx-auto max-w-170 px-6 max-sm:px-4">
+      {{ > header }}
+      <main id="main" class="min-h-[60vh] pt-14 pb-20 max-sm:pt-8">
+        <header class="mb-8">
+          <h1 class="mt-0 mb-4 w-fit text-[clamp(28px,5vw,36px)] font-semibold leading-tight tracking-tight" data-title>
+            {{ heading }}
+          </h1>
+        </header>
+        <div class="text-muted wrap-anywhere [&_ul]:text-fg">{{ content }}</div>
+        {{ related }}
+      </main>
+      {{ > footer }}
+    </div>
+  </body>
+</html>

@@ -10,7 +10,6 @@
     "name-pattern": ["error", { "pattern": "kebabcase" }],
     "no-inline-style": "error",
     "no-missing-references": "error",
-    "no-style-tag": "error",
     "require-sri": "off",
     "void-style": ["error", { "style": "selfclosing" }]
   }

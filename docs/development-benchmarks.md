@@ -1,5 +1,14 @@
 # Development benchmarks
 
+[Documentation index](index.md)
+
+This is a historical measurement record: it compares the previous custom
+development server with the Vite based one that replaced it, measured before the
+repository was split into workspaces. The runner still works against the current
+layout, and the tool choice section still describes why the development server is
+built this way, but the numbers below were taken on the older tree and are not a
+current benchmark of either site.
+
 Vite 8.3.0 serves Markdown pages and social cards when requested. Production builds still render every page into `dist/` for static deployment. Bun remains the runtime and package-script launcher.
 
 ## Method

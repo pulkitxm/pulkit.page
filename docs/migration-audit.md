@@ -28,7 +28,7 @@ The `experienceTreatment` field and the experience pages' `period` metadata were
 
 ## Historical source versus ongoing authoring
 
-The local ignored [reference directory](../extras/pulkitxm.com/) is a much larger Next.js/React application. Its package includes MDX rendering, animation libraries, Prisma, Redis, Hono, authentication, and email tooling. Its app routes include newsletter/admin, guestbook, component showcases, Claude Directory, feeds, sitemap/robots, and dynamic OG generation. Those packages and routes are not part of the static portfolio.
+The local ignored reference directory `extras/pulkitxm.com/`, which is not committed and is absent from a fresh clone, is a much larger Next.js/React application. Its package includes MDX rendering, animation libraries, Prisma, Redis, Hono, authentication, and email tooling. Its app routes include newsletter/admin, guestbook, component showcases, Claude Directory, feeds, sitemap/robots, and dynamic OG generation. Those packages and routes are not part of the static portfolio.
 
 The static project preserves the article archive, the full experience write-ups, and selected imagery. Rich widgets were first flattened into readable static equivalents or links; later work restored many of them as build-time embeds in `packages/embeds` and interactive demos in `packages/demos`. Home, About, Contact, Experience landing, Résumé, tools, and services on pulkit.page, and the pulkit.blog home, are authored separately.
 

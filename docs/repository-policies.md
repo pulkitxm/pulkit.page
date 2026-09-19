@@ -1,6 +1,8 @@
-# Repository text and dead-code policies
+# Repository policies
 
-The repository rejects source-code comments, literal em dash characters, and unused JavaScript/TypeScript code. These checks run locally, in GitHub CI, and against the staged index in pre-commit. They report failures without rewriting files.
+[Documentation index](index.md) · [Quality checks](quality-checks.md)
+
+The repository rejects source-code comments, literal em dash characters, and unused JavaScript/TypeScript code. These checks run locally, in GitHub CI, and against the staged index in pre-commit. They report failures without rewriting files. The sections below describe those checks, the formatting and validation gates around them, and the conventions that no check can enforce.
 
 ## Scope
 
@@ -34,6 +36,39 @@ Unknown source types and unknown fence languages cause a failure requesting an e
 `bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
 
 Knip is static analysis, not a guarantee about runtime reachability or a CSS/image/Markdown garbage collector. Dynamic use must be modeled with an explicit legitimate entry point. Do not add every source file as an entry to silence unused-file findings.
+
+## Formatting and validation gates
+
+These are enforced too, and every one of them runs inside `bun run ci`:
+
+| Gate                          | Tool                                                               | Rule                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `format:check`, `lint`        | Biome with the root [biome.json](../biome.json)                    | Space indentation, 100 columns, LF, and the strict lint presets; warnings fail `lint`      |
+| `check:content`               | [check-content.mjs](../tooling/checks/src/check-content.mjs)       | The content schema plus canonical Markdown and YAML formatting for every tracked document  |
+| `check:repository`            | [check-repository.mjs](../tooling/checks/src/check-repository.mjs) | Lowercase kebab-case source paths, no symlinks, size limits, LF endings, trailing newlines |
+| `check:imports`               | [check-imports.mjs](../tooling/checks/src/check-imports.mjs)       | Every static import in `apps/`, `packages/`, and `tooling/` resolves at runtime            |
+| `check:dead-code`             | Knip with [knip.json](../knip.json)                                | No unused files, exports, or dependencies, with no tolerated issues                        |
+| `check:layouts`, `check:html` | html-validate with [.htmlvalidate.json](../.htmlvalidate.json)     | Valid HTML in the layout templates and in every built page                                 |
+| `check:shell`                 | `sh -n`                                                            | The hook and its installer parse                                                           |
+
+Documentation files follow the same content rules as pages, minus the frontmatter:
+lowercase kebab-case names except `README.md`, exactly one H1, no duplicate heading
+text, labeled lowercase code fences with no fence metadata, canonical Remark
+formatting, one trailing newline, and no comments inside fenced examples, because
+the comment scanner exempts only Markdown under `apps/<app>/content/`.
+[Quality checks](quality-checks.md) covers what each gate proves and what it misses.
+
+## Contribution conventions
+
+These are review conventions rather than checks, so nothing fails when they are
+ignored:
+
+- No AI attribution anywhere: not in commit messages, code, branch names, pull
+  request titles or descriptions, or documentation.
+- Pull request descriptions are one line.
+- Merge with a squash merge, then delete the branch.
+- GitHub mutations (opening pull requests, merging, commenting) go through the
+  owner's Pukbot CLI, a GitHub App wrapper, rather than a personal token.
 
 ## Commands
 

@@ -1,6 +1,6 @@
 # SEO, social cards, and environments
 
-[Documentation index](index.md) · [Rendering flow](rendering-flow.md)
+[Documentation index](index.md) · [Architecture](architecture.md) · [Rendering flow](rendering-flow.md)
 
 ## One origin for every output
 
@@ -68,7 +68,7 @@ Title wrapping is greedy at 29 characters per line; font size drops from 54 to 4
 
 Sitemap includes every discovered page exactly once with its canonical URL. Articles carry `lastmod` from their publication `date`; other pages have no trustworthy date and stay undated rather than getting an invented one. Robots allows crawling and advertises that sitemap.
 
-A site with an `articles` field also gets `/feed.xml`, an Atom feed of all its posts, newest first. The feed carries the site brand as its title, the site description as its subtitle, self and site links, the author name and profile URL, and one entry per post with title, canonical link and ID, the post's date as both published and updated time (midnight UTC), and its description as the summary. The feed's updated time is the newest post's date. The development server serves it as `application/atom+xml`, pulkit.blog's head partial advertises it with an alternate link, and the RSS entry appended to the site's social links points at it. pulkit.page has no articles and therefore no feed.
+A site with an `articles` field also gets `/feed.xml`, an Atom feed of all its posts, newest first. The feed carries the site brand as its title, the site description as its subtitle, self and site links, the author name and profile URL, and one entry per post with title, canonical link and ID, the post's date as both published and updated time (midnight UTC), and its description as the summary. The feed's updated time is the newest post's date. The development server serves it as `application/atom+xml`, the rendered head of every pulkit.blog page advertises it with an Atom alternate link, and the RSS entry appended to the site's social links points at it. pulkit.page has no articles and therefore no feed.
 
 pulkit.page's output comprises 12 HTML files, 12 cards, 12 Markdown copies, `llms.txt`, sitemap, and robots; pulkit.blog's comprises 54 HTML files, 54 cards, 54 Markdown copies, `llms.txt`, sitemap, robots, and `feed.xml`. Cards are generation outputs, not part of the historical copied-image audit.
 

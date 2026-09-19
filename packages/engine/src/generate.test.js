@@ -335,3 +335,10 @@ test("code blocks indent line by line while keeping blank lines copyable", async
   );
   expect(html).not.toMatch(/^\s*>|<\/[a-z]+$/m);
 });
+
+test("tables scroll sideways as a keyboard-focusable region without splitting words", async () => {
+  const html = await renderPage(
+    `${source}\n| Approach | Limit |\n| --- | --- |\n| Token bucket | 8000 |\n`,
+  );
+  expect(html).toMatch(/<table tabindex="0" class="[^"]*overflow-x-auto[^"]*wrap-normal/);
+});

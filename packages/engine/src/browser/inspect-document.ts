@@ -49,6 +49,12 @@ export function inspectDocument(): DocumentReport {
     emptyLinks: anchors
       .filter((link) => !link.textContent?.trim() && !link.getAttribute("aria-label"))
       .filter((link) => !link.querySelector("img")?.alt.trim())
+      .filter(
+        (link) =>
+          ![...link.querySelectorAll("[role=img]")].some((image) =>
+            image.getAttribute("aria-label")?.trim(),
+          ),
+      )
       .map((link) => link.href),
     duplicateIds: [...document.querySelectorAll("[id]")]
       .map((element) => element.id)

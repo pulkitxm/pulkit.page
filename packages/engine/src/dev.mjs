@@ -250,7 +250,7 @@ const server = await createServer({
   ],
 });
 await server.listen();
-origin = server.resolvedUrls.local[0].replace(/\/$/, "");
+origin = server.resolvedUrls.local[0].replace("127.0.0.1", "localhost").replace(/\/$/, "");
 mkdirSync(".cache", { recursive: true });
 writeFileSync(developmentOriginFile, origin);
 developmentLog(`Development server: ${origin}/`, 0);

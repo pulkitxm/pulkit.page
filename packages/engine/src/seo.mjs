@@ -163,9 +163,8 @@ export function structuredData(route, metadata, site, pages) {
   graph.push(page);
   return { "@context": "https://schema.org", "@graph": graph };
 }
-export function safeJson(value, indent = "") {
+export function safeJson(value) {
   return JSON.stringify(value, null, 2)
-    .replaceAll("\n", `\n${indent}`)
     .replace(/</g, "\\u003c")
     .replace(/>/g, "\\u003e")
     .replace(/&/g, "\\u0026")

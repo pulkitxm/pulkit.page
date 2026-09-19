@@ -194,13 +194,19 @@ export async function renderPage(
         );
       },
       code(token) {
-        return Renderer.prototype.code
-          .call(this, token)
-          .replace(
-            /^<pre><code(?: class="([^"]*)")?>/,
-            (_, language) =>
-              `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">\n<code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
+        const [, language, highlighted] =
+          /^<pre><code(?: class="([^"]*)")?>([\s\S]*)<\/code><\/pre>\n?$/.exec(
+            Renderer.prototype.code.call(this, token),
           );
+        const lines = highlighted
+          .replace(/\n$/, "")
+          .split("\n")
+          .map(
+            (line) =>
+              `<span class="block leading-(--pre-line) whitespace-pre">${line || "<br>"}</span>`,
+          )
+          .join("");
+        return `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5 whitespace-normal [--pre-line:1lh]"><code class="${[language, "block w-max min-w-full rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">${lines}</code></pre>\n`;
       },
       codespan(token) {
         return withClass(
@@ -495,9 +501,7 @@ ${[
 ]
   .map(([key, value]) => meta(key, value))
   .join("\n")}
-<script type="application/ld+json">
-      ${safeJson(structuredData(route, metadata, site, pages), "      ")}
-    </script>`;
+<script type="application/ld+json">${safeJson(structuredData(route, metadata, site, pages))}</script>`;
 }
 
 function collectionItems(pages, route, collection, limit, site) {

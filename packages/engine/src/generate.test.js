@@ -324,8 +324,10 @@ test("lists from another site link to that site and show recent dates", async ()
   );
 });
 
-test("code blocks open on their own line so the formatter never hangs a bracket before code", async () => {
-  const html = await renderPage(`${source}\n\`\`\`ts\nconst answer = 42;\n\`\`\`\n`);
-  expect(html).toMatch(/<pre [^>]*>\n<code class="language-ts /);
-  expect(html).not.toMatch(/^\s*><code/m);
+test("code blocks indent line by line while keeping blank lines copyable", async () => {
+  const html = await renderPage(`${source}\n\`\`\`text\nfirst\n\n  second\n\`\`\`\n`);
+  expect(html).toMatch(
+    /\n( +)<pre [^>]*whitespace-normal[^>]*>\n\1 {2}<code class="language-text [^"]*">\n\1 {4}<span class="block leading-\(--pre-line\) whitespace-pre">first<\/span>\n\1 {4}<span class="block leading-\(--pre-line\) whitespace-pre"><br \/><\/span>\n\1 {4}<span class="block leading-\(--pre-line\) whitespace-pre"> {2}second<\/span>\n\1 {2}<\/code>\n\1<\/pre>\n/,
+  );
+  expect(html).not.toMatch(/^\s*>|<\/[a-z]+$/m);
 });

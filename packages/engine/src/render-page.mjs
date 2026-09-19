@@ -9,6 +9,7 @@ import {
   renderEmbed,
   renderRawHtml,
 } from "@pulkit/embeds";
+import { lightboxScript, lightboxStyle, localImageSize, zoomable } from "@pulkit/embeds/lightbox";
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
 import { applyLayout, loadLayouts } from "./layouts.mjs";
@@ -144,6 +145,14 @@ export async function renderPage(
   const layout = metadata.layout ?? (article ? "article" : "simple");
   const ids = new Set(["main"]);
   const assets = createPageAssets();
+  const zoomAttributes = (href) => {
+    const size = localImageSize(href);
+    assets.style(lightboxStyle);
+    assets.script(lightboxScript);
+    return size
+      ? ` data-media-zoom data-width="${size.width}" data-height="${size.height}"`
+      : " data-media-zoom";
+  };
   const markdown = new Marked({
     async: true,
     walkTokens: async (token) => {
@@ -153,6 +162,13 @@ export async function renderPage(
         const render = () => highlightFence(language, formatFence(language, text));
         token.text = await (cache ? cache.get("fence", [language, text], render) : render());
         token.escaped = true;
+      }
+      if (token.type === "link") {
+        for (const child of token.tokens ?? []) {
+          if (child.type === "image") {
+            child.linked = true;
+          }
+        }
       }
       if (token.type === "demo") {
         token.html = await renderDemo(token.name, token.variant);
@@ -238,7 +254,16 @@ export async function renderPage(
           token.href === portrait
             ? "mx-0 mt-0 mb-7 block size-36 max-w-full rounded-[50%] object-cover"
             : "mx-auto my-7 block h-auto max-w-full rounded-md";
-        return `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}" loading="lazy">`;
+        const image = `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}" loading="lazy">`;
+        return token.href === portrait || token.linked
+          ? image
+          : zoomable({
+              src: token.href,
+              image: image.replace('class="mx-auto', 'class="cursor-zoom-in mx-auto'),
+              className: "block",
+              assets,
+              escapeHtml,
+            });
       },
     },
   });
@@ -312,7 +337,7 @@ export async function renderPage(
           const slides = token.images
             .map(
               (image) =>
-                `<a class="block w-full shrink-0 snap-center" href="${safeUrl(image.href)}"><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}" loading="lazy"></a>`,
+                `<a class="block w-full shrink-0 cursor-zoom-in snap-center" href="${safeUrl(image.href)}"${zoomAttributes(image.href)}><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}" loading="lazy"></a>`,
             )
             .join("");
           const button =

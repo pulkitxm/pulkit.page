@@ -1,6 +1,7 @@
 import type { ServerResponse } from "node:http";
 import process from "node:process";
 import { errorMessage } from "@pulkit/shared/failures";
+import { themeFile } from "@pulkit/theme/files";
 import type { Connect, ViteDevServer } from "vite";
 import { developmentLog } from "../lib/log.ts";
 import { logRequest } from "../lib/server.ts";
@@ -10,7 +11,8 @@ import type { DevelopmentRenderer } from "./dev-renderer.ts";
 const demoSources = /^\/packages\/demos\//;
 const resetSources =
   /^\/(?:packages\/[a-z-]+\/src\/|bun.lock$|biome.json$|packages\/theme\/assets\/fonts\/|packages\/demos\/showcases\/)/;
-const pageSources = /^(?:content\/|layouts\/|CNAME$|\/packages\/theme\/layouts\/)/;
+const pageSources =
+  /^(?:content\/|layouts\/|CNAME$|\/packages\/theme\/[a-z-]+\.svg$|\/packages\/theme\/layouts\/)/;
 
 function errorStatus(error: unknown): number {
   if (error instanceof URIError) {
@@ -36,6 +38,7 @@ export function watchSources(
   assets: DevelopmentAssets,
 ): void {
   const project = `${process.cwd()}/`;
+  vite.watcher.add([themeFile("layouts"), themeFile("wordmark.svg")]);
   vite.watcher.on("all", (event, file) => {
     if (!["add", "change", "unlink"].includes(event)) {
       return;

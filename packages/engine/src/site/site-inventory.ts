@@ -4,6 +4,7 @@ import profile from "@pulkit/profile";
 import { developmentOutput } from "@pulkit/shared/built-site";
 import { walkFiles } from "@pulkit/shared/files";
 import { siteConfigFile } from "@pulkit/shared/frontmatter";
+import { themeFile } from "@pulkit/theme/files";
 import { loadLayouts } from "../render/layouts.ts";
 import { articles } from "../seo/routes.ts";
 import type { ListedPage, Page, Site, SiteInventory } from "../types.ts";
@@ -19,6 +20,9 @@ export function readSiteConfig(url: string, root = "."): Site {
     author: profile.name,
     authorUrl: profile.url,
     ...config,
+    ...(config.wordmark && {
+      wordmark: readFileSync(themeFile(config.wordmark), "utf8").trim(),
+    }),
     social: [
       ...(config.social ?? profile.social),
       ...(config.articles ? [{ label: "RSS", href: "/feed.xml" }] : []),

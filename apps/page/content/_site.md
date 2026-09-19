@@ -1,5 +1,6 @@
 ---
 brand: Pulkit
+wordmark: wordmark.svg
 description: Software engineer building useful things for the web.
 copyright: © 2026 Pulkit
 navigation:

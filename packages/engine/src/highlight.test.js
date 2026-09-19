@@ -85,8 +85,8 @@ describe("build-time syntax highlighting", () => {
   });
 
   test("every app theme defines token colors for light and dark", () => {
-    expect(base).toContain('&:not([data-theme="light"])');
-    expect(base).toContain('&[data-theme="dark"]');
+    expect(base).toContain(':root:not([data-theme="light"])');
+    expect(base).toContain('[data-theme="dark"] *');
     expect(base).toContain("@media (prefers-color-scheme: dark)");
     for (const styles of appStyles) {
       for (const name of ["k", "s", "c", "n", "f", "t", "p", "o", "u", "g"]) {

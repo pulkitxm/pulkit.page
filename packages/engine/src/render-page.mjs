@@ -58,6 +58,7 @@ export function readPage(source) {
     "period",
     "endDate",
     "icon",
+    "darkIcon",
     "secondaryIcon",
     "layout",
     "brand",
@@ -124,12 +125,16 @@ function experiencePeriod(metadata) {
 }
 function experienceEntry(page) {
   const { metadata } = page;
-  const icons = [metadata.icon, metadata.secondaryIcon]
+  const image = (icon, className) =>
+    `<img class="${className} size-9 rounded-xl border-2 border-bg object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`;
+  const icons = [
+    metadata.darkIcon
+      ? image(metadata.icon, "m-0 bg-bg dark:hidden") +
+        image(metadata.darkIcon, "m-0 hidden bg-bg dark:block")
+      : image(metadata.icon, "m-0 bg-icon"),
+    metadata.secondaryIcon && image(metadata.secondaryIcon, "m-0 -ml-6 translate-y-2.5 bg-icon"),
+  ]
     .filter(Boolean)
-    .map(
-      (icon, index) =>
-        `<img class="${index ? "m-0 -ml-6 translate-y-2.5" : "m-0"} size-9 rounded-xl border-2 border-bg bg-icon object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`,
-    )
     .join("");
   return `<li class="border-b border-line"><a class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-normal text-inherit no-underline underline-offset-4 max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3" href="${safeUrl(page.route)}"><span class="flex w-12 items-center max-sm:row-span-2">${icons}</span><span class="grid gap-0.75"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="text-xs text-muted">${escapeHtml(metadata.role)}</span></span><span class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs">${experiencePeriod(metadata)}</span></a></li>`;
 }
@@ -581,6 +586,7 @@ export function renderDependencies(page, pages, site) {
           entry.metadata.date,
           entry.metadata.endDate,
           entry.metadata.icon,
+          entry.metadata.darkIcon,
           entry.metadata.secondaryIcon,
           entry.metadata.role,
         ]),

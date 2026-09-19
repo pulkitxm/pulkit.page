@@ -5,7 +5,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { bundleDemoScripts, compileDemoStyles, fontFile } from "@pulkit/demos/assets";
 import { bundleEmbedScripts, katexDirectory, photoswipeStyles } from "@pulkit/embeds/bundle";
-import { assetFile, themeFile } from "@pulkit/theme/files";
+import { assetFile } from "@pulkit/theme/files";
 import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
 import { developmentLog } from "./dev-log.mjs";
@@ -195,16 +195,11 @@ const server = await createServer({
               next();
               return;
             }
-            if (
-              pathname === "/theme.js" ||
-              pathname === "/favicon.ico" ||
-              pathname.startsWith("/assets/")
-            ) {
+            if (pathname === "/favicon.ico" || pathname.startsWith("/assets/")) {
               asset = true;
-              const file =
-                pathname === "/theme.js"
-                  ? themeFile("theme.js")
-                  : assetFile(pathname === "/favicon.ico" ? "/assets/favicon-32.png" : pathname);
+              const file = assetFile(
+                pathname === "/favicon.ico" ? "/assets/favicon-32.png" : pathname,
+              );
               if (!file) {
                 response.writeHead(404).end("Not found");
                 return;

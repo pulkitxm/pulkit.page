@@ -32,7 +32,7 @@ async function highlight(file) {
 
 export async function renderDemo(name, variant) {
   const key = variant ? `${name}-${variant}` : name;
-  const { component, props, frame, files } = showcase(key);
+  const { component, props, frame, files, heavy } = showcase(key);
   const sources = await Promise.all(
     files.map(async (file) => ({ filename: file.filename, ...(await highlight(file)) })),
   );
@@ -44,5 +44,5 @@ export async function renderDemo(name, variant) {
   if (frame.fullHeight) {
     height = "full";
   }
-  return `<demo-showcase data-component="${component}" data-props="${escapeAttribute(JSON.stringify(props))}" data-frame="${escapeAttribute(JSON.stringify(frame))}" data-height="${height}"${files.length > 0 ? " data-files" : ""}>${data}</demo-showcase>`;
+  return `<demo-showcase data-component="${component}" data-props="${escapeAttribute(JSON.stringify(props))}" data-frame="${escapeAttribute(JSON.stringify(frame))}" data-height="${height}"${heavy ? " data-heavy" : ""}${files.length > 0 ? " data-files" : ""}>${data}</demo-showcase>`;
 }

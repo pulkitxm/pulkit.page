@@ -72,7 +72,6 @@ test("Vite serves pages on demand, refreshes dependencies, and recovers after er
     expect((await fetch(origin, { method: "POST" })).status).toBe(405);
     expect((await fetch(`${origin}content/home.md`)).status).toBe(404);
     expect((await fetch(`${origin}styles.css`)).status).toBe(200);
-    expect((await fetch(`${origin}theme.js`)).status).toBe(200);
     expect((await fetch(`${origin}assets/favicon.svg`)).headers.get("content-type")).toBe(
       "image/svg+xml",
     );

@@ -1,4 +1,4 @@
-import { mediaScript, mediaStyle, zoomLink } from "./blog-image.mjs";
+import { loadingAttributes, mediaScript, mediaStyle, zoomLink } from "./blog-image.mjs";
 import { lightboxScript } from "./lightbox.mjs";
 
 const iconAttributes =
@@ -22,10 +22,12 @@ export function renderCarousel(images, { frame, label }, { assets, escapeHtml })
   assets.style(mediaStyle);
   assets.script(lightboxScript);
   assets.script(mediaScript);
+  const leading = assets.claim("gallery-lcp");
   const slides = images
     .map((image, index) => {
-      const backdrop = `<img src="${escapeHtml(image.src)}" alt="" aria-hidden="true" width="${image.width}" height="${image.height}" class="${backdropClasses[frame]}" loading="lazy" decoding="async">`;
-      const foreground = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" class="block h-full w-full select-none object-contain" loading="lazy" decoding="async">`;
+      const priority = loadingAttributes(index === 0 && leading);
+      const backdrop = `<img src="${escapeHtml(image.src)}" alt="" aria-hidden="true" width="${image.width}" height="${image.height}" class="${backdropClasses[frame]}"${priority} decoding="async">`;
+      const foreground = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" class="block h-full w-full select-none object-contain"${priority} decoding="async">`;
       const link = zoomLink(
         {
           src: image.src,

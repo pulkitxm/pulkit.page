@@ -59,7 +59,8 @@ describe("build-time syntax highlighting", () => {
     expect(html).not.toContain("shiki");
     expect(html).not.toContain("highlight.js");
     expect(html).not.toContain("prism");
-    expect(html).toContain('<script src="/theme.js"></script>');
+    expect(html).toContain("portfolio-theme");
+    expect(html).not.toContain('<script src="/theme.js">');
     expect(html).not.toMatch(/src="[^"]*(?:shiki|prism|highlight)/);
     expect(visibleText(html)).toBe("const value = 1; // keep");
   });

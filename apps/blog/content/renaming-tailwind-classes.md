@@ -1,8 +1,7 @@
 ---
 title: Renaming Tailwind Classes at Build Time
-description: I taught this site's build to swap every Tailwind utility for a one or two letter class
-  name. Here's how it works, what it saved in real bytes, and why it's a size trick, not a way to
-  hide your styles.
+description: I wanted to rename every Tailwind class on my site so nobody could read my CSS. It
+  didn't hide anything, but it did make every page smaller. Here's what I built and what I learned.
 date: 2026-09-20
 tags:
   - Tailwind CSS
@@ -12,39 +11,31 @@ tags:
   - Web Performance
 ---
 
-Open the source of any Tailwind site and you'll see markup like this:
+I was working on this site the other day, writing Tailwind classes like I always do, when I opened the page source and saw this:
 
 ```html
 <div class="mx-auto max-w-190 px-7 max-sm:px-5.5">
 ```
 
-Readable, great to write, and repeated on every element of every page you ship. So I asked a simple question: can the build rename all of that to something short, the same way a JS minifier renames variables?
+Anyone who knows Tailwind can read that like a sentence: centered, max width, padding, less padding on small screens. My whole design was sitting there in plain English on every element of every page.
 
-It can. As of this week, pulkit.blog ships this instead:
+So I had an idea. JavaScript minifiers rename variables to single letters, so why not do the same to class names at build time? Rename everything to short, meaningless names, and nobody can read my CSS anymore.
+
+I built it. Now the same element ships like this:
 
 ```html
 <div class="x r2 v6 md">
 ```
 
-## How it works
+The build compiles the stylesheet with Tailwind, walks every selector in it with [Lightning CSS](https://lightningcss.dev), gives each class a short name (`a`, `b`, ... `z`, then `a0`, `b0`), and rewrites the `class` attributes in every built page with the same map. Development builds skip the step, so I still see readable names while working.
 
-The rename is one extra step at the end of the build, after Tailwind compiles the stylesheet:
+The tricky part was knowing what not to rename. If a script toggles `hidden` and the build renames it, the toggle breaks silently. So any class that appears in a shipped script keeps its name, which on this site was just `block`, `hidden` and `group`. Classes that belong to other stylesheets, like KaTeX's, stay too. So does anything inside a `<script>` tag, because the demos on this blog carry highlighted code as JSON with their own styles.
 
-1. Parse the compiled CSS with [Lightning CSS](https://lightningcss.dev) and walk every selector, including the ones nested inside `:is()`, `:not()` and `:has()`. Tailwind's `**:` and arbitrary variants live in there.
-2. Give each class a short name: `a`, `b`, ... `z`, then `a0`, `b0` and so on.
-3. Rewrite the `class` attributes in every built HTML page with the same map.
+Then I checked whether it actually worked, and a few things surprised me.
 
-The interesting part is what it must **not** rename:
+First, it doesn't hide anything. The browser needs the full stylesheet to draw the page, so anyone can open DevTools, click an element and read every computed value: `display: flex`, `gap: 1rem`, every color. Renaming `gap-4` to `x7` removes the Tailwind vocabulary, not the design. My original goal was a dead end.
 
-- **Classes that scripts refer to by name.** If a script toggles `hidden`, renaming it breaks the toggle silently. So any class that appears in a shipped script keeps its name. Here that's just three: `block`, `hidden` and `group`.
-- **Classes owned by other stylesheets**, like KaTeX and PhotoSwipe. Their CSS still says `.katex`.
-- **Anything inside a `<script>` tag.** The demos on this blog carry highlighted source code as JSON, and those classes are styled by the demo's own stylesheet inside a shadow root.
-
-Development builds skip the step entirely, so while I'm working I still see `max-sm:px-5.5` in DevTools.
-
-## What it actually saved
-
-I measured it against the same commit without the rename:
+Second, it made the site smaller, more than I expected:
 
 |                    | Before  | After   | Gzipped change |
 | ------------------ | ------- | ------- | -------------- |
@@ -52,19 +43,10 @@ I measured it against the same commit without the rename:
 | 54 blog pages      | 4.52 MB | 3.65 MB | -7%            |
 | 12 portfolio pages | 295 KB  | 237 KB  | -11%           |
 
-Gzip already squeezes repeated class names hard, so the compressed win is smaller than the raw one. It works out to roughly 1 KB less CSS and 1 KB less HTML per page load. Small, but free once it's in the build.
+Gzip already compresses repeated class names well, so the real win is smaller than the raw numbers. It's still roughly 1 KB less CSS and 1 KB less HTML on every page load, for free.
 
-To make sure nothing moved, I compared the computed style of every element on all 66 routes, on desktop and mobile, in light and dark mode. Zero differences.
+Third, nothing broke. I compared the computed style of every element on all 66 routes, on desktop and mobile, in light and dark mode, against a build without the rename. Zero differences.
 
-## Should you do this?
+And fourth, there are costs. The names are the same every time you build the same code, but adding a single class can shift most of them, so never use the generated names for tests, analytics or scripts. Use `data-*` attributes instead. And debugging production gets harder, because `class="v w5 s7"` tells you nothing.
 
-Do it if you want a few free kilobytes on a content-heavy site and your build already has a post-processing step to hang it on.
-
-Don't do it to hide your styles. The browser needs the full stylesheet to render the page, so anyone can open DevTools and read every computed value. Renaming `gap-4` to `x7` removes the Tailwind vocabulary, not the design.
-
-Two costs to know about:
-
-- **Names aren't stable.** They're deterministic for the same source, but adding one class can shift most names on the site. Use `data-*` attributes for tests, analytics and scripts, never the generated names.
-- **Debugging production gets harder.** `class="v w5 s7"` tells you nothing. Keep dev builds unrenamed.
-
-For this blog, that's a trade I'm happy with.
+Those were my observations, and I thought they were worth writing down. If you run a content-heavy site and your build already has a step to hang this on, it's a few free kilobytes on every page. Just don't do it to protect your CSS, because it won't.

@@ -34,7 +34,9 @@ const workersPerViewport = Math.max(
 const blockingImpacts = new Set(["serious", "critical"]);
 const { pages, site } = readSite("http://localhost");
 const collections = pages.filter((page) => page.index).map((page) => page.route);
-const navigationTarget = site.navigation.find((item) => item.href.startsWith("/")).href;
+const navigationTarget =
+  site.navigation.find((item) => item.href.startsWith("/"))?.href ??
+  pages.find((page) => page.route !== "/").route;
 const problems = new Set();
 
 function routes(directory, prefix = "/") {

@@ -35,6 +35,10 @@
     "tooling/checks": {
       "entry": ["src/check-*.mjs"],
       "project": ["src/**/*.mjs"]
+    },
+    "tooling/lighthouse": {
+      "entry": ["src/lighthouse.mjs", "src/worker.mjs"],
+      "project": ["src/**/*.mjs"]
     }
   }
 }

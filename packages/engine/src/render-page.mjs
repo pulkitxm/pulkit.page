@@ -33,7 +33,8 @@ const headingClasses = {
   4: "leading-tight tracking-tight",
 };
 const portrait = "/assets/content/pulkit-portrait.webp";
-const listDirective = /^:::list ([a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?\s*(?:\n|$)/;
+const listDirective =
+  /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?\s*(?:\n|$)/;
 
 function withClass(html, classes) {
   return html.replace(/^<(\w+)/, `<$1 class="${classes}"`);
@@ -83,14 +84,15 @@ function safeUrl(value) {
   }
   return escapeHtml(value);
 }
-function listingDate(metadata, grouped = false) {
+function listingDate(metadata, grouped = false, recent = false) {
   if (metadata.period || !metadata.date) {
     return escapeHtml(metadata.period ?? "");
   }
+  const thisYear = Number(metadata.date.slice(0, 4)) === new Date().getUTCFullYear();
   const month = new Intl.DateTimeFormat("en-US", {
-    day: grouped ? "numeric" : undefined,
+    day: grouped || recent ? "numeric" : undefined,
     month: "short",
-    year: grouped ? undefined : "numeric",
+    year: grouped || (recent && thisYear) ? undefined : "numeric",
     timeZone: "UTC",
   }).format(new Date(metadata.date));
   return `<time datetime="${escapeHtml(metadata.date)}">${month}</time>`;
@@ -347,7 +349,7 @@ export async function renderPage(
               .map((page) =>
                 page.metadata.icon
                   ? experienceEntry(page)
-                  : `<li class="border-b border-line"><a class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3" href="${safeUrl(page.route)}"><span class="group-hover:underline" data-title>${escapeHtml(page.metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(page.metadata, grouped)}</span></a></li>`,
+                  : `<li class="border-b border-line"><a class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3" href="${safeUrl(page.route)}"><span class="group-hover:underline" data-title>${escapeHtml(page.metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(page.metadata, grouped, Number.isFinite(token.limit))}</span></a></li>`,
               )
               .join("")}</ul>`;
           if (!grouped) {
@@ -413,6 +415,8 @@ export async function renderPage(
       related: relatedNavigation(route, metadata, pages, site),
       description: escapeHtml(metadata.description ?? site.description ?? metadata.title),
       brand: escapeHtml(site.brand ?? "Pulkit"),
+      author: escapeHtml(site.author ?? ""),
+      authorUrl: site.authorUrl ? safeUrl(site.authorUrl) : "/",
       navigation: links(site.navigation, true),
       social: links(site.social),
       copyright: escapeHtml(site.copyright ?? ""),
@@ -497,16 +501,24 @@ ${[
 }
 
 function collectionItems(pages, route, collection, limit, site) {
-  return (
-    collection === "all"
-      ? articles(pages, site)
-      : pages.filter(
-          (page) =>
-            !page.index &&
-            page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
-              `/${collection}/`,
-        )
-  )
+  const external = /^([a-z0-9-]+):all$/.exec(collection)?.[1];
+  if (external && !site?.external?.[external]) {
+    throw new Error(`Unknown site in list directive: ${external}`);
+  }
+  let entries;
+  if (external) {
+    entries = site.external[external];
+  } else if (collection === "all") {
+    entries = articles(pages, site);
+  } else {
+    entries = pages.filter(
+      (page) =>
+        !page.index &&
+        page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
+          `/${collection}/`,
+    );
+  }
+  return entries
     .filter((page) => page.route !== route)
     .sort(
       (a, b) =>

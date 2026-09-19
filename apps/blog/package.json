@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "SITE_DEV_PORT=3001 site dev",
+    "dev": "SITE_PORT=3001 site dev",
     "build": "site build",
-    "start": "site start",
+    "start": "SITE_PORT=3001 site start",
     "clean": "site clean",
     "check:layouts": "site check-layouts",
     "check:seo": "site check-seo",

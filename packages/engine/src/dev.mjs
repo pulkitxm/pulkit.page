@@ -10,6 +10,7 @@ import { createServer } from "vite";
 import { developmentLog } from "./dev-log.mjs";
 import { developmentRenderer } from "./dev-renderer.mjs";
 import { formatDuration } from "./duration.mjs";
+import { serverPort } from "./server-port.mjs";
 import { themeFile } from "./theme-files.mjs";
 
 const sharedTypes = {
@@ -21,20 +22,18 @@ const sharedTypes = {
 
 const packages = fileURLToPath(new URL("../../", import.meta.url));
 const repository = resolve(packages, "..");
-const explicit = process.env.PORT !== undefined && process.env.PORT !== "";
-const port = explicit ? Number(process.env.PORT) : Number(process.env.SITE_DEV_PORT || 3000);
-if (!Number.isInteger(port) || port < 0 || port > 65535) {
-  throw new Error("PORT must be an integer between 0 and 65535 (0 selects an available port)");
-}
+const { port, explicit } = serverPort();
 let origin;
 const demoOutput = ".cache/demos-dev";
 const embedOutput = ".cache/embeds-dev";
 let embedBundle;
 let demoBundle;
+let demoStyles;
 
 async function demoAsset(name) {
   if (name === "demos.css" || name === "document.css") {
-    const styles = compileDemoStyles({ minify: false });
+    demoStyles ??= compileDemoStyles({ minify: false });
+    const styles = demoStyles;
     return { type: "text/css", body: name === "demos.css" ? styles.shadow : styles.document };
   }
   const font = fontFile(name);
@@ -61,6 +60,7 @@ const server = await createServer({
   clearScreen: false,
   logLevel: "warn",
   server: {
+    preTransformRequests: false,
     host: "127.0.0.1",
     port,
     strictPort: explicit,
@@ -85,6 +85,7 @@ const server = await createServer({
             );
           if (/^\/packages\/demos\//.test(path) && !reset) {
             demoBundle = undefined;
+            demoStyles = undefined;
             vite.ws.send({ type: "full-reload" });
             return;
           }
@@ -186,7 +187,9 @@ const server = await createServer({
               return;
             }
             let shared;
-            if (pathname === "/theme.js") {
+            if (pathname === "/favicon.ico") {
+              shared = themeFile("icons/favicon-32.png");
+            } else if (pathname === "/theme.js") {
               shared = themeFile("theme.js");
             } else if (pathname.startsWith("/assets/fonts/")) {
               shared = themeFile(`fonts/${pathname.slice("/assets/fonts/".length)}`);

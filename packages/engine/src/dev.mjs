@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, realpathSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { rm } from "node:fs/promises";
 import { extname, resolve, sep } from "node:path";
 import process from "node:process";
@@ -9,7 +9,7 @@ import { assetFile, themeFile } from "@pulkit/theme/files";
 import tailwindcss from "@tailwindcss/vite";
 import { createServer } from "vite";
 import { developmentLog } from "./dev-log.mjs";
-import { developmentRenderer } from "./dev-renderer.mjs";
+import { developmentOriginFile, developmentRenderer } from "./dev-renderer.mjs";
 import { formatDuration } from "./duration.mjs";
 import { serverPort } from "./server-port.mjs";
 
@@ -251,11 +251,14 @@ const server = await createServer({
 });
 await server.listen();
 origin = server.resolvedUrls.local[0].replace(/\/$/, "");
+mkdirSync(".cache", { recursive: true });
+writeFileSync(developmentOriginFile, origin);
 developmentLog(`Development server: ${origin}/`, 0);
 developmentLog("Ready. Pages compile when opened; edits reload automatically.");
 for (const signal of ["SIGINT", "SIGTERM"]) {
   process.on(signal, async () => {
     developmentLog("Stopping development server.");
+    rmSync(developmentOriginFile, { force: true });
     await server.close();
     process.exit(0);
   });

@@ -279,7 +279,7 @@ Three axes, three independent knobs. Any combination is valid, and each one only
 - **CI, build-and-discard**: `--depth 1`, adding `--filter=blob:none` when the tree is media-heavy. If the job diffs against a base branch, deepen or skip shallow entirely.
 - **Archaeology** (blame, bisect, "when did this break"): a boring full clone. The right tool for reading history is having the history.
 
-One more connection worth making: if you read my [git worktrees](/blogs/git-worktrees/) post, you'll recognize the philosophy. Worktrees stop you from paying twice for the same `.git`; partial and sparse stop you from paying for parts of the repo you'll never touch. Both come from the same realization: `git clone`'s defaults assume you want *everything*, and on modern repo sizes, you usually don't. They compose, too: a blobless clone with several sparse worktrees is a genuinely great setup for parallel work on a monorepo.
+One more connection worth making: if you read my [git worktrees](/git-worktrees/) post, you'll recognize the philosophy. Worktrees stop you from paying twice for the same `.git`; partial and sparse stop you from paying for parts of the repo you'll never touch. Both come from the same realization: `git clone`'s defaults assume you want *everything*, and on modern repo sizes, you usually don't. They compose, too: a blobless clone with several sparse worktrees is a genuinely great setup for parallel work on a monorepo.
 
 ## Wrapping up
 
@@ -287,6 +287,6 @@ The thing I love about this corner of git is that nothing here is a workaround. 
 
 Next time a giant repo stands between you and a one-file fix, don't watch the progress bar. Skeleton-clone it, check out the one file, do the surgery, push, and be done before the full clone would have hit double digits.
 
-If you want to go deeper: the [official partial clone docs](https://git-scm.com/docs/partial-clone), the [`git sparse-checkout` reference](https://git-scm.com/docs/git-sparse-checkout), and GitHub's excellent [partial vs shallow clone write-up](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/) are all worth your time. And if you set this up and hit something weird, reach out, you can find all my socials and a [contact form](/contact/).
+If you want to go deeper: the [official partial clone docs](https://git-scm.com/docs/partial-clone), the [`git sparse-checkout` reference](https://git-scm.com/docs/git-sparse-checkout), and GitHub's excellent [partial vs shallow clone write-up](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/) are all worth your time. And if you set this up and hit something weird, reach out, you can find all my socials and a [contact form](https://pulkit.page/contact/).
 
 Happy (skeleton) shipping!

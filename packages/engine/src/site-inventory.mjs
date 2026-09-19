@@ -1,7 +1,22 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
+import profile from "@pulkit/profile";
 import { loadLayouts } from "./layouts.mjs";
 import { readPage } from "./render-page.mjs";
+
+export function readSiteConfig(url) {
+  const config = readPage(readFileSync("content/_site.md", "utf8")).metadata;
+  return {
+    author: profile.name,
+    authorUrl: profile.url,
+    ...config,
+    social: [
+      ...(config.social ?? profile.social),
+      ...(config.articles ? [{ label: "RSS", href: "/feed.xml" }] : []),
+    ],
+    url,
+  };
+}
 
 export function readSite(url) {
   function sources(directory) {
@@ -42,6 +57,6 @@ export function readSite(url) {
   return {
     pages,
     layouts: loadLayouts(),
-    site: { ...readPage(readFileSync("content/_site.md", "utf8")).metadata, url },
+    site: readSiteConfig(url),
   };
 }

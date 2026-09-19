@@ -226,6 +226,6 @@ If your company isn't sponsoring AI tools for developers yet, show them the math
 
 And if you're already using Cursor but feel like you're not getting the full value, revisit your rules, be more specific with your prompts, and stop accepting code you haven't read.
 
-If you want personalized Cursor tips or suggestions for your workflow, reach out. I'm happy to help. You can find all my socials and [contact form](/contact/).
+If you want personalized Cursor tips or suggestions for your workflow, reach out. I'm happy to help. You can find all my socials and [contact form](https://pulkit.page/contact/).
 
 Happy building!

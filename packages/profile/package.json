@@ -1,0 +1,8 @@
+{
+  "name": "@pulkit/profile",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./profile.json"
+  }
+}

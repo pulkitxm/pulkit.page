@@ -18,14 +18,14 @@ Known binary media and fonts have no source-code comment syntax and are excluded
 
 - Tree-sitter handles JavaScript, TypeScript, JSX/TSX, CSS, shell, Python, Ruby, Lua, Swift, Rust, C/C++, Java, Kotlin, Go, TOML, JSON/JSONC, and other explicitly registered languages.
 - YAML concrete-syntax tokens distinguish comments from quoted and block scalars.
-- Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except article examples under `apps/<app>/content/blogs/`, which preserve their original comments.
+- Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except examples in Markdown under any `apps/<app>/content/`, which preserve their original comments.
 - parse5 finds HTML/SVG/XML comments, embedded scripts/styles, JSON-LD, and generated code examples. HTML entities in code examples are decoded before scanning. Actual HTML comments and embedded scripts/styles remain checked everywhere.
 - Small syntax-aware lexers handle SQL comments and quoted/dollar-quoted strings, hash-comment configuration languages, and Mermaid comments.
 - Python docstrings count as documentation comments. All lint directives, coverage directives, documentation comments, and license comments count as comments. Third-party plain-text license files remain ordinary text.
 
 A shebang at byte zero is executable interpreter metadata and is accepted. Strings containing comment-like characters are not comments. Plain-text output, HTTP examples, and math fences have no code-comment interpretation, but still participate in the em-dash check.
 
-Unknown source types and unknown fence languages cause a failure requesting an explicit parser registration. This prevents newly added languages from silently bypassing checks. The scanner uses error-tolerant syntax trees for partial tutorial snippets; it is a policy check, not a compiler or proof that example code is runnable. Article code examples retain their original comments and formatting.
+Unknown source types and unknown fence languages cause a failure requesting an explicit parser registration. This prevents newly added languages from silently bypassing checks. The scanner uses error-tolerant syntax trees for partial tutorial snippets; it is a policy check, not a compiler or proof that example code is runnable. Code examples in content Markdown retain their original comments and formatting.
 
 ## Knip
 
@@ -44,7 +44,7 @@ bun run check:dead-code
 bun run ci
 ```
 
-For fixes, edit the source Markdown or code, run `bun run format`, and rerun CI. Generated HTML is build output in `apps/page/dist/` and is never edited or committed.
+For fixes, edit the source Markdown or code, run `bun run format`, and rerun CI. Generated HTML is build output in each app's `dist/` and is never edited or committed.
 
 ## Regression coverage
 

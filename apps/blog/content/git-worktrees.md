@@ -347,7 +347,7 @@ That maps perfectly onto my Noveum day. The feature I'm building lives in one wo
 
 ### The pattern: one long task, one foreground
 
-This is my bread and butter: I kick off a slow, autonomous task in worktree A, a big refactor, a flaky-test fix, a dependency bump, and let the agent churn. Then I switch to worktree B and do focused work, pairing with a second agent or hand-editing the hotfix. Because the worktrees are isolated checkouts, the background agent can rewrite half the codebase and never touch what I'm doing. I check back on A when it's done; it has its own branch ready to become a PR. (If you've read [how I use Cursor](/blogs/how-i-use-cursor/), you know I run a few of these at once, worktrees are what keep it sane.)
+This is my bread and butter: I kick off a slow, autonomous task in worktree A, a big refactor, a flaky-test fix, a dependency bump, and let the agent churn. Then I switch to worktree B and do focused work, pairing with a second agent or hand-editing the hotfix. Because the worktrees are isolated checkouts, the background agent can rewrite half the codebase and never touch what I'm doing. I check back on A when it's done; it has its own branch ready to become a PR. (If you've read [how I use Cursor](/how-i-use-cursor/), you know I run a few of these at once, worktrees are what keep it sane.)
 
 Practically, run each worktree in its own terminal tab or `tmux` window, each with its own agent. One tip that saves a lot of confusion: **name the worktree directory exactly the same as its branch** (`feat-auth/` on branch `feat-auth`), and put the branch in your shell prompt, so you always know which world you're typing in.
 
@@ -448,6 +448,6 @@ The shift is real, and it fits how we build now: several streams of work at once
 
 If you take nothing else away: next time prod breaks while you're mid-feature, don't stash and don't clone. Run `git worktree add ../myapp-worktrees/hotfix -b hotfix`, fix the thing, ship it, and walk right back to where you were. Once you feel that, you won't go back.
 
-If you want to go deeper, the [Claude Code worktrees docs](https://code.claude.com/docs/en/worktrees) and the [official `git worktree` reference](https://git-scm.com/docs/git-worktree) are both excellent. And if you set this up and have questions about wiring it into your own workflow, reach out, you can find all my socials and a [contact form](/contact/).
+If you want to go deeper, the [Claude Code worktrees docs](https://code.claude.com/docs/en/worktrees) and the [official `git worktree` reference](https://git-scm.com/docs/git-worktree) are both excellent. And if you set this up and have questions about wiring it into your own workflow, reach out, you can find all my socials and a [contact form](https://pulkit.page/contact/).
 
 Happy shipping!

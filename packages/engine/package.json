@@ -12,11 +12,12 @@
     "test": "bun test ./src"
   },
   "dependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@pulkit/code": "workspace:*",
     "@pulkit/demos": "workspace:*",
     "@pulkit/embeds": "workspace:*",
+    "@pulkit/profile": "workspace:*",
     "@pulkit/theme": "workspace:*",
-    "@axe-core/playwright": "4.13.0",
     "@resvg/resvg-js": "2.6.2",
     "@tailwindcss/cli": "4.3.3",
     "@tailwindcss/vite": "4.3.3",

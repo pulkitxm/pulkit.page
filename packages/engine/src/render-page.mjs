@@ -12,7 +12,17 @@ import {
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
 import { applyLayout, loadLayouts } from "./layouts.mjs";
-import { ancestors, imagePath, pageTitle, relatedPages, safeJson, structuredData } from "./seo.mjs";
+import {
+  ancestors,
+  articles,
+  categoryOf,
+  imagePath,
+  isArticle,
+  pageTitle,
+  relatedPages,
+  safeJson,
+  structuredData,
+} from "./seo.mjs";
 
 const link = "text-inherit decoration-muted underline-offset-4 hover:decoration-current";
 const codeFont = "[font:0.84em/1.65_var(--font-mono)]";
@@ -23,6 +33,7 @@ const headingClasses = {
   4: "leading-tight tracking-tight",
 };
 const portrait = "/assets/content/pulkit-portrait.webp";
+const listDirective = /^:::list ([a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?\s*(?:\n|$)/;
 
 function withClass(html, classes) {
   return html.replace(/^<(\w+)/, `<$1 class="${classes}"`);
@@ -47,6 +58,7 @@ export function readPage(source) {
     "secondaryIcon",
     "layout",
     "brand",
+    "articles",
     "copyright",
   ]) {
     if (
@@ -71,20 +83,24 @@ function safeUrl(value) {
   }
   return escapeHtml(value);
 }
-function listingDate(metadata, exact = false, recent = false) {
+function listingDate(metadata, grouped = false) {
   if (metadata.period || !metadata.date) {
     return escapeHtml(metadata.period ?? "");
   }
   const month = new Intl.DateTimeFormat("en-US", {
-    day: exact || recent ? "numeric" : undefined,
+    day: grouped ? "numeric" : undefined,
     month: "short",
-    year:
-      recent && Number(metadata.date.slice(0, 4)) === new Date().getUTCFullYear()
-        ? undefined
-        : "numeric",
+    year: grouped ? undefined : "numeric",
     timeZone: "UTC",
   }).format(new Date(metadata.date));
   return `<time datetime="${escapeHtml(metadata.date)}">${month}</time>`;
+}
+function readingMinutes(body) {
+  const words = body
+    .replace(/```[\s\S]*?```/g, "")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / 230));
 }
 function experiencePeriod(metadata) {
   const month = new Intl.DateTimeFormat("en-US", {
@@ -121,11 +137,8 @@ export async function renderPage(
   if (typeof metadata?.title !== "string" || !metadata.title.trim()) {
     throw new Error("title must be a nonempty string");
   }
-  const layout =
-    metadata.layout ??
-    (route.startsWith("/blogs/") && !pages.find((page) => page.route === route)?.index
-      ? "article"
-      : "simple");
+  const article = isArticle(route, pages, site);
+  const layout = metadata.layout ?? (article ? "article" : "simple");
   const ids = new Set(["main"]);
   const assets = createPageAssets();
   const markdown = new Marked({
@@ -309,9 +322,9 @@ export async function renderPage(
         level: "block",
         start: (src) => src.indexOf(":::list"),
         tokenizer(src) {
-          const match = /^:::list ([a-z0-9/-]+)(?: limit=([1-9][0-9]*))?\s*(?:\n|$)/.exec(src);
+          const match = listDirective.exec(src);
           if (!match && /^:::list\b/.test(src)) {
-            throw new Error("Invalid list directive; use :::list collection limit=5");
+            throw new Error("Invalid list directive; use :::list collection limit=5 by-year");
           }
           if (match) {
             return {
@@ -319,21 +332,22 @@ export async function renderPage(
               raw: match[0],
               collection: match[1],
               limit: Number(match[2]) || Number.POSITIVE_INFINITY,
+              grouped: Boolean(match[3]),
             };
           }
         },
         renderer(token) {
-          const items = collectionItems(pages, route, token.collection, token.limit);
+          const items = collectionItems(pages, route, token.collection, token.limit, site);
           if (!items.length) {
             throw new Error(`Empty or unknown collection: ${token.collection}`);
           }
-          const grouped = route === "/blogs/" && token.collection === "blogs";
+          const { grouped } = token;
           const list = (entries) =>
             `<ul class="mt-0 mb-6 list-none p-0">${entries
               .map((page) =>
                 page.metadata.icon
                   ? experienceEntry(page)
-                  : `<li class="border-b border-line"><a class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3" href="${safeUrl(page.route)}"><span class="group-hover:underline" data-title>${escapeHtml(page.metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(page.metadata, grouped, route === "/" && token.collection === "blogs")}</span></a></li>`,
+                  : `<li class="border-b border-line"><a class="group flex items-baseline justify-between gap-5 py-3.75 leading-normal text-inherit no-underline underline-offset-4 max-sm:gap-3" href="${safeUrl(page.route)}"><span class="group-hover:underline" data-title>${escapeHtml(page.metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(page.metadata, grouped)}</span></a></li>`,
               )
               .join("")}</ul>`;
           if (!grouped) {
@@ -372,8 +386,20 @@ export async function renderPage(
           `<a class="${navigation ? "text-inherit no-underline aria-[current=page]:text-fg" : "text-inherit no-underline"}" href="${safeUrl(item.href)}"${navigation && item.href === route ? ' aria-current="page"' : ""}>${escapeHtml(item.label)}</a>`,
       )
       .join(navigation ? "\n" : " · ");
-  const detail =
-    metadata.date && !metadata.period
+  const category = categoryOf(route, pages);
+  const detail = article
+    ? [
+        metadata.date
+          ? `<time datetime="${escapeHtml(metadata.date)}">${new Intl.DateTimeFormat("en-US", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(metadata.date))}</time>`
+          : "",
+        `${readingMinutes(body)} min read`,
+        category
+          ? `<a class="${link}" href="${safeUrl(category.route)}">${escapeHtml(category.metadata.title)}</a>`
+          : "",
+      ]
+        .filter(Boolean)
+        .join(" · ")
+    : metadata.date && !metadata.period
       ? `<time datetime="${metadata.date}">${escapeHtml(metadata.date)}</time>`
       : "";
   const content = await markdown.parse(body);
@@ -382,7 +408,7 @@ export async function renderPage(
       title: escapeHtml(pageTitle(metadata, site, route)),
       seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${assets.tags()}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
       breadcrumbs: breadcrumbs(route, pages),
-      related: relatedNavigation(route, metadata, pages),
+      related: relatedNavigation(route, metadata, pages, site),
       description: escapeHtml(metadata.description ?? site.description ?? metadata.title),
       brand: escapeHtml(site.brand ?? "Pulkit"),
       navigation: links(site.navigation, true),
@@ -404,8 +430,8 @@ function breadcrumbs(route, pages) {
     ? `<nav class="mb-8 text-[0.8rem]" aria-label="Breadcrumb"><ol class="mt-0 mb-6 flex list-none flex-wrap gap-2 p-0 [&>li+li]:before:mr-2 [&>li+li]:before:opacity-50 [&>li+li]:before:content-['/'] [&_a]:text-inherit [&_a]:decoration-muted [&_a]:underline-offset-4 [&_a:hover]:decoration-current">${parents.map((page) => `<li><a href="${escapeHtml(page.route)}">${escapeHtml(page.route === "/" ? "Home" : page.metadata.title)}</a></li>`).join("")}<li aria-current="page">${escapeHtml(pages.find((page) => page.route === route)?.metadata.title ?? "Current page")}</li></ol></nav>`
     : "";
 }
-function relatedNavigation(route, metadata, pages) {
-  const related = relatedPages(route, metadata, pages);
+function relatedNavigation(route, metadata, pages, site) {
+  const related = relatedPages(route, metadata, pages, site);
   const collections = pages.filter(
     (page) =>
       page.index &&
@@ -432,7 +458,7 @@ function relatedNavigation(route, metadata, pages) {
 function seoHead(route, metadata, site, pages) {
   const url = site.url + route;
   const image = site.url + imagePath(route);
-  const article = route.startsWith("/blogs/") && !pages.find((page) => page.route === route)?.index;
+  const article = isArticle(route, pages, site);
   const meta = (name, content, property = false) =>
     `<meta ${property ? "property" : "name"}="${name}" content="${escapeHtml(content)}" />`;
   return `<link rel="canonical" href="${escapeHtml(url)}" />
@@ -453,7 +479,7 @@ ${[
 ]
   .map(([key, value]) => meta(key, value, true))
   .join("\n")}
-${article && metadata.date ? meta("article:published_time", metadata.date, true) + meta("article:author", `${site.url}/about/`, true) : ""}
+${article && metadata.date ? meta("article:published_time", metadata.date, true) + meta("article:author", site.authorUrl ?? `${site.url}/`, true) : ""}
 ${[
   ["twitter:card", "summary_large_image"],
   ["twitter:title", pageTitle(metadata, site, route)],
@@ -466,15 +492,18 @@ ${[
 <script type="application/ld+json">${safeJson(structuredData(route, metadata, site, pages))}</script>`;
 }
 
-function collectionItems(pages, route, collection, limit) {
-  return pages
-    .filter(
-      (page) =>
-        page.route !== route &&
-        !page.index &&
-        page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
-          `/${collection}/`,
-    )
+function collectionItems(pages, route, collection, limit, site) {
+  return (
+    collection === "all"
+      ? articles(pages, site)
+      : pages.filter(
+          (page) =>
+            !page.index &&
+            page.route.slice(0, page.route.lastIndexOf("/", page.route.length - 2) + 1) ===
+              `/${collection}/`,
+        )
+  )
+    .filter((page) => page.route !== route)
     .sort(
       (a, b) =>
         (b.metadata.date ?? "").localeCompare(a.metadata.date ?? "") ||
@@ -485,17 +514,18 @@ function collectionItems(pages, route, collection, limit) {
 
 export function renderDependencies(page, pages, site) {
   return {
-    year: page.route === "/" ? new Date().getUTCFullYear() : undefined,
     seo: seoHead(page.route, page.metadata, site, pages),
     breadcrumbs: breadcrumbs(page.route, pages),
-    related: relatedNavigation(page.route, page.metadata, pages),
-    listings: [...page.body.matchAll(/:::list ([a-z0-9/-]+)(?: limit=([1-9][0-9]*))?/g)].map(
+    related: relatedNavigation(page.route, page.metadata, pages, site),
+    category: categoryOf(page.route, pages)?.metadata.title,
+    listings: [...page.body.matchAll(new RegExp(listDirective, "gm"))].map(
       ([, collection, limit]) =>
         collectionItems(
           pages,
           page.route,
           collection,
           Number(limit) || Number.POSITIVE_INFINITY,
+          site,
         ).map((entry) => [
           entry.route,
           entry.metadata.title,

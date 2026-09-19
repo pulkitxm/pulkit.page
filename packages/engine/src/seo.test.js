@@ -9,6 +9,7 @@ import { resolveSiteOrigin } from "./site-origin.mjs";
 
 const site = {
   ...readPage(readFileSync("content/_site.md", "utf8")).metadata,
+  articles: "/blogs/",
   url: resolveSiteOrigin({}),
 };
 const metadata = {
@@ -50,13 +51,13 @@ test("graphs distinguish collections, posts, contact and experience without inve
 });
 test("navigation selects ancestors and related topics, excluding unrelated posts", () => {
   expect(ancestors("/blogs/example/", pages).map((page) => page.route)).toEqual(["/", "/blogs/"]);
-  expect(relatedPages("/blogs/example/", metadata, pages).map((page) => page.route)).toEqual([
+  expect(relatedPages("/blogs/example/", metadata, pages, site).map((page) => page.route)).toEqual([
     "/blogs/related/",
   ]);
 });
 test("cards render deterministically and preserve long titles", () => {
   const page = { route: "/blogs/example/", metadata };
-  expect(renderCard(page, site).equals(renderCard(page, site))).toBe(true);
+  expect(renderCard(page, site, "Writing").equals(renderCard(page, site, "Writing"))).toBe(true);
   const title =
     "Understanding distributed systems with practical examples and useful implementation details";
   expect(titleLines(title).join(" ")).toBe(title);
@@ -66,7 +67,7 @@ test("validator rejects wrong canonicals, missing metadata, broken JSON and wron
     "---\ntitle: Example\ndescription: Example description\ndate: 2025-01-02\n---\n\nText.\n";
   const data = readPage(source).metadata;
   const html = await renderPage(source, { site, pages, route: "/blogs/example/" });
-  const png = renderCard({ route: "/blogs/example/", metadata: data }, site);
+  const png = renderCard({ route: "/blogs/example/", metadata: data }, site, "Writing");
   const validate = (value, buffer = png) =>
     validateSeo(value, "/blogs/example/", data, site, () => buffer);
   expect(() => validate(html)).not.toThrow();

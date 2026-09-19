@@ -1,7 +1,8 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { escapeHtml, readPage } from "./render-page.mjs";
-import { imagePath, pageTitle } from "./seo.mjs";
+import { imagePath, isArticle, pageTitle } from "./seo.mjs";
+import { readSiteConfig } from "./site-inventory.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
 export function validateSeo(html, route, metadata, site, readAsset) {
@@ -76,10 +77,7 @@ function walk(directory) {
   );
 }
 function checkSeo(root = "dist") {
-  const site = {
-    ...readPage(readFileSync("content/_site.md", "utf8")).metadata,
-    url: resolveSiteOrigin(),
-  };
+  const site = readSiteConfig(resolveSiteOrigin());
   const titles = new Set();
   const descriptions = new Set();
   const routes = [];
@@ -120,6 +118,29 @@ function checkSeo(root = "dist") {
     !readFileSync(join(root, "robots.txt"), "utf8").includes(`Sitemap: ${site.url}/sitemap.xml`)
   ) {
     throw new Error("Robots must advertise the canonical sitemap");
+  }
+  const feedPath = join(root, "feed.xml");
+  if (site.articles) {
+    const pages = walk("content")
+      .filter((path) => path.endsWith(".md") && path !== "content/_site.md")
+      .map((path) => ({
+        route:
+          path === "content/home.md" ? "/" : `/${path.slice(8).replace(/(?:\/index)?\.md$/, "")}/`,
+        index: path.endsWith("/index.md"),
+      }));
+    const expected = pages
+      .filter((page) => isArticle(page.route, pages, site))
+      .map((page) => site.url + page.route)
+      .sort();
+    const feed = existsSync(feedPath) ? readFileSync(feedPath, "utf8") : "";
+    const ids = [...feed.matchAll(/<entry>\s*<title>[^<]*<\/title>\s*<id>([^<]+)<\/id>/g)]
+      .map((match) => match[1])
+      .sort();
+    if (JSON.stringify(ids) !== JSON.stringify(expected)) {
+      throw new Error("Feed must contain every article exactly once");
+    }
+  } else if (existsSync(feedPath)) {
+    throw new Error("Only sites with articles publish a feed");
   }
   console.log(`Validated SEO, JSON-LD, sitemap and PNG dimensions for ${routes.length} pages`);
 }

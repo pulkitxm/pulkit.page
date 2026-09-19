@@ -55,7 +55,7 @@ function entryTransition(event, otherUrl) {
   }
   const current = new URL(window.location.href);
   const other = new URL(otherUrl);
-  const collection = /^\/(blogs|exp)\//.exec(current.pathname)?.[0];
+  const collection = /^\/[^/]+\//.exec(current.pathname)?.[0];
   const titles = [...document.querySelectorAll("[data-title]")];
   const title =
     titles.find((candidate) => candidate.closest("a")?.href === other.href) ??

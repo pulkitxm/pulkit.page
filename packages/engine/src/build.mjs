@@ -39,7 +39,7 @@ const production =
   (!process.env.NODE_ENV || process.env.NODE_ENV === "production") &&
   origin === resolveSiteOrigin({ NODE_ENV: "production" });
 stepStartedAt = performance.now();
-await generateSite("dist", origin);
+const pages = await generateSite("dist", origin);
 logDuration("Rendered pages", stepStartedAt);
 stepStartedAt = performance.now();
 cpSync("assets", "dist/assets", { recursive: true });
@@ -58,7 +58,9 @@ execFileSync(
 );
 logDuration("Compiled styles", stepStartedAt);
 stepStartedAt = performance.now();
-await buildDemoAssets("dist/assets/demos");
+if (pages.some((page) => page.body.includes(":::demo "))) {
+  await buildDemoAssets("dist/assets/demos");
+}
 await buildEmbedAssets("dist/assets");
 logDuration("Built demo assets", stepStartedAt);
 stepStartedAt = performance.now();

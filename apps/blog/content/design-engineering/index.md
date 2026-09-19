@@ -4,4 +4,4 @@ description: Motion design, micro-interactions, and the craft of building interf
   alive. From CSS fundamentals to advanced Framer Motion patterns.
 ---
 
-:::list blogs/design-engineering
+:::list design-engineering

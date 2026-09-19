@@ -44,7 +44,7 @@ test("page dependencies follow listing limits, schema, breadcrumbs and related l
     { route: "/blogs/old/", metadata: { title: "Old", date: "2025-01-01", tags: ["web"] } },
   ];
   const pages = [page, ...posts];
-  const site = { url: "https://example.com", brand: "Example" };
+  const site = { url: "https://example.com", brand: "Example", articles: "/blogs/" };
   const before = renderDependencies(page, pages, site);
   posts[1].body = "Changed body";
   posts[1].metadata.title = "Changed older title";

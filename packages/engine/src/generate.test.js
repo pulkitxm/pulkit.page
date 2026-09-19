@@ -14,6 +14,7 @@ import { join, resolve } from "node:path";
 import process from "node:process";
 import { checkLayouts } from "./check-layouts.mjs";
 import { loadLayouts } from "./layouts.mjs";
+import { crawlerOutputs } from "./og-images.mjs";
 import { renderPage } from "./render-page.mjs";
 
 const engine = import.meta.dir;
@@ -124,6 +125,7 @@ test("conflicting routes and unsupported MDX fail the build", () => {
 
 test("rebuilds reuse cached renders and invalidate on content and layout edits", () => {
   const cwd = project();
+  writeFileSync(join(cwd, "content/_site.md"), "---\nbrand: Pulkit\narticles: /blogs/\n---\n");
   mkdirSync(join(cwd, "content/blogs"));
   writeFileSync(join(cwd, "content/home.md"), `${source}\n:::list blogs limit=1\n`);
   writeFileSync(
@@ -252,33 +254,48 @@ test("HTML formatting preserves check marks in highlighted shell transcripts", a
   expect(html).not.toContain("√");
 });
 
-test("writing groups years newest first and shows exact publication dates", async () => {
+test("by-year lists group newest first with day and month dates", async () => {
   const pages = [
     { route: "/blogs/old/", metadata: { title: "Old", date: "2024-12-31" } },
     { route: "/blogs/new/", metadata: { title: "New", date: "2025-01-01" } },
     { route: "/blogs/later/", metadata: { title: "Later", date: "2025-03-02" } },
   ];
-  const markdown = `${source}\n:::list blogs\n`;
-  const html = await renderPage(markdown, { pages, route: "/blogs/" });
+  const html = await renderPage(`${source}\n:::list blogs by-year\n`, { pages, route: "/blogs/" });
   const years = [...html.matchAll(/<h2\s+class="[^"]+"\s*>\s*(\d{4})\s*<\/h2>/g)].map(
     (match) => match[1],
   );
   expect(years).toEqual(["2025", "2024"]);
-  expect(html).toContain('datetime="2025-01-01">Jan 1, 2025</time>');
-  expect(html).toContain('datetime="2024-12-31">Dec 31, 2024</time>');
+  expect(html).toContain('datetime="2025-01-01">Jan 1</time>');
+  expect(html).toContain('datetime="2024-12-31">Dec 31</time>');
   expect(html.indexOf('href="/blogs/later/"')).toBeLessThan(html.indexOf('href="/blogs/new/"'));
-  const home = await renderPage(markdown, { pages });
-  expect(home).not.toMatch(/<h2\s+class="[^"]+"\s*>\s*\d{4}\s*<\/h2>/);
-  expect(home).toContain('datetime="2025-01-01">Jan 1');
+  const plain = await renderPage(`${source}\n:::list blogs\n`, { pages });
+  expect(plain).not.toMatch(/<h2\s+class="[^"]+"\s*>\s*\d{4}\s*<\/h2>/);
+  expect(plain).toContain('datetime="2025-01-01">Jan 2025</time>');
 });
 
-test("recent writing omits the current year and retains older years", async () => {
-  const year = new Date().getUTCFullYear();
+test("sites with articles list every post, render article meta and publish a feed", async () => {
+  const site = { url: "https://example.com", brand: "Example", articles: "/" };
   const pages = [
-    { route: "/blogs/current/", metadata: { title: "Current", date: `${year}-08-14` } },
-    { route: "/blogs/previous/", metadata: { title: "Previous", date: `${year - 1}-12-31` } },
+    { route: "/", metadata: { title: "Home" } },
+    { route: "/topic/", index: true, metadata: { title: "Topic" } },
+    { route: "/first/", metadata: { title: "First", description: "One.", date: "2025-01-01" } },
+    {
+      route: "/topic/second/",
+      metadata: { title: "Second", description: "Two.", date: "2026-02-03" },
+    },
   ];
-  const html = await renderPage(`${source}\n:::list blogs\n`, { pages });
-  expect(html).toContain(`datetime="${year}-08-14">Aug 14</time>`);
-  expect(html).toContain(`datetime="${year - 1}-12-31">Dec 31, ${year - 1}</time>`);
+  const home = await renderPage(`${source}\n:::list all by-year\n`, { pages, site });
+  expect(home.indexOf('href="/topic/second/"')).toBeLessThan(home.indexOf('href="/first/"'));
+  expect(home).not.toContain('href="/topic/"');
+  const article = await renderPage(
+    "---\ntitle: Second\ndescription: Two.\ndate: 2026-02-03\n---\n\nShort body.\n",
+    { pages, site, route: "/topic/second/" },
+  );
+  expect(article).toContain("February 3, 2026");
+  expect(article).toContain("1 min read");
+  expect(article).toContain('href="/topic/"');
+  const feed = crawlerOutputs(pages, site).get("feed.xml").toString();
+  expect(feed.match(/<entry>/g)).toHaveLength(2);
+  expect(feed).toContain("<id>https://example.com/topic/second/</id>");
+  expect(crawlerOutputs(pages, { ...site, articles: undefined }).has("feed.xml")).toBe(false);
 });

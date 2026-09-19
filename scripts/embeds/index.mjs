@@ -1,6 +1,7 @@
 import { render as blogGallery } from "./blog-gallery.mjs";
 import { render as blogImage } from "./blog-image.mjs";
 import { render as cmdKey } from "./cmd-key.mjs";
+import { render as contactLinks } from "./contact-links.mjs";
 import { render as documentTabs } from "./document-tabs.mjs";
 import { render as documentViewer } from "./document-viewer.mjs";
 import { render as image } from "./image.mjs";
@@ -19,6 +20,7 @@ export const components = {
   "blog-gallery": { render: blogGallery },
   "blog-image": { render: blogImage },
   "cmd-key": { render: cmdKey },
+  "contact-links": { render: contactLinks },
   "document-tabs": { render: documentTabs },
   "document-viewer": { render: documentViewer },
   image: { render: image },

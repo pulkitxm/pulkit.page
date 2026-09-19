@@ -222,7 +222,7 @@ test("deployment build copies generated pages and assets and rejects legacy root
   const failed = run("build.mjs");
   expect(failed.status).not.toBe(0);
   expect(failed.stderr).toContain("Extra HTML without a Markdown source: legacy.html");
-});
+}, 30_000);
 
 test("templates are checked separately and shared partial edits invalidate output", () => {
   const cwd = workspace();

@@ -2,6 +2,7 @@
   "article": "design-engineering/the-physics-behind-natural-motion",
   "index": 0,
   "component": "vercel-badge",
+  "heavy": true,
   "props": {},
   "frame": {
     "focusCode": false,

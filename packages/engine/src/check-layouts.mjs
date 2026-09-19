@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { formatHtml } from "@pulkit/code/format-html";
 import { HtmlValidate } from "html-validate";
-import { applyLayout, layoutDirectory, loadLayouts } from "./layouts.mjs";
+import { applyLayout, layoutDirectory, loadLayouts, themeScript } from "./layouts.mjs";
 
 export async function checkLayouts(directory = layoutDirectory()) {
   const layouts = loadLayouts(directory);
@@ -10,6 +10,7 @@ export async function checkLayouts(directory = layoutDirectory()) {
   );
   const values = {
     seo: "",
+    themeScript: themeScript(),
     breadcrumbs: "",
     related: "",
     title: "Example page",

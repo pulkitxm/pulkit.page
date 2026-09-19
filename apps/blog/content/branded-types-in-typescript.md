@@ -559,7 +559,7 @@ For a deeper dive into the theory and additional patterns, see Josh Goldberg’s
 ## Credits and Further Watching
 
 :::embed youtube-embed
-{"videoId":"aP6w2OzidYM","title":"Branded Types in TypeScript","className":"h-[200px] w-full rounded-xl sm:h-[400px]"}
+{"videoId":"aP6w2OzidYM","title":"Branded Types in TypeScript","className":"h-[200px] w-full rounded-xl sm:h-[400px]","imgLink":"/assets/content/public/blogs/branded-types-in-typescript/video-thumbnail.webp"}
 :::
 
 This post was inspired by the YouTube video [“Branded Types in TypeScript”](https://www.youtube.com/watch?v=aP6w2OzidYM); all credit to [the creator](https://x.com/DevSimplified) for the clear explanation and examples.

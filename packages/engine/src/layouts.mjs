@@ -18,6 +18,7 @@ const placeholderNames = [
   "related",
   "author",
   "authorUrl",
+  "themeScript",
 ];
 const allowed = new Set(placeholderNames);
 
@@ -33,6 +34,13 @@ function readTemplates(directory) {
     templates.set(entry.name.slice(0, -5), readFileSync(join(directory, entry.name), "utf8"));
   }
   return templates;
+}
+
+let themeSource;
+
+export function themeScript() {
+  themeSource ??= `<script>${readFileSync(themeFile("theme.js"), "utf8").trim()}</script>`;
+  return themeSource;
 }
 
 export function layoutDirectory() {

@@ -36,6 +36,8 @@ const pageFields = [
 const siteFields = ["brand", "description", "copyright", "navigation", "social", "articles"];
 const requiredSiteFields = ["brand", "description", "copyright", "navigation"];
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const genericLinkText =
+  /^(?:click here|read more|learn more|here|this|link|more)[\s.,:;!?>\u2192]*$/i;
 const repository = fileURLToPath(new URL("../../../", import.meta.url));
 const siteRoot = /^((?:apps\/[a-z0-9-]+|packages\/[a-z0-9-]+\/test\/fixture)\/)(content\/.*)$/;
 
@@ -264,6 +266,7 @@ export function checkContent(path, source) {
   }
   const tree = markdown.parse(body);
   let topHeadings = 0;
+  let headingDepth = page ? 1 : 0;
   const headings = new Set();
   const definitions = new Set();
   const references = [];
@@ -281,7 +284,10 @@ export function checkContent(path, source) {
       }
       if (page && node.depth === 1) {
         fail("page H1 comes from title; start body headings at ##", node);
+      } else if (node.depth > headingDepth + 1) {
+        fail(`heading levels must not skip: h${headingDepth} is followed by h${node.depth}`, node);
       }
+      headingDepth = node.depth;
       const label = sourceText(node).toLowerCase();
       if (headings.has(label)) {
         fail(`duplicate heading: ${label}`, node);
@@ -294,8 +300,13 @@ export function checkContent(path, source) {
     ) {
       fail("code fences need a lowercase language and no extra metadata", node);
     }
-    if (node.type === "link" && !sourceText(node).trim()) {
-      fail("links require descriptive text", node);
+    if (node.type === "link") {
+      const label = sourceText(node).trim();
+      if (!label) {
+        fail("links require descriptive text", node);
+      } else if (genericLinkText.test(label)) {
+        fail(`link text must describe its destination, not "${label}"`, node);
+      }
     }
     if (node.type === "link" || node.type === "image" || node.type === "definition") {
       if (
@@ -307,6 +318,9 @@ export function checkContent(path, source) {
       }
       if (page && node.url && !/^(?:https?:\/\/|mailto:|\/(?!\/)|#)/.test(node.url)) {
         fail("page links must be root-relative, HTTPS/HTTP, mailto, or fragments", node);
+      }
+      if (page && node.type === "image" && node.url && !node.url.startsWith("/assets/")) {
+        fail("page images must be self-hosted under /assets/", node);
       }
       const target = node.url?.startsWith("/") ? node.url.split(/[?#]/)[0] : "";
       if (target && !target.endsWith("/") && !/\.[a-z0-9]+$/i.test(target)) {

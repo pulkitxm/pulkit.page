@@ -14,7 +14,7 @@ import { lightboxScript, lightboxStyle, localImageSize, zoomable } from "@pulkit
 import { escapeHtml } from "@pulkit/shared/html";
 import { Marked, Renderer } from "marked";
 import { parse } from "yaml";
-import { applyLayout, loadLayouts } from "./layouts.mjs";
+import { applyLayout, loadLayouts, themeScript } from "./layouts.mjs";
 import {
   ancestors,
   articles,
@@ -145,6 +145,10 @@ export async function renderPage(
   const layout = metadata.layout ?? (article ? "article" : "simple");
   const ids = new Set(["main"]);
   const assets = createPageAssets();
+  const sizeAttributes = (href) => {
+    const size = localImageSize(href);
+    return size ? ` width="${size.width}" height="${size.height}"` : "";
+  };
   const zoomAttributes = (href) => {
     const size = localImageSize(href);
     assets.style(lightboxStyle);
@@ -261,7 +265,7 @@ export async function renderPage(
           token.href === portrait
             ? "mx-0 mt-0 mb-7 block size-36 max-w-full rounded-[50%] object-cover"
             : "mx-auto my-7 block h-auto max-w-full rounded-md";
-        const image = `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}" loading="lazy">`;
+        const image = `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}"${sizeAttributes(token.href)} loading="lazy">`;
         return token.href === portrait || token.linked
           ? image
           : zoomable({
@@ -345,7 +349,7 @@ export async function renderPage(
           const slides = token.images
             .map(
               (image) =>
-                `<a class="block w-full shrink-0 cursor-zoom-in snap-center" href="${safeUrl(image.href)}"${zoomAttributes(image.href)}><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}" loading="lazy"></a>`,
+                `<a class="block w-full shrink-0 cursor-zoom-in snap-center" href="${safeUrl(image.href)}"${zoomAttributes(image.href)}><img class="mx-auto block h-auto max-h-[70vh] w-full object-contain" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}"${sizeAttributes(image.href)} loading="lazy"></a>`,
             )
             .join("");
           const button =
@@ -444,6 +448,7 @@ export async function renderPage(
   return formatHtml(
     applyLayout(layouts, layout, {
       title: escapeHtml(pageTitle(metadata, site, route)),
+      themeScript: themeScript(),
       seo: `${site.url ? seoHead(route, metadata, site, pages) : ""}${site.articles ? `<link rel="alternate" type="application/atom+xml" title="${escapeHtml(site.brand ?? "Feed")}" href="/feed.xml">` : ""}${assets.tags()}${body.includes(":::demo ") ? '<link rel="stylesheet" href="/assets/demos/document.css"><script type="module" src="/assets/demos/index.js"></script>' : ""}`,
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages, site),

@@ -136,13 +136,12 @@ export function mount(root) {
   const size = { height: 0, width: 0 };
   const resizeListeners = [];
 
-  function resize() {
-    const rect = inner.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) {
+  function resize(width, height) {
+    if (width === 0 || height === 0) {
       return;
     }
-    size.width = rect.width;
-    size.height = rect.height;
+    size.width = width;
+    size.height = height;
     renderer.setSize(size.width, size.height);
     camera.aspect = size.width / size.height;
     camera.updateProjectionMatrix();
@@ -151,16 +150,29 @@ export function mount(root) {
     }
   }
 
-  const resizeObserver = new ResizeObserver(resize);
-  resizeObserver.observe(inner);
-  resize();
-
-  loadAssets().then(([, gltf, loadedTexture]) => {
-    if (destroyed) {
-      return;
-    }
-    cleanup = start(gltf, loadedTexture);
+  const resizeObserver = new ResizeObserver((entries) => {
+    const { width, height } = entries.at(-1).contentRect;
+    resize(width, height);
   });
+  resizeObserver.observe(inner);
+
+  loadAssets()
+    .then(([, gltf, loadedTexture]) => {
+      if (destroyed) {
+        return;
+      }
+      cleanup = start(gltf, loadedTexture);
+    })
+    .catch(() => {
+      if (destroyed) {
+        return;
+      }
+      resizeObserver.disconnect();
+      renderer.dispose();
+      root.innerHTML = html`<p class="p-6 text-center text-muted-foreground text-sm" role="alert">
+        This demo could not download its 3D assets.
+      </p>`;
+    });
 
   function start(gltf, bandTexture) {
     const scene = new Scene();

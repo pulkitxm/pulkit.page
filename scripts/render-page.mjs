@@ -12,6 +12,7 @@ import { formatFence } from "./format-code.mjs";
 import { formatHtml } from "./format-html.mjs";
 import { highlightFence } from "./highlight.mjs";
 import { applyLayout, loadLayouts } from "./layouts.mjs";
+import { markdownPath } from "./markdown-export.mjs";
 import { ancestors, imagePath, pageTitle, relatedPages, safeJson, structuredData } from "./seo.mjs";
 
 const link = "text-inherit decoration-muted underline-offset-4 hover:decoration-current";
@@ -388,6 +389,7 @@ export async function renderPage(
       navigation: links(site.navigation, true),
       social: links(site.social),
       copyright: escapeHtml(site.copyright ?? ""),
+      markdown: escapeHtml(markdownPath(route)),
       heading: escapeHtml(metadata.title),
       date:
         detail || metadata.role
@@ -436,6 +438,7 @@ function seoHead(route, metadata, site, pages) {
   const meta = (name, content, property = false) =>
     `<meta ${property ? "property" : "name"}="${name}" content="${escapeHtml(content)}" />`;
   return `<link rel="canonical" href="${escapeHtml(url)}" />
+<link rel="alternate" type="text/markdown" href="${escapeHtml(site.url + markdownPath(route))}" />
 ${meta("robots", "index, follow, max-image-preview:large")}
 ${[
   ["og:type", article ? "article" : "website"],

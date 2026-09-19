@@ -11,6 +11,11 @@
       content="A deep dive into git&#39;s three cloning knobs: how partial clone, shallow clone, and sparse checkout actually work under the hood, and the exact recipe that turns a multi-gigabyte clone into a few seconds of download when you only need to touch one file."
     />
     <link rel="canonical" href="https://pulkit.page/blogs/git-partial-clones/" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="https://pulkit.page/blogs/git-partial-clones.md"
+    />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Pulkit" />
@@ -1026,16 +1031,23 @@
             >LinkedIn</a
           >
         </div>
-        <div class="mt-4.5 flex items-center justify-between">
-          <small>© 2026 Pulkit</small
-          ><button
-            class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
-            type="button"
-            data-theme-toggle
-            aria-label="Switch color theme"
-          >
-            Theme
-          </button>
+        <div class="mt-4.5 flex items-center justify-between gap-4">
+          <small>© 2026 Pulkit</small>
+          <div class="flex items-center gap-4">
+            <a
+              class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
+              href="/blogs/git-partial-clones.md"
+              type="text/markdown"
+              >View as Markdown</a
+            ><button
+              class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
+              type="button"
+              data-theme-toggle
+              aria-label="Switch color theme"
+            >
+              Theme
+            </button>
+          </div>
         </div>
       </footer>
     </div>

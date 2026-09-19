@@ -7,6 +7,7 @@ const placeholderNames = [
   "brand",
   "navigation",
   "copyright",
+  "markdown",
   "social",
   "heading",
   "content",

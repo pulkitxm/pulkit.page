@@ -20,7 +20,15 @@ import { generationDirectory, resolveSiteOrigin } from "./site-origin.mjs";
 const generationStartedAt = performance.now();
 let stepStartedAt = generationStartedAt;
 const outputDirectory = generationDirectory();
-const excluded = new Set([".git", "node_modules", "extras", "dist", "layouts", ".cache"]);
+const excluded = new Set([
+  ".git",
+  "node_modules",
+  "extras",
+  "dist",
+  "layouts",
+  ".cache",
+  "reports",
+]);
 
 function filesUnder(directory, excludeTools = false) {
   if (!existsSync(directory)) {

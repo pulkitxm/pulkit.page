@@ -75,9 +75,13 @@ The renderer promotes body headings to at least H2 and assigns IDs from lowercas
 :::list system-design
 
 :::list all by-year
+
+:::list blog:all limit=5
 ```
 
-Place one directive in its own paragraph. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. Items sort newest date first then title. Ungrouped lists display the period, or the month and year. With `by-year`, the list is grouped under year headings and each entry shows its day and month. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
+Place one directive in its own paragraph. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. `<site>:all` lists every post of another app in the workspace, such as `blog:all` for `apps/blog`, linking each entry to that site's domain from the shared profile. Items sort newest date first then title. Ungrouped lists display the period, or the month and year; a list with a limit shows the day and month for this year's posts and the full date for older ones. With `by-year`, the list is grouped under year headings and each entry shows its day and month. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
+
+Post pages on pulkit.blog show a byline with the portrait and the author's name from the shared profile, linking to the author URL. Its [article layout](../apps/blog/layouts/article.html) fills it from the `author` and `authorUrl` template values.
 
 Group two or more related images into a sliding carousel with Previous and Next buttons:
 

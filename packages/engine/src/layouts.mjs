@@ -15,6 +15,8 @@ const placeholderNames = [
   "seo",
   "breadcrumbs",
   "related",
+  "author",
+  "authorUrl",
 ];
 const allowed = new Set(placeholderNames);
 

@@ -140,10 +140,15 @@ directive names a collection, an optional limit, and an optional year grouping:
 :::list system-design
 
 :::list all by-year
+
+:::list blog:all limit=5
 ```
 
-The collection `all` lists every post of the site, and `by-year` groups the list
-under year headings with day and month dates; ungrouped lists show month and year.
+The collection `all` lists every post of the site, and `blog:all` lists every post
+of `apps/blog` from another app, linking to pulkit.blog; pulkit.page's home uses it
+for its latest five posts. `by-year` groups the list under year headings with day
+and month dates; ungrouped lists show month and year, and limited lists show day
+and month for this year's posts.
 
 Routes come from file paths:
 

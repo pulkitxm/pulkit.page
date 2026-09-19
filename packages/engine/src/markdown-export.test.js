@@ -84,6 +84,23 @@ test("directives become plain Markdown while code fences stay literal", () => {
   expect(markdown).toEndWith("[^1]: Its meaning.\n");
 });
 
+test("lists from another site link to that site's Markdown copies", () => {
+  const external = {
+    ...site,
+    external: {
+      notes: [
+        {
+          route: "https://notes.example.org/post/",
+          metadata: { title: "Post", description: "A post.", date: "2026-02-03" },
+        },
+      ],
+    },
+  };
+  expect(renderMarkdown(page(":::list notes:all limit=5\n", "/about/"), pages, external)).toContain(
+    "- [Post](https://notes.example.org/post.md): February 3, 2026",
+  );
+});
+
 test("raw HTML falls back to readable Markdown", () => {
   const markdown = renderMarkdown(
     page(

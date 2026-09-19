@@ -72,7 +72,10 @@ function entryLine(page, resolve) {
     : metadata.date
       ? shortDate(metadata.date)
       : "";
-  return `- ${linkTo(metadata.title, resolve(page.route))}${detail ? `: ${detail}` : ""}`;
+  const href = /^https?:\/\//.test(page.route)
+    ? page.route.replace(/\/$/, ".md")
+    : resolve(page.route);
+  return `- ${linkTo(metadata.title, href)}${detail ? `: ${detail}` : ""}`;
 }
 
 function listingMarkdown(pages, route, collection, limit, byYear, site, resolve) {
@@ -207,7 +210,7 @@ function tokenize(body, context) {
         token(demoMarkdown(name, variant, pageUrl)),
       )
       .replace(
-        /^:::list ([a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?[ \t]*$/gm,
+        /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?[ \t]*$/gm,
         (_, collection, limit, byYear) =>
           token(
             listingMarkdown(pages, page.route, collection, Number(limit), byYear, site, resolve),

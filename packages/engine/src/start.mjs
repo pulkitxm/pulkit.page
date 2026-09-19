@@ -3,16 +3,15 @@ import process from "node:process";
 import { preview } from "vite";
 import { developmentLog } from "./dev-log.mjs";
 import { formatDuration } from "./duration.mjs";
+import { serverPort } from "./server-port.mjs";
 
 if (!existsSync("dist/index.html")) {
-  console.error("No built site found. Run `bun run build` first, then `bun start`.");
+  console.error(
+    "No built site found. Run `bun run build` first, or `bun run serve` to build and serve.",
+  );
   process.exit(1);
 }
-const explicit = process.env.PORT !== undefined && process.env.PORT !== "";
-const port = explicit ? Number(process.env.PORT) : 3000;
-if (!Number.isInteger(port) || port < 0 || port > 65535) {
-  throw new Error("PORT must be an integer between 0 and 65535 (0 selects an available port)");
-}
+const { port, explicit } = serverPort();
 const server = await preview({
   configFile: false,
   appType: "mpa",

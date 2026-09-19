@@ -38,7 +38,7 @@ Both apps have the same shape and no code of their own. pulkit.page is the portf
 | `apps/<app>/styles.css`                                      | Imports the shared base, defines the app's fonts and color tokens                  | Compiled and minified into `dist/`       |
 | `apps/<app>/package.json`                                    | App scripts that call the `site` CLI                                               | Add app tasks here and in `turbo.json`   |
 
-App scripts (`dev`, `build`, `start`, `clean`, `check:layouts`, `check:seo`, `check:site`, `check:html`, `check:browser`) run with the app as the working directory, so every relative path the engine uses (`content/`, `layouts/`, `assets/`, `styles.css`, `CNAME`, `dist/`, `.cache/`) resolves inside that app. The scripts are identical except that the blog's `dev` script sets `SITE_DEV_PORT=3001`, so its development server prefers port 3001 while pulkit.page prefers 3000.
+App scripts (`dev`, `build`, `start`, `clean`, `check:layouts`, `check:seo`, `check:site`, `check:html`, `check:browser`) run with the app as the working directory, so every relative path the engine uses (`content/`, `layouts/`, `assets/`, `styles.css`, `CNAME`, `dist/`, `.cache/`) resolves inside that app. The scripts are identical except that the blog's `dev` and `start` scripts set `SITE_PORT=3001`, so its servers prefer port 3001 while pulkit.page prefers 3000.
 
 The two apps differ in presentation. pulkit.page uses Comic Relief with a warm light/dark palette. pulkit.blog uses Instrument Sans for body text, IBM Plex Mono for metadata such as the brand, dates, and footer, and a neutral light/dark palette; its head partial advertises `/feed.xml`.
 

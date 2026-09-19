@@ -19,7 +19,7 @@ bun install
 bun run dev
 ```
 
-Use the printed URLs: with PORT unset, pulkit.page starts at 3000 and pulkit.blog starts at 3001 (its `dev` script sets `SITE_DEV_PORT=3001`), and each walks to higher ports until one binds. PORT requests a specific port; PORT=0 requests an available one. To run only one site, use `bunx turbo run dev --filter=@pulkit/page` or `--filter=@pulkit/blog`.
+Use the printed URLs: with PORT unset, pulkit.page starts at 3000 and pulkit.blog starts at 3001 (its `dev` script sets `SITE_PORT=3001`), and each walks to higher ports until one binds. PORT requests a specific port; PORT=0 requests an available one. To run only one site, use `bunx turbo run dev --filter=@pulkit/page` or `--filter=@pulkit/blog`.
 
 ```sh
 bun run format
@@ -33,11 +33,10 @@ After a page rename/removal, update inbound links; the next build clears the app
 ## Production and preview builds
 
 ```sh
-bun run build
-bun run start
+bun run serve
 ```
 
-A default build uses the HTTPS origin in each app's CNAME: `apps/page/CNAME` for pulkit.page and `apps/blog/CNAME` for pulkit.blog. `bun run start` builds when needed and then previews `dist/` on loopback. To generate matching preview metadata and validate it:
+A default build uses the HTTPS origin in each app's CNAME: `apps/page/CNAME` for pulkit.page and `apps/blog/CNAME` for pulkit.blog. `bun run serve` builds when needed and then previews `dist/` on loopback. To generate matching preview metadata and validate it:
 
 ```sh
 NODE_ENV=staging SITE_URL=https://preview.example.com bun run build

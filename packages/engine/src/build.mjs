@@ -45,6 +45,7 @@ stepStartedAt = performance.now();
 cpSync("assets", "dist/assets", { recursive: true });
 cpSync(themeFile("fonts"), "dist/assets/fonts", { recursive: true });
 cpSync(themeFile("icons"), "dist/assets", { recursive: true });
+copyFileSync(themeFile("icons/favicon-32.png"), "dist/favicon.ico");
 copyFileSync(themeFile("theme.js"), "dist/theme.js");
 if (production) {
   copyFileSync("CNAME", "dist/CNAME");

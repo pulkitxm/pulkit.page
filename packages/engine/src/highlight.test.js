@@ -98,3 +98,14 @@ describe("build-time syntax highlighting", () => {
     expect(await scanText("dist/exp/example/index.html", html)).toHaveLength(1);
   });
 });
+
+test("concurrent fences load each grammar once and highlight consistently", async () => {
+  const languages = ["typescript", "tsx", "markdown", "html", "vue", "typescript", "tsx"];
+  const results = await Promise.all(
+    languages.map((language) => highlightFence(language, "const value: number = 1;")),
+  );
+  for (const html of results) {
+    expect(html).toContain("value");
+  }
+  expect(results[0]).toBe(results[5]);
+});

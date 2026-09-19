@@ -8,7 +8,9 @@
     "./highlight": "./src/highlight.mjs"
   },
   "dependencies": {
-    "@biomejs/biome": "2.5.14",
+    "@biomejs/js-api": "6.0.0",
+    "@biomejs/wasm-nodejs": "2.5.14",
+    "@pulkit/shared": "workspace:*",
     "parse5": "8.0.1",
     "shiki": "4.4.3"
   }

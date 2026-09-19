@@ -1,0 +1,12 @@
+{
+  "name": "@pulkit/shared",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./html": "./src/html.mjs",
+    "./built-site": "./src/built-site.mjs"
+  },
+  "scripts": {
+    "test": "bun test ./src"
+  }
+}

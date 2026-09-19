@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { escapeHtml, readPage } from "./render-page.mjs";
+import { escapeHtml } from "@pulkit/shared/html";
+import { readPage } from "./render-page.mjs";
 import { imagePath, isArticle, pageTitle } from "./seo.mjs";
 import { readSiteConfig } from "./site-inventory.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";

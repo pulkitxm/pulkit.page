@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@pulkit/shared": "workspace:*",
     "chrome-launcher": "1.2.1",
     "lighthouse": "13.5.0",
     "vite": "8.3.0"

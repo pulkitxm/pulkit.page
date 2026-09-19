@@ -1,3 +1,4 @@
+import { escapeHtml } from "@pulkit/shared/html";
 import { components } from "./registry.mjs";
 
 const codeFont = "[font:0.84em/1.65_var(--font-mono)]";
@@ -37,14 +38,6 @@ const allowedTags = new Set([
   "video",
 ]);
 const trustedFrames = /^https:\/\/codesandbox\.io\/embed\//;
-
-function escapeHtml(value) {
-  return String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character],
-  );
-}
 
 function decode(value) {
   return value

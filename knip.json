@@ -40,6 +40,9 @@
     "tooling/lighthouse": {
       "entry": ["src/lighthouse.mjs", "src/worker.mjs"],
       "project": ["src/**/*.mjs"]
+    },
+    "packages/shared": {
+      "project": ["src/**/*.mjs"]
     }
   }
 }

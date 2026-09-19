@@ -6,6 +6,9 @@
     "./files": "./src/files.mjs",
     "./styles.css": "./styles.css"
   },
+  "scripts": {
+    "test": "bun test ./src"
+  },
   "dependencies": {
     "tailwindcss": "4.3.3"
   }

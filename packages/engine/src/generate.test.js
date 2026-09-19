@@ -336,6 +336,19 @@ test("code blocks indent line by line while keeping blank lines copyable", async
   expect(html).not.toMatch(/^\s*>|<\/[a-z]+$/m);
 });
 
+test("code blocks carry a sticky copy button and load its script once", async () => {
+  const html = await renderPage(
+    `${source}\n\`\`\`js\nconst a = 1;\n\`\`\`\n\n\`\`\`text\nsecond\n\`\`\`\n`,
+  );
+  expect(html.match(/<div class="relative [^"]*" data-code-block>/g)).toHaveLength(2);
+  expect(
+    html.match(/<button [^>]*class="[^"]*sticky top-3[^"]*"[^>]*data-code-copy>/g),
+  ).toHaveLength(2);
+  expect(html.match(/<script type="module" src="\/assets\/embeds\/code-copy\.js">/g)).toHaveLength(
+    1,
+  );
+});
+
 test("tables scroll sideways as a keyboard-focusable region without splitting words", async () => {
   const html = await renderPage(
     `${source}\n| Approach | Limit |\n| --- | --- |\n| Token bucket | 8000 |\n`,

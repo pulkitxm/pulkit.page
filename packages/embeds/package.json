@@ -5,6 +5,7 @@
   "exports": {
     ".": "./src/index.mjs",
     "./bundle": "./src/bundle.mjs",
+    "./copy-button": "./src/copy-button.mjs",
     "./lightbox": "./src/lightbox.mjs"
   },
   "dependencies": {

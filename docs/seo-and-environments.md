@@ -52,7 +52,7 @@ Experience pages remain WebPage about the person; role and period do not become 
 
 ## Breadcrumbs, collections, and related articles
 
-`ancestors` selects the home route plus actual index routes that prefix the current route, sorted by path length. For pulkit.blog's caching post the BreadcrumbList chain is Home, System Design, Caching. Visible breadcrumbs render only in layouts that include them, which on these sites means pulkit.page's; the current page gets aria-current and ancestor links are root-relative.
+`ancestors` selects the home route plus actual index routes that prefix the current route, sorted by path length. For pulkit.blog's caching post the BreadcrumbList chain is Home, System Design, Caching. Visible breadcrumbs render in every shared layout on both sites; the current page gets aria-current and ancestor links are root-relative.
 
 `relatedPages` runs only on article pages and selects other posts of the same site. Each case-insensitive tag overlap adds one point; sharing a category directory below the articles root adds three. Zero-score items are excluded. Highest score wins, ties use route lexical order, and at most three are emitted. There is no date weighting or semantic search. Tags now affect related navigation and JSON-LD but still do not produce tag archives.
 
@@ -82,7 +82,7 @@ The body is the authored Markdown with site-specific syntax resolved into portab
 
 ## Validation and limitations
 
-[check-seo.mjs](../packages/engine/src/check-seo.mjs) validates dist against source metadata and the resolved origin. It loads the site configuration through the same `readSiteConfig` as the build, including the shared profile. It checks one matching canonical, one H1/main, full title, selected unique meta fields, one parseable graph with expected context, unique top-level entity IDs, page/website linkage, BlogPosting facts when present, PNG signature/dimensions, same-origin absolute href existence, exact sitemap membership, robots sitemap advertisement, and, on sites with `articles`, that `feed.xml` lists every article exactly once. It also rejects duplicate page titles/descriptions globally.
+[check-seo.mjs](../packages/engine/src/check-seo.mjs) validates dist against source metadata and the resolved origin. It loads the site configuration through the same `readSiteConfig` as the build, including the shared profile. It checks one matching canonical, one H1/main, full title, selected unique meta fields (a meta carrying a `media` attribute, such as the light and dark `theme-color` pair, is exempt), one parseable graph with expected context, unique top-level entity IDs, page/website linkage, BlogPosting facts when present, PNG signature/dimensions, same-origin absolute href existence, exact sitemap membership, robots sitemap advertisement, and, on sites with `articles`, that `feed.xml` lists every article exactly once. It also rejects duplicate page titles/descriptions globally.
 
 This is not full Schema.org validation. It does not require every possible graph entity/type, exhaustively validate breadcrumb/ItemList members, prove every @id resolves, verify all Open Graph fields, or inspect card appearance. It does not fetch external URLs or establish Google indexing/rich-result eligibility. Its regular expressions depend on the generator's HTML shape. Source metadata correctness remains an editorial responsibility.
 

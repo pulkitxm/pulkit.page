@@ -3,9 +3,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./package.json": "./package.json",
-    "./base.css": "./base.css",
-    "./theme.js": "./theme.js"
+    "./files": "./src/files.mjs",
+    "./styles.css": "./styles.css"
   },
   "dependencies": {
     "tailwindcss": "4.3.3"

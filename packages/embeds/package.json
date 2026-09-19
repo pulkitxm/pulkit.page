@@ -8,6 +8,7 @@
     "./lightbox": "./src/lightbox.mjs"
   },
   "dependencies": {
+    "@pulkit/theme": "workspace:*",
     "embla-carousel": "8.6.0",
     "image-size": "2.0.4",
     "katex": "0.18.7",

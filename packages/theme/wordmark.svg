@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164 46" fill="currentColor" role="img" aria-label="Pulkit" data-wordmark>
-  <mask id="wordmark-fold" maskUnits="userSpaceOnUse" x="-1" y="-1" width="166" height="48">
-    <rect x="-1" y="-1" width="166" height="48" fill="#fff" />
-    <path d="M21 -1H36V14H25Q21 14 21 10Z" fill="#000" data-fold />
+  <mask id="wordmark-fold" maskUnits="userSpaceOnUse" x="-5" y="-5" width="174" height="56">
+    <rect x="-5" y="-5" width="174" height="56" fill="#fff" />
+    <path d="M21 -4H40V14H25Q21 14 21 10Z" fill="#000" data-fold />
   </mask>
   <path d="M5 0H35V26C35 33 30 38 23 38H13V31H17C23 31 26 27 26 22C26 17 22 14 17 14C12 14 9 18 9 23V46H0V5Q0 0 5 0Z" mask="url(#wordmark-fold)" />
   <path d="M24 0L35 11H26Q24 11 24 9Z" data-fold />

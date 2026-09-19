@@ -2,10 +2,9 @@
 brand: Pulkit
 description: Software engineer building useful things for the web.
 copyright: © 2026 Pulkit
-articles: /blogs/
 navigation:
   - label: Writing
-    href: /blogs/
+    href: https://pulkit.blog/
   - label: Experience
     href: /exp/
   - label: About

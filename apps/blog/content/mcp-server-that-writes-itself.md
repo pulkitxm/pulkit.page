@@ -465,7 +465,7 @@ MCP is not a second product. It is a thin front door on top of the API you alrea
 
 Tighten your spec first, then add the route. After that, new endpoints can show up as tools without you maintaining a hand-written list.
 
-If you want to trade notes on large APIs, weird schemas, or prompts for long-running jobs, you can use my [contact form](/contact/).
+If you want to trade notes on large APIs, weird schemas, or prompts for long-running jobs, you can use my [contact form](https://pulkit.page/contact/).
 
 A tiny runnable version of this whole thing (Hono + OpenAPI + a \~200-line MCP handler, tools generated from the spec, deny list, walkthrough demo client) lives at [pulkitxm/systems → `ai-agents/mcp-server/`](https://github.com/pulkitxm/systems/tree/main/ai-agents/mcp-server). Clone it, `bun install`, `bun run server`, `bun run demo`, and you can watch an MCP session happen end to end.
 

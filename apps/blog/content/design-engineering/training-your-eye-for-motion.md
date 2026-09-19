@@ -101,7 +101,7 @@ The same thing happens to musicians who develop an ear. They hear a chord and im
 
 ## The Difference Between Rules and Judgment
 
-[This series](/blogs/design-engineering/) covers a lot of rules. Ease-out for entrances. Ease-in for exits. 200ms as a baseline duration. Spring physics for interactive elements.
+[This series](/design-engineering/) covers a lot of rules. Ease-out for entrances. Ease-in for exits. 200ms as a baseline duration. Spring physics for interactive elements.
 
 These rules are useful starting points. They'll get you most of the way. But taste is what tells you when to break them.
 

@@ -28,7 +28,7 @@ describe("strict content conventions", () => {
     ["content/about.md", page("", ["[bad](", "javascript:", "alert)\n"].join("")), "unsafe"],
     ["content/about.md", page("", "[relative](../about.md)\n"), "root-relative"],
     ["content/about.md", page("", ":::list blogs limit=0\n"), "invalid"],
-    ["apps/page/content/blogs/example.md", page(), "date"],
+    ["apps/blog/content/example.md", page(), "date"],
     ["content/exp/example.md", page(), "role"],
     ["README.md", "No heading.\n", "exactly one H1"],
   ])("rejects invalid content in %s", (file, source, message) => {

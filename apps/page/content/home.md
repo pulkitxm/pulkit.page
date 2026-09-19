@@ -16,11 +16,9 @@ I'm Pulkit, a software engineer based in India. I build products for the web at 
 
 [All experience →](/exp/)
 
-## Recent writing
+## Writing
 
-:::list blogs limit=5
-
-[All writing →](/blogs/)
+I write about system design, design engineering, and the tools I use at [pulkit.blog](https://pulkit.blog/).
 
 ## Podcast
 

@@ -13,4 +13,4 @@ when you want reference code alongside the write-ups.
 
 </div>
 
-:::list blogs/system-design
+:::list system-design

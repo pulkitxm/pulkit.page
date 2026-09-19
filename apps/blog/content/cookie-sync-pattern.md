@@ -421,4 +421,4 @@ The localStorage hydration flash is one of those problems that seems minor until
 
 Cookie sync solves it cleanly for returning users, and first visits degrade gracefully to defaults. It's a bit more code upfront, but the result is a page that looks right from the first paint.
 
-If you have questions or found a better approach, reach out on any of my [socials](/contact/). Happy building!
+If you have questions or found a better approach, reach out on any of my [socials](https://pulkit.page/contact/). Happy building!

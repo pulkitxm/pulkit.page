@@ -40,8 +40,8 @@ export function mount(root) {
           <div class="absolute -top-1 -right-1 rounded-full bg-red-500" style="animation: pulse-bad 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; height: 10px; width: 10px"></div>
         </div>
         <div class="text-center">
-          <span class="block font-medium text-red-600 text-xs">Bad</span>
-          <span class="text-neutral-500 text-xs">Animates width/height</span>
+          <span class="block font-medium text-red-600 dark:text-red-400 text-xs">Bad</span>
+          <span class="text-neutral-600 dark:text-neutral-400 text-xs">Animates width/height</span>
         </div>
       </div>
       <div class="flex flex-col items-center gap-4">
@@ -50,8 +50,8 @@ export function mount(root) {
           <div class="absolute -top-1 -right-1 size-2.5 rounded-full bg-red-500" style="animation: pulse-good 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"></div>
         </div>
         <div class="text-center">
-          <span class="block font-medium text-green-600 text-xs">Good</span>
-          <span class="text-neutral-500 text-xs">Animates transform</span>
+          <span class="block font-medium text-green-600 dark:text-green-400 text-xs">Good</span>
+          <span class="text-neutral-600 dark:text-neutral-400 text-xs">Animates transform</span>
         </div>
       </div>
     </div>

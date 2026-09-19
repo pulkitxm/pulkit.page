@@ -56,14 +56,14 @@ export function mount(root) {
           ${boxes("janky-box rounded-sm bg-linear-to-br from-red-400 to-red-600")}
         </div>
         <span class="font-medium text-red-600 text-xs dark:text-red-400">Animates width, height</span>
-        <span class="text-neutral-500 text-xs">Triggers layout every frame</span>
+        <span class="text-neutral-600 dark:text-neutral-400 text-xs">Triggers layout every frame</span>
       </div>
       <div class="flex flex-col items-center gap-2">
         <div class="relative grid h-32 w-32 grid-cols-4 gap-1 overflow-hidden rounded-lg border border-green-200 bg-green-50 p-2 dark:border-green-900 dark:bg-green-950/40">
           ${boxes("smooth-box rounded-sm bg-linear-to-br from-green-400 to-green-600")}
         </div>
         <span class="font-medium text-green-600 text-xs dark:text-green-400">Animates transform only</span>
-        <span class="text-neutral-500 text-xs">GPU handles it</span>
+        <span class="text-neutral-600 dark:text-neutral-400 text-xs">GPU handles it</span>
       </div>
     </div>
     <div class="flex gap-3">

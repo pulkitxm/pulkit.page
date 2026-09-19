@@ -112,7 +112,7 @@ function renderEnvironment(renderer) {
 export function mount(root) {
   root.innerHTML = html`<div class="h-full w-full">
     <div data-ref="wrapper" style="position: relative; width: 100%; height: 100%; overflow: hidden; pointer-events: auto">
-      <div data-ref="inner" style="width: 100%; height: 100%"><canvas data-ref="canvas" style="display: block"></canvas></div>
+      <div data-ref="inner" style="position: absolute; inset: 0"><canvas data-ref="canvas" style="position: absolute; inset: 0; display: block"></canvas></div>
     </div>
   </div>`;
   const { wrapper, inner, canvas } = refs(root);
@@ -138,6 +138,9 @@ export function mount(root) {
 
   function resize() {
     const rect = inner.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) {
+      return;
+    }
     size.width = rect.width;
     size.height = rect.height;
     renderer.setSize(size.width, size.height);
@@ -357,7 +360,7 @@ export function mount(root) {
         const clampedDistance = Math.max(0.1, Math.min(1, current.distanceTo(body.translation())));
         current.lerp(
           body.translation(),
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
+          Math.min(1, delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))),
         );
       }
       curve.points[0].copy(j3.translation());
@@ -400,7 +403,7 @@ export function mount(root) {
 
     let last = performance.now();
     function loop(now) {
-      const delta = (now - last) / 1000;
+      const delta = Math.min(Math.max((now - last) / 1000, 0), 0.1);
       last = now;
       updateBand(delta);
       stepPhysics(delta);

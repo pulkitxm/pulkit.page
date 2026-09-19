@@ -27,7 +27,7 @@ const cards = [
 
 function card({ label, description, bounce }) {
   return html`<div class="flex flex-col items-center gap-3">
-    <span class="font-mono text-[10px] text-neutral-400">bounce: ${bounce}</span>
+    <span class="font-mono text-[10px] text-neutral-500 dark:text-neutral-400">bounce: ${bounce}</span>
     <div class="relative flex h-32 w-32 items-end justify-center rounded-lg bg-neutral-100 pb-4 dark:bg-neutral-800">
       <div data-box class="h-10 w-10 rounded-lg bg-orange-500 shadow-md"></div>
     </div>

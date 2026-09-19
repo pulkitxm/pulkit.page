@@ -21,19 +21,19 @@ export function mount(root) {
     </div>
     <div class="flex w-full max-w-2xl gap-4">
       <div class="flex flex-1 flex-col gap-2">
-        <span class="text-center text-neutral-500 text-xs">CSS (GPU)</span>
-        <div class="relative h-28 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900">
+        <span class="text-center text-neutral-600 dark:text-neutral-400 text-xs">CSS (GPU)</span>
+        <div class="@container relative h-28 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900">
           <div data-ref="cssTrack" class="flex h-full items-center"></div>
           <style>
             @keyframes move-css {
               from { transform: translateX(8px); }
-              to { transform: translateX(180px); }
+              to { transform: translateX(min(180px, calc(100cqw - 20px))); }
             }
           </style>
         </div>
       </div>
       <div class="flex flex-1 flex-col gap-2">
-        <span class="text-center text-neutral-500 text-xs">Framer Motion (JS)</span>
+        <span class="text-center text-neutral-600 dark:text-neutral-400 text-xs">Framer Motion (JS)</span>
         <div class="relative h-28 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-900">
           <div data-ref="motionTrack" class="flex h-full items-center"></div>
         </div>
@@ -60,7 +60,7 @@ export function mount(root) {
       animate(motionItem, { x: 8 }, { duration: 0 });
       const controls = animate(
         motionItem,
-        { x: [8, 180] },
+        { x: [8, Math.min(180, Math.max(8, motionTrack.clientWidth - 20))] },
         {
           delay: (index / itemCount) * 2,
           duration: 2,

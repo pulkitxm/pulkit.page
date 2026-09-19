@@ -19,7 +19,7 @@ The root package contains pinned tooling dependencies under `devDependencies`: M
 
 ## Outputs and deployment files
 
-[pages/](../pages/) is committed production output: 66 HTML pages, 66 social-card PNGs, `sitemap.xml`, and `robots.txt`, totaling 134 files. Generation owns the entire directory. Do not manually edit HTML/cards/crawler files or store authored assets there; sync detects stale or extra output and clean can delete it.
+[pages/](../pages/) is committed production output: 66 HTML pages, 66 social-card PNGs, 66 Markdown copies, `llms.txt`, `sitemap.xml`, and `robots.txt`, totaling 201 files. Generation owns the entire directory. Do not manually edit HTML/cards/crawler files or store authored assets there; sync detects stale or extra output and clean can delete it.
 
 `dist/` is ignored output. Build first verifies production `pages/`, clears deployment files while preserving `dist/dev-<port>/`, then copies the verified snapshot for production or renders other environments. Both paths copy source assets, theme JS, and `.nojekyll`, then compile Tailwind CSS; production assembly includes CNAME. Vite development renders requested pages in memory and serves shared source assets directly. Persistent render caches stay under `.cache/generate/`; development does not write into dist. Root routes named `dev-<port>` are reserved. Local deployment validation excludes those preview directories; clean CI workspaces have no local preview output. `.cache/generate/` holds disposable, ignored generation caches outside the deployment artifact.
 

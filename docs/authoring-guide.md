@@ -78,7 +78,7 @@ The block may contain only images, each with alt text. Each slide links to its f
 
 ## Components
 
-Richer widgets come from the original site and render at generate time. A block component is an `embed` fence naming the component, whose single line is a JSON object of props. The inline form carries the same name and props inside running text. Unknown names, unknown props, and unsupported prop values fail generation rather than degrading silently.
+Richer widgets come from the original site and render at generate time. A block component is an `embed` fence naming the component, whose single line is a JSON object of props. The inline form carries the same name and props inside running text. Unknown names, unknown props, and unsupported prop values fail generation rather than degrading silently. A new component also needs a plain-Markdown fallback in [markdown-export.mjs](../scripts/markdown-export.mjs) for the page's Markdown copy.
 
 ```md
 :::embed tech-badges

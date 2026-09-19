@@ -62,7 +62,15 @@ Experience pages remain WebPage about the person; role and period do not become 
 
 Title wrapping is greedy at 29 characters per line; font size drops from 54 to 44 if there are more than four lines. The function retains words, but neither generation nor tests prove every long title fits visually. PNG signature/dimensions and deterministic bytes are tested; actual typography/clipping still merits visual review. The README records that the current design is provisional pending the original visual reference.
 
-Sitemap includes every discovered page exactly once with its canonical URL, without invented lastmod timestamps. Robots allows crawling and advertises that sitemap. Generated output comprises 66 HTML files, 66 cards, and these two crawler files. Cards are generation outputs, not part of the historical copied-image audit.
+Sitemap includes every discovered page exactly once with its canonical URL. Blog articles carry `lastmod` from their publication `date`; other pages have no trustworthy date and stay undated rather than getting an invented one. Robots allows crawling and advertises that sitemap. Generated output comprises 66 HTML files, 66 cards, 66 Markdown copies, `llms.txt`, and the two crawler files. Cards are generation outputs, not part of the historical copied-image audit.
+
+## Markdown copies and llms.txt
+
+[markdown-export.mjs](../scripts/markdown-export.mjs) writes every page a second time as GitHub-flavored Markdown beside its HTML: `/` becomes `/index.md`, `/about/` becomes `/about.md`, and `/blogs/system-design/` becomes `/blogs/system-design.md`. GitHub Pages serves them as static files, so no routing is involved. Each copy opens with the title as H1, the description as a quote, and a short fact list (canonical URL, publication date, role and period, tags, parent collection), followed by the body, collection and related-writing lists, and footnotes.
+
+The body is the authored Markdown with site-specific syntax resolved into portable Markdown. Lists become link lists, images and carousels become images, math becomes `$…$` and `$$…$$`, info tips become footnotes, tweets and replies become quotes, documents and videos become links, and demos become a note linking to the page plus the demo's source files as fences. Raw `<code>`, `<strong>`, and `<br>` become Markdown; `<details>` stays as HTML; wrapper tags are dropped. Code fences are never rewritten. Every link is absolute, and links to site pages point at their Markdown copies so agents can crawl Markdown only. An embed or HTML tag without a Markdown fallback fails generation.
+
+`llms.txt` follows the llmstxt.org shape: the brand as H1, the homepage description as a quote, a note on the `.md` convention, then one section for top-level pages and one per collection, each entry linking to the Markdown copy with its date or role and description. Every HTML page links to its copy with `<link rel="alternate" type="text/markdown">` and a View as Markdown footer link. The development server renders both on request.
 
 ## Validation and limitations
 

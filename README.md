@@ -83,6 +83,10 @@ updates its archive and the homepage when regenerated.
 - `content/blogs/index.md` → `pages/blogs/index.html` → `/blogs/`
 - `content/blogs/system-design/caching.md` → `/blogs/system-design/caching/`
 
+Every page is also published as Markdown beside its HTML: `/about/` has
+`/about.md`, and `/` has `/index.md`. `/llms.txt` indexes those copies. See
+[SEO and environments](docs/seo-and-environments.md#markdown-copies-and-llmstxt).
+
 The homepage uses `home`; blog detail pages default to `article`; other pages
 use `simple`. Set `layout` to override. Templates live in `layouts/`, with shared
 head, header, and footer partials. Their placeholder names are checked. Adding a
@@ -122,8 +126,8 @@ environment, copies shared assets, and compiles `styles.css` with the Tailwind C
 minified stylesheet that contains only the utilities used by layouts and the renderer.
 The stylesheet and `theme.js` get content-hashed names such as `styles.<hash>.css`, and
 every built page points at them, so CDN caches never pair new HTML with stale assets.
-GitHub Pages deploys `dist/`. Markdown, templates, and reference files are not
-published. Source files are capped at 2 MiB; migrated media at 5 MiB.
+GitHub Pages deploys `dist/`. Source Markdown, templates, and reference files are
+not published; each page's generated Markdown copy and `llms.txt` are. Source files are capped at 2 MiB; migrated media at 5 MiB.
 
 ```sh
 bun run build

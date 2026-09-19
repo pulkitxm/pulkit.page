@@ -11,7 +11,7 @@ flowchart TD
   B --> C
   L[Layouts and partials] --> C
   C --> D[Biome-stable HTML]
-  B --> E[PNG cards, sitemap, robots]
+  B --> E[PNG cards, Markdown copies, llms.txt, sitemap, robots]
   O --> E
   D --> F[Production pages or isolated dist output]
   E --> F
@@ -52,7 +52,7 @@ The custom list is resolved during Marked parsing/rendering. There is no draft s
 
 `renderPage` uses explicit `layout` first; otherwise non-index blog routes use `article`, and collection indexes/other pages use `simple`. Home explicitly requests `home`. All layouts include a page H1 and shared head/header/footer; article/simple insert breadcrumbs before the article and related/collection navigation after it.
 
-[loadLayouts](../scripts/layouts.mjs) reads layout and partial HTML, expands includes recursively, rejects missing partials/cycles/unknown or malformed placeholders, and requires exactly one content and heading placeholder in every expanded layout. Allowed values are title, description, brand, navigation, copyright, social, heading, content, date, seo, breadcrumbs, and related. `applyLayout` substitutes values in one pass, so user text resembling a placeholder is not evaluated again.
+[loadLayouts](../scripts/layouts.mjs) reads layout and partial HTML, expands includes recursively, rejects missing partials/cycles/unknown or malformed placeholders, and requires exactly one content and heading placeholder in every expanded layout. Allowed values are title, description, brand, navigation, copyright, markdown, social, heading, content, date, seo, breadcrumbs, and related. `applyLayout` substitutes values in one pass, so user text resembling a placeholder is not evaluated again.
 
 The full document title is `page title | brand`; there is no previous 55-character truncation. H1 is the full page title. Metadata and generated navigation labels are HTML-escaped. Description has renderer fallbacks, but strict content validation requires it on every page. Dates are validated by ISO parse-and-round-trip. Date without period produces a `time` element; experience role/period produce the detail line. A period alone without a role suppresses the date but does not trigger the paragraph.
 

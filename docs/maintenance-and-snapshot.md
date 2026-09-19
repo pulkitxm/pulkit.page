@@ -6,7 +6,7 @@
 
 This refresh inspected merged commit `d0e897b` on September 18, 2026. The checkout was clean at the start, and the interrupted documentation edits carried over when the folder moved. Its current location is `/Volumes/sandisk-apfs/codingAndFun/samaan/pulkit.page-worktrees/pulkit.page`. Relative documentation links continue to work after the move; shell commands below run from that root.
 
-The current project has 67 content Markdown files, 66 public pages, 204 source assets, and 134 committed generated files (66 HTML, 66 PNG cards, sitemap, robots). The historical migration audit still records 58 imported sources and 197 copied assets. The previous guides described pre-SEO behavior; this refresh incorporates the merged metadata, cards, environment isolation, policy enforcement, and restored article-code comments.
+The current project has 67 content Markdown files, 66 public pages, 204 source assets, and 201 committed generated files (66 HTML, 66 PNG cards, 66 Markdown copies, llms.txt, sitemap, robots). The historical migration audit still records 58 imported sources and 197 copied assets. The previous guides described pre-SEO behavior; this refresh incorporates the merged metadata, cards, environment isolation, policy enforcement, and restored article-code comments.
 
 Documentation is the only intended tracked change in this refresh. No article examples, application scripts, dependency files, generated production output, or audit data are edited to make the explanation fit. Live DNS, deployed Pages configuration, external links, and tutorial factual freshness were not independently verified.
 

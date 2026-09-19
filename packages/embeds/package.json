@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.mjs",
-    "./bundle": "./src/bundle.mjs",
-    "./copy-button": "./src/copy-button.mjs",
-    "./lightbox": "./src/lightbox.mjs"
+    ".": "./src/index.ts",
+    "./bundle": "./src/bundle.ts",
+    "./copy-button": "./src/lib/copy-button.ts",
+    "./lightbox": "./src/lib/lightbox.ts"
   },
   "dependencies": {
     "@pulkit/shared": "workspace:*",

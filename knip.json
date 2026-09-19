@@ -19,8 +19,8 @@
       "project": ["**/*.{mjs,css}"]
     },
     "packages/embeds": {
-      "entry": ["client/*.js"],
-      "project": ["src/**/*.mjs", "client/**/*.js"]
+      "entry": ["client/entries/*.ts"],
+      "project": ["src/**/*.ts", "client/**/*.ts"]
     },
     "packages/demos": {
       "entry": ["index.js"],

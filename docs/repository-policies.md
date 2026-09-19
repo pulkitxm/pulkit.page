@@ -31,7 +31,7 @@ Unknown source types and unknown fence languages cause a failure requesting an e
 
 ## Knip
 
-[knip.json](../knip.json) configures each workspace separately. The engine declares its CLI modules and test setup as entries, embeds declare their `client/*.js` browser scripts, demos declare `index.js`, and checks declare their `check-*.mjs` CLIs; package `exports` and `bin` fields supply the rest. Apps have no JavaScript of their own and ignore their `@pulkit/theme` dependency, which is consumed through CSS. `includeEntryExports` also checks unnecessary public exports in entry points.
+[knip.json](../knip.json) configures each workspace separately. The engine declares its CLI modules and test setup as entries, embeds declare their `client/entries/*.ts` browser scripts, demos declare `index.js`, and checks declare their `check-*.mjs` CLIs; package `exports` and `bin` fields supply the rest. Apps have no JavaScript of their own and ignore their `@pulkit/theme` dependency, which is consumed through CSS. `includeEntryExports` also checks unnecessary public exports in entry points.
 
 `bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
 

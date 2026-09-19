@@ -235,10 +235,12 @@ text inside `pre` untouched.
 
 `@pulkit/embeds` renders the block and inline embeds described in the
 [authoring guide](authoring-guide.md#components) from a
-[registry](../packages/embeds/src/registry.mjs) of renderers, and also decides
+[registry](../packages/embeds/src/renderers/registry.ts) of renderers, and also decides
 which raw HTML tags are allowed in Markdown. Every renderer records
 the stylesheet or script it needs, so a page carries only the assets it uses.
-The browser half lives in `client/` and is bundled with `Bun.build` and code
+The browser half lives in `client/`, with one thin entry per script in
+`client/entries/`, widget logic in `client/components/`, and shared helpers in
+`client/lib/`; the entries are bundled with `Bun.build` and code
 splitting.
 
 `@pulkit/demos` renders a demo directive, with an optional variant, as a

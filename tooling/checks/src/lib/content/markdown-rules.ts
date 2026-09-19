@@ -66,7 +66,7 @@ export function walkMarkdown(tree: MarkdownNode, page: boolean, fail: Fail): Mar
   function walk(node: MarkdownNode): void {
     if (node.type === "html") {
       try {
-        renderRawHtml(node.value, createPageAssets());
+        renderRawHtml(node.value ?? "", createPageAssets());
       } catch (error) {
         fail(`raw HTML: ${errorMessage(error)}`, node);
       }

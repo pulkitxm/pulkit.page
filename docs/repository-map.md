@@ -67,18 +67,19 @@ Root-relative URLs assume deployment at the domain root; there is no configurabl
 
 ## Root configuration
 
-| Path                                                    | Role                                                                  |
-| ------------------------------------------------------- | --------------------------------------------------------------------- |
-| [package.json](../package.json)                         | Workspaces, root Turbo commands, repository gates, `postinstall`      |
-| [turbo.json](../turbo.json)                             | Task graph, `transit` invalidation, cache outputs, `verify` aggregate |
-| [biome.json](../biome.json)                             | Formatting, lint rules, exclusions, CLI exceptions                    |
-| [knip.json](../knip.json)                               | Per-workspace entry points and project files for dead-code checks     |
-| [.htmlvalidate.json](../.htmlvalidate.json)             | Recommended HTML rules plus local policy                              |
-| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | Verify, browser smoke, workflow checks, gate, Pages deployment        |
-| [.githooks/pre-commit](../.githooks/pre-commit)         | Validate the staged snapshot in a temporary repository                |
-| [.gitignore](../.gitignore)                             | Ignore `node_modules`, `dist`, `extras/`, `.cache/`, and `.turbo/`    |
-| [README.md](../README.md)                               | Front page: layout, quick start, and common commands                  |
-| [docs/](./)                                             | This explanation and the historical migration audit                   |
+| Path                                                            | Role                                                                  |
+| --------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [package.json](../package.json)                                 | Workspaces, root Turbo commands, repository gates, `postinstall`      |
+| [turbo.json](../turbo.json)                                     | Task graph, `transit` invalidation, cache outputs, `verify` aggregate |
+| [biome.json](../biome.json)                                     | Formatting, lint rules, exclusions, CLI exceptions                    |
+| [knip.json](../knip.json)                                       | Per-workspace entry points and project files for dead-code checks     |
+| [.htmlvalidate.json](../.htmlvalidate.json)                     | Recommended HTML rules plus local policy                              |
+| [.github/workflows/ci.yml](../.github/workflows/ci.yml)         | Verify, browser smoke, workflow checks, and the CI gate               |
+| [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) | Deploys both sites from a successful CI run on main                   |
+| [.githooks/pre-commit](../.githooks/pre-commit)                 | Validate the staged snapshot in a temporary repository                |
+| [.gitignore](../.gitignore)                                     | Ignore `node_modules`, `dist`, `extras/`, `.cache/`, and `.turbo/`    |
+| [README.md](../README.md)                                       | Front page: layout, quick start, and common commands                  |
+| [docs/](./)                                                     | This explanation and the historical migration audit                   |
 
 The local `node_modules/` trees are installed tooling, not authoritative source. `extras/pulkitxm.com/` is historical reference, not an alternative active source tree. The [migration explanation](migration-audit.md) covers why the reference and its richer runtime should not be confused with the current site.
 

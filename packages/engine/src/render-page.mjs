@@ -239,7 +239,7 @@ export async function renderPage(
       table(token) {
         return withClass(
           Renderer.prototype.table.call(this, token),
-          "mt-0 mb-6 block overflow-x-auto border-collapse text-md",
+          "mt-0 mb-6 block overflow-x-auto border-collapse text-md wrap-normal",
         );
       },
       tablecell(token) {

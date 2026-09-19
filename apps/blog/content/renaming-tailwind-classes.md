@@ -27,12 +27,11 @@ I built it. Now the same element ships like this:
 <div class="x r2 v6 md">
 ```
 
-Here's what I observed after shipping it:
+After shipping it, I noticed a few things. It doesn't actually hide anything. The browser needs the full stylesheet to draw the page, so anyone can open DevTools and still read every computed value. Renaming `gap-4` to `x7` removes the Tailwind vocabulary, not the design.
 
-- **It doesn't hide anything.** The browser needs the full stylesheet to draw the page, so DevTools still shows every computed value. Renaming `gap-4` to `x7` removes the Tailwind vocabulary, not the design.
-- **It made every page smaller.** The stylesheet dropped 16% and the HTML about 7 to 11% after gzip, roughly 2 KB less per page load.
-- **Nothing broke.** Every element on all 66 routes computed the exact same styles as before.
-- **The names aren't stable.** Adding one class can shift most of them, so never use them in tests or scripts.
+What it did do was make every page smaller. The stylesheet dropped 16% and the HTML about 7 to 11% after gzip, which is roughly 2 KB less on every page load. Nothing broke either: every element on all 66 routes computed exactly the same styles as before.
+
+The one catch is that the names aren't stable. Adding a single class can shift most of them, so they should never be used in tests or scripts.
 
 So my original goal was a dead end, but the size win was real, and I kept it. If you want to try it on your own site, here's the prompt I'd hand to a coding agent.
 

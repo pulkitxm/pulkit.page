@@ -121,7 +121,7 @@
     "experimentalFullSupportEnabled": true,
     "formatter": {
       "enabled": true,
-      "lineWidth": 120,
+      "lineWidth": 320,
       "whitespaceSensitivity": "css",
       "attributePosition": "auto",
       "bracketSameLine": false,

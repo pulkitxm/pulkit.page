@@ -1,3 +1,5 @@
+import { zoomable } from "./lightbox.mjs";
+
 const styleClasses = {
   borderRadius: { "0.5rem": "rounded-lg" },
   width: { auto: "w-auto" },
@@ -6,7 +8,7 @@ const styleClasses = {
   maxWidth: { "100%": "max-w-full" },
 };
 
-export function render(props, { escapeHtml }) {
+export function render(props, { assets, escapeHtml }) {
   const classes = Object.entries(props.style ?? {}).map(([key, value]) => {
     const match = styleClasses[key]?.[value];
     if (!match) {
@@ -14,5 +16,6 @@ export function render(props, { escapeHtml }) {
     }
     return match;
   });
-  return `<img class="${["mx-auto my-7 block", ...classes].join(" ")}" src="${escapeHtml(props.src)}" alt="${escapeHtml(props.alt ?? "")}" loading="${props.loading === "eager" ? "eager" : "lazy"}" decoding="async">`;
+  const image = `<img class="${["mx-auto my-7 block cursor-zoom-in", ...classes].join(" ")}" src="${escapeHtml(props.src)}" alt="${escapeHtml(props.alt ?? "")}" loading="${props.loading === "eager" ? "eager" : "lazy"}" decoding="async">`;
+  return zoomable({ src: props.src, image, className: "block", assets, escapeHtml });
 }

@@ -53,6 +53,7 @@
       "name": "@pulkit/embeds",
       "dependencies": {
         "embla-carousel": "8.6.0",
+        "image-size": "2.0.4",
         "katex": "0.18.7",
         "lucide": "1.47.0",
         "photoswipe": "5.4.4",
@@ -76,6 +77,10 @@
         "html-validate": "11.16.0",
         "marked": "18.0.13",
         "playwright": "1.63.0",
+        "remark-gfm": "4.0.1",
+        "remark-parse": "11.0.0",
+        "remark-stringify": "11.0.0",
+        "unified": "11.0.5",
         "vite": "8.3.0",
         "yaml": "2.9.1",
       },
@@ -588,6 +593,8 @@
     "html-void-elements": ["html-void-elements@3.0.0", "", {}, "sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg=="],
 
     "http-link-header": ["http-link-header@1.1.4", "", {}, "sha512-xT3GPW6/ZbGuw4UvwHqErSCEjNUlwbQJuZn9/q5U4WEKfp2kENVCAlousG1zLxHeaQ/ffOHUNpWamvkbBW0eNw=="],
+
+    "image-size": ["image-size@2.0.4", "", { "bin": { "image-size": "bin/image-size.js" } }, "sha512-QRUkFFsRV/6fuESxb9Vkq+a0LkSrgKXuc2NEqfikiXxxN/G3tjWt5EVUlMaImRBZRZK/jRBEbYvpPYZL8t08Zw=="],
 
     "image-ssim": ["image-ssim@0.2.0", "", {}, "sha512-W7+sO6/yhxy83L0G7xR8YAc5Z5QFtYEXXRV6EaE8tuYBZJnA3gVgp3q7X7muhLZVodeb9UfvjSbwt9VJwjIYAg=="],
 

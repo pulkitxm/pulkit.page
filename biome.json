@@ -85,6 +85,11 @@
     "experimentalFullSupportEnabled": true,
     "formatter": {
       "enabled": true,
+      "lineWidth": 120,
+      "whitespaceSensitivity": "css",
+      "attributePosition": "auto",
+      "bracketSameLine": false,
+      "indentScriptAndStyle": false,
       "selfCloseVoidElements": "always"
     }
   },

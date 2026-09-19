@@ -1,8 +1,5 @@
 <!doctype html>
-<html
-  lang="en"
-  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
->
+<html lang="en" class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,10 +18,7 @@
       content="Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery."
     />
     <meta property="og:url" content="https://pulkit.page/blogs/system-design/high-availability/" />
-    <meta
-      property="og:image"
-      content="https://pulkit.page/og/blogs/system-design/high-availability/card.png"
-    />
+    <meta property="og:image" content="https://pulkit.page/og/blogs/system-design/high-availability/card.png" />
     <meta
       property="og:image:secure_url"
       content="https://pulkit.page/og/blogs/system-design/high-availability/card.png"
@@ -41,14 +35,125 @@
       name="twitter:description"
       content="Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery."
     />
-    <meta
-      name="twitter:image"
-      content="https://pulkit.page/og/blogs/system-design/high-availability/card.png"
-    />
+    <meta name="twitter:image" content="https://pulkit.page/og/blogs/system-design/high-availability/card.png" />
     <meta name="twitter:image:alt" content="High Availability" />
-    <script
-      type="application/ld+json"
-    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://pulkit.page/#person","name":"Pulkit","url":"https://pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://pulkit.page/#website","url":"https://pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://pulkit.page/blogs/system-design/high-availability/#image","contentUrl":"https://pulkit.page/og/blogs/system-design/high-availability/card.png","width":1200,"height":630,"caption":"High Availability"},{"@type":"BlogPosting","@id":"https://pulkit.page/blogs/system-design/high-availability/#article","headline":"High Availability","description":"Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery.","datePublished":"2026-01-23","author":{"@id":"https://pulkit.page/#person"},"publisher":{"@id":"https://pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://pulkit.page/blogs/system-design/high-availability/#webpage"},"isPartOf":{"@id":"https://pulkit.page/blogs/#webpage"},"image":{"@id":"https://pulkit.page/blogs/system-design/high-availability/#image"},"url":"https://pulkit.page/blogs/system-design/high-availability/","inLanguage":"en","keywords":["System Design","High Availability","Distributed Systems","Leader Election"]},{"@type":"BreadcrumbList","@id":"https://pulkit.page/blogs/system-design/high-availability/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"System Design","item":"https://pulkit.page/blogs/system-design/"},{"@type":"ListItem","position":4,"name":"High Availability","item":"https://pulkit.page/blogs/system-design/high-availability/"}]},{"@type":"WebPage","@id":"https://pulkit.page/blogs/system-design/high-availability/#webpage","url":"https://pulkit.page/blogs/system-design/high-availability/","name":"High Availability","description":"Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery.","isPartOf":{"@id":"https://pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://pulkit.page/blogs/system-design/high-availability/#image"},"inLanguage":"en","mainEntity":{"@id":"https://pulkit.page/blogs/system-design/high-availability/#article"},"breadcrumb":{"@id":"https://pulkit.page/blogs/system-design/high-availability/#breadcrumbs"}}]}</script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://pulkit.page/#person",
+            "name": "Pulkit",
+            "url": "https://pulkit.page/",
+            "sameAs": [
+              "https://github.com/Pulkitxm",
+              "https://x.com/_pulkitxm",
+              "https://www.linkedin.com/in/pulkitxm"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://pulkit.page/#website",
+            "url": "https://pulkit.page/",
+            "name": "Pulkit",
+            "description": "Software engineer building useful things for the web.",
+            "publisher": {
+              "@id": "https://pulkit.page/#person"
+            },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://pulkit.page/blogs/system-design/high-availability/#image",
+            "contentUrl": "https://pulkit.page/og/blogs/system-design/high-availability/card.png",
+            "width": 1200,
+            "height": 630,
+            "caption": "High Availability"
+          },
+          {
+            "@type": "BlogPosting",
+            "@id": "https://pulkit.page/blogs/system-design/high-availability/#article",
+            "headline": "High Availability",
+            "description": "Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery.",
+            "datePublished": "2026-01-23",
+            "author": {
+              "@id": "https://pulkit.page/#person"
+            },
+            "publisher": {
+              "@id": "https://pulkit.page/#person"
+            },
+            "mainEntityOfPage": {
+              "@id": "https://pulkit.page/blogs/system-design/high-availability/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://pulkit.page/blogs/#webpage"
+            },
+            "image": {
+              "@id": "https://pulkit.page/blogs/system-design/high-availability/#image"
+            },
+            "url": "https://pulkit.page/blogs/system-design/high-availability/",
+            "inLanguage": "en",
+            "keywords": [
+              "System Design",
+              "High Availability",
+              "Distributed Systems",
+              "Leader Election"
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://pulkit.page/blogs/system-design/high-availability/#breadcrumbs",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://pulkit.page/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Writing",
+                "item": "https://pulkit.page/blogs/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "System Design",
+                "item": "https://pulkit.page/blogs/system-design/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "High Availability",
+                "item": "https://pulkit.page/blogs/system-design/high-availability/"
+              }
+            ]
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://pulkit.page/blogs/system-design/high-availability/#webpage",
+            "url": "https://pulkit.page/blogs/system-design/high-availability/",
+            "name": "High Availability",
+            "description": "Learn how to build resilient systems through data redundancy, automatic failover, and leader election. Understand backup strategies, database replication, disaster recovery patterns, and how leader election enables zero-downtime auto-recovery.",
+            "isPartOf": {
+              "@id": "https://pulkit.page/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://pulkit.page/blogs/system-design/high-availability/#image"
+            },
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://pulkit.page/blogs/system-design/high-availability/#article"
+            },
+            "breadcrumb": {
+              "@id": "https://pulkit.page/blogs/system-design/high-availability/#breadcrumbs"
+            }
+          }
+        ]
+      }
+    </script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>High Availability | Pulkit</title>
@@ -71,20 +176,11 @@
         class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
       >
         <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
-        <nav
-          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
-          aria-label="Main navigation"
-        >
-          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
-            >Writing</a
-          >
-          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/exp/"
-            >Experience</a
-          >
+        <nav class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5" aria-label="Main navigation">
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/">Writing</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/exp/">Experience</a>
           <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
-          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
-            >Contact</a
-          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/">Contact</a>
         </nav>
       </header>
 
@@ -107,109 +203,93 @@
             >
               High Availability
             </h1>
-            <p class="mt-0 mb-6 text-sm text-muted">
-              <time datetime="2026-01-23">2026-01-23</time>
-            </p>
+            <p class="mt-0 mb-6 text-sm text-muted"><time datetime="2026-01-23">2026-01-23</time></p>
           </header>
           <div class="wrap-anywhere">
             <p class="mt-0 mb-6">
-              Your server crashes. That&#39;s annoying, but manageable. Spin up another one, route
-              traffic there. API servers are typically stateless. Losing one is like losing a waiter
-              at a restaurant: inconvenient, but the kitchen keeps cooking.
+              Your server crashes. That&#39;s annoying, but manageable. Spin up another one, route traffic there. API
+              servers are typically stateless. Losing one is like losing a waiter at a restaurant: inconvenient, but the
+              kitchen keeps cooking.
             </p>
             <p class="mt-0 mb-6">
-              Now imagine your database crashes. Not just &quot;process died and needs
-              restart.&quot; The disk failed. Corrupted. Unrecoverable. All your user data, orders,
-              transactions: gone. That&#39;s not inconvenience. That&#39;s a business-ending
-              catastrophe.
+              Now imagine your database crashes. Not just &quot;process died and needs restart.&quot; The disk failed.
+              Corrupted. Unrecoverable. All your user data, orders, transactions: gone. That&#39;s not inconvenience.
+              That&#39;s a business-ending catastrophe.
             </p>
             <p class="mt-0 mb-6">
               This is why redundancy matters. You can&#39;t prevent failures. You can survive them.
             </p>
-            <h2 id="tl-dr" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              TL;DR
-            </h2>
+            <h2 id="tl-dr" class="mt-12 text-xl font-semibold leading-tight tracking-tight">TL;DR</h2>
             <p class="mt-0 mb-6"><strong>Data Redundancy:</strong></p>
             <ul class="mt-0 mb-6">
               <li>
-                <strong>Stateless vs stateful</strong>: API servers are replaceable. Databases hold
-                your business. Treat them differently
+                <strong>Stateless vs stateful</strong>: API servers are replaceable. Databases hold your business. Treat
+                them differently
               </li>
               <li>
-                <strong>Redundancy is survival</strong>: When data loss happens, having copies is
-                the difference between recovery and shutdown
+                <strong>Redundancy is survival</strong>: When data loss happens, having copies is the difference between
+                recovery and shutdown
               </li>
               <li>
-                <strong>Multiple levels</strong>: Redundancy can be at row, table, or database
-                level. Choose based on criticality
+                <strong>Multiple levels</strong>: Redundancy can be at row, table, or database level. Choose based on
+                criticality
               </li>
               <li>
-                <strong>Backup and restore</strong>: Daily incremental + weekly full backups.
-                Simple, effective, essential
+                <strong>Backup and restore</strong>: Daily incremental + weekly full backups. Simple, effective,
+                essential
               </li>
               <li>
-                <strong>Continuous redundancy</strong>: Real-time replication to a standby database.
-                Zero data loss on failure
+                <strong>Continuous redundancy</strong>: Real-time replication to a standby database. Zero data loss on
+                failure
               </li>
               <li>
-                <strong>Cross-region backups</strong>: One copy in another data center. Natural
-                disasters can&#39;t kill your business
+                <strong>Cross-region backups</strong>: One copy in another data center. Natural disasters can&#39;t kill
+                your business
               </li>
               <li>
-                <strong>Sync vs async replication</strong>: Sync is safer, async is faster. Pick
-                based on your tolerance for data loss
+                <strong>Sync vs async replication</strong>: Sync is safer, async is faster. Pick based on your tolerance
+                for data loss
               </li>
               <li>
-                <strong>Standby replicas</strong>: Dedicated copy that doesn&#39;t serve traffic.
-                Just waits for disaster
+                <strong>Standby replicas</strong>: Dedicated copy that doesn&#39;t serve traffic. Just waits for
+                disaster
               </li>
               <li>
-                <strong>Automatic failover</strong>: Detect failure, promote replica, redirect
-                traffic. Minimal downtime
+                <strong>Automatic failover</strong>: Detect failure, promote replica, redirect traffic. Minimal downtime
               </li>
             </ul>
             <p class="mt-0 mb-6"><strong>Leader Election:</strong></p>
             <ul class="mt-0 mb-6">
               <li>
-                <strong>The monitoring problem</strong>: Someone needs to watch your servers. But
-                who watches the watcher?
+                <strong>The monitoring problem</strong>: Someone needs to watch your servers. But who watches the
+                watcher?
               </li>
               <li>
-                <strong>Orchestrators</strong>: Components that monitor servers and spin up
-                replacements when needed
+                <strong>Orchestrators</strong>: Components that monitor servers and spin up replacements when needed
+              </li>
+              <li><strong>The recursion problem</strong>: Orchestrators need orchestrators. Where does it stop?</li>
+              <li>
+                <strong>Leader election as base case</strong>: The point where your system can self-heal without
+                external intervention
               </li>
               <li>
-                <strong>The recursion problem</strong>: Orchestrators need orchestrators. Where does
-                it stop?
+                <strong>Leader-follower setup</strong>: One leader monitors workers, workers monitor servers, workers
+                elect new leader if needed
               </li>
               <li>
-                <strong>Leader election as base case</strong>: The point where your system can
-                self-heal without external intervention
-              </li>
-              <li>
-                <strong>Leader-follower setup</strong>: One leader monitors workers, workers monitor
-                servers, workers elect new leader if needed
-              </li>
-              <li>
-                <strong>Zero human intervention</strong>: System recovers automatically from any
-                single point of failure
+                <strong>Zero human intervention</strong>: System recovers automatically from any single point of failure
               </li>
             </ul>
-            <h2
-              id="why-databases-are-different"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="why-databases-are-different" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Why Databases Are Different
             </h2>
             <p class="mt-0 mb-6">
-              API servers sit behind a load balancer. Request comes in, any server can handle it. If
-              server 3 goes down, servers 1, 2, and 4 pick up the slack. The only impact? Requests
-              mid-flight on server 3 fail. Users retry, life goes on.
+              API servers sit behind a load balancer. Request comes in, any server can handle it. If server 3 goes down,
+              servers 1, 2, and 4 pick up the slack. The only impact? Requests mid-flight on server 3 fail. Users retry,
+              life goes on.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Load Balancer
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Load Balancer
      │
      ├── API Server 1 ✓
      ├── API Server 2 ✓
@@ -219,18 +299,16 @@
 Traffic automatically routes to healthy servers.
 </code></pre>
             <p class="mt-0 mb-6">
-              This works because API servers don&#39;t remember anything. They&#39;re stateless.
-              Every request carries all the information needed. Server 1 handles your login, server
-              4 handles your next page load. Neither server cares.
+              This works because API servers don&#39;t remember anything. They&#39;re stateless. Every request carries
+              all the information needed. Server 1 handles your login, server 4 handles your next page load. Neither
+              server cares.
             </p>
             <p class="mt-0 mb-6">
-              Databases are the opposite. They hold your state. Your users. Your orders. Your
-              payment history. Your entire business.
+              Databases are the opposite. They hold your state. Your users. Your orders. Your payment history. Your
+              entire business.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Single Database
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Single Database
      │
      └── 💾 All your data
          (users, orders, payments, everything)
@@ -238,9 +316,9 @@ Traffic automatically routes to healthy servers.
 If this fails catastrophically, you&#39;re done.
 </code></pre>
             <p class="mt-0 mb-6">
-              When your database disk fails, you can&#39;t just &quot;spin up another one.&quot;
-              There&#39;s no other copy. The data doesn&#39;t exist anywhere else. You&#39;re not
-              debugging a bug. You&#39;re explaining to customers why their accounts vanished.
+              When your database disk fails, you can&#39;t just &quot;spin up another one.&quot; There&#39;s no other
+              copy. The data doesn&#39;t exist anywhere else. You&#39;re not debugging a bug. You&#39;re explaining to
+              customers why their accounts vanished.
             </p>
             <p class="mt-0 mb-6">
               <img
@@ -256,17 +334,13 @@ If this fails catastrophically, you&#39;re done.
                 class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31"
                 >GitLab famously lost 6 hours of production data in 2017</a
-              >. A combination of human error and incomplete backups. They had 5 different backup
-              mechanisms. None worked correctly when needed.
+              >. A combination of human error and incomplete backups. They had 5 different backup mechanisms. None
+              worked correctly when needed.
             </p>
             <p class="mt-0 mb-6">
-              The lesson: redundancy isn&#39;t optional. It&#39;s how your business survives the
-              inevitable.
+              The lesson: redundancy isn&#39;t optional. It&#39;s how your business survives the inevitable.
             </p>
-            <h2
-              id="levels-of-redundancy"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="levels-of-redundancy" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Levels of Redundancy
             </h2>
             <p class="mt-0 mb-6">
@@ -277,52 +351,35 @@ If this fails catastrophically, you&#39;re done.
                 loading="lazy"
               />
             </p>
-            <p class="mt-0 mb-6">
-              When you think about making data redundant, the first question is: at what level?
-            </p>
-            <h3 id="row-or-document-level" class="mt-8 text-lg leading-tight tracking-tight">
-              Row or Document Level
-            </h3>
-            <p class="mt-0 mb-6">
-              Replicate individual records across databases. Useful for specific high-value data.
-            </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createCriticalRecord</span><span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-t">CriticalData</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+            <p class="mt-0 mb-6">When you think about making data redundant, the first question is: at what level?</p>
+            <h3 id="row-or-document-level" class="mt-8 text-lg leading-tight tracking-tight">Row or Document Level</h3>
+            <p class="mt-0 mb-6">Replicate individual records across databases. Useful for specific high-value data.</p>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">createCriticalRecord</span><span class="text-syn-u">(</span>data<span class="text-syn-o">:</span> <span class="text-syn-t">CriticalData</span><span class="text-syn-u">)</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">await</span> primaryDb<span class="text-syn-u">.</span><span class="text-syn-f">insert</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;critical_records&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
   <span class="text-syn-k">await</span> secondaryDb<span class="text-syn-u">.</span><span class="text-syn-f">insert</span><span class="text-syn-u">(</span><span class="text-syn-s">&quot;critical_records&quot;</span><span class="text-syn-u">,</span> data<span class="text-syn-u">);</span>
 <span class="text-syn-u">}</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              Financial transactions, user authentication data, audit logs. Things where losing a
-              single record is unacceptable.
+              Financial transactions, user authentication data, audit logs. Things where losing a single record is
+              unacceptable.
             </p>
             <h3 id="table-level" class="mt-8 text-lg leading-tight tracking-tight">Table Level</h3>
             <p class="mt-0 mb-6">
-              Dump entire tables and restore them elsewhere. Useful for periodic snapshots of
-              important data.
+              Dump entire tables and restore them elsewhere. Useful for periodic snapshots of important data.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">users</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">orders</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">critical_tables.sql</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">users</span> <span class="text-syn-s">-t</span> <span class="text-syn-s">orders</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">critical_tables.sql</span>
 </code></pre>
-            <h3 id="database-level" class="mt-8 text-lg leading-tight tracking-tight">
-              Database Level
-            </h3>
+            <h3 id="database-level" class="mt-8 text-lg leading-tight tracking-tight">Database Level</h3>
             <p class="mt-0 mb-6">
-              Full database backup or real-time replication. The most common approach for complete
-              protection.
+              Full database backup or real-time replication. The most common approach for complete protection.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/postgres</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/postgres</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              The right level depends on what you&#39;re protecting and how much you can afford to
-              lose.
+              The right level depends on what you&#39;re protecting and how much you can afford to lose.
             </p>
             <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
@@ -355,13 +412,10 @@ If this fails catastrophically, you&#39;re done.
               </tbody>
             </table>
             <p class="mt-0 mb-6">
-              Most systems use database-level redundancy as the foundation, with additional
-              row-level protection for the most critical data.
+              Most systems use database-level redundancy as the foundation, with additional row-level protection for the
+              most critical data.
             </p>
-            <h2
-              id="backup-and-restore"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="backup-and-restore" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Backup and Restore
             </h2>
             <p class="mt-0 mb-6">
@@ -373,38 +427,29 @@ If this fails catastrophically, you&#39;re done.
               />
             </p>
             <p class="mt-0 mb-6">
-              The simplest form of redundancy. Take copies of your data regularly. Store them
-              somewhere safe. If disaster strikes, restore from the most recent backup.
+              The simplest form of redundancy. Take copies of your data regularly. Store them somewhere safe. If
+              disaster strikes, restore from the most recent backup.
             </p>
-            <h3 id="the-basic-strategy" class="mt-8 text-lg leading-tight tracking-tight">
-              The Basic Strategy
-            </h3>
+            <h3 id="the-basic-strategy" class="mt-8 text-lg leading-tight tracking-tight">The Basic Strategy</h3>
             <p class="mt-0 mb-6">
-              <strong>Daily incremental backups</strong>: Capture what changed since the last
-              backup. Small, fast, low overhead.
+              <strong>Daily incremental backups</strong>: Capture what changed since the last backup. Small, fast, low
+              overhead.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">--data-only</span> <span class="text-syn-s">--inserts</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">incremental_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span><span class="text-syn-s">.sql</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_dump</span> <span class="text-syn-s">--data-only</span> <span class="text-syn-s">--inserts</span> <span class="text-syn-s">mydb</span> <span class="text-syn-o">&gt;</span> <span class="text-syn-s">incremental_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span><span class="text-syn-s">.sql</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              <strong>Weekly full backups</strong>: Complete snapshot of everything. Larger, slower,
-              but comprehensive.
+              <strong>Weekly full backups</strong>: Complete snapshot of everything. Larger, slower, but comprehensive.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/full_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/backup/full_</span><span class="text-syn-u">$(</span><span class="text-syn-f">date</span> <span class="text-syn-s">+%Y%m%d</span><span class="text-syn-u">)</span> <span class="text-syn-s">-Fp</span> <span class="text-syn-s">-Xs</span> <span class="text-syn-s">-P</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              <strong>Cross-region copy</strong>: At least one copy in a different data center. Fire
-              floods the building? Your data survives in another continent.
+              <strong>Cross-region copy</strong>: At least one copy in a different data center. Fire floods the
+              building? Your data survives in another continent.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DC (Mumbai)
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DC (Mumbai)
 ├── Daily incremental (local)
 ├── Weekly full (local)
 └── Weekly full (replicated to Singapore)
@@ -412,16 +457,14 @@ If this fails catastrophically, you&#39;re done.
             <h3 id="the-recovery-point-objective" class="mt-8 text-lg leading-tight tracking-tight">
               The Recovery Point Objective
             </h3>
+            <p class="mt-0 mb-6">When disaster strikes at 3 PM on Wednesday, how much data do you lose?</p>
             <p class="mt-0 mb-6">
-              When disaster strikes at 3 PM on Wednesday, how much data do you lose?
+              If your last backup was Tuesday night, you lose everything from Wednesday. Every order placed. Every user
+              registered. Every payment processed. Gone.
             </p>
             <p class="mt-0 mb-6">
-              If your last backup was Tuesday night, you lose everything from Wednesday. Every order
-              placed. Every user registered. Every payment processed. Gone.
-            </p>
-            <p class="mt-0 mb-6">
-              This is your <strong>Recovery Point Objective (RPO)</strong>: the maximum acceptable
-              data loss measured in time.
+              This is your <strong>Recovery Point Objective (RPO)</strong>: the maximum acceptable data loss measured in
+              time.
             </p>
             <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
@@ -450,20 +493,19 @@ If this fails catastrophically, you&#39;re done.
               </tbody>
             </table>
             <p class="mt-0 mb-6">
-              An e-commerce site doing ₹10 lakhs in daily sales can&#39;t afford to lose a day of
-              orders. A personal blog probably can. Your RPO determines your backup frequency.
+              An e-commerce site doing ₹10 lakhs in daily sales can&#39;t afford to lose a day of orders. A personal
+              blog probably can. Your RPO determines your backup frequency.
             </p>
             <h3 id="the-recovery-time-objective" class="mt-8 text-lg leading-tight tracking-tight">
               The Recovery Time Objective
             </h3>
             <p class="mt-0 mb-6">How long can you be down?</p>
             <p class="mt-0 mb-6">
-              Restoring a 500GB database from backup takes time. Hours, potentially. During that
-              time, your service is offline. Users see errors. Revenue stops.
+              Restoring a 500GB database from backup takes time. Hours, potentially. During that time, your service is
+              offline. Users see errors. Revenue stops.
             </p>
             <p class="mt-0 mb-6">
-              This is your <strong>Recovery Time Objective (RTO)</strong>: the maximum acceptable
-              downtime.
+              This is your <strong>Recovery Time Objective (RTO)</strong>: the maximum acceptable downtime.
             </p>
             <p class="mt-0 mb-6">Backups alone have slow RTO. You need to:</p>
             <ol class="mt-0 mb-6">
@@ -473,13 +515,8 @@ If this fails catastrophically, you&#39;re done.
               <li>Verify data integrity</li>
               <li>Switch traffic</li>
             </ol>
-            <p class="mt-0 mb-6">
-              Each step takes time. For faster recovery, you need something more than backups.
-            </p>
-            <h2
-              id="continuous-redundancy"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <p class="mt-0 mb-6">Each step takes time. For faster recovery, you need something more than backups.</p>
+            <h2 id="continuous-redundancy" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Continuous Redundancy
             </h2>
             <p class="mt-0 mb-6">
@@ -491,31 +528,26 @@ If this fails catastrophically, you&#39;re done.
               />
             </p>
             <p class="mt-0 mb-6">
-              Backups are point-in-time snapshots. Between backups, new data exists only in one
-              place. If that place fails, recent data is lost.
+              Backups are point-in-time snapshots. Between backups, new data exists only in one place. If that place
+              fails, recent data is lost.
             </p>
             <p class="mt-0 mb-6">
-              Continuous redundancy fixes this. You maintain a live copy of your database,
-              synchronized in real-time.
+              Continuous redundancy fixes this. You maintain a live copy of your database, synchronized in real-time.
             </p>
-            <h3 id="the-standby-replica" class="mt-8 text-lg leading-tight tracking-tight">
-              The Standby Replica
-            </h3>
+            <h3 id="the-standby-replica" class="mt-8 text-lg leading-tight tracking-tight">The Standby Replica</h3>
             <p class="mt-0 mb-6">
-              A standby replica is a second database that mirrors your primary. Every write to the
-              primary is replicated to the standby.
+              A standby replica is a second database that mirrors your primary. Every write to the primary is replicated
+              to the standby.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DB                      Standby DB
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DB                      Standby DB
 ├── users table     ──sync──→   ├── users table
 ├── orders table    ──sync──→   ├── orders table
 └── payments table  ──sync──→   └── payments table
 </code></pre>
             <p class="mt-0 mb-6">
-              The standby doesn&#39;t serve any traffic. No reads, no writes. It just sits there,
-              maintaining an up-to-date copy of your data. Waiting for disaster.
+              The standby doesn&#39;t serve any traffic. No reads, no writes. It just sits there, maintaining an
+              up-to-date copy of your data. Waiting for disaster.
             </p>
             <p class="mt-0 mb-6">When the primary fails:</p>
             <ol class="mt-0 mb-6">
@@ -524,18 +556,13 @@ If this fails catastrophically, you&#39;re done.
               <li>Redirect application traffic</li>
               <li>Business continues</li>
             </ol>
-            <p class="mt-0 mb-6">
-              No restore from backup needed. The data is already there, current, ready to serve.
-            </p>
-            <h3
-              id="synchronous-vs-asynchronous-replication"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <p class="mt-0 mb-6">No restore from backup needed. The data is already there, current, ready to serve.</p>
+            <h3 id="synchronous-vs-asynchronous-replication" class="mt-8 text-lg leading-tight tracking-tight">
               Synchronous vs Asynchronous Replication
             </h3>
             <p class="mt-0 mb-6">
-              How does data get to the replica? The short version: asynchronous is faster but risks
-              small data loss windows, synchronous is slower but guarantees zero data loss.
+              How does data get to the replica? The short version: asynchronous is faster but risks small data loss
+              windows, synchronous is slower but guarantees zero data loss.
             </p>
             <p class="mt-0 mb-6">
               I talked about replication modes in great detail here:
@@ -546,29 +573,25 @@ If this fails catastrophically, you&#39;re done.
               >.
             </p>
             <p class="mt-0 mb-6">
-              Most systems use asynchronous replication. The performance hit of synchronous
-              isn&#39;t worth it for non-critical data. Financial systems, where losing even one
-              transaction is unacceptable, pay the latency cost.
+              Most systems use asynchronous replication. The performance hit of synchronous isn&#39;t worth it for
+              non-critical data. Financial systems, where losing even one transaction is unacceptable, pay the latency
+              cost.
             </p>
             <h3 id="setting-up-replication" class="mt-8 text-lg leading-tight tracking-tight">
               Setting Up Replication
             </h3>
             <p class="mt-0 mb-6">
-              Let&#39;s walk through setting up streaming replication in PostgreSQL. The concept
-              applies to other databases too, though the specific commands differ.
+              Let&#39;s walk through setting up streaming replication in PostgreSQL. The concept applies to other
+              databases too, though the specific commands differ.
             </p>
             <p class="mt-0 mb-6"><strong>Step 1: Configure the Primary</strong></p>
             <p class="mt-0 mb-6">
-              First, tell PostgreSQL to generate enough information for replicas to follow along.
-              Edit
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >postgresql.conf</code
+              First, tell PostgreSQL to generate enough information for replicas to follow along. Edit
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">postgresql.conf</code
               >:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">wal_level = replica
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">wal_level = replica
 max_wal_senders = 3
 wal_keep_size = 1GB
 </code></pre>
@@ -577,73 +600,56 @@ wal_keep_size = 1GB
               <li>
                 <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                   >wal_level = replica</code
-                >: Write-Ahead Log (WAL) contains enough detail for replicas to reconstruct changes.
-                WAL is PostgreSQL&#39;s transaction log, every change goes here before hitting the
-                actual tables.
+                >: Write-Ahead Log (WAL) contains enough detail for replicas to reconstruct changes. WAL is
+                PostgreSQL&#39;s transaction log, every change goes here before hitting the actual tables.
               </li>
               <li>
                 <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                   >max_wal_senders = 3</code
-                >: Allow up to 3 replicas to connect simultaneously. Each replica needs one
-                &quot;sender&quot; process.
+                >: Allow up to 3 replicas to connect simultaneously. Each replica needs one &quot;sender&quot; process.
               </li>
               <li>
                 <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                   >wal_keep_size = 1GB</code
-                >: Keep at least 1GB of WAL files around. If a replica disconnects temporarily, it
-                can catch up from these files instead of needing a full resync.
+                >: Keep at least 1GB of WAL files around. If a replica disconnects temporarily, it can catch up from
+                these files instead of needing a full resync.
               </li>
             </ul>
             <p class="mt-0 mb-6"><strong>Step 2: Allow Replica Connections</strong></p>
             <p class="mt-0 mb-6">
               PostgreSQL blocks replication connections by default. Add this to
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >pg_hba.conf</code
-              >:
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">pg_hba.conf</code>:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">host replication replicator replica_ip/32 md5
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">host replication replicator replica_ip/32 md5
 </code></pre>
             <p class="mt-0 mb-6">
               This says: allow the user
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >replicator</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">replicator</code>
               to connect for replication purposes from
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >replica_ip</code
-              >, authenticated with password (<code
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">replica_ip</code>,
+              authenticated with password (<code
                 class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >md5</code
               >). Create this user if it doesn&#39;t exist:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">USER</span> <span class="text-syn-f">replicator</span> <span class="text-syn-k">WITH</span> REPLICATION <span class="text-syn-k">ENCRYPTED</span> <span class="text-syn-k">PASSWORD</span> <span class="text-syn-s">&#39;secure_password&#39;</span>;
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">CREATE</span> <span class="text-syn-k">USER</span> <span class="text-syn-f">replicator</span> <span class="text-syn-k">WITH</span> REPLICATION <span class="text-syn-k">ENCRYPTED</span> <span class="text-syn-k">PASSWORD</span> <span class="text-syn-s">&#39;secure_password&#39;</span>;
 </code></pre>
             <p class="mt-0 mb-6">Restart PostgreSQL for changes to take effect.</p>
             <p class="mt-0 mb-6"><strong>Step 3: Initialize the Replica</strong></p>
             <p class="mt-0 mb-6">
-              The replica needs a copy of the primary&#39;s data before it can start following
-              changes.
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >pg_basebackup</code
-              >
+              The replica needs a copy of the primary&#39;s data before it can start following changes.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">pg_basebackup</code>
               handles this:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-h</span> <span class="text-syn-s">primary_ip</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/var/lib/postgresql/data</span> <span class="text-syn-s">-U</span> <span class="text-syn-s">replicator</span> <span class="text-syn-s">-P</span> <span class="text-syn-s">-R</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">pg_basebackup</span> <span class="text-syn-s">-h</span> <span class="text-syn-s">primary_ip</span> <span class="text-syn-s">-D</span> <span class="text-syn-s">/var/lib/postgresql/data</span> <span class="text-syn-s">-U</span> <span class="text-syn-s">replicator</span> <span class="text-syn-s">-P</span> <span class="text-syn-s">-R</span>
 </code></pre>
             <p class="mt-0 mb-6">Breaking this down:</p>
             <ul class="mt-0 mb-6">
               <li>
-                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                  >-h primary_ip</code
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">-h primary_ip</code
                 >: Connect to the primary server
               </li>
               <li>
@@ -652,41 +658,31 @@ wal_keep_size = 1GB
                 >: Where to put the data on the replica
               </li>
               <li>
-                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                  >-U replicator</code
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">-U replicator</code
                 >: Connect as the replication user we created
               </li>
               <li>
-                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                  >-P</code
-                >: Show progress (useful for large databases)
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">-P</code>: Show
+                progress (useful for large databases)
               </li>
               <li>
-                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                  >-R</code
-                >: Auto-generate the configuration files the replica needs to follow the primary
+                <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">-R</code>:
+                Auto-generate the configuration files the replica needs to follow the primary
               </li>
             </ul>
-            <p class="mt-0 mb-6">
-              This copies the entire database. For a 100GB database, expect this to take a while.
-            </p>
+            <p class="mt-0 mb-6">This copies the entire database. For a 100GB database, expect this to take a while.</p>
             <p class="mt-0 mb-6"><strong>Step 4: Start the Replica</strong></p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">postgresql</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-bash rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-f">sudo</span> <span class="text-syn-s">systemctl</span> <span class="text-syn-s">start</span> <span class="text-syn-s">postgresql</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              The replica automatically connects to the primary and starts receiving WAL stream.
-              Every transaction on the primary flows to the replica within milliseconds (for async)
-              or before commit (for sync).
+              The replica automatically connects to the primary and starts receiving WAL stream. Every transaction on
+              the primary flows to the replica within milliseconds (for async) or before commit (for sync).
             </p>
             <p class="mt-0 mb-6"><strong>Step 5: Verify It&#39;s Working</strong></p>
             <p class="mt-0 mb-6">On the primary, check connected replicas:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">SELECT</span> client_addr, <span class="text-syn-k">state</span>, sent_lsn, replay_lsn
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-sql rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">SELECT</span> client_addr, <span class="text-syn-k">state</span>, sent_lsn, replay_lsn
 <span class="text-syn-k">FROM</span> pg_stat_replication;
 </code></pre>
             <p class="mt-0 mb-6">
@@ -694,20 +690,12 @@ wal_keep_size = 1GB
               <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                 >state = streaming</code
               >. The
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >sent_lsn</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">sent_lsn</code>
               and
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >replay_lsn</code
-              >
-              columns show how caught up the replica is. If they&#39;re close together, replication
-              is healthy.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">replay_lsn</code>
+              columns show how caught up the replica is. If they&#39;re close together, replication is healthy.
             </p>
-            <h2
-              id="disaster-recovery"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="disaster-recovery" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Disaster Recovery
             </h2>
             <p class="mt-0 mb-6">
@@ -719,13 +707,11 @@ wal_keep_size = 1GB
               />
             </p>
             <p class="mt-0 mb-6">
-              A standby replica protects against database crashes. But what if the entire data
-              center goes down?
+              A standby replica protects against database crashes. But what if the entire data center goes down?
             </p>
             <p class="mt-0 mb-6">
-              Fire. Flood. Power grid failure. Natural disasters. Political unrest affecting
-              infrastructure. These aren&#39;t hypotheticals. AWS us-east-1 has had multiple
-              significant outages.
+              Fire. Flood. Power grid failure. Natural disasters. Political unrest affecting infrastructure. These
+              aren&#39;t hypotheticals. AWS us-east-1 has had multiple significant outages.
               <a
                 class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                 href="https://www.datacenterdynamics.com/en/analysis/ovhcloud-fire-france-data-center/#:~:text=The%2030%2C000%20servers%20inside%20were,No%20one%20was%20hurt."
@@ -733,19 +719,13 @@ wal_keep_size = 1GB
               >.
             </p>
             <p class="mt-0 mb-6">
-              If all your infrastructure is in one location, you&#39;re betting your business that
-              nothing bad will happen to that location. Ever.
+              If all your infrastructure is in one location, you&#39;re betting your business that nothing bad will
+              happen to that location. Ever.
             </p>
-            <h3 id="cross-region-backups" class="mt-8 text-lg leading-tight tracking-tight">
-              Cross-Region Backups
-            </h3>
-            <p class="mt-0 mb-6">
-              The minimum: store one copy of your backups in a different geographic region.
-            </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DC (Mumbai)
+            <h3 id="cross-region-backups" class="mt-8 text-lg leading-tight tracking-tight">Cross-Region Backups</h3>
+            <p class="mt-0 mb-6">The minimum: store one copy of your backups in a different geographic region.</p>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Primary DC (Mumbai)
 ├── Production database
 ├── Standby replica
 └── Local backups
@@ -754,24 +734,22 @@ Secondary DC (Singapore)
 └── Weekly backup copy
 </code></pre>
             <p class="mt-0 mb-6">
-              If Mumbai is underwater, you have data in Singapore. Recovery takes longer (restore
-              from backup, not failover to replica), but you can recover.
+              If Mumbai is underwater, you have data in Singapore. Recovery takes longer (restore from backup, not
+              failover to replica), but you can recover.
             </p>
             <h3 id="cross-region-replication" class="mt-8 text-lg leading-tight tracking-tight">
               Cross-Region Replication
             </h3>
             <p class="mt-0 mb-6">For faster recovery, run a replica in another region.</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Mumbai DC                        Singapore DC
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Mumbai DC                        Singapore DC
 ├── Primary DB ──────async──────→ DR Replica
 ├── Standby                       (24/7 sync)
 └── App Servers                   └── Cold standby app servers
 </code></pre>
             <p class="mt-0 mb-6">
-              Network latency makes synchronous replication impractical across regions. Async
-              replication with a small lag (seconds to minutes) is the standard.
+              Network latency makes synchronous replication impractical across regions. Async replication with a small
+              lag (seconds to minutes) is the standard.
             </p>
             <p class="mt-0 mb-6">Recovery:</p>
             <ol class="mt-0 mb-6">
@@ -782,8 +760,8 @@ Secondary DC (Singapore)
               <li>Service restored</li>
             </ol>
             <p class="mt-0 mb-6">
-              This is expensive. You&#39;re paying for infrastructure in two regions. But for
-              businesses where downtime costs more than the infrastructure, it&#39;s worth it.
+              This is expensive. You&#39;re paying for infrastructure in two regions. But for businesses where downtime
+              costs more than the infrastructure, it&#39;s worth it.
             </p>
             <h3
               id="embed-info-tip-text-rpo-tip-recovery-point-objective-how-much-data-you-can-afford-to-lose-and-embed-info-tip-text-rto-tip-recovery-time-objective-how-long-until-service-is-restored-for-different-strategies"
@@ -794,16 +772,16 @@ Secondary DC (Singapore)
                   title="Recovery Point Objective - How much data you can afford to lose"
                   class="inline-flex size-4 cursor-help items-center justify-center rounded-full bg-surface text-[10px] font-bold text-muted"
                   >i</span
-                ></span
-              >
+                >
+              </span>
               and
               <span class="inline-flex items-center gap-1"
                 >RTO<span
                   title="Recovery Time Objective - How long until service is restored"
                   class="inline-flex size-4 cursor-help items-center justify-center rounded-full bg-surface text-[10px] font-bold text-muted"
                   >i</span
-                ></span
-              >
+                >
+              </span>
               for Different Strategies
             </h3>
             <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
@@ -829,9 +807,7 @@ Secondary DC (Singapore)
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Low</td>
                 </tr>
                 <tr>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    Local standby replica
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Local standby replica</td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Seconds-minutes</td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Minutes</td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Medium</td>
@@ -853,10 +829,7 @@ Secondary DC (Singapore)
             <p class="mt-0 mb-6">
               Choose based on what your business can afford to lose and how long it can be offline.
             </p>
-            <h2
-              id="automatic-failover"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="automatic-failover" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Automatic Failover
             </h2>
             <p class="mt-0 mb-6">
@@ -868,21 +841,15 @@ Secondary DC (Singapore)
               />
             </p>
             <p class="mt-0 mb-6">
-              Having a replica is useless if nobody promotes it when the primary dies. Manual
-              failover means someone needs to wake up at 3 AM, assess the situation, and execute the
-              promotion. That&#39;s slow and error-prone.
+              Having a replica is useless if nobody promotes it when the primary dies. Manual failover means someone
+              needs to wake up at 3 AM, assess the situation, and execute the promotion. That&#39;s slow and
+              error-prone.
             </p>
             <p class="mt-0 mb-6">Automatic failover removes the human from the critical path.</p>
-            <h3 id="how-it-works" class="mt-8 text-lg leading-tight tracking-tight">
-              How It Works
-            </h3>
-            <p class="mt-0 mb-6">
-              A monitoring system continuously checks the primary&#39;s health:
-            </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-u">{</span>
+            <h3 id="how-it-works" class="mt-8 text-lg leading-tight tracking-tight">How It Works</h3>
+            <p class="mt-0 mb-6">A monitoring system continuously checks the primary&#39;s health:</p>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">HealthCheck</span> <span class="text-syn-u">{</span>
   endpoint<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
   interval<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
   timeout<span class="text-syn-o">:</span> <span class="text-syn-t">number</span><span class="text-syn-u">;</span>
@@ -899,17 +866,12 @@ Secondary DC (Singapore)
             <p class="mt-0 mb-6">If the primary fails consecutive health checks:</p>
             <ol class="mt-0 mb-6">
               <li><strong>Confirm failure</strong>: Is it really down, or just a network blip?</li>
-              <li>
-                <strong>Fence the primary</strong>: Ensure it can&#39;t accept writes (prevent
-                split-brain)
-              </li>
+              <li><strong>Fence the primary</strong>: Ensure it can&#39;t accept writes (prevent split-brain)</li>
               <li><strong>Promote replica</strong>: Tell the replica it&#39;s now the primary</li>
               <li><strong>Redirect traffic</strong>: Update connection strings or DNS</li>
             </ol>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">handlePrimaryFailure</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">handlePrimaryFailure</span><span class="text-syn-u">()</span><span class="text-syn-o">:</span> <span class="text-syn-t">Promise</span><span class="text-syn-u">&lt;</span><span class="text-syn-t">void</span><span class="text-syn-u">&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-k">const</span> confirmed <span class="text-syn-o">=</span> <span class="text-syn-k">await</span> <span class="text-syn-f">confirmFailure</span><span class="text-syn-u">(</span>primary<span class="text-syn-u">,</span> <span class="text-syn-n">3</span><span class="text-syn-u">);</span>
   <span class="text-syn-k">if</span> <span class="text-syn-u">(</span><span class="text-syn-o">!</span>confirmed<span class="text-syn-u">)</span> <span class="text-syn-k">return</span><span class="text-syn-u">;</span>
 
@@ -924,10 +886,7 @@ Secondary DC (Singapore)
             </h3>
             <p class="mt-0 mb-6"><strong>PostgreSQL:</strong></p>
             <ul class="mt-0 mb-6">
-              <li>
-                <strong>Patroni</strong>: Distributed consensus for HA PostgreSQL. Uses
-                etcd/Consul/ZooKeeper
-              </li>
+              <li><strong>Patroni</strong>: Distributed consensus for HA PostgreSQL. Uses etcd/Consul/ZooKeeper</li>
               <li><strong>repmgr</strong>: Replication manager with automatic failover</li>
               <li><strong>pg_auto_failover</strong>: Simpler setup, fewer dependencies</li>
             </ul>
@@ -943,26 +902,22 @@ Secondary DC (Singapore)
               <li><strong>Azure Database</strong>: Zone-redundant high availability</li>
             </ul>
             <p class="mt-0 mb-6">
-              Managed services handle all of this for you. You pay more, but you don&#39;t need to
-              configure, monitor, or test failover yourself.
+              Managed services handle all of this for you. You pay more, but you don&#39;t need to configure, monitor,
+              or test failover yourself.
             </p>
             <h3 id="the-split-brain-problem" class="mt-8 text-lg leading-tight tracking-tight">
               The Split-Brain Problem
             </h3>
             <p class="mt-0 mb-6">
-              What if the primary isn&#39;t actually dead? Maybe there was a network partition. The
-              monitoring system can&#39;t reach the primary, but the primary is still running, still
-              accepting writes.
+              What if the primary isn&#39;t actually dead? Maybe there was a network partition. The monitoring system
+              can&#39;t reach the primary, but the primary is still running, still accepting writes.
             </p>
             <p class="mt-0 mb-6">
-              Now you have two primaries. Two databases accepting writes independently. Data
-              diverges. When the network heals, you have conflicting data. This is split-brain, and
-              it&#39;s catastrophic.
+              Now you have two primaries. Two databases accepting writes independently. Data diverges. When the network
+              heals, you have conflicting data. This is split-brain, and it&#39;s catastrophic.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Network partition:
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Network partition:
 
 Monitoring ──✗── Primary (still running, taking writes)
      │
@@ -972,40 +927,30 @@ Two primaries. Data diverging. Disaster.
 </code></pre>
             <p class="mt-0 mb-6">Prevention:</p>
             <p class="mt-0 mb-6">
-              <strong>Fencing</strong>: Before promoting the replica, ensure the primary can&#39;t
-              accept writes. STONITH (Shoot The Other Node In The Head) - literally power off the
-              old primary.
+              <strong>Fencing</strong>: Before promoting the replica, ensure the primary can&#39;t accept writes.
+              STONITH (Shoot The Other Node In The Head) - literally power off the old primary.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Quorum</strong>: Require majority agreement before failover. If monitoring
-              can&#39;t reach the primary but the replica can, don&#39;t failover.
+              <strong>Quorum</strong>: Require majority agreement before failover. If monitoring can&#39;t reach the
+              primary but the replica can, don&#39;t failover.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Witness node</strong>: Third node that breaks ties. If monitoring and witness
-              both can&#39;t reach primary, it&#39;s probably really down.
+              <strong>Witness node</strong>: Third node that breaks ties. If monitoring and witness both can&#39;t reach
+              primary, it&#39;s probably really down.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">       Primary ───── Witness
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">       Primary ───── Witness
           │            │
           └──── Monitoring
                (needs 2/3 agreement)
 </code></pre>
-            <p class="mt-0 mb-6">
-              Split-brain is rare but devastating. Any automatic failover system must address it.
-            </p>
-            <h2
-              id="putting-it-together"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <p class="mt-0 mb-6">Split-brain is rare but devastating. Any automatic failover system must address it.</p>
+            <h2 id="putting-it-together" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Putting It Together
             </h2>
             <p class="mt-0 mb-6">A production-ready setup combines multiple strategies:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────────────────────────────┐
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────────────────────────────┐
 │                  Mumbai DC                       │
 │  ┌─────────┐      ┌─────────┐                   │
 │  │ Primary │──────│ Standby │                   │
@@ -1032,29 +977,25 @@ Two primaries. Data diverging. Disaster.
 └─────────────────────────────────────────────────┘
 </code></pre>
             <p class="mt-0 mb-6">
-              <strong>Normal operation</strong>: Primary serves all traffic. Standby receives
-              synchronous replication. DR replica receives async replication.
+              <strong>Normal operation</strong>: Primary serves all traffic. Standby receives synchronous replication.
+              DR replica receives async replication.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Primary disk failure</strong>: Automatic failover to standby. Near-zero
-              downtime, zero data loss.
+              <strong>Primary disk failure</strong>: Automatic failover to standby. Near-zero downtime, zero data loss.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Mumbai DC outage</strong>: Manual failover to Singapore DR replica. Possible
-              small data loss (async lag), but business continues.
+              <strong>Mumbai DC outage</strong>: Manual failover to Singapore DR replica. Possible small data loss
+              (async lag), but business continues.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Total catastrophe</strong>: Restore from Singapore backup. Hours of downtime,
-              up to a week of data loss, but you survive.
+              <strong>Total catastrophe</strong>: Restore from Singapore backup. Hours of downtime, up to a week of data
+              loss, but you survive.
             </p>
             <p class="mt-0 mb-6">
-              Each layer adds cost and complexity. But each layer also adds resilience. How much you
-              invest depends on what you&#39;re protecting.
+              Each layer adds cost and complexity. But each layer also adds resilience. How much you invest depends on
+              what you&#39;re protecting.
             </p>
-            <h2
-              id="hands-on-practice"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="hands-on-practice" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Hands-on Practice
             </h2>
             <p class="mt-0 mb-6">
@@ -1071,8 +1012,8 @@ Two primaries. Data diverging. Disaster.
                   class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                   href="https://github.com/pulkitxm/systems/tree/main/databases/db-replica"
                   >db-replica</a
-                >: PostgreSQL streaming replication with primary and standby. Includes scripts to
-                test replication and simulate failover.
+                >: PostgreSQL streaming replication with primary and standby. Includes scripts to test replication and
+                simulate failover.
               </li>
               <li>
                 <a
@@ -1083,38 +1024,28 @@ Two primaries. Data diverging. Disaster.
               </li>
             </ul>
             <p class="mt-0 mb-6">
-              When you&#39;ve done this yourself, you&#39;ll understand not just how redundancy
-              works, but what happens when it&#39;s needed. That understanding is invaluable when
-              you&#39;re debugging a production issue at 3 AM.
+              When you&#39;ve done this yourself, you&#39;ll understand not just how redundancy works, but what happens
+              when it&#39;s needed. That understanding is invaluable when you&#39;re debugging a production issue at 3
+              AM.
             </p>
-            <h2
-              id="leader-election-for-auto-recovery"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="leader-election-for-auto-recovery" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Leader Election for Auto Recovery
             </h2>
             <p class="mt-0 mb-6">
-              We&#39;ve covered how to make your data redundant. But there&#39;s a deeper question:
-              who manages all this failover? When a server dies, something needs to detect it and
-              spin up a replacement. But what happens when that &quot;something&quot; dies?
+              We&#39;ve covered how to make your data redundant. But there&#39;s a deeper question: who manages all this
+              failover? When a server dies, something needs to detect it and spin up a replacement. But what happens
+              when that &quot;something&quot; dies?
             </p>
             <p class="mt-0 mb-6">
-              This is where leader election becomes essential. It&#39;s the mechanism that lets your
-              system recover from failures automatically, with zero human intervention.
+              This is where leader election becomes essential. It&#39;s the mechanism that lets your system recover from
+              failures automatically, with zero human intervention.
             </p>
-            <h2
-              id="the-monitoring-problem"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="the-monitoring-problem" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               The Monitoring Problem
             </h2>
-            <p class="mt-0 mb-6">
-              You have three servers behind a load balancer, handling HTTP requests:
-            </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        User
+            <p class="mt-0 mb-6">You have three servers behind a load balancer, handling HTTP requests:</p>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">        User
           │
           ▼
     Load Balancer
@@ -1125,13 +1056,12 @@ Server  Server  Server
    1       2       3
 </code></pre>
             <p class="mt-0 mb-6">
-              Server 2 crashes. What happens? Nothing automatic. Someone needs to detect the
-              failure, spin up a new server, and add it to the load balancer.
+              Server 2 crashes. What happens? Nothing automatic. Someone needs to detect the failure, spin up a new
+              server, and add it to the load balancer.
             </p>
             <p class="mt-0 mb-6">
-              Enter the <strong>orchestrator</strong>: a component whose job is to monitor your
-              servers. When one goes down, it spins up a new one and puts it behind the load
-              balancer.
+              Enter the <strong>orchestrator</strong>: a component whose job is to monitor your servers. When one goes
+              down, it spins up a new one and puts it behind the load balancer.
             </p>
             <p class="mt-0 mb-6">
               <img
@@ -1142,23 +1072,16 @@ Server  Server  Server
               />
             </p>
             <p class="mt-0 mb-6">
-              The orchestrator continuously pings servers. If one stops responding, it marks it
-              unhealthy, removes it from the load balancer, provisions a new server, and adds it
-              back. No human intervention needed.
+              The orchestrator continuously pings servers. If one stops responding, it marks it unhealthy, removes it
+              from the load balancer, provisions a new server, and adds it back. No human intervention needed.
             </p>
-            <p class="mt-0 mb-6">
-              But here&#39;s the question: <strong>who monitors the orchestrator?</strong>
-            </p>
-            <h2
-              id="the-recursion-problem"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <p class="mt-0 mb-6">But here&#39;s the question: <strong>who monitors the orchestrator?</strong></p>
+            <h2 id="the-recursion-problem" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               The Recursion Problem
             </h2>
             <p class="mt-0 mb-6">
-              If the orchestrator crashes, servers can fail without replacement. You need something
-              to monitor the orchestrator. But what monitors that? And what monitors the thing that
-              monitors the orchestrator?
+              If the orchestrator crashes, servers can fail without replacement. You need something to monitor the
+              orchestrator. But what monitors that? And what monitors the thing that monitors the orchestrator?
             </p>
             <p class="mt-0 mb-6">
               <img
@@ -1169,33 +1092,26 @@ Server  Server  Server
               />
             </p>
             <p class="mt-0 mb-6">
-              This is infinite recursion. Every monitoring layer needs its own monitor. You could
-              have orchestrators all the way down, but that&#39;s impractical and expensive.
+              This is infinite recursion. Every monitoring layer needs its own monitor. You could have orchestrators all
+              the way down, but that&#39;s impractical and expensive.
             </p>
             <p class="mt-0 mb-6">
-              You need a base case. A point where the system can recover without external
-              intervention.
+              You need a base case. A point where the system can recover without external intervention.
             </p>
             <p class="mt-0 mb-6"><strong>That base case is leader election.</strong></p>
-            <h2
-              id="leader-election-the-base-case"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="leader-election-the-base-case" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Leader Election: The Base Case
             </h2>
             <p class="mt-0 mb-6">
-              Leader election is a distributed systems concept where nodes in a cluster can
-              automatically select one of themselves to be the leader. When the leader fails, the
-              remaining nodes elect a new one.
+              Leader election is a distributed systems concept where nodes in a cluster can automatically select one of
+              themselves to be the leader. When the leader fails, the remaining nodes elect a new one.
             </p>
             <p class="mt-0 mb-6">
-              This breaks the infinite recursion because you don&#39;t need external monitoring at
-              the top level. The system monitors itself and self-heals.
+              This breaks the infinite recursion because you don&#39;t need external monitoring at the top level. The
+              system monitors itself and self-heals.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Traditional approach:
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Traditional approach:
   Component A monitors B
   Component C monitors A
   Component D monitors C
@@ -1207,15 +1123,11 @@ With leader election:
   If leader dies → workers elect new leader
   System self-heals ✓
 </code></pre>
-            <h2
-              id="the-leader-follower-setup"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="the-leader-follower-setup" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               The Leader-Follower Setup
             </h2>
             <p class="mt-0 mb-6">
-              Instead of a single orchestrator, you run multiple orchestrator nodes in a
-              leader-follower configuration.
+              Instead of a single orchestrator, you run multiple orchestrator nodes in a leader-follower configuration.
             </p>
             <p class="mt-0 mb-6">
               <img
@@ -1238,23 +1150,15 @@ With leader election:
               <li>If a worker dies, spin up a new worker</li>
               <li>Coordinate work distribution</li>
             </ul>
-            <h2
-              id="failure-scenarios"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="failure-scenarios" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Failure Scenarios
             </h2>
             <p class="mt-0 mb-6">Let&#39;s walk through each failure scenario:</p>
-            <h3
-              id="scenario-1-backend-server-dies"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <h3 id="scenario-1-backend-server-dies" class="mt-8 text-lg leading-tight tracking-tight">
               Scenario 1: Backend Server Dies
             </h3>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 2 stops responding
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Server 2 stops responding
      ↓
 Worker detects failure
      ↓
@@ -1265,16 +1169,11 @@ Worker adds Server 4 to load balancer
 System recovered ✓
 </code></pre>
             <p class="mt-0 mb-6">No human intervention. The worker handles it.</p>
-            <h3
-              id="scenario-2-orchestrator-worker-dies"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <h3 id="scenario-2-orchestrator-worker-dies" class="mt-8 text-lg leading-tight tracking-tight">
               Scenario 2: Orchestrator Worker Dies
             </h3>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Worker 1 stops responding
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Worker 1 stops responding
      ↓
 Leader detects failure
      ↓
@@ -1285,17 +1184,12 @@ Leader assigns servers to Worker 3
 System recovered ✓
 </code></pre>
             <p class="mt-0 mb-6">No human intervention. The leader handles it.</p>
-            <h3
-              id="scenario-3-orchestrator-leader-dies"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <h3 id="scenario-3-orchestrator-leader-dies" class="mt-8 text-lg leading-tight tracking-tight">
               Scenario 3: Orchestrator Leader Dies
             </h3>
             <p class="mt-0 mb-6">This is where leader election kicks in:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Leader stops responding
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Leader stops responding
      ↓
 Workers detect leader is gone
      ↓
@@ -1316,51 +1210,38 @@ System recovered ✓
                 loading="lazy"
               />
             </p>
-            <h2
-              id="leader-election-algorithms"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="leader-election-algorithms" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Leader Election Algorithms
             </h2>
             <p class="mt-0 mb-6">
-              When workers detect the leader is dead, they need a way to agree on who becomes the
-              new leader. This is the job of leader election algorithms.
+              When workers detect the leader is dead, they need a way to agree on who becomes the new leader. This is
+              the job of leader election algorithms.
             </p>
             <p class="mt-0 mb-6">The key challenges:</p>
             <ol class="mt-0 mb-6">
               <li><strong>Agreement</strong>: All workers must agree on the same leader</li>
-              <li>
-                <strong>Availability</strong>: Election must complete even if some workers are down
-              </li>
-              <li>
-                <strong>No split-brain</strong>: Can&#39;t have two workers both thinking
-                they&#39;re the leader
-              </li>
+              <li><strong>Availability</strong>: Election must complete even if some workers are down</li>
+              <li><strong>No split-brain</strong>: Can&#39;t have two workers both thinking they&#39;re the leader</li>
             </ol>
             <p class="mt-0 mb-6">Common algorithms:</p>
             <p class="mt-0 mb-6">
-              <strong>Bully Algorithm</strong>: The simplest. Node with highest ID wins. When a node
-              detects leader failure, it sends election messages to all higher-ID nodes. If none
-              respond, it becomes leader. If any respond, it waits for them to become leader.
+              <strong>Bully Algorithm</strong>: The simplest. Node with highest ID wins. When a node detects leader
+              failure, it sends election messages to all higher-ID nodes. If none respond, it becomes leader. If any
+              respond, it waits for them to become leader.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Raft</strong>: More sophisticated. Uses terms (epochs) and voting. A candidate
-              requests votes from peers. If it gets majority, it becomes leader. Widely used in
-              production systems.
+              <strong>Raft</strong>: More sophisticated. Uses terms (epochs) and voting. A candidate requests votes from
+              peers. If it gets majority, it becomes leader. Widely used in production systems.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Paxos</strong>: Theoretically elegant but complex to implement. Forms the
-              basis for many consensus systems.
+              <strong>Paxos</strong>: Theoretically elegant but complex to implement. Forms the basis for many consensus
+              systems.
             </p>
             <p class="mt-0 mb-6">
-              <strong>ZooKeeper/etcd</strong>: Often you don&#39;t implement leader election
-              yourself. Tools like ZooKeeper and etcd provide distributed coordination primitives
-              that handle leader election for you.
+              <strong>ZooKeeper/etcd</strong>: Often you don&#39;t implement leader election yourself. Tools like
+              ZooKeeper and etcd provide distributed coordination primitives that handle leader election for you.
             </p>
-            <h2
-              id="the-real-world-analogy"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="the-real-world-analogy" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               The Real-World Analogy
             </h2>
             <p class="mt-0 mb-6">Think about how your team works:</p>
@@ -1369,10 +1250,8 @@ System recovered ✓
               <li>If the manager is sick one day, someone else steps up</li>
               <li>The team doesn&#39;t stop functioning because the manager is absent</li>
             </ul>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Normal day:
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">Normal day:
   Manager runs standup
   Team members do their work
   Manager handles coordination
@@ -1387,21 +1266,15 @@ Manager returns:
   System returns to normal
 </code></pre>
             <p class="mt-0 mb-6">
-              This is exactly how leader election works in distributed systems. There&#39;s always
-              someone who can step up. The system never stops functioning because of a single
-              failure.
+              This is exactly how leader election works in distributed systems. There&#39;s always someone who can step
+              up. The system never stops functioning because of a single failure.
             </p>
-            <h2
-              id="implementation-sketch"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="implementation-sketch" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Implementation Sketch
             </h2>
             <p class="mt-0 mb-6">Here&#39;s a simplified view of how this might look:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrchestratorNode</span> <span class="text-syn-u">{</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">interface</span> <span class="text-syn-t">OrchestratorNode</span> <span class="text-syn-u">{</span>
   id<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">;</span>
   isLeader<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
   peers<span class="text-syn-o">:</span> <span class="text-syn-t">string</span><span class="text-syn-u">[];</span>
@@ -1454,10 +1327,7 @@ Manager returns:
   <span class="text-syn-u">}</span>
 <span class="text-syn-u">}</span>
 </code></pre>
-            <h2
-              id="hands-on-simulate-leader-election"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="hands-on-simulate-leader-election" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Hands-on: Simulate Leader Election
             </h2>
             <p class="mt-0 mb-6">
@@ -1474,76 +1344,60 @@ Manager returns:
                   class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
                   href="https://github.com/pulkitxm/systems/tree/main/coordination/leader-election"
                   >leader-election</a
-                >: Simulates the Bully Algorithm using JavaScript timers. Kill the leader and watch
-                the remaining nodes elect a new one automatically.
+                >: Simulates the Bully Algorithm using JavaScript timers. Kill the leader and watch the remaining nodes
+                elect a new one automatically.
               </li>
             </ul>
             <p class="mt-0 mb-6">
-              You don&#39;t need multiple machines. Each &quot;node&quot; is simulated using timers
-              to mimic independent processes. Run it, kill the leader, and watch the system recover
-              with zero human intervention.
+              You don&#39;t need multiple machines. Each &quot;node&quot; is simulated using timers to mimic independent
+              processes. Run it, kill the leader, and watch the system recover with zero human intervention.
             </p>
-            <h2
-              id="tools-that-use-leader-election"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="tools-that-use-leader-election" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Tools That Use Leader Election
             </h2>
             <p class="mt-0 mb-6">Many production systems rely on leader election:</p>
             <ul class="mt-0 mb-6">
               <li>
-                <strong>Kubernetes</strong>: etcd uses Raft for leader election. The control plane
-                is highly available because of this.
+                <strong>Kubernetes</strong>: etcd uses Raft for leader election. The control plane is highly available
+                because of this.
               </li>
-              <li>
-                <strong>Kafka</strong>: Uses ZooKeeper (or KRaft now) for controller election.
-              </li>
-              <li>
-                <strong>PostgreSQL with Patroni</strong>: Uses consensus for automatic failover.
-              </li>
+              <li><strong>Kafka</strong>: Uses ZooKeeper (or KRaft now) for controller election.</li>
+              <li><strong>PostgreSQL with Patroni</strong>: Uses consensus for automatic failover.</li>
               <li><strong>Redis Sentinel</strong>: Elects a leader to coordinate failover.</li>
               <li><strong>Consul</strong>: Uses Raft for leader election among servers.</li>
             </ul>
             <p class="mt-0 mb-6">
-              You&#39;re likely already using systems built on leader election, even if you
-              didn&#39;t realize it.
+              You&#39;re likely already using systems built on leader election, even if you didn&#39;t realize it.
             </p>
-            <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              Conclusion
-            </h2>
+            <h2 id="conclusion" class="mt-12 text-xl font-semibold leading-tight tracking-tight">Conclusion</h2>
+            <p class="mt-0 mb-6">High availability requires two things: redundant data and automatic recovery.</p>
             <p class="mt-0 mb-6">
-              High availability requires two things: redundant data and automatic recovery.
-            </p>
-            <p class="mt-0 mb-6">
-              Redundancy gives you copies of your data. Backups, replicas, cross-region storage.
-              When hardware fails, you have something to fall back to.
+              Redundancy gives you copies of your data. Backups, replicas, cross-region storage. When hardware fails,
+              you have something to fall back to.
             </p>
             <p class="mt-0 mb-6">
-              Leader election gives you automatic recovery. Instead of humans waking up at 3 AM to
-              failover a database, the system does it itself. The orchestrator monitors servers,
-              workers monitor each other, and when the leader dies, a new one is elected.
+              Leader election gives you automatic recovery. Instead of humans waking up at 3 AM to failover a database,
+              the system does it itself. The orchestrator monitors servers, workers monitor each other, and when the
+              leader dies, a new one is elected.
             </p>
             <p class="mt-0 mb-6">
-              The key insight:
-              <strong>leader election is the base condition of your recursion</strong>. You can have
-              components monitoring other components, but at some point you need a self-healing
-              mechanism. Leader election provides that.
+              The key insight: <strong>leader election is the base condition of your recursion</strong>. You can have
+              components monitoring other components, but at some point you need a self-healing mechanism. Leader
+              election provides that.
             </p>
             <p class="mt-0 mb-6">
-              When you configure systems where the orchestration layer can automatically recover
-              from node failures, you&#39;ve reached the base case. Your entire system becomes
-              auto-recoverable with zero human intervention.
+              When you configure systems where the orchestration layer can automatically recover from node failures,
+              you&#39;ve reached the base case. Your entire system becomes auto-recoverable with zero human
+              intervention.
             </p>
             <p class="mt-0 mb-6">
-              Your API servers are cattle. Your database is a pet. And your orchestration layer?
-              It&#39;s a self-healing organism.
+              Your API servers are cattle. Your database is a pet. And your orchestration layer? It&#39;s a self-healing
+              organism.
             </p>
           </div>
         </article>
         <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
-          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
-            Related writing
-          </h2>
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2>
           <ul class="mt-0 mb-6">
             <li class="my-2">
               <a
@@ -1573,13 +1427,11 @@ Manager returns:
         <div>
           <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
           · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
-          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
-            >LinkedIn</a
-          >
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
         <div class="mt-4.5 flex items-center justify-between">
-          <small>© 2026 Pulkit</small
-          ><button
+          <small>© 2026 Pulkit</small>
+          <button
             class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
             type="button"
             data-theme-toggle

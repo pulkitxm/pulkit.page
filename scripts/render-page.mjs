@@ -184,7 +184,7 @@ export async function renderPage(
           .replace(
             /^<pre><code(?: class="([^"]*)")?>/,
             (_, language) =>
-              `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"><code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
+              `<pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">\n<code class="${[language, "rounded-sm", codeFont, "[tab-size:2]"].filter(Boolean).join(" ")}">`,
           );
       },
       codespan(token) {
@@ -463,7 +463,9 @@ ${[
 ]
   .map(([key, value]) => meta(key, value))
   .join("\n")}
-<script type="application/ld+json">${safeJson(structuredData(route, metadata, site, pages))}</script>`;
+<script type="application/ld+json">
+      ${safeJson(structuredData(route, metadata, site, pages), "      ")}
+    </script>`;
 }
 
 function collectionItems(pages, route, collection, limit) {

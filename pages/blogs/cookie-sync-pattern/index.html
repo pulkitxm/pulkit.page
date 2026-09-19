@@ -1,8 +1,5 @@
 <!doctype html>
-<html
-  lang="en"
-  class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light"
->
+<html lang="en" class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,10 +19,7 @@
     />
     <meta property="og:url" content="https://pulkit.page/blogs/cookie-sync-pattern/" />
     <meta property="og:image" content="https://pulkit.page/og/blogs/cookie-sync-pattern/card.png" />
-    <meta
-      property="og:image:secure_url"
-      content="https://pulkit.page/og/blogs/cookie-sync-pattern/card.png"
-    />
+    <meta property="og:image:secure_url" content="https://pulkit.page/og/blogs/cookie-sync-pattern/card.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -38,14 +32,122 @@
       name="twitter:description"
       content="How to make localStorage state work with SSR. No more hydration mismatches, no more flash of wrong content. A pattern that works for themes, sidebars, user preferences, and any persisted UI state."
     />
-    <meta
-      name="twitter:image"
-      content="https://pulkit.page/og/blogs/cookie-sync-pattern/card.png"
-    />
+    <meta name="twitter:image" content="https://pulkit.page/og/blogs/cookie-sync-pattern/card.png" />
     <meta name="twitter:image:alt" content="The Cookie Sync Pattern" />
-    <script
-      type="application/ld+json"
-    >{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://pulkit.page/#person","name":"Pulkit","url":"https://pulkit.page/","sameAs":["https://github.com/Pulkitxm","https://x.com/_pulkitxm","https://www.linkedin.com/in/pulkitxm"]},{"@type":"WebSite","@id":"https://pulkit.page/#website","url":"https://pulkit.page/","name":"Pulkit","description":"Software engineer building useful things for the web.","publisher":{"@id":"https://pulkit.page/#person"},"inLanguage":"en"},{"@type":"ImageObject","@id":"https://pulkit.page/blogs/cookie-sync-pattern/#image","contentUrl":"https://pulkit.page/og/blogs/cookie-sync-pattern/card.png","width":1200,"height":630,"caption":"The Cookie Sync Pattern"},{"@type":"BlogPosting","@id":"https://pulkit.page/blogs/cookie-sync-pattern/#article","headline":"The Cookie Sync Pattern","description":"How to make localStorage state work with SSR. No more hydration mismatches, no more flash of wrong content. A pattern that works for themes, sidebars, user preferences, and any persisted UI state.","datePublished":"2026-05-04","author":{"@id":"https://pulkit.page/#person"},"publisher":{"@id":"https://pulkit.page/#person"},"mainEntityOfPage":{"@id":"https://pulkit.page/blogs/cookie-sync-pattern/#webpage"},"isPartOf":{"@id":"https://pulkit.page/blogs/#webpage"},"image":{"@id":"https://pulkit.page/blogs/cookie-sync-pattern/#image"},"url":"https://pulkit.page/blogs/cookie-sync-pattern/","inLanguage":"en","keywords":["Next.js","React","SSR","Hydration","localStorage","State Management","Performance"]},{"@type":"BreadcrumbList","@id":"https://pulkit.page/blogs/cookie-sync-pattern/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pulkit.page/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://pulkit.page/blogs/"},{"@type":"ListItem","position":3,"name":"The Cookie Sync Pattern","item":"https://pulkit.page/blogs/cookie-sync-pattern/"}]},{"@type":"WebPage","@id":"https://pulkit.page/blogs/cookie-sync-pattern/#webpage","url":"https://pulkit.page/blogs/cookie-sync-pattern/","name":"The Cookie Sync Pattern","description":"How to make localStorage state work with SSR. No more hydration mismatches, no more flash of wrong content. A pattern that works for themes, sidebars, user preferences, and any persisted UI state.","isPartOf":{"@id":"https://pulkit.page/#website"},"primaryImageOfPage":{"@id":"https://pulkit.page/blogs/cookie-sync-pattern/#image"},"inLanguage":"en","mainEntity":{"@id":"https://pulkit.page/blogs/cookie-sync-pattern/#article"},"breadcrumb":{"@id":"https://pulkit.page/blogs/cookie-sync-pattern/#breadcrumbs"}}]}</script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://pulkit.page/#person",
+            "name": "Pulkit",
+            "url": "https://pulkit.page/",
+            "sameAs": [
+              "https://github.com/Pulkitxm",
+              "https://x.com/_pulkitxm",
+              "https://www.linkedin.com/in/pulkitxm"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://pulkit.page/#website",
+            "url": "https://pulkit.page/",
+            "name": "Pulkit",
+            "description": "Software engineer building useful things for the web.",
+            "publisher": {
+              "@id": "https://pulkit.page/#person"
+            },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#image",
+            "contentUrl": "https://pulkit.page/og/blogs/cookie-sync-pattern/card.png",
+            "width": 1200,
+            "height": 630,
+            "caption": "The Cookie Sync Pattern"
+          },
+          {
+            "@type": "BlogPosting",
+            "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#article",
+            "headline": "The Cookie Sync Pattern",
+            "description": "How to make localStorage state work with SSR. No more hydration mismatches, no more flash of wrong content. A pattern that works for themes, sidebars, user preferences, and any persisted UI state.",
+            "datePublished": "2026-05-04",
+            "author": {
+              "@id": "https://pulkit.page/#person"
+            },
+            "publisher": {
+              "@id": "https://pulkit.page/#person"
+            },
+            "mainEntityOfPage": {
+              "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#webpage"
+            },
+            "isPartOf": {
+              "@id": "https://pulkit.page/blogs/#webpage"
+            },
+            "image": {
+              "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#image"
+            },
+            "url": "https://pulkit.page/blogs/cookie-sync-pattern/",
+            "inLanguage": "en",
+            "keywords": [
+              "Next.js",
+              "React",
+              "SSR",
+              "Hydration",
+              "localStorage",
+              "State Management",
+              "Performance"
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#breadcrumbs",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://pulkit.page/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Writing",
+                "item": "https://pulkit.page/blogs/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "The Cookie Sync Pattern",
+                "item": "https://pulkit.page/blogs/cookie-sync-pattern/"
+              }
+            ]
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#webpage",
+            "url": "https://pulkit.page/blogs/cookie-sync-pattern/",
+            "name": "The Cookie Sync Pattern",
+            "description": "How to make localStorage state work with SSR. No more hydration mismatches, no more flash of wrong content. A pattern that works for themes, sidebars, user preferences, and any persisted UI state.",
+            "isPartOf": {
+              "@id": "https://pulkit.page/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#image"
+            },
+            "inLanguage": "en",
+            "mainEntity": {
+              "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#article"
+            },
+            "breadcrumb": {
+              "@id": "https://pulkit.page/blogs/cookie-sync-pattern/#breadcrumbs"
+            }
+          }
+        ]
+      }
+    </script>
     <meta name="theme-color" content="#000000" />
     <script src="/theme.js"></script>
     <title>The Cookie Sync Pattern | Pulkit</title>
@@ -68,20 +170,11 @@
         class="flex items-center justify-between gap-6 py-9 max-sm:flex-col max-sm:items-start max-sm:gap-3.5 max-sm:py-6.5"
       >
         <a class="font-bold text-inherit no-underline" href="/">Pulkit</a>
-        <nav
-          class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5"
-          aria-label="Main navigation"
-        >
-          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/"
-            >Writing</a
-          >
-          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/exp/"
-            >Experience</a
-          >
+        <nav class="flex flex-wrap gap-5 text-sm text-muted max-sm:gap-4.5" aria-label="Main navigation">
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/blogs/">Writing</a>
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/exp/">Experience</a>
           <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/about/">About</a>
-          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/"
-            >Contact</a
-          >
+          <a class="text-inherit no-underline aria-[current=page]:text-fg" href="/contact/">Contact</a>
         </nav>
       </header>
 
@@ -103,47 +196,33 @@
             >
               The Cookie Sync Pattern
             </h1>
-            <p class="mt-0 mb-6 text-sm text-muted">
-              <time datetime="2026-05-04">2026-05-04</time>
-            </p>
+            <p class="mt-0 mb-6 text-sm text-muted"><time datetime="2026-05-04">2026-05-04</time></p>
           </header>
           <div class="wrap-anywhere">
             <p class="mt-0 mb-6">
-              You&#39;ve seen this before. You persist something to localStorage (a theme
-              preference, a sidebar width, a collapsed panel state), and it works great. Until you
-              refresh the page.
+              You&#39;ve seen this before. You persist something to localStorage (a theme preference, a sidebar width, a
+              collapsed panel state), and it works great. Until you refresh the page.
             </p>
             <p class="mt-0 mb-6">
-              For a split second, the page renders with the wrong state. Light mode flashes before
-              dark mode kicks in. The sidebar snaps from its default width to wherever you left it.
-              A panel expands, then collapses. The server rendered one thing, the client hydrated
-              with another, and React had to patch the difference.
+              For a split second, the page renders with the wrong state. Light mode flashes before dark mode kicks in.
+              The sidebar snaps from its default width to wherever you left it. A panel expands, then collapses. The
+              server rendered one thing, the client hydrated with another, and React had to patch the difference.
             </p>
             <p class="mt-0 mb-6">
-              This is the localStorage + SSR problem. And it&#39;s not a bug in your code or your
-              state library. It&#39;s a fundamental mismatch between what the server knows and what
-              the client knows.
+              This is the localStorage + SSR problem. And it&#39;s not a bug in your code or your state library.
+              It&#39;s a fundamental mismatch between what the server knows and what the client knows.
             </p>
             <p class="mt-0 mb-6">Here&#39;s the pattern I use to fix it.</p>
-            <h2 id="the-problem" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              The Problem
-            </h2>
+            <h2 id="the-problem" class="mt-12 text-xl font-semibold leading-tight tracking-tight">The Problem</h2>
             <p class="mt-0 mb-6">
               localStorage is client-only. The server has no access to it. So when you use
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >atomWithStorage</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">atomWithStorage</code>
               (Jotai),
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >persist</code
-              >
-              middleware (Zustand), or any localStorage-based persistence, you&#39;re creating a
-              gap:
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">persist</code>
+              middleware (Zustand), or any localStorage-based persistence, you&#39;re creating a gap:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────────────────────────────────────────────┐
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────────────────────────────────────────────────────────┐
 │                         SERVER (Node.js)                        │
 ├─────────────────────────────────────────────────────────────────┤
 │  • No access to localStorage                                    │
@@ -171,31 +250,23 @@
             <p class="mt-0 mb-6">Two things happen:</p>
             <ol class="mt-0 mb-6">
               <li>
-                <strong>Hydration mismatch warning</strong>: React complains that server HTML
-                doesn&#39;t match client markup
+                <strong>Hydration mismatch warning</strong>: React complains that server HTML doesn&#39;t match client
+                markup
               </li>
-              <li>
-                <strong>Visual flash</strong>: The UI renders with defaults, then snaps to the
-                persisted state
-              </li>
+              <li><strong>Visual flash</strong>: The UI renders with defaults, then snaps to the persisted state</li>
             </ol>
             <p class="mt-0 mb-6">
-              The root cause is simple: the server can&#39;t read localStorage. So server and client
-              start with different state, and React has to reconcile the difference visibly.
+              The root cause is simple: the server can&#39;t read localStorage. So server and client start with
+              different state, and React has to reconcile the difference visibly.
             </p>
-            <h2 id="the-solutions" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              The Solutions
-            </h2>
-            <p class="mt-0 mb-6">
-              There are a few ways to handle this. Let me walk through each one.
-            </p>
+            <h2 id="the-solutions" class="mt-12 text-xl font-semibold leading-tight tracking-tight">The Solutions</h2>
+            <p class="mt-0 mb-6">There are a few ways to handle this. Let me walk through each one.</p>
             <h3 id="option-1-accept-the-flash" class="mt-8 text-lg leading-tight tracking-tight">
               Option 1: Accept the Flash
             </h3>
             <p class="mt-0 mb-6">
-              The simplest approach is to do nothing. Zero complexity. But the UX is jarring and
-              React throws hydration warnings into your console. For a portfolio site, maybe
-              acceptable. For a product, not great.
+              The simplest approach is to do nothing. Zero complexity. But the UX is jarring and React throws hydration
+              warnings into your console. For a portfolio site, maybe acceptable. For a product, not great.
             </p>
             <h3 id="option-2-css-transition-gate" class="mt-8 text-lg leading-tight tracking-tight">
               Option 2: CSS Transition Gate
@@ -203,10 +274,8 @@
             <p class="mt-0 mb-6">
               Hide or fade the affected component until the client has resolved the correct state:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>mounted<span class="text-syn-u">,</span> setMounted<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>mounted<span class="text-syn-u">,</span> setMounted<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
 <span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-f">setMounted</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
@@ -224,21 +293,16 @@
 <span class="text-syn-u">);</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              This masks the problem with a fade. It works, but you&#39;re still rendering the wrong
-              state briefly; you&#39;re just hiding it. And if the fade is too slow, users notice.
-              If it&#39;s too fast, you might still catch the shift.
+              This masks the problem with a fade. It works, but you&#39;re still rendering the wrong state briefly;
+              you&#39;re just hiding it. And if the fade is too slow, users notice. If it&#39;s too fast, you might
+              still catch the shift.
             </p>
-            <h3
-              id="option-3-loading-skeleton-state"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <h3 id="option-3-loading-skeleton-state" class="mt-8 text-lg leading-tight tracking-tight">
               Option 3: Loading/Skeleton State
             </h3>
             <p class="mt-0 mb-6">Render a placeholder until the client has the real values:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>ready<span class="text-syn-u">,</span> setReady<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">const</span> <span class="text-syn-u">[</span>ready<span class="text-syn-u">,</span> setReady<span class="text-syn-u">]</span> <span class="text-syn-o">=</span> <span class="text-syn-f">useState</span><span class="text-syn-u">(</span><span class="text-syn-k">false</span><span class="text-syn-u">);</span>
 
 <span class="text-syn-f">useEffect</span><span class="text-syn-u">(()</span> <span class="text-syn-k">=&gt;</span> <span class="text-syn-u">{</span>
   <span class="text-syn-f">setReady</span><span class="text-syn-u">(</span><span class="text-syn-k">true</span><span class="text-syn-u">);</span>
@@ -251,27 +315,20 @@
 <span class="text-syn-k">return</span> <span class="text-syn-u">&lt;</span><span class="text-syn-g">ActualComponent</span> <span class="text-syn-u">/&gt;;</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              This is explicit about the loading state, which can be good UX for data-fetching
-              scenarios. But for simple preferences like &quot;is this panel collapsed?&quot; or
-              &quot;what theme did they pick?&quot;, adding a skeleton feels heavy-handed.
-              You&#39;re not fetching anything, you just need to read a value that already exists
-              locally.
+              This is explicit about the loading state, which can be good UX for data-fetching scenarios. But for simple
+              preferences like &quot;is this panel collapsed?&quot; or &quot;what theme did they pick?&quot;, adding a
+              skeleton feels heavy-handed. You&#39;re not fetching anything, you just need to read a value that already
+              exists locally.
             </p>
-            <h3
-              id="option-4-cookie-sync-the-clean-one"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <h3 id="option-4-cookie-sync-the-clean-one" class="mt-8 text-lg leading-tight tracking-tight">
               Option 4: Cookie Sync (The Clean One)
             </h3>
             <p class="mt-0 mb-6">
-              The idea: sync localStorage to a cookie so the server can read it. On subsequent
-              requests, the server knows the user&#39;s preferences and renders the correct state
-              from the start. No mismatch, no flash.
+              The idea: sync localStorage to a cookie so the server can read it. On subsequent requests, the server
+              knows the user&#39;s preferences and renders the correct state from the start. No mismatch, no flash.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌──────────────────────────────────────────────────────────────────────────┐
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌──────────────────────────────────────────────────────────────────────────┐
 │                            REQUEST LIFECYCLE                              │
 ├──────────────────────────────────────────────────────────────────────────┤
 │                                                                          │
@@ -291,34 +348,24 @@
 └──────────────────────────────────────────────────────────────────────────┘
 </code></pre>
             <p class="mt-0 mb-6">
-              The first visit still uses defaults (no cookie exists yet). But every visit after that
-              renders correctly from the server. Let me show you the implementation.
+              The first visit still uses defaults (no cookie exists yet). But every visit after that renders correctly
+              from the server. Let me show you the implementation.
             </p>
-            <h2
-              id="the-implementation"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="the-implementation" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               The Implementation
             </h2>
             <p class="mt-0 mb-6">
-              I&#39;ll use a resizable sidebar as the example, but this pattern works for any
-              localStorage state: themes, collapsed panels, sort preferences, table column widths,
-              whatever.
+              I&#39;ll use a resizable sidebar as the example, but this pattern works for any localStorage state:
+              themes, collapsed panels, sort preferences, table column widths, whatever.
             </p>
-            <h3
-              id="step-1-define-your-preferences"
-              class="mt-8 text-lg leading-tight tracking-tight"
-            >
+            <h3 id="step-1-define-your-preferences" class="mt-8 text-lg leading-tight tracking-tight">
               Step 1: Define Your Preferences
             </h3>
             <p class="mt-0 mb-6">
-              First, define what you&#39;re persisting and create utilities to parse and persist the
-              cookie:
+              First, define what you&#39;re persisting and create utilities to parse and persist the cookie:
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> PREFS_COOKIE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;ui_prefs&quot;</span><span class="text-syn-u">;</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> PREFS_COOKIE <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;ui_prefs&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">export</span> <span class="text-syn-k">interface</span> <span class="text-syn-t">UIPrefs</span> <span class="text-syn-u">{</span>
   sidebarCollapsed<span class="text-syn-o">:</span> <span class="text-syn-t">boolean</span><span class="text-syn-u">;</span>
@@ -360,15 +407,13 @@
               Step 2: The Bootstrap Script
             </h3>
             <p class="mt-0 mb-6">
-              This is the key piece. An inline script that runs
-              <strong>before React hydrates</strong>, reading localStorage and writing to a cookie:
+              This is the key piece. An inline script that runs <strong>before React hydrates</strong>, reading
+              localStorage and writing to a cookie:
             </p>
             <p class="mt-0 mb-6">
               Use
               <strong
-                ><code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                  >JSON.parse</code
-                >
+                ><code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">JSON.parse</code>
                 for both keys.</strong
               >
               Your React code should persist the <strong>same shapes</strong> jotai-style (<code
@@ -377,10 +422,8 @@
               >
               per value), otherwise the bootstrap and your client get out of sync.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_COLLAPSED <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-collapsed&quot;</span><span class="text-syn-u">;</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-typescript rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_COLLAPSED <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-collapsed&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">export</span> <span class="text-syn-k">const</span> SIDEBAR_LS_WIDTH <span class="text-syn-o">=</span> <span class="text-syn-s">&quot;sidebar-width&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">export</span> <span class="text-syn-k">const</span> BOOTSTRAP_SCRIPT <span class="text-syn-o">=</span> <span class="text-syn-s">`(function(){try{</span>
@@ -394,18 +437,13 @@
 <span class="text-syn-s">}catch(e){}})();`</span><span class="text-syn-u">;</span>
 </code></pre>
             <p class="mt-0 mb-6">
-              This runs synchronously before React. On the user&#39;s
-              <strong>next navigation or refresh</strong>, the server receives this cookie and
-              renders HTML that matches what localStorage will provide.
+              This runs synchronously before React. On the user&#39;s <strong>next navigation or refresh</strong>, the
+              server receives this cookie and renders HTML that matches what localStorage will provide.
             </p>
-            <h3 id="step-3-server-layout" class="mt-8 text-lg leading-tight tracking-tight">
-              Step 3: Server Layout
-            </h3>
+            <h3 id="step-3-server-layout" class="mt-8 text-lg leading-tight tracking-tight">Step 3: Server Layout</h3>
             <p class="mt-0 mb-6">Read the cookie and pass the preferences down:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> cookies <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/headers&quot;</span><span class="text-syn-u">;</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-k">import</span> <span class="text-syn-u">{</span> cookies <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/headers&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> Script <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;next/script&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">export</span> <span class="text-syn-k">default</span> <span class="text-syn-k">async</span> <span class="text-syn-k">function</span> <span class="text-syn-f">RootLayout</span><span class="text-syn-u">({</span> children <span class="text-syn-u">}</span><span class="text-syn-o">:</span> <span class="text-syn-u">{</span> children<span class="text-syn-o">:</span> <span class="text-syn-t">React</span><span class="text-syn-u">.</span><span class="text-syn-t">ReactNode</span> <span class="text-syn-u">})</span> <span class="text-syn-u">{</span>
@@ -432,23 +470,19 @@
 </code></pre>
             <p class="mt-0 mb-6">
               The
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >prefsTrusted</code
-              >
-              flag tells components whether the server had real preferences or used defaults. This
-              matters for handling first visits correctly.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">prefsTrusted</code>
+              flag tells components whether the server had real preferences or used defaults. This matters for handling
+              first visits correctly.
             </p>
             <h3 id="step-4-client-component" class="mt-8 text-lg leading-tight tracking-tight">
               Step 4: Client Component
             </h3>
             <p class="mt-0 mb-6">
-              The component that uses these preferences needs to handle three cases: trusted cookie
-              values, first visit, and subsequent user changes.
+              The component that uses these preferences needs to handle three cases: trusted cookie values, first visit,
+              and subsequent user changes.
             </p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-tsx rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]"><span class="text-syn-s">&quot;use client&quot;</span><span class="text-syn-u">;</span>
 
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useAtom <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;jotai&quot;</span><span class="text-syn-u">;</span>
 <span class="text-syn-k">import</span> <span class="text-syn-u">{</span> useHydrateAtoms <span class="text-syn-u">}</span> <span class="text-syn-k">from</span> <span class="text-syn-s">&quot;jotai/utils&quot;</span><span class="text-syn-u">;</span>
@@ -497,8 +531,8 @@
                 ><code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
                   >useHydrateAtoms</code
                 ></strong
-              >: Only hydrate when we have trusted cookie values. This primes Jotai with the
-              server-side values so there&#39;s no mismatch.
+              >: Only hydrate when we have trusted cookie values. This primes Jotai with the server-side values so
+              there&#39;s no mismatch.
             </p>
             <p class="mt-0 mb-6">
               <strong
@@ -506,16 +540,10 @@
                   >useSyncExternalStore</code
                 ></strong
               >: A safe pattern for detecting client-side rendering. Server returns
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >false</code
-              >, client returns
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >true</code
-              >. No hydration mismatch because both snapshots are used correctly. After hydrate, it
-              switches to
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >true</code
-              >.
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">false</code>, client
+              returns <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">true</code>.
+              No hydration mismatch because both snapshots are used correctly. After hydrate, it switches to
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">true</code>.
             </p>
             <p class="mt-0 mb-6">
               <strong
@@ -523,42 +551,29 @@
                   >layoutKnown</code
                 ></strong
               >: When
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >prefsTrusted</code
-              >
-              (cookie exists), use real values immediately. When not trusted (first visit), use
-              defaults until
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >clientReady</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">prefsTrusted</code>
+              (cookie exists), use real values immediately. When not trusted (first visit), use defaults until
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">clientReady</code>
               flips. This ensures server HTML always matches the client&#39;s first render.
             </p>
             <p class="mt-0 mb-6">
               <strong
-                ><code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                  >useEffect</code
-                >
+                ><code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">useEffect</code>
                 for cookie sync</strong
-              >: Whenever the user changes preferences, persist to the cookie so the next SSR
-              request has the updated values.
+              >: Whenever the user changes preferences, persist to the cookie so the next SSR request has the updated
+              values.
             </p>
-            <h2 id="why-a-cookie" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              Why a Cookie?
-            </h2>
+            <h2 id="why-a-cookie" class="mt-12 text-xl font-semibold leading-tight tracking-tight">Why a Cookie?</h2>
             <p class="mt-0 mb-6">
-              You might wonder if you can just configure Jotai (or Zustand, or Redux) differently to
-              avoid this. The answer is no, because the problem isn&#39;t the state library.
+              You might wonder if you can just configure Jotai (or Zustand, or Redux) differently to avoid this. The
+              answer is no, because the problem isn&#39;t the state library.
             </p>
             <p class="mt-0 mb-6">
               localStorage doesn&#39;t exist on the server. Node.js has no
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >localStorage</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">localStorage</code>
               API. The only way to get client-side data to the server during a render is via
               <strong>HTTP headers</strong>, and the
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >Cookie</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">Cookie</code>
               header is the standard way to do that.
             </p>
             <p class="mt-0 mb-6">The bootstrap script approach works because:</p>
@@ -569,20 +584,15 @@
               <li>The server can read that cookie during rendering</li>
             </ol>
             <p class="mt-0 mb-6">
-              You&#39;re not replacing your state library. You&#39;re adding a sync layer that
-              bridges client-only storage to server-readable storage.
+              You&#39;re not replacing your state library. You&#39;re adding a sync layer that bridges client-only
+              storage to server-readable storage.
             </p>
-            <h2
-              id="first-visit-vs-subsequent-visits"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="first-visit-vs-subsequent-visits" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               First Visit vs. Subsequent Visits
             </h2>
             <p class="mt-0 mb-6">On the first visit, there&#39;s no cookie yet:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────┐
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────┐
 │   Request   │ ──► │   Server    │ ──► │ No cookie → use defaults    │
 │  (no cookie)│     │             │     │                             │
 └─────────────┘     └─────────────┘     └─────────────────────────────┘
@@ -600,10 +610,8 @@
 └─────────────────────────────────────────────────────────────────────┘
 </code></pre>
             <p class="mt-0 mb-6">On subsequent visits, the cookie exists:</p>
-            <pre
-              tabindex="0"
-              class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5"
-            ><code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────┐
+            <pre tabindex="0" class="mt-0 mb-6 overflow-x-auto rounded-lg border border-line bg-surface p-5">
+<code class="language-text rounded-sm [font:0.84em/1.65_var(--font-mono)] [tab-size:2]">┌─────────────┐     ┌─────────────┐     ┌─────────────────────────────┐
 │   Request   │ ──► │   Server    │ ──► │ Cookie found → parse prefs  │
 │ (with cookie)│    │             │     │ Use actual user values      │
 └─────────────┘     └─────────────┘     └─────────────────────────────┘
@@ -626,13 +634,10 @@
 └─────────────────────────────────────────────────────────────────────┘
 </code></pre>
             <p class="mt-0 mb-6">
-              The first visit still has the potential for a flash if the user has existing
-              localStorage values from before you implemented this. But subsequent visits are
-              perfect.
+              The first visit still has the potential for a flash if the user has existing localStorage values from
+              before you implemented this. But subsequent visits are perfect.
             </p>
-            <h2 id="trade-offs" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              Trade-offs
-            </h2>
+            <h2 id="trade-offs" class="mt-12 text-xl font-semibold leading-tight tracking-tight">Trade-offs</h2>
             <table class="mt-0 mb-6 block overflow-x-auto border-collapse text-md">
               <thead>
                 <tr>
@@ -643,138 +648,92 @@
               </thead>
               <tbody>
                 <tr>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    <strong>Cookie sync</strong>
-                  </td>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    SSR matches client, no flash
-                  </td>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    Extra cookie, bootstrap script
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left"><strong>Cookie sync</strong></td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">SSR matches client, no flash</td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Extra cookie, bootstrap script</td>
                 </tr>
                 <tr>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    <strong>CSS transition gate</strong>
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left"><strong>CSS transition gate</strong></td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Simple to implement</td>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    Still renders wrong state, just hides it
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Still renders wrong state, just hides it</td>
                 </tr>
                 <tr>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    <strong>Skeleton/loading</strong>
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left"><strong>Skeleton/loading</strong></td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Explicit loading UX</td>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    Heavy for simple preferences
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Heavy for simple preferences</td>
                 </tr>
                 <tr>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    <strong>Accept the flash</strong>
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left"><strong>Accept the flash</strong></td>
                   <td class="border-b border-line px-3.5 py-2.5 text-left">Zero complexity</td>
-                  <td class="border-b border-line px-3.5 py-2.5 text-left">
-                    Poor UX, hydration warnings
-                  </td>
+                  <td class="border-b border-line px-3.5 py-2.5 text-left">Poor UX, hydration warnings</td>
                 </tr>
               </tbody>
             </table>
             <p class="mt-0 mb-6">
-              Cookie sync is more setup upfront, but it&#39;s a one-time cost. After that, it just
-              works. The cookie adds a few bytes to every request, maybe 50-100 bytes for typical UI
-              preferences. Negligible.
+              Cookie sync is more setup upfront, but it&#39;s a one-time cost. After that, it just works. The cookie
+              adds a few bytes to every request, maybe 50-100 bytes for typical UI preferences. Negligible.
             </p>
-            <h2
-              id="works-with-any-state-library"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="works-with-any-state-library" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Works With Any State Library
             </h2>
-            <p class="mt-0 mb-6">
-              I showed Jotai in the examples, but the pattern is the same for any state library:
-            </p>
+            <p class="mt-0 mb-6">I showed Jotai in the examples, but the pattern is the same for any state library:</p>
             <p class="mt-0 mb-6">
               <strong>Zustand</strong>: Create a bootstrap script that reads from Zustand&#39;s
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >persist</code
-              >
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">persist</code>
               middleware localStorage key. Parse it, write to cookie, read cookie on server.
             </p>
             <p class="mt-0 mb-6">
-              <strong>Redux Persist</strong>: Same idea. The bootstrap script reads from Redux
-              Persist&#39;s localStorage key (usually
-              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]"
-                >persist:root</code
-              >
+              <strong>Redux Persist</strong>: Same idea. The bootstrap script reads from Redux Persist&#39;s
+              localStorage key (usually
+              <code class="rounded-sm bg-surface px-1 py-0.5 [font:0.84em/1.65_var(--font-mono)]">persist:root</code>
               or similar), extracts the values you need, writes to cookie.
             </p>
             <p class="mt-0 mb-6">
-              <strong>React Context</strong>: If you&#39;re using plain Context with localStorage,
-              create a server component that reads the cookie and passes values to a client
-              provider.
+              <strong>React Context</strong>: If you&#39;re using plain Context with localStorage, create a server
+              component that reads the cookie and passes values to a client provider.
             </p>
             <p class="mt-0 mb-6">
-              <strong>No library (just useState + localStorage)</strong>: Works too. The server
-              passes cookie values as props, the client component initializes state with those
-              props, then syncs to localStorage.
+              <strong>No library (just useState + localStorage)</strong>: Works too. The server passes cookie values as
+              props, the client component initializes state with those props, then syncs to localStorage.
             </p>
             <p class="mt-0 mb-6">
-              The principle is always the same: localStorage is client-only, cookies are
-              server-readable. The bootstrap script bridges them.
+              The principle is always the same: localStorage is client-only, cookies are server-readable. The bootstrap
+              script bridges them.
             </p>
-            <h2
-              id="real-world-use-cases"
-              class="mt-12 text-xl font-semibold leading-tight tracking-tight"
-            >
+            <h2 id="real-world-use-cases" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
               Real-World Use Cases
             </h2>
             <p class="mt-0 mb-6">This pattern applies to more than sidebars:</p>
             <ul class="mt-0 mb-6">
               <li><strong>Theme preferences</strong>: Dark mode, high contrast, font size</li>
-              <li>
-                <strong>Layout preferences</strong>: Collapsed panels, split pane ratios, table
-                column widths
-              </li>
+              <li><strong>Layout preferences</strong>: Collapsed panels, split pane ratios, table column widths</li>
               <li><strong>Sort/filter state</strong>: Remembered sort order, active filters</li>
               <li><strong>Onboarding state</strong>: Which tooltips have been dismissed</li>
-              <li>
-                <strong>Feature flags</strong>: Client-side feature toggles that affect layout
-              </li>
+              <li><strong>Feature flags</strong>: Client-side feature toggles that affect layout</li>
             </ul>
             <p class="mt-0 mb-6">
-              Anywhere you&#39;re persisting UI state to localStorage and that state affects the
-              initial render, you&#39;ll benefit from cookie sync.
+              Anywhere you&#39;re persisting UI state to localStorage and that state affects the initial render,
+              you&#39;ll benefit from cookie sync.
             </p>
-            <h2 id="wrapping-up" class="mt-12 text-xl font-semibold leading-tight tracking-tight">
-              Wrapping Up
-            </h2>
+            <h2 id="wrapping-up" class="mt-12 text-xl font-semibold leading-tight tracking-tight">Wrapping Up</h2>
             <p class="mt-0 mb-6">
-              The localStorage hydration flash is one of those problems that seems minor until you
-              notice it. Then it&#39;s all you can see. Light mode flashing before dark mode.
-              Sidebars snapping. Panels jumping around.
+              The localStorage hydration flash is one of those problems that seems minor until you notice it. Then
+              it&#39;s all you can see. Light mode flashing before dark mode. Sidebars snapping. Panels jumping around.
             </p>
             <p class="mt-0 mb-6">
-              Cookie sync solves it cleanly for returning users, and first visits degrade gracefully
-              to defaults. It&#39;s a bit more code upfront, but the result is a page that looks
-              right from the first paint.
+              Cookie sync solves it cleanly for returning users, and first visits degrade gracefully to defaults.
+              It&#39;s a bit more code upfront, but the result is a page that looks right from the first paint.
             </p>
             <p class="mt-0 mb-6">
               If you have questions or found a better approach, reach out on any of my
-              <a
-                class="text-inherit decoration-muted underline-offset-4 hover:decoration-current"
-                href="/contact/"
+              <a class="text-inherit decoration-muted underline-offset-4 hover:decoration-current" href="/contact/"
                 >socials</a
               >. Happy building!
             </p>
           </div>
         </article>
         <nav class="mt-12 text-[0.9rem]" aria-label="Related writing">
-          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">
-            Related writing
-          </h2>
+          <h2 class="mt-12 text-[1rem] font-semibold leading-tight tracking-tight">Related writing</h2>
           <ul class="mt-0 mb-6">
             <li class="my-2">
               <a
@@ -804,13 +763,11 @@
         <div>
           <a class="text-inherit no-underline" href="https://github.com/Pulkitxm">GitHub</a>
           · <a class="text-inherit no-underline" href="https://x.com/_pulkitxm">X</a> ·
-          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm"
-            >LinkedIn</a
-          >
+          <a class="text-inherit no-underline" href="https://www.linkedin.com/in/pulkitxm">LinkedIn</a>
         </div>
         <div class="mt-4.5 flex items-center justify-between">
-          <small>© 2026 Pulkit</small
-          ><button
+          <small>© 2026 Pulkit</small>
+          <button
             class="cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit]"
             type="button"
             data-theme-toggle

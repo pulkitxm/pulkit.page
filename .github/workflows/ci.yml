@@ -123,11 +123,10 @@ jobs:
         with:
           name: built-sites
           path: apps
-      - run: bunx playwright install --with-deps chromium
-        working-directory: packages/engine
       - name: Run browser check
         env:
           BROWSER_VIEWPORT: ${{ matrix.viewport }}
+          PLAYWRIGHT_CHANNEL: chrome
         run: bunx turbo run check:browser --only
   ci:
     name: CI

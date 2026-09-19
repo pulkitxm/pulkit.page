@@ -159,7 +159,7 @@ async function auditAccessibility(page, scope) {
     await page.evaluate((selected) => {
       document.documentElement.dataset.theme = selected;
     }, theme);
-    const builder = new AxeBuilder({ page }).exclude(["iframe", "*"]);
+    const builder = new AxeBuilder({ page }).exclude(["iframe", "*"]).setLegacyMode(true);
     const { violations } = await (theme === "light"
       ? builder.withTags(axeTags)
       : builder.withRules(themeDependentRules)

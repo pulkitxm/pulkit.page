@@ -528,7 +528,7 @@ Compare this to `node-cron` or `setInterval`, where the scheduler, the executor,
 
 The full architecture looks like this: a **Queue** backed by Redis holds the cron patterns, a **Worker** process picks up jobs when they fire, your **API** lets users create and manage schedules, and an optional **sync script** reconciles the database with Redis when things drift.
 
-For sending emails as part of your cron jobs (weekly digests, reports, notifications), I've covered that in a [previous post about email delivery with Resend](/blogs/contact-form-with-resend/).
+For sending emails as part of your cron jobs (weekly digests, reports, notifications), I've covered that in a [previous post about email delivery with Resend](/contact-form-with-resend/).
 
 I've put together a working example with all the code from this post that you can run locally: [cron-jobs on GitHub](https://github.com/pulkitxm/systems/tree/main/messaging/cron-jobs). It includes the queue setup, worker with task handlers, schedule management scripts, and the reconciliation logic, all wired up with Docker Compose for Redis.
 

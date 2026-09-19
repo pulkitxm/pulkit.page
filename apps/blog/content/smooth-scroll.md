@@ -486,4 +486,4 @@ Start with Lenis if you want something lightweight. Add GSAP ScrollTrigger if yo
 
 The best smooth scroll implementations are the ones you barely notice. The page just feels good. That's the goal.
 
-If you have questions or want to share what you built, reach out on any of my [socials](/contact/). Happy scrolling!
+If you have questions or want to share what you built, reach out on any of my [socials](https://pulkit.page/contact/). Happy scrolling!

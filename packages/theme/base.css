@@ -1,0 +1,43 @@
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@source "../engine/src/render-page.mjs";
+@source "../code/src/highlight.mjs";
+@source "../embeds/src";
+
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:not([data-theme="light"]) {
+      @slot;
+    }
+  }
+  &[data-theme="dark"] {
+    @slot;
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(entry-title) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(entry-title),
+::view-transition-new(entry-title) {
+  width: auto;
+  height: auto;
+  object-fit: none;
+  object-position: left top;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 150ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

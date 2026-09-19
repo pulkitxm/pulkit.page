@@ -1,0 +1,13 @@
+{
+  "name": "@pulkit/theme",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    "./base.css": "./base.css",
+    "./theme.js": "./theme.js"
+  },
+  "dependencies": {
+    "tailwindcss": "4.3.3"
+  }
+}

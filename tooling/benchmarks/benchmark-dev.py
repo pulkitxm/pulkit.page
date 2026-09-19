@@ -27,10 +27,13 @@ def request(url):
     return milliseconds(start), body
 
 
+CLI = Path(__file__).resolve().parents[2] / "packages/engine/src/cli.mjs"
+
+
 def launch(root, port):
     start = time.perf_counter()
     process = subprocess.Popen(
-        ["bun", "run", "dev"], cwd=root,
+        ["bun", str(CLI), "dev"], cwd=root,
         env={**os.environ, "PORT": str(port)},
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
         text=True, start_new_session=True,
@@ -87,7 +90,8 @@ def benchmark(source, repetitions):
         for package in (source / "node_modules").iterdir():
             if package.name not in {".vite", ".vite-temp"}:
                 (dependencies / package.name).symlink_to(package.resolve())
-        articles = list((root / "content/blogs").rglob("*.md"))
+        articles = [path for path in (root / "content").rglob("*.md")
+            if path.name not in {"index.md", "home.md", "_site.md"}]
         article = max(articles, key=lambda path: path.read_text().count("```"))
         route = "/" + str(article.relative_to(root / "content").with_suffix("")) + "/"
         for iteration in range(repetitions):
@@ -115,7 +119,7 @@ def benchmark(source, repetitions):
                     originals[article] + f"\n{marker}\n", marker)
                 marker = f"Benchmark title {iteration}"
                 changed = re.sub(r"(?m)^title:.*$", f"title: {marker}", article.read_text())
-                row["metadata_edit_ms"] = edit(root, url + "/blogs/", article, changed, marker)
+                row["metadata_edit_ms"] = edit(root, url + route.rsplit("/", 2)[0] + "/", article, changed, marker)
                 layout = root / "layouts/partials/footer.html"
                 originals[layout] = layout.read_text()
                 marker = f"benchmark layout {iteration}"
@@ -126,7 +130,7 @@ def benchmark(source, repetitions):
                 for path, text in originals.items():
                     path.write_text(text)
             start = time.perf_counter()
-            result = subprocess.run(["bun", "run", "build"], cwd=root,
+            result = subprocess.run(["bun", str(CLI), "build"], cwd=root,
                 capture_output=True, text=True, timeout=120)
             if result.returncode:
                 raise RuntimeError(result.stdout + result.stderr)

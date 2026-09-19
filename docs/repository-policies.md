@@ -10,15 +10,15 @@ Known binary media and fonts have no source-code comment syntax and are excluded
 
 ## No em dashes
 
-[check-em-dashes.mjs](../scripts/check-em-dashes.mjs) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, HTML templates, and code examples. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
+[check-em-dashes.mjs](../tooling/checks/src/check-em-dashes.mjs) rejects the literal Unicode U+2014 character in repository text, including strings, Markdown, JSON, HTML templates, and code examples. It reports filenames and line numbers. Use ordinary punctuation instead. Test fixtures construct the character at runtime to test the rejection without storing it literally.
 
 ## No source-code comments
 
-[check-comments.mjs](../scripts/check-comments.mjs) parses syntax rather than searching every slash or hash as a comment.
+[check-comments.mjs](../tooling/checks/src/check-comments.mjs) parses syntax rather than searching every slash or hash as a comment.
 
 - Tree-sitter handles JavaScript, TypeScript, JSX/TSX, CSS, shell, Python, Ruby, Lua, Swift, Rust, C/C++, Java, Kotlin, Go, TOML, JSON/JSONC, and other explicitly registered languages.
 - YAML concrete-syntax tokens distinguish comments from quoted and block scalars.
-- Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except article examples under `content/blogs/`, which preserve their original comments.
+- Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except article examples under `apps/<app>/content/blogs/`, which preserve their original comments.
 - parse5 finds HTML/SVG/XML comments, embedded scripts/styles, JSON-LD, and generated code examples. HTML entities in code examples are decoded before scanning. Actual HTML comments and embedded scripts/styles remain checked everywhere.
 - Small syntax-aware lexers handle SQL comments and quoted/dollar-quoted strings, hash-comment configuration languages, and Mermaid comments.
 - Python docstrings count as documentation comments. All lint directives, coverage directives, documentation comments, and license comments count as comments. Third-party plain-text license files remain ordinary text.
@@ -29,9 +29,9 @@ Unknown source types and unknown fence languages cause a failure requesting an e
 
 ## Knip
 
-[knip.json](../knip.json) declares the browser entry point, actual CLI programs, manual importer, and tests. It scans project JavaScript/TypeScript/JSX/MDX source, excluding ignored reference and disposable build trees. `includeEntryExports` also checks unnecessary public exports in entry points.
+[knip.json](../knip.json) configures each workspace separately. The engine declares its CLI modules and test setup as entries, embeds declare their `client/*.js` browser scripts, demos declare `index.js`, and checks declare their `check-*.mjs` CLIs; package `exports` and `bin` fields supply the rest. Apps have no JavaScript of their own and ignore their `@pulkit/theme` dependency, which is consumed through CSS. `includeEntryExports` also checks unnecessary public exports in entry points.
 
-`bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. The manual importer has a real `import:reference` package command and remains intentional tooling. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
+`bun run check:dead-code` runs pinned Knip with zero tolerated issues and treats configuration hints as errors. There are no unused-file/export/dependency allowlists. Keep exports that have real consumers; SEO validation now imports the shared HTML escaping helper. Export necessity follows the current dependency graph, not an earlier cleanup count.
 
 Knip is static analysis, not a guarantee about runtime reachability or a CSS/image/Markdown garbage collector. Dynamic use must be modeled with an explicit legitimate entry point. Do not add every source file as an entry to silence unused-file findings.
 
@@ -44,10 +44,10 @@ bun run check:dead-code
 bun run ci
 ```
 
-For fixes, edit the source Markdown or code, run `bun run format`, and rerun CI. Generated HTML is build output in `dist/` and is never edited or committed.
+For fixes, edit the source Markdown or code, run `bun run format`, and rerun CI. Generated HTML is build output in `apps/page/dist/` and is never edited or committed.
 
 ## Regression coverage
 
-[check-comments.test.js](../scripts/check-comments.test.js) covers quotes, regex URLs, JavaScript template interpolation, JSX, Python docstrings and multiline strings, shell parameter expansion and heredocs, YAML block scalars, JSONC, nested SQL/Swift comments, Lua block comments, embedded HTML languages, Markdown fences, generated code blocks, unsupported languages, offsets, and em dashes.
+[check-comments.test.js](../tooling/checks/src/check-comments.test.js) covers quotes, regex URLs, JavaScript template interpolation, JSX, Python docstrings and multiline strings, shell parameter expansion and heredocs, YAML block scalars, JSONC, nested SQL/Swift comments, Lua block comments, embedded HTML languages, Markdown fences, generated code blocks, unsupported languages, offsets, and em dashes.
 
-[policy-ci.test.js](../scripts/policy-ci.test.js) verifies read-only failures for force-tracked ignored files and demonstrates that Knip fails on unused files, exports, and dependencies, then passes after those problems are removed.
+[policy-ci.test.js](../tooling/checks/src/policy-ci.test.js) verifies read-only failures for force-tracked ignored files and demonstrates that Knip fails on unused files, exports, and dependencies, then passes after those problems are removed.

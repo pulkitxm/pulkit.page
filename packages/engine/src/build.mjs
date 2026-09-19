@@ -18,6 +18,7 @@ import { buildEmbedAssets } from "@pulkit/embeds/bundle";
 import { themeFile } from "@pulkit/theme/files";
 import { logDuration } from "./duration.mjs";
 import { generateSite } from "./generate.mjs";
+import { mangleClasses } from "./mangle-classes.mjs";
 import { resolveSiteOrigin } from "./site-origin.mjs";
 
 const tailwind = fileURLToPath(
@@ -64,6 +65,12 @@ if (pages.some((page) => page.body.includes(":::demo "))) {
 }
 await buildEmbedAssets("dist/assets");
 logDuration("Built demo assets", stepStartedAt);
+stepStartedAt = performance.now();
+const { renamed, kept } = mangleClasses("dist", "styles.css");
+logDuration(
+  `Renamed ${renamed} classes, kept ${kept} referenced by scripts or other styles`,
+  stepStartedAt,
+);
 stepStartedAt = performance.now();
 const fingerprinted = new Map();
 for (const file of ["styles.css"]) {

@@ -24,6 +24,7 @@
     "@tailwindcss/cli": "4.3.3",
     "@tailwindcss/vite": "4.3.3",
     "html-validate": "11.16.0",
+    "lightningcss": "1.33.0",
     "marked": "18.0.13",
     "playwright": "1.63.0",
     "remark-gfm": "4.0.1",

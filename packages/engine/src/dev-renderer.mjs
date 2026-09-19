@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import profile from "@pulkit/profile";
 import { formatDuration } from "./duration.mjs";
 import { generationCache, generationVersion } from "./generation-cache.mjs";
 import { llmsText, renderMarkdown } from "./markdown-export.mjs";
@@ -5,6 +8,20 @@ import { cardCategory, crawlerOutputs, renderCard } from "./og-images.mjs";
 import { renderDependencies, renderPage } from "./render-page.mjs";
 import { imagePath, markdownPath } from "./seo.mjs";
 import { readSite } from "./site-inventory.mjs";
+
+export const developmentOriginFile = ".cache/dev-origin";
+
+function linkLocalSites(html) {
+  return Object.entries(profile.sites).reduce((body, [site, origin]) => {
+    let local;
+    try {
+      local = readFileSync(join("..", site, developmentOriginFile), "utf8").trim();
+    } catch {
+      return body;
+    }
+    return body.replaceAll(`href="${origin}`, `href="${local}`);
+  }, html);
+}
 
 function crawlerType(pathname) {
   if (pathname.endsWith(".txt")) {
@@ -63,7 +80,7 @@ export function developmentRenderer(origin) {
         );
         const description = summary(startedAt);
         save();
-        return { body: html, type: "text/html; charset=utf-8", description };
+        return { body: linkLocalSites(html), type: "text/html; charset=utf-8", description };
       }
       const card = pages.find((entry) => imagePath(entry.route) === pathname);
       if (card) {

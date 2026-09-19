@@ -86,10 +86,10 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(existsSync(join(cwd, "dist/stale.html"))).toBe(false);
   const built = readFileSync(join(cwd, "dist/index.html"), "utf8");
   const [, styles] = built.match(/href="\/(styles\.[0-9a-f]{12}\.css)"/);
-  const [, theme] = built.match(/src="\/(theme\.[0-9a-f]{12}\.js)"/);
   expect(existsSync(join(cwd, "dist", styles))).toBe(true);
-  expect(existsSync(join(cwd, "dist", theme))).toBe(true);
   expect(existsSync(join(cwd, "dist/styles.css"))).toBe(false);
+  expect(existsSync(join(cwd, "dist/theme.js"))).toBe(false);
+  expect(built).toContain("portfolio-theme");
   rmSync(join(cwd, "content/notes/example.md"));
   expect(build(cwd).status).toBe(0);
   expect(existsSync(join(cwd, "dist/notes/example/index.html"))).toBe(false);

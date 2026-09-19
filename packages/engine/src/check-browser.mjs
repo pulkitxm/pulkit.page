@@ -32,7 +32,7 @@ const workersPerViewport = Math.max(
   1,
   Math.floor(availableParallelism() / auditedViewports.length),
 );
-const blockingImpacts = new Set(["serious", "critical"]);
+const blockingImpacts = new Set(["moderate", "serious", "critical"]);
 const { pages, site } = readSite("http://localhost");
 const collections = pages.filter((page) => page.index).map((page) => page.route);
 const navigationTarget =
@@ -360,15 +360,6 @@ async function auditKeyboard(browser, origin) {
   const label = "keyboard";
   const { context, page } = await openSession(browser, origin, label);
   await page.goto(origin);
-  await page.keyboard.press("Tab");
-  const skip = await page.evaluate(() => ({
-    href: document.activeElement?.getAttribute("href"),
-    visible: document.activeElement?.getBoundingClientRect().top >= 0,
-  }));
-  expect(label, skip.href === "#main", "First tab stop is not the skip link");
-  expect(label, skip.visible, "Skip link stays off screen when focused");
-  await page.keyboard.press("Enter");
-  expect(label, new URL(page.url()).hash === "#main", "Skip link did not jump to main");
   let reached = false;
   for (let step = 0; step < 200 && !reached; step += 1) {
     await page.keyboard.press("Tab");

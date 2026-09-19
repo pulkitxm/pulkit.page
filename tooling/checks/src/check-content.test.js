@@ -22,6 +22,12 @@ describe("strict content conventions", () => {
     ["content/about.md", page("layout: nonexistent\n"), "existing layout"],
     ["content/about.md", page("", "# Another title\n"), "H1 comes from title"],
     ["content/about.md", page("", "## Same\n\n## Same\n"), "duplicate heading"],
+    ["content/about.md", page("", "### Section\n"), "must not skip"],
+    ["content/about.md", page("", "## Section\n\n#### Detail\n"), "must not skip"],
+    ["docs/guide.md", "# Guide\n\n### Detail\n", "must not skip"],
+    ["content/about.md", page("", "[here](https://example.com/)\n"), "must describe"],
+    ["content/about.md", page("", "[Read more](https://example.com/)\n"), "must describe"],
+    ["content/about.md", page("", "![Chart](https://cdn.example.com/chart.png)\n"), "self-hosted"],
     ["content/about.md", page("", "<marquee>raw</marquee>\n"), "raw HTML"],
     ["content/about.md", page("", "```\nexample\n```\n"), "lowercase language"],
 
@@ -33,6 +39,15 @@ describe("strict content conventions", () => {
     ["README.md", "No heading.\n", "exactly one H1"],
   ])("rejects invalid content in %s", (file, source, message) => {
     expect(checkContent(file, source).errors.join("\n")).toContain(message);
+  });
+
+  test("accepts ordered headings, descriptive links and self-hosted images", () => {
+    const body = [
+      "## Section\n\n### Detail\n\n#### Fine grain\n\n## Next\n\n",
+      "[the EC2 feature list](https://aws.amazon.com/ec2/features/)\n\n",
+      "![Diagram](/assets/content/blogs/example/diagram.webp)\n",
+    ].join("");
+    expect(checkContent("content/about.md", page("", body)).errors).toEqual([]);
   });
 
   test("rejects duplicate YAML keys and aliases without fixing away evidence", () => {

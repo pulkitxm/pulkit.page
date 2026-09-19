@@ -7,11 +7,11 @@
 
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
-    &:not([data-theme="light"]) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
       @slot;
     }
   }
-  &[data-theme="dark"] {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
     @slot;
   }
 }

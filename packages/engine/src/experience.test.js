@@ -36,9 +36,22 @@ test("experience listing cache changes when dates, roles or icons change", () =>
     endDate: "2025-07-01",
     role: "Senior Engineer",
     icon: "/assets/exp/updated.webp",
+    darkIcon: "/assets/exp/updated-dark.svg",
     secondaryIcon: "/assets/exp/second.webp",
   })) {
     const updated = { ...entry, metadata: { ...metadata, [field]: value } };
     expect(renderDependencies(home, [updated], site)).not.toEqual(before);
   }
+});
+
+test("experience icons with a dark variant swap by color scheme", async () => {
+  const source = "---\ntitle: Home\n---\n\n:::list exp\n";
+  const html = await renderPage(source, {
+    pages: [{ ...entry, metadata: { ...metadata, darkIcon: "/assets/exp/example-dark.svg" } }],
+  });
+  expect(html).toMatch(/class="[^"]*dark:hidden[^"]*" src="\/assets\/exp\/example\.webp"/);
+  expect(html).toMatch(
+    /class="[^"]*hidden[^"]*dark:block[^"]*" src="\/assets\/exp\/example-dark\.svg"/,
+  );
+  expect(html).not.toContain("bg-icon");
 });

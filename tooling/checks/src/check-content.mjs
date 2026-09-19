@@ -29,6 +29,7 @@ const pageFields = [
   "period",
   "endDate",
   "icon",
+  "darkIcon",
   "secondaryIcon",
   "tags",
 ];
@@ -133,7 +134,7 @@ function metadataErrors(data, file, root) {
   if (data.endDate && (!data.date || data.endDate < data.date)) {
     errors.push("endDate must be on or after date");
   }
-  for (const field of ["icon", "secondaryIcon"]) {
+  for (const field of ["icon", "darkIcon", "secondaryIcon"]) {
     if (
       data[field] &&
       (!/^\/assets\/exp\/[a-z0-9-]+\.(webp|svg)$/.test(data[field]) ||

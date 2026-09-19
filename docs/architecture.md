@@ -83,17 +83,17 @@ flowchart TD
   bundles --> fingerprint[Fingerprint styles.css and theme.js, rewrite references]
 ```
 
-[build.mjs](../packages/engine/src/build.mjs) drives those steps in order and
+[build.ts](../packages/engine/src/commands/build.ts) drives those steps in order and
 prints the duration of each one.
 
-1. **Origin.** [resolveSiteOrigin](../packages/engine/src/site-origin.mjs)
+1. **Origin.** [resolveSiteOrigin](../packages/engine/src/site/site-origin.ts)
    returns `SITE_URL` when set, `http://127.0.0.1:<PORT>` under
    `NODE_ENV=development`, and `https://<CNAME>` for production. Any other
    `NODE_ENV` without `SITE_URL` fails. The origin is the only source of
    canonical URLs, so there is no `url` frontmatter field.
 2. **Clear.** Everything in `dist/` except reserved `dev-<port>` directories is
    removed, so a renamed or deleted page leaves no stale output.
-3. **Inventory.** [site-inventory.mjs](../packages/engine/src/site-inventory.mjs)
+3. **Inventory.** [site-inventory.ts](../packages/engine/src/site/site-inventory.ts)
    walks `content/`, rejects symlinks and `.mdx`, maps each file to a route,
    rejects routes that collide after NFC and lowercase normalization, and
    requires a homepage. `readSiteConfig` merges
@@ -103,19 +103,19 @@ prints the duration of each one.
    layouts otherwise. A list directive that names another site, such as
    `blog:all`, also makes the inventory read `../blog/content` so the list can
    link to the other site.
-4. **Render.** For each page, [generate.mjs](../packages/engine/src/generate.mjs)
+4. **Render.** For each page, [generate.ts](../packages/engine/src/site/generate.ts)
    asks the render cache for the HTML and renders it on a miss.
-   [renderPage](../packages/engine/src/render-page.mjs) validates the
+   [renderPage](../packages/engine/src/render/render-page.ts) validates the
    frontmatter, runs Marked with the project's renderer overrides and the
    `embed`, `demo`, `carousel` and `list` extensions, collects the styles and
    scripts the page actually used, builds the SEO head, fills a layout, and
    returns HTML formatted by
-   [formatHtml](../packages/code/src/format-html.mjs).
-5. **Generated assets.** [og-images.mjs](../packages/engine/src/og-images.mjs)
+   [formatHtml](../packages/code/src/format/format-html.ts).
+5. **Generated assets.** [og-images.ts](../packages/engine/src/seo/og-images.ts)
    rasterizes one 1200 by 630 PNG card per route with resvg, then adds
    `sitemap.xml`, `robots.txt`, `feed.xml` on sites with articles, and the
    Markdown copies and `llms.txt` from
-   [markdown-export.mjs](../packages/engine/src/markdown-export.mjs).
+   [markdown-export.ts](../packages/engine/src/markdown/markdown-export.ts).
 6. **Write.** Only after every page and asset is in memory does the generator
    write files, so a rendering error cannot leave a half written page. It then
    saves the render cache and prints how many entries it had to compute.
@@ -142,7 +142,7 @@ committed.
 ## From Markdown to a page during development
 
 `bun run dev` starts one server per app. `site dev` runs
-[dev.mjs](../packages/engine/src/dev.mjs) under `bun --watch`, which creates a
+[dev.ts](../packages/engine/src/commands/dev.ts) under `bun --watch`, which creates a
 Vite server in middleware mode. Vite supplies file watching, the browser reload
 client, CSS hot replacement and HTML transforms; a single middleware supplies the
 pages.
@@ -162,7 +162,7 @@ flowchart TD
   render --> serve
 ```
 
-[dev-renderer.mjs](../packages/engine/src/dev-renderer.mjs) reads the inventory
+[dev-renderer.ts](../packages/engine/src/dev/dev-renderer.ts) reads the inventory
 on the first request and keeps it until a watched file changes. It answers page
 routes, social cards, `sitemap.xml`, `robots.txt`, `feed.xml`, every Markdown
 copy and `llms.txt`, redirects a missing trailing slash, and returns 404 for
@@ -187,7 +187,7 @@ the next request retries after a fix.
 
 `site start` is a separate mode: it previews an existing `dist/` with Vite and
 never renders anything. Port selection is shared by both
-([server-port.mjs](../packages/engine/src/server-port.mjs)): `PORT` wins and is
+([port.ts](../packages/engine/src/lib/port.ts)): `PORT` wins and is
 strict, `SITE_PORT` is a preference that falls forward to a free port, `PORT=0`
 asks the operating system, and the default is 3000. pulkit.blog sets
 `SITE_PORT=3001` in its `dev` and `start` scripts so both sites run together.
@@ -199,7 +199,7 @@ Both sites look identical because both take their entire presentation from
 
 - [styles.css](../packages/theme/styles.css) sets up the Tailwind theme and
   utilities layers without Preflight, declares `@source` entries for the theme's
-  `layouts/`, the engine's `render-page.mjs`, the code package's `highlight.mjs`
+  `layouts/`, the engine's `src/render/` modules, the code package's `highlight/token-role.ts`
   and the embed renderers, defines the `dark` variant for both the system
   preference and the `data-theme` override, declares the Comic Relief web fonts,
   replaces the default Tailwind theme with the site tokens, including the
@@ -210,10 +210,10 @@ Both sites look identical because both take their entire presentation from
   by adding its own `layouts/` directory; neither does.
 - `assets/` holds the favicons, the Comic Relief web fonts, the IBM Plex Mono
   TTF used only for social cards, and the author portrait.
-- [theme.js](../packages/theme/theme.js) is loaded without `defer` in the head so
+- [theme.ts](../packages/theme/src/client/theme.ts) is loaded without `defer` in the head so
   a stored theme applies before the body renders. It also names the shared
   element for view transitions and skips the animation under reduced motion.
-- [src/files.mjs](../packages/theme/src/files.mjs) resolves paths inside the
+- [src/lib/files.ts](../packages/theme/src/lib/files.ts) resolves paths inside the
   package (`themeFile`) and maps a public `/assets/...` path to the app's own
   asset first and the shared asset second (`assetFile`).
 
@@ -235,16 +235,18 @@ text inside `pre` untouched.
 
 `@pulkit/embeds` renders the block and inline embeds described in the
 [authoring guide](authoring-guide.md#components) from a
-[registry](../packages/embeds/src/registry.mjs) of renderers, and also decides
+[registry](../packages/embeds/src/renderers/registry.ts) of renderers, and also decides
 which raw HTML tags are allowed in Markdown. Every renderer records
 the stylesheet or script it needs, so a page carries only the assets it uses.
-The browser half lives in `client/` and is bundled with `Bun.build` and code
+The browser half lives in `client/`, with one thin entry per script in
+`client/entries/`, widget logic in `client/components/`, and shared helpers in
+`client/lib/`; the entries are bundled with `Bun.build` and code
 splitting.
 
 `@pulkit/demos` renders a demo directive, with an optional variant, as a
 `demo-showcase` custom element whose data comes from `showcases/*.json`. In the browser the element
 attaches a shadow root, adopts the demo stylesheet, and loads the component with
-a dynamic `import()` from [registry.js](../packages/demos/registry.js) once the
+a dynamic `import()` from [registry.ts](../packages/demos/client/registry.ts) once the
 element scrolls near the viewport.
 
 `@pulkit/shared` holds the two pieces that several workspaces need: `escapeHtml`
@@ -263,8 +265,8 @@ deleted to force a cold run.
 | Render cache      | `apps/<app>/.cache/generate/` | A version hash of package sources plus the inputs of one page, fence or card           | One HTML page, fence or card   |
 | Bun package cache | `~/.bun/install/cache`        | `bun.lock`                                                                             | Downloaded dependencies        |
 
-[generation-cache.mjs](../packages/engine/src/generation-cache.mjs) computes the
-version from every `packages/*/src/*.mjs` file, the demo showcases, `biome.json`,
+[generation-cache.ts](../packages/engine/src/lib/generation-cache.ts) computes the
+version from every non-test `packages/*/src/**/*.ts` file, the demo showcases, `biome.json`,
 `bun.lock` and the bundled card font, so any change in generator behavior
 invalidates it conservatively. Entries are stored per absolute output directory,
 which keeps a build and a development server on the same checkout apart, are
@@ -324,7 +326,7 @@ Two files extend the root configuration:
 - [tooling/checks/turbo.json](../tooling/checks/turbo.json) adds `.github/`,
   `.githooks/`, the root `turbo.json`, `package.json`, `knip.json` and every
   workspace manifest to the inputs of its `test`, because
-  [policy-ci.test.js](../tooling/checks/src/policy-ci.test.js) asserts facts
+  [policy-ci.test.ts](../tooling/checks/src/commands/policy-ci.test.ts) asserts facts
   about those files.
 
 `biome.json` and `.htmlvalidate.json` are global dependencies, and `NODE_ENV`

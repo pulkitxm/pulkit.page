@@ -27,7 +27,7 @@ def request(url):
     return milliseconds(start), body
 
 
-CLI = Path(__file__).resolve().parents[2] / "packages/engine/src/cli.mjs"
+CLI = Path(__file__).resolve().parents[2] / "packages/engine/src/cli.ts"
 
 
 def launch(root, port):

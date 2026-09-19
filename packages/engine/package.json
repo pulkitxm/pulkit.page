@@ -3,14 +3,11 @@
   "private": true,
   "type": "module",
   "bin": {
-    "site": "./src/cli.mjs"
-  },
-  "exports": {
-    "./render-page": "./src/render-page.mjs"
+    "site": "./src/cli.ts"
   },
   "scripts": {
     "test": "bun test --timeout 30000 ./src",
-    "check:layouts": "bun src/check-layouts.mjs"
+    "check:layouts": "bun src/commands/check-layouts.ts"
   },
   "dependencies": {
     "@axe-core/playwright": "4.13.0",
@@ -21,16 +18,11 @@
     "@pulkit/shared": "workspace:*",
     "@pulkit/theme": "workspace:*",
     "@resvg/resvg-js": "2.6.2",
-    "@tailwindcss/cli": "4.3.3",
     "@tailwindcss/vite": "4.3.3",
     "html-validate": "11.16.0",
     "lightningcss": "1.33.0",
     "marked": "18.0.13",
     "playwright": "1.63.0",
-    "remark-gfm": "4.0.1",
-    "remark-parse": "11.0.0",
-    "remark-stringify": "11.0.0",
-    "unified": "11.0.5",
     "vite": "8.3.0",
     "yaml": "2.9.1"
   },

@@ -18,7 +18,7 @@ apps/
 packages/
   engine/             @pulkit/engine: the static site generator and its `site` CLI
   theme/              @pulkit/theme: the shared stylesheet, layouts, assets, and theme script
-  shared/             @pulkit/shared: HTML escaping and built-site walkers used across workspaces
+  shared/             @pulkit/shared: browser-safe and Node helpers shared across workspaces
   code/               @pulkit/code: build-time syntax highlighting and code formatting
   embeds/             @pulkit/embeds: Markdown embed renderers and their browser scripts
   demos/              @pulkit/demos: interactive motion demos rendered by demo directives

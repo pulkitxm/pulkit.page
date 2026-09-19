@@ -3,21 +3,18 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./content": "./src/check-content.mjs",
-    "./comments": "./src/check-comments.mjs"
+    "./content": "./src/lib/content/check-content.ts",
+    "./comments": "./src/lib/comments/comment-ranges.ts"
   },
   "scripts": {
     "test": "bun test ./src"
   },
   "dependencies": {
-    "@pulkit/embeds": "workspace:*",
     "@babel/parser": "8.0.6",
+    "@pulkit/embeds": "workspace:*",
+    "@pulkit/shared": "workspace:*",
     "parse5": "8.0.1",
-    "remark-gfm": "4.0.1",
-    "remark-parse": "11.0.0",
-    "remark-stringify": "11.0.0",
     "tree-sitter-wasm": "2.0.1",
-    "unified": "11.0.5",
     "web-tree-sitter": "0.27.0",
     "yaml": "2.9.1"
   }

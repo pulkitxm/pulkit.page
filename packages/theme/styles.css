@@ -2,8 +2,9 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @source "./layouts";
-@source "../engine/src/render-page.mjs";
-@source "../code/src/highlight.mjs";
+@source "../engine/src/render";
+@source not "../engine/src/render/*.test.ts";
+@source "../code/src/highlight/token-role.ts";
 @source "../embeds/src";
 
 @custom-variant dark {

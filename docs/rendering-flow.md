@@ -17,7 +17,7 @@ flowchart TD
   E --> F
   F --> I[Copy app assets and theme files, bundle embeds and demos, compile Tailwind CSS]
   I --> J[Site and SEO validation]
-  J --> K[GitHub Pages artifact]
+  J --> K[GitHub Pages: this repository and pulkitxm/pulkit.blog]
 ```
 
 Build runs this path once per app, for the production origin or a preview origin, and writes everything into that app's `dist/` (`apps/page/dist/` or `apps/blog/dist/`); nothing generated is committed. Development renders the same pages on request instead of writing a full build.
@@ -87,7 +87,7 @@ Rendering reuses verified cache entries for HTML, fences, and cards. Changes to 
 
 Only the stylesheet and the embed and demo bundles are minified; no source-image optimization, redirects, or search service is generated. SEO assets are rendered for the selected origin; custom-origin output intentionally differs from production in canonicals, cards, schema, and crawler files.
 
-The [GitHub workflow](../.github/workflows/ci.yml) runs quality and workflow-analysis jobs, then the CI gate. It builds and checks both apps; main push or main manual dispatch uploads only `apps/page/dist` and deploys it to Pages after the gate, so no deployment of `apps/blog/dist` is configured here. Pull requests and merge groups validate without deployment. Local CI rebuilds ignored dist but does not deploy. Live DNS, GitHub settings, and remote health require separate verification.
+The [GitHub workflow](../.github/workflows/ci.yml) runs quality and workflow-analysis jobs, then the CI gate. It builds and checks both apps; main push or main manual dispatch deploys `apps/page/dist` to this repository's Pages and publishes `apps/blog/dist` to the pulkitxm/pulkit.blog Pages branch after the gate, as described in [deployment](deployment.md). Pull requests and merge groups validate without deployment. Local CI rebuilds ignored dist but does not deploy. Live DNS, GitHub settings, and remote health require separate verification.
 
 ## Incremental development and caches
 

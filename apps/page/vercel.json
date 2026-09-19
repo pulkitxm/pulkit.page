@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/blogs",
+      "destination": "https://pulkit.blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/:path*",
+      "destination": "https://pulkit.blog/:path*",
+      "permanent": true
+    }
+  ]
+}

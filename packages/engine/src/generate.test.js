@@ -38,6 +38,7 @@ function workspace() {
 function project() {
   const directory = workspace();
   writeFileSync(join(directory, "assets/example.txt"), "asset");
+  writeFileSync(join(directory, "vercel.json"), '{"trailingSlash":true}\n');
   writeFileSync(join(directory, "styles.css"), "");
   writeFileSync(join(directory, "content/home.md"), source);
   return directory;
@@ -81,7 +82,8 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   );
   expect(readFileSync(join(cwd, "dist/og/home/card.png")).subarray(1, 4).toString()).toBe("PNG");
   expect(readFileSync(join(cwd, "dist/assets/example.txt"), "utf8")).toBe("asset");
-  expect(readFileSync(join(cwd, "dist/CNAME"), "utf8")).toBe("example.com\n");
+  expect(readFileSync(join(cwd, "dist/vercel.json"), "utf8")).toBe('{"trailingSlash":true}\n');
+  expect(existsSync(join(cwd, "dist/CNAME"))).toBe(false);
   expect(readFileSync(join(cwd, "dist/dev-3456/index.html"), "utf8")).toBe("running preview");
   expect(existsSync(join(cwd, "dist/stale.html"))).toBe(false);
   const built = readFileSync(join(cwd, "dist/index.html"), "utf8");
@@ -96,7 +98,7 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).not.toContain("/notes/");
 }, 30000);
 
-test("preview builds use their own origin and never claim the production domain", () => {
+test("preview builds use their own origin", () => {
   const cwd = project();
   const result = build(cwd, {
     ...fixtureEnv,
@@ -111,7 +113,6 @@ test("preview builds use their own origin and never claim the production domain"
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).toContain(
     "<loc>https://preview.example/</loc>",
   );
-  expect(existsSync(join(cwd, "dist/CNAME"))).toBe(false);
 }, 30000);
 
 test("conflicting routes and unsupported MDX fail the build", () => {

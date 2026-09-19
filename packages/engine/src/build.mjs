@@ -35,9 +35,6 @@ if (existsSync("dist")) {
   }
 }
 logDuration("Cleared previous build", stepStartedAt);
-const production =
-  (!process.env.NODE_ENV || process.env.NODE_ENV === "production") &&
-  origin === resolveSiteOrigin({ NODE_ENV: "production" });
 stepStartedAt = performance.now();
 const pages = await generateSite("dist", origin);
 logDuration("Rendered pages", stepStartedAt);
@@ -46,8 +43,8 @@ cpSync("assets", "dist/assets", { recursive: true });
 cpSync(themeFile("fonts"), "dist/assets/fonts", { recursive: true });
 cpSync(themeFile("icons"), "dist/assets", { recursive: true });
 copyFileSync(themeFile("theme.js"), "dist/theme.js");
-if (production) {
-  copyFileSync("CNAME", "dist/CNAME");
+if (existsSync("vercel.json")) {
+  copyFileSync("vercel.json", "dist/vercel.json");
 }
 logDuration("Copied shared assets", stepStartedAt);
 stepStartedAt = performance.now();

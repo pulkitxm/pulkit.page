@@ -25,18 +25,15 @@ jobs:
           bun-version: 1.4.2
       - run: bun install --frozen-lockfile
       - run: bun run ci
+        env:
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: built-sites
           path: apps/*/dist
           include-hidden-files: true
           retention-days: 1
-      - name: Upload Pages artifact
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name ==
-          'workflow_dispatch')
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
-        with:
-          path: apps/page/dist
   workflows:
     name: Workflow lint
     runs-on: ubuntu-26.04
@@ -139,19 +136,49 @@ jobs:
         run: exit 1
       - run: echo "every required check passed"
   deploy:
-    name: Deploy Pages
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name ==
-      'workflow_dispatch')
+    name: Deploy ${{ matrix.app }}
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref ==
+      'refs/heads/main') || (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository)
     needs: ci
     runs-on: ubuntu-26.04
-    permissions:
-      contents: read
-      id-token: write
-      pages: write
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: page
+            project: VERCEL_PROJECT_ID_PAGE
+          - app: blog
+            project: VERCEL_PROJECT_ID_BLOG
     environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      name: ${{ github.event_name == 'pull_request' && format('{0}-preview', matrix.app) || matrix.app }}
+      url: ${{ steps.deploy.outputs.url }}
     steps:
-      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: built-sites
+          path: apps
       - id: deploy
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
+        env:
+          APP: ${{ matrix.app }}
+          PRODUCTION: ${{ github.event_name != 'pull_request' }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ vars[matrix.project] }}
+        run: >
+          target=preview
+
+          if [ "$PRODUCTION" = "true" ]; then
+            target=production
+          fi
+
+          url=$(bunx vercel@59.23.2 deploy "apps/$APP/dist" --yes --target "$target" --token
+          "$VERCEL_TOKEN")
+
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+          echo "Deployed $APP to $url" >> "$GITHUB_STEP_SUMMARY"

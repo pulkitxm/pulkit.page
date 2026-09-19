@@ -13,9 +13,20 @@ const viewports = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "mobile", width: 390, height: 844 },
 ];
+const selectedViewport = process.env.BROWSER_VIEWPORT;
+const auditedViewports = viewports.filter(
+  (viewport) => !selectedViewport || viewport.name === selectedViewport,
+);
+if (auditedViewports.length === 0) {
+  throw new Error(`Unknown BROWSER_VIEWPORT ${selectedViewport}`);
+}
+const auditsSiteFlows = auditedViewports.includes(viewports[0]);
 const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const themeDependentRules = ["color-contrast", "link-in-text-block"];
-const workersPerViewport = Math.max(1, Math.floor(availableParallelism() / viewports.length));
+const workersPerViewport = Math.max(
+  1,
+  Math.floor(availableParallelism() / auditedViewports.length),
+);
 const blockingImpacts = new Set(["serious", "critical"]);
 const { pages, site } = readSite("http://localhost");
 const collections = pages.filter((page) => page.index).map((page) => page.route);
@@ -215,7 +226,7 @@ async function auditViewport(browser, origin, paths, viewport) {
 
 async function auditPages(browser, origin, paths) {
   const [primary] = await Promise.all(
-    viewports.map((viewport) => auditViewport(browser, origin, paths, viewport)),
+    auditedViewports.map((viewport) => auditViewport(browser, origin, paths, viewport)),
   );
   return new Map(
     paths.filter((path) => primary.get(path)).map((path) => [path, primary.get(path)]),
@@ -443,11 +454,13 @@ try {
   }
   const documents = await auditPages(browser, origin, paths);
   auditLinks(documents, origin);
-  await auditWithoutJavaScript(browser, origin, paths);
-  await auditThemes(browser, origin);
-  await auditBlockedStorage(browser, origin);
-  await auditKeyboard(browser, origin);
-  await auditTransitions(browser, origin);
+  if (auditsSiteFlows) {
+    await auditWithoutJavaScript(browser, origin, paths);
+    await auditThemes(browser, origin);
+    await auditBlockedStorage(browser, origin);
+    await auditKeyboard(browser, origin);
+    await auditTransitions(browser, origin);
+  }
 } finally {
   await browser?.close();
   await server.close();

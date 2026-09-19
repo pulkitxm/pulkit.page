@@ -1,8 +1,9 @@
-import { existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
 import AxeBuilder from "@axe-core/playwright";
+import { builtRoutes } from "@pulkit/shared/built-site";
 import { chromium } from "playwright";
 import { preview } from "vite";
 import { readSite } from "./site-inventory.mjs";
@@ -38,17 +39,6 @@ const navigationTarget =
   site.navigation.find((item) => item.href.startsWith("/"))?.href ??
   pages.find((page) => page.route !== "/").route;
 const problems = new Set();
-
-function routes(directory, prefix = "/") {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    if (entry.isDirectory()) {
-      return entry.name === "assets" || /^dev-[0-9]+$/.test(entry.name)
-        ? []
-        : routes(join(directory, entry.name), `${prefix}${entry.name}/`);
-    }
-    return entry.name === "index.html" ? [prefix] : [];
-  });
-}
 
 function report(scope, message) {
   problems.add(`${scope}: ${message}`);
@@ -460,7 +450,7 @@ let chromiumBrowser;
 try {
   chromiumBrowser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
   const origin = server.resolvedUrls.local[0].replace(/\/$/, "");
-  const paths = routes(buildDirectory);
+  const paths = builtRoutes(buildDirectory);
   if (paths.length === 0) {
     report("build", "The build must contain pages");
   }

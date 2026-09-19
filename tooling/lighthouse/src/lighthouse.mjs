@@ -5,6 +5,7 @@ import { join } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import { builtRoutes } from "@pulkit/shared/built-site";
 import { preview } from "vite";
 
 const categories = ["performance", "accessibility", "best-practices", "seo"];
@@ -40,17 +41,6 @@ const outputDirectory = values.output;
 const concurrency = Number(values.concurrency);
 if (!Number.isInteger(concurrency) || concurrency < 1) {
   throw new Error("--concurrency must be a positive integer");
-}
-
-function routes(directory, prefix = "/") {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    if (entry.isDirectory()) {
-      return entry.name === "assets" || /^dev-[0-9]+$/.test(entry.name)
-        ? []
-        : routes(join(directory, entry.name), `${prefix}${entry.name}/`);
-    }
-    return entry.name === "index.html" ? [prefix] : [];
-  });
 }
 
 function slug(route) {
@@ -229,13 +219,13 @@ async function sitemapRoutes(origin) {
     .map((url) => url.pathname);
 }
 
-function builtRoutes(site) {
+function localRoutes(site) {
   if (!existsSync(join(site.directory, "dist/index.html"))) {
     throw new Error(
       `No build found for ${site.domain}. Run \`bun run build\` first, or pass --prod.`,
     );
   }
-  return routes(join(site.directory, "dist"));
+  return builtRoutes(join(site.directory, "dist"));
 }
 
 function discoverSites() {
@@ -266,7 +256,7 @@ try {
       site.routes = await sitemapRoutes(site.origin);
       continue;
     }
-    site.routes = builtRoutes(site);
+    site.routes = localRoutes(site);
     const server = await preview({
       configFile: false,
       appType: "mpa",

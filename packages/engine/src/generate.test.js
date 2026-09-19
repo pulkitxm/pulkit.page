@@ -238,6 +238,10 @@ test("carousel directives render sliding images and reject stray content", async
   expect(html.match(/data-carousel-track/g)).toHaveLength(1);
   expect(html).toContain('alt="Second"');
   expect(html).toContain("1 / 2");
+  expect(html).toContain('<script type="module" src="/assets/embeds/image-carousel.js">');
+  expect(await renderPage(`${source}\n![Single](/assets/a.webp)\n`)).not.toContain(
+    "image-carousel.js",
+  );
   await expect(renderPage(`${source}\n:::carousel\n\n${images}\n\nText\n\n:::\n`)).rejects.toThrow(
     "Invalid carousel directive",
   );

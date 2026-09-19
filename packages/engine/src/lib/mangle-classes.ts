@@ -6,6 +6,8 @@ import { transform } from "lightningcss";
 import { isRecord } from "./guards.ts";
 
 const shadowAssets = /^assets\/demos\/(?!document\.css$)/;
+const classAttribute = /(\s(?:class|data-[\w-]+-class)=")([^"]*)(")/g;
+const executableScriptTypes = new Set(["module", "text/javascript", "application/javascript"]);
 
 type Rename = (name: string) => string;
 
@@ -69,6 +71,25 @@ function referencedIn(scripts: string, name: string): boolean {
   return new RegExp(`(?<![\\w-])${escapeRegExp(name)}(?![\\w-])`).test(scripts);
 }
 
+function classTokens(html: string): string[] {
+  return [...html.matchAll(classAttribute)].flatMap(([, , value = ""]) =>
+    unescapeHtml(value).split(/\s+/),
+  );
+}
+
+function inlineScripts(html: string): string[] {
+  return [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+    .filter(([, attributes = ""]) => {
+      const type = /\stype\s*=\s*["']?([^"'\s>]+)/i.exec(attributes)?.[1]?.toLowerCase();
+      return !type || executableScriptTypes.has(type);
+    })
+    .map(([, , body = ""]) => body);
+}
+
+function inlineStyles(html: string): string[] {
+  return [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map(([, body = ""]) => body);
+}
+
 export function renameHtmlClasses(html: string, names: ReadonlyMap<string, string>): string {
   return html
     .split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>|<!--[\s\S]*?-->)/)
@@ -76,7 +97,7 @@ export function renameHtmlClasses(html: string, names: ReadonlyMap<string, strin
       index % 2 === 1
         ? segment
         : segment.replace(
-            /(\sclass=")([^"]*)(")/g,
+            classAttribute,
             (_, open: string, value: string, close: string) =>
               `${open}${value.replace(/\S+/g, (token) => names.get(unescapeHtml(token)) ?? token)}${close}`,
           ),
@@ -104,17 +125,23 @@ export function mangleClasses(directory: string, stylesheet: string): MangleResu
       }
     }
   }
-  const scripts = filesIn(directory, ".js")
-    .map((name) => readFileSync(join(directory, name), "utf8"))
-    .join("\n");
   const htmlFiles = filesIn(directory, ".html").map((name) => join(directory, name));
   const pages = htmlFiles.map((path) => ({ path, html: readFileSync(path, "utf8") }));
+  for (const { path, html } of pages) {
+    for (const style of inlineStyles(html)) {
+      for (const className of stylesheetClasses(style, path)) {
+        kept.add(className);
+      }
+    }
+  }
+  const scripts = [
+    ...filesIn(directory, ".js").map((name) => readFileSync(join(directory, name), "utf8")),
+    ...pages.flatMap(({ html }) => inlineScripts(html)),
+  ].join("\n");
   const taken = new Set(kept);
   for (const { html } of pages) {
-    for (const [, value = ""] of html.matchAll(/\sclass="([^"]*)"/g)) {
-      for (const token of unescapeHtml(value).split(/\s+/)) {
-        taken.add(token);
-      }
+    for (const token of classTokens(html)) {
+      taken.add(token);
     }
   }
   const source = readFileSync(stylesheetPath, "utf8");

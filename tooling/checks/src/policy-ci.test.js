@@ -135,17 +135,15 @@ test("a newer CI run cancels the older one on every branch, including main", () 
   expect(concurrency.group).toContain("github.ref");
 });
 
-test("deploys run after a successful main CI run and never cancel a running deploy", () => {
-  const deploy = workflow("deploy.yml");
-  expect(deploy.on.workflow_run.workflows).toEqual(["CI"]);
-  expect(deploy.on.workflow_run.branches).toEqual(["main"]);
-  expect(deploy.concurrency["cancel-in-progress"]).toBe(false);
-  expect(deploy.permissions).toEqual({});
-  for (const job of Object.values(deploy.jobs)) {
-    expect(job.if).toContain("github.event.workflow_run.conclusion == 'success'");
-    expect(job.if).toContain("github.event.workflow_run.head_branch == 'main'");
+test("deploys run in the CI workflow after the gate, only for main pushes and manual runs", () => {
+  const { jobs } = workflow("ci.yml");
+  for (const id of ["deploy-page", "deploy-blog"]) {
+    expect(jobs[id].needs).toBe("ci");
+    expect(jobs[id].if).toContain("github.ref == 'refs/heads/main'");
+    expect(jobs[id].if).toContain("github.event_name == 'push'");
+    expect(jobs.ci.needs).not.toContain(id);
   }
-  expect(JSON.stringify(workflow("ci.yml").jobs)).not.toContain("deploy-pages");
+  expect(readdirSync(join(repository, ".github/workflows"))).toEqual(["ci.yml"]);
 });
 
 test("every workflow job has a timeout and pins actions to a commit", () => {

@@ -87,7 +87,7 @@ Rendering reuses verified cache entries for HTML, fences, and cards. Changes to 
 
 Only the stylesheet and the embed and demo bundles are minified; no source-image optimization, redirects, or search service is generated. SEO assets are rendered for the selected origin; custom-origin output intentionally differs from production in canonicals, cards, schema, and crawler files.
 
-The [GitHub workflow](../.github/workflows/ci.yml) runs quality and workflow-analysis jobs, then the CI gate. It builds and checks both apps; after a successful main push or main manual dispatch, the [deploy workflow](../.github/workflows/deploy.yml) deploys `apps/page/dist` to this repository's Pages and publishes `apps/blog/dist` to the pulkitxm/pulkit.blog Pages branch, as described in [deployment](deployment.md). Pull requests and merge groups validate without deployment. Local CI rebuilds ignored dist but does not deploy. Live DNS, GitHub settings, and remote health require separate verification.
+The [GitHub workflow](../.github/workflows/ci.yml) runs quality and workflow-analysis jobs, then the CI gate. It builds and checks both apps; after the gate passes on a main push or main manual dispatch, its deploy jobs deploy `apps/page/dist` to this repository's Pages and publishes `apps/blog/dist` to the pulkitxm/pulkit.blog Pages branch, as described in [deployment](deployment.md). Pull requests and merge groups validate without deployment. Local CI rebuilds ignored dist but does not deploy. Live DNS, GitHub settings, and remote health require separate verification.
 
 ## Incremental development and caches
 

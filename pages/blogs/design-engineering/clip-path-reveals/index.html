@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="clip-path trims elements into circles and polygons, but it is also a powerful animation tool. Learn how inset clipping works, build before and after sliders without extra wrappers, reveal images without layout shift, and fire reveals with Intersection Observer."

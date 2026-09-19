@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Learn how Bloom filters work: a probabilistic data structure that tells you with 100% certainty when something doesn&#39;t exist. Understand hash functions, bit arrays, false positives, and real-world use cases like recommendation engines and web crawlers."

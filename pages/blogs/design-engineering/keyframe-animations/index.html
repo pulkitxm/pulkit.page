@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Keyframe animations let you choreograph multi-step sequences that play automatically, loop forever, or pause mid-flight. Learn when to reach for keyframes over transitions, how fill-mode controls the before and after, and how to stack independent animations on a single element."

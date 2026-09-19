@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Next.js build output symbols decoded: ● means SSG (prerendered as static HTML), ○ Static, ƒ Dynamic, plus how SSG, SSR and ISR work."

@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="The story of the craziest 24 hours I&#39;ve had: launching Claude Directory, watching it cross 75k views and 160+ stars overnight, and then walking up to demo it on stage for the very first time in my life."

@@ -6,6 +6,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+    @view-transition {
+      navigation: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+    </style>
     <meta
       name="description"
       content="Worked at CrowdVolt, a YC-backed startup, as a Software Engineer focusing on web platform maintenance, bug resolution, new feature implementation, and code quality improvements with ESLint and Prettier."

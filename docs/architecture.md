@@ -32,7 +32,8 @@ Everything else lives in workspace packages that the engine imports by name:
 | [tooling/lighthouse](../tooling/lighthouse/) | `@pulkit/lighthouse` | Parallel Lighthouse reports for both sites                                 |
 | [tooling/benchmarks](../tooling/benchmarks/) |                      | The development server benchmark runner                                    |
 
-Only `@pulkit/engine` and `@pulkit/theme` are direct dependencies of the apps.
+The only workspace packages an app depends on are `@pulkit/engine` and
+`@pulkit/theme`, alongside `html-validate` for its `check:html` script.
 The engine depends on `@pulkit/code`, `@pulkit/demos`, `@pulkit/embeds`,
 `@pulkit/profile`, `@pulkit/shared` and `@pulkit/theme`, so an edit in any of
 them changes what the apps build.

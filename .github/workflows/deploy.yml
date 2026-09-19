@@ -1,0 +1,112 @@
+name: Deploy
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+    branches:
+      - main
+permissions: {}
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+jobs:
+  page:
+    name: Deploy pulkit.page
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch ==
+      'main' && (github.event.workflow_run.event == 'push' || github.event.workflow_run.event ==
+      'workflow_dispatch')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: built-sites
+          path: apps
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        with:
+          path: apps/page/dist
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+      - id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
+  blog:
+    name: Deploy pulkit.blog
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch ==
+      'main' && (github.event.workflow_run.event == 'push' || github.event.workflow_run.event ==
+      'workflow_dispatch')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+    environment:
+      name: pulkit-blog
+      url: https://pulkit.blog/
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: built-sites
+          path: apps
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - name: Publish to the pulkit.blog repository
+        env:
+          DEPLOY_KEY: ${{ secrets.BLOG_DEPLOY_KEY }}
+          SOURCE: ${{ github.repository }}@${{ github.event.workflow_run.head_sha }}
+        run: >
+          if [ -z "$DEPLOY_KEY" ]; then
+            echo "::warning::BLOG_DEPLOY_KEY is not set, so pulkit.blog was not published"
+            exit 0
+          fi
+
+          key="$RUNNER_TEMP/blog-deploy-key"
+
+          hosts="$RUNNER_TEMP/known_hosts"
+
+          printf '%s\n' "$DEPLOY_KEY" > "$key"
+
+          chmod 600 "$key"
+
+          printf '%s\n' "github.com ssh-ed25519
+          AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > "$hosts"
+
+          export GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes -o UserKnownHostsFile=$hosts -o
+          StrictHostKeyChecking=yes"
+
+          cd apps/blog/dist
+
+          touch .nojekyll
+
+          git init -q -b gh-pages
+
+          git config user.name "github-actions[bot]"
+
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git remote add origin git@github.com:pulkitxm/pulkit.blog.git
+
+          if git fetch -q --depth 1 origin gh-pages 2>/dev/null; then
+            git reset -q --soft FETCH_HEAD
+          fi
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "pulkit.blog is already up to date"
+            exit 0
+          fi
+
+          git commit -q -m "Publish pulkit.blog from $SOURCE"
+
+          git push -q origin gh-pages
+
+          echo "Published pulkit.blog from $SOURCE" >> "$GITHUB_STEP_SUMMARY"

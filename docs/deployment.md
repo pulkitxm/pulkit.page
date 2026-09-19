@@ -14,12 +14,18 @@ every deployment replaces its `gh-pages` branch contents.
 ## What runs when
 
 The [CI workflow](../.github/workflows/ci.yml) builds and checks both apps on
-every pull request and push. On a push to `main` or a manual run on `main`, once
-every required job has passed:
+every pull request and push. A newer push to the same pull request or branch,
+including `main`, cancels the older CI run, so only the latest commit is checked.
+
+The separate [Deploy workflow](../.github/workflows/deploy.yml) starts when a CI
+run on `main` completes. It deploys only when that run succeeded and came from a
+push or a manual run, and it downloads that run's `built-sites` artifact instead
+of building again. Deploys never cancel each other: a running deploy always
+finishes, and while it runs only the newest waiting deploy is kept.
 
 - **Deploy pulkit.page** uploads `apps/page/dist` as this repository's Pages
   artifact and deploys it in the `github-pages` environment.
-- **Deploy pulkit.blog** downloads the same build, adds `.nojekyll`, and pushes
+- **Deploy pulkit.blog** takes the same build, adds `.nojekyll`, and pushes
   `apps/blog/dist` as one new commit on top of the `gh-pages` branch of
   pulkitxm/pulkit.blog. Only changed files are uploaded, and an unchanged build
   pushes nothing. It authenticates with a deploy key and pins GitHub's published

@@ -17,11 +17,12 @@ The [CI workflow](../.github/workflows/ci.yml) builds and checks both apps on
 every pull request and push. A newer push to the same pull request or branch,
 including `main`, cancels the older CI run, so only the latest commit is checked.
 
-The separate [Deploy workflow](../.github/workflows/deploy.yml) starts when a CI
-run on `main` completes. It deploys only when that run succeeded and came from a
-push or a manual run, and it downloads that run's `built-sites` artifact instead
-of building again. Deploys never cancel each other: a running deploy always
-finishes, and while it runs only the newest waiting deploy is kept.
+The two deploy jobs are part of the same workflow, so they appear in the same
+run graph after the `CI` gate. They run only on a push to `main` or a manual run
+on `main`, after every required job has passed, and they download the run's
+`built-sites` artifact instead of building again. A newer push cancels an older
+run even while it deploys; both deploys are all or nothing, so the previous site
+stays live and the newer run deploys the newer commit.
 
 - **Deploy pulkit.page** uploads `apps/page/dist` as this repository's Pages
   artifact and deploys it in the `github-pages` environment.

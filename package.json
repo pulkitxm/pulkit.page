@@ -31,7 +31,8 @@
     "import:reference": "bun scripts/import-reference.mjs",
     "check:seo": "bun scripts/check-seo.mjs",
     "browser:check": "bun scripts/check-browser.mjs",
-    "lighthouse": "bun run build && bun scripts/lighthouse.mjs"
+    "lighthouse": "bun run build && bun scripts/lighthouse.mjs",
+    "lighthouse:prod": "bun scripts/lighthouse.mjs --origin https://pulkit.page"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

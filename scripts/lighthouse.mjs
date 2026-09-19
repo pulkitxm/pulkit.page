@@ -1,11 +1,10 @@
-import { execFileSync } from "node:child_process";
+import { execFileSync, fork } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { availableParallelism } from "node:os";
 import { join } from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { launch } from "chrome-launcher";
-import lighthouse from "lighthouse";
-import desktopConfig from "lighthouse/core/config/desktop-config.js";
 import { preview } from "vite";
 
 const categories = ["performance", "accessibility", "best-practices", "seo"];
@@ -17,14 +16,17 @@ const metrics = [
   ["speed-index", "SI"],
 ];
 const hiddenModes = new Set(["notApplicable", "manual", "informative", "error"]);
-const outputDirectory = "reports/lighthouse";
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
   options: {
     "form-factor": { type: "string", default: "both" },
     origin: { type: "string" },
-    concurrency: { type: "string", default: "1" },
+    concurrency: {
+      type: "string",
+      default: String(Math.max(1, Math.floor(availableParallelism() / 2))),
+    },
+    output: { type: "string", default: "reports/lighthouse" },
   },
 });
 const formFactors =
@@ -32,12 +34,10 @@ const formFactors =
 if (!formFactors.every((formFactor) => formFactor === "mobile" || formFactor === "desktop")) {
   throw new Error("--form-factor must be mobile, desktop, or both");
 }
+const outputDirectory = values.output;
 const concurrency = Number(values.concurrency);
 if (!Number.isInteger(concurrency) || concurrency < 1) {
   throw new Error("--concurrency must be a positive integer");
-}
-if (!existsSync("dist/index.html")) {
-  throw new Error("No built site found. Run `bun run build` first.");
 }
 
 function routes(directory, prefix = "/") {
@@ -92,21 +92,25 @@ function failingAudits(lhr, category) {
     .sort((left, right) => left.score - right.score);
 }
 
-async function audit(url, formFactor, port) {
-  const result = await lighthouse(
-    url,
-    {
-      port,
-      output: "html",
-      logLevel: process.env.LIGHTHOUSE_LOG ?? "error",
-      onlyCategories: categories,
+function startWorker() {
+  const worker = fork(fileURLToPath(new URL("lighthouse-worker.mjs", import.meta.url)));
+  let settle;
+  worker.on("message", (message) => settle?.(message));
+  worker.on("exit", (code) => settle?.({ error: `Lighthouse worker exited with code ${code}` }));
+  const next = () =>
+    new Promise((resolve) => {
+      settle = resolve;
+    });
+  const ready = next();
+  return {
+    ready,
+    run(job) {
+      const reply = next();
+      worker.send(job);
+      return reply;
     },
-    formFactor === "desktop" ? desktopConfig : undefined,
-  );
-  if (!result) {
-    throw new Error(`Lighthouse returned no result for ${url}`);
-  }
-  return result;
+    stop: () => worker.disconnect(),
+  };
 }
 
 function pageReport(route, runs) {
@@ -200,11 +204,31 @@ function summaryReport(results, origin) {
   return `${lines.join("\n").trimEnd()}\n`;
 }
 
-const selected = routes("dist")
+async function sitemapRoutes(origin) {
+  const response = await fetch(new URL("/sitemap.xml", origin));
+  if (!response.ok) {
+    throw new Error(`Could not fetch ${response.url}: HTTP ${response.status}`);
+  }
+  const text = await response.text();
+  return [...text.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)]
+    .map(([, location]) => new URL(location))
+    .filter((url) => url.origin === new URL(origin).origin)
+    .map((url) => url.pathname);
+}
+
+function builtRoutes() {
+  if (!existsSync("dist/index.html")) {
+    throw new Error("No built site found. Run `bun run build` first, or pass --origin.");
+  }
+  return routes("dist");
+}
+
+const available = values.origin ? await sitemapRoutes(values.origin) : builtRoutes();
+const selected = [...new Set(available)]
   .filter((route) => positionals.length === 0 || positionals.includes(route))
   .sort();
 if (selected.length === 0) {
-  throw new Error(`No built routes match ${positionals.join(", ")}`);
+  throw new Error(`No routes match ${positionals.join(", ") || "the site"}`);
 }
 
 const server = values.origin
@@ -216,48 +240,70 @@ const server = values.origin
       preview: { host: "127.0.0.1", port: 0 },
     });
 const origin = values.origin ?? server.resolvedUrls.local[0];
-const browsers = await Promise.all(
-  Array.from({ length: Math.min(concurrency, selected.length) }, () =>
-    launch({ chromeFlags: ["--headless=new", "--no-sandbox"] }),
-  ),
-);
+const jobs = selected.flatMap((route) => formFactors.map((formFactor) => ({ route, formFactor })));
+const workers = Array.from({ length: Math.min(concurrency, jobs.length) }, startWorker);
 
 rmSync(outputDirectory, { recursive: true, force: true });
 mkdirSync(join(outputDirectory, "pages"), { recursive: true });
 mkdirSync(join(outputDirectory, "html"), { recursive: true });
 
-const results = [];
-const queue = [...selected];
+const runsByRoute = new Map(selected.map((route) => [route, []]));
 const startedAt = performance.now();
+let completed = 0;
 try {
   await Promise.all(
-    browsers.map(async (browser) => {
-      for (let route = queue.shift(); route !== undefined; route = queue.shift()) {
-        const runs = [];
-        for (const formFactor of formFactors) {
-          const { lhr, report } = await audit(
-            new URL(route, origin).href,
-            formFactor,
-            browser.port,
-          );
-          writeFileSync(join(outputDirectory, "html", `${slug(route)}-${formFactor}.html`), report);
-          runs.push({ formFactor, lhr });
-          console.log(
-            `${route} ${formFactor}: ${categories.map((category) => score(lhr.categories[category].score).replaceAll("*", "")).join(" / ")}`,
-          );
+    workers.map(async (worker) => {
+      const started = await worker.ready;
+      if (started.error) {
+        throw new Error(started.error);
+      }
+      for (let job = jobs.shift(); job !== undefined; job = jobs.shift()) {
+        const { route, formFactor } = job;
+        const { lhr, error } = await worker.run({
+          url: new URL(route, origin).href,
+          formFactor,
+          categories,
+          reportPath: join(outputDirectory, "html", `${slug(route)}-${formFactor}.html`),
+        });
+        if (error) {
+          throw new Error(error);
         }
-        writeFileSync(join(outputDirectory, "pages", `${slug(route)}.md`), pageReport(route, runs));
-        results.push({ route, runs });
+        runsByRoute.get(route).push({ formFactor, lhr });
+        completed += 1;
+        console.log(
+          `[${completed}/${selected.length * formFactors.length}] ${route} ${formFactor}: ${categories.map((category) => score(lhr.categories[category].score).replaceAll("*", "")).join(" / ")}`,
+        );
       }
     }),
   );
 } finally {
-  await Promise.all(browsers.map((browser) => browser.kill()));
+  for (const worker of workers) {
+    worker.stop();
+  }
   await server?.close();
 }
 
-results.sort((left, right) => left.route.localeCompare(right.route));
+const results = selected.map((route) => ({
+  route,
+  runs: formFactors.map((formFactor) =>
+    runsByRoute.get(route).find((run) => run.formFactor === formFactor),
+  ),
+}));
+for (const { route, runs } of results) {
+  writeFileSync(join(outputDirectory, "pages", `${slug(route)}.md`), pageReport(route, runs));
+}
 writeFileSync(join(outputDirectory, "README.md"), summaryReport(results, origin));
+const failed = results.flatMap(({ route, runs }) =>
+  runs
+    .filter(({ lhr }) => lhr.runtimeError)
+    .map(({ formFactor, lhr }) => `${route} ${formFactor}: ${lhr.runtimeError.message}`),
+);
+for (const failure of failed) {
+  console.error(failure);
+}
+if (failed.length > 0) {
+  process.exitCode = 1;
+}
 console.log(
   `Audited ${results.length} pages in ${Math.round((performance.now() - startedAt) / 1000)}s. Summary: ${join(outputDirectory, "README.md")}`,
 );

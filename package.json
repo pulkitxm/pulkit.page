@@ -28,13 +28,16 @@
     "check:repository": "bun tooling/checks/src/check-repository.mjs",
     "check:em-dashes": "bun tooling/checks/src/check-em-dashes.mjs",
     "check:imports": "bun tooling/checks/src/check-imports.mjs",
+    "check:types": "tsc -p tsconfig.json",
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "check:shell": "sh -n tooling/checks/install-hooks.sh && sh -n .githooks/pre-commit",
     "postinstall": "sh tooling/checks/install-hooks.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
+    "@types/bun": "1.4.2",
     "knip": "6.37.0",
-    "turbo": "2.11.2"
+    "turbo": "2.11.2",
+    "typescript": "7.0.2"
   }
 }

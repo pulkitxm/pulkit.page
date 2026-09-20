@@ -8,8 +8,8 @@ navigation:
     href: https://pulkit.blog/
   - label: Experience
     href: /exp/
-  - label: About
-    href: /about/
+  - label: Projects
+    href: /projects/
   - label: Contact
     href: /contact/
 ---

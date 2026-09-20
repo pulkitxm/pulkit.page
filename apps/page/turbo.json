@@ -3,7 +3,17 @@
   "extends": ["//"],
   "tasks": {
     "build": {
+      "cache": false,
       "inputs": ["$TURBO_DEFAULT$", "!.cache/**", "$TURBO_ROOT$/apps/blog/content/**"]
+    },
+    "check:seo": {
+      "cache": false
+    },
+    "check:site": {
+      "cache": false
+    },
+    "check:html": {
+      "cache": false
     }
   }
 }

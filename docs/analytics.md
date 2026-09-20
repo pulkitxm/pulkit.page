@@ -18,11 +18,24 @@ carry no analytics.
 | `POSTHOG_HOST`  | no       | `https://us.i.posthog.com` | Ingestion origin, `https://eu.i.posthog.com` for the EU region |
 | `POSTHOG_DEBUG` | no       | unset                      | `1` prints PostHog's own event log to the browser console      |
 
-Run a local server or a local build with the key in the environment:
+Put the values in a `.env` file at the repository root, which Git ignores:
+
+```sh
+POSTHOG_KEY=phc_yourprojectkey
+POSTHOG_DEBUG=1
+```
+
+The [site CLI](../packages/engine/src/cli.ts) passes that file to every command
+it runs with Bun's `--env-file`, because `bun run` does not export values from a
+`.env` file to the commands a script spawns, and Turbo starts each task in its
+own app directory where a repository-root file would not be read. The same file
+is a Turbo global dependency, so editing it invalidates cached builds instead of
+replaying output rendered under the previous settings. Any variable the sites
+read works there, including the `GITHUB_TOKEN` that the projects directive
+needs. Passing the variables on the command line works as well:
 
 ```sh
 POSTHOG_KEY=phc_yourprojectkey bun run dev
-POSTHOG_KEY=phc_yourprojectkey POSTHOG_DEBUG=1 bun run build
 ```
 
 A malformed key or a host with credentials, a path, or a query fails the render

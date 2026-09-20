@@ -1,126 +1,87 @@
-import process from "node:process";
-import { isRecord } from "../lib/guards.ts";
+import { unescapeHtml } from "@pulkit/shared/html";
 import type { ListedProject, ProjectList } from "../types.ts";
 
-const endpoint = "https://api.github.com/graphql";
+const entryPattern = /<h2[^>]*>\s*<a href="\/([\w.-]+)\/([\w.-]+)"/g;
+const descriptionPattern = /itemprop="description"[^>]*>([\s\S]*?)<\/p>/;
+const listDescriptionPattern = /<meta name="twitter:description" content="([^"]*)"/;
 
-const query = `query ProjectList($login: String!) {
-  user(login: $login) {
-    lists(first: 50) {
-      nodes {
-        slug
-        description
-        items(first: 100) {
-          nodes {
-            ... on Repository {
-              nameWithOwner
-              url
-              description
-              homepageUrl
-              stargazerCount
-            }
-          }
-        }
-      }
-    }
-  }
-}`;
-
-function token(): string {
-  const value = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN;
-  if (!value) {
-    throw new Error(
-      "A :::projects directive needs GITHUB_TOKEN (or GH_TOKEN) to read the starred list. Set it to a token with no scopes beyond public read, for example GITHUB_TOKEN=$(gh auth token).",
-    );
-  }
-  return value;
+function listUrl(login: string, slug: string): string {
+  return `https://github.com/stars/${login}/lists/${slug}`;
 }
 
-function ownSite(href: string, origins: readonly string[]): boolean {
+function plain(value: string): string {
+  return unescapeHtml(value.replace(/<[^>]*>/g, ""))
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function starsIn(block: string, login: string, name: string): number {
+  const pattern = new RegExp(`/${login}/${name}/stargazers"[\\s\\S]*?<\\/svg>\\s*([\\d,]+)`);
+  return Number((pattern.exec(block)?.[1] ?? "0").replace(/,/g, ""));
+}
+
+function readEntries(html: string): ListedProject[] {
+  const matches = [...html.matchAll(entryPattern)];
+  return matches.map((match, index): ListedProject => {
+    const [login = "", name = ""] = [match[1] ?? "", match[2] ?? ""];
+    const block = html.slice(match.index, matches[index + 1]?.index ?? html.length);
+    const description = plain(descriptionPattern.exec(block)?.[1] ?? "");
+    return {
+      name,
+      url: `https://github.com/${login}/${name}`,
+      stars: starsIn(block, login, name),
+      ...(description && { description }),
+    };
+  });
+}
+
+async function fullDescription(project: ListedProject): Promise<ListedProject> {
+  const path = project.url.replace("https://github.com/", "");
   try {
-    const { origin } = new URL(href);
-    return origins.includes(origin);
+    const response = await fetch(`https://api.github.com/repos/${path}`, {
+      headers: { accept: "application/vnd.github+json", "user-agent": "pulkit.page-build" },
+    });
+    if (!response.ok) {
+      return project;
+    }
+    const body: unknown = await response.json();
+    const description =
+      typeof body === "object" && body !== null && "description" in body
+        ? String(body.description ?? "").trim()
+        : "";
+    return description ? { ...project, description } : project;
   } catch {
-    return false;
+    return project;
   }
 }
 
-function text(value: unknown): string {
-  return typeof value === "string" ? value.trim() : "";
+function resolveTruncated(projects: readonly ListedProject[]): Promise<ListedProject[]> {
+  return Promise.all(
+    projects.map((project) =>
+      project.description?.endsWith("…") ? fullDescription(project) : project,
+    ),
+  );
 }
 
-function readProject(node: unknown, origins: readonly string[]): ListedProject | undefined {
-  if (!isRecord(node)) {
-    return;
-  }
-  const name = text(node.nameWithOwner);
-  const url = text(node.url);
-  if (!(name && url)) {
-    return;
-  }
-  const site = text(node.homepageUrl);
-  const description = text(node.description);
-  return {
-    name: name.split("/").pop() ?? name,
-    url,
-    stars: typeof node.stargazerCount === "number" ? node.stargazerCount : 0,
-    ...(description && { description }),
-    ...(site.startsWith("https://") && !ownSite(site, origins) && { site }),
-  };
-}
-
-async function request(login: string): Promise<unknown> {
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      authorization: `bearer ${token()}`,
-      "content-type": "application/json",
-      "user-agent": "pulkit.page-build",
-    },
-    body: JSON.stringify({ query, variables: { login } }),
+export async function fetchProjectList(login: string, slug: string): Promise<ProjectList> {
+  const url = listUrl(login, slug);
+  const response = await fetch(url, {
+    headers: { accept: "text/html", "user-agent": "pulkit.page-build" },
   });
   if (!response.ok) {
-    throw new Error(
-      `GitHub replied ${response.status} ${response.statusText} for ${login}'s lists`,
-    );
+    throw new Error(`GitHub replied ${response.status} ${response.statusText} for ${url}`);
   }
-  const body: unknown = await response.json();
-  if (isRecord(body) && Array.isArray(body.errors) && body.errors.length > 0) {
-    const [first] = body.errors;
-    throw new Error(
-      `GitHub rejected the starred-list query: ${isRecord(first) ? text(first.message) : "unknown error"}`,
-    );
-  }
-  return body;
-}
-
-function listNodes(body: unknown): unknown[] {
-  const data = isRecord(body) ? body.data : undefined;
-  const user = isRecord(data) ? data.user : undefined;
-  const lists = isRecord(user) ? user.lists : undefined;
-  const nodes = isRecord(lists) ? lists.nodes : undefined;
-  return Array.isArray(nodes) ? nodes : [];
-}
-
-export async function fetchProjectList(
-  login: string,
-  slug: string,
-  origins: readonly string[],
-): Promise<ProjectList> {
-  const key = `${login}/${slug}`;
-  const list = listNodes(await request(login)).find(
-    (node) => isRecord(node) && text(node.slug) === slug,
+  const html = await response.text();
+  const projects = (await resolveTruncated(readEntries(html))).sort(
+    (left, right) => right.stars - left.stars || left.name.localeCompare(right.name),
   );
-  if (!isRecord(list)) {
-    throw new Error(`${login} has no public starred list called ${slug}`);
-  }
-  const items = isRecord(list.items) ? list.items.nodes : undefined;
-  const projects = (Array.isArray(items) ? items : [])
-    .map((node) => readProject(node, origins))
-    .filter((project): project is ListedProject => project !== undefined)
-    .sort((left, right) => right.stars - left.stars || left.name.localeCompare(right.name));
   if (projects.length === 0) {
-    throw new Error(`The starred list ${key} is empty`);
+    throw new Error(
+      `No repositories were found on ${url}. The list may be empty or private, or GitHub changed the page markup that this parser depends on.`,
+    );
   }
-  return { description: text(list.description), projects };
+  return {
+    description: plain(listDescriptionPattern.exec(html)?.[1] ?? ""),
+    projects,
+  };
 }

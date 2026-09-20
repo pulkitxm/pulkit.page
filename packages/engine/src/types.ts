@@ -48,7 +48,6 @@ export interface ListedProject {
   url: string;
   description?: string;
   stars: number;
-  site?: string;
 }
 
 export interface ProjectList {

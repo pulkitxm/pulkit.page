@@ -1,6 +1,7 @@
 {
   "name": "pulkit",
   "private": true,
+  "license": "PolyForm-Noncommercial-1.0.0",
   "type": "module",
   "packageManager": "bun@1.4.2",
   "workspaces": [

@@ -1,14 +1,29 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { failWith } from "@pulkit/shared/failures";
 import { preview } from "vite";
 import { developmentLog } from "../lib/log.ts";
 import { serverPort } from "../lib/port.ts";
 import { closeOnSignals, localServerUrl, logRequest } from "../lib/server.ts";
+import { notFoundFile } from "../seo/routes.ts";
 
 if (!existsSync("dist/index.html")) {
   failWith(
     "No built site found. Run `bun run build` first, or `bun run serve` to build and serve.",
   );
+}
+const notFound = existsSync(join("dist", notFoundFile))
+  ? readFileSync(join("dist", notFoundFile))
+  : undefined;
+
+function builtFile(url: string | undefined): boolean {
+  try {
+    return existsSync(
+      join("dist", decodeURIComponent(new URL(url ?? "/", "http://dist").pathname)),
+    );
+  } catch {
+    return false;
+  }
 }
 const { port, explicit } = serverPort();
 const server = await preview({
@@ -34,6 +49,16 @@ const server = await preview({
           });
           next();
         });
+        return () => {
+          vite.middlewares.use((request, response, next) => {
+            if (!notFound || builtFile(request.url)) {
+              next();
+              return;
+            }
+            response.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+            response.end(request.method === "HEAD" ? undefined : notFound);
+          });
+        };
       },
     },
   ],

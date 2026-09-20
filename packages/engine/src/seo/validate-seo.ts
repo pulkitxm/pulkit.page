@@ -2,6 +2,7 @@ import { escapeHtml } from "@pulkit/shared/html";
 import { isRecord } from "../lib/guards.ts";
 import type { PageMetadata, Site } from "../types.ts";
 import { imagePath, pageTitle } from "./routes.ts";
+import { robots } from "./seo-head.ts";
 
 type ReadAsset = (path: string) => Buffer;
 
@@ -44,7 +45,7 @@ function expectedMetadata(
     "og:image:alt": metadata.title,
     "twitter:image:alt": metadata.title,
     "twitter:card": "summary_large_image",
-    robots: "index, follow, max-image-preview:large",
+    robots: robots(route),
   };
 }
 

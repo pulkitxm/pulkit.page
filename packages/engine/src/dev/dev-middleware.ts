@@ -26,8 +26,9 @@ function respond(
   response: ServerResponse,
   type: string,
   body: string | Buffer,
+  status = 200,
 ): void {
-  response.writeHead(200, { "Content-Type": type, "Cache-Control": "no-store" });
+  response.writeHead(status, { "Content-Type": type, "Cache-Control": "no-store" });
   response.end(request.method === "HEAD" ? undefined : body);
 }
 
@@ -112,7 +113,7 @@ export function servePages(
         result.type.startsWith("text/html") && typeof result.body === "string"
           ? await vite.transformIndexHtml(pathname, result.body)
           : result.body;
-      respond(request, response, result.type, body);
+      respond(request, response, result.type, body, result.status);
     } catch (error) {
       const message = errorMessage(error);
       description = `failed: ${message}`;

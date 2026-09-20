@@ -20,10 +20,12 @@ test("start requires a build and serves nested built pages without development t
   expect(missing.stderr).toContain("Run `bun run build` first");
   const home = "<!doctype html><html><body>Built homepage</body></html>\n";
   const article = "<!doctype html><html><body>Built article</body></html>\n";
+  const notFoundPage = "<!doctype html><html><body>Page not found</body></html>\n";
   writeFiles(directory, {
     "dist/index.html": home,
     "dist/blogs/example/index.html": article,
     "dist/styles.css": "body { color: red; }\n",
+    "dist/404.html": notFoundPage,
   });
   let server: RunningServer | undefined;
   try {
@@ -32,7 +34,9 @@ test("start requires a build and serves nested built pages without development t
     expect(await (await fetch(origin)).text()).toBe(home);
     expect(await (await fetch(`${origin}blogs/example/`)).text()).toBe(article);
     expect((await fetch(`${origin}styles.css`)).status).toBe(200);
-    expect((await fetch(`${origin}missing/`)).status).toBe(404);
+    const notFound = await fetch(`${origin}missing/`);
+    expect(notFound.status).toBe(404);
+    expect(await notFound.text()).toBe(notFoundPage);
     expect((await fetch(origin, { method: "HEAD" })).status).toBe(200);
     expect(readFileSync(join(directory, "dist/index.html"), "utf8")).toBe(home);
   } finally {

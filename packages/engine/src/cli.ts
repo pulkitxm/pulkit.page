@@ -1,7 +1,10 @@
 #!/usr/bin/env bun
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { repositoryRoot } from "@pulkit/shared/repository";
 
 interface Command {
   script: string;
@@ -26,6 +29,13 @@ if (!command) {
   process.exit(1);
 }
 const script = fileURLToPath(new URL(`commands/${command.script}`, import.meta.url));
-const args = command.watch ? ["--watch", script] : [script, ...(command.args ?? []), ...rest];
+const environmentFile = join(repositoryRoot, ".env");
+const options = [
+  ...(command.watch ? ["--watch"] : []),
+  ...(existsSync(environmentFile) ? [`--env-file=${environmentFile}`] : []),
+];
+const args = command.watch
+  ? [...options, script]
+  : [...options, script, ...(command.args ?? []), ...rest];
 const result = spawnSync(process.execPath, args, { stdio: "inherit" });
 process.exit(result.status ?? 1);

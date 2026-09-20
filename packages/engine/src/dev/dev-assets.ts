@@ -3,6 +3,7 @@ import { rm } from "node:fs/promises";
 import { extname, resolve, sep } from "node:path";
 import { bundleDemoScripts, compileDemoStyles, fontFile } from "@pulkit/demos/assets";
 import { bundleEmbedScripts, katexDirectory, photoswipeStyles } from "@pulkit/embeds/bundle";
+import { bundleAnalyticsScript } from "@pulkit/theme/analytics";
 import { assetFile } from "@pulkit/theme/files";
 
 type AssetResolution =
@@ -25,6 +26,7 @@ const sharedTypes: Readonly<Record<string, string>> = {
   ".txt": "text/plain",
 };
 
+const analyticsOutput = ".cache/analytics-dev";
 const demoOutput = ".cache/demos-dev";
 const embedOutput = ".cache/embeds-dev";
 const missing: AssetResolution = { kind: "missing" };
@@ -56,9 +58,22 @@ function sharedAsset(pathname: string, appAssets: string): AssetResolution {
 
 export function developmentAssets(): DevelopmentAssets {
   const appAssets = resolve("assets");
+  let analyticsBundle: Promise<void> | undefined;
   let embedBundle: Promise<void> | undefined;
   let demoBundle: Promise<void> | undefined;
   let demoStyles: ReturnType<typeof compileDemoStyles> | undefined;
+
+  async function analyticsAsset(name: string): Promise<AssetResolution> {
+    analyticsBundle ??= rm(analyticsOutput, { force: true, recursive: true }).then(() =>
+      bundleAnalyticsScript(analyticsOutput, { minify: false }),
+    );
+    await analyticsBundle;
+    const path = resolve(analyticsOutput, name);
+    if (!/^[\w.-]+\.js$/.test(name) || !existsSync(path)) {
+      return missing;
+    }
+    return file("text/javascript", readFileSync(path));
+  }
 
   async function embedAsset(name: string): Promise<AssetResolution> {
     if (name === "photoswipe.css") {
@@ -107,6 +122,9 @@ export function developmentAssets(): DevelopmentAssets {
       }
       if (pathname.startsWith("/assets/katex/")) {
         return Promise.resolve(katexAsset(pathname));
+      }
+      if (pathname.startsWith("/assets/analytics")) {
+        return analyticsAsset(pathname.slice("/assets/".length));
       }
       if (pathname.startsWith("/assets/embeds/")) {
         return embedAsset(pathname.slice("/assets/embeds/".length));

@@ -15,8 +15,10 @@ import { builtFiles, developmentOutput } from "@pulkit/shared/built-site";
 import { logDuration, timed, timedAsync } from "@pulkit/shared/duration";
 import { sha256Hex } from "@pulkit/shared/hash";
 import { compileTailwind } from "@pulkit/shared/tailwind";
+import { bundleAnalyticsScript } from "@pulkit/theme/analytics";
 import { themeFile } from "@pulkit/theme/files";
 import { mangleClasses } from "../lib/mangle-classes.ts";
+import { resolveAnalytics } from "../site/analytics.ts";
 import { generateSite } from "../site/generate.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 
@@ -54,6 +56,9 @@ await timedAsync("Built demo assets", async () => {
     await buildDemoAssets("dist/assets/demos");
   }
   await buildEmbedAssets("dist/assets");
+  if (resolveAnalytics()) {
+    await bundleAnalyticsScript("dist/assets");
+  }
 });
 timed(
   ({ renamed, kept }) =>

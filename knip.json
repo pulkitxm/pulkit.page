@@ -24,7 +24,7 @@
       "project": ["client/**/*.ts", "src/**/*.ts", "*.css"]
     },
     "packages/theme": {
-      "entry": ["src/client/theme.ts"],
+      "entry": ["src/client/analytics.ts", "src/client/theme.ts"],
       "project": ["src/**/*.ts", "*.css"]
     },
     "packages/code": {

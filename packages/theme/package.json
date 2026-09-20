@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./analytics": "./src/analytics.ts",
     "./files": "./src/lib/files.ts",
     "./styles.css": "./styles.css"
   },
@@ -10,6 +11,8 @@
     "test": "bun test ./src"
   },
   "dependencies": {
+    "@pulkit/shared": "workspace:*",
+    "posthog-js": "1.434.2",
     "tailwindcss": "4.3.3"
   }
 }

@@ -7,7 +7,7 @@ import { seoHead } from "../seo/seo-head.ts";
 import { readPage } from "../site/read-page.ts";
 import type { Layouts, ListedPage, PageMetadata, Site, SiteContext } from "../types.ts";
 import { linkClasses, longDate, safeUrl } from "./html.ts";
-import { applyLayout, loadLayouts, themeScript } from "./layouts.ts";
+import { analyticsScript, applyLayout, loadLayouts, themeScript } from "./layouts.ts";
 import { experiencePeriod } from "./listings.ts";
 import { createMarkdown } from "./markdown-renderer.ts";
 import { breadcrumbs, relatedNavigation, siteLinks } from "./page-navigation.ts";
@@ -105,6 +105,7 @@ export async function renderPage(
     applyLayout(layouts, layout, {
       title: escapeHtml(pageTitle(metadata, site, route)),
       themeScript: themeScript(),
+      analyticsScript: analyticsScript(),
       seo: `${headExtras(route, metadata, site, pages)}${assets.tags()}${demoAssets}`,
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages, site),

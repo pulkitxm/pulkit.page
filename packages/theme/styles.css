@@ -66,6 +66,20 @@ a:focus-visible > [data-wordmark] [data-fold] {
 ::view-transition-new(root) {
   animation-duration: 150ms;
 }
+:root[data-theme-change]::view-transition-old(root) {
+  animation: none;
+}
+:root[data-theme-change]::view-transition-new(root) {
+  animation: theme-wipe 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes theme-wipe {
+  from {
+    clip-path: circle(0 at var(--theme-x) var(--theme-y));
+  }
+  to {
+    clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y));
+  }
+}
 
 @property --pre-line {
   syntax: "<length>";

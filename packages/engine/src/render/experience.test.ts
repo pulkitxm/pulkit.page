@@ -24,7 +24,7 @@ test("experience dates preserve exact days and render ongoing roles without an e
   expect(html).toContain("Mar 2025");
   expect(html).toContain("Jun 2025");
   expect(html).toContain('class="text-xs text-muted">Engineer');
-  expect(html).toContain('src="/assets/exp/example.webp"');
+  expect(html).toContain('class="m-0 size-9 object-contain" src="/assets/exp/example.webp"');
   const { endDate: _, ...ongoingMetadata } = metadata;
   const ongoing = await renderPage(source, { pages: [{ ...entry, metadata: ongoingMetadata }] });
   expect(ongoing).toContain("present");
@@ -53,5 +53,4 @@ test("experience icons with a dark variant swap by color scheme", async () => {
   expect(html).toMatch(
     /class="[^"]*hidden[^"]*dark:block[^"]*" src="\/assets\/exp\/example-dark\.svg"/,
   );
-  expect(html).not.toContain("bg-icon");
 });

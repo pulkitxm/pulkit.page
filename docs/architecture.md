@@ -155,12 +155,12 @@ pages.
 ```mermaid
 flowchart TD
   request[GET /system-design/caching/] --> guard{Method and path}
-  guard -->|not GET or HEAD| reject[405]
-  guard -->|/@ or /node_modules| vite[Vite handles it]
-  guard -->|/assets/embeds or /assets/demos| bundle[Bundle on demand into .cache]
-  guard -->|/styles.css| tailwind[Vite and the Tailwind plugin]
-  guard -->|/theme.js, /favicon.ico, /assets| files[App asset, else shared theme asset]
-  guard -->|anything else| renderer[Development renderer]
+  guard -->|"not GET or HEAD"| reject[405]
+  guard -->|"/@ or /node_modules"| vite[Vite handles it]
+  guard -->|"/assets/embeds or /assets/demos"| bundle[Bundle on demand into .cache]
+  guard -->|"/styles.css"| tailwind[Vite and the Tailwind plugin]
+  guard -->|"/theme.js, /favicon.ico, /assets"| files[App asset, else shared theme asset]
+  guard -->|"anything else"| renderer[Development renderer]
   renderer --> cache{Render cache}
   cache -->|hit| serve[Serve HTML and log cached]
   cache -->|miss| render[Render the page now]

@@ -9,7 +9,7 @@ import { auditSiteFlows } from "../browser/site-flows.ts";
 import { localServerUrl } from "../lib/server.ts";
 import { readSite } from "../site/site-inventory.ts";
 
-const { pages, site } = readSite("http://localhost");
+const { pages, site } = await readSite("http://localhost");
 const collections = pages.filter((page) => page.index).map((page) => page.route);
 const navigationTarget =
   site.navigation?.find((item) => item.href.startsWith("/"))?.href ??

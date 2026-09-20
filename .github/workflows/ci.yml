@@ -36,7 +36,10 @@ jobs:
             apps/*/.cache/generate
           key: turbo-${{ runner.os }}-${{ github.sha }}
           restore-keys: turbo-${{ runner.os }}-
-      - run: bun run ci
+      - name: Verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run ci
       - name: Prune week-old Turbo cache entries
         run: find .turbo/cache -type f -mtime +7 -delete
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -149,6 +152,7 @@ jobs:
           BROWSER_VIEWPORT: ${{ matrix.viewport }}
           BROWSER_SHARD: ${{ matrix.shard }}
           PLAYWRIGHT_CHANNEL: chrome
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bunx turbo run check:browser --only
   ci:
     name: CI

@@ -1,10 +1,11 @@
 import { matchBlockEmbed, matchInlineEmbed } from "@pulkit/embeds";
 import { markdownProcessor as markdown } from "@pulkit/shared/markdown";
 import { collectionItems, listingLimit } from "../render/listings.ts";
+import { projectListFor, projectListKey, projectsDirective } from "../render/projects.ts";
 import type { ListedPage, PageRecord, Site } from "../types.ts";
 import { demoMarkdown, embedMarkdown } from "./embed-markdown.ts";
 import type { MarkdownNode } from "./html-fallback.ts";
-import { entryLine, imageTo, type ResolveUrl } from "./markdown-links.ts";
+import { entryLine, imageTo, linkTo, type ResolveUrl } from "./markdown-links.ts";
 
 export interface DirectiveContext {
   resolve: ResolveUrl;
@@ -33,6 +34,20 @@ function listingMarkdown(
         `## ${year}\n\n${entries.map((entry) => entryLine(entry, resolve)).join("\n")}`,
     )
     .join("\n\n");
+}
+
+function projectsMarkdown(site: Site, login: string, slug: string): string {
+  const list = projectListFor(site, projectListKey(login, slug));
+  const rows = list.projects.map((project) => {
+    const facts = `${project.stars} stars`;
+    const links = [linkTo("Repository", project.url)];
+    if (project.site) {
+      links.push(linkTo("Site", project.site));
+    }
+    const summary = project.description ? ` - ${project.description}` : "";
+    return `- **${project.name}** (${facts})${summary} (${links.join(", ")})`;
+  });
+  return [list.description, rows.join("\n")].filter(Boolean).join("\n\n");
 }
 
 function codeRanges(body: string): [number, number][] {
@@ -108,6 +123,9 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
         /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?[ \t]*$/gm,
         (_, collection: string, limit: string | undefined, byYear: string | undefined) =>
           token(listingMarkdown(context, collection, limit, Boolean(byYear))),
+      )
+      .replace(new RegExp(projectsDirective, "gm"), (_, login: string, slug: string) =>
+        token(projectsMarkdown(site, login, slug)),
       )
       .replace(/^:::carousel[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (_, images: string) =>
         token(

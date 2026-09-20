@@ -10,6 +10,7 @@ import {
   listingLimit,
   renderListing,
 } from "./listings.ts";
+import { projectListFor, projectListKey, projectsDirective, renderProjects } from "./projects.ts";
 import {
   type RenderContext,
   sizeAttributes,
@@ -67,6 +68,7 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
   const demos = tokenStore<Demo>();
   const carousels = tokenStore<CarouselImage[]>();
   const listings = tokenStore<Listing>();
+  const projects = tokenStore<string>();
   return {
     walkTokens: async (token) => {
       if (token.type === "demo") {
@@ -125,6 +127,23 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
         },
         renderer(token) {
           return renderCarousel(carousels.read(token), context);
+        },
+      },
+      {
+        name: "projects",
+        level: "block",
+        start: (src) => src.indexOf(":::projects"),
+        tokenizer(src) {
+          const match = projectsDirective.exec(src);
+          if (!match && /^:::projects\b/.test(src)) {
+            throw new Error("Invalid projects directive; use :::projects login/list-slug");
+          }
+          return match
+            ? projects.create("projects", match[0], projectListKey(match[1] ?? "", match[2] ?? ""))
+            : undefined;
+        },
+        renderer(token) {
+          return renderProjects(projectListFor(context.site, projects.read(token)));
         },
       },
       {

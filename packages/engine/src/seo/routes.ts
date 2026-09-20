@@ -1,5 +1,13 @@
 import type { ListedPage, PageMetadata, SiteContext } from "../types.ts";
 
+export const notFoundRoute = "/404/";
+
+export const notFoundFile = "404.html";
+
+export function isNotFound(route: string): boolean {
+  return route === notFoundRoute;
+}
+
 export function markdownPath(route: string): string {
   return route === "/" ? "/index.md" : `${route.slice(0, -1)}.md`;
 }
@@ -16,6 +24,7 @@ export function isArticle(route: string, pages: readonly ListedPage[], site: Sit
   return (
     typeof site.articles === "string" &&
     route !== "/" &&
+    !isNotFound(route) &&
     route.startsWith(site.articles) &&
     !pages.find((page) => page.route === route)?.index
   );

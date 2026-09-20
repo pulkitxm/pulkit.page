@@ -1,6 +1,6 @@
 import { escapeXml as xml } from "@pulkit/shared/html";
 import type { ListedPage, Site } from "../types.ts";
-import { articles, isArticle } from "./routes.ts";
+import { articles, isArticle, isNotFound } from "./routes.ts";
 
 function timestamp(date: string | undefined): string {
   return `${date}T00:00:00Z`;
@@ -37,10 +37,12 @@ ${entries
 }
 
 function sitemap(pages: readonly ListedPage[], site: Site): string {
-  const urls = pages.map(
-    (page) =>
-      `  <url><loc>${xml(site.url + page.route)}</loc>${isArticle(page.route, pages, site) && page.metadata.date ? `<lastmod>${page.metadata.date}</lastmod>` : ""}</url>`,
-  );
+  const urls = pages
+    .filter((page) => !isNotFound(page.route))
+    .map(
+      (page) =>
+        `  <url><loc>${xml(site.url + page.route)}</loc>${isArticle(page.route, pages, site) && page.metadata.date ? `<lastmod>${page.metadata.date}</lastmod>` : ""}</url>`,
+    );
   return `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
 }
 

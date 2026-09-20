@@ -1,12 +1,16 @@
 import { escapeHtml } from "@pulkit/shared/html";
 import type { ListedPage, PageMetadata, Site } from "../types.ts";
-import { imagePath, isArticle, markdownPath, pageTitle } from "./routes.ts";
+import { imagePath, isArticle, isNotFound, markdownPath, pageTitle } from "./routes.ts";
 import { safeJson, structuredData } from "./structured-data.ts";
 
 type MetaEntry = readonly [string, string | undefined];
 
 function meta(name: string, content: string | undefined, property = false): string {
   return `<meta ${property ? "property" : "name"}="${name}" content="${escapeHtml(content)}" />`;
+}
+
+export function robots(route: string): string {
+  return isNotFound(route) ? "noindex, follow" : "index, follow, max-image-preview:large";
 }
 
 export function seoHead(
@@ -41,7 +45,7 @@ export function seoHead(
   ];
   return `<link rel="canonical" href="${escapeHtml(url)}" />
 <link rel="alternate" type="text/markdown" href="${escapeHtml(site.url + markdownPath(route))}" />
-${meta("robots", "index, follow, max-image-preview:large")}
+${meta("robots", robots(route))}
 ${openGraph.map(([key, value]) => meta(key, value, true)).join("\n")}
 ${article && metadata.date ? meta("article:published_time", metadata.date, true) + meta("article:author", site.authorUrl ?? `${site.url}/`, true) : ""}
 ${twitter.map(([key, value]) => meta(key, value)).join("\n")}

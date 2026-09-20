@@ -7,7 +7,8 @@ import { resolveSiteOrigin } from "../site/site-origin.ts";
 import type { ListedPage, PageMetadata, Site } from "../types.ts";
 import { crawlerOutputs } from "./crawler-outputs.ts";
 import { renderCard, titleLines } from "./og-images.ts";
-import { ancestors, relatedPages } from "./routes.ts";
+import { ancestors, notFoundRoute, relatedPages } from "./routes.ts";
+import { robots } from "./seo-head.ts";
 import { safeJson, structuredData } from "./structured-data.ts";
 import { validateSeo } from "./validate-seo.ts";
 
@@ -94,6 +95,14 @@ test("shared metadata rejects a second source of domain configuration", () => {
   );
 });
 
+test("the not-found page stays out of the sitemap, the feed and search results", () => {
+  const withNotFound = [...pages, { route: notFoundRoute, metadata: { title: "Page not found" } }];
+  const outputs = crawlerOutputs(withNotFound, site);
+  expect(String(outputs.get("sitemap.xml"))).not.toContain(notFoundRoute);
+  expect(String(outputs.get("feed.xml"))).not.toContain(notFoundRoute);
+  expect(robots(notFoundRoute)).toBe("noindex, follow");
+  expect(robots("/blogs/example/")).toBe("index, follow, max-image-preview:large");
+});
 test("sitemap dates articles by publication and leaves other pages undated", () => {
   const dated = pages.map((page) =>
     page.route.startsWith("/blogs/") && !page.index

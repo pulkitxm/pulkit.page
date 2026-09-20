@@ -32,7 +32,7 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   });
   const result = build(cwd);
   expect(result.status).toBe(0);
-  expect(result.stdout).toMatch(/Rendered 2 pages \([\d.]+ (?:ms|s)\)/);
+  expect(result.stdout).toMatch(/Rendered 3 pages \([\d.]+ (?:ms|s)\)/);
   expect(result.stdout).toMatch(/Built dist for https:\/\/example.com \([\d.]+ (?:ms|s)\)/);
   expect(readFileSync(join(cwd, "dist/notes/example/index.html"), "utf8")).toContain("data-title");
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).toContain(
@@ -41,6 +41,12 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/robots.txt"), "utf8")).toContain(
     "https://example.com/sitemap.xml",
   );
+  const notFound = readFileSync(join(cwd, "dist/404.html"), "utf8");
+  expect(notFound).toBe(readFileSync(join(cwd, "dist/404/index.html"), "utf8"));
+  expect(notFound).toContain("Page not found");
+  expect(notFound).toContain('content="noindex, follow"');
+  expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).not.toContain("/404/");
+  expect(readFileSync(join(cwd, "dist/llms.txt"), "utf8")).not.toContain("404");
   expect(readFileSync(join(cwd, "dist/og/home/card.png")).subarray(1, 4).toString()).toBe("PNG");
   expect(readFileSync(join(cwd, "dist/assets/example.txt"), "utf8")).toBe("asset");
   expect(readFileSync(join(cwd, "dist/CNAME"), "utf8")).toBe("example.com\n");
@@ -79,6 +85,9 @@ test("conflicting routes and unsupported MDX fail the build", () => {
   const cwd = buildProject({ "content/index.md": source });
   expect(build(cwd).stderr).toContain("Multiple Markdown sources map to /");
   rmSync(join(cwd, "content/index.md"));
+  writeFileSync(join(cwd, "content/404.md"), source);
+  expect(build(cwd).stderr).toContain("renders from the shared not-found page");
+  rmSync(join(cwd, "content/404.md"));
   writeFileSync(join(cwd, "content/article.mdx"), source);
   expect(build(cwd).stderr).toContain("MDX is not supported");
 }, 30_000);
@@ -94,7 +103,7 @@ test("rebuilds reuse cached renders and invalidate on content and layout edits",
     "content/blogs/second.md": post("Second", "2025-01-01"),
   });
   const first = join(cwd, "content/blogs/first.md");
-  expect(htmlRenders(build(cwd))).toBe(4);
+  expect(htmlRenders(build(cwd))).toBe(5);
   expect(computed(build(cwd))).toEqual({});
   writeFileSync(first, readFileSync(first, "utf8").replace("Example body", "Edited body"));
   expect(computed(build(cwd))).toEqual({ html: 1 });
@@ -107,5 +116,5 @@ test("rebuilds reuse cached renders and invalidate on content and layout edits",
       '<footer aria-label="Footer"',
     ),
   });
-  expect(htmlRenders(build(cwd))).toBe(4);
+  expect(htmlRenders(build(cwd))).toBe(5);
 }, 60_000);

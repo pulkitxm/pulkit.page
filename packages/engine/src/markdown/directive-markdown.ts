@@ -1,7 +1,7 @@
 import { matchBlockEmbed, matchInlineEmbed } from "@pulkit/embeds";
 import { markdownProcessor as markdown } from "@pulkit/shared/markdown";
 import { collectionItems, listingLimit } from "../render/listings.ts";
-import { projectListFor, projectListKey, projectsDirective } from "../render/projects.ts";
+import { projectListFor, projectListKey, projectsLine } from "../render/projects.ts";
 import type { ListedPage, PageRecord, Site } from "../types.ts";
 import { demoMarkdown, embedMarkdown } from "./embed-markdown.ts";
 import type { MarkdownNode } from "./html-fallback.ts";
@@ -40,12 +40,8 @@ function projectsMarkdown(site: Site, login: string, slug: string): string {
   const list = projectListFor(site, projectListKey(login, slug));
   const rows = list.projects.map((project) => {
     const facts = `${project.stars} stars`;
-    const links = [linkTo("Repository", project.url)];
-    if (project.site) {
-      links.push(linkTo("Site", project.site));
-    }
     const summary = project.description ? ` - ${project.description}` : "";
-    return `- **${project.name}** (${facts})${summary} (${links.join(", ")})`;
+    return `- ${linkTo(project.name, project.url)} (${facts})${summary}`;
   });
   return [list.description, rows.join("\n")].filter(Boolean).join("\n\n");
 }
@@ -124,7 +120,7 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
         (_, collection: string, limit: string | undefined, byYear: string | undefined) =>
           token(listingMarkdown(context, collection, limit, Boolean(byYear))),
       )
-      .replace(new RegExp(projectsDirective, "gm"), (_, login: string, slug: string) =>
+      .replace(projectsLine, (_, login: string, slug: string) =>
         token(projectsMarkdown(site, login, slug)),
       )
       .replace(/^:::carousel[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (_, images: string) =>

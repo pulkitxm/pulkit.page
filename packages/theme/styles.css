@@ -62,6 +62,17 @@ a:focus-visible > [data-wordmark] [data-fold] {
     transition: none;
   }
 }
+@media (prefers-reduced-motion: no-preference) {
+  :where(a, button, summary, [tabindex]):focus-visible {
+    animation: focus-land 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+@keyframes focus-land {
+  from {
+    outline-color: transparent;
+    outline-offset: 13px;
+  }
+}
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 150ms;

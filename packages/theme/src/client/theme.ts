@@ -48,6 +48,9 @@ function entryTransition(
   if (!transition) {
     return;
   }
+  const ignore = () => {};
+  transition.ready.catch(ignore);
+  transition.finished.catch(ignore);
   if (!otherUrl || globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     transition.skipTransition();
     return;

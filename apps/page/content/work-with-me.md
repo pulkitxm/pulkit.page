@@ -9,7 +9,7 @@ I build websites, web apps, and mobile apps end to end: scope, design, build, la
 Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [tell me what you're building](/contact/).
 
 :::embed stat-row
-{"stats":[{"value":"50+","label":"Technical blogs"},{"value":"90+","label":"Public repos"},{"value":"55+","label":"Prototypes shipped"},{"value":"5.76B","label":"AI tokens / 3 wks"}]}
+{"stats":[{"value":"50+","label":"Technical blogs"},{"value":"90+","label":"Public repos"},{"value":"55+","label":"Prototypes shipped"},{"value":"62B","label":"AI tokens to date"}]}
 :::
 
 :::embed blog-gallery

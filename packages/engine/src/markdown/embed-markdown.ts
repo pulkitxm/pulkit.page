@@ -81,6 +81,14 @@ export function embedMarkdown(
     case "image-grid":
     case "blog-gallery":
       return imageList(props, resolve);
+    case "stat-row":
+      return list(props, "stats")
+        .map((stat) => `- **${text(stat, "value")}** ${text(stat, "label")}`)
+        .join("\n");
+    case "card-grid":
+      return list(props, "cards")
+        .map((card) => `### ${text(card, "title")}\n\n${text(card, "body")}`)
+        .join("\n\n");
     case "contact-links":
       return list(props, "links")
         .map(
@@ -100,9 +108,16 @@ export function embedMarkdown(
     case "install-tabs":
       return `\`\`\`sh\nnpm install ${text(props, "packages")}\n\`\`\``;
     case "tech-badges":
-      return list(props, "technologies")
-        .map((technology) => `- ${String(technology)}`)
-        .join("\n");
+      return property(props, "groups")
+        ? list(props, "groups")
+            .map(
+              (group) =>
+                `- **${text(group, "label")}:** ${list(group, "technologies").map(String).join(", ")}`,
+            )
+            .join("\n")
+        : list(props, "technologies")
+            .map((technology) => `- ${String(technology)}`)
+            .join("\n");
     case "tweet":
     case "tweet-embed":
       return `${quote(text(props, "content"))}\n>\n> ${linkTo("View the post on X", text(props, "tweetUrl"))}`;

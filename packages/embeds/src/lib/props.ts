@@ -47,7 +47,7 @@ export function optionalCount(
   return value;
 }
 
-export function readList(props: EmbedProps, key: string, embed: string): readonly unknown[] {
+function readList(props: EmbedProps, key: string, embed: string): readonly unknown[] {
   const value = props[key];
   if (!Array.isArray(value)) {
     throw new Error(`${embed} needs a ${key} array`);

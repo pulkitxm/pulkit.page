@@ -1,6 +1,7 @@
 import type { EmbedRenderer } from "../types.ts";
 import { render as blogGallery } from "./blog-gallery.ts";
 import { render as blogImage } from "./blog-image.ts";
+import { render as cardGrid } from "./card-grid.ts";
 import { render as cmdKey } from "./cmd-key.ts";
 import { render as contactLinks } from "./contact-links.ts";
 import { render as documentTabs } from "./document-tabs.ts";
@@ -12,6 +13,7 @@ import { render as infoTip } from "./info-tip.ts";
 import { render as installTabs } from "./install-tabs.ts";
 import { render as math } from "./math.ts";
 import { render as repliesCarousel } from "./replies-carousel.ts";
+import { render as statRow } from "./stat-row.ts";
 import { render as techBadges } from "./tech-badges.ts";
 import { render as tweet } from "./tweet.ts";
 import { render as tweetEmbed } from "./tweet-embed.ts";
@@ -20,6 +22,7 @@ import { render as youtubeEmbed } from "./youtube-embed.ts";
 export const renderers: ReadonlyMap<string, EmbedRenderer> = new Map([
   ["blog-gallery", blogGallery],
   ["blog-image", blogImage],
+  ["card-grid", cardGrid],
   ["cmd-key", cmdKey],
   ["contact-links", contactLinks],
   ["document-tabs", documentTabs],
@@ -31,6 +34,7 @@ export const renderers: ReadonlyMap<string, EmbedRenderer> = new Map([
   ["install-tabs", installTabs],
   ["math", math],
   ["replies-carousel", repliesCarousel],
+  ["stat-row", statRow],
   ["tech-badges", techBadges],
   ["tweet", tweet],
   ["tweet-embed", tweetEmbed],

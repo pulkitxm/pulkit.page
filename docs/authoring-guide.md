@@ -124,11 +124,21 @@ Richer widgets come from the original site and render at generate time through `
 {"groups":[{"label":"Backend","technologies":["TypeScript","Redis"]},{"label":"Infrastructure","technologies":["Kubernetes"]}]}
 :::
 
+:::embed stat-row
+{"stats":[{"value":"50+","label":"Technical blogs"},{"value":"5.76B","label":"AI tokens / 3 wks"}]}
+:::
+
+:::embed card-grid
+{"columns":2,"cards":[{"step":1,"title":"Discovery","body":"The goal and what fits in a first release."}]}
+:::
+
 Press :embed[cmd-key]{{}} + K to open it.
 ```
 
 | Component                     | Purpose                                                                        |
 | ----------------------------- | ------------------------------------------------------------------------------ |
+| `stat-row`                    | A band of figures with hairline dividers, two columns on small screens         |
+| `card-grid`                   | Titled cards in two or three columns, with an optional `step` number           |
 | `image`, `blog-image`         | A single figure, optionally captioned and zoomable                             |
 | `image-grid`                  | Two images side by side, or a carousel with an optional `label` above two      |
 | `blog-gallery`                | A carousel of captioned photographs                                            |

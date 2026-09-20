@@ -81,6 +81,14 @@ export function embedMarkdown(
     case "image-grid":
     case "blog-gallery":
       return imageList(props, resolve);
+    case "stat-row":
+      return list(props, "stats")
+        .map((stat) => `- **${text(stat, "value")}** ${text(stat, "label")}`)
+        .join("\n");
+    case "card-grid":
+      return list(props, "cards")
+        .map((card) => `### ${text(card, "title")}\n\n${text(card, "body")}`)
+        .join("\n\n");
     case "contact-links":
       return list(props, "links")
         .map(

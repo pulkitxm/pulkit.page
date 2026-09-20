@@ -26,14 +26,22 @@ try {
     document.documentElement.dataset.entry = "cross-site";
   }
 } catch {}
+let chosenTheme: string | null = null;
 function applyTheme(theme: string) {
   document.documentElement.dataset.theme = theme;
   try {
     localStorage.setItem(themeKey, theme);
   } catch {}
 }
-function wipeOrigin(button: Element, event: MouseEvent): { x: number; y: number } {
-  if (event.clientX > 0 || event.clientY > 0) {
+function nextTheme(root: HTMLElement): string {
+  const current =
+    chosenTheme ??
+    root.dataset.theme ??
+    (globalThis.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  return current === "dark" ? "light" : "dark";
+}
+function wipeOrigin(button: Element, event: Event): { x: number; y: number } {
+  if (event instanceof MouseEvent && event.detail > 0) {
     return { x: event.clientX, y: event.clientY };
   }
   const box = button.getBoundingClientRect();
@@ -43,13 +51,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const button = document.querySelector("[data-theme-toggle]");
   button?.addEventListener("click", (event) => {
     const root = document.documentElement;
-    const dark = root.dataset.theme
-      ? root.dataset.theme === "dark"
-      : globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
-    const theme = dark ? "light" : "dark";
+    const theme = nextTheme(root);
+    chosenTheme = theme;
     if (
       !document.startViewTransition ||
-      !(event instanceof MouseEvent) ||
       globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
       applyTheme(theme);

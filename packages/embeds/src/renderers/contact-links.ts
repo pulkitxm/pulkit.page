@@ -1,4 +1,4 @@
-import { checkIcon, copyIcon, iconAttributes } from "../lib/icons.ts";
+import { arrowIcon, checkIcon, copyIcon } from "../lib/icons.ts";
 import { isRecord } from "../lib/props.ts";
 import type { EmbedRenderer } from "../types.ts";
 
@@ -10,7 +10,6 @@ interface ContactLink {
 }
 
 const linkProps = new Set(["label", "value", "href", "copy"]);
-const arrowIcon = `<svg ${iconAttributes} class="size-3.5"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`;
 const trailing = "inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted";
 
 function isFilled(value: unknown): value is string {

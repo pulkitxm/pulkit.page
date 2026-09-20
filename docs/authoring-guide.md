@@ -125,6 +125,7 @@ Press :embed[cmd-key]{{}} + K to open it.
 | `document-tabs`               | Several such cards behind a tab strip, at most four                            |
 | `tech-badges`                 | A wrapped row of technology names                                              |
 | `contact-links`               | One row per contact channel, with an optional copy button                      |
+| `project-list`                | One row per project, with its description and an optional live-site link       |
 | `math`, `info-tip`, `cmd-key` | Inline formula, hover tip, and command-key glyph                               |
 
 Carousels that share a page need distinct accessible names: pass `label` to each `image-grid` so the landmarks stay unique. Components that need behavior load their own script and stylesheet; each one still renders readable markup without JavaScript. Renderers live in `packages/embeds/src/renderers/` and are registered in `registry.ts`; their browser scripts are the entries in `packages/embeds/client/entries/` and are bundled to `/assets/embeds/` by the build, so `image-popup` loads `/assets/embeds/image-popup.js`.

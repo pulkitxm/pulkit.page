@@ -5,6 +5,8 @@ const svgAttributes =
 
 export const iconAttributes = `${svgAttributes} aria-hidden="true"`;
 
+export const arrowIcon = `<svg ${iconAttributes} class="size-3.5"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`;
+
 export const copyIcon = `<svg ${iconAttributes} class="size-3.5" data-copy-idle><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
 
 export const checkIcon = `<svg ${iconAttributes} class="hidden size-3.5" data-copy-done><path d="M20 6 9 17l-5-5"/></svg>`;

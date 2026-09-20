@@ -39,6 +39,8 @@ jobs:
       - name: Verify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
         run: bun run ci
       - name: Prune week-old Turbo cache entries
         run: find .turbo/cache -type f -mtime +7 -delete

@@ -2,7 +2,14 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "stream",
   "globalDependencies": [".env", "biome.json", ".htmlvalidate.json", "tsconfig.json"],
-  "globalEnv": ["NODE_ENV", "POSTHOG_DEBUG", "POSTHOG_HOST", "POSTHOG_KEY", "SITE_URL"],
+  "globalEnv": [
+    "NODE_ENV",
+    "POSTHOG_DEBUG",
+    "POSTHOG_HOST",
+    "POSTHOG_IGNORE_KEY",
+    "POSTHOG_KEY",
+    "SITE_URL"
+  ],
   "tasks": {
     "transit": {
       "dependsOn": ["^transit"]

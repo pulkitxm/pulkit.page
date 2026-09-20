@@ -8,9 +8,14 @@ Neither site loads an analytics script by default. The PostHog client is opt-in
 through the environment: when `POSTHOG_KEY` is set, every rendered page gets one
 module script in `<head>` and the build emits `/assets/analytics.js`. When the
 variable is absent the placeholder renders as an empty string, no bundle is
-produced, and the output is byte for byte what it was before. Nothing in the
-[CI workflow](../.github/workflows/ci.yml) sets the variable, so deployed pages
-carry no analytics.
+produced, and the output is byte for byte what it was before.
+
+Deployed pages are built by the Verify job of the
+[CI workflow](../.github/workflows/ci.yml), which reads `POSTHOG_KEY` and
+`POSTHOG_IGNORE_KEY` from repository secrets. Remove either secret and the next
+deployment drops that part of the behavior with no code change. The project key
+is not a credential: it is public by design and visible in the page source of
+every site that uses PostHog.
 
 | Variable        | Required | Default                    | Meaning                                                        |
 | --------------- | -------- | -------------------------- | -------------------------------------------------------------- |
@@ -42,6 +47,24 @@ A malformed key or a host with credentials, a path, or a query fails the render
 instead of shipping a broken tag. All three variables are Turbo global
 environment inputs, and the resolved script tag is part of the page cache key,
 so turning analytics on or off re-renders the pages it affects.
+
+## Excluding your own visits
+
+`POSTHOG_IGNORE_KEY` holds a phrase you choose. A build hashes it with SHA-256
+and publishes only that digest on the script tag, so the phrase itself never
+appears in the page. Before initializing, the browser reads `IGNORE_KEY` from
+local storage, hashes it the same way, and skips PostHog entirely when the two
+digests match: no client, no requests, no events. Run this once in the console
+of each browser you want excluded:
+
+```js
+localStorage.setItem("IGNORE_KEY", "the phrase");
+```
+
+Local storage is per origin, so repeat it on pulkit.page and on pulkit.blog.
+Clearing site data removes the exclusion and the visit is tracked again. Anyone
+who learns the phrase can exclude themselves as well, which costs nothing, but
+the digest means reading the page source does not reveal it.
 
 ## What the browser runs
 

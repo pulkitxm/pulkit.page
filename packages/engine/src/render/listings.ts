@@ -78,18 +78,17 @@ export function experiencePeriod(metadata: PageMetadata): string {
 }
 
 function experienceIcon(icon: string | undefined, className: string): string {
-  return `<img class="${className} size-9 rounded-xl border-2 border-bg object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`;
+  return `<img class="${className} size-9 object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`;
 }
 
 function experienceEntry(page: ListedPage): string {
   const { metadata } = page;
   const icons = [
     metadata.darkIcon
-      ? experienceIcon(metadata.icon, "m-0 bg-bg dark:hidden") +
-        experienceIcon(metadata.darkIcon, "m-0 hidden bg-bg dark:block")
-      : experienceIcon(metadata.icon, "m-0 bg-icon"),
-    metadata.secondaryIcon &&
-      experienceIcon(metadata.secondaryIcon, "m-0 -ml-6 translate-y-2.5 bg-icon"),
+      ? experienceIcon(metadata.icon, "m-0 dark:hidden") +
+        experienceIcon(metadata.darkIcon, "m-0 hidden dark:block")
+      : experienceIcon(metadata.icon, "m-0"),
+    metadata.secondaryIcon && experienceIcon(metadata.secondaryIcon, "m-0 -ml-6 translate-y-2.5"),
   ]
     .filter(Boolean)
     .join("");

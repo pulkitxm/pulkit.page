@@ -118,7 +118,6 @@ a:focus-visible > [data-wordmark] [data-fold] {
   --color-muted: #686258;
   --color-line: #e3d5c2;
   --color-surface: #eee0cd;
-  --color-icon: #181916;
   --color-syn-k: #3d5a36;
   --color-syn-s: #8b4d2a;
   --color-syn-c: var(--color-muted);

@@ -35,7 +35,7 @@ Unknown fields, including `draft`, `slug`, author, and custom SEO fields, fail t
 
 ## Filenames and Markdown
 
-Content paths use lowercase ASCII kebab-case segments and `.md`, for example `apps/blog/content/a-useful-post.md`. Use `home.md` for `/`; `content/index.md` is forbidden. `_site.md` is the named configuration exception. A nested `index.md` creates that folder's landing page and is excluded from automatic lists.
+Content paths use lowercase ASCII kebab-case segments and `.md`, for example `apps/blog/content/a-useful-post.md`. Use `home.md` for `/`; `content/index.md` is forbidden. `_site.md` is the named configuration exception, and `content/404.md` is rejected because the engine renders the shared not-found page for every site. A nested `index.md` creates that folder's landing page and is excluded from automatic lists.
 
 Begin each page with YAML delimited by `---`, then a nonempty Markdown body. No body H1: the layout supplies it from `title`. Start sections at H2, never skip levels, and avoid duplicate heading labels. Documentation has no page frontmatter and requires exactly one H1. Documentation paths follow lowercase kebab-case except root `README.md`.
 

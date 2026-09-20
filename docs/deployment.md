@@ -42,8 +42,10 @@ stays live and the newer run deploys the newer commit.
 
 Production builds copy each app's `CNAME` into `dist/`, which keeps both custom
 domains attached to their Pages sites. A preview build for another origin leaves
-it out, so a preview cannot claim a production domain. Old pulkit.page `/blogs/` URLs are not
-redirected; they return 404.
+it out, so a preview cannot claim a production domain. Both builds write the shared
+not-found page to `dist/404.html`, which is the file GitHub Pages serves, with
+status 404, for any path it cannot match. Old pulkit.page `/blogs/` URLs are not
+redirected; they reach that page.
 
 ## One-time setup for pulkit.blog
 

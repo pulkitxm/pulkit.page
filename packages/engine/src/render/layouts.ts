@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { themeFile } from "@pulkit/theme/files";
+import { resolveAnalytics } from "../site/analytics.ts";
 import type { Layouts } from "../types.ts";
 
 const placeholderNames = [
@@ -20,6 +21,7 @@ const placeholderNames = [
   "author",
   "authorUrl",
   "themeScript",
+  "analyticsScript",
 ] as const;
 
 type Placeholder = (typeof placeholderNames)[number];
@@ -53,6 +55,20 @@ export function themeScript(): string {
     .transformSync(readFileSync(themeFile("src/client/theme.ts"), "utf8"))
     .trim()}</script>`;
   return themeSource;
+}
+
+let analyticsTag: string | undefined;
+
+export function analyticsScript(): string {
+  if (analyticsTag === undefined) {
+    const analytics = resolveAnalytics();
+    const debug = analytics?.debug ? ' data-posthog-debug="true"' : "";
+    const ignore = analytics?.ignore ? ` data-posthog-ignore="${analytics.ignore}"` : "";
+    analyticsTag = analytics
+      ? `<script type="module" src="/assets/analytics.js" data-posthog-key="${analytics.key}" data-posthog-host="${analytics.host}"${ignore}${debug}></script>`
+      : "";
+  }
+  return analyticsTag;
 }
 
 export function layoutDirectory(): string {

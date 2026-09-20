@@ -78,7 +78,7 @@ export function experiencePeriod(metadata: PageMetadata): string {
 }
 
 const stackedIcon =
-  "rounded-xl border-2 border-bg bg-bg transition-transform duration-300 ease-out";
+  "rounded-xl border-2 border-bg bg-bg ring-1 ring-line transition-transform duration-300 ease-out";
 
 function experienceIcon(icon: string | undefined, className: string): string {
   return `<img class="${className} size-9 object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`;

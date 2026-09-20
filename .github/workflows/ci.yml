@@ -38,7 +38,6 @@ jobs:
           restore-keys: turbo-${{ runner.os }}-
       - name: Verify
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
           POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
         run: bun run ci
@@ -154,7 +153,6 @@ jobs:
           BROWSER_VIEWPORT: ${{ matrix.viewport }}
           BROWSER_SHARD: ${{ matrix.shard }}
           PLAYWRIGHT_CHANNEL: chrome
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bunx turbo run check:browser --only
   ci:
     name: CI

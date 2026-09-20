@@ -46,6 +46,8 @@ describe("comment detection", () => {
       3,
     ],
     ["file.svg", "<svg><!-- SVG comment --></svg>", 1],
+    ["LICENSE", ["## Acceptance", "", "Required Notice: Copyright 2026 Pulkit", ""].join("\n"), 0],
+    ["LICENSE-CONTENT", ["Section 1 -- Definitions.", "", "# not a comment", ""].join("\n"), 0],
     ["file.html", '<script type="application/ld+json">{"url":"https://example.com"}</script>', 0],
     [
       "file.md",

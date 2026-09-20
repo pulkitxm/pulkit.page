@@ -120,6 +120,10 @@ Richer widgets come from the original site and render at generate time through `
 {"technologies":["TypeScript","Kubernetes","Redis"]}
 :::
 
+:::embed tech-badges
+{"groups":[{"label":"Backend","technologies":["TypeScript","Redis"]},{"label":"Infrastructure","technologies":["Kubernetes"]}]}
+:::
+
 Press :embed[cmd-key]{{}} + K to open it.
 ```
 
@@ -135,7 +139,7 @@ Press :embed[cmd-key]{{}} + K to open it.
 | `replies-carousel`            | A looping marquee of replies, each linking to the original post                |
 | `document-viewer`             | One PDF in a titled card with an open-in-new-tab link                          |
 | `document-tabs`               | Several such cards behind a tab strip, at most four                            |
-| `tech-badges`                 | A wrapped row of technology names                                              |
+| `tech-badges`                 | A wrapped row of technology names, or labelled rows when given `groups`        |
 | `contact-links`               | One row per contact channel, with an optional copy button                      |
 | `math`, `info-tip`, `cmd-key` | Inline formula, hover tip, and command-key glyph                               |
 

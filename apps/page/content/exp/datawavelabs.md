@@ -8,6 +8,7 @@ date: 2024-04-01
 period: Apr 2024 – Sep 2024
 endDate: 2024-09-30
 icon: /assets/exp/datawavelabs.webp
+darkIcon: /assets/exp/datawavelabs-dark.webp
 ---
 
 My internship at Datawave Labs provided a hands-on experience as a Full Stack Engineer, immersing me in the development of a scalable, cloud-driven data intelligence platform. Below are detailed insights into the work I accomplished.

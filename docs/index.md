@@ -16,9 +16,10 @@ This is a static publishing system for two sites, organized as a Bun and Turbore
 10. [Quality checks and limits](quality-checks.md): what validation proves and what it misses.
 11. [Repository policies](repository-policies.md): the no-comments, no-em-dash, formatting, dead-code, and contribution rules.
 12. [SEO and environments](seo-and-environments.md): metadata, cards, origin selection, preview isolation, and validation.
-13. [Development benchmarks](development-benchmarks.md): request-time rendering measurements and a reproducible runner.
-14. [Maintenance and snapshot](maintenance-and-snapshot.md): findings, troubleshooting, and suggested improvements.
-15. [Migration audit explained](migration-audit.md): what `content-migration.json` means and why it is not a manifest.
+13. [Analytics](analytics.md): the opt-in PostHog client, the environment that enables it, and why builds stay clean without it.
+14. [Development benchmarks](development-benchmarks.md): request-time rendering measurements and a reproducible runner.
+15. [Maintenance and snapshot](maintenance-and-snapshot.md): findings, troubleshooting, and suggested improvements.
+16. [Migration audit explained](migration-audit.md): what `content-migration.json` means and why it is not a manifest.
 
 ## Scope of this explanation
 

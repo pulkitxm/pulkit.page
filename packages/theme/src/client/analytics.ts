@@ -12,4 +12,5 @@ if (key && host) {
     disable_session_recording: true,
     debug: tag?.dataset.posthogDebug === "true",
   });
+  Object.assign(globalThis, { posthog });
 }

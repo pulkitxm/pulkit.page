@@ -50,6 +50,17 @@ function readTheme(page: Page): Promise<string | null> {
   return page.locator("html").getAttribute("data-theme");
 }
 
+async function settledTheme(page: Page, expected: string | null): Promise<string | null> {
+  await page
+    .waitForFunction(
+      (want) => (document.documentElement.dataset.theme ?? null) === want,
+      expected,
+      { timeout: 2000 },
+    )
+    .catch(() => undefined);
+  return readTheme(page);
+}
+
 function readBackground(page: Page): Promise<string> {
   return page.evaluate(() => getComputedStyle(document.body).backgroundColor);
 }
@@ -77,7 +88,7 @@ async function auditThemeFlow(
   expect(label, (await readTheme(page)) === null, "Theme is forced before any choice");
   const initial = await readBackground(page);
   await page.locator("[data-theme-toggle]").click();
-  expect(label, (await readTheme(page)) === other, `Toggle did not switch to ${other}`);
+  expect(label, (await settledTheme(page, other)) === other, `Toggle did not switch to ${other}`);
   expect(label, (await readStoredTheme(page, themeKey)) === other, "Choice was not stored");
   const toggled = await readBackground(page);
   expect(label, toggled !== initial, "Background did not change with the theme");
@@ -92,7 +103,11 @@ async function auditThemeFlow(
   await page.waitForURL(new URL(navigationTarget, origin).href);
   expect(label, (await readTheme(page)) === other, "Choice did not survive navigation");
   await page.locator("[data-theme-toggle]").click();
-  expect(label, (await readTheme(page)) === systemScheme, "Second toggle did not switch back");
+  expect(
+    label,
+    (await settledTheme(page, systemScheme)) === systemScheme,
+    "Second toggle did not switch back",
+  );
   expect(label, (await readBackground(page)) === initial, "Background did not switch back");
   await context.close();
   return { initial, toggled };
@@ -120,7 +135,7 @@ async function auditBlockedStorage(browser: Browser, origin: string): Promise<vo
   const { context, page } = await openSession(browser, origin, label, {}, [blockStorage]);
   await page.goto(origin);
   await page.locator("[data-theme-toggle]").click();
-  expect(label, (await readTheme(page)) === "dark", "Toggle failed without storage");
+  expect(label, (await settledTheme(page, "dark")) === "dark", "Toggle failed without storage");
   await page.reload();
   expect(label, (await readTheme(page)) === null, "Theme persisted without storage");
   await context.close();
@@ -145,9 +160,13 @@ async function auditKeyboard(browser: Browser, origin: string): Promise<void> {
     );
     expect(label, outline !== "none", "Focused theme toggle has no visible outline");
     await page.keyboard.press("Enter");
-    expect(label, (await readTheme(page)) === "dark", "Enter did not toggle the theme");
+    expect(label, (await settledTheme(page, "dark")) === "dark", "Enter did not toggle the theme");
     await page.keyboard.press("Space");
-    expect(label, (await readTheme(page)) === "light", "Space did not toggle the theme");
+    expect(
+      label,
+      (await settledTheme(page, "light")) === "light",
+      "Space did not toggle the theme",
+    );
   }
   await context.close();
   console.log("Validated keyboard navigation");

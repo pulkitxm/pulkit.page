@@ -26,17 +26,53 @@ try {
     document.documentElement.dataset.entry = "cross-site";
   }
 } catch {}
+let chosenTheme: string | null = null;
+function applyTheme(theme: string) {
+  document.documentElement.dataset.theme = theme;
+  try {
+    localStorage.setItem(themeKey, theme);
+  } catch {}
+}
+function nextTheme(root: HTMLElement): string {
+  const current =
+    chosenTheme ??
+    root.dataset.theme ??
+    (globalThis.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  return current === "dark" ? "light" : "dark";
+}
+function wipeOrigin(button: Element, event: Event): { x: number; y: number } {
+  if (event instanceof MouseEvent && event.detail > 0) {
+    return { x: event.clientX, y: event.clientY };
+  }
+  const box = button.getBoundingClientRect();
+  return { x: box.left + box.width / 2, y: box.top + box.height / 2 };
+}
 document.addEventListener("DOMContentLoaded", () => {
   const button = document.querySelector("[data-theme-toggle]");
-  button?.addEventListener("click", () => {
-    const dark = document.documentElement.dataset.theme
-      ? document.documentElement.dataset.theme === "dark"
-      : globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
-    const theme = dark ? "light" : "dark";
-    document.documentElement.dataset.theme = theme;
-    try {
-      localStorage.setItem(themeKey, theme);
-    } catch {}
+  button?.addEventListener("click", (event) => {
+    const root = document.documentElement;
+    const theme = nextTheme(root);
+    chosenTheme = theme;
+    if (
+      !document.startViewTransition ||
+      globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      applyTheme(theme);
+      return;
+    }
+    const { x, y } = wipeOrigin(button, event);
+    root.style.setProperty("--theme-x", `${x}px`);
+    root.style.setProperty("--theme-y", `${y}px`);
+    root.style.setProperty(
+      "--theme-radius",
+      `${Math.hypot(Math.max(x, globalThis.innerWidth - x), Math.max(y, globalThis.innerHeight - y))}px`,
+    );
+    root.dataset.themeChange = "";
+    const transition = document.startViewTransition(() => applyTheme(theme));
+    const clear = () => {
+      delete root.dataset.themeChange;
+    };
+    transition.finished.then(clear, clear);
   });
 });
 

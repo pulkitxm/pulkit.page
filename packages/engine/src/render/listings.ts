@@ -77,18 +77,26 @@ export function experiencePeriod(metadata: PageMetadata): string {
   return `${periodDate(metadata.date ?? "")} – ${metadata.endDate ? periodDate(metadata.endDate) : "present"}`;
 }
 
+const stackedIcon =
+  "rounded-xl border-2 border-bg bg-bg ring-1 ring-line transition-transform duration-300 ease-out";
+
 function experienceIcon(icon: string | undefined, className: string): string {
   return `<img class="${className} size-9 object-contain" src="${safeUrl(icon)}" alt="" width="36" height="36" loading="lazy">`;
 }
 
 function experienceEntry(page: ListedPage): string {
   const { metadata } = page;
+  const front = metadata.secondaryIcon ? `m-0 ${stackedIcon} group-hover:-translate-x-0.5` : "m-0";
   const icons = [
     metadata.darkIcon
-      ? experienceIcon(metadata.icon, "m-0 dark:hidden") +
-        experienceIcon(metadata.darkIcon, "m-0 hidden dark:block")
-      : experienceIcon(metadata.icon, "m-0"),
-    metadata.secondaryIcon && experienceIcon(metadata.secondaryIcon, "m-0 -ml-6 translate-y-2.5"),
+      ? experienceIcon(metadata.icon, `${front} dark:hidden`) +
+        experienceIcon(metadata.darkIcon, `${front} hidden dark:block`)
+      : experienceIcon(metadata.icon, front),
+    metadata.secondaryIcon &&
+      experienceIcon(
+        metadata.secondaryIcon,
+        `m-0 -ml-3 translate-y-2.5 ${stackedIcon} group-hover:translate-x-1`,
+      ),
   ]
     .filter(Boolean)
     .join("");

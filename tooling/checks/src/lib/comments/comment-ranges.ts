@@ -178,7 +178,7 @@ function languageOf(file: string, source: string): string {
   if (!extension && source.startsWith("#!")) {
     return /\b(node|bun|deno)\b/.test(source.split("\n")[0] ?? "") ? "javascript" : "bash";
   }
-  if (["CNAME", ".nojekyll"].includes(name)) {
+  if (["CNAME", ".nojekyll", "LICENSE", "LICENSE-CONTENT"].includes(name)) {
     return "text";
   }
   if ([".gitignore", ".npmrc", ".env"].includes(name)) {

@@ -196,3 +196,28 @@ Every page on both sites is also published as Markdown beside its HTML:
 `/about/` has `/about.md`, and `/` has `/index.md`. Each site's `/llms.txt`
 indexes those copies. See
 [Markdown copies and llms.txt](docs/seo-and-environments.md#markdown-copies-and-llmstxt).
+
+## License
+
+The repository is licensed in two parts, and some material is not licensed at all.
+
+The code is under the [PolyForm Noncommercial License 1.0.0](LICENSE): everything in
+`packages/`, `tooling/`, and the build and configuration files at the root. You may
+read, run, modify, and share it for any noncommercial purpose, and any copy you pass
+on must carry the required copyright notice. Commercial use is not licensed.
+
+The writing is under [CC BY-NC-ND 4.0](LICENSE-CONTENT): `apps/page/content`,
+`apps/blog/content`, and `docs`. You may republish it with credit to Pulkit and a
+link back to the original. You may not use it commercially, and you may not publish
+an edited version of a post.
+
+Nothing else is licensed:
+
+- the name Pulkit, the wordmark, the favicon, and the portrait in `packages/theme/assets`
+- personal documents in `apps/page/assets/content`, including the resume, offer letters, and relieving letters
+- third-party company logos in `apps/page/assets/exp`, which belong to those companies
+- the bundled fonts, which carry their own licenses beside them in `packages/theme/assets/fonts`
+
+Building your own site on this code is fine under the code license, but the identity
+is not part of it. Replace the branding, the content, and the personal documents
+before you deploy.

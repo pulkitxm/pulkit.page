@@ -23,7 +23,7 @@ Known binary media and fonts have no source-code comment syntax and are excluded
 - Remark finds Markdown frontmatter, raw HTML, and code fences. Fenced examples are checked according to their declared language, except examples in Markdown under any `apps/<app>/content/`, which preserve their original comments.
 - parse5 finds HTML/SVG/XML comments, embedded scripts/styles, JSON-LD, and generated code examples. HTML entities in code examples are decoded before scanning. Actual HTML comments and embedded scripts/styles remain checked everywhere.
 - Small syntax-aware lexers handle SQL comments and quoted/dollar-quoted strings, hash-comment configuration languages, and Mermaid comments.
-- Python docstrings count as documentation comments. All lint directives, coverage directives, documentation comments, and license comments count as comments. Third-party plain-text license files remain ordinary text.
+- Python docstrings count as documentation comments. All lint directives, coverage directives, documentation comments, and license comments count as comments. Third-party plain-text license files remain ordinary text. The repository's own extensionless `LICENSE` and `LICENSE-CONTENT` are registered as plain text beside them.
 
 A shebang at byte zero is executable interpreter metadata and is accepted. Strings containing comment-like characters are not comments. Plain-text output, HTTP examples, and math fences have no code-comment interpretation, but still participate in the em-dash check.
 

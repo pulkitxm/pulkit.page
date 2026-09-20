@@ -86,6 +86,8 @@ Root-relative URLs assume deployment at the domain root; there is no configurabl
 | [tooling/checks/turbo.json](../tooling/checks/turbo.json) | Adds workflow, hook and manifest files to the policy test inputs           |
 | [bun.lock](../bun.lock)                                   | The locked dependency tree; also an input of the render cache version      |
 | [README.md](../README.md)                                 | Front page: layout, quick start, and common commands                       |
+| [LICENSE](../LICENSE)                                     | PolyForm Noncommercial 1.0.0 for the code, with the required notice        |
+| [LICENSE-CONTENT](../LICENSE-CONTENT)                     | CC BY-NC-ND 4.0 for the writing in `apps/*/content` and `docs`             |
 | [docs/](./)                                               | This explanation and the historical migration audit                        |
 
 The local `node_modules/` trees are installed tooling, not authoritative source. `extras/pulkitxm.com/` is historical reference, not an alternative active source tree. The [migration explanation](migration-audit.md) covers why the reference and its richer runtime should not be confused with the current site.

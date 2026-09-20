@@ -96,7 +96,9 @@ prints the duration of each one.
 3. **Inventory.** [site-inventory.ts](../packages/engine/src/site/site-inventory.ts)
    walks `content/`, rejects symlinks and `.mdx`, maps each file to a route,
    rejects routes that collide after NFC and lowercase normalization, and
-   requires a homepage. `readSiteConfig` merges
+   requires a homepage. It then appends the shared not-found page from
+   [not-found.ts](../packages/engine/src/site/not-found.ts), so both sites
+   render the same `/404/` without a content file of their own. `readSiteConfig` merges
    [@pulkit/profile](../packages/profile/profile.json) under the app's
    `content/_site.md` and appends an RSS link when the site sets `articles`.
    `loadLayouts` reads the app's `layouts/` when it exists and the shared theme
@@ -133,11 +135,14 @@ prints the duration of each one.
     hexadecimal characters of their SHA-256 digest, and every built HTML file is
     rewritten to reference the hashed names.
 
-A build of this repository writes 39 files for pulkit.page (12 pages, 12 cards,
-12 Markdown copies, `llms.txt`, `sitemap.xml`, `robots.txt`) and 166 files for
-pulkit.blog (54 pages, 54 cards, 54 Markdown copies, `llms.txt`, `sitemap.xml`,
-`robots.txt`, `feed.xml`), plus the copied and bundled assets. None of it is
-committed.
+The not-found page is also written to `dist/404.html`, which is the file
+GitHub Pages serves for every unmatched path.
+
+A build of this repository writes 46 files for pulkit.page (14 pages plus the
+`404.html` copy, 14 cards, 14 Markdown copies, `llms.txt`, `sitemap.xml`,
+`robots.txt`) and 173 files for pulkit.blog (56 pages plus the `404.html` copy,
+56 cards, 56 Markdown copies, `llms.txt`, `sitemap.xml`, `robots.txt`,
+`feed.xml`), plus the copied and bundled assets. None of it is committed.
 
 ## From Markdown to a page during development
 
@@ -165,8 +170,8 @@ flowchart TD
 [dev-renderer.ts](../packages/engine/src/dev/dev-renderer.ts) reads the inventory
 on the first request and keeps it until a watched file changes. It answers page
 routes, social cards, `sitemap.xml`, `robots.txt`, `feed.xml`, every Markdown
-copy and `llms.txt`, redirects a missing trailing slash, and returns 404 for
-anything else. It uses the same renderer, layouts, SEO helpers and render cache
+copy and `llms.txt`, redirects a missing trailing slash, and renders the
+not-found page with status 404 for anything else. It uses the same renderer, layouts, SEO helpers and render cache
 as the build, so a page looks the same in both, except that its canonical URLs
 use the bound loopback origin and Vite injects its client.
 

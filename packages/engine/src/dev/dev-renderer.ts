@@ -13,15 +13,15 @@ import { llmsText } from "../markdown/llms-text.ts";
 import { renderMarkdown } from "../markdown/markdown-export.ts";
 import { crawlerOutputs } from "../seo/crawler-outputs.ts";
 import { cardCategory, renderCard } from "../seo/og-images.ts";
-import { imagePath, markdownPath } from "../seo/routes.ts";
+import { imagePath, isNotFound, markdownPath } from "../seo/routes.ts";
 import { renderSitePage } from "../site/generate.ts";
 import { readSite } from "../site/site-inventory.ts";
-import type { SiteInventory } from "../types.ts";
+import type { Page, SiteInventory } from "../types.ts";
 
 export const developmentOriginFile = ".cache/dev-origin";
 
 type DevelopmentResponse =
-  | { kind: "content"; body: string | Buffer; type: string; description: string }
+  | { kind: "content"; body: string | Buffer; type: string; description: string; status?: number }
   | { kind: "redirect"; location: string };
 
 export interface DevelopmentRenderer {
@@ -96,21 +96,27 @@ export function developmentRenderer(origin: () => string): DevelopmentRenderer {
         generationVersion(),
       );
       const current = cache;
-      const { pages, site } = inventory;
+      const loaded = inventory;
+      const { pages, site } = loaded;
       const { access, summary } = tracker(pathname);
       const route = pathname.replace(/index\.html$/, "");
-      const page = pages.find((entry) => entry.route === route);
-      if (page) {
+      const renderHtml = async (entry: Page, status?: number): Promise<DevelopmentResponse> => {
         const startedAt = performance.now();
-        const html = await renderSitePage(page, inventory, current, access);
-        const description = summary(startedAt);
+        const html = await renderSitePage(entry, loaded, current, access);
+        const rendered = summary(startedAt);
+        const description = status === 404 ? `not found, ${rendered}` : rendered;
         save(current);
         return {
           kind: "content",
           body: linkLocalSites(html),
           type: "text/html; charset=utf-8",
           description,
+          ...(status === undefined ? {} : { status }),
         };
+      };
+      const page = pages.find((entry) => entry.route === route);
+      if (page) {
+        return renderHtml(page);
       }
       const card = pages.find((entry) => imagePath(entry.route) === pathname);
       if (card) {
@@ -149,9 +155,11 @@ export function developmentRenderer(origin: () => string): DevelopmentRenderer {
           description: "generated",
         };
       }
-      const redirects =
-        !pathname.endsWith("/") && pages.some((entry) => entry.route === `${pathname}/`);
-      return redirects ? { kind: "redirect", location: `${pathname}/` } : undefined;
+      if (!pathname.endsWith("/") && pages.some((entry) => entry.route === `${pathname}/`)) {
+        return { kind: "redirect", location: `${pathname}/` };
+      }
+      const missing = pages.find((entry) => isNotFound(entry.route));
+      return missing ? renderHtml(missing, 404) : undefined;
     },
   };
 }

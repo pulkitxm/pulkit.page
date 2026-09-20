@@ -12,6 +12,7 @@ import { renderDependencies } from "../render/render-dependencies.ts";
 import { renderPage } from "../render/render-page.ts";
 import { crawlerOutputs } from "../seo/crawler-outputs.ts";
 import { cardOutputs } from "../seo/og-images.ts";
+import { isNotFound, notFoundFile } from "../seo/routes.ts";
 import type { Page, SiteInventory } from "../types.ts";
 import { readSite } from "./site-inventory.ts";
 
@@ -51,7 +52,11 @@ export async function generateSite(outputDirectory: string, origin: string): Pro
     async () => {
       const rendered = new Map<string, string | Buffer>();
       for (const page of pages) {
-        rendered.set(outputFor(page.route), await renderSitePage(page, inventory, cache));
+        const html = await renderSitePage(page, inventory, cache);
+        rendered.set(outputFor(page.route), html);
+        if (isNotFound(page.route)) {
+          rendered.set(notFoundFile, html);
+        }
       }
       return rendered;
     },

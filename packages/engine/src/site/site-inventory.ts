@@ -7,9 +7,10 @@ import { siteConfigFile } from "@pulkit/shared/frontmatter";
 import { themeFile } from "@pulkit/theme/files";
 import { loadLayouts } from "../render/layouts.ts";
 import { projectListKey, projectsDirective } from "../render/projects.ts";
-import { articles } from "../seo/routes.ts";
+import { articles, isNotFound } from "../seo/routes.ts";
 import type { ListedPage, Page, ProjectList, Site, SiteInventory } from "../types.ts";
 import { fetchProjectList } from "./github-projects.ts";
+import { notFoundPage } from "./not-found.ts";
 import { readFrontmatter, readPage, siteSettings } from "./read-page.ts";
 
 const externalList = /^:::list ([a-z0-9-]+):all\b/gm;
@@ -60,6 +61,9 @@ export function readPages(root: string): Page[] {
       if (developmentOutput.test(route.split("/")[1] ?? "")) {
         throw new Error("Root dev-<port> routes are reserved for development output");
       }
+      if (isNotFound(route)) {
+        throw new Error(`Remove ${source}: ${route} renders from the shared not-found page`);
+      }
       routes.add(key);
       const text = readFileSync(source, "utf8");
       return { source, text, ...readPage(text), route, index: source.endsWith("/index.md") };
@@ -103,7 +107,7 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
 }
 
 export async function readSite(url: string): Promise<SiteInventory> {
-  const pages = readPages(".");
+  const pages = [...readPages("."), notFoundPage()];
   const names = new Set(
     pages.flatMap((page) =>
       [...page.body.matchAll(externalList)].flatMap((match) => (match[1] ? [match[1]] : [])),

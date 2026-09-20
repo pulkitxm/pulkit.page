@@ -1,5 +1,5 @@
 import { longDate } from "../render/html.ts";
-import { isArticle, newestFirstByTitle, parentRoute } from "../seo/routes.ts";
+import { isArticle, isNotFound, newestFirstByTitle, parentRoute } from "../seo/routes.ts";
 import type { ListedPage, Site } from "../types.ts";
 import { linkTo, markdownResolver } from "./markdown-links.ts";
 
@@ -18,7 +18,11 @@ export function llmsText(pages: readonly ListedPage[], site: Site): string {
   };
   const home = pages.filter((page) => page.route === "/").slice(0, 1);
   const topLevel = pages.filter(
-    (page) => page.route !== "/" && !page.index && parentRoute(page.route) === "/",
+    (page) =>
+      page.route !== "/" &&
+      !page.index &&
+      !isNotFound(page.route) &&
+      parentRoute(page.route) === "/",
   );
   const writing = topLevel
     .filter((page) => isArticle(page.route, pages, site))

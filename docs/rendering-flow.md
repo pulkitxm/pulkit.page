@@ -44,21 +44,22 @@ The apps have no code of their own: their scripts call the engine, and the engin
 
 ## Discovery and routes
 
-[site-inventory.ts](../packages/engine/src/site/site-inventory.ts) walks the app's `content/`, rejects symlinks and MDX, and selects Markdown files except `_site.md`. `readPage` parses YAML/body. `readSiteConfig` builds the site configuration: the author name and profile URL from [@pulkit/profile](../packages/profile/profile.json), then the app's `_site.md`, with social links taken from `_site.md` or else the profile, an RSS link to `/feed.xml` appended when `articles` is set, and an origin from [site-origin.ts](../packages/engine/src/site/site-origin.ts). Origin is not a frontmatter field.
+[site-inventory.ts](../packages/engine/src/site/site-inventory.ts) walks the app's `content/`, rejects symlinks and MDX, and selects Markdown files except `_site.md`. `readPage` parses YAML/body, and the shared not-found page from [not-found.ts](../packages/engine/src/site/not-found.ts) joins the inventory after them. `readSiteConfig` builds the site configuration: the author name and profile URL from [@pulkit/profile](../packages/profile/profile.json), then the app's `_site.md`, with social links taken from `_site.md` or else the profile, an RSS link to `/feed.xml` appended when `articles` is set, and an origin from [site-origin.ts](../packages/engine/src/site/site-origin.ts). Origin is not a frontmatter field.
 
 Paths below are relative to the app named in the first column.
 
-| App         | Source                             | Build output                            | Route                     |
-| ----------- | ---------------------------------- | --------------------------------------- | ------------------------- |
-| `apps/page` | `content/home.md`                  | `dist/index.html`                       | `/`                       |
-| `apps/page` | `content/about.md`                 | `dist/about/index.html`                 | `/about/`                 |
-| `apps/page` | `content/exp/magicapi.md`          | `dist/exp/magicapi/index.html`          | `/exp/magicapi/`          |
-| `apps/blog` | `content/home.md`                  | `dist/index.html`                       | `/`                       |
-| `apps/blog` | `content/git-worktrees.md`         | `dist/git-worktrees/index.html`         | `/git-worktrees/`         |
-| `apps/blog` | `content/system-design/index.md`   | `dist/system-design/index.html`         | `/system-design/`         |
-| `apps/blog` | `content/system-design/caching.md` | `dist/system-design/caching/index.html` | `/system-design/caching/` |
+| App         | Source                             | Build output                              | Route                     |
+| ----------- | ---------------------------------- | ----------------------------------------- | ------------------------- |
+| `apps/page` | `content/home.md`                  | `dist/index.html`                         | `/`                       |
+| `apps/page` | `content/about.md`                 | `dist/about/index.html`                   | `/about/`                 |
+| `apps/page` | `content/exp/magicapi.md`          | `dist/exp/magicapi/index.html`            | `/exp/magicapi/`          |
+| `apps/blog` | `content/home.md`                  | `dist/index.html`                         | `/`                       |
+| `apps/blog` | `content/git-worktrees.md`         | `dist/git-worktrees/index.html`           | `/git-worktrees/`         |
+| `apps/blog` | `content/system-design/index.md`   | `dist/system-design/index.html`           | `/system-design/`         |
+| `apps/blog` | `content/system-design/caching.md` | `dist/system-design/caching/index.html`   | `/system-design/caching/` |
+| both        | the engine's not-found page        | `dist/404/index.html` and `dist/404.html` | `/404/`                   |
 
-Discovery also understands `content/index.md`, but strict authoring forbids it. Routes are normalized to NFC and lowercase to reject collisions, and root `dev-<port>` routes are reserved for development output. A root page is required. Each discovered page carries source, metadata, body, route, and an index flag based on `/index.md`. Discovery finishes before rendering, so lists, breadcrumbs, related links, schema, and sitemap share the same page inventory.
+Discovery also understands `content/index.md`, but strict authoring forbids it. Routes are normalized to NFC and lowercase to reject collisions, and root `dev-<port>` routes and `/404/` are reserved, the first for development output and the second for the shared not-found page. A root page is required. Each discovered page carries source, metadata, body, route, and an index flag based on `/index.md`. Discovery finishes before rendering, so lists, breadcrumbs, related links, schema, and sitemap share the same page inventory.
 
 ## Markdown and collection rendering
 
@@ -88,7 +89,7 @@ Rendering reuses verified cache entries for HTML, fences, and cards. Changes to 
 
 ## Build and publication
 
-[build.ts](../packages/engine/src/commands/build.ts) resolves the requested environment origin, clears the deployment root while preserving reserved `dist/dev-<port>/` directories, and calls `generateSite("dist", origin)` to render every page, card, Markdown copy, `llms.txt`, sitemap, robots file, and feed. It then copies `packages/theme/assets/` into `dist/assets/`, copies the app's `assets/` on top of it, copies `favicon-32.png` to `dist/favicon.ico`, and copies the theme's `theme.js`. The Tailwind CLI compiles the app's `styles.css`, which only imports `@pulkit/theme/styles.css`, into minified `dist/styles.css`. When any page body contains a demo directive, `buildDemoAssets` from `@pulkit/demos` writes `dist/assets/demos/` (so pulkit.blog gets it and pulkit.page skips it), and `buildEmbedAssets` from `@pulkit/embeds` writes `dist/assets/embeds/` plus KaTeX and PhotoSwipe assets. Finally the stylesheet and theme script are fingerprinted and every page is rewritten to point at the hashed names. Only a production build with the production origin includes CNAME, including when SITE\_URL explicitly names that origin.
+[build.ts](../packages/engine/src/commands/build.ts) resolves the requested environment origin, clears the deployment root while preserving reserved `dist/dev-<port>/` directories, and calls `generateSite("dist", origin)` to render every page, card, Markdown copy, `llms.txt`, sitemap, robots file, and feed. The not-found page is written twice, at its own route and at `dist/404.html` for GitHub Pages. It then copies `packages/theme/assets/` into `dist/assets/`, copies the app's `assets/` on top of it, copies `favicon-32.png` to `dist/favicon.ico`, and copies the theme's `theme.js`. The Tailwind CLI compiles the app's `styles.css`, which only imports `@pulkit/theme/styles.css`, into minified `dist/styles.css`. When any page body contains a demo directive, `buildDemoAssets` from `@pulkit/demos` writes `dist/assets/demos/` (so pulkit.blog gets it and pulkit.page skips it), and `buildEmbedAssets` from `@pulkit/embeds` writes `dist/assets/embeds/` plus KaTeX and PhotoSwipe assets. Finally the stylesheet and theme script are fingerprinted and every page is rewritten to point at the hashed names. Only a production build with the production origin includes CNAME, including when SITE\_URL explicitly names that origin.
 
 Only the stylesheet and the embed and demo bundles are minified; no source-image optimization, redirects, or search service is generated. SEO assets are rendered for the selected origin; custom-origin output intentionally differs from production in canonicals, cards, schema, and crawler files.
 

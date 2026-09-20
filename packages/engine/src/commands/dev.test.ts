@@ -55,7 +55,9 @@ async function exerciseServer(directory: string, server: RunningServer): Promise
   const redirect = await fetch(`${origin}blogs/post?test=1`, { redirect: "manual" });
   expect(redirect.status).toBe(302);
   expect(redirect.headers.get("location")).toBe("/blogs/post/?test=1");
-  expect((await fetch(`${origin}missing/`)).status).toBe(404);
+  const notFound = await fetch(`${origin}missing/`);
+  expect(notFound.status).toBe(404);
+  expect(await notFound.text()).toContain("Page not found");
   expect((await fetch(`${origin}%ZZ`)).status).toBe(400);
   expect((await fetch(origin, { method: "POST" })).status).toBe(405);
   expect((await fetch(`${origin}content/home.md`)).status).toBe(404);
@@ -103,6 +105,7 @@ test("Vite serves pages on demand, refreshes dependencies, and recovers after er
       "GET /blogs/post/ | 500 | failed: Empty or unknown collection: missing",
     );
     expect(output()).toContain("302 | redirect to /blogs/post/?test=1");
+    expect(output()).toContain("GET /missing/ | 404 | not found,");
     expect(output()).toContain("GET /og/blogs/post/card.png | 200 | compiled in");
     expect(output()).not.toContain("GET /styles.css");
     expect(output()).not.toContain("INVENTORY");

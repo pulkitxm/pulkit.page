@@ -270,6 +270,15 @@ deleted to force a cold run.
 | Render cache      | `apps/<app>/.cache/generate/` | A version hash of package sources plus the inputs of one page, fence or card           | One HTML page, fence or card   |
 | Bun package cache | `~/.bun/install/cache`        | `bun.lock`                                                                             | Downloaded dependencies        |
 
+The page app opts out of the Turbo layer. Its `build`, `check:seo`, `check:site`
+and `check:html` tasks set `cache: false` in
+[apps/page/turbo.json](../apps/page/turbo.json), because a projects directive
+reads a GitHub starred list over the network at build time and Turbo
+hashes only local files. Without the opt-out, rerunning an unchanged commit
+replays an older `dist` and the Projects page keeps a stale list however many
+times it is redeployed. The render cache still applies inside that build, so a
+rebuild whose inputs did not change stays under a second.
+
 [generation-cache.ts](../packages/engine/src/lib/generation-cache.ts) computes the
 version from every non-test `packages/*/src/**/*.ts` file, the demo showcases, `biome.json`,
 `bun.lock` and the bundled card font, so any change in generator behavior

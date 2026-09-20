@@ -1,5 +1,5 @@
 ---
-title: MagicAPI
+title: Magic API (Noveum.ai & API.market)
 description: Working as a Software Engineer at API.market (MagicAPI), responsible for improving user
   experience, implementing new features, code quality improvements, wallet system, voucher system,
   and redesigning key platform components.

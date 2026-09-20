@@ -90,7 +90,7 @@ export function developmentRenderer(origin: () => string): DevelopmentRenderer {
       }
     },
     async render(pathname) {
-      inventory ??= readSite(origin());
+      inventory ??= await readSite(origin());
       cache ??= generationCache(
         `dist/${developmentOutputName(new URL(origin()).port)}`,
         generationVersion(),

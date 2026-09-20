@@ -88,17 +88,6 @@ export function embedMarkdown(
             `- **${text(link, "label")}:** ${linkTo(text(link, "value"), text(link, "href"))}`,
         )
         .join("\n");
-    case "project-list":
-      return list(props, "projects")
-        .map((project) => {
-          const site = optionalText(project, "site");
-          const links = [linkTo("Repository", text(project, "repo"))];
-          if (site) {
-            links.push(linkTo("Site", site));
-          }
-          return `- **${text(project, "name")}** - ${text(project, "description")} (${links.join(", ")})`;
-        })
-        .join("\n");
     case "document-tabs":
       return list(props, "documents")
         .map(

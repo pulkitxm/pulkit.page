@@ -11,7 +11,6 @@ import { render as imagePopup } from "./image-popup.ts";
 import { render as infoTip } from "./info-tip.ts";
 import { render as installTabs } from "./install-tabs.ts";
 import { render as math } from "./math.ts";
-import { render as projectList } from "./project-list.ts";
 import { render as repliesCarousel } from "./replies-carousel.ts";
 import { render as techBadges } from "./tech-badges.ts";
 import { render as tweet } from "./tweet.ts";
@@ -31,7 +30,6 @@ export const renderers: ReadonlyMap<string, EmbedRenderer> = new Map([
   ["info-tip", infoTip],
   ["install-tabs", installTabs],
   ["math", math],
-  ["project-list", projectList],
   ["replies-carousel", repliesCarousel],
   ["tech-badges", techBadges],
   ["tweet", tweet],

@@ -16,6 +16,8 @@ function sampleValues(): LayoutValues {
   return {
     seo: "",
     themeScript: themeScript(),
+    analyticsScript:
+      '<script type="module" src="/assets/analytics.js" data-posthog-key="phc_example" data-posthog-host="https://us.i.posthog.com"></script>',
     breadcrumbs: "",
     related: "",
     title: "Example page",

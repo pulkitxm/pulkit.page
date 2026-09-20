@@ -7,6 +7,7 @@ import {
   generationVersion,
 } from "../lib/generation-cache.ts";
 import { markdownOutputs } from "../markdown/markdown-export.ts";
+import { analyticsScript } from "../render/layouts.ts";
 import { renderDependencies } from "../render/render-dependencies.ts";
 import { renderPage } from "../render/render-page.ts";
 import { crawlerOutputs } from "../seo/crawler-outputs.ts";
@@ -26,7 +27,14 @@ export function renderSitePage(
 ): Promise<string> {
   return cache.getAsync(
     "html",
-    [page.route, page.text, [...layouts], site, renderDependencies(page, pages, site)],
+    [
+      page.route,
+      page.text,
+      [...layouts],
+      site,
+      analyticsScript(),
+      renderDependencies(page, pages, site),
+    ],
     () => renderPage(page.text, { layouts, site, pages, route: page.route, cache }),
     onAccess,
   );

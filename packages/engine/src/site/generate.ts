@@ -33,9 +33,9 @@ export function renderSitePage(
 }
 
 export async function generateSite(outputDirectory: string, origin: string): Promise<Page[]> {
-  const { cache, inventory } = timed("Discovered source pages", () => ({
+  const { cache, inventory } = await timedAsync("Discovered source pages", async () => ({
     cache: generationCache(outputDirectory, generationVersion()),
-    inventory: readSite(origin),
+    inventory: await readSite(origin),
   }));
   const { pages, site } = inventory;
   const outputs = await timedAsync<Map<string, string | Buffer>>(

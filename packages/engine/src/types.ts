@@ -43,11 +43,25 @@ export interface SiteSettings {
   articles?: string;
 }
 
+export interface ListedProject {
+  name: string;
+  url: string;
+  description?: string;
+  stars: number;
+  site?: string;
+}
+
+export interface ProjectList {
+  description: string;
+  projects: ListedProject[];
+}
+
 export interface SiteContext extends SiteSettings {
   url?: string;
   author?: string;
   authorUrl?: string;
   external?: Record<string, ListedPage[]>;
+  projects?: Record<string, ProjectList>;
 }
 
 export interface Site extends SiteContext {

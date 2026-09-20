@@ -6,8 +6,10 @@ import { walkFiles } from "@pulkit/shared/files";
 import { siteConfigFile } from "@pulkit/shared/frontmatter";
 import { themeFile } from "@pulkit/theme/files";
 import { loadLayouts } from "../render/layouts.ts";
+import { projectListKey, projectsDirective } from "../render/projects.ts";
 import { articles } from "../seo/routes.ts";
-import type { ListedPage, Page, Site, SiteInventory } from "../types.ts";
+import type { ListedPage, Page, ProjectList, Site, SiteInventory } from "../types.ts";
+import { fetchProjectList } from "./github-projects.ts";
 import { readFrontmatter, readPage, siteSettings } from "./read-page.ts";
 
 const externalList = /^:::list ([a-z0-9-]+):all\b/gm;
@@ -82,7 +84,25 @@ function readExternalArticles(name: string): ListedPage[] {
   }));
 }
 
-export function readSite(url: string): SiteInventory {
+async function readProjectLists(pages: readonly Page[]): Promise<Record<string, ProjectList>> {
+  const origins = Object.values(profile.sites).map((site) => new URL(site).origin);
+  const keys = new Set(
+    pages.flatMap((page) =>
+      [...page.body.matchAll(new RegExp(projectsDirective, "gm"))].map(
+        ([, login = "", slug = ""]) => projectListKey(login, slug),
+      ),
+    ),
+  );
+  const lists = await Promise.all(
+    [...keys].map(async (key): Promise<[string, ProjectList]> => {
+      const [login = "", slug = ""] = key.split("/");
+      return [key, await fetchProjectList(login, slug, origins)];
+    }),
+  );
+  return Object.fromEntries(lists);
+}
+
+export async function readSite(url: string): Promise<SiteInventory> {
   const pages = readPages(".");
   const names = new Set(
     pages.flatMap((page) =>
@@ -95,6 +115,7 @@ export function readSite(url: string): SiteInventory {
     site: {
       ...readSiteConfig(url),
       external: Object.fromEntries([...names].map((name) => [name, readExternalArticles(name)])),
+      projects: await readProjectLists(pages),
     },
   };
 }

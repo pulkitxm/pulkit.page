@@ -83,6 +83,18 @@ The renderer promotes body headings to at least H2 and assigns IDs from lowercas
 
 Place one directive in its own paragraph. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. `<site>:all` lists every post of another app in the workspace, such as `blog:all` for `apps/blog`, linking each entry to that site's domain from the shared profile. Items sort newest date first then title. Ungrouped lists display the period, or the month and year; a list with a limit shows the day and month for this year's posts and the full date for older ones. With `by-year`, the list is grouped under year headings and each entry shows its day and month. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
 
+```text
+:::projects <login>/<list-slug>
+```
+
+```md
+:::projects pulkitxm/tools-and-projects
+```
+
+Place one directive in its own paragraph. It renders a GitHub starred list: the list's own description as the opening paragraph, then one row per repository with its name, primary language, star count, GitHub description, and a link to its homepage when the repository sets one. Everything is read from GitHub at build time and nothing is stored in the repository, so a project joins or leaves the page by joining or leaving the list on GitHub, and wording changes come from editing the repository description.
+
+This is the only build step that needs the network. `readSite` queries the GitHub GraphQL API once per build for every distinct list named by a directive, and puts the result on the site context, so `bun run build`, `bun run dev`, and `bun run ci` all require `GITHUB_TOKEN` (or `GH_TOKEN`) whenever a page uses the directive. Any token that can read public data is enough, so `GITHUB_TOKEN=$(gh auth token) bun run ci` works locally and CI passes the built-in Actions token. A missing token, an unreachable API, an unknown list, an empty list, or a repository with no GitHub description fails the build rather than publishing a thinner page. The fetched list is part of the generation cache key, so a changed list invalidates the affected pages.
+
 Article pages show a byline with the portrait and the author's name from the shared profile, linking to the author URL. The shared [article layout](../packages/theme/layouts/article.html) fills it from the `author` and `authorUrl` template values.
 
 Group two or more related images into a sliding carousel with Previous and Next buttons:

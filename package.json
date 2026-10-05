@@ -9,6 +9,9 @@
     "packages/*",
     "tooling/*"
   ],
+  "overrides": {
+    "@parcel/watcher": "2.6.0"
+  },
   "scripts": {
     "dev": "turbo run dev",
     "dev:clean": "turbo run clean && turbo run dev",

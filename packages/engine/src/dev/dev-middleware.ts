@@ -12,7 +12,7 @@ const demoSources = /^\/packages\/demos\//;
 const resetSources =
   /^\/(?:packages\/[a-z-]+\/src\/|bun.lock$|biome.json$|packages\/theme\/assets\/fonts\/|packages\/demos\/showcases\/)/;
 const pageSources =
-  /^(?:content\/|layouts\/|CNAME$|\/packages\/theme\/[a-z-]+\.svg$|\/packages\/theme\/layouts\/)/;
+  /^(?:content\/|data\/|layouts\/|CNAME$|\/packages\/theme\/[a-z-]+\.svg$|\/packages\/theme\/layouts\/)/;
 
 function errorStatus(error: unknown): number {
   if (error instanceof URIError) {

@@ -12,4 +12,6 @@ navigation:
     href: /projects/
   - label: Contact
     href: /contact/
+  - label: Guestbook
+    href: /guestbook/
 ---

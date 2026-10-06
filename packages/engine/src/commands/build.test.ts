@@ -107,6 +107,35 @@ test("preview builds use their own origin and never claim the production domain"
   expect(existsSync(join(cwd, "dist/CNAME"))).toBe(false);
 }, 30_000);
 
+test("guestbook JSON changes invalidate cached HTML and Markdown copies", () => {
+  const first = {
+    id: "github-1",
+    name: "Sample Guest",
+    message: "First message",
+    createdAt: "2026-01-01T00:00:00.000Z",
+    github: null,
+    avatar: null,
+  };
+  const cwd = buildProject({
+    "content/guestbook.md":
+      "---\ntitle: Guestbook\ndescription: Visitor notes.\n---\n:::guestbook\n",
+    "data/guestbook.json": JSON.stringify([first]),
+    "data/guestbook-settings.json": JSON.stringify({
+      repository: "example/site",
+      googleFormUrl: null,
+    }),
+  });
+  expect(build(cwd).status).toBe(0);
+  expect(readFileSync(join(cwd, "dist/guestbook/index.html"), "utf8")).toContain("First message");
+  const added = { ...first, id: "google-2", message: "Second message" };
+  writeFileSync(join(cwd, "data/guestbook.json"), JSON.stringify([first, added]));
+  expect(build(cwd).status).toBe(0);
+  expect(readFileSync(join(cwd, "dist/guestbook/index.html"), "utf8")).toContain("Second message");
+  expect(readFileSync(join(cwd, "dist/guestbook.md"), "utf8")).toContain("Second message");
+  writeFileSync(join(cwd, "data/guestbook.json"), JSON.stringify([first, first]));
+  expect(build(cwd).status).not.toBe(0);
+}, 30_000);
+
 test("conflicting routes and unsupported MDX fail the build", () => {
   const cwd = buildProject({ "content/index.md": source });
   expect(build(cwd).stderr).toContain("Multiple Markdown sources map to /");

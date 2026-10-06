@@ -103,6 +103,32 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
   const pageUrl = `${site.url}${page.route}`;
   return outsideCode(body, (segment) => {
     const text = segment
+      .replace(/^:::guestbook[ \t]*$/gm, () => {
+        const guestbook = site.guestbook;
+        if (!guestbook) {
+          throw new Error("Guestbook data was not loaded");
+        }
+        return token(
+          [
+            linkTo("Sign my guestbook with GitHub", guestbook.githubFormUrl),
+            guestbook.googleFormUrl
+              ? linkTo(
+                  "Don’t have a GitHub account? Leave a message with Google Forms",
+                  guestbook.googleFormUrl,
+                )
+              : "",
+            ...guestbook.entries.map(
+              (entry) =>
+                `### ${entry.name.replace(/[\r\n]/g, " ")} (${entry.createdAt.slice(0, 10)})\n\n${entry.message
+                  .split("\n")
+                  .map((line) => `> ${line}`)
+                  .join("\n")}`,
+            ),
+          ]
+            .filter(Boolean)
+            .join("\n\n"),
+        );
+      })
       .replace(/^:::embed [^\n]*\n[^\n]*\n:::$/gm, (block) => {
         const match = matchBlockEmbed(`${block}\n`);
         if (!match) {

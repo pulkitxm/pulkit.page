@@ -1,0 +1,93 @@
+name: Sync guestbook
+on:
+  schedule:
+    - cron: 17 * * * *
+  workflow_dispatch: null
+permissions:
+  contents: read
+  issues: read
+concurrency:
+  group: guestbook-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    name: Import new messages
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      issues: read
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
+      revision: ${{ steps.publish.outputs.revision }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - name: Import GitHub and Google Form messages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GUESTBOOK_GOOGLE_SHEET_ID: ${{ vars.GUESTBOOK_GOOGLE_SHEET_ID }}
+          GUESTBOOK_GOOGLE_SHEET_TAB: ${{ vars.GUESTBOOK_GOOGLE_SHEET_TAB }}
+          GUESTBOOK_GOOGLE_CREDENTIALS: ${{ secrets.GUESTBOOK_GOOGLE_CREDENTIALS }}
+        run: bun run --cwd tooling/guestbook sync
+      - name: Check for new entries
+        id: changes
+        run: |
+          git add apps/page/data/guestbook.json apps/page/assets/guestbook
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Verify the updated site
+        if: steps.changes.outputs.changed == 'true'
+        run: bun run ci
+      - name: Install Pukbot
+        if: steps.changes.outputs.changed == 'true'
+        run: >
+          curl --proto '=https' --tlsv1.2 -fsSL
+          https://github.com/pulkitxm/pukbot/releases/download/v0.3.30/pukbot-linux-x86_64 -o
+          "$RUNNER_TEMP/pukbot"
+
+          printf '%s  %s\n' bd2539c5a5d45650bd80ba48efc6e42ca14251b2eb0e586622ed064652c8e033
+          "$RUNNER_TEMP/pukbot" | sha256sum --check
+
+          chmod +x "$RUNNER_TEMP/pukbot"
+      - name: Publish new guestbook entries
+        id: publish
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: >
+          current="$(git ls-remote origin refs/heads/main | cut -f1)"
+
+          if [ "$current" != "$(git rev-parse HEAD)" ]; then
+            echo "main changed during the import; retry the workflow against the latest data"
+            exit 1
+          fi
+
+          "$RUNNER_TEMP/pukbot" commit create --repo "$REPOSITORY" --branch main --message "Add new
+          guestbook messages" --json > "$RUNNER_TEMP/guestbook-publish.json"
+
+          revision="$(jq -er '.resourceUrl | capture("/commit/(?<sha>[0-9a-f]{40})$") | .sha'
+          "$RUNNER_TEMP/guestbook-publish.json")"
+
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+  verify-and-deploy:
+    needs: sync
+    if: needs.sync.outputs.changed == 'true'
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    with:
+      revision: ${{ needs.sync.outputs.revision }}
+    secrets: inherit

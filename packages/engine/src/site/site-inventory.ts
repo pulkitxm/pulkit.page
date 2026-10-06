@@ -10,6 +10,7 @@ import { projectListKey, projectsLine } from "../render/projects.ts";
 import { articles, isNotFound } from "../seo/routes.ts";
 import type { ListedPage, Page, ProjectList, Site, SiteInventory } from "../types.ts";
 import { fetchProjectList } from "./github-projects.ts";
+import { readGuestbook } from "./guestbook.ts";
 import { notFoundPage } from "./not-found.ts";
 import { readFrontmatter, readPage, siteSettings } from "./read-page.ts";
 
@@ -119,6 +120,9 @@ export async function readSite(url: string): Promise<SiteInventory> {
       ...readSiteConfig(url),
       external: Object.fromEntries([...names].map((name) => [name, readExternalArticles(name)])),
       projects: await readProjectLists(pages),
+      ...(pages.some((page) => /^:::guestbook[ \t]*$/m.test(page.body)) && {
+        guestbook: readGuestbook(),
+      }),
     },
   };
 }

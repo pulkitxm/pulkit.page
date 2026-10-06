@@ -2,6 +2,7 @@ import { renderDemo } from "@pulkit/demos/render";
 import { matchBlockEmbed, matchInlineEmbed, renderEmbed } from "@pulkit/embeds";
 import { escapeHtml } from "@pulkit/shared/html";
 import type { MarkedExtension } from "marked";
+import { renderGuestbook } from "./guestbook.ts";
 import { safeUrl } from "./html.ts";
 import {
   collectionItems,
@@ -77,6 +78,18 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
       }
     },
     extensions: [
+      {
+        name: "guestbook",
+        level: "block",
+        start: (src) => src.indexOf(":::guestbook"),
+        tokenizer(src) {
+          const match = /^:::guestbook[ \t]*(?:\n|$)/.exec(src);
+          return match ? { type: "guestbook", raw: match[0] } : undefined;
+        },
+        renderer() {
+          return renderGuestbook(context.site);
+        },
+      },
       {
         name: "embed",
         level: "block",

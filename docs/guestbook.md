@@ -65,12 +65,11 @@ Google Form usernames are self-reported, unlike authenticated GitHub issue autho
 
 ## Enable publishing
 
-Create a fine-grained GitHub personal access token for `pulkitxm/pulkit.page`
-with **Contents: Read and write**, and store it as the Actions secret
-`GUESTBOOK_PUBLISH_TOKEN`. The token owner needs write access to the repository.
-It is used only by the Pukbot publishing step. Reads use the workflow's automatic
-GitHub token. A personal token lets the resulting commit trigger the existing CI
-and deployment workflow.
+Publishing uses Pukbot with GitHub Actions' automatic, short-lived `GITHUB_TOKEN`.
+No personal access token or additional GitHub secret is needed. The sync job has
+Contents write permission to commit new entries through Pukbot. Since commits
+made with the automatic token do not trigger push workflows, the sync workflow
+calls CI directly with the published commit SHA to verify and deploy the update.
 
 The scheduled workflow becomes available after `.github/workflows/guestbook.yml`
 lands on `main`. Run **Sync guestbook** manually once to verify the configuration.
@@ -92,7 +91,8 @@ Existing files are reused. Profile URLs and messages render as escaped text.
 
 Each scheduled run stages only the JSON and guestbook avatar assets, verifies the
 repository, and commits through Pukbot when there are changes. A run without new
-messages makes no commit. CI then rebuilds and deploys the portfolio.
+messages makes no commit and skips the CI call. CI checks out the published commit,
+rebuilds the sites, and deploys the portfolio after every required check passes.
 
 For a local run, supply the same environment variables and run:
 

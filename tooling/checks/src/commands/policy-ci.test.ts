@@ -26,6 +26,10 @@ interface TurboConfig {
 }
 
 interface WorkflowJob {
+  uses?: string;
+  with?: Record<string, string>;
+  outputs?: Record<string, string>;
+  permissions?: Record<string, string>;
   needs?: string | string[];
   if?: string;
   "timeout-minutes"?: unknown;
@@ -33,6 +37,7 @@ interface WorkflowJob {
 }
 
 interface Workflow {
+  on?: { workflow_call?: { inputs?: Record<string, { required?: boolean; type?: string }> } };
   concurrency: { group: string; "cancel-in-progress": boolean };
   jobs: Record<string, WorkflowJob>;
 }
@@ -178,7 +183,7 @@ test("a newer CI run cancels the older one on every branch, including main", () 
   expect(concurrency.group).toContain("github.ref");
 });
 
-test("deploys run in the CI workflow after the gate, only for main pushes and manual runs", () => {
+test("deploys run in the CI workflow after the gate and only on main", () => {
   const { jobs } = workflow("ci.yml");
   for (const id of ["deploy-page", "deploy-blog"]) {
     expect(job(jobs, id).needs).toBe("ci");
@@ -193,11 +198,38 @@ test("deploys run in the CI workflow after the gate, only for main pushes and ma
       )
       .map(({ name }) => name),
   ).toEqual(["ci.yml"]);
+  expect(job(jobs, "deploy-page").if).toContain("github.workflow == 'Sync guestbook'");
+  expect(job(jobs, "deploy-page").if).toContain("github.event_name == 'schedule'");
+});
+
+test("guestbook publishing uses Pukbot and the automatic token, then verifies the published revision", () => {
+  const source = readText(".github/workflows/guestbook.yml");
+  const { jobs } = workflow("guestbook.yml");
+  expect(source).not.toContain("GUESTBOOK_PUBLISH_TOKEN");
+  expect(source).toMatch(/GH_TOKEN: \$\{\{ github.token \}\}/);
+  expect(source).toContain('"$RUNNER_TEMP/pukbot" commit create');
+  expect(job(jobs, "sync").permissions?.contents).toBe("write");
+  const downstream = job(jobs, "verify-and-deploy");
+  expect(downstream.needs).toBe("sync");
+  expect(downstream.if).toBe("needs.sync.outputs.changed == 'true'");
+  expect(downstream.uses).toBe("./.github/workflows/ci.yml");
+  expect(downstream.with?.revision).toMatch(/^\$\{\{ needs.sync.outputs.revision \}\}$/);
+  expect(workflow("ci.yml").on?.workflow_call?.inputs?.revision).toEqual({
+    required: true,
+    type: "string",
+  });
+  expect(
+    readText(".github/workflows/ci.yml").match(/ref: \$\{\{ inputs.revision \|\| github.sha \}\}/g),
+  ).toHaveLength(7);
 });
 
 test("every workflow job has a timeout and pins actions to a commit", () => {
   for (const { name, jobs } of workflows) {
     for (const [id, definition] of Object.entries(jobs)) {
+      if (definition.uses) {
+        expect(definition.uses).toMatch(/^\.\/\.github\/workflows\/[\w-]+\.yml$/);
+        continue;
+      }
       expect(`${name}:${id}:${typeof definition["timeout-minutes"]}`).toBe(`${name}:${id}:number`);
       for (const step of definition.steps ?? []) {
         if (step.uses) {

@@ -85,6 +85,11 @@ GitHub issue numbers and stable Google response hashes prevent duplicate imports
 The store only appends new entries and orders them newest first. It does not
 overwrite or delete published messages when an issue or response changes.
 
+To remove a published entry, add its `id` to `removedEntryIds` in
+`apps/page/data/guestbook-settings.json` and delete it from
+`apps/page/data/guestbook.json`. The importer skips removed IDs from both sources,
+so a response still present in the private Sheet cannot restore a deleted entry.
+
 New avatars are downloaded from GitHub's avatar host and converted to 64-by-64
 WebP, with metadata removed. Downloads have time, byte, and decoded-pixel limits.
 Existing files are reused. Profile URLs and messages render as escaped text.

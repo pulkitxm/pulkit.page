@@ -8,6 +8,7 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
+import { relative } from "node:path";
 import process from "node:process";
 import { buildDemoAssets } from "@pulkit/demos/assets";
 import { buildEmbedAssets } from "@pulkit/embeds/bundle";
@@ -65,9 +66,12 @@ timed(
     `Renamed ${renamed} classes, kept ${kept} referenced by scripts or other styles`,
   () => mangleClasses("dist", "styles.css"),
 );
-timed("Fingerprinted styles", () => {
+timed("Fingerprinted styles and downloads", () => {
   const fingerprinted = new Map<string, string>();
-  for (const file of ["styles.css"]) {
+  const downloads = builtFiles("dist")
+    .filter((file) => file.endsWith(".pdf"))
+    .map((file) => relative("dist", file));
+  for (const file of ["styles.css", ...downloads]) {
     const hash = sha256Hex(readFileSync(`dist/${file}`)).slice(0, 12);
     const name = file.replace(/\.(\w+)$/, `.${hash}.$1`);
     renameSync(`dist/${file}`, `dist/${name}`);

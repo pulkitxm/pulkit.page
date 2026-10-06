@@ -65,29 +65,29 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).not.toContain("/notes/");
 }, 30_000);
 
-test("PDF download URLs change when the file changes even when page renders are cached", () => {
+test("PDF filenames stay fixed while download versions track changes through cached renders", () => {
   const firstPdf = "%PDF-1.7\nFirst synthetic resume\n";
   const secondPdf = "%PDF-1.7\nUpdated synthetic resume\n";
   const cwd = buildProject({
     "content/home.md": `${source}\n[Download resume](/assets/content/resume.pdf).\n`,
     "assets/content/resume.pdf": firstPdf,
   });
-  const fileName = (pdf: string) => `resume.${sha256Hex(pdf).slice(0, 12)}.pdf`;
-  const firstName = fileName(firstPdf);
-  const secondName = fileName(secondPdf);
+  const downloadUrl = (pdf: string) =>
+    `/assets/content/resume.pdf?v=${sha256Hex(pdf).slice(0, 12)}`;
+  const firstUrl = downloadUrl(firstPdf);
+  const secondUrl = downloadUrl(secondPdf);
   expect(build(cwd).status).toBe(0);
-  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).toContain(
-    `href="/assets/content/${firstName}"`,
-  );
-  expect(readFileSync(join(cwd, "dist/assets/content", firstName), "utf8")).toBe(firstPdf);
-  expect(existsSync(join(cwd, "dist/assets/content/resume.pdf"))).toBe(false);
+  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).toContain(`href="${firstUrl}"`);
+  expect(readFileSync(join(cwd, "dist/assets/content/resume.pdf"), "utf8")).toBe(firstPdf);
   writeFileSync(join(cwd, "assets/content/resume.pdf"), secondPdf);
   expect(computed(build(cwd))).toEqual({});
   const html = readFileSync(join(cwd, "dist/index.html"), "utf8");
-  expect(html).toContain(`href="/assets/content/${secondName}"`);
-  expect(html).not.toContain(firstName);
-  expect(readFileSync(join(cwd, "dist/assets/content", secondName), "utf8")).toBe(secondPdf);
-  expect(existsSync(join(cwd, "dist/assets/content", firstName))).toBe(false);
+  expect(html).toContain(`href="${secondUrl}"`);
+  expect(html).not.toContain(firstUrl);
+  expect(readFileSync(join(cwd, "dist/assets/content/resume.pdf"), "utf8")).toBe(secondPdf);
+  expect(
+    existsSync(join(cwd, `dist/assets/content/resume.${sha256Hex(secondPdf).slice(0, 12)}.pdf`)),
+  ).toBe(false);
 }, 30_000);
 
 test("preview builds use their own origin and never claim the production domain", () => {

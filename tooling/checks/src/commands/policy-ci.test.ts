@@ -30,15 +30,16 @@ interface WorkflowJob {
   with?: Record<string, string>;
   outputs?: Record<string, string>;
   permissions?: Record<string, string>;
+  concurrency?: { group: string; "cancel-in-progress": boolean };
   needs?: string | string[];
   if?: string;
   "timeout-minutes"?: unknown;
-  steps?: { uses?: string }[];
+  steps?: { id?: string; uses?: string; run?: string; if?: string }[];
 }
 
 interface Workflow {
   on?: { workflow_call?: { inputs?: Record<string, { required?: boolean; type?: string }> } };
-  concurrency: { group: string; "cancel-in-progress": boolean };
+  concurrency: { group: string; "cancel-in-progress": boolean | string };
   jobs: Record<string, WorkflowJob>;
 }
 
@@ -176,11 +177,59 @@ const workflows = readdirSync(join(repository, ".github/workflows")).map((name) 
   name,
 }));
 
-test("a newer CI run cancels the older one on every branch, including main", () => {
+test("main CI runs are isolated by workflow and revision while branch runs stay cancellable", () => {
   const { concurrency } = workflow("ci.yml");
-  expect(concurrency["cancel-in-progress"]).toBe(true);
+  expect(concurrency["cancel-in-progress"]).toMatch(
+    /^\$\{\{ github.ref != 'refs\/heads\/main' \}\}$/,
+  );
+  expect(concurrency.group).toContain("github.workflow");
   expect(concurrency.group).toContain("github.event.pull_request.number");
   expect(concurrency.group).toContain("github.ref");
+  expect(concurrency.group).toContain("inputs.revision || github.sha");
+});
+
+test("deployments serialize and skip stale revisions without failing their completed CI checks", () => {
+  const directory = mkdtempSync(join(tmpdir(), "deployment-revision-"));
+  try {
+    for (const id of ["deploy-page", "deploy-blog"]) {
+      const definition = job(workflow("ci.yml").jobs, id);
+      expect(definition.concurrency).toEqual({ group: id, "cancel-in-progress": false });
+      const [guard, ...steps] = definition.steps ?? [];
+      expect(guard?.id).toBe("revision");
+      if (!guard?.run) {
+        throw new Error("Missing deployment revision check");
+      }
+      for (const step of steps) {
+        expect(step.if).toBe("steps.revision.outputs.current == 'true'");
+      }
+      for (const current of [true, false]) {
+        const output = join(directory, "output");
+        const summary = join(directory, "summary");
+        writeFileSync(output, "");
+        writeFileSync(summary, "");
+        const result = spawnSync(
+          "bash",
+          ["-e", "-c", `gh() { printf '%s\\n' "$TEST_HEAD"; }\n${guard.run}`],
+          {
+            encoding: "utf8",
+            env: {
+              ...process.env,
+              TEST_HEAD: current ? "current-revision" : "newer-revision",
+              REVISION: "current-revision",
+              REPOSITORY: "example/site",
+              GITHUB_OUTPUT: output,
+              GITHUB_STEP_SUMMARY: summary,
+            },
+          },
+        );
+        expect(result.status).toBe(0);
+        expect(readFileSync(output, "utf8")).toBe(`current=${current}\n`);
+        expect(readFileSync(summary, "utf8").includes("Skipped deployment")).toBe(!current);
+      }
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test("deploys run in the CI workflow after the gate and only on main", () => {

@@ -18,6 +18,7 @@ export type GuestbookEntry = z.infer<typeof guestbookEntry>;
 
 export const guestbookSettings = z.strictObject({
   repository: z.string().regex(/^[\w.-]+\/[\w.-]+$/),
+  removedEntryIds: z.array(guestbookEntry.shape.id).default([]),
   googleFormUrl: z
     .url()
     .refine((value) => {

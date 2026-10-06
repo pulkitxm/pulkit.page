@@ -1,4 +1,10 @@
 {
   "repository": "pulkitxm/pulkit.page",
-  "googleFormUrl": "https://forms.gle/Es9CijTgurxUZZkCA"
+  "googleFormUrl": "https://forms.gle/Es9CijTgurxUZZkCA",
+  "removedEntryIds": [
+    "github-77",
+    "google-7372f4cc2c870f0f02df1fb2",
+    "google-13cc7d8ec566ab5f9e3e1c2f",
+    "google-763b6f121a522afa675b5391"
+  ]
 }

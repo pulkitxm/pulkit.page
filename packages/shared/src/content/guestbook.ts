@@ -16,6 +16,23 @@ export const guestbookEntry = z.strictObject({
 
 export type GuestbookEntry = z.infer<typeof guestbookEntry>;
 
+export const guestbookSettings = z.strictObject({
+  repository: z.string().regex(/^[\w.-]+\/[\w.-]+$/),
+  googleFormUrl: z
+    .url()
+    .refine((value) => {
+      const url = new URL(value);
+      return (
+        url.protocol === "https:" &&
+        (url.hostname === "forms.gle" ||
+          (url.hostname === "docs.google.com" && url.pathname.startsWith("/forms/"))) &&
+        !url.username &&
+        !url.password
+      );
+    })
+    .nullable(),
+});
+
 export const guestbookEntries = z.array(guestbookEntry).superRefine((entries, context) => {
   const ids = new Set<string>();
   for (const entry of entries) {

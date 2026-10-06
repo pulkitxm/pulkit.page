@@ -17,7 +17,10 @@ async function sync(): Promise<void> {
       await readFile(resolve(repositoryRoot, "apps/page/data/guestbook-settings.json"), "utf8"),
     ),
   );
-  const existing = new Set((await readEntries()).map((entry) => entry.id));
+  const existing = new Set([
+    ...(await readEntries()).map((entry) => entry.id),
+    ...settings.removedEntryIds,
+  ]);
   const submissions = await githubSubmissions(settings.repository, token, existing);
   const sheetId = process.env.GUESTBOOK_GOOGLE_SHEET_ID;
   const credentials = process.env.GUESTBOOK_GOOGLE_CREDENTIALS;

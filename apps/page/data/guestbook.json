@@ -1,5 +1,13 @@
 [
   {
+    "id": "github-77",
+    "name": "Pulkit",
+    "message": "TEST ENTRY 2026-10-07: submitted through GitHub to verify issue import, authenticated author identity, local profile photo, deployment, and deduplication. Safe to delete after verification.",
+    "createdAt": "2026-10-06T19:16:20.000Z",
+    "github": "pulkitxm",
+    "avatar": "/assets/guestbook/github-user-65671483.webp"
+  },
+  {
     "id": "google-7372f4cc2c870f0f02df1fb2",
     "name": "Guestbook test: profile photo",
     "message": "TEST ENTRY 2026-10-07: submitted through Google Forms with the public octocat profile to verify avatar downloads. Safe to delete after verification.",

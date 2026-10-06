@@ -27,7 +27,7 @@ for (const row of rows) {
   if (!existing.has(id)) {
     entries.push({
       id,
-      name: row.name?.trim() || "Guest",
+      name: row.name?.trim().replaceAll("\u2014", ",") || "Guest",
       message: row.content.replaceAll("\u2014", ","),
       createdAt: new Date(row.createdAt).toISOString(),
       github: null,

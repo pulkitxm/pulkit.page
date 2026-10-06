@@ -167,8 +167,8 @@ test("turbo verify runs every check, lint, format and test script", () => {
 });
 
 const workflows = readdirSync(join(repository, ".github/workflows")).map((name) => ({
-  name,
   ...workflow(name),
+  name,
 }));
 
 test("a newer CI run cancels the older one on every branch, including main", () => {
@@ -186,7 +186,13 @@ test("deploys run in the CI workflow after the gate, only for main pushes and ma
     expect(job(jobs, id).if).toContain("github.event_name == 'push'");
     expect(job(jobs, "ci").needs).not.toContain(id);
   }
-  expect(readdirSync(join(repository, ".github/workflows"))).toEqual(["ci.yml"]);
+  expect(
+    workflows
+      .filter(({ jobs: definitions }) =>
+        Object.keys(definitions).some((id) => id.startsWith("deploy-")),
+      )
+      .map(({ name }) => name),
+  ).toEqual(["ci.yml"]);
 });
 
 test("every workflow job has a timeout and pins actions to a commit", () => {

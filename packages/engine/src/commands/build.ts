@@ -73,8 +73,11 @@ timed("Fingerprinted styles and downloads", () => {
     .map((file) => relative("dist", file));
   for (const file of ["styles.css", ...downloads]) {
     const hash = sha256Hex(readFileSync(`dist/${file}`)).slice(0, 12);
-    const name = file.replace(/\.(\w+)$/, `.${hash}.$1`);
-    renameSync(`dist/${file}`, `dist/${name}`);
+    const isDownload = file.endsWith(".pdf");
+    const name = isDownload ? `${file}?v=${hash}` : file.replace(/\.(\w+)$/, `.${hash}.$1`);
+    if (!isDownload) {
+      renameSync(`dist/${file}`, `dist/${name}`);
+    }
     fingerprinted.set(`/${file}"`, `/${name}"`);
   }
   for (const file of builtFiles("dist").filter((path) => path.endsWith(".html"))) {

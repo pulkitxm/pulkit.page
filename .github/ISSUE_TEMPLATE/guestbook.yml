@@ -1,0 +1,16 @@
+name: Sign the guestbook
+description: Leave a message for the public guestbook. No fork or pull request needed.
+title: Guestbook message
+body:
+  - type: markdown
+    attributes:
+      value: Your message and GitHub profile will be published in my public guestbook and repository. New
+        messages appear after the next hourly sync.
+  - type: textarea
+    id: message
+    attributes:
+      label: Message
+      description: Say hello or tell me what brought you here. Please keep it under 1,000 characters.
+      placeholder: Hi Pulkit! Thanks for sharing your work.
+    validations:
+      required: true

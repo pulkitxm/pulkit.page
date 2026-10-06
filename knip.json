@@ -38,6 +38,10 @@
       "entry": ["src/commands/lighthouse.ts", "src/commands/worker.ts"],
       "project": ["src/**/*.ts"]
     },
+    "tooling/guestbook": {
+      "entry": ["src/commands/*.ts"],
+      "project": ["src/**/*.ts"]
+    },
     "packages/shared": {
       "project": ["src/**/*.{ts,css}"]
     }

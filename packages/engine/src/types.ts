@@ -1,3 +1,5 @@
+import type { GuestbookEntry } from "@pulkit/shared/guestbook";
+
 export interface SiteLink {
   label: string;
   href: string;
@@ -61,6 +63,11 @@ export interface SiteContext extends SiteSettings {
   authorUrl?: string;
   external?: Record<string, ListedPage[]>;
   projects?: Record<string, ProjectList>;
+  guestbook?: {
+    entries: GuestbookEntry[];
+    githubFormUrl: string;
+    googleFormUrl: string | null;
+  };
 }
 
 export interface Site extends SiteContext {

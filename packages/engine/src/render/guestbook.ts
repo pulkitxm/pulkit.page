@@ -12,6 +12,7 @@ const dateFormat = new Intl.DateTimeFormat("en-GB", {
 
 function entryHtml(entry: GuestbookEntry): string {
   const name = escapeHtml(entry.name);
+  const message = escapeHtml(entry.message.replace(/[ \t]+$/gm, ""));
   const author = entry.github
     ? `<a class="font-medium text-inherit no-underline hover:underline" href="https://github.com/${escapeHtml(entry.github)}" rel="noopener">${name}</a>`
     : `<span class="font-medium">${name}</span>`;
@@ -19,7 +20,7 @@ function entryHtml(entry: GuestbookEntry): string {
     ? `<img class="m-0 size-8 shrink-0 rounded-full object-cover" src="${safeUrl(entry.avatar)}" alt="" width="32" height="32" loading="lazy" decoding="async">`
     : `<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-line text-xs text-muted" aria-hidden="true">${escapeHtml(entry.name.slice(0, 1).toUpperCase())}</span>`;
   const date = `<time class="text-2xs text-muted" datetime="${escapeHtml(entry.createdAt)}">${dateFormat.format(new Date(entry.createdAt))}</time>`;
-  return `<li class="border-b border-line py-5" id="${escapeHtml(entry.id)}"><div class="flex items-center gap-3">${avatar}<div class="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1 [overflow-wrap:anywhere]">${author}${date}</div></div><p class="mb-0 mt-3 whitespace-pre-wrap text-sm leading-relaxed [overflow-wrap:anywhere]">${escapeHtml(entry.message)}</p></li>`;
+  return `<li class="border-b border-line py-5" id="${escapeHtml(entry.id)}"><div class="flex items-center gap-3">${avatar}<div class="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1 [overflow-wrap:anywhere]">${author}${date}</div></div><p class="mb-0 mt-3 whitespace-pre-wrap text-sm leading-relaxed [overflow-wrap:anywhere]">${message}</p></li>`;
 }
 
 export function renderGuestbook(site: SiteContext): string {

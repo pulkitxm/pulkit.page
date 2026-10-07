@@ -1,9 +1,10 @@
 import { expect, test } from "bun:test";
+import { HtmlValidate } from "html-validate";
 import { renderMarkdown } from "../markdown/markdown-export.ts";
 import type { Site } from "../types.ts";
 import { renderPage } from "./render-page.ts";
 
-const site: Site = {
+const site = {
   url: "https://example.invalid",
   guestbook: {
     githubFormUrl: "https://github.com/example/site/issues/new?template=guestbook.yml",
@@ -19,7 +20,7 @@ const site: Site = {
       },
     ],
   },
-};
+} satisfies Site;
 
 test("guestbook messages are escaped text with local thumbnails and both submission links", async () => {
   const html = await renderPage(
@@ -34,6 +35,31 @@ test("guestbook messages are escaped text with local thumbnails and both submiss
   expect(html).toContain("issues/new?template=guestbook.yml");
   expect(html).toContain("6 Oct 2026");
 });
+
+test.each(["\n", "\r\n", "\r"])(
+  "multiline messages with %j line endings produce valid HTML",
+  async (newline) => {
+    const html = await renderPage(
+      "---\ntitle: Guestbook\ndescription: Visitor notes.\n---\n:::guestbook\n",
+      {
+        site: {
+          ...site,
+          guestbook: {
+            ...site.guestbook,
+            entries: site.guestbook.entries.map((entry) => ({
+              ...entry,
+              message: ["Hello  <visitor>! \t", " \t", "  Thanks & goodbye."].join(newline),
+            })),
+          },
+        },
+      },
+    );
+    const validator = new HtmlValidate({ rules: { "no-trailing-whitespace": "error" } });
+    const report = await validator.validateString(html);
+    expect(report.valid).toBe(true);
+    expect(html).toContain("Hello  &lt;visitor&gt;!\n\n  Thanks &amp; goodbye.");
+  },
+);
 
 test("Markdown copies include messages and submission links instead of the directive", () => {
   const markdown = renderMarkdown(

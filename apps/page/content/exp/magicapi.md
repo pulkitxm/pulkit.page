@@ -248,6 +248,12 @@ After that came keyset pagination with a virtualized list (loading 8,000 issues 
 
 For [Yodu.ai](https://yodu.ai) I designed and built a browser runtime that lets AI employees use a real, logged in Chromium session for each user. A supervisor starts one locked down container per active browser profile and talks to it over the Chrome DevTools Protocol. The agent gets 10 browser tools over MCP, and every action goes through one permission check. Approvals are tied to a signed snapshot of the page, so an approved click can't be replayed on a page that has changed since. A human can take over at any time, and session state is kept in encrypted vaults.
 
+![Yodu.ai homepage](/assets/content/exp/magicapi/yodu/homepage.webp)
+
+Here's how the pieces fit together:
+
+![Architecture of the private browser runtime](/assets/content/exp/magicapi/yodu/browser-runtime.webp)
+
 ### Hinge
 
 [Hinge](https://github.com/Noveum/hinge) is a small open source macOS app we made for fun. It reads the MacBook's lid angle sensor and folds your live desktop in perspective as you close the lid, using IOKit, ScreenCaptureKit and a Metal shader. I wrote the first renderer and the sensor code and set up releases. It's at almost 80 stars, and people outside the company have started contributing to it.

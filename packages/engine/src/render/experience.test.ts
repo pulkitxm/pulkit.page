@@ -54,3 +54,31 @@ test("experience icons with a dark variant swap by color scheme", async () => {
     /class="[^"]*hidden[^"]*dark:block[^"]*" src="\/assets\/exp\/example-dark\.svg"/,
   );
 });
+
+test("experience pages link company profiles with platform icons", async () => {
+  const page = `---
+title: Example Studio
+role: Engineer
+date: 2025-03-25
+period: Mar 2025 – present
+icon: /assets/exp/example.webp
+links:
+  - https://example.com
+  - https://www.linkedin.com/company/example/
+  - https://x.com/example
+---
+
+Body
+`;
+  const html = await renderPage(page);
+  expect(html).toContain(
+    'href="https://example.com" target="_blank" rel="noopener noreferrer" aria-label="example.com"',
+  );
+  expect(html).toContain('aria-label="linkedin.com/company/example"');
+  expect(html).toContain('class="size-4.5" aria-hidden="true"');
+  expect(html).not.toContain('d="M0 0h24v24H0z"');
+  expect((html.match(/<svg /g) ?? []).length).toBe(3);
+  await expect(
+    renderPage(page.replace("https://example.com", "http://example.com")),
+  ).rejects.toThrow("https");
+});

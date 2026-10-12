@@ -24,6 +24,9 @@ function header(
   if (metadata.period) {
     facts.push(`- Period: ${metadata.period}`);
   }
+  if (metadata.links?.length) {
+    facts.push(`- Links: ${metadata.links.map((href) => `<${href}>`).join(", ")}`);
+  }
   if (metadata.tags?.length) {
     facts.push(`- Tags: ${metadata.tags.join(", ")}`);
   }

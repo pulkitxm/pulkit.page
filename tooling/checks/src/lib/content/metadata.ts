@@ -86,7 +86,9 @@ function valueErrors(
   root: string,
 ): string[] {
   const errors: string[] = [];
-  for (const field of fields.filter((key) => !["tags", "navigation", "social"].includes(key))) {
+  for (const field of fields.filter(
+    (key) => !["tags", "links", "navigation", "social"].includes(key),
+  )) {
     if (data[field] !== undefined && !isText(data[field])) {
       errors.push(`${field} must be a trimmed, nonempty string`);
     }
@@ -142,6 +144,19 @@ function tagErrors(tags: unknown): string[] {
     : [];
 }
 
+function urlListErrors(links: unknown): string[] {
+  if (links === undefined) {
+    return [];
+  }
+  const list: unknown[] = Array.isArray(links) ? links : [];
+  return !Array.isArray(links) ||
+    list.length === 0 ||
+    !list.every((href) => isText(href) && /^https:\/\/[^\s/]+\.[^\s]+$/.test(href)) ||
+    new Set(list).size !== list.length
+    ? ["links must be a nonempty list of unique https URLs"]
+    : [];
+}
+
 export function metadataErrors(data: unknown, file: string, root: string): string[] {
   if (!isRecord(data)) {
     return ["frontmatter must be a YAML mapping"];
@@ -156,7 +171,11 @@ export function metadataErrors(data: unknown, file: string, root: string): strin
       errors.push(`missing required metadata: ${field}`);
     }
   }
-  errors.push(...valueErrors(data, fields, root), ...tagErrors(data.tags));
+  errors.push(
+    ...valueErrors(data, fields, root),
+    ...tagErrors(data.tags),
+    ...urlListErrors(data.links),
+  );
   for (const field of ["navigation", "social"]) {
     if (data[field] !== undefined) {
       errors.push(...linkErrors(field, data[field]));

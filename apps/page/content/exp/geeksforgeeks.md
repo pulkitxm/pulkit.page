@@ -8,6 +8,12 @@ date: 2024-04-01
 period: Apr 2024 – Apr 2025
 endDate: 2025-04-01
 icon: /assets/exp/geeksforgeeks.webp
+links:
+  - https://www.geeksforgeeks.org
+  - https://www.linkedin.com/company/geeksforgeeks
+  - https://x.com/geeksforgeeks
+  - https://www.instagram.com/geeks_for_geeks
+  - https://www.youtube.com/@GeeksforGeeksVideos
 ---
 
 :::embed image-grid

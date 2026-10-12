@@ -8,6 +8,14 @@ date: 2025-03-25
 period: Mar 2025 – present
 icon: /assets/exp/api-market.webp
 secondaryIcon: /assets/exp/noveum.webp
+links:
+  - https://api.market
+  - https://www.linkedin.com/company/api.market
+  - https://x.com/apimarket_
+  - https://noveum.ai
+  - https://www.linkedin.com/company/noveum-ai
+  - https://x.com/noveumai
+  - https://github.com/Noveum
 ---
 
 After my sudden departure from the previous company, I was going through a rough patch. One of my most trusted mentors recommended me to API.market, and I couldn't be more grateful. The referral led me to a team I genuinely admire. The work, culture, and people here have been incredibly motivating and fulfilling. I had a lot of ownership of the platform. Things like revenue, databases etc. were shared transparently.

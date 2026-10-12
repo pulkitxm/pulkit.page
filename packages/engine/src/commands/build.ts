@@ -21,7 +21,6 @@ import { themeFile } from "@pulkit/theme/files";
 import { mangleClasses } from "../lib/mangle-classes.ts";
 import { resolveAnalytics } from "../site/analytics.ts";
 import { generateSite } from "../site/generate.ts";
-import { optimizeImages } from "../site/responsive-images.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 
 const buildStartedAt = performance.now();
@@ -50,10 +49,6 @@ timed("Copied shared assets", () => {
     copyFileSync("CNAME", "dist/CNAME");
   }
 });
-await timedAsync(
-  (count) => `Optimized ${count} responsive images`,
-  () => optimizeImages("dist"),
-);
 timed("Compiled styles", () =>
   compileTailwind({ input: "styles.css", output: "dist/styles.css", minify: true }),
 );
@@ -73,8 +68,6 @@ timed(
 );
 timed("Fingerprinted styles and downloads", () => {
   const fingerprinted = new Map<string, string>();
-  const styles = readFileSync("dist/styles.css", "utf8");
-  let mathStyles: string | undefined;
   const downloads = builtFiles("dist")
     .filter((file) => file.endsWith(".pdf"))
     .map((file) => relative("dist", file));
@@ -88,21 +81,7 @@ timed("Fingerprinted styles and downloads", () => {
     fingerprinted.set(`/${file}"`, `/${name}"`);
   }
   for (const file of builtFiles("dist").filter((path) => path.endsWith(".html"))) {
-    let html = readFileSync(file, "utf8")
-      .replace(
-        /<link rel="stylesheet" href="\/styles\.css"\s*\/?>/g,
-        () => `<style>${styles}</style>`,
-      )
-      .replace(
-        /<link rel="stylesheet" href="\/assets\/katex\/katex-swap\.min\.css"\s*\/?>/g,
-        () => {
-          mathStyles ??= readFileSync("dist/assets/katex/katex-swap.min.css", "utf8").replaceAll(
-            "url(fonts/",
-            "url(/assets/katex/fonts/",
-          );
-          return `<style>${mathStyles}</style>`;
-        },
-      );
+    let html = readFileSync(file, "utf8");
     for (const [from, to] of fingerprinted) {
       html = html.replaceAll(`="${from}`, `="${to}`);
     }

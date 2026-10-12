@@ -28,9 +28,6 @@ if (key && host && !(await excluded(tag?.dataset.posthogIgnore))) {
     capture_pageview: true,
     capture_pageleave: true,
     disable_session_recording: true,
-    disable_surveys: true,
-    advanced_disable_feature_flags: true,
-    disable_external_dependency_loading: true,
     debug: tag?.dataset.posthogDebug === "true",
   });
   Object.assign(globalThis, { posthog });

@@ -65,7 +65,7 @@ export function analyticsScript(): string {
     const debug = analytics?.debug ? ' data-posthog-debug="true"' : "";
     const ignore = analytics?.ignore ? ` data-posthog-ignore="${analytics.ignore}"` : "";
     analyticsTag = analytics
-      ? `<script async fetchpriority="low" type="module" src="/assets/analytics.js" data-posthog-key="${analytics.key}" data-posthog-host="${analytics.host}"${ignore}${debug}></script>`
+      ? `<script type="module" src="/assets/analytics.js" data-posthog-key="${analytics.key}" data-posthog-host="${analytics.host}"${ignore}${debug}></script>`
       : "";
   }
   return analyticsTag;

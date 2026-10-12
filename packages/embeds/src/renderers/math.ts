@@ -5,7 +5,7 @@ import type { EmbedRenderer } from "../types.ts";
 const directive = "<!-- [html-validate-disable-block no-inline-style] -->";
 
 export const render: EmbedRenderer = (props, { assets, inline }) => {
-  assets.style("/assets/katex/katex-swap.min.css");
+  assets.style("/assets/katex/katex.min.css");
   const html = katex.renderToString(readString(props, "formula", "math"), {
     displayMode: Boolean(props.block),
     throwOnError: false,

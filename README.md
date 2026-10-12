@@ -85,13 +85,6 @@ The root `check:*` scripts run the individual repository gates that
 `check:repository`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
 `check:shell`.
 
-Lighthouse uses up to five audit workers by default and checks both mobile and desktop.
-Run `bun run lighthouse:prod --concurrency 5 --min-score 100` to audit the live sites
-and fail if any page category scores below 100. Use `--site pulkit.page` or
-`--site pulkit.blog` and route arguments to narrow a run. Reports stay in
-`reports/lighthouse/`, including each page's metrics and a `run.json` with categories
-below the requested target. Without `--min-score`, scores do not fail the command.
-
 A single app script can also run directly with `bun run --cwd apps/page <script>`,
 for example `bun run --cwd apps/blog check:seo`. Unlike the Turbo tasks, direct app
 scripts do not build first. Set `PLAYWRIGHT_CHANNEL=chrome` to let `check:browser`

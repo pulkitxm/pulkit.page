@@ -55,8 +55,6 @@ export function openTag(name: string, attributes: string, assets: PageAssets): O
     values.set("loading", "lazy");
   }
   if (name === "video" && src !== undefined) {
-    values.set("loading", "lazy");
-    values.set("preload", "none");
     const size = localVideoSize(src);
     if (size) {
       values.set("width", String(size.width));

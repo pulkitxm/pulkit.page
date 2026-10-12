@@ -21,6 +21,7 @@ import { themeFile } from "@pulkit/theme/files";
 import { mangleClasses } from "../lib/mangle-classes.ts";
 import { resolveAnalytics } from "../site/analytics.ts";
 import { generateSite } from "../site/generate.ts";
+import { optimizeImages } from "../site/responsive-images.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 
 const buildStartedAt = performance.now();
@@ -49,6 +50,10 @@ timed("Copied shared assets", () => {
     copyFileSync("CNAME", "dist/CNAME");
   }
 });
+await timedAsync(
+  (count) => `Optimized ${count} responsive images`,
+  () => optimizeImages("dist"),
+);
 timed("Compiled styles", () =>
   compileTailwind({ input: "styles.css", output: "dist/styles.css", minify: true }),
 );

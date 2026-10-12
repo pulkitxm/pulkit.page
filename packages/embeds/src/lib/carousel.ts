@@ -12,6 +12,7 @@ export interface CarouselImage extends Partial<Size> {
 interface CarouselOptions {
   frame: CarouselFrame;
   label: string;
+  eager?: boolean;
 }
 
 const arrowAttributes = `${iconAttributes} class="pointer-events-none size-4 shrink-0"`;
@@ -32,15 +33,15 @@ const backdropClasses: Record<CarouselFrame, string> = {
 
 export function renderCarousel(
   images: readonly CarouselImage[],
-  { frame, label }: CarouselOptions,
+  { frame, label, eager = false }: CarouselOptions,
   { assets, escapeHtml }: EmbedContext,
 ): string {
   addMediaAssets(assets);
-  const leading = assets.claim("gallery-lcp");
+  const leading = eager && assets.claim("gallery-lcp");
   const slides = images
     .map((image, index) => {
       const priority = loadingAttributes(index === 0 && leading);
-      const backdrop = `<img src="${escapeHtml(image.src)}" alt="" aria-hidden="true" width="${image.width}" height="${image.height}" class="${backdropClasses[frame]}"${priority} decoding="async">`;
+      const backdrop = `<img src="${escapeHtml(image.src)}" alt="" aria-hidden="true" width="${image.width}" height="${image.height}" class="${backdropClasses[frame]}"${loadingAttributes(false)} decoding="async">`;
       const foreground = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" class="block h-full w-full select-none object-contain"${priority} decoding="async">`;
       const link = zoomLink(
         {

@@ -17,7 +17,7 @@ links:
 ---
 
 :::embed image-grid
-{"images":["/assets/content/exp/geeksforgeeks/geekssForGeeksImages-11.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-3.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-6.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-9.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-0.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-1.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-4.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-7.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-10.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-2.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-5.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-8.webp"],"label":"GeeksforGeeks campus sessions"}
+{"loading":"eager","images":["/assets/content/exp/geeksforgeeks/geekssForGeeksImages-11.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-3.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-6.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-9.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-0.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-1.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-4.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-7.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-10.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-2.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-5.webp","/assets/content/exp/geeksforgeeks/geekssForGeeksImages-8.webp"],"label":"GeeksforGeeks campus sessions"}
 :::
 
 ## Key Responsibilities

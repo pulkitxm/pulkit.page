@@ -65,7 +65,9 @@ export function createPageAssets(): PageAssets {
     tags: () =>
       [
         ...[...styles].map(styleTag),
-        ...[...scripts].map((src) => `<script type="module" src="${src}"></script>`),
+        ...[...scripts].map(
+          (src) => `<script type="module" src="${src}" fetchpriority="low"></script>`,
+        ),
       ].join(""),
   };
 }

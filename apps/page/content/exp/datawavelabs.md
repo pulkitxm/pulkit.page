@@ -1,5 +1,6 @@
 ---
 title: DatawaveLabs
+priorityImage: /assets/content/exp/datawavelabs/datawaveDashboard.webp
 description: Full Stack Engineer internship at Datawave Labs, developing scalable cloud-driven data
   intelligence platform with authentication systems, cloud integrations (AWS, Azure, GCP),
   infrastructure automation, and real-time notifications.

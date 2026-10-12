@@ -10,6 +10,7 @@ export interface LighthouseOptions {
   routes: string[];
   concurrency: number;
   reportsDirectory: string;
+  minimumScore: number;
 }
 
 export function readOptions(): LighthouseOptions {
@@ -21,9 +22,10 @@ export function readOptions(): LighthouseOptions {
       site: { type: "string", multiple: true, default: [] },
       concurrency: {
         type: "string",
-        default: String(Math.max(1, Math.floor(availableParallelism() / 2))),
+        default: String(Math.min(5, Math.max(1, Math.floor(availableParallelism() / 2)))),
       },
       output: { type: "string", default: "reports/lighthouse" },
+      "min-score": { type: "string", default: "0" },
     },
   });
   const requested =
@@ -36,7 +38,12 @@ export function readOptions(): LighthouseOptions {
   if (!Number.isInteger(concurrency) || concurrency < 1) {
     throw new Error("--concurrency must be a positive integer");
   }
+  const minimumScore = Number(values["min-score"]);
+  if (!Number.isInteger(minimumScore) || minimumScore < 0 || minimumScore > 100) {
+    throw new Error("--min-score must be an integer between 0 and 100");
+  }
   return {
+    minimumScore,
     formFactors,
     production: values.prod,
     sites: values.site,

@@ -21,14 +21,6 @@ function styleReady(): Promise<void> {
   });
 }
 
-function whenIdle(task: () => void): void {
-  if ("requestIdleCallback" in globalThis) {
-    requestIdleCallback(task, { timeout: 2000 });
-  } else {
-    setTimeout(task, 200);
-  }
-}
-
 export function setupLightbox(): void {
   const links = findElements(document, zoomSelector, HTMLAnchorElement);
   if (links.length === 0) {
@@ -39,7 +31,6 @@ export function setupLightbox(): void {
     ready ??= Promise.all([styleReady(), import("photoswipe")]);
     return ready;
   };
-  whenIdle(warm);
   const dataSource = links.map((link) => ({
     src: link.getAttribute("href") ?? undefined,
     msrc: link.getAttribute("href") ?? undefined,

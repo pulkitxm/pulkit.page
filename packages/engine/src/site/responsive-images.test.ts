@@ -50,6 +50,11 @@ test("responsive copies preserve original downloads and layout", async () => {
     expect((await sharp(join(directory, backdrop ?? "")).metadata()).width).toBe(160);
     const full = updated.match(/srcset="([^"]+)"/)?.[1];
     expect(full).toContain("/assets/photo.webp 1200w");
+    const intermediate = full?.match(/(\/assets\/responsive\/[^, ]+) 672w/)?.[1];
+    expect(intermediate).toBeDefined();
+    const intermediateSize = await sharp(join(directory, intermediate ?? "")).metadata();
+    expect(intermediateSize.width).toBe(672);
+    expect(intermediateSize.height).toBe(896);
     expect(await optimizeImages(directory)).toBe(0);
   } finally {
     rmSync(directory, { recursive: true, force: true });

@@ -104,13 +104,10 @@ timed("Fingerprinted styles and downloads", () => {
           return `<style>${mathStyles}</style>`;
         },
       )
-      .replace(
-        /<link rel="stylesheet" href="\/assets\/demos\/document\.css"\s*\/?>/g,
-        () => {
-          demoStyles ??= readFileSync("dist/assets/demos/document.css", "utf8");
-          return `<style>${demoStyles}</style>`;
-        },
-      );
+      .replace(/<link rel="stylesheet" href="\/assets\/demos\/document\.css"\s*\/?>/g, () => {
+        demoStyles ??= readFileSync("dist/assets/demos/document.css", "utf8");
+        return `<style>${demoStyles}</style>`;
+      });
     for (const [from, to] of fingerprinted) {
       html = html.replaceAll(`="${from}`, `="${to}`);
     }

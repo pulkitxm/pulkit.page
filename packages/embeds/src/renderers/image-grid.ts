@@ -1,6 +1,6 @@
 import { renderCarousel } from "../lib/carousel.ts";
 import { localImageSize } from "../lib/lightbox.ts";
-import { addMediaAssets, loadingAttributes, zoomLink } from "../lib/media.ts";
+import { addMediaAssets, galleryPriority, loadingAttributes, zoomLink } from "../lib/media.ts";
 import { optionalNumber, optionalString, readStrings } from "../lib/props.ts";
 import type { EmbedRenderer } from "../types.ts";
 
@@ -12,6 +12,7 @@ const gridColumns: Readonly<Record<number, string>> = {
 };
 
 export const render: EmbedRenderer = (props, context) => {
+  const eager = galleryPriority(props);
   const columns = optionalNumber(props, "columns", "image-grid") ?? 2;
   const label = optionalString(props, "label", "image-grid") ?? "Image carousel";
   const resolved = readStrings(props, "images", "image-grid").map((src) => ({
@@ -20,7 +21,7 @@ export const render: EmbedRenderer = (props, context) => {
   }));
   if (resolved.length > 2) {
     const slides = resolved.map((image, index) => ({ ...image, alt: `Slide ${index + 1}` }));
-    const carousel = renderCarousel(slides, { frame: "plain", label }, context);
+    const carousel = renderCarousel(slides, { frame: "plain", label, eager }, context);
     return `<div class="mt-0 mb-6 flex items-center justify-center"><div class="relative mx-auto w-full max-w-[64rem]"><div class="mx-auto w-full max-w-[48rem]">${carousel}</div></div></div>`;
   }
   const { assets, escapeHtml } = context;
@@ -29,7 +30,7 @@ export const render: EmbedRenderer = (props, context) => {
     throw new Error(`Unsupported image-grid columns: ${columns}`);
   }
   addMediaAssets(assets);
-  const leading = assets.claim("gallery-lcp");
+  const leading = eager && assets.claim("gallery-lcp");
   const items = resolved
     .map((image, index) =>
       zoomLink(

@@ -1,5 +1,6 @@
-import type { EscapeHtml, PageAssets } from "../types.ts";
+import type { EmbedProps, EscapeHtml, PageAssets } from "../types.ts";
 import { lightboxScript, lightboxStyle } from "./lightbox.ts";
+import { optionalString } from "./props.ts";
 
 const mediaScript = "/assets/embeds/blog-media.js";
 
@@ -9,6 +10,14 @@ export interface ZoomLink {
   height: number | undefined;
   className: string;
   image: string;
+}
+
+export function galleryPriority(props: EmbedProps): boolean {
+  const loading = optionalString(props, "loading", "image gallery");
+  if (loading !== undefined && loading !== "lazy" && loading !== "eager") {
+    throw new Error(`Unsupported gallery loading: ${loading}`);
+  }
+  return loading === "eager";
 }
 
 export function loadingAttributes(eager: boolean): string {

@@ -70,7 +70,7 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
   const root = resolve(outputDirectory);
   const variants = new Map<string, Promise<Image | undefined>>();
   const cache = resolve(".cache/responsive-images");
-  const widths = [96, 192, 320, 384, 480, 640, 768, 960, 1280];
+  const widths = [96, 192, 320, 384, 480, 640, 672, 768, 960, 1280];
   let optimized = 0;
 
   async function prepare(src: string): Promise<Image | undefined> {

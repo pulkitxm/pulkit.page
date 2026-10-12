@@ -17,6 +17,7 @@ import {
   sitemapRoutes,
   validateRequestedRoutes,
 } from "../lib/sites.ts";
+import { reportPath, writeRawResult } from "../lib/storage.ts";
 import { startWorker } from "../lib/worker-pool.ts";
 
 interface AuditedSite extends Site {
@@ -91,7 +92,6 @@ if (jobs.length === 0) {
   throw new Error(`No routes match ${options.routes.join(", ")}`);
 }
 const total = jobs.length;
-const workers = Array.from({ length: Math.min(options.concurrency, total) }, startWorker);
 
 if (existsSync(outputDirectory)) {
   throw new Error(`Report ${runId} already exists; wait a second and run again`);
@@ -99,8 +99,10 @@ if (existsSync(outputDirectory)) {
 for (const site of sites) {
   mkdirSync(join(outputDirectory, "pages", site.domain), { recursive: true });
   mkdirSync(join(outputDirectory, "html", site.domain), { recursive: true });
+  mkdirSync(join(outputDirectory, "json", site.domain), { recursive: true });
 }
 
+const workers = Array.from({ length: Math.min(options.concurrency, total) }, startWorker);
 const runs = new Map<string, PageRun[]>();
 const startedAt = performance.now();
 let completed = 0;
@@ -117,12 +119,7 @@ try {
           url: new URL(route, site.origin).href,
           formFactor,
           categories,
-          reportPath: join(
-            outputDirectory,
-            "html",
-            site.domain,
-            `${slug(route)}-${formFactor}.html`,
-          ),
+          reportPath: reportPath(outputDirectory, site.domain, route, formFactor, "html"),
         });
         if ("error" in reply) {
           throw new Error(reply.error);
@@ -131,6 +128,7 @@ try {
           throw new Error(`Lighthouse worker sent no result for ${site.domain}${route}`);
         }
         const { lhr } = reply;
+        writeRawResult(outputDirectory, site.domain, route, formFactor, lhr);
         const key = `${site.domain}${route}`;
         runs.set(key, [...(runs.get(key) ?? []), { formFactor, lhr }]);
         completed += 1;

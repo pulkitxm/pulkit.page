@@ -52,7 +52,7 @@ export function renderCarousel(
         },
         escapeHtml,
       );
-      return `<section aria-roledescription="slide" aria-label="${index + 1} of ${images.length}" class="min-w-0 shrink-0 grow-0 basis-full pl-4" data-carousel-slide><div class="${slideFrames[frame]}">${backdrop}<div class="absolute inset-0 flex items-center justify-center">${link}</div></div></section>`;
+      return `<section aria-roledescription="slide" aria-label="${escapeHtml(label)}: ${index + 1} of ${images.length}" class="min-w-0 shrink-0 grow-0 basis-full pl-4" data-carousel-slide><div class="${slideFrames[frame]}">${backdrop}<div class="absolute inset-0 flex items-center justify-center">${link}</div></div></section>`;
     })
     .join("");
   const dots = images

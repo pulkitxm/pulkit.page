@@ -1,6 +1,6 @@
 import { afterEach, expect, test } from "bun:test";
 import type { SpawnSyncReturns } from "node:child_process";
-import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { sha256Hex } from "@pulkit/shared/hash";
 import {
@@ -54,8 +54,14 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/dev-3456/index.html"), "utf8")).toBe("running preview");
   expect(existsSync(join(cwd, "dist/stale.html"))).toBe(false);
   const built = readFileSync(join(cwd, "dist/index.html"), "utf8");
-  const styles = /href="\/(styles\.[0-9a-f]{12}\.css)"/.exec(built)?.[1] ?? "";
-  expect(existsSync(join(cwd, "dist", styles))).toBe(true);
+  const styles = readdirSync(join(cwd, "dist")).find((file) =>
+    /^styles\.[0-9a-f]{12}\.css$/.test(file),
+  );
+  expect(styles).toBeDefined();
+  expect(built).toContain(
+    `<style>${readFileSync(join(cwd, "dist", styles ?? ""), "utf8")}</style>`,
+  );
+  expect(built).not.toMatch(/<link rel="stylesheet"/);
   expect(existsSync(join(cwd, "dist/styles.css"))).toBe(false);
   expect(existsSync(join(cwd, "dist/theme.js"))).toBe(false);
   expect(built).toContain("portfolio-theme");
@@ -63,6 +69,42 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(build(cwd).status).toBe(0);
   expect(existsSync(join(cwd, "dist/notes/example/index.html"))).toBe(false);
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).not.toContain("/notes/");
+}, 30_000);
+
+test("math styles render inline only where needed and every font URL remains valid", () => {
+  const cwd = buildProject({
+    "content/math.md": `${source.replace("layout: home", "layout: simple")}\n:embed[math]{{"formula":"x^2"}}\n`,
+  });
+  expect(build(cwd).status).toBe(0);
+  const css = readFileSync(join(cwd, "dist/assets/katex/katex-swap.min.css"), "utf8");
+  const expected = css.replaceAll("url(fonts/", "url(/assets/katex/fonts/");
+  const html = readFileSync(join(cwd, "dist/math/index.html"), "utf8");
+  expect(html).toContain(`<style>${expected}</style>`);
+  expect(html).not.toContain('href="/assets/katex/katex-swap.min.css"');
+  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).not.toContain(expected);
+  const fonts = [...expected.matchAll(/url\((\/assets\/katex\/fonts\/[^)]+)\)/g)];
+  expect(fonts.length).toBeGreaterThan(0);
+  for (const font of fonts) {
+    expect(existsSync(join(cwd, "dist", font[1] ?? ""))).toBe(true);
+  }
+}, 30_000);
+
+test("demo placeholders retain inline styling and valid font URLs without a blocking stylesheet", () => {
+  const cwd = buildProject({
+    "content/demo.md": `${source.replace("layout: home", "layout: simple")}\n:::demo janky-vs-smooth\n`,
+  });
+  expect(build(cwd).status).toBe(0);
+  const css = readFileSync(join(cwd, "dist/assets/demos/document.css"), "utf8");
+  const html = readFileSync(join(cwd, "dist/demo/index.html"), "utf8");
+  expect(html).toContain(`<style>${css}</style>`);
+  expect(html).not.toContain('href="/assets/demos/document.css"');
+  expect(css).toContain("demo-showcase:not([data-ready])");
+  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).not.toContain(css);
+  const fonts = [...css.matchAll(/url\((\/assets\/demos\/[^)]+)\)/g)];
+  expect(fonts).toHaveLength(4);
+  for (const font of fonts) {
+    expect(existsSync(join(cwd, "dist", font[1] ?? ""))).toBe(true);
+  }
 }, 30_000);
 
 test("PDF filenames stay fixed while download versions track changes through cached renders", () => {

@@ -22,7 +22,7 @@ function fontFaces(): string {
   return weights
     .map(
       (weight) =>
-        `@font-face{font-family:"Poppins";font-style:normal;font-display:swap;font-weight:${weight};src:url(poppins-${weight}.woff2) format("woff2")}`,
+        `@font-face{font-family:"Poppins";font-style:normal;font-display:swap;font-weight:${weight};src:url(/assets/demos/poppins-${weight}.woff2) format("woff2")}`,
     )
     .join("\n");
 }

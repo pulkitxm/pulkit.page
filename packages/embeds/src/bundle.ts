@@ -22,12 +22,19 @@ export async function bundleEmbedScripts(
   const entrypoints = readdirSync(entries)
     .filter((file) => file.endsWith(".ts"))
     .map((file) => join(entries, file));
-  await bundleBrowserScripts({ entrypoints, outdir, minify, label: "embed scripts" });
+  for (const entrypoint of entrypoints) {
+    await bundleBrowserScripts({
+      entrypoints: [entrypoint],
+      outdir,
+      minify,
+      label: "embed scripts",
+    });
+  }
 }
 
 export async function buildEmbedAssets(outdir: string): Promise<void> {
   await bundleEmbedScripts(join(outdir, "embeds"));
   cpSync(photoswipeStyles, join(outdir, "embeds/photoswipe.css"));
-  cpSync(join(katexDirectory, "katex.min.css"), join(outdir, "katex/katex.min.css"));
+  cpSync(join(katexDirectory, "katex-swap.min.css"), join(outdir, "katex/katex-swap.min.css"));
   cpSync(join(katexDirectory, "fonts"), join(outdir, "katex/fonts"), { recursive: true });
 }

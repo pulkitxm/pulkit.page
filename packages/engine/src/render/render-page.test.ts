@@ -68,7 +68,9 @@ test("carousel directives render sliding images and reject stray content", async
   expect(html.match(/data-carousel-track/g)).toHaveLength(1);
   expect(html).toContain('alt="Second"');
   expect(html).toContain("1 / 2");
-  expect(html).toContain('<script type="module" src="/assets/embeds/image-carousel.js">');
+  expect(html).toMatch(
+    /<script type="module" src="\/assets\/embeds\/image-carousel\.js" fetchpriority="low">/,
+  );
   expect(await renderPage(`${source}\n![Single](/assets/a.webp)\n`)).not.toContain(
     "image-carousel.js",
   );
@@ -175,9 +177,9 @@ test("code blocks carry a sticky copy button and load its script once", async ()
   expect(
     html.match(/<button [^>]*class="[^"]*sticky top-3[^"]*"[^>]*data-code-copy>/g),
   ).toHaveLength(2);
-  expect(html.match(/<script type="module" src="\/assets\/embeds\/code-copy\.js">/g)).toHaveLength(
-    1,
-  );
+  expect(
+    html.match(/<script type="module" src="\/assets\/embeds\/code-copy\.js" fetchpriority="low">/g),
+  ).toHaveLength(1);
 });
 
 test("tables scroll sideways as a keyboard-focusable region without splitting words", async () => {
@@ -185,4 +187,60 @@ test("tables scroll sideways as a keyboard-focusable region without splitting wo
     `${source}\n| Approach | Limit |\n| --- | --- |\n| Token bucket | 8000 |\n`,
   );
   expect(html).toMatch(/<table tabindex="0" class="[^"]*overflow-x-auto[^"]*wrap-normal/);
+});
+
+test("only images at the start of page content receive loading priority", async () => {
+  const imagePage = "---\ntitle: Images\n---\n";
+  for (const first of [
+    "![Leading](/assets/leading.webp)",
+    "[![Leading](/assets/leading.webp)](https://example.com)",
+  ]) {
+    const html = await renderPage(`${imagePage}\n\n${first}\n\n![Later](/assets/later.webp)\n`);
+    expect(html.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('loading="eager"');
+    expect(html.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('fetchpriority="high"');
+    expect(html.match(/<img[^>]+alt="Later"[^>]*>/)?.[0]).toContain('loading="lazy"');
+    expect(html.match(/fetchpriority="high"/g)).toHaveLength(1);
+  }
+  for (const introduction of [
+    "Introduction",
+    "## Heading",
+    "Introduction ![Inline](/assets/inline.webp)",
+  ]) {
+    const html = await renderPage(
+      `${imagePage}\n\n${introduction}\n\n![Later](/assets/later.webp)\n`,
+    );
+    expect(html.match(/<img[^>]+alt="Later"[^>]*>/)?.[0]).toContain('loading="lazy"');
+    expect(html).not.toContain('fetchpriority="high"');
+  }
+});
+
+test("explicit image priority selects one image without changing its lightbox or styling", async () => {
+  const body = [
+    "Introduction.",
+    "![Selected](/assets/selected.webp)",
+    "![Later](/assets/later.webp)",
+  ].join("\n\n");
+  const imageSource = "---\ntitle: Images\n---\n";
+  const normal = await renderPage(`${imageSource}${body}`);
+  const prioritized = await renderPage(
+    `---\ntitle: Images\npriorityImage: /assets/selected.webp\n---\n${body}`,
+  );
+  expect(prioritized).toBe(
+    normal.replace(
+      'alt="Selected" loading="lazy"',
+      'alt="Selected" loading="eager" fetchpriority="high"',
+    ),
+  );
+  expect(prioritized.match(/fetchpriority="high"/g)).toHaveLength(1);
+  expect(prioritized.match(/<img[^>]+alt="Later"[^>]*>/)?.[0]).toContain('loading="lazy"');
+  expect(prioritized).toContain('href="/assets/selected.webp"');
+  const explicit = await renderPage(
+    [
+      "---\ntitle: Images\npriorityImage: /assets/later.webp\n---",
+      "![Leading](/assets/leading.webp)",
+      "![Later](/assets/later.webp)",
+    ].join("\n\n"),
+  );
+  expect(explicit.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('loading="lazy"');
+  expect(explicit.match(/fetchpriority="high"/g)).toHaveLength(1);
 });

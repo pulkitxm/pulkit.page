@@ -1,5 +1,6 @@
 ---
 title: Deviators
+priorityImage: /assets/content/exp/deviators/website.webp
 description: Chairperson of Deviators, an independent college coding club. Led tech initiatives,
   organized events and workshops, and managed a 36-hour hackathon with 350+ participants using a
   custom-built platform.

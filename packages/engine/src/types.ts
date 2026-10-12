@@ -16,6 +16,7 @@ export interface PageMetadata {
   icon?: string;
   darkIcon?: string;
   secondaryIcon?: string;
+  priorityImage?: string;
   tags?: string[];
   links?: string[];
 }

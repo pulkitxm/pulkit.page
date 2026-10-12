@@ -2,6 +2,9 @@
   "name": "@pulkit/embeds",
   "private": true,
   "type": "module",
+  "scripts": {
+    "test": "bun test ./src"
+  },
   "exports": {
     ".": "./src/index.ts",
     "./bundle": "./src/bundle.ts",

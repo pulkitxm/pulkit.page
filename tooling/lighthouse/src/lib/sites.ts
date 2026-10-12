@@ -8,6 +8,17 @@ export interface Site {
   domain: string;
 }
 
+export function validateRequestedRoutes(
+  requested: readonly string[],
+  available: readonly string[],
+): void {
+  const routes = new Set(available);
+  const missing = [...new Set(requested)].filter((route) => !routes.has(route));
+  if (missing.length > 0) {
+    throw new Error(`Requested routes were not found: ${missing.join(", ")}`);
+  }
+}
+
 export function discoverSites(filters: readonly string[]): Site[] {
   return readdirSync("apps", { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && existsSync(join("apps", entry.name, "CNAME")))

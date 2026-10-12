@@ -11,7 +11,12 @@ import { readOptions } from "../lib/options.ts";
 import type { PageRun, SiteSection } from "../lib/reports.ts";
 import { pageReport, runIndex, summaryReport } from "../lib/reports.ts";
 import type { Site } from "../lib/sites.ts";
-import { discoverSites, localRoutes, sitemapRoutes } from "../lib/sites.ts";
+import {
+  discoverSites,
+  localRoutes,
+  sitemapRoutes,
+  validateRequestedRoutes,
+} from "../lib/sites.ts";
 import { startWorker } from "../lib/worker-pool.ts";
 
 interface AuditedSite extends Site {
@@ -62,6 +67,10 @@ async function auditedSites(started: PreviewServer[]): Promise<AuditedSite[]> {
       started.push(server);
       audited.push({ ...site, origin: server.resolvedUrls?.local[0] ?? "", routes });
     }
+    validateRequestedRoutes(
+      options.routes,
+      audited.flatMap((site) => site.routes),
+    );
   } catch (error) {
     await closeAll(started);
     throw error;

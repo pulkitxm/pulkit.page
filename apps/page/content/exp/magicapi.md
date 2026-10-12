@@ -1,5 +1,6 @@
 ---
 title: Magic API (Noveum.ai & API.market)
+priorityImage: /assets/content/exp/magicapi/website.webp
 description: Software Engineer at MagicAPI, first on API.market (wallet, vouchers, search) and then
   building Noveum.ai from the ground up, from trace ingestion, evals and billing to two cloud
   migrations, plus Orbit, an open source Linear alternative.

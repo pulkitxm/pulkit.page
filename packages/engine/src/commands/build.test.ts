@@ -1,6 +1,6 @@
 import { afterEach, expect, test } from "bun:test";
 import type { SpawnSyncReturns } from "node:child_process";
-import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { sha256Hex } from "@pulkit/shared/hash";
 import {
@@ -54,8 +54,14 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/dev-3456/index.html"), "utf8")).toBe("running preview");
   expect(existsSync(join(cwd, "dist/stale.html"))).toBe(false);
   const built = readFileSync(join(cwd, "dist/index.html"), "utf8");
-  const styles = /href="\/(styles\.[0-9a-f]{12}\.css)"/.exec(built)?.[1] ?? "";
-  expect(existsSync(join(cwd, "dist", styles))).toBe(true);
+  const styles = readdirSync(join(cwd, "dist")).find((file) =>
+    /^styles\.[0-9a-f]{12}\.css$/.test(file),
+  );
+  expect(styles).toBeDefined();
+  expect(built).toContain(
+    `<style>${readFileSync(join(cwd, "dist", styles ?? ""), "utf8")}</style>`,
+  );
+  expect(built).not.toMatch(/<link rel="stylesheet"/);
   expect(existsSync(join(cwd, "dist/styles.css"))).toBe(false);
   expect(existsSync(join(cwd, "dist/theme.js"))).toBe(false);
   expect(built).toContain("portfolio-theme");

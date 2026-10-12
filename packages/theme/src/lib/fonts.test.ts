@@ -15,23 +15,38 @@ function fontFaces(): Array<{ source: string; weight: number; ranges: [number, n
   );
 }
 
-test("core and original fonts cover Unicode without overlapping ranges", () => {
+test("font ranges match original coverage and exclude unsupported characters", () => {
   const faces = fontFaces();
+  const supportedRanges =
+    "20-7E,A0-FF,131,152-153,2C6,2DA,2DC,2013-2015,2017-201E,2020-2022,2026,2030,2032-2033,2039-203A,203C,203E,2044,20AC,2122,2212,2215";
+  const supported = new Set<number>();
+  for (const range of supportedRanges.split(",")) {
+    const [first = "", last = first] = range.split("-");
+    for (let point = Number.parseInt(first, 16); point <= Number.parseInt(last, 16); point += 1) {
+      supported.add(point);
+    }
+  }
   expect(faces).toHaveLength(4);
+  expect(supported.size).toBe(224);
   for (const weight of [400, 700]) {
     const selected = faces.filter((face) => face.weight === weight);
-    const ranges = selected.flatMap((face) => face.ranges).sort((a, b) => a[0] - b[0]);
-    expect(ranges[0]?.[0]).toBe(0);
-    expect(ranges.at(-1)?.[1]).toBe(0x10ffff);
-    for (let index = 1; index < ranges.length; index += 1) {
-      expect(ranges[index]?.[0]).toBe((ranges[index - 1]?.[1] ?? -1) + 1);
-    }
+    const coverage = new Set<number>();
     for (const face of selected) {
       expect(
         readFileSync(themeFile(face.source.slice(1)))
           .subarray(0, 4)
           .toString(),
       ).toBe("wOF2");
+      for (const [first, last] of face.ranges) {
+        for (let point = first; point <= last; point += 1) {
+          expect(coverage.has(point)).toBe(false);
+          coverage.add(point);
+        }
+      }
+    }
+    expect(coverage).toEqual(supported);
+    for (const character of ["🤞", "✌", "🏻", "↗", "→", "中"]) {
+      expect(coverage.has(character.codePointAt(0) ?? -1)).toBe(false);
     }
     for (const [character, suffix] of [
       ["a", "core"],

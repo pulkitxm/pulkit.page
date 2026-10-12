@@ -62,11 +62,12 @@ export function mountFrame(shadow: ShadowRoot, { frame, files, id }: FrameMount)
     modifier: false,
   };
   const filenames = files.map((file) => file.filename);
+  let renderedFile: HighlightedSource | undefined;
   const scheduler = createScheduler();
   const clipboard = createCopyFeedback(scheduler, () => render());
 
   function renderCode() {
-    if (!hasFiles) {
+    if (!(hasFiles && state.expanded)) {
       return;
     }
     const file = files[state.active] ?? files[0];
@@ -77,7 +78,10 @@ export function mountFrame(shadow: ShadowRoot, { frame, files, id }: FrameMount)
         "[&_code]:wrap-break-word [&_pre]:wrap-break-word [&_code]:whitespace-pre-wrap [&_pre]:whitespace-pre-wrap",
       state.modifier && "[&_.file-link:hover]:underline [&_.file-link]:cursor-pointer",
     );
-    highlighted.innerHTML = linkFiles(file?.html ?? "", filenames);
+    if (renderedFile !== file) {
+      highlighted.innerHTML = linkFiles(file?.html ?? "", filenames);
+      renderedFile = file;
+    }
     for (const [index, element] of queryAll(shadow, "[data-file]", HTMLElement).entries()) {
       element.className = cn(
         buttonClass({ variant: index === state.active ? "secondary" : "ghost" }),

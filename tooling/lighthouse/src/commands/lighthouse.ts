@@ -10,6 +10,7 @@ import { categoryOf, score, slug } from "../lib/format.ts";
 import { readOptions } from "../lib/options.ts";
 import type { PageRun, SiteSection } from "../lib/reports.ts";
 import { pageReport, runIndex, summaryReport } from "../lib/reports.ts";
+import { researchReport } from "../lib/research.ts";
 import type { Site } from "../lib/sites.ts";
 import {
   discoverSites,
@@ -17,6 +18,7 @@ import {
   sitemapRoutes,
   validateRequestedRoutes,
 } from "../lib/sites.ts";
+import { jsonReport, reportPath, runnerState, writeRawResult } from "../lib/storage.ts";
 import { startWorker } from "../lib/worker-pool.ts";
 
 interface AuditedSite extends Site {
@@ -33,8 +35,9 @@ interface PendingJob {
 const options = readOptions();
 process.chdir(repositoryRoot);
 const { formFactors, production, reportsDirectory } = options;
-const runId = `${new Date()
-  .toISOString()
+const provenance = runnerState();
+const startedAtIso = new Date().toISOString();
+const runId = `${startedAtIso
   .replaceAll(":", "-")
   .replace(/\.\d+Z$/, "Z")}-${production ? "prod" : "local"}`;
 const outputDirectory = join(reportsDirectory, runId);
@@ -91,7 +94,6 @@ if (jobs.length === 0) {
   throw new Error(`No routes match ${options.routes.join(", ")}`);
 }
 const total = jobs.length;
-const workers = Array.from({ length: Math.min(options.concurrency, total) }, startWorker);
 
 if (existsSync(outputDirectory)) {
   throw new Error(`Report ${runId} already exists; wait a second and run again`);
@@ -99,8 +101,10 @@ if (existsSync(outputDirectory)) {
 for (const site of sites) {
   mkdirSync(join(outputDirectory, "pages", site.domain), { recursive: true });
   mkdirSync(join(outputDirectory, "html", site.domain), { recursive: true });
+  mkdirSync(join(outputDirectory, "json", site.domain), { recursive: true });
 }
 
+const workers = Array.from({ length: Math.min(options.concurrency, total) }, startWorker);
 const runs = new Map<string, PageRun[]>();
 const startedAt = performance.now();
 let completed = 0;
@@ -117,12 +121,7 @@ try {
           url: new URL(route, site.origin).href,
           formFactor,
           categories,
-          reportPath: join(
-            outputDirectory,
-            "html",
-            site.domain,
-            `${slug(route)}-${formFactor}.html`,
-          ),
+          reportPath: reportPath(outputDirectory, site.domain, route, formFactor, "html"),
         });
         if ("error" in reply) {
           throw new Error(reply.error);
@@ -131,6 +130,7 @@ try {
           throw new Error(`Lighthouse worker sent no result for ${site.domain}${route}`);
         }
         const { lhr } = reply;
+        writeRawResult(outputDirectory, site.domain, route, formFactor, lhr);
         const key = `${site.domain}${route}`;
         runs.set(key, [...(runs.get(key) ?? []), { formFactor, lhr }]);
         completed += 1;
@@ -204,6 +204,30 @@ if (failed.length > 0 || belowTarget.length > 0) {
   process.exitCode = 1;
 }
 writeFileSync(
+  join(outputDirectory, "research.json"),
+  jsonReport(
+    researchReport(sections, {
+      runId,
+      production,
+      minimumScore: options.minimumScore,
+      concurrency: options.concurrency,
+      effectiveConcurrency: workers.length,
+      runnerRevision: provenance.runnerRevision,
+      provenance: {
+        runnerDirty: provenance.runnerDirty,
+        startedAt: startedAtIso,
+        finishedAt: new Date().toISOString(),
+        runtime: {
+          name: "bun",
+          version: Bun.version,
+          platform: process.platform,
+          arch: process.arch,
+        },
+      },
+    }),
+  ),
+);
+writeFileSync(
   join(outputDirectory, "run.json"),
   `${JSON.stringify({ id: runId, sites: siteNames, pages: pageCount, formFactors, failed: failed.length, minimumScore: options.minimumScore, belowTarget }, null, 2)}\n`,
 );
@@ -213,3 +237,4 @@ console.log(
 );
 console.log(`Report ${runId}: ${join(outputDirectory, "README.md")}`);
 console.log(`All reports: ${join(reportsDirectory, "README.md")}`);
+console.log(`Research: ${join(outputDirectory, "research.json")}`);

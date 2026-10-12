@@ -92,6 +92,15 @@ and fail if any page category scores below 100. Use `--site pulkit.page` or
 `reports/lighthouse/`, including each page's metrics and a `run.json` with categories
 below the requested target. Without `--min-score`, scores do not fail the command.
 
+Each run also writes `research.json` with exact URLs, device settings, unrounded
+metrics, audit weights, failures, warnings, and their resource and element details.
+Page reports link to the complete Lighthouse result at
+`json/<domain>/<page>-<device>.json` and to the matching PageSpeed URL. Raw results
+are saved as each audit finishes, so completed pages remain available if a later
+worker fails. Diagnostic warnings remain visible even when a category scores 100.
+The report identifies the local runner revision separately from the live site's
+deployment, which an audit cannot infer from its response alone.
+
 A single app script can also run directly with `bun run --cwd apps/page <script>`,
 for example `bun run --cwd apps/blog check:seo`. Unlike the Turbo tasks, direct app
 scripts do not build first. Set `PLAYWRIGHT_CHANNEL=chrome` to let `check:browser`

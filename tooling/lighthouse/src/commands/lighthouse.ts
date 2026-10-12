@@ -10,6 +10,7 @@ import { categoryOf, score, slug } from "../lib/format.ts";
 import { readOptions } from "../lib/options.ts";
 import type { PageRun, SiteSection } from "../lib/reports.ts";
 import { pageReport, runIndex, summaryReport } from "../lib/reports.ts";
+import { researchReport } from "../lib/research.ts";
 import type { Site } from "../lib/sites.ts";
 import {
   discoverSites,
@@ -17,7 +18,7 @@ import {
   sitemapRoutes,
   validateRequestedRoutes,
 } from "../lib/sites.ts";
-import { reportPath, writeRawResult } from "../lib/storage.ts";
+import { jsonReport, reportPath, runnerState, writeRawResult } from "../lib/storage.ts";
 import { startWorker } from "../lib/worker-pool.ts";
 
 interface AuditedSite extends Site {
@@ -34,8 +35,9 @@ interface PendingJob {
 const options = readOptions();
 process.chdir(repositoryRoot);
 const { formFactors, production, reportsDirectory } = options;
-const runId = `${new Date()
-  .toISOString()
+const provenance = runnerState();
+const startedAtIso = new Date().toISOString();
+const runId = `${startedAtIso
   .replaceAll(":", "-")
   .replace(/\.\d+Z$/, "Z")}-${production ? "prod" : "local"}`;
 const outputDirectory = join(reportsDirectory, runId);
@@ -202,6 +204,30 @@ if (failed.length > 0 || belowTarget.length > 0) {
   process.exitCode = 1;
 }
 writeFileSync(
+  join(outputDirectory, "research.json"),
+  jsonReport(
+    researchReport(sections, {
+      runId,
+      production,
+      minimumScore: options.minimumScore,
+      concurrency: options.concurrency,
+      effectiveConcurrency: workers.length,
+      runnerRevision: provenance.runnerRevision,
+      provenance: {
+        runnerDirty: provenance.runnerDirty,
+        startedAt: startedAtIso,
+        finishedAt: new Date().toISOString(),
+        runtime: {
+          name: "bun",
+          version: Bun.version,
+          platform: process.platform,
+          arch: process.arch,
+        },
+      },
+    }),
+  ),
+);
+writeFileSync(
   join(outputDirectory, "run.json"),
   `${JSON.stringify({ id: runId, sites: siteNames, pages: pageCount, formFactors, failed: failed.length, minimumScore: options.minimumScore, belowTarget }, null, 2)}\n`,
 );
@@ -211,3 +237,4 @@ console.log(
 );
 console.log(`Report ${runId}: ${join(outputDirectory, "README.md")}`);
 console.log(`All reports: ${join(reportsDirectory, "README.md")}`);
+console.log(`Research: ${join(outputDirectory, "research.json")}`);

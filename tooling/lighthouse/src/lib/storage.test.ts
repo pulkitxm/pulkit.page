@@ -3,7 +3,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { Result } from "lighthouse";
-import { reportPath, writeRawResult } from "./storage.ts";
+import { jsonReport, reportPath, writeRawResult } from "./storage.ts";
 
 const result = {
   lighthouseVersion: "13.5.0",
@@ -65,4 +65,12 @@ test("HTML and raw JSON paths use the same route and device naming", () => {
   expect(reportPath("reports/run", "example.test", "/nested/sample/", "desktop", "json")).toBe(
     "reports/run/json/example.test/nested-sample-desktop.json",
   );
+});
+
+test("JSON escapes em dashes without altering decoded diagnostic data", () => {
+  const diagnostic = { warning: `sample${String.fromCodePoint(0x2014)}warning` };
+  const source = jsonReport(diagnostic);
+  expect(source).not.toContain(String.fromCodePoint(0x2014));
+  expect(source).toContain("\\u2014");
+  expect(JSON.parse(source)).toEqual(diagnostic);
 });

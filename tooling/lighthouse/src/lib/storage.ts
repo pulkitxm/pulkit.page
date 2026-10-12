@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { Result } from "lighthouse";
@@ -23,5 +24,21 @@ export function writeRawResult(
 ): void {
   const path = reportPath(outputDirectory, domain, route, formFactor, "json");
   mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, `${JSON.stringify(lhr, null, 2)}\n`);
+  writeFileSync(path, jsonReport(lhr));
+}
+
+export function runnerState(): { runnerRevision: string | null; runnerDirty: boolean | null } {
+  try {
+    return {
+      runnerRevision: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+      runnerDirty:
+        execFileSync("git", ["status", "--porcelain"], { encoding: "utf8" }).trim().length > 0,
+    };
+  } catch {
+    return { runnerRevision: null, runnerDirty: null };
+  }
+}
+
+export function jsonReport(value: object): string {
+  return `${JSON.stringify(value, null, 2).replaceAll("\u2014", "\\u2014")}\n`;
 }

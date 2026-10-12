@@ -41,7 +41,7 @@ export function renderCarousel(
   const slides = images
     .map((image, index) => {
       const priority = loadingAttributes(index === 0 && leading);
-      const backdrop = `<img src="${escapeHtml(image.src)}" alt="" aria-hidden="true" width="${image.width}" height="${image.height}" class="${backdropClasses[frame]}"${loadingAttributes(false)} decoding="async">`;
+      const backdrop = `<img src="${escapeHtml(image.src)}" alt="" aria-hidden="true" width="${image.width}" height="${image.height}" class="${backdropClasses[frame]}"${priority} decoding="async">`;
       const foreground = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" class="block h-full w-full select-none object-contain"${priority} decoding="async">`;
       const link = zoomLink(
         {

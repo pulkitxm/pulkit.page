@@ -68,7 +68,9 @@ test("carousel directives render sliding images and reject stray content", async
   expect(html.match(/data-carousel-track/g)).toHaveLength(1);
   expect(html).toContain('alt="Second"');
   expect(html).toContain("1 / 2");
-  expect(html).toContain('<script type="module" src="/assets/embeds/image-carousel.js">');
+  expect(html).toMatch(
+    /<script type="module" src="\/assets\/embeds\/image-carousel\.js" fetchpriority="low">/,
+  );
   expect(await renderPage(`${source}\n![Single](/assets/a.webp)\n`)).not.toContain(
     "image-carousel.js",
   );
@@ -175,9 +177,9 @@ test("code blocks carry a sticky copy button and load its script once", async ()
   expect(
     html.match(/<button [^>]*class="[^"]*sticky top-3[^"]*"[^>]*data-code-copy>/g),
   ).toHaveLength(2);
-  expect(html.match(/<script type="module" src="\/assets\/embeds\/code-copy\.js">/g)).toHaveLength(
-    1,
-  );
+  expect(
+    html.match(/<script type="module" src="\/assets\/embeds\/code-copy\.js" fetchpriority="low">/g),
+  ).toHaveLength(1);
 });
 
 test("tables scroll sideways as a keyboard-focusable region without splitting words", async () => {

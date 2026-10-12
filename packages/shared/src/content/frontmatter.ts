@@ -12,6 +12,7 @@ export const pageFields = [
   "darkIcon",
   "secondaryIcon",
   "tags",
+  "links",
 ] as const;
 
 export const siteFields = [
@@ -27,7 +28,7 @@ export const siteFields = [
 export const requiredSiteFields = ["brand", "description", "copyright", "navigation"] as const;
 
 export const textFields = [
-  ...pageFields.filter((field) => field !== "tags"),
+  ...pageFields.filter((field) => field !== "tags" && field !== "links"),
   "brand",
   "wordmark",
   "articles",

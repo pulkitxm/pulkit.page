@@ -80,6 +80,13 @@ function pageMetadata(data: Record<string, unknown>): PageMetadata {
     }
     metadata.tags = tags;
   }
+  const companyLinks = data.links;
+  if (companyLinks !== undefined) {
+    if (!isStringArray(companyLinks)) {
+      throw new Error("links must be a list of URLs");
+    }
+    metadata.links = companyLinks;
+  }
   return metadata;
 }
 

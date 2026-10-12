@@ -6,6 +6,7 @@ import { categoryOf, isArticle, markdownPath, pageTitle } from "../seo/routes.ts
 import { seoHead } from "../seo/seo-head.ts";
 import { readPage } from "../site/read-page.ts";
 import type { Layouts, ListedPage, PageMetadata, Site, SiteContext } from "../types.ts";
+import { companyLinks } from "./company-links.ts";
 import { linkClasses, longDate, safeUrl } from "./html.ts";
 import { analyticsScript, applyLayout, loadLayouts, themeScript } from "./layouts.ts";
 import { experiencePeriod } from "./listings.ts";
@@ -66,7 +67,8 @@ function dateLine(metadata: PageMetadata, detail: string): string {
     return "";
   }
   const period = metadata.icon ? experiencePeriod(metadata) : escapeHtml(metadata.period ?? "");
-  return `<p class="mt-0 mb-6 text-sm text-muted">${[escapeHtml(metadata.role ?? ""), period, detail].filter(Boolean).join(" · ")}</p>`;
+  const spacing = metadata.links?.length ? "mb-3" : "mb-6";
+  return `<p class="mt-0 ${spacing} text-sm text-muted">${[escapeHtml(metadata.role ?? ""), period, detail].filter(Boolean).join(" · ")}</p>${companyLinks(metadata.links)}`;
 }
 
 function headExtras(

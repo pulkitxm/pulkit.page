@@ -8,6 +8,11 @@ date: 2025-02-03
 period: Feb 2025 – Mar 2025
 endDate: 2025-03-14
 icon: /assets/exp/crowdvolt.webp
+links:
+  - https://www.crowdvolt.com
+  - https://www.linkedin.com/company/crowdvolt
+  - https://x.com/CrowdVolt
+  - https://www.instagram.com/crowdvolt
 ---
 
 At CrowdVolt, I focused on maintaining and enhancing their web platform, resolving critical bugs, implementing new features, and improving the overall user experience. I introduced clean code practices by implementing ESLint and Prettier configurations, significantly improving code quality and consistency. Additionally, I optimized website performance through code refactoring and asset optimization.

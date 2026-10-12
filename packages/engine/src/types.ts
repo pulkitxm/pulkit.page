@@ -17,6 +17,7 @@ export interface PageMetadata {
   darkIcon?: string;
   secondaryIcon?: string;
   tags?: string[];
+  links?: string[];
 }
 
 export interface ListedPage {

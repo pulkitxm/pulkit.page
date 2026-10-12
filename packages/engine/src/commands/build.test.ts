@@ -89,6 +89,24 @@ test("math styles render inline only where needed and every font URL remains val
   }
 }, 30_000);
 
+test("demo placeholders retain inline styling and valid font URLs without a blocking stylesheet", () => {
+  const cwd = buildProject({
+    "content/demo.md": `${source.replace("layout: home", "layout: simple")}\n:::demo janky-vs-smooth\n`,
+  });
+  expect(build(cwd).status).toBe(0);
+  const css = readFileSync(join(cwd, "dist/assets/demos/document.css"), "utf8");
+  const html = readFileSync(join(cwd, "dist/demo/index.html"), "utf8");
+  expect(html).toContain(`<style>${css}</style>`);
+  expect(html).not.toContain('href="/assets/demos/document.css"');
+  expect(css).toContain("demo-showcase:not([data-ready])");
+  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).not.toContain(css);
+  const fonts = [...css.matchAll(/url\((\/assets\/demos\/[^)]+)\)/g)];
+  expect(fonts).toHaveLength(4);
+  for (const font of fonts) {
+    expect(existsSync(join(cwd, "dist", font[1] ?? ""))).toBe(true);
+  }
+}, 30_000);
+
 test("PDF filenames stay fixed while download versions track changes through cached renders", () => {
   const firstPdf = "%PDF-1.7\nFirst synthetic resume\n";
   const secondPdf = "%PDF-1.7\nUpdated synthetic resume\n";

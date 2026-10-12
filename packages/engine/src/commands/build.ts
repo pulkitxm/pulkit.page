@@ -75,6 +75,7 @@ timed("Fingerprinted styles and downloads", () => {
   const fingerprinted = new Map<string, string>();
   const styles = readFileSync("dist/styles.css", "utf8");
   let mathStyles: string | undefined;
+  let demoStyles: string | undefined;
   const downloads = builtFiles("dist")
     .filter((file) => file.endsWith(".pdf"))
     .map((file) => relative("dist", file));
@@ -101,6 +102,13 @@ timed("Fingerprinted styles and downloads", () => {
             "url(/assets/katex/fonts/",
           );
           return `<style>${mathStyles}</style>`;
+        },
+      )
+      .replace(
+        /<link rel="stylesheet" href="\/assets\/demos\/document\.css"\s*\/?>/g,
+        () => {
+          demoStyles ??= readFileSync("dist/assets/demos/document.css", "utf8");
+          return `<style>${demoStyles}</style>`;
         },
       );
     for (const [from, to] of fingerprinted) {

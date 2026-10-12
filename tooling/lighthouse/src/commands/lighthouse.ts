@@ -132,9 +132,7 @@ try {
     }),
   );
 } finally {
-  for (const worker of workers) {
-    worker.stop();
-  }
+  await Promise.all(workers.map((worker) => worker.stop()));
   await closeAll(servers);
 }
 

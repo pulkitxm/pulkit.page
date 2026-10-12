@@ -39,9 +39,27 @@ process.on("message", async (message: unknown) => {
   }
 });
 
-process.once("disconnect", async () => {
-  await chrome.kill();
-  process.exit(0);
+let shuttingDown = false;
+async function shutdown(code: number): Promise<void> {
+  if (shuttingDown) {
+    return;
+  }
+  shuttingDown = true;
+  try {
+    await chrome.kill();
+  } finally {
+    process.exit(code);
+  }
+}
+
+process.once("disconnect", () => shutdown(0));
+process.once("uncaughtException", (error) => {
+  console.error(errorMessage(error));
+  void shutdown(1);
+});
+process.once("unhandledRejection", (error) => {
+  console.error(errorMessage(error));
+  void shutdown(1);
 });
 
 reply({ ready: true });

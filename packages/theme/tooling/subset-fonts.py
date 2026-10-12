@@ -1,4 +1,5 @@
 import argparse
+import re
 from pathlib import Path
 from io import BytesIO
 
@@ -38,6 +39,16 @@ for weight in ["regular", "bold"]:
     original_map = original.getBestCmap()
     generated_map = generated.getBestCmap()
     assert set(generated_map) == set(original_map) & core_codepoints
+    styles = (font_directory.parent.parent / "styles.css").read_text()
+    for suffix, expected in [("core", set(generated_map)), ("latin", set(original_map) - set(generated_map))]:
+        source = f"comic-relief-{weight}-{suffix}.woff2"
+        face = next(rule for rule in re.findall(r"@font-face\s*\{[^}]+}", styles) if source in rule)
+        descriptor = re.search(r"unicode-range:\s*([^;]+)", face).group(1)
+        advertised = set()
+        for first, last in re.findall(r"U\+([0-9A-F]+)(?:-([0-9A-F]+))?", descriptor):
+            advertised.update(range(int(first, 16), int(last or first, 16) + 1))
+        assert advertised == expected, f"{source} advertises unsupported or missing glyphs"
+
     original_glyphs = original.getGlyphSet()
     generated_glyphs = generated.getGlyphSet()
     for codepoint, name in generated_map.items():

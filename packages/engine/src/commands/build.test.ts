@@ -71,6 +71,24 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).not.toContain("/notes/");
 }, 30_000);
 
+test("math styles render inline only where needed and every font URL remains valid", () => {
+  const cwd = buildProject({
+    "content/math.md": `${source.replace("layout: home", "layout: simple")}\n:embed[math]{{"formula":"x^2"}}\n`,
+  });
+  expect(build(cwd).status).toBe(0);
+  const css = readFileSync(join(cwd, "dist/assets/katex/katex-swap.min.css"), "utf8");
+  const expected = css.replaceAll("url(fonts/", "url(/assets/katex/fonts/");
+  const html = readFileSync(join(cwd, "dist/math/index.html"), "utf8");
+  expect(html).toContain(`<style>${expected}</style>`);
+  expect(html).not.toContain('href="/assets/katex/katex-swap.min.css"');
+  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).not.toContain(expected);
+  const fonts = [...expected.matchAll(/url\((\/assets\/katex\/fonts\/[^)]+)\)/g)];
+  expect(fonts.length).toBeGreaterThan(0);
+  for (const font of fonts) {
+    expect(existsSync(join(cwd, "dist", font[1] ?? ""))).toBe(true);
+  }
+}, 30_000);
+
 test("PDF filenames stay fixed while download versions track changes through cached renders", () => {
   const firstPdf = "%PDF-1.7\nFirst synthetic resume\n";
   const secondPdf = "%PDF-1.7\nUpdated synthetic resume\n";

@@ -1,8 +1,10 @@
 ---
 title: Résumé
-description: Download my résumé and explore my experience.
+description: View or download my résumé and explore my experience.
 ---
 
-[Download my résumé (PDF)](/assets/content/resume.pdf).
+:::embed document-viewer
+{"title":"Résumé","documentUrl":"/assets/content/resume.pdf"}
+:::
 
 For more context, read about my [experience](/exp/) or [get in touch](/contact/).

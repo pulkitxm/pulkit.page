@@ -1,8 +1,8 @@
 ---
 title: Magic API (Noveum.ai & API.market)
-description: Working as a Software Engineer at API.market (MagicAPI), responsible for improving user
-  experience, implementing new features, code quality improvements, wallet system, voucher system,
-  and redesigning key platform components.
+description: Software Engineer at MagicAPI, first on API.market (wallet, vouchers, search) and then
+  building Noveum.ai from the ground up, from trace ingestion, evals and billing to two cloud
+  migrations, plus Orbit, an open source Linear alternative.
 role: Software Engineer
 date: 2025-03-25
 period: Mar 2025 – present
@@ -224,10 +224,38 @@ The new setup included:
 
 This migration improved our deployment reliability and gave us proper separation between environments which we didn't have before.
 
+After the move I kept working on EKS cost and reliability using load tests and CloudWatch data. A week of CloudWatch numbers showed our RDS instance averaging 1.7% CPU, so downsizing it saved about $180 a month. Deleting a node group template that was never deployed avoided another $2,234 a month. And I found a PodDisruptionBudget deadlock that had been quietly blocking node group rotations for months.
+
+### Moving again: AWS to GCP
+
+In September 2026 we moved the whole platform again, this time from AWS to [GCP](https://cloud.google.com), and I led it on top of the landing zone a teammate had set up. I wrote 6 OpenTofu modules (network, GKE, Cloud SQL, storage, edge and delivery), 2 Helm charts and a Cloud Deploy pipeline with a manual approval before production. Then came the fun part: debugging prod until the first real traffic came through (liveness probes that checked dependencies had been restarting pods hundreds of times), moving the customer domains over and writing the cutover runbook.
+
+I also set up backups and actually tested restoring them. Cloud SQL restored to a point in time in 6 minutes 17 seconds with every table's row count matching, and ClickHouse gets backed up every 6 hours and kept for 30 days for under $10 a month.
+
+### Orbit
+
+Orbit is an open source alternative to Linear that we built at Noveum and now use ourselves instead of Plane and Linear. It lives at [orbit.noveum.ai](https://orbit.noveum.ai) and the code is on [GitHub](https://github.com/Noveum/orbit). I started it from an empty repo and wrote everything up to its first production deploy.
+
+The core of it is realtime sync. Every change runs in a Postgres transaction, takes a global sync ID and returns small typed deltas. Those go through Redis to a WebSocket service that checks permissions per scope, batches updates, rate limits and handles backpressure. On the client the deltas patch the TanStack Query cache in place, and after a reconnect the client catches up from where it left off. So when someone drags an issue on their board, it moves on yours too.
+
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/orbit/board.webp","/assets/content/exp/magicapi/orbit/issue.webp","/assets/content/exp/magicapi/orbit/standup.webp","/assets/content/exp/magicapi/orbit/docs-diagram.webp","/assets/content/exp/magicapi/orbit/sign-in.webp"],"columns":2,"label":"Orbit"}
+:::
+
+After that came keyset pagination with a virtualized list (loading 8,000 issues used to mean 7.5 MB over 40 requests), a nested filter engine compiled to SQL, docs with nesting and version history, sprint analytics, GitHub and Slack integrations, an MCP server, and an importer that moved all of our Plane and Linear data over. On the security side I added passkey sign in, an OAuth 2.1 server so AI clients can connect to Orbit's MCP server in one click, short lived signed tickets for WebSockets instead of session tokens in URLs, and made removing a member close their sessions and sockets in the same transaction. Orbit first ran on EKS, and I later moved it to Vercel and Supabase by folding the WebSocket hub and MCP server into one Next.js deployment.
+
+### Yodu.ai: a private browser for AI employees
+
+For [Yodu.ai](https://yodu.ai) I designed and built a browser runtime that lets AI employees use a real, logged in Chromium session for each user. A supervisor starts one locked down container per active browser profile and talks to it over the Chrome DevTools Protocol. The agent gets 10 browser tools over MCP, and every action goes through one permission check. Approvals are tied to a signed snapshot of the page, so an approved click can't be replayed on a page that has changed since. A human can take over at any time, and session state is kept in encrypted vaults.
+
+### Hinge
+
+[Hinge](https://github.com/Noveum/hinge) is a small open source macOS app we made for fun. It reads the MacBook's lid angle sensor and folds your live desktop in perspective as you close the lid, using IOKit, ScreenCaptureKit and a Metal shader. I wrote the first renderer and the sensor code and set up releases. It's at almost 80 stars, and people outside the company have started contributing to it.
+
 ## Technologies & Skills
 
 :::embed tech-badges
-{"technologies":["TypeScript","JavaScript","Nextjs (Pages Router)","Next Auth (Auth.js)","Stripe","Tailwind CSS","Elasticsearch","PostgreSQL","Kubernetes","Turborepo","Docker","Git","AWS","EKS","S3","ECR","CodeBuild","WAF","IAM","VPC","Redis","BullMQ"]}
+{"technologies":["TypeScript","JavaScript","Python","Nextjs (Pages Router)","Next.js (App Router)","React","Next Auth (Auth.js)","Hono","Stripe","AWS Marketplace","Tailwind CSS","Elasticsearch","PostgreSQL","Prisma","Drizzle","ClickHouse","Redis","BullMQ","WebSockets","MCP","Bun","Turborepo","Docker","Kubernetes","Helm","KEDA","Git","AWS","EKS","S3","ECR","CodeBuild","WAF","IAM","VPC","SQS","GCP","GKE","Cloud SQL","OpenTofu","Chromium","Swift"]}
 :::
 
 ## Documents

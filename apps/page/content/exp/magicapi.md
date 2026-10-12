@@ -115,6 +115,14 @@ Datasets are curated collections of examples extracted from traces (inputs, outp
 {"images":["/assets/content/exp/magicapi/noveum.ai/datasets/datasets.webp","/assets/content/exp/magicapi/noveum.ai/datasets/example-dataset-items.webp","/assets/content/exp/magicapi/noveum.ai/datasets/chat-ui.webp","/assets/content/exp/magicapi/noveum.ai/datasets/scorer-ui.webp","/assets/content/exp/magicapi/noveum.ai/datasets/json-view.webp"],"columns":2,"label":"Datasets UI"}
 :::
 
+#### Public API and trace ingestion
+
+Our SDK, [noveum-trace](https://github.com/Noveum/noveum-trace), sends every agent run to the platform, so ingestion is the hot path. I built the public API it talks to: API keys, a v1 API with bearer auth and rate limiting, a health check that tests Postgres, ClickHouse and Redis together, and the Docker and Kubernetes setup behind api.noveum.ai. Later I moved every backend route into one typed Hono API.
+
+Ingestion itself never does the heavy work inside the request. The handler validates the payload, puts it on a Redis backed BullMQ queue and returns job IDs right away. Big batches get split into chunks of 100 traces, staggered and prioritized, with a cap of 10,000 traces per request. That one trace worker slowly grew into a whole `apps/workers` service with workers for ETL, evals, NovaPilot reports, scheduled reports, voice tests, analytics rollups and AWS Marketplace events. I wrote the Deployment, autoscaling and disruption budget manifests for each of them.
+
+Queues also taught me that the worst bugs don't throw errors. A few I chased down: KEDA's Redis trigger ignored BullMQ's priority set, so a growing backlog never scaled anything up; a `:` inside repeatable job IDs let a startup cleanup delete our billing and sampling crons; and stable job IDs combined with `removeOnComplete` silently swallowed manual refreshes as duplicates.
+
 #### Completing Six Months
 
 On October 1st 2025, I completed six months at MagicAPI. It had been a remarkable journey, starting with API.Market and evolving into building Noveum AI from the ground up. Beyond just shipping features, I grew a lot as an engineer here. The team's culture of sharing what works, iterating fast, and pushing each other on AI-assisted workflows shaped how I approach building software today.
@@ -128,6 +136,74 @@ The ETL (Extract, Transform, Load) pipeline converted traces into datasets via a
 :::embed image-grid
 {"images":["/assets/content/exp/magicapi/noveum.ai/etl-job/etl-jobs.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-agent.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/trace-picker.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/complete-trace-view.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/create-job.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/mapper-code.webp","/assets/content/exp/magicapi/noveum.ai/etl-job/etl-job-runs.webp"],"columns":2,"label":"ETL job"}
 :::
+
+Later I added a realtime mode, where the trace worker hands new traces straight to the ETL job, batched every 500ms or 100 traces, so datasets fill up while the agent is still running. Failed jobs show exactly which traces failed and why:
+
+![ETL job run details](/assets/content/exp/magicapi/noveum.ai/etl-job/job-details.webp)
+
+#### Eval Jobs and NovaPilot
+
+ETL turns traces into datasets, Eval Jobs score those datasets, and NovaPilot turns scores into fixes. I built that whole loop. Eval Jobs score dataset items in batches or in realtime, with queue priorities and cancellation that takes effect in the middle of a run. NovaPilot reads the scored items from ClickHouse, runs the [NovaEval](https://noveum.ai/novaeval) analysis and stores a report with what's failing and the exact prompt change to fix it. Reports can also run on a schedule, with timezone aware cron and a Redis lock so two pods never run the same one.
+
+I also built custom LLM-as-judge scorers, with an agent that drafts the rubric for you, and on the NovaEval side an AWS Bedrock provider and the CLI for that scorer agent.
+
+![Quality breakdown across datasets](/assets/content/exp/magicapi/noveum.ai/evals/quality-breakdown.webp)
+
+#### Making ClickHouse fast and correct
+
+A lot of the ClickHouse layer ended up being mine. I designed the scorer results and NovaPilot tables, built server side filtering and search for traces, and moved the dashboards off live ClickHouse queries onto snapshots in Postgres that a rollup worker keeps fresh.
+
+Some of my favourite debugging stories are from here. The rollup was quietly dead for a week, and it turned out to be three separate problems at once. I cut peak query memory for our heaviest workload from 4 GiB to 1.75 GiB. I found that 21% of span rows were duplicates because the version column wasn't deterministic. And I replaced a search that ran one scan per token, and timed out after 13 to 23 seconds, with a single subquery. Schema changes also moved out of app pods into a migration runner that every deploy has to pass first.
+
+#### Credits wallet and AWS Marketplace
+
+Usage used to be tracked with a best effort counter in Redis. I replaced it with a ledgered credit wallet in Postgres. Every paid feature (evals, NovaPilot, voice tests, mappers) reserves credits before it starts and settles after it finishes, so parallel jobs can't overspend and retries can't charge twice. It's wired into Stripe credit packs, refunds and disputes, admin grants, and a migration that carried every org's existing balance over.
+
+At the same time I added AWS Marketplace as a second way to pay: subscription fulfillment, claiming an org safely when two requests race, an hourly entitlement sync, an SQS worker for marketplace events, a guard so an org is never billed by Stripe and AWS at once, and an admin console to see it all. Both were built as stacks of reviewed PRs. The wallet alone came with 146 tests.
+
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/noveum.ai/billing/credit-balance.webp","/assets/content/exp/magicapi/noveum.ai/billing/aws-marketplace-billing.webp","/assets/content/exp/magicapi/noveum.ai/billing/aws-marketplace-admin.webp"],"columns":2,"label":"Credits and AWS Marketplace billing"}
+:::
+
+#### Bring your own LLM keys
+
+Customers can store their own LLM provider credentials, encrypted per organization, with a live connection check against each provider. I later turned this into bring your own keys for evals and NovaPilot across OpenAI, Anthropic, Google, AWS Bedrock, Azure OpenAI and any OpenAI compatible endpoint. Decrypted keys only ever live in the environment of the subprocess that needs them.
+
+Around the same time I reworked roles and permissions across the API, seed data and UI (6 roles across 16 services), and taught the auth middleware to tell "you're logged out" apart from "the auth service is down", so deploys stopped kicking people out.
+
+![Adding an LLM provider](/assets/content/exp/magicapi/noveum.ai/providers/add-provider.webp)
+
+#### NovaSynth: testing voice agents
+
+NovaSynth tests voice agents by having synthetic personas actually call them. I built the platform side: personas, scenarios, agent endpoints and runs, with a batch run that expands every persona and scenario pair into queued calls. Later I added inbound calls, where the customer's bot dials numbers we lease to it, with row locking so two tests never grab the same number.
+
+Engineers used to make batch reports by hand with a CLI, so I automated them. The first version drew PDFs by hand with jsPDF, about 1.7K lines of it. I replaced that with a small standalone service that renders the report as HTML in headless Chromium, with its own auth, a bounded queue and its own deployment.
+
+#### MCP server
+
+I launched an MCP server for Noveum that reads the platform's OpenAPI spec at runtime and turns every operation into a tool an AI assistant can call. To get there I annotated more than 220 API routes. Then I hardened it: secret endpoints are filtered out, tools carry annotations, and anything that deletes data needs confirmation. So you can sit in Cursor and ask how many traces you have, or set up an eval job, in plain English.
+
+#### Our own blog CMS
+
+We were paying for Strapi just to run the blog, so I built blogging into the main app instead. It has editor and reviewer roles where approval is tied to the exact revision that was submitted, immutable revisions, preview links, redirects when a slug changes, private media on S3, and 22 MCP tools so AI agents can write and publish posts too. I migrated every post and image from Strapi with a migration that's safe to rerun, and built a Tiptap editor that round trips Markdown without losing anything, by keeping the original source for blocks you didn't touch.
+
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/noveum.ai/blog-cms/editor.webp","/assets/content/exp/magicapi/noveum.ai/blog-cms/live-preview.webp"],"label":"Blog editor"}
+:::
+
+#### Design system, German and faster pages
+
+I unified Noveum's design system and the server rendered app shell in one big change (802 files) that also moved us to Next.js 16, and redrew the sidebar icons so every product area has its own metaphor. I translated the whole product into German, with CI checking that both languages have the exact same keys, and made heavy pages stream their ClickHouse numbers over SSE instead of blocking. I also built Open Graph images that are generated per route, so every product page gets its own card when it's shared.
+
+![Custom sidebar icons](/assets/content/exp/magicapi/noveum.ai/design/sidebar-icons.webp)
+
+:::embed image-grid
+{"images":["/assets/content/exp/magicapi/noveum.ai/og/reliability-loop.webp","/assets/content/exp/magicapi/noveum.ai/og/novapilot.webp","/assets/content/exp/magicapi/noveum.ai/og/novaeval.webp","/assets/content/exp/magicapi/noveum.ai/og/scorers.webp"],"columns":2,"label":"Open Graph images"}
+:::
+
+#### Keeping the codebase healthy
+
+Remember the code cleanup from my first week at API.market? I did a bigger version of it for Noveum. I moved the monorepo from pnpm to Bun and TypeScript 7, with a CI check that dependency versions resolve exactly the same as before, and upgraded Prisma 6 to 7. Then a series of cleanup PRs deleted over 22,000 lines of dead code (157 unreachable files, 790 unused exports), took build warnings from 142 to 0 and broke 4 import cycles. Each cleanup became a CI check so it stays clean. I also shrank the Docker build context from about 3.7 GB to 1.1 GB and saved around 46 runner minutes on every push.
 
 ### AWS Infrastructure Migration
 

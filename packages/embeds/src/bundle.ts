@@ -28,6 +28,6 @@ export async function bundleEmbedScripts(
 export async function buildEmbedAssets(outdir: string): Promise<void> {
   await bundleEmbedScripts(join(outdir, "embeds"));
   cpSync(photoswipeStyles, join(outdir, "embeds/photoswipe.css"));
-  cpSync(join(katexDirectory, "katex.min.css"), join(outdir, "katex/katex.min.css"));
+  cpSync(join(katexDirectory, "katex-swap.min.css"), join(outdir, "katex/katex-swap.min.css"));
   cpSync(join(katexDirectory, "fonts"), join(outdir, "katex/fonts"), { recursive: true });
 }

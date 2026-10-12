@@ -13,6 +13,7 @@
   "dependencies": {
     "@pulkit/shared": "workspace:*",
     "posthog-js": "1.434.2",
-    "tailwindcss": "4.3.3"
+    "tailwindcss": "4.3.3",
+    "terser": "5.51.2"
   }
 }

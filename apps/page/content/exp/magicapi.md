@@ -60,6 +60,10 @@ We implemented two distinct types of vouchers to meet different use cases. The f
 {"images":["/assets/content/exp/magicapi/user-specific-vouchers.webp","/assets/content/exp/magicapi/public-vouchers.webp"]}
 :::
 
+### Passwordless login with Google and GitHub
+
+I rewrote the login on API.market to be passwordless. You enter your email, get a 6 digit code that works once and expires in 3 minutes, and you're in for 30 days. After that I added Google and GitHub sign in on top of NextAuth, and linked accounts by email, so signing in with Google after using a code doesn't leave you with two separate accounts.
+
 ### New Hero Section Design
 
 I redesigned the hero section of the API.market website to enhance user engagement and provide clearer information hierarchy. The new design featured improved visual flow, better call-to-action placement, and more intuitive navigation elements.
@@ -73,6 +77,16 @@ I redesigned the smart onboarding form to enhance user engagement and provide cl
 :::embed image-grid
 {"images":["/assets/content/exp/magicapi/smart-onboarding-form/step-1.webp","/assets/content/exp/magicapi/smart-onboarding-form/step-2.webp","/assets/content/exp/magicapi/smart-onboarding-form/step-3.webp"],"columns":3,"label":"Smart onboarding form"}
 :::
+
+### Search and discovery for APIs
+
+A marketplace is only as good as its search. I built the stats behind it: a cron job runs every 6 hours, pulls API call counts per product from Elasticsearch, adds subscribers and revenue, and stores the totals in Postgres. Those numbers feed the ranked lists on the homepage, which is statically regenerated every 10 minutes.
+
+I also extended search itself with pricing and rating filters and new sort modes written as Painless scripts in Elasticsearch, and moved the homepage sections onto search results cached in Redis for an hour. One small thing I liked: I wrapped the Prisma client in a Proxy so every database call retries on transient failures with jittered backoff, without changing a single call site.
+
+### Tools for developers using the APIs
+
+For people integrating an API, I built per-plan OpenAPI YAML downloads, code snippets in 8 languages, latency and usage dashboards, and a pipeline that uses Gemini to write seller documentation and streams it back over SSE. Later I came back to fix the API playground for very large specs, adding pagination so a spec with 964 endpoints stays usable.
 
 ### Converting full time!!
 

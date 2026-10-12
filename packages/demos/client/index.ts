@@ -6,13 +6,18 @@ import type { DemoHandle, DemoModule } from "./types.ts";
 
 type LoadState = "loading" | "ready" | "failed";
 
-const stylesheet = fetch(new URL("demos.css", import.meta.url))
-  .then((response) => response.text())
-  .then((text) => {
-    const sheet = new CSSStyleSheet();
-    sheet.replaceSync(text);
-    return sheet;
-  });
+let stylesheet: Promise<CSSStyleSheet> | undefined;
+
+function loadStylesheet(): Promise<CSSStyleSheet> {
+  stylesheet ??= fetch(new URL("demos.css", import.meta.url))
+    .then((response) => response.text())
+    .then((text) => {
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync(text);
+      return sheet;
+    });
+  return stylesheet;
+}
 
 const darkQuery = matchMedia("(prefers-color-scheme: dark)");
 const hosts = new Set<HTMLElement>();
@@ -76,7 +81,7 @@ class DemoShowcaseElement extends HTMLElement {
       return;
     }
     const shadow = this.shadowRoot ?? this.attachShadow({ mode: "open" });
-    const sheet = await stylesheet;
+    const sheet = await loadStylesheet();
     if (!this.isConnected || this.frame) {
       return;
     }

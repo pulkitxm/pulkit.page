@@ -103,7 +103,26 @@ a:focus-visible > [data-wordmark] [data-fold] {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
+  src: url("/assets/fonts/comic-relief-regular-core.woff2") format("woff2");
+  unicode-range: U+20-7E, U+A0, U+A9, U+B7, U+D7, U+E0, U+E9, U+F7, U+2000-206F, U+2212;
+}
+@font-face {
+  font-family: "Comic Relief";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
   src: url("/assets/fonts/comic-relief-regular-latin.woff2") format("woff2");
+  unicode-range:
+    U+0-1F, U+7F-9F, U+A1-A8, U+AA-B6, U+B8-D6, U+D8-DF, U+E1-E8, U+EA-F6, U+F8-1FFF, U+2070-2211,
+    U+2213-10FFFF;
+}
+@font-face {
+  font-family: "Comic Relief";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/comic-relief-bold-core.woff2") format("woff2");
+  unicode-range: U+20-7E, U+A0, U+A9, U+B7, U+D7, U+E0, U+E9, U+F7, U+2000-206F, U+2212;
 }
 @font-face {
   font-family: "Comic Relief";
@@ -111,6 +130,9 @@ a:focus-visible > [data-wordmark] [data-fold] {
   font-weight: 700;
   font-display: swap;
   src: url("/assets/fonts/comic-relief-bold-latin.woff2") format("woff2");
+  unicode-range:
+    U+0-1F, U+7F-9F, U+A1-A8, U+AA-B6, U+B8-D6, U+D8-DF, U+E1-E8, U+EA-F6, U+F8-1FFF, U+2070-2211,
+    U+2213-10FFFF;
 }
 
 @theme {

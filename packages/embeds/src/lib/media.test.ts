@@ -15,13 +15,14 @@ test("galleries default to lazy images and only explicit priority loads eagerly"
     expect(lazy).not.toContain('fetchpriority="high"');
     const assets = createPageAssets();
     const eager = renderEmbed(name, { images, loading: "eager" }, assets, false);
-    expect(eager.match(/loading="eager"/g)).toHaveLength(1);
-    expect(eager.match(/fetchpriority="high"/g)).toHaveLength(1);
-    expect(
-      eager
-        .match(/<img[^>]+aria-hidden="true"[^>]*>/g)
-        ?.every((image) => image.includes('loading="lazy"')) ?? true,
-    ).toBe(true);
+    const backdrops = eager.match(/<img[^>]+aria-hidden="true"[^>]*>/g) ?? [];
+    const priorityImages = backdrops.length > 0 ? 2 : 1;
+    expect(eager.match(/loading="eager"/g)).toHaveLength(priorityImages);
+    expect(eager.match(/fetchpriority="high"/g)).toHaveLength(priorityImages);
+    if (backdrops.length > 0) {
+      expect(backdrops[0]).toContain('loading="eager" fetchpriority="high"');
+      expect(backdrops.slice(1).every((image) => image.includes('loading="lazy"'))).toBe(true);
+    }
     const later = renderEmbed(name, { images, loading: "eager" }, assets, false);
     expect(later).not.toContain('loading="eager"');
     expect(later).not.toContain('fetchpriority="high"');

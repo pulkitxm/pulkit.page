@@ -41,5 +41,5 @@ While my journey at CrowdVolt came to an unexpected end, I deeply value the expe
 :::
 
 :::embed tweet-embed
-{"tweetUrl":"https://x.com/_pulkitxm/status/1887001835669741636","content":"received my first full-time offer as a Software Engineer at a US-based startup. Huge thanks to @kirat_tw bhaiya for the guidance and support, this wouldn't have been possible without you! I'm currently in my\n\ntrial period.....Wish me luck🤞","stats":{"likes":472,"bookmarks":63,"comments":52,"retweets":8,"views":"66.4k"},"timestamp":"10:24 AM · Feb 5, 2025"}
+{"tweetUrl":"https://x.com/pu_lkit/status/1887001835669741636","content":"received my first full-time offer as a Software Engineer at a US-based startup. Huge thanks to @kirat_tw bhaiya for the guidance and support, this wouldn't have been possible without you! I'm currently in my\n\ntrial period.....Wish me luck🤞","stats":{"likes":472,"bookmarks":63,"comments":52,"retweets":8,"views":"66.4k"},"timestamp":"10:24 AM · Feb 5, 2025"}
 :::

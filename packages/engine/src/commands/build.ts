@@ -68,6 +68,7 @@ timed(
 );
 timed("Fingerprinted styles and downloads", () => {
   const fingerprinted = new Map<string, string>();
+  const styles = readFileSync("dist/styles.css", "utf8");
   const downloads = builtFiles("dist")
     .filter((file) => file.endsWith(".pdf"))
     .map((file) => relative("dist", file));
@@ -81,7 +82,10 @@ timed("Fingerprinted styles and downloads", () => {
     fingerprinted.set(`/${file}"`, `/${name}"`);
   }
   for (const file of builtFiles("dist").filter((path) => path.endsWith(".html"))) {
-    let html = readFileSync(file, "utf8");
+    let html = readFileSync(file, "utf8").replace(
+      /<link rel="stylesheet" href="\/styles\.css"\s*\/?>/g,
+      () => `<style>${styles}</style>`,
+    );
     for (const [from, to] of fingerprinted) {
       html = html.replaceAll(`="${from}`, `="${to}`);
     }

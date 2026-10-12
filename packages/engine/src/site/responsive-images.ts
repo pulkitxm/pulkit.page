@@ -107,7 +107,7 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
     }
     const candidates: Image["variants"] = [];
     for (const width of widths.filter((candidate) => candidate < metadata.width)) {
-      candidates.push({ width, src: await variant(width, 90) });
+      candidates.push({ width, src: await variant(width, 85) });
     }
     candidates.push({ width: metadata.width, src });
     return {

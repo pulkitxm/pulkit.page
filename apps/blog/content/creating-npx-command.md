@@ -51,7 +51,7 @@ To create your own `npx` command, follow these steps:
      web: "https://pulkitxm.com",
      linkedin: "https://www.linkedin.com/in/pulkitxm",
      gh: "https://github.com/Pulkitxm",
-     twitter: "https://twitter.com/devpulkitt",
+     twitter: "https://x.com/pu_lkit",
      desc: "Passionate about web & app development, MERN stack enthusiast, open-source contributor, and ICPC regionalist.",
      skills: {
        langs: ["JavaScript", "TypeScript", "Python"],
@@ -101,7 +101,7 @@ To create your own `npx` command, follow these steps:
      web: "https://pulkitxm.com",
      linkedin: "https://www.linkedin.com/in/pulkitxm",
      gh: "https://github.com/Pulkitxm",
-     twitter: "https://twitter.com/devpulkitt",
+     twitter: "https://x.com/pu_lkit",
      desc: "Passionate about web & app development, MERN stack enthusiast, open-source contributor, and ICPC regionalist.",
      skills: {
        langs: ["JavaScript", "TypeScript", "Python"],

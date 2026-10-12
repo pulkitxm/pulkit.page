@@ -4,8 +4,8 @@ import { renderTweet, type TweetUser } from "./tweet.ts";
 
 const author: TweetUser = {
   name: "Pulkit",
-  profileLink: "https://x.com/_pulkitxm",
-  username: "_pulkitxm",
+  profileLink: "https://x.com/pu_lkit",
+  username: "pu_lkit",
   verified: true,
 };
 

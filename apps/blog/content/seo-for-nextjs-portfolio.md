@@ -19,7 +19,7 @@ Recently, I randomly searched for "Deploying portfolio on Coolify" and was pleas
 I even tweeted about it:
 
 :::embed tweet
-{"content":"Randomly searched for 'Deploying portfolio on Coolify' and my blog appeared on top on google\n\nhttp://pulkitxm.com/blogs/deploying...\n\nlet's discuss how I did this?🧵","link":"https://x.com/_pulkitxm/status/1992553456054436067","user":{"name":"Pulkit","username":"_pulkitxm","profileLink":"https://x.com/_pulkitxm","verified":true},"timestamp":"4:48 PM · Nov 23, 2025"}
+{"content":"Randomly searched for 'Deploying portfolio on Coolify' and my blog appeared on top on google\n\nhttp://pulkitxm.com/blogs/deploying...\n\nlet's discuss how I did this?🧵","link":"https://x.com/pu_lkit/status/1992553456054436067","user":{"name":"Pulkit","username":"pu_lkit","profileLink":"https://x.com/pu_lkit","verified":true},"timestamp":"4:48 PM · Nov 23, 2025"}
 :::
 
 <br>
@@ -29,7 +29,7 @@ I don't use any third-party platforms for my content (I used to write on Hashnod
 In this post, I'll walk you through the exact strategies I used to achieve perfect Lighthouse SEO scores and rank high on Google, using Next.js deployed on Vercel.
 
 ![Lighthouse performance report showing perfect 100 SEO score](/assets/content/blogs/how-this-website-ranks-on-google/lighthouse-score.webp)
-([I think nextjs won't let me have 4-100's🥲](https://x.com/_pulkitxm/status/1991758828464111734))
+([I think nextjs won't let me have 4-100's🥲](https://x.com/pu_lkit/status/1991758828464111734))
 
 ## The Foundation: Static Site Generation (SSG) with MDX
 
@@ -200,7 +200,7 @@ export async function generateMetadata({
       title,
       description,
       images: [coverImage],
-      creator: "@_pulkitxm",
+      creator: "@pu_lkit",
     },
     alternates: {
       canonical: url,
@@ -357,7 +357,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Blog Title",
     description: "Engaging description for Twitter",
-    creator: "@_pulkitxm",
+    creator: "@pu_lkit",
     images: ["https://pulkitxm.com/images/cover.png"],
   },
 

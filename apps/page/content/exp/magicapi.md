@@ -9,9 +9,6 @@ period: Mar 2025 – present
 icon: /assets/exp/api-market.webp
 secondaryIcon: /assets/exp/noveum.webp
 links:
-  - https://api.market
-  - https://www.linkedin.com/company/api.market
-  - https://x.com/apimarket_
   - https://noveum.ai
   - https://www.linkedin.com/company/noveum-ai
   - https://x.com/noveumai

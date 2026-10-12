@@ -49,7 +49,11 @@ function sections(audits: AuditResult[], score = 1): SiteSection[] {
                   performance: {
                     title: "Performance",
                     score,
-                    auditRefs: audits.map(({ id }) => ({ id, weight: 0.25, group: "diagnostics" })),
+                    auditRefs: audits.map(({ id }) => ({
+                      id,
+                      weight: id === "largest-contentful-paint" ? 0.25 : 0,
+                      group: id === "largest-contentful-paint" ? "metrics" : "diagnostics",
+                    })),
                   },
                 },
                 categoryGroups: { diagnostics: { title: "Diagnostics" } },
@@ -95,7 +99,7 @@ test("research preserves exact URLs, settings, scores, metrics and raw report pa
   expect(page?.metrics["largest-contentful-paint"]?.numericValue).toBe(1234.56789);
   expect(page?.findings[0]?.score).toBe(0.95123);
   expect(page?.findings[0]?.categoryMemberships).toEqual([
-    { category: "performance", id: "largest-contentful-paint", weight: 0.25, group: "diagnostics" },
+    { category: "performance", id: "largest-contentful-paint", weight: 0.25, group: "metrics" },
   ]);
 });
 
@@ -125,6 +129,7 @@ test("perfect categories retain unused script findings and all nested details", 
   expect(report.pages[0].findings[0].details).toEqual(details);
   expect(report.pages[0].findings[0].metricSavings).toEqual({ LCP: 250 });
   expect(report.pages[0].findings[0].reasons).toEqual(["non-perfect-score"]);
+  expect(report.pages[0].findings[0].categoryMemberships[0].weight).toBe(0);
   expect(JSON.stringify(source)).toBe(snapshot);
 });
 

@@ -175,12 +175,30 @@ const failed = sections.flatMap(({ domain, results }) =>
 for (const failure of failed) {
   console.error(failure);
 }
-if (failed.length > 0) {
+const belowTarget = sections.flatMap(({ domain, results }) =>
+  results.flatMap(({ route, runs: pageRuns }) =>
+    pageRuns.flatMap(({ formFactor, lhr }) =>
+      categories.flatMap((category) => {
+        const result = categoryOf(lhr, category);
+        const actual = result.score === null ? null : Math.round(result.score * 100);
+        return actual === null || actual < options.minimumScore
+          ? [
+              `${domain}${route} ${formFactor} ${result.title}: ${actual ?? "n/a"} < ${options.minimumScore}`,
+            ]
+          : [];
+      }),
+    ),
+  ),
+);
+for (const failure of belowTarget) {
+  console.error(failure);
+}
+if (failed.length > 0 || belowTarget.length > 0) {
   process.exitCode = 1;
 }
 writeFileSync(
   join(outputDirectory, "run.json"),
-  `${JSON.stringify({ id: runId, sites: siteNames, pages: pageCount, formFactors, failed: failed.length }, null, 2)}\n`,
+  `${JSON.stringify({ id: runId, sites: siteNames, pages: pageCount, formFactors, failed: failed.length, minimumScore: options.minimumScore, belowTarget }, null, 2)}\n`,
 );
 writeFileSync(join(reportsDirectory, "README.md"), runIndex(reportsDirectory));
 console.log(

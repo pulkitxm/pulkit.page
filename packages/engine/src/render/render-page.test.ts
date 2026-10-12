@@ -186,3 +186,28 @@ test("tables scroll sideways as a keyboard-focusable region without splitting wo
   );
   expect(html).toMatch(/<table tabindex="0" class="[^"]*overflow-x-auto[^"]*wrap-normal/);
 });
+
+test("only images at the start of page content receive loading priority", async () => {
+  const imagePage = "---\ntitle: Images\n---\n";
+  for (const first of [
+    "![Leading](/assets/leading.webp)",
+    "[![Leading](/assets/leading.webp)](https://example.com)",
+  ]) {
+    const html = await renderPage(`${imagePage}\n\n${first}\n\n![Later](/assets/later.webp)\n`);
+    expect(html.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('loading="eager"');
+    expect(html.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('fetchpriority="high"');
+    expect(html.match(/<img[^>]+alt="Later"[^>]*>/)?.[0]).toContain('loading="lazy"');
+    expect(html.match(/fetchpriority="high"/g)).toHaveLength(1);
+  }
+  for (const introduction of [
+    "Introduction",
+    "## Heading",
+    "Introduction ![Inline](/assets/inline.webp)",
+  ]) {
+    const html = await renderPage(
+      `${imagePage}\n\n${introduction}\n\n![Later](/assets/later.webp)\n`,
+    );
+    expect(html.match(/<img[^>]+alt="Later"[^>]*>/)?.[0]).toContain('loading="lazy"');
+    expect(html).not.toContain('fetchpriority="high"');
+  }
+});

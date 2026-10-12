@@ -211,3 +211,34 @@ test("only images at the start of page content receive loading priority", async 
     expect(html).not.toContain('fetchpriority="high"');
   }
 });
+
+test("explicit image priority selects one image without changing its lightbox or styling", async () => {
+  const body = [
+    "Introduction.",
+    "![Selected](/assets/selected.webp)",
+    "![Later](/assets/later.webp)",
+  ].join("\n\n");
+  const imageSource = "---\ntitle: Images\n---\n";
+  const normal = await renderPage(`${imageSource}${body}`);
+  const prioritized = await renderPage(
+    `---\ntitle: Images\npriorityImage: /assets/selected.webp\n---\n${body}`,
+  );
+  expect(prioritized).toBe(
+    normal.replace(
+      'alt="Selected" loading="lazy"',
+      'alt="Selected" loading="eager" fetchpriority="high"',
+    ),
+  );
+  expect(prioritized.match(/fetchpriority="high"/g)).toHaveLength(1);
+  expect(prioritized.match(/<img[^>]+alt="Later"[^>]*>/)?.[0]).toContain('loading="lazy"');
+  expect(prioritized).toContain('href="/assets/selected.webp"');
+  const explicit = await renderPage(
+    [
+      "---\ntitle: Images\npriorityImage: /assets/later.webp\n---",
+      "![Leading](/assets/leading.webp)",
+      "![Later](/assets/later.webp)",
+    ].join("\n\n"),
+  );
+  expect(explicit.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('loading="lazy"');
+  expect(explicit.match(/fetchpriority="high"/g)).toHaveLength(1);
+});

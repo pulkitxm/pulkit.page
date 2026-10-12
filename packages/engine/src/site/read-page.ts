@@ -23,6 +23,7 @@ const optionalPageText = [
   "icon",
   "darkIcon",
   "secondaryIcon",
+  "priorityImage",
 ] as const;
 
 const siteText = ["brand", "wordmark", "description", "copyright", "articles"] as const;

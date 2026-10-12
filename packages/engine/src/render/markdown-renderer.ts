@@ -160,9 +160,10 @@ export function createMarkdown(context: RenderContext): Marked {
           token.href === portrait
             ? "mx-0 mt-0 mb-7 block size-36 max-w-full rounded-[50%] object-cover"
             : "mx-auto my-7 block h-auto max-w-full rounded-md";
-        const loading = leadingImages.has(token)
-          ? ' loading="eager" fetchpriority="high"'
-          : ' loading="lazy"';
+        const prioritized = context.priorityImage
+          ? token.href === context.priorityImage
+          : leadingImages.has(token);
+        const loading = prioritized ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"';
         const image = `<img class="${classes}" src="${safeUrl(token.href)}" alt="${escapeHtml(token.text)}"${sizeAttributes(token.href)}${loading}>`;
         return token.href === portrait || linkedImages.has(token)
           ? image

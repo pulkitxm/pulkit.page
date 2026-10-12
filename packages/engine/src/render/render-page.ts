@@ -92,7 +92,14 @@ export async function renderPage(
   const article = isArticle(route, pages, site);
   const layout = metadata.layout ?? (article ? "article" : "simple");
   const assets = createPageAssets();
-  const markdown = createMarkdown({ assets, cache, pages, route, site });
+  const markdown = createMarkdown({
+    assets,
+    cache,
+    pages,
+    route,
+    site,
+    priorityImage: metadata.priorityImage,
+  });
   validateDate(metadata);
   const plainDate =
     metadata.date && !metadata.period

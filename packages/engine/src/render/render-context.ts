@@ -10,6 +10,7 @@ export interface RenderContext {
   cache: GenerationCache | undefined;
   pages: readonly ListedPage[];
   route: string;
+  priorityImage?: string;
   site: SiteContext;
 }
 

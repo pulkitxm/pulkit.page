@@ -73,7 +73,7 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
   const widths = [96, 192, 320, 384, 480, 640, 672, 768, 960, 1280];
   let optimized = 0;
 
-  async function prepare(src: string): Promise<Image | undefined> {
+  async function prepare(src: string, priority: boolean): Promise<Image | undefined> {
     if (
       src.startsWith("/assets/responsive/") ||
       !/^\/assets\/[^?#]+\.(?:png|jpe?g|webp)$/i.test(src)
@@ -90,15 +90,20 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
       return;
     }
     const hash = sha256Hex(bytes).slice(0, 16);
-    async function variant(width: number, quality: number): Promise<string> {
-      const name = `${hash}-${width}-${quality}.webp`;
+    async function variant(
+      width: number,
+      quality: number,
+      format: "webp" | "avif" = "webp",
+    ): Promise<string> {
+      const name = `${hash}-${width}-${quality}.${format}`;
       const stored = resolve(cache, name);
       if (!existsSync(stored)) {
         mkdirSync(cache, { recursive: true });
-        await sharp(bytes)
-          .resize({ width, withoutEnlargement: true })
-          .webp({ quality })
-          .toFile(stored);
+        const image = sharp(bytes).resize({ width, withoutEnlargement: true });
+        await (format === "avif"
+          ? image.avif({ quality, effort: 4, chromaSubsampling: "4:4:4" })
+          : image.webp({ quality })
+        ).toFile(stored);
       }
       const destination = resolve(root, "assets/responsive", name);
       mkdirSync(dirname(destination), { recursive: true });
@@ -107,7 +112,15 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
     }
     const candidates: Image["variants"] = [];
     for (const width of widths.filter((candidate) => candidate < metadata.width)) {
-      candidates.push({ width, src: await variant(width, 85) });
+      const webp = await variant(width, 85);
+      const avif = priority ? await variant(width, 67, "avif") : undefined;
+      const selected =
+        avif &&
+        readFileSync(resolve(root, `.${avif}`)).length <
+          readFileSync(resolve(root, `.${webp}`)).length
+          ? avif
+          : webp;
+      candidates.push({ width, src: selected });
     }
     candidates.push({ width: metadata.width, src });
     return {
@@ -127,10 +140,12 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
       if (!src || !location || attribute(element, "srcset")) {
         continue;
       }
-      let pending = variants.get(src);
+      const priority = attribute(element, "fetchpriority") === "high";
+      const key = `${src}:${priority}`;
+      let pending = variants.get(key);
       if (!pending) {
-        pending = prepare(src);
-        variants.set(src, pending);
+        pending = prepare(src, priority);
+        variants.set(key, pending);
       }
       const image = await pending;
       if (!image) {

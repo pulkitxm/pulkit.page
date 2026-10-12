@@ -55,6 +55,18 @@ test("responsive copies preserve original downloads and layout", async () => {
     const intermediateSize = await sharp(join(directory, intermediate ?? "")).metadata();
     expect(intermediateSize.width).toBe(672);
     expect(intermediateSize.height).toBe(896);
+    for (const candidate of full?.split(", ") ?? []) {
+      const selected = candidate.split(" ")[0] ?? "";
+      if (!selected.startsWith("/assets/responsive/")) {
+        continue;
+      }
+      const webp = selected.replace(/-67\.avif$/, "-85.webp");
+      expect(readFileSync(join(directory, selected)).length).toBeLessThanOrEqual(
+        readFileSync(join(directory, webp)).length,
+      );
+    }
+    const icon = updated.match(/<img[^>]+class="size-9"[^>]*>/)?.[0];
+    expect(icon).not.toContain(".avif");
     expect(await optimizeImages(directory)).toBe(0);
   } finally {
     rmSync(directory, { recursive: true, force: true });

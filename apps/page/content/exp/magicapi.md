@@ -252,6 +252,12 @@ For [Yodu.ai](https://yodu.ai) I designed and built a browser runtime that lets 
 
 [Hinge](https://github.com/Noveum/hinge) is a small open source macOS app we made for fun. It reads the MacBook's lid angle sensor and folds your live desktop in perspective as you close the lid, using IOKit, ScreenCaptureKit and a Metal shader. I wrote the first renderer and the sensor code and set up releases. It's at almost 80 stars, and people outside the company have started contributing to it.
 
+The post where I open sourced it went viral, crossing 170k views:
+
+:::embed tweet-embed
+{"tweetUrl":"https://x.com/pu_lkit/status/2098105499879416040","content":"here you go, free and open sourced ✌🏻\n\nhttps://hinge.noveum.ai","stats":{"likes":2206,"bookmarks":0,"comments":57,"retweets":61,"views":"170k"},"timestamp":"September 10, 2026"}
+:::
+
 ## Technologies & Skills
 
 :::embed tech-badges

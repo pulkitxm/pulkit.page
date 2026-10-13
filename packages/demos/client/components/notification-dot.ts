@@ -1,4 +1,4 @@
-import { Bell } from "lucide";
+import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { stage } from "../lib/layout.ts";
 import { html, icon } from "../runtime/ui.ts";
 import type { DemoMount } from "../types.ts";
@@ -30,7 +30,7 @@ const styles = `
   }
 `;
 
-const bell = () => icon(Bell, "size-6 text-neutral-600 dark:text-neutral-300");
+const bell = () => icon(faBell, "size-6 text-neutral-600 dark:text-neutral-300");
 
 export const mount: DemoMount = (root) => {
   root.innerHTML = stage(

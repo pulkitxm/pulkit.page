@@ -1,5 +1,5 @@
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { escapeAttribute } from "@pulkit/shared/html";
-import { Check } from "lucide";
 import {
   type Cancel,
   closestTarget,
@@ -70,7 +70,7 @@ const openKeys = ["Enter", " ", "ArrowDown", "ArrowUp"];
 
 function optionMarkup(option: SelectOption, selected: string | undefined): string {
   const checked = option.value === selected;
-  return `<div role="option" data-slot="select-item" data-value="${escapeAttribute(option.value)}" aria-selected="${checked}" data-state="${checked ? "checked" : "unchecked"}" tabindex="-1" class="${itemClass}"><span class="absolute right-2 flex size-3.5 items-center justify-center">${checked ? `<span aria-hidden="true">${icon(Check, "size-4")}</span>` : ""}</span><span>${escapeAttribute(option.label)}</span></div>`;
+  return `<div role="option" data-slot="select-item" data-value="${escapeAttribute(option.value)}" aria-selected="${checked}" data-state="${checked ? "checked" : "unchecked"}" tabindex="-1" class="${itemClass}"><span class="absolute right-2 flex size-3.5 items-center justify-center">${checked ? `<span aria-hidden="true">${icon(faCheck, "size-4")}</span>` : ""}</span><span>${escapeAttribute(option.label)}</span></div>`;
 }
 
 function menuHost(trigger: Element): ParentNode {

@@ -1,5 +1,5 @@
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { prefersReducedMotion } from "@pulkit/shared/motion";
-import { Pause, Play } from "lucide";
 import { ref } from "../../lib/dom.ts";
 import { createScheduler } from "../../lib/scheduler.ts";
 import { icon } from "../../runtime/ui.ts";
@@ -81,7 +81,9 @@ export const mount: DemoMount = (root) => {
 
     prev.disabled = stepIndex <= 0;
     next.disabled = stepIndex >= lastStep;
-    play.innerHTML = isPlaying ? `${icon(Pause, "size-4")}Pause` : `${icon(Play, "size-4")}Play`;
+    play.innerHTML = isPlaying
+      ? `${icon(faPause, "size-4")}Pause`
+      : `${icon(faPlay, "size-4")}Play`;
     stepLabel.textContent = `Step ${stepIndex + 1} / ${steps.length}`;
   }
 

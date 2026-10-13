@@ -1,5 +1,5 @@
+import { faChevronLeft, faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { escapeAttribute } from "@pulkit/shared/html";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide";
 import { button, buttonClass, cn, html, icon } from "../../runtime/ui.ts";
 import {
   type Attempt,
@@ -135,10 +135,10 @@ export function shellMarkup(reduceMotion: boolean): string {
           </div>
         </div>
         <div class="flex flex-wrap items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-100/70 px-3 py-2.5 dark:border-neutral-800 dark:bg-neutral-900/55">
-          ${button({ variant: "outline", size: "icon", className: "size-9 shrink-0", label: icon(ChevronLeft, "size-4"), attrs: 'data-ref="prev" aria-label="Previous step"' })}
-          ${button({ variant: "outline", size: "icon", className: "size-9 shrink-0", label: icon(ChevronRight, "size-4"), attrs: 'data-ref="next" aria-label="Next step"' })}
+          ${button({ variant: "outline", size: "icon", className: "size-9 shrink-0", label: icon(faChevronLeft, "size-4"), attrs: 'data-ref="prev" aria-label="Previous step"' })}
+          ${button({ variant: "outline", size: "icon", className: "size-9 shrink-0", label: icon(faChevronRight, "size-4"), attrs: 'data-ref="next" aria-label="Next step"' })}
           <button type="button" data-ref="play" class="${buttonClass({ variant: "secondary", size: "sm", className: "gap-1.5 px-4" })}"></button>
-          ${button({ variant: "ghost", size: "sm", className: "gap-1.5", label: `${icon(RotateCcw, "size-4")}Reset`, attrs: 'data-ref="reset"' })}
+          ${button({ variant: "ghost", size: "sm", className: "gap-1.5", label: `${icon(faRotateLeft, "size-4")}Reset`, attrs: 'data-ref="reset"' })}
           <span data-ref="stepLabel" class="ml-auto whitespace-nowrap font-mono text-[11px] text-neutral-600 tabular-nums sm:text-xs dark:text-neutral-400"></span>
         </div>
       </div>

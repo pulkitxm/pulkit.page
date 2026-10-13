@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { type Cancel, ref } from "../../lib/dom.ts";
 import { createScheduler } from "../../lib/scheduler.ts";
 import { createSlider } from "../../runtime/slider.ts";
@@ -48,7 +48,7 @@ export const mount: DemoMount = (root) => {
       <div class="flex w-full max-w-md flex-row items-center gap-3">
         <div data-ref="selectColumn" class="flex min-w-0 flex-1 flex-col gap-1.5">
           <label class="text-neutral-600 text-xs dark:text-neutral-400" for="transform-origin-select">Transform origin</label>
-          <button type="button" role="combobox" aria-autocomplete="none" aria-expanded="false" dir="ltr" data-state="closed" data-slot="select-trigger" data-size="default" id="transform-origin-select" data-ref="trigger" class="${triggerClass}"><span data-slot="select-value" data-ref="valueText" style="pointer-events: none;"></span>${icon(ChevronDown, "size-4 opacity-50")}</button>
+          <button type="button" role="combobox" aria-autocomplete="none" aria-expanded="false" dir="ltr" data-state="closed" data-slot="select-trigger" data-size="default" id="transform-origin-select" data-ref="trigger" class="${triggerClass}"><span data-slot="select-value" data-ref="valueText" style="pointer-events: none;"></span>${icon(faChevronDown, "size-4 opacity-50")}</button>
         </div>
         <div class="flex min-w-0 flex-1 flex-col gap-1.5">
           <label data-ref="rotationLabel" class="text-neutral-600 text-xs dark:text-neutral-400" for="rotation-slider"></label>

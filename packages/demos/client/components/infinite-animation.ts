@@ -1,5 +1,6 @@
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { caption, stage } from "../lib/layout.ts";
-import { html } from "../runtime/ui.ts";
+import { html, icon } from "../runtime/ui.ts";
 import type { DemoMount } from "../types.ts";
 
 const styles = `
@@ -30,10 +31,7 @@ export const mount: DemoMount = (root) => {
     <div class="flex flex-wrap items-stretch justify-center gap-12">
       <div class="flex min-w-16 flex-col items-center gap-4">
         <div class="flex size-16 shrink-0 items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800">
-          <svg class="size-8 text-blue-600" style="animation: spin 1s linear infinite" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
+          ${icon(faCircleNotch, "size-8 text-blue-600", `style="animation: spin 1s linear infinite"`)}
         </div>
         <span class="text-center text-neutral-600 dark:text-neutral-400 text-xs">Loading Spinner</span>
       </div>

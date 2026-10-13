@@ -1,4 +1,4 @@
-import { Pause, Play } from "lucide";
+import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "../lib/dom.ts";
 import { caption, stage } from "../lib/layout.ts";
 import { buttonClass, html, icon } from "../runtime/ui.ts";
@@ -33,8 +33,8 @@ export const mount: DemoMount = (root) => {
   function render() {
     ball.style.animationPlayState = paused ? "paused" : "running";
     toggle.innerHTML = paused
-      ? `${icon(Play, "mr-1.5 size-3.5")}Resume`
-      : `${icon(Pause, "mr-1.5 size-3.5")}Pause`;
+      ? `${icon(faPlay, "mr-1.5 size-3.5")}Resume`
+      : `${icon(faPause, "mr-1.5 size-3.5")}Pause`;
   }
 
   toggle.addEventListener("click", () => {

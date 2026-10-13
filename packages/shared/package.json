@@ -4,6 +4,7 @@
   "type": "module",
   "exports": {
     "./html": "./src/browser/html.ts",
+    "./icons": "./src/browser/icons.ts",
     "./motion": "./src/browser/motion.ts",
     "./storage": "./src/browser/storage.ts",
     "./frontmatter": "./src/content/frontmatter.ts",

@@ -1,5 +1,5 @@
-import { FileText } from "lucide";
-import { lucideSvg } from "../lib/icons.ts";
+import { faFileLines } from "@fortawesome/free-regular-svg-icons";
+import { faSvg } from "@pulkit/shared/icons";
 import { readRecords, readString } from "../lib/props.ts";
 import type { EmbedRenderer } from "../types.ts";
 import { documentCard } from "./document-viewer.ts";
@@ -28,7 +28,7 @@ export const render: EmbedRenderer = (props, context) => {
     throw new Error(`Unsupported document-tabs count: ${documents.length}`);
   }
   assets.script("/assets/embeds/document-tabs.js");
-  const icon = lucideSvg(FileText, "mr-1 size-3 shrink-0 sm:mr-2 sm:size-4");
+  const icon = faSvg(faFileLines, "mr-1 size-3 shrink-0 sm:mr-2 sm:size-4");
   const tabs = documents
     .map((entry, index) => {
       const label = `<span class="min-w-0 truncate">${escapeHtml(readString(entry, "title", "document-tabs"))}</span>`;

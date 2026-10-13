@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@axe-core/playwright": "4.13.0",
+    "@fortawesome/free-brands-svg-icons": "7.3.1",
+    "@fortawesome/free-regular-svg-icons": "7.3.1",
+    "@fortawesome/free-solid-svg-icons": "7.3.1",
     "@pulkit/code": "workspace:*",
     "@pulkit/demos": "workspace:*",
     "@pulkit/embeds": "workspace:*",
@@ -18,7 +21,6 @@
     "@pulkit/shared": "workspace:*",
     "@pulkit/theme": "workspace:*",
     "@resvg/resvg-js": "2.6.2",
-    "@tabler/icons": "3.49.0",
     "@tailwindcss/vite": "4.3.3",
     "html-validate": "11.16.0",
     "lightningcss": "1.33.0",

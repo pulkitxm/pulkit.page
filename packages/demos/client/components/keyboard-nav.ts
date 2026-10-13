@@ -1,7 +1,9 @@
+import { faFile } from "@fortawesome/free-regular-svg-icons";
+import { faFolder } from "@fortawesome/free-solid-svg-icons";
 import { type AnimationPlaybackControls, animate } from "motion";
 import { closestTarget, listenWindow, ref } from "../lib/dom.ts";
 import { createScheduler } from "../lib/scheduler.ts";
-import { button, html } from "../runtime/ui.ts";
+import { button, html, icon } from "../runtime/ui.ts";
 import type { DemoMount } from "../types.ts";
 
 interface BrowserItem {
@@ -17,8 +19,8 @@ const items: readonly BrowserItem[] = [
   { name: "hooks", type: "folder" },
 ];
 
-const folderIcon = `<svg class="size-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" /></svg>`;
-const fileIcon = `<svg class="size-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`;
+const folderIcon = icon(faFolder, "size-4 text-yellow-600");
+const fileIcon = icon(faFile, "size-4 text-neutral-500");
 const highlightClass = "absolute inset-x-1 h-8 rounded bg-blue-100 dark:bg-blue-900/40";
 
 function highlightTop(index: number): string {

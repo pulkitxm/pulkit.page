@@ -1,4 +1,6 @@
+import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { escapeHtml } from "@pulkit/shared/html";
+import { faSvg } from "@pulkit/shared/icons";
 import type { ListedProject, ProjectList, SiteContext } from "../types.ts";
 import { safeUrl } from "./html.ts";
 
@@ -6,10 +8,7 @@ export const projectsDirective = /^:::projects ([\w.-]+)\/([a-z0-9-]+)\s*(?:\n|$
 
 export const projectsLine = /^:::projects ([\w.-]+)\/([a-z0-9-]+)[ \t]*$/gm;
 
-const iconAttributes =
-  'xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
-
-const starIcon = `<svg ${iconAttributes} class="size-3"><path d="M11.5 2.3a.6.6 0 0 1 1 0l2.5 5.2 5.6.8c.5.1.7.7.3 1l-4 4 1 5.6a.6.6 0 0 1-.9.6l-5-2.6-5 2.6a.6.6 0 0 1-.9-.6l1-5.6-4-4c-.4-.3-.2-.9.3-1l5.6-.8Z"/></svg>`;
+const starIcon = faSvg(faStar, "size-3");
 
 export function projectListKey(login: string, slug: string): string {
   return `${login}/${slug}`;

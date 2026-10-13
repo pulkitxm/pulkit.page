@@ -1,9 +1,9 @@
-import { createElement } from "lucide";
+import { type FontAwesomeIcon, faSvg } from "@pulkit/shared/icons";
 import { twMerge } from "tailwind-merge";
 
 export type ClassValue = string | number | boolean | null | undefined | readonly ClassValue[];
 export type HtmlValue = string | number | boolean | null | undefined | readonly HtmlValue[];
-export type IconNode = Parameters<typeof createElement>[0];
+export type IconNode = FontAwesomeIcon;
 
 function flattenClasses(value: ClassValue): string[] {
   if (Array.isArray(value)) {
@@ -69,12 +69,8 @@ export function button({
   return `<button type="button" class="${buttonClass({ variant, size, className })}" ${attrs}>${label}</button>`;
 }
 
-export function icon(node: IconNode, className = ""): string {
-  const svg = createElement(node);
-  const name = svg.getAttribute("class") ?? "";
-  svg.setAttribute("class", cn(name, className));
-  svg.setAttribute("aria-hidden", "true");
-  return svg.outerHTML;
+export function icon(node: IconNode, className = "", attributes = ""): string {
+  return faSvg(node, cn(className), attributes);
 }
 
 function flattenHtml(value: HtmlValue): string {

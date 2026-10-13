@@ -41,7 +41,12 @@ async function check(
         }),
       );
     case "x":
-      return statusOf(await request(`https://x.com/${handle}`, { signal }));
+      return statusOf(
+        await request(
+          `https://publish.twitter.com/oembed?url=${encodeURIComponent(`https://x.com/${handle}`)}`,
+          { redirect: "follow", signal },
+        ),
+      );
     case "linkedin":
       return statusOf(
         await request(profile.url, {

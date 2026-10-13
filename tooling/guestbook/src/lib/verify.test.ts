@@ -12,8 +12,10 @@ function profile(href: string) {
 }
 
 const responses: Record<string, () => Response> = {
-  "https://x.com/real_dev": () => new Response("ok"),
-  "https://x.com/fake_handle_881": () => new Response(null, { status: 404 }),
+  "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Freal_dev": () =>
+    Response.json({ html: "" }),
+  "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ffake_handle_881": () =>
+    new Response(null, { status: 404 }),
   "https://www.linkedin.com/in/real-dev": () => new Response("ok"),
   "https://www.linkedin.com/in/fake-dev": () => new Response(null, { status: 404 }),
   "https://www.linkedin.com/in/blocked-dev": () => new Response(null, { status: 999 }),

@@ -17,7 +17,13 @@ const site = {
         createdAt: "2026-10-06T12:00:00.000Z",
         github: "sample-visitor",
         avatar: "/assets/guestbook/github-42.webp",
-        links: ["https://sample.example/", "https://www.linkedin.com/in/sample"],
+        links: [
+          "https://sample.example/",
+          "https://www.linkedin.com/in/sample",
+          "https://twitter.com/sample",
+          "https://www.instagram.com/sample/",
+          "https://github.com/sample-visitor",
+        ],
       },
     ],
   },
@@ -37,18 +43,21 @@ test("guestbook messages are escaped text with local thumbnails and both submiss
   expect(html).toContain("6 Oct 2026");
 });
 
-test("GitHub entries show icon links for the profile and each synced profile link", async () => {
+test("GitHub entries show icons only for supported social profiles, without duplicates", async () => {
   const html = await renderPage(
     "---\ntitle: Guestbook\ndescription: Visitor notes.\n---\n:::guestbook\n",
     { site },
   );
   for (const href of [
     "https://github.com/sample-visitor",
-    "https://sample.example/",
     "https://www.linkedin.com/in/sample",
+    "https://x.com/sample",
   ]) {
     expect(html).toContain(`href="${href}"`);
   }
+  expect(html.split('href="https://github.com/sample-visitor"').length).toBe(2);
+  expect(html).not.toContain("sample.example");
+  expect(html).not.toContain("instagram.com");
   expect(html).toContain('aria-label="linkedin.com/in/sample"');
   expect(html).toContain('rel="noopener nofollow ugc"');
 });

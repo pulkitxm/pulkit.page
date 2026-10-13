@@ -10,6 +10,49 @@ export const profileLink = z
     return url !== null && !url.username && !url.password;
   });
 
+type SocialPlatform = "github" | "x" | "linkedin" | "npm" | "crates";
+
+export interface SocialProfile {
+  platform: SocialPlatform;
+  handle: string;
+  url: string;
+}
+
+const socialPatterns: readonly [SocialPlatform, RegExp, RegExp, (handle: string) => string][] = [
+  [
+    "github",
+    /^github\.com$/,
+    /^\/([a-z\d](?:[a-z\d-]{0,37}[a-z\d])?)\/?$/i,
+    (h) => `https://github.com/${h}`,
+  ],
+  ["x", /^(?:x|twitter)\.com$/, /^\/(\w{1,15})\/?$/, (h) => `https://x.com/${h}`],
+  [
+    "linkedin",
+    /^(?:[a-z]{2,3}\.)?linkedin\.com$/,
+    /^\/in\/([\w%-]{3,100})\/?$/,
+    (h) => `https://www.linkedin.com/in/${h}`,
+  ],
+  ["npm", /^npmjs\.com$/, /^\/~([a-z\d][\w.-]{0,213})\/?$/i, (h) => `https://www.npmjs.com/~${h}`],
+  ["crates", /^crates\.io$/, /^\/users\/([\w-]{1,39})\/?$/, (h) => `https://crates.io/users/${h}`],
+];
+
+const reservedXPaths = new Set(["home", "i", "intent", "search", "share", "explore", "settings"]);
+
+export function socialProfile(href: string): SocialProfile | null {
+  const url = URL.parse(href);
+  if (url?.protocol !== "https:" || url.username || url.password) {
+    return null;
+  }
+  const host = url.hostname.toLowerCase().replace(/^(?:www|m|mobile)\./, "");
+  for (const [platform, hostPattern, pathPattern, canonical] of socialPatterns) {
+    const handle = hostPattern.test(host) ? pathPattern.exec(url.pathname)?.[1] : undefined;
+    if (handle && !(platform === "x" && reservedXPaths.has(handle.toLowerCase()))) {
+      return { platform, handle, url: canonical(handle) };
+    }
+  }
+  return null;
+}
+
 export const guestbookEntry = z.strictObject({
   id: z.string().regex(/^(legacy|github|google)-[a-z\d-]+$/),
   name: z.string().min(1).max(100),

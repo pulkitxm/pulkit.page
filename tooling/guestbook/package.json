@@ -5,7 +5,8 @@
   "scripts": {
     "test": "bun test ./src",
     "import:legacy": "bun src/commands/import-legacy.ts",
-    "sync": "bun src/commands/sync.ts"
+    "sync": "bun src/commands/sync.ts",
+    "verify:links": "bun src/commands/verify-links.ts"
   },
   "dependencies": {
     "@pulkit/shared": "workspace:*",

@@ -28,7 +28,12 @@ test("accepts only https profile links without credentials", () => {
   expect(guestbookEntry.safeParse({ ...entry, links: ["https://example.com/"] }).success).toBe(
     true,
   );
-  for (const link of ["http://example.com/", "javascript:alert(1)", "https://a:b@example.com/"]) {
+  for (const link of [
+    "http://example.com/",
+    "javascript:alert(1)",
+    "https://a:b@example.com/",
+    "https://in process",
+  ]) {
     expect(guestbookEntry.safeParse({ ...entry, links: [link] }).success).toBe(false);
   }
 });

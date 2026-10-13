@@ -71,6 +71,7 @@ test("profile links combine the website and social accounts without unsafe or du
               { provider: "generic", url: "http://insecure.example" },
               { provider: "generic", url: "https://github.com/Sample-Visitor" },
               { provider: "generic", url: "https://sample.example/" },
+              { provider: "generic", url: "in process" },
             ]
           : {
               login: "sample-visitor",

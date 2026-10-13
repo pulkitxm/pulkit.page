@@ -17,6 +17,7 @@ const site = {
         createdAt: "2026-10-06T12:00:00.000Z",
         github: "sample-visitor",
         avatar: "/assets/guestbook/github-42.webp",
+        links: ["https://sample.example/", "https://www.linkedin.com/in/sample"],
       },
     ],
   },
@@ -34,6 +35,22 @@ test("guestbook messages are escaped text with local thumbnails and both submiss
   expect(html).toContain("https://forms.gle/example");
   expect(html).toContain("issues/new?template=guestbook.yml");
   expect(html).toContain("6 Oct 2026");
+});
+
+test("GitHub entries show icon links for the profile and each synced profile link", async () => {
+  const html = await renderPage(
+    "---\ntitle: Guestbook\ndescription: Visitor notes.\n---\n:::guestbook\n",
+    { site },
+  );
+  for (const href of [
+    "https://github.com/sample-visitor",
+    "https://sample.example/",
+    "https://www.linkedin.com/in/sample",
+  ]) {
+    expect(html).toContain(`href="${href}"`);
+  }
+  expect(html).toContain('aria-label="linkedin.com/in/sample"');
+  expect(html).toContain('rel="noopener nofollow ugc"');
 });
 
 test.each(["\n", "\r\n", "\r"])(

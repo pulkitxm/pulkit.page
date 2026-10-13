@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   sync:
-    name: Import new messages
+    name: Import messages and refresh profiles
     runs-on: ubuntu-26.04
     timeout-minutes: 15
     permissions:
@@ -36,7 +36,7 @@ jobs:
           GUESTBOOK_GOOGLE_SHEET_TAB: ${{ vars.GUESTBOOK_GOOGLE_SHEET_TAB }}
           GUESTBOOK_GOOGLE_CREDENTIALS: ${{ secrets.GUESTBOOK_GOOGLE_CREDENTIALS }}
         run: bun run --cwd tooling/guestbook sync
-      - name: Check for new entries
+      - name: Check for changes
         id: changes
         run: |
           git add apps/page/data/guestbook.json apps/page/assets/guestbook
@@ -59,7 +59,7 @@ jobs:
           "$RUNNER_TEMP/pukbot" | sha256sum --check
 
           chmod +x "$RUNNER_TEMP/pukbot"
-      - name: Publish new guestbook entries
+      - name: Publish guestbook changes
         id: publish
         if: steps.changes.outputs.changed == 'true'
         env:
@@ -73,8 +73,8 @@ jobs:
             exit 1
           fi
 
-          "$RUNNER_TEMP/pukbot" commit create --repo "$REPOSITORY" --branch main --message "Add new
-          guestbook messages" --json > "$RUNNER_TEMP/guestbook-publish.json"
+          "$RUNNER_TEMP/pukbot" commit create --repo "$REPOSITORY" --branch main --message "Sync
+          guestbook messages and profile links" --json > "$RUNNER_TEMP/guestbook-publish.json"
 
           revision="$(jq -er '.resourceUrl | capture("/commit/(?<sha>[0-9a-f]{40})$") | .sha'
           "$RUNNER_TEMP/guestbook-publish.json")"

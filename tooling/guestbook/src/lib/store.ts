@@ -30,8 +30,32 @@ export async function appendEntries(
     (left, right) =>
       right.createdAt.localeCompare(left.createdAt) || left.id.localeCompare(right.id),
   );
+  await writeEntries(entries, path);
+  return added.length;
+}
+
+export async function refreshLinks(
+  linksByLogin: ReadonlyMap<string, readonly string[]>,
+  path = dataPath,
+): Promise<number> {
+  let changed = 0;
+  const entries = (await readEntries(path)).map((entry) => {
+    const links = entry.github ? linksByLogin.get(entry.github.toLowerCase()) : undefined;
+    if (!links || JSON.stringify(links) === JSON.stringify(entry.links ?? [])) {
+      return entry;
+    }
+    changed++;
+    const { links: _previous, ...rest } = entry;
+    return links.length > 0 ? { ...rest, links: [...links] } : rest;
+  });
+  if (changed > 0) {
+    await writeEntries(guestbookEntries.parse(entries), path);
+  }
+  return changed;
+}
+
+async function writeEntries(entries: readonly GuestbookEntry[], path: string): Promise<void> {
   await mkdir(dirname(path), { recursive: true });
   await writeFile(`${path}.tmp`, `${JSON.stringify(entries, null, 2)}\n`);
   await rename(`${path}.tmp`, path);
-  return added.length;
 }

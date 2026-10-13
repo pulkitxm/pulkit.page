@@ -85,6 +85,13 @@ GitHub issue numbers and stable Google response hashes prevent duplicate imports
 The store only appends new entries and orders them newest first. It does not
 overwrite or delete published messages when an issue or response changes.
 
+Every run also refreshes profile links for each entry with a GitHub username. The
+worker reads the profile's website and social accounts from the GitHub API, keeps
+only `https` URLs, and stores up to eight in the entry's `links`. The page shows
+them as small icons beside the name, after the GitHub profile icon. Links that a
+visitor removes from their profile disappear on the next run, as do all links of
+a deleted account. Messages, names, and avatars are not refreshed.
+
 To remove a published entry, add its `id` to `removedEntryIds` in
 `apps/page/data/guestbook-settings.json` and delete it from
 `apps/page/data/guestbook.json`. The importer skips removed IDs from both sources,
@@ -96,7 +103,7 @@ Existing files are reused. Profile URLs and messages render as escaped text.
 
 Each scheduled run stages only the JSON and guestbook avatar assets, verifies the
 repository, and commits through Pukbot when there are changes. A run without new
-messages makes no commit and skips the CI call. CI checks out the published commit,
+messages or link changes makes no commit and skips the CI call. CI checks out the published commit,
 rebuilds the sites, and deploys the portfolio after every required check passes.
 
 For a local run, supply the same environment variables and run:

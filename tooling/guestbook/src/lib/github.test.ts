@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { githubSubmissions, type Request } from "./github.ts";
+import { githubProfileLinks, githubSubmissions, type Request } from "./github.ts";
 
 function issue(number: number, overrides: Record<string, unknown> = {}) {
   return {
@@ -57,4 +57,39 @@ test("API failures abort the import instead of publishing partial results", asyn
   await expect(githubSubmissions("example/site", "test-token", new Set(), request)).rejects.toThrow(
     "HTTP 403",
   );
+});
+
+test("profile links combine the website and social accounts without unsafe or duplicate URLs", async () => {
+  const request: Request = (url) =>
+    Promise.resolve(
+      Response.json(
+        url.endsWith("/social_accounts")
+          ? [
+              { provider: "twitter", url: "https://twitter.com/sample" },
+              { provider: "linkedin", url: "https://www.linkedin.com/in/sample" },
+              { provider: "generic", url: "javascript:alert(1)" },
+              { provider: "generic", url: "http://insecure.example" },
+              { provider: "generic", url: "https://github.com/Sample-Visitor" },
+              { provider: "generic", url: "https://sample.example/" },
+            ]
+          : {
+              login: "sample-visitor",
+              id: 123,
+              name: null,
+              avatar_url: "https://avatars.githubusercontent.com/u/123",
+              blog: "sample.example",
+              twitter_username: "sample",
+            },
+      ),
+    );
+  expect(await githubProfileLinks("sample-visitor", "test-token", request)).toEqual([
+    "https://sample.example/",
+    "https://twitter.com/sample",
+    "https://www.linkedin.com/in/sample",
+  ]);
+});
+
+test("profile links are null for deleted accounts", async () => {
+  const request: Request = () => Promise.resolve(new Response(null, { status: 404 }));
+  expect(await githubProfileLinks("gone", "test-token", request)).toBeNull();
 });

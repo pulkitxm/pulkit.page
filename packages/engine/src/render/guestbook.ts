@@ -1,6 +1,7 @@
 import type { GuestbookEntry } from "@pulkit/shared/guestbook";
 import { escapeHtml } from "@pulkit/shared/html";
 import type { SiteContext } from "../types.ts";
+import { linkIcon, linkLabel } from "./company-links.ts";
 import { linkClasses, safeUrl } from "./html.ts";
 
 const dateFormat = new Intl.DateTimeFormat("en-GB", {
@@ -13,14 +14,22 @@ const dateFormat = new Intl.DateTimeFormat("en-GB", {
 function entryHtml(entry: GuestbookEntry): string {
   const name = escapeHtml(entry.name);
   const message = escapeHtml(entry.message.replace(/[ \t]+$/gm, ""));
-  const author = entry.github
-    ? `<a class="font-medium text-inherit no-underline hover:underline" href="https://github.com/${escapeHtml(entry.github)}" rel="noopener">${name}</a>`
-    : `<span class="font-medium">${name}</span>`;
+  const links = [
+    ...(entry.github ? [`https://github.com/${entry.github}`] : []),
+    ...(entry.links ?? []),
+  ];
+  const icons = links
+    .map((href) => {
+      const label = escapeHtml(linkLabel(href));
+      return `<a class="flex text-muted transition-colors duration-150 hover:text-fg" href="${safeUrl(href)}" rel="noopener nofollow ugc" aria-label="${label}" title="${label}">${linkIcon(href, "size-3.5")}</a>`;
+    })
+    .join("");
+  const author = `<span class="font-medium">${name}</span>${icons ? `<span class="flex items-center gap-1.5">${icons}</span>` : ""}`;
   const avatar = entry.avatar
     ? `<img class="m-0 size-8 shrink-0 rounded-full object-cover" src="${safeUrl(entry.avatar)}" alt="" width="32" height="32" loading="lazy" decoding="async">`
     : `<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-line text-xs text-muted" aria-hidden="true">${escapeHtml(entry.name.slice(0, 1).toUpperCase())}</span>`;
-  const date = `<time class="text-2xs text-muted" datetime="${escapeHtml(entry.createdAt)}">${dateFormat.format(new Date(entry.createdAt))}</time>`;
-  return `<li class="border-b border-line py-5" id="${escapeHtml(entry.id)}"><div class="flex items-center gap-3">${avatar}<div class="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1 [overflow-wrap:anywhere]">${author}${date}</div></div><p class="mb-0 mt-3 whitespace-pre-wrap text-sm leading-relaxed [overflow-wrap:anywhere]">${message}</p></li>`;
+  const date = `<time class="ml-auto shrink-0 text-2xs text-muted" datetime="${escapeHtml(entry.createdAt)}">${dateFormat.format(new Date(entry.createdAt))}</time>`;
+  return `<li class="border-b border-line py-5" id="${escapeHtml(entry.id)}"><div class="flex items-center gap-3">${avatar}<div class="flex min-w-0 flex-1 items-center gap-3"><div class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 [overflow-wrap:anywhere]">${author}</div>${date}</div></div><p class="mb-0 mt-3 whitespace-pre-wrap text-sm leading-relaxed [overflow-wrap:anywhere]">${message}</p></li>`;
 }
 
 export function renderGuestbook(site: SiteContext): string {

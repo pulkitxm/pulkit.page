@@ -6,8 +6,8 @@ export const profileLink = z
   .url({ protocol: /^https$/ })
   .max(300)
   .refine((value) => {
-    const url = new URL(value);
-    return !url.username && !url.password;
+    const url = URL.parse(value);
+    return url !== null && !url.username && !url.password;
   });
 
 export const guestbookEntry = z.strictObject({

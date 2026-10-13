@@ -134,7 +134,7 @@ function profileUrl(value: string | null | undefined): string | null {
   }
   const candidate = /^[a-z][a-z\d+.-]*:/i.test(trimmed) ? trimmed : `https://${trimmed}`;
   const parsed = profileLink.safeParse(candidate);
-  return parsed.success ? new URL(parsed.data).href : null;
+  return parsed.success ? new URL(parsed.data).href.replace(/\/$/, "") : null;
 }
 
 export async function githubProfileLinks(

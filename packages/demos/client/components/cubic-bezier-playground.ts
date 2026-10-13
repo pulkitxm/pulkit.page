@@ -1,4 +1,5 @@
-import { Check, Copy, RotateCw } from "lucide";
+import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { faCheck, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { createCopyFeedback } from "../lib/clipboard.ts";
 import { listenWindow, queryAll, ref } from "../lib/dom.ts";
 import { cubicBezierEase } from "../lib/easing.ts";
@@ -131,12 +132,12 @@ export const mount: DemoMount = (root) => {
           </div>
           <div class="flex gap-2">
             ${button({ className: "flex-1", label: "Play", attrs: 'data-ref="play"' })}
-            ${button({ variant: "outline", size: "icon", label: icon(RotateCw, "size-4"), attrs: 'data-ref="reset" title="Reset"' })}
+            ${button({ variant: "outline", size: "icon", label: icon(faRotateRight, "size-4"), attrs: 'data-ref="reset" title="Reset"' })}
           </div>
         </div>
         <div class="flex w-full items-center gap-2">
           <code data-ref="code" class="min-w-0 flex-1 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2 text-center font-mono text-neutral-700 text-xs dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"></code>
-          ${button({ variant: "outline", size: "icon", label: icon(Copy, "size-4"), attrs: 'data-ref="copy" title="Copy to clipboard"' })}
+          ${button({ variant: "outline", size: "icon", label: icon(faCopy, "size-4"), attrs: 'data-ref="copy" title="Copy to clipboard"' })}
         </div>
       </div>
     </div>
@@ -194,7 +195,7 @@ export const mount: DemoMount = (root) => {
     box.style.transition = isAnimating ? "none" : "left 0.1s ease-out";
     play.disabled = isAnimating;
     code.textContent = bezier();
-    copy.innerHTML = icon(clipboard.copied ? Check : Copy, "size-4");
+    copy.innerHTML = icon(clipboard.copied ? faCheck : faCopy, "size-4");
   }
 
   function playAnimation() {

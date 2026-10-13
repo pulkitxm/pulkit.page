@@ -1,7 +1,9 @@
+import { faHeart as faHeartOutline } from "@fortawesome/free-regular-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { type AnimationPlaybackControls, animate, press } from "motion";
 import { ref } from "../lib/dom.ts";
 import { createScheduler } from "../lib/scheduler.ts";
-import { buttonClass, html } from "../runtime/ui.ts";
+import { buttonClass, html, icon } from "../runtime/ui.ts";
 import type { DemoMount } from "../types.ts";
 
 export const mount: DemoMount = (root) => {
@@ -21,9 +23,7 @@ export const mount: DemoMount = (root) => {
         })}"
         aria-label="Like"
       >
-        <svg data-ref="heart" class="size-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
+        <span data-ref="heart" class="inline-flex size-8">${icon(faHeartOutline, "size-8")}</span>
       </button>
     </div>
     <div class="max-w-xs space-y-1 text-center text-neutral-600 text-xs dark:text-neutral-400">
@@ -33,7 +33,7 @@ export const mount: DemoMount = (root) => {
   </div>`;
   const wrapper = ref(root, "wrapper", HTMLDivElement);
   const button = ref(root, "button", HTMLButtonElement);
-  const heart = ref(root, "heart", SVGSVGElement);
+  const heart = ref(root, "heart", HTMLSpanElement);
   let color = getComputedStyle(heart).color;
   let scale = 1;
   let colorAnimation: AnimationPlaybackControls | undefined;
@@ -46,7 +46,7 @@ export const mount: DemoMount = (root) => {
 
   function update() {
     button.setAttribute("aria-label", liked ? "Unlike" : "Like");
-    heart.setAttribute("fill", liked ? "currentColor" : "none");
+    heart.innerHTML = icon(liked ? faHeart : faHeartOutline, "size-8");
     colorAnimation?.stop();
     scaleAnimation?.stop();
     colorAnimation = animate(color, liked ? "#ef4444" : "#a3a3a3", {

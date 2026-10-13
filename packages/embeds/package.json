@@ -12,12 +12,14 @@
     "./lightbox": "./src/lib/lightbox.ts"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "7.3.1",
+    "@fortawesome/free-regular-svg-icons": "7.3.1",
+    "@fortawesome/free-solid-svg-icons": "7.3.1",
     "@pulkit/shared": "workspace:*",
     "@pulkit/theme": "workspace:*",
     "embla-carousel": "8.6.0",
     "image-size": "2.0.4",
     "katex": "0.18.7",
-    "lucide": "1.47.0",
     "photoswipe": "5.4.4"
   }
 }

@@ -1,4 +1,4 @@
-import { Star } from "lucide";
+import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { expectElement, ref } from "../lib/dom.ts";
 import { createSwapButton } from "../runtime/swap-button.ts";
 import { button, html, icon } from "../runtime/ui.ts";
@@ -10,7 +10,7 @@ const grownW = 182;
 const grownH = 57;
 
 export const mount: DemoMount = (root) => {
-  const label = `${icon(Star, "size-4 shrink-0")}<span>Button</span>`;
+  const label = `${icon(faStar, "size-4 shrink-0")}<span>Button</span>`;
   root.innerHTML = html`<div class="flex size-full flex-col items-center justify-center gap-8 p-6">
     <div class="flex flex-col gap-8 sm:flex-row sm:gap-16">
       <div class="flex w-50 flex-col items-center gap-4">

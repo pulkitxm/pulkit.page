@@ -1,5 +1,5 @@
-import { ExternalLink } from "lucide";
-import { lucideSvg } from "../lib/icons.ts";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { faSvg } from "@pulkit/shared/icons";
 import { readString } from "../lib/props.ts";
 import type { EmbedContext, EmbedProps, EmbedRenderer } from "../types.ts";
 
@@ -9,7 +9,7 @@ const frameClass = "block h-60 w-full rounded-md border-0 min-[64rem]:h-96";
 export function documentCard(props: EmbedProps, { escapeHtml }: EmbedContext): string {
   const url = escapeHtml(readString(props, "documentUrl", "document-viewer"));
   const name = escapeHtml(readString(props, "title", "document-viewer"));
-  const heading = `<div class="flex flex-col space-y-1.5 p-6"><div class="flex items-center font-semibold text-xl leading-tight tracking-tight">${name}<a class="ml-2 inline-flex items-center text-inherit" href="${url}" target="_blank" rel="noopener noreferrer">${lucideSvg(ExternalLink, "size-5 shrink-0")}<span class="sr-only">Open ${name}</span></a></div></div>`;
+  const heading = `<div class="flex flex-col space-y-1.5 p-6"><div class="flex items-center font-semibold text-xl leading-tight tracking-tight">${name}<a class="ml-2 inline-flex items-center text-inherit" href="${url}" target="_blank" rel="noopener noreferrer">${faSvg(faArrowUpRightFromSquare, "size-5 shrink-0")}<span class="sr-only">Open ${name}</span></a></div></div>`;
   const frame = `<iframe class="${frameClass}" src="${url}" title="${name}" loading="lazy"></iframe>`;
   const download = `<a class="mt-3 inline-block text-sm text-muted underline underline-offset-4 hover:text-fg" href="${url}" download>Download ${name} (PDF)</a>`;
   return `<div class="${cardClass}">${heading}<div class="p-6 pt-0">${frame}${download}</div></div>`;

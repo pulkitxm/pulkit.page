@@ -1,16 +1,15 @@
-import { escapeAttribute } from "@pulkit/shared/html";
+import { faCopy, faEye } from "@fortawesome/free-regular-svg-icons";
 import {
-  Check,
-  Code,
-  Copy,
-  Eye,
-  GripVertical,
-  Menu,
-  RotateCw,
-  SidebarClose,
-  SidebarOpen,
-  WrapText,
-} from "lucide";
+  faAlignLeft,
+  faAnglesLeft,
+  faAnglesRight,
+  faBars,
+  faCheck,
+  faCode,
+  faGripVertical,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { escapeAttribute } from "@pulkit/shared/html";
 import type { FrameOptions, HighlightedSource } from "../types.ts";
 import { type ButtonVariant, button, cn, type IconNode, icon } from "./ui.ts";
 
@@ -25,7 +24,7 @@ function tab(key: string, label: string, node: IconNode, index: number, id: numb
 }
 
 function tabs(id: number): string {
-  return `<div class="border-(--frame-border) border-b p-1.5 lg:hidden [&>div]:mb-0"><div class="relative mb-6"><div role="tablist" aria-label="Tabs" class="grid w-full grid-cols-2 gap-1 rounded-lg bg-muted p-1">${tab("code", "Code", Code, 0, id)}${tab("preview", "Preview", Eye, 1, id)}<div data-ref="indicator" class="absolute inset-y-1 left-1 z-0 rounded-md border border-border bg-card shadow-sm transition-transform ease-out motion-reduce:transition-none" style="width: calc(50% - 2px)"></div></div></div></div>`;
+  return `<div class="border-(--frame-border) border-b p-1.5 lg:hidden [&>div]:mb-0"><div class="relative mb-6"><div role="tablist" aria-label="Tabs" class="grid w-full grid-cols-2 gap-1 rounded-lg bg-muted p-1">${tab("code", "Code", faCode, 0, id)}${tab("preview", "Preview", faEye, 1, id)}<div data-ref="indicator" class="absolute inset-y-1 left-1 z-0 rounded-md border border-border bg-card shadow-sm transition-transform ease-out motion-reduce:transition-none" style="width: calc(50% - 2px)"></div></div></div></div>`;
 }
 
 function replayButton(className: string, variant: ButtonVariant = "ghost"): string {
@@ -33,7 +32,7 @@ function replayButton(className: string, variant: ButtonVariant = "ghost"): stri
     variant,
     size: "icon",
     className: cn("rounded-none", className),
-    label: icon(RotateCw, "size-4"),
+    label: icon(faRotateRight, "size-4"),
     attrs: 'data-action="replay" title="Replay animation"',
   });
 }
@@ -91,7 +90,7 @@ function codePanel(frame: FrameOptions, files: readonly HighlightedSource[]): st
       }),
     )
     .join("");
-  return `<div data-ref="code" class="${cn("relative min-w-0", codeHeightClass(frame))} border-(--frame-border) border-b bg-(--code-bg) lg:border-b-0"><div class="flex w-full flex-1 flex-col overflow-hidden"><div class="flex items-center justify-between border-(--frame-border) border-b"><div class="flex flex-1 items-center overflow-hidden">${button({ variant: "ghost", size: "icon", className: "hidden shrink-0 rounded-none border-(--frame-border) border-r lg:flex", label: icon(SidebarClose, "size-4"), attrs: 'data-action="hide-code" title="Hide code panel"' })}<div class="flex w-full items-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">${fileButtons}</div></div><div class="flex shrink-0 items-center">${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(WrapText, "size-4")}${icon(Menu, "size-4")}`, attrs: 'data-action="wrap"' })}${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(Check, "size-4")}${icon(Copy, "size-4")}`, attrs: 'data-action="copy" title="Copy code"' })}</div></div><div data-ref="scroller" tabindex="0" class="flex-1 overflow-auto p-4 [scrollbar-width:none]"><div data-ref="highlighted"></div></div></div></div>`;
+  return `<div data-ref="code" class="${cn("relative min-w-0", codeHeightClass(frame))} border-(--frame-border) border-b bg-(--code-bg) lg:border-b-0"><div class="flex w-full flex-1 flex-col overflow-hidden"><div class="flex items-center justify-between border-(--frame-border) border-b"><div class="flex flex-1 items-center overflow-hidden">${button({ variant: "ghost", size: "icon", className: "hidden shrink-0 rounded-none border-(--frame-border) border-r lg:flex", label: icon(faAnglesLeft, "size-4"), attrs: 'data-action="hide-code" title="Hide code panel"' })}<div class="flex w-full items-center overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">${fileButtons}</div></div><div class="flex shrink-0 items-center">${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(faAlignLeft, "size-4")}${icon(faBars, "size-4")}`, attrs: 'data-action="wrap"' })}${button({ variant: "ghost", size: "icon", className: "rounded-none border-l-2", label: `${icon(faCheck, "size-4")}${icon(faCopy, "size-4")}`, attrs: 'data-action="copy" title="Copy code"' })}</div></div><div data-ref="scroller" tabindex="0" class="flex-1 overflow-auto p-4 [scrollbar-width:none]"><div data-ref="highlighted"></div></div></div></div>`;
 }
 
 export function frameMarkup(
@@ -103,7 +102,7 @@ export function frameMarkup(
   const desktopHeightClass = frame.bitBigger ? "lg:h-128" : "lg:h-112";
   const heightClass = frame.fullHeight ? fullHeightClass : desktopHeightClass;
   const previewBar = hasFiles
-    ? `<div class="hidden items-center justify-between border-(--frame-border) border-b lg:flex">${button({ variant: "ghost", size: "icon", className: "rounded-none transition-none", label: icon(SidebarOpen, "size-4"), attrs: 'data-action="show-code" title="Show code"' })}${frame.replayButton ? replayButton("rounded-none") : ""}</div>`
+    ? `<div class="hidden items-center justify-between border-(--frame-border) border-b lg:flex">${button({ variant: "ghost", size: "icon", className: "rounded-none transition-none", label: icon(faAnglesRight, "size-4"), attrs: 'data-action="show-code" title="Show code"' })}${frame.replayButton ? replayButton("rounded-none") : ""}</div>`
     : "";
-  return `<div class="relative my-6 overflow-hidden rounded-md border border-(--frame-border) bg-(--frame-bg)">${frame.replayButton && !hasFiles ? replayButton("absolute right-4 bottom-4 z-2 rounded-md", "secondary") : ""}${hasFiles ? tabs(id) : ""}<div data-ref="container" class="${cn("flex flex-col lg:flex-row", heightClass)}">${hasFiles ? codePanel(frame, files) : ""}<button type="button" data-ref="handle" aria-label="Resize panels" class="${handleClass}">${icon(GripVertical, "size-4 text-(--grip) group-hover:text-(--grip-hover)")}</button><div data-ref="previewColumn">${previewBar}<div data-ref="preview" class="${previewClass(frame, hasFiles)}"></div></div></div></div>`;
+  return `<div class="relative my-6 overflow-hidden rounded-md border border-(--frame-border) bg-(--frame-bg)">${frame.replayButton && !hasFiles ? replayButton("absolute right-4 bottom-4 z-2 rounded-md", "secondary") : ""}${hasFiles ? tabs(id) : ""}<div data-ref="container" class="${cn("flex flex-col lg:flex-row", heightClass)}">${hasFiles ? codePanel(frame, files) : ""}<button type="button" data-ref="handle" aria-label="Resize panels" class="${handleClass}">${icon(faGripVertical, "size-4 text-(--grip) group-hover:text-(--grip-hover)")}</button><div data-ref="previewColumn">${previewBar}<div data-ref="preview" class="${previewClass(frame, hasFiles)}"></div></div></div></div>`;
 }

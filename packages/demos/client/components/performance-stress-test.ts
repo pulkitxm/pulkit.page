@@ -1,4 +1,4 @@
-import { Minus, Plus } from "lucide";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { type AnimationPlaybackControls, animate } from "motion";
 import { ref } from "../lib/dom.ts";
 import { caption, stage } from "../lib/layout.ts";
@@ -26,9 +26,9 @@ export const mount: DemoMount = (root) => {
     html`
     <div class="flex flex-wrap items-center justify-center gap-4">
       <div class="flex items-center gap-2">
-        ${button({ variant: "outline", size: "icon", label: icon(Minus, "size-4"), attrs: 'data-ref="minus"' })}
+        ${button({ variant: "outline", size: "icon", label: icon(faMinus, "size-4"), attrs: 'data-ref="minus"' })}
         <span data-ref="count" class="w-20 text-center text-sm"></span>
-        ${button({ variant: "outline", size: "icon", label: icon(Plus, "size-4"), attrs: 'data-ref="plus"' })}
+        ${button({ variant: "outline", size: "icon", label: icon(faPlus, "size-4"), attrs: 'data-ref="plus"' })}
       </div>
       ${button({ variant: "secondary", size: "sm", label: "Add Load", attrs: 'data-ref="load"' })}
     </div>

@@ -1,4 +1,5 @@
-import { ArrowLeft, ChevronRight, FileText, FolderOpen, Image, Music } from "lucide";
+import { faFileLines, faFolderOpen, faImage } from "@fortawesome/free-regular-svg-icons";
+import { faArrowLeft, faChevronRight, faMusic } from "@fortawesome/free-solid-svg-icons";
 import { animate } from "motion";
 import { closestTarget, ref } from "../lib/dom.ts";
 import { button, cn, html, type IconNode, icon } from "../runtime/ui.ts";
@@ -16,13 +17,31 @@ const items: readonly ListItem[] = [
   {
     color: "bg-blue-500",
     description: "23 files, 1.2 GB",
-    icon: FileText,
+    icon: faFileLines,
     id: 1,
     title: "Documents",
   },
-  { color: "bg-green-500", description: "847 files, 4.8 GB", icon: Image, id: 2, title: "Photos" },
-  { color: "bg-purple-500", description: "156 files, 2.1 GB", icon: Music, id: 3, title: "Music" },
-  { color: "bg-orange-500", description: "12 folders", icon: FolderOpen, id: 4, title: "Projects" },
+  {
+    color: "bg-green-500",
+    description: "847 files, 4.8 GB",
+    icon: faImage,
+    id: 2,
+    title: "Photos",
+  },
+  {
+    color: "bg-purple-500",
+    description: "156 files, 2.1 GB",
+    icon: faMusic,
+    id: 3,
+    title: "Music",
+  },
+  {
+    color: "bg-orange-500",
+    description: "12 folders",
+    icon: faFolderOpen,
+    id: 4,
+    title: "Projects",
+  },
 ];
 
 const fade = { duration: 0.1 };
@@ -30,7 +49,7 @@ const fade = { duration: 0.1 };
 function detailView(item: ListItem): string {
   return html`<div class="flex h-full flex-col">
     <div class="flex items-center gap-2 border-neutral-200 border-b p-3 dark:border-neutral-700">
-      ${button({ variant: "ghost", size: "icon", className: "size-7 cursor-pointer", label: icon(ArrowLeft, "size-4"), attrs: "data-back" })}
+      ${button({ variant: "ghost", size: "icon", className: "size-7 cursor-pointer", label: icon(faArrowLeft, "size-4"), attrs: "data-back" })}
       <div class="${cn("flex size-6 items-center justify-center rounded text-white", item.color)}">${icon(item.icon, "size-4")}</div>
       <span class="font-medium text-sm">${item.title}</span>
     </div>
@@ -62,7 +81,7 @@ function listButtons(): string[] {
           <div class="font-medium text-sm">${item.title}</div>
           <div class="text-neutral-600 text-xs dark:text-neutral-300">${item.description}</div>
         </div>
-        ${icon(ChevronRight, "size-4 text-neutral-400 transition-transform group-hover:translate-x-0.5")}`,
+        ${icon(faChevronRight, "size-4 text-neutral-400 transition-transform group-hover:translate-x-0.5")}`,
       attrs: `data-item="${item.id}"`,
     }),
   );

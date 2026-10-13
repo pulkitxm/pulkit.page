@@ -1,63 +1,46 @@
-import { readFileSync } from "node:fs";
+import type { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+import {
+  faBehance,
+  faBluesky,
+  faDribbble,
+  faFacebook,
+  faGithub,
+  faInstagram,
+  faLinkedin,
+  faMastodon,
+  faMedium,
+  faNpm,
+  faReddit,
+  faStackOverflow,
+  faThreads,
+  faTwitch,
+  faXTwitter,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { escapeHtml } from "@pulkit/shared/html";
+import { faSvg } from "@pulkit/shared/icons";
 import { safeUrl } from "./html.ts";
 
-const icons = {
-  world: import.meta.resolve("@tabler/icons/outline/world.svg"),
-  linkedin: import.meta.resolve("@tabler/icons/outline/brand-linkedin.svg"),
-  x: import.meta.resolve("@tabler/icons/outline/brand-x.svg"),
-  github: import.meta.resolve("@tabler/icons/outline/brand-github.svg"),
-  instagram: import.meta.resolve("@tabler/icons/outline/brand-instagram.svg"),
-  youtube: import.meta.resolve("@tabler/icons/outline/brand-youtube.svg"),
-  bluesky: import.meta.resolve("@tabler/icons/outline/brand-bluesky.svg"),
-  mastodon: import.meta.resolve("@tabler/icons/outline/brand-mastodon.svg"),
-  reddit: import.meta.resolve("@tabler/icons/outline/brand-reddit.svg"),
-  twitch: import.meta.resolve("@tabler/icons/outline/brand-twitch.svg"),
-  npm: import.meta.resolve("@tabler/icons/outline/brand-npm.svg"),
-  threads: import.meta.resolve("@tabler/icons/outline/brand-threads.svg"),
-  medium: import.meta.resolve("@tabler/icons/outline/brand-medium.svg"),
-  stackoverflow: import.meta.resolve("@tabler/icons/outline/brand-stackoverflow.svg"),
-  dribbble: import.meta.resolve("@tabler/icons/outline/brand-dribbble.svg"),
-  behance: import.meta.resolve("@tabler/icons/outline/brand-behance.svg"),
+const platformIcons: Record<string, IconDefinition> = {
+  "linkedin.com": faLinkedin,
+  "x.com": faXTwitter,
+  "twitter.com": faXTwitter,
+  "github.com": faGithub,
+  "instagram.com": faInstagram,
+  "youtube.com": faYoutube,
+  "bsky.app": faBluesky,
+  "mastodon.social": faMastodon,
+  "facebook.com": faFacebook,
+  "reddit.com": faReddit,
+  "twitch.tv": faTwitch,
+  "npmjs.com": faNpm,
+  "threads.net": faThreads,
+  "medium.com": faMedium,
+  "stackoverflow.com": faStackOverflow,
+  "dribbble.com": faDribbble,
+  "behance.net": faBehance,
 };
-
-type IconName = keyof typeof icons;
-
-const platformIcons: Record<string, IconName> = {
-  "linkedin.com": "linkedin",
-  "x.com": "x",
-  "twitter.com": "x",
-  "github.com": "github",
-  "instagram.com": "instagram",
-  "youtube.com": "youtube",
-  "bsky.app": "bluesky",
-  "mastodon.social": "mastodon",
-  "reddit.com": "reddit",
-  "twitch.tv": "twitch",
-  "npmjs.com": "npm",
-  "threads.net": "threads",
-  "medium.com": "medium",
-  "stackoverflow.com": "stackoverflow",
-  "dribbble.com": "dribbble",
-  "behance.net": "behance",
-};
-
-const iconCache = new Map<string, string>();
-
-function iconSvg(name: IconName, size: string): string {
-  const key = `${name} ${size}`;
-  let svg = iconCache.get(key);
-  if (svg === undefined) {
-    svg = readFileSync(new URL(icons[name]), "utf8")
-      .replace(/\s+/g, " ")
-      .replace(/ class="[^"]*"/, ` class="${size}" aria-hidden="true"`)
-      .replace(/<path stroke="none" d="M0 0h24v24H0z" fill="none" \/>/, "")
-      .replace(/>\s+</g, "><")
-      .trim();
-    iconCache.set(key, svg);
-  }
-  return svg;
-}
 
 export function linkLabel(href: string): string {
   const url = new URL(href);
@@ -66,7 +49,7 @@ export function linkLabel(href: string): string {
 
 export function linkIcon(href: string, size = "size-4.5"): string {
   const host = new URL(href).hostname.replace(/^(?:www|m)\./, "");
-  return iconSvg(platformIcons[host] ?? "world", size);
+  return faSvg(platformIcons[host] ?? faGlobe, size);
 }
 
 export function companyLinks(links: readonly string[] | undefined): string {

@@ -1,5 +1,6 @@
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faSvg } from "@pulkit/shared/icons";
 import type { EmbedContext, Size } from "../types.ts";
-import { iconAttributes } from "./icons.ts";
 import { addMediaAssets, loadingAttributes, zoomLink } from "./media.ts";
 
 type CarouselFrame = "bordered" | "plain";
@@ -15,9 +16,9 @@ interface CarouselOptions {
   eager?: boolean;
 }
 
-const arrowAttributes = `${iconAttributes} class="pointer-events-none size-4 shrink-0"`;
-const arrowLeft = `<svg ${arrowAttributes}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`;
-const arrowRight = `<svg ${arrowAttributes}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
+const arrowClass = "pointer-events-none size-4 shrink-0";
+const arrowLeft = faSvg(faArrowLeft, arrowClass);
+const arrowRight = faSvg(faArrowRight, arrowClass);
 const navigationClass =
   "absolute top-1/2 inline-flex size-8 p-0 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-line bg-[#000]/50 text-[#fff] shadow-[0_1px_3px_0_rgb(0_0_0/0.1),0_1px_2px_-1px_rgb(0_0_0/0.1)] transition-[color,background-color,box-shadow] duration-150 hover:bg-[#000]/75 focus-visible:outline-2 focus-visible:outline-offset-2";
 const slideFrames: Record<CarouselFrame, string> = {

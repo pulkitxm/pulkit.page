@@ -43,10 +43,10 @@ jobs:
             apps/*/.cache/generate
           key: turbo-${{ runner.os }}-${{ github.sha }}
           restore-keys: turbo-${{ runner.os }}-
-      - name: Strip unavailable guestbook profiles
+      - name: Check guestbook profile links
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: bun run --cwd tooling/guestbook verify:links --write
+        run: bun run --cwd tooling/guestbook verify:links --strict
       - name: Verify
         env:
           POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}

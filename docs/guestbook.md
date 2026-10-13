@@ -96,12 +96,13 @@ The page only shows professional social profiles: GitHub, X, LinkedIn, npm, and
 crates.io, normalized to one canonical URL each. Websites, Instagram, and other
 links stay in the data but are not rendered.
 
-Before every CI build, `bun run --cwd tooling/guestbook verify:links --write`
-checks each shown profile and strips the ones that no longer exist, such as a
-renamed X handle, from the build's copy of the data. The committed JSON is not
-changed. A profile is only stripped on a definite not-found response; blocked,
-rate-limited, or failed checks keep the link. Run the command without `--write`
-to print the same report locally.
+Every CI run checks each shown profile with
+`bun run --cwd tooling/guestbook verify:links --strict` and fails when one no longer
+exists, such as a renamed X handle, naming the entry and link in the error.
+Unsupported links, such as websites, appear as warnings and do not fail the run.
+A profile only counts as missing on a definite not-found response; blocked,
+rate-limited, or failed checks pass. Run the command without a flag for the same
+report, or with `--write` to remove the missing profiles from the data.
 
 To remove a published entry, add its `id` to `removedEntryIds` in
 `apps/page/data/guestbook-settings.json` and delete it from

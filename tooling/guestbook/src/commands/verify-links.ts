@@ -3,12 +3,25 @@ import { socialProfile } from "@pulkit/shared/guestbook";
 import { readEntries, writeEntries } from "../lib/store.ts";
 import { type ProfileStatus, profileStatus } from "../lib/verify.ts";
 
-async function verifyLinks(write: boolean): Promise<void> {
+async function verifyLinks(mode: "report" | "strict" | "write"): Promise<void> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
     throw new Error("GITHUB_TOKEN is required");
   }
+  const annotate = process.env.GITHUB_ACTIONS === "true";
   const entries = await readEntries();
+  for (const entry of entries) {
+    for (const href of entry.links ?? []) {
+      if (!socialProfile(href)) {
+        const message = `${entry.name} (${entry.id}): ${href} is not a supported social profile and is not shown`;
+        console.log(
+          annotate
+            ? `::warning title=Unsupported guestbook link::${message}`
+            : `skipped ${message}`,
+        );
+      }
+    }
+  }
   const profiles = new Map(
     entries
       .flatMap((entry) => [
@@ -32,26 +45,47 @@ async function verifyLinks(write: boolean): Promise<void> {
     const profile = socialProfile(href);
     return profile ? statuses.get(profile.url.toLowerCase()) === "missing" : false;
   };
-  for (const [key, profile] of profiles) {
-    console.log(`${statuses.get(key)?.padEnd(7)} ${profile.url}`);
+  for (const entry of entries) {
+    for (const href of [
+      ...(entry.github ? [`https://github.com/${entry.github}`] : []),
+      ...(entry.links ?? []),
+    ]) {
+      if (missing(href)) {
+        const message = `${entry.name} (${entry.id}): ${href} no longer exists`;
+        console.log(
+          annotate
+            ? `::error title=Unavailable guestbook profile::${message}`
+            : `missing ${message}`,
+        );
+      }
+    }
   }
-  const stripped = entries.map((entry) => {
-    const links = entry.links?.filter((href) => !missing(href));
-    const github =
-      entry.github && missing(`https://github.com/${entry.github}`) ? null : entry.github;
-    const { links: _previous, ...rest } = entry;
-    return { ...rest, github, ...(links?.length ? { links } : {}) };
-  });
-  const removed = [...statuses.values()].filter((status) => status === "missing").length;
+  const counts = [...statuses.values()];
+  const removed = counts.filter((status) => status === "missing").length;
   console.log(
     `Checked ${profiles.size} guestbook profiles: ${removed} missing, ${
-      [...statuses.values()].filter((status) => status === "unknown").length
+      counts.filter((status) => status === "unknown").length
     } inconclusive.`,
   );
-  if (write && removed > 0) {
-    await writeEntries(stripped);
-    console.log(`Stripped ${removed} unavailable profiles from the guestbook data.`);
+  if (removed === 0) {
+    return;
+  }
+  if (mode === "write") {
+    await writeEntries(
+      entries.map((entry) => {
+        const links = entry.links?.filter((href) => !missing(href));
+        const github =
+          entry.github && missing(`https://github.com/${entry.github}`) ? null : entry.github;
+        const { links: _previous, ...rest } = entry;
+        return { ...rest, github, ...(links?.length ? { links } : {}) };
+      }),
+    );
+    console.log(`Removed ${removed} unavailable profiles from the guestbook data.`);
+  } else if (mode === "strict") {
+    console.log("Remove them with: bun run --cwd tooling/guestbook verify:links --write");
+    process.exitCode = 1;
   }
 }
 
-await verifyLinks(process.argv.includes("--write"));
+const flag = (["write", "strict"] as const).find((name) => process.argv.includes(`--${name}`));
+await verifyLinks(flag ?? "report");

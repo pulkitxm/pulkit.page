@@ -84,7 +84,7 @@ test("profile links combine the website and social accounts without unsafe or du
       ),
     );
   expect(await githubProfileLinks("sample-visitor", "test-token", request)).toEqual([
-    "https://sample.example/",
+    "https://sample.example",
     "https://twitter.com/sample",
     "https://www.linkedin.com/in/sample",
   ]);

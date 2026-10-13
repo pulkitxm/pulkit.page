@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import process from "node:process";
-import { type GuestbookEntry, guestbookSettings } from "@pulkit/shared/guestbook";
+import { type GuestbookEntry, guestbookSettings, socialProfile } from "@pulkit/shared/guestbook";
 import { downloadAvatar } from "../lib/avatars.ts";
 import {
   githubAvatar,
@@ -11,6 +11,7 @@ import {
 } from "../lib/github.ts";
 import { googleSubmissions } from "../lib/google.ts";
 import { appendEntries, readEntries, refreshLinks, repositoryRoot } from "../lib/store.ts";
+import { profileStatus } from "../lib/verify.ts";
 
 async function sync(): Promise<void> {
   const token = process.env.GITHUB_TOKEN;
@@ -55,7 +56,17 @@ async function sync(): Promise<void> {
   for (const entry of await readEntries()) {
     const login = entry.github?.toLowerCase();
     if (login && !linksByLogin.has(login)) {
-      linksByLogin.set(login, (await githubProfileLinks(login, token)) ?? []);
+      const links = (await githubProfileLinks(login, token)) ?? [];
+      const available = await Promise.all(
+        links.map(async (href) => {
+          const profile = socialProfile(href);
+          return !profile || (await profileStatus(profile, token)) !== "missing";
+        }),
+      );
+      linksByLogin.set(
+        login,
+        links.filter((_, index) => available[index]),
+      );
     }
   }
   console.log(`Refreshed profile links on ${await refreshLinks(linksByLogin)} guestbook messages.`);

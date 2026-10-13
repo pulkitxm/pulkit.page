@@ -1,4 +1,4 @@
-import type { GuestbookEntry } from "@pulkit/shared/guestbook";
+import { type GuestbookEntry, socialProfile } from "@pulkit/shared/guestbook";
 import { escapeHtml } from "@pulkit/shared/html";
 import type { SiteContext } from "../types.ts";
 import { linkIcon, linkLabel } from "./company-links.ts";
@@ -14,10 +14,18 @@ const dateFormat = new Intl.DateTimeFormat("en-GB", {
 function entryHtml(entry: GuestbookEntry): string {
   const name = escapeHtml(entry.name);
   const message = escapeHtml(entry.message.replace(/[ \t]+$/gm, ""));
+  const seen = new Set<string>();
   const links = [
     ...(entry.github ? [`https://github.com/${entry.github}`] : []),
     ...(entry.links ?? []),
-  ];
+  ].flatMap((href) => {
+    const url = socialProfile(href)?.url;
+    if (!url || seen.has(url.toLowerCase())) {
+      return [];
+    }
+    seen.add(url.toLowerCase());
+    return [url];
+  });
   const icons = links
     .map((href) => {
       const label = escapeHtml(linkLabel(href));

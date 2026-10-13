@@ -54,7 +54,10 @@ export async function refreshLinks(
   return changed;
 }
 
-async function writeEntries(entries: readonly GuestbookEntry[], path: string): Promise<void> {
+export async function writeEntries(
+  entries: readonly GuestbookEntry[],
+  path = dataPath,
+): Promise<void> {
   await mkdir(dirname(path), { recursive: true });
   await writeFile(`${path}.tmp`, `${JSON.stringify(entries, null, 2)}\n`);
   await rename(`${path}.tmp`, path);

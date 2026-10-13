@@ -92,6 +92,17 @@ them as small icons beside the name, after the GitHub profile icon. Links that a
 visitor removes from their profile disappear on the next run, as do all links of
 a deleted account. Messages, names, and avatars are not refreshed.
 
+The page only shows professional social profiles: GitHub, X, LinkedIn, npm, and
+crates.io, normalized to one canonical URL each. Websites, Instagram, and other
+links stay in the data but are not rendered.
+
+Before every CI build, `bun run --cwd tooling/guestbook verify:links --write`
+checks each shown profile and strips the ones that no longer exist, such as a
+renamed X handle, from the build's copy of the data. The committed JSON is not
+changed. A profile is only stripped on a definite not-found response; blocked,
+rate-limited, or failed checks keep the link. Run the command without `--write`
+to print the same report locally.
+
 To remove a published entry, add its `id` to `removedEntryIds` in
 `apps/page/data/guestbook-settings.json` and delete it from
 `apps/page/data/guestbook.json`. The importer skips removed IDs from both sources,

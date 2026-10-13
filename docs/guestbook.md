@@ -90,7 +90,10 @@ worker reads the profile's website and social accounts from the GitHub API, keep
 only `https` URLs, and stores up to eight in the entry's `links`. The page shows
 them as small icons beside the name, after the GitHub profile icon. Links that a
 visitor removes from their profile disappear on the next run, as do all links of
-a deleted account. Messages, names, and avatars are not refreshed.
+a deleted account. Social profiles that no longer exist, such as an X handle
+the visitor renamed without updating GitHub, are left out. Messages, names, and
+avatars are not refreshed, and manual edits to a GitHub-linked entry's links are
+replaced on the next run.
 
 The page only shows professional social profiles: GitHub, X, LinkedIn, npm, and
 crates.io, normalized to one canonical URL each. Websites, Instagram, and other

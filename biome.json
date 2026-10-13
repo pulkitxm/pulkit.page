@@ -165,6 +165,14 @@
           }
         }
       }
+    },
+    {
+      "includes": ["apps/page/data/guestbook.json"],
+      "json": {
+        "formatter": {
+          "expand": "always"
+        }
+      }
     }
   ]
 }

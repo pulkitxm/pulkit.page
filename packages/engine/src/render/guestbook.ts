@@ -29,10 +29,10 @@ function entryHtml(entry: GuestbookEntry): string {
   const icons = links
     .map((href) => {
       const label = escapeHtml(linkLabel(href));
-      return `<a class="flex text-muted transition-colors duration-150 hover:text-fg" href="${safeUrl(href)}" rel="noopener nofollow ugc" aria-label="${label}" title="${label}">${linkIcon(href, "size-3.5")}</a>`;
+      return `<a class="flex size-6 items-center justify-center rounded text-muted transition-colors duration-150 hover:text-fg" href="${safeUrl(href)}" rel="noopener nofollow ugc" aria-label="${label}" title="${label}">${linkIcon(href, "size-3.5")}</a>`;
     })
     .join("");
-  const author = `<span class="font-medium">${name}</span>${icons ? `<span class="flex items-center gap-1.5">${icons}</span>` : ""}`;
+  const author = `<span class="font-medium">${name}</span>${icons ? `<span class="-mx-1 flex items-center">${icons}</span>` : ""}`;
   const avatar = entry.avatar
     ? `<img class="m-0 size-8 shrink-0 rounded-full object-cover" src="${safeUrl(entry.avatar)}" alt="" width="32" height="32" loading="lazy" decoding="async">`
     : `<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-line text-xs text-muted" aria-hidden="true">${escapeHtml(entry.name.slice(0, 1).toUpperCase())}</span>`;

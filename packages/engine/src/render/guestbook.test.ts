@@ -60,6 +60,7 @@ test("GitHub entries show icons only for supported social profiles, without dupl
   expect(html).not.toContain("instagram.com");
   expect(html).toContain('aria-label="linkedin.com/in/sample"');
   expect(html).toContain('rel="noopener nofollow ugc"');
+  expect(html).toContain('class="flex size-6 items-center justify-center');
 });
 
 test.each(["\n", "\r\n", "\r"])(

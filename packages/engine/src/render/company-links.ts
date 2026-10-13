@@ -11,6 +11,7 @@ import {
   faMedium,
   faNpm,
   faReddit,
+  faRust,
   faStackOverflow,
   faThreads,
   faTwitch,
@@ -40,6 +41,7 @@ const platformIcons: Record<string, IconDefinition> = {
   "stackoverflow.com": faStackOverflow,
   "dribbble.com": faDribbble,
   "behance.net": faBehance,
+  "crates.io": faRust,
 };
 
 export function linkLabel(href: string): string {

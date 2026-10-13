@@ -13,7 +13,10 @@
     "message": "Met this guy in Trackshift Hackathon. \nPeak Project.\nGreat teammates.\nW time spent.",
     "createdAt": "2026-10-07T20:13:33.000Z",
     "github": "Sanidhya14321",
-    "avatar": "/assets/guestbook/github-user-163896084.webp"
+    "avatar": "/assets/guestbook/github-user-163896084.webp",
+    "links": [
+      "https://www.linkedin.com/in/sanidhya-vats-9344522b7"
+    ]
   },
   {
     "id": "legacy-cms2rwupx000004k02v0b7iq6",
@@ -69,6 +72,7 @@
     "github": "Vivek09Chahal",
     "avatar": "/assets/guestbook/legacy-cmmnwv8bf0001l2045kzh6bmv.webp",
     "links": [
+      "https://vivek09chahal.github.io/portfolio",
       "https://twitter.com/vivekchahal09",
       "https://www.linkedin.com/in/vivekchahal09"
     ]
@@ -296,9 +300,10 @@
     "github": "Manas-thakur",
     "avatar": "/assets/guestbook/legacy-cmdbu7jne000wbkvtbu1t10wp.webp",
     "links": [
-      "https://tensorman.me",
+      "https://menace-ai.vercel.app",
       "https://x.com/Menace_thakur",
-      "https://www.linkedin.com/in/manasthakur30"
+      "https://www.linkedin.com/in/manasthakur30",
+      "https://www.instagram.com/menace_thakur"
     ]
   }
 ]

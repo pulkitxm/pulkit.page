@@ -1,4 +1,4 @@
-import { type GuestbookEntry, guestbookEntry } from "@pulkit/shared/guestbook";
+import { type GuestbookEntry, guestbookEntry, profileLink } from "@pulkit/shared/guestbook";
 import { z } from "zod";
 
 export type Request = (url: string, options?: RequestInit) => Promise<Response>;
@@ -16,7 +16,10 @@ const profileSchema = z.object({
   id: z.number().int().positive(),
   name: z.string().nullable(),
   avatar_url: z.url(),
+  blog: z.string().nullable().optional(),
+  twitter_username: z.string().nullable().optional(),
 });
+const socialAccountsSchema = z.array(z.object({ provider: z.string(), url: z.string() }));
 
 export interface Submission {
   entry: GuestbookEntry;
@@ -122,4 +125,57 @@ export async function githubAvatar(
   }
   const profile = profileSchema.parse(await response.json());
   return { url: profile.avatar_url, id: `github-user-${profile.id}` };
+}
+
+function profileUrl(value: string | null | undefined): string | null {
+  const trimmed = value?.trim();
+  if (!trimmed) {
+    return null;
+  }
+  const candidate = /^[a-z][a-z\d+.-]*:/i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  const parsed = profileLink.safeParse(candidate);
+  return parsed.success ? new URL(parsed.data).href : null;
+}
+
+export async function githubProfileLinks(
+  login: string,
+  token: string,
+  request: Request = fetch,
+): Promise<string[] | null> {
+  let profile: z.infer<typeof profileSchema>;
+  try {
+    profile = profileSchema.parse(
+      await githubJson(`users/${encodeURIComponent(login)}`, token, request),
+    );
+  } catch (error) {
+    if (error instanceof Error && error.message.endsWith("HTTP 404")) {
+      return null;
+    }
+    throw error;
+  }
+  const accounts = socialAccountsSchema.parse(
+    await githubJson(`users/${encodeURIComponent(profile.login)}/social_accounts`, token, request),
+  );
+  const candidates = [
+    profile.blog,
+    ...accounts.map((account) => account.url),
+    profile.twitter_username ? `https://x.com/${profile.twitter_username}` : null,
+  ];
+  const links: string[] = [];
+  const hosts = new Set([`github.com/${profile.login}`.toLowerCase()]);
+  for (const candidate of candidates) {
+    const url = profileUrl(candidate);
+    if (!url) {
+      continue;
+    }
+    const host = new URL(url).hostname.replace(/^www\./, "").replace(/^twitter\.com$/, "x.com");
+    const key =
+      host === "x.com" ? host : `${host}${new URL(url).pathname.replace(/\/$/, "")}`.toLowerCase();
+    if (hosts.has(key) || links.length >= 8) {
+      continue;
+    }
+    hosts.add(key);
+    links.push(url);
+  }
+  return links;
 }

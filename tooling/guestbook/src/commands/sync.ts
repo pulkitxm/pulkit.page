@@ -3,9 +3,14 @@ import { resolve } from "node:path";
 import process from "node:process";
 import { type GuestbookEntry, guestbookSettings } from "@pulkit/shared/guestbook";
 import { downloadAvatar } from "../lib/avatars.ts";
-import { githubAvatar, githubSubmissions, type Submission } from "../lib/github.ts";
+import {
+  githubAvatar,
+  githubProfileLinks,
+  githubSubmissions,
+  type Submission,
+} from "../lib/github.ts";
 import { googleSubmissions } from "../lib/google.ts";
-import { appendEntries, readEntries, repositoryRoot } from "../lib/store.ts";
+import { appendEntries, readEntries, refreshLinks, repositoryRoot } from "../lib/store.ts";
 
 async function sync(): Promise<void> {
   const token = process.env.GITHUB_TOKEN;
@@ -46,6 +51,14 @@ async function sync(): Promise<void> {
     additions.push(await withAvatar(submission));
   }
   console.log(`Imported ${await appendEntries(additions)} new guestbook messages.`);
+  const linksByLogin = new Map<string, string[]>();
+  for (const entry of await readEntries()) {
+    const login = entry.github?.toLowerCase();
+    if (login && !linksByLogin.has(login)) {
+      linksByLogin.set(login, (await githubProfileLinks(login, token)) ?? []);
+    }
+  }
+  console.log(`Refreshed profile links on ${await refreshLinks(linksByLogin)} guestbook messages.`);
 }
 
 async function withAvatar({

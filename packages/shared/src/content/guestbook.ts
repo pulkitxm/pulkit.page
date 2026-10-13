@@ -2,6 +2,14 @@ import { z } from "zod";
 
 const githubUsername = z.string().regex(/^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i);
 
+export const profileLink = z
+  .url({ protocol: /^https$/ })
+  .max(300)
+  .refine((value) => {
+    const url = new URL(value);
+    return !url.username && !url.password;
+  });
+
 export const guestbookEntry = z.strictObject({
   id: z.string().regex(/^(legacy|github|google)-[a-z\d-]+$/),
   name: z.string().min(1).max(100),
@@ -12,6 +20,7 @@ export const guestbookEntry = z.strictObject({
     .string()
     .regex(/^\/assets\/guestbook\/[a-z\d-]+\.webp$/)
     .nullable(),
+  links: z.array(profileLink).max(8).optional(),
 });
 
 export type GuestbookEntry = z.infer<typeof guestbookEntry>;

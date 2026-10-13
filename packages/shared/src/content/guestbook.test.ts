@@ -23,3 +23,12 @@ test("rejects unsafe asset paths and invalid GitHub identities", () => {
   );
   expect(guestbookEntry.safeParse({ ...entry, github: "../other-user" }).success).toBe(false);
 });
+
+test("accepts only https profile links without credentials", () => {
+  expect(guestbookEntry.safeParse({ ...entry, links: ["https://example.com/"] }).success).toBe(
+    true,
+  );
+  for (const link of ["http://example.com/", "javascript:alert(1)", "https://a:b@example.com/"]) {
+    expect(guestbookEntry.safeParse({ ...entry, links: [link] }).success).toBe(false);
+  }
+});

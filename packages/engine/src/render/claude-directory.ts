@@ -76,7 +76,7 @@ function pagination(base: string, current: number, count: number): string {
   const step = (page: number, label: string): string =>
     page >= 1 && page <= count
       ? `<a class="${pageLink}" href="${escapeHtml(directoryPageRoute(base, page))}">${label}</a>`
-      : `<span class="${pageLink} opacity-40" aria-hidden="true">${label}</span>`;
+      : "";
   const numbers = pageNumbers(current, count)
     .map((page) =>
       page === undefined

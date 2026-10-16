@@ -272,8 +272,8 @@ deleted to force a cold run.
 
 The page app opts out of the Turbo layer. Its `build`, `check:seo`, `check:site`
 and `check:html` tasks set `cache: false` in
-[apps/page/turbo.json](../apps/page/turbo.json), because a projects directive
-reads a GitHub starred list over the network at build time and Turbo
+[apps/page/turbo.json](../apps/page/turbo.json), because the projects and
+Claude Directory directives read GitHub over the network at build time and Turbo
 hashes only local files. Without the opt-out, rerunning an unchanged commit
 replays an older `dist` and the Projects page keeps a stale list however many
 times it is redeployed. The render cache still applies inside that build, so a

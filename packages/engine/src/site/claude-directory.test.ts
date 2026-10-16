@@ -126,7 +126,7 @@ test("a directory page expands into numbered pages and one page per project", ()
     ...Array.from({ length: 49 }, (_, index) => `/directory/hero-${index}/`),
     "/about/",
   ]);
-  expect(pages[0]?.index).toBe(true);
+  expect(pages[0]?.index).toBe(false);
   const project = pages.find((page) => page.route === "/directory/hero-7/");
   expect(project?.metadata).toEqual({
     title: "Hero 7",

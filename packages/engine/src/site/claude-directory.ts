@@ -1,4 +1,5 @@
 import { unescapeHtml } from "@pulkit/shared/html";
+import sharp from "sharp";
 import { stringify } from "yaml";
 import { isRecord } from "../lib/guards.ts";
 import {
@@ -134,12 +135,26 @@ async function stargazers(): Promise<number> {
   }
 }
 
+async function reencoded(project: DirectoryProject): Promise<DirectoryProject> {
+  if (!project.blur) {
+    return project;
+  }
+  try {
+    const source = Buffer.from(project.blur.slice(project.blur.indexOf(",") + 1), "base64");
+    const webp = await sharp(source).webp({ quality: 50 }).toBuffer();
+    return { ...project, blur: `data:image/webp;base64,${webp.toString("base64")}` };
+  } catch {
+    return { ...project, blur: "" };
+  }
+}
+
 export async function fetchDirectory(): Promise<Directory> {
   const [readme, posters, dates] = await Promise.all(
     ["README.md", "posters.json", "project-dates.json"].map(download),
   );
+  const projects = parseDirectory(readme ?? "", JSON.parse(posters ?? ""), JSON.parse(dates ?? ""));
   return {
-    projects: parseDirectory(readme ?? "", JSON.parse(posters ?? ""), JSON.parse(dates ?? "")),
+    projects: await Promise.all(projects.map(reencoded)),
     stars: await stargazers(),
   };
 }
@@ -197,7 +212,7 @@ export function withDirectoryPages(
   return pages.flatMap((page) =>
     hasDirectory(page)
       ? [
-          { ...page, index: true },
+          page,
           ...Array.from({ length: count - 1 }, (_, index) => numberedPage(page, index + 2, count)),
           ...projects.map((project) => projectPage(page, project)),
         ]

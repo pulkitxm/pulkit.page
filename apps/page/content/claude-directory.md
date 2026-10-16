@@ -1,5 +1,6 @@
 ---
 title: Claude Directory
+layout: wide
 description: More than 500 open-source interface experiments, from hero sections and GLSL shaders to
   landing pages and full templates, each with its prompt, code, and demo.
 ---

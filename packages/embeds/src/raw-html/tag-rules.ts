@@ -1,5 +1,7 @@
 import { codeFont } from "../lib/classes.ts";
 
+export const videoFrame = "mt-0 mb-6 overflow-hidden rounded-lg";
+
 export const frameBox = "mt-0 mb-6 block h-[500px] w-full overflow-hidden rounded";
 
 export const tagClasses: Readonly<Record<string, string>> = {
@@ -8,7 +10,7 @@ export const tagClasses: Readonly<Record<string, string>> = {
   details: "mt-0 mb-6 rounded-lg border border-line p-4 [&>*:last-child]:mb-0",
   summary: "cursor-pointer font-bold",
   iframe: `${frameBox} border-0`,
-  video: "mt-0 mb-6 block h-auto w-full rounded-lg",
+  video: "block h-auto w-full",
   small: "-mt-4 mb-6 block text-sm text-muted",
   code: `rounded-sm bg-surface px-1 py-0.5 ${codeFont}`,
 };

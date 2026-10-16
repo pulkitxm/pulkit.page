@@ -210,7 +210,7 @@ Both sites look identical because both take their entire presentation from
   replaces the default Tailwind theme with the site tokens, including the
   `--color-syn-*` syntax colors, and keeps the view transition rules that have
   no utility equivalent.
-- [layouts/](../packages/theme/layouts/) holds `home`, `simple` and `article`
+- [layouts/](../packages/theme/layouts/) holds `home`, `simple`, `wide` and `article`
   plus the `head`, `header` and `footer` partials. Each app would override them
   by adding its own `layouts/` directory; neither does.
 - `assets/` holds the favicons, the Comic Relief web fonts, the IBM Plex Mono
@@ -272,8 +272,8 @@ deleted to force a cold run.
 
 The page app opts out of the Turbo layer. Its `build`, `check:seo`, `check:site`
 and `check:html` tasks set `cache: false` in
-[apps/page/turbo.json](../apps/page/turbo.json), because a projects directive
-reads a GitHub starred list over the network at build time and Turbo
+[apps/page/turbo.json](../apps/page/turbo.json), because the projects and
+Claude Directory directives read GitHub over the network at build time and Turbo
 hashes only local files. Without the opt-out, rerunning an unchanged commit
 replays an older `dist` and the Projects page keeps a stale list however many
 times it is redeployed. The render cache still applies inside that build, so a

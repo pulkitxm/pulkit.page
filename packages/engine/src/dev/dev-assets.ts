@@ -2,7 +2,13 @@ import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { rm } from "node:fs/promises";
 import { extname, resolve, sep } from "node:path";
 import { bundleDemoScripts, compileDemoStyles, fontFile } from "@pulkit/demos/assets";
-import { bundleEmbedScripts, katexDirectory, photoswipeStyles } from "@pulkit/embeds/bundle";
+import {
+  bundleEmbedScripts,
+  katexDirectory,
+  photoswipeStyles,
+  plyrIcons,
+  plyrStyles,
+} from "@pulkit/embeds/bundle";
 import { bundleAnalyticsScript } from "@pulkit/theme/analytics";
 import { assetFile } from "@pulkit/theme/files";
 
@@ -78,6 +84,12 @@ export function developmentAssets(): DevelopmentAssets {
   async function embedAsset(name: string): Promise<AssetResolution> {
     if (name === "photoswipe.css") {
       return file("text/css", readFileSync(photoswipeStyles));
+    }
+    if (name === "plyr.css") {
+      return file("text/css", readFileSync(plyrStyles));
+    }
+    if (name === "plyr.svg") {
+      return file("image/svg+xml", readFileSync(plyrIcons));
     }
     if (!/-[a-z0-9]{8}\.js$/.test(name) || !embedBundle) {
       embedBundle = (embedBundle ?? Promise.resolve()).then(async () => {

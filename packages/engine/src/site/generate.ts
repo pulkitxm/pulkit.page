@@ -14,6 +14,7 @@ import { crawlerOutputs } from "../seo/crawler-outputs.ts";
 import { cardOutputs } from "../seo/og-images.ts";
 import { isNotFound, notFoundFile } from "../seo/routes.ts";
 import type { Page, SiteInventory } from "../types.ts";
+import { directoryOutputs } from "./claude-directory.ts";
 import { readSite } from "./site-inventory.ts";
 
 function outputFor(route: string): string {
@@ -66,6 +67,7 @@ export async function generateSite(outputDirectory: string, origin: string): Pro
       cardOutputs(pages, site, cache),
       crawlerOutputs(pages, site),
       markdownOutputs(pages, site),
+      directoryOutputs(pages, site),
     ]) {
       for (const [path, bytes] of generated) {
         outputs.set(path, bytes);

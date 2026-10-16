@@ -9,6 +9,7 @@ import { loadLayouts } from "../render/layouts.ts";
 import { projectListKey, projectsLine } from "../render/projects.ts";
 import { articles, isNotFound } from "../seo/routes.ts";
 import type { ListedPage, Page, ProjectList, Site, SiteInventory } from "../types.ts";
+import { fetchDirectory, hasDirectory, withDirectoryPages } from "./claude-directory.ts";
 import { fetchProjectList } from "./github-projects.ts";
 import { readGuestbook } from "./guestbook.ts";
 import { notFoundPage } from "./not-found.ts";
@@ -16,7 +17,7 @@ import { readFrontmatter, readPage, siteSettings } from "./read-page.ts";
 
 const externalList = /^:::list ([a-z0-9-]+):all\b/gm;
 
-export function readSiteConfig(url: string, root = "."): Site {
+function readSiteConfig(url: string, root = "."): Site {
   const config = siteSettings(
     readFrontmatter(readFileSync(join(root, siteConfigFile), "utf8")).data,
   );
@@ -47,7 +48,7 @@ function pageSources(root: string, content: string): string[] {
   });
 }
 
-export function readPages(root: string): Page[] {
+function readPages(root: string): Page[] {
   const content = join(root, "content");
   const routes = new Set<string>();
   const pages = pageSources(root, content)
@@ -107,7 +108,9 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
 }
 
 export async function readSite(url: string): Promise<SiteInventory> {
-  const pages = [...readPages("."), notFoundPage()];
+  const sources = [...readPages("."), notFoundPage()];
+  const directory = sources.some(hasDirectory) ? await fetchDirectory() : undefined;
+  const pages = directory ? withDirectoryPages(sources, directory) : sources;
   const names = new Set(
     pages.flatMap((page) =>
       [...page.body.matchAll(externalList)].flatMap((match) => (match[1] ? [match[1]] : [])),
@@ -120,6 +123,7 @@ export async function readSite(url: string): Promise<SiteInventory> {
       ...readSiteConfig(url),
       external: Object.fromEntries([...names].map((name) => [name, readExternalArticles(name)])),
       projects: await readProjectLists(pages),
+      ...(directory && { directory }),
       ...(pages.some((page) => /^:::guestbook[ \t]*$/m.test(page.body)) && {
         guestbook: readGuestbook(),
       }),

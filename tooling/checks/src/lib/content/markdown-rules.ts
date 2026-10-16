@@ -49,6 +49,7 @@ function checkDirective(node: MarkdownNode, fail: Fail): void {
     !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text) &&
     !/^:::projects [\w.-]+\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(text) &&
     text !== ":::guestbook" &&
+    text !== ":::claude-directory" &&
     !/^EMBEDTOKEN\d+X$/.test(text)
   ) {
     fail("invalid or embedded directive", node);

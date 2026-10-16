@@ -106,6 +106,8 @@ export function renderRawHtml(source: string, assets: PageAssets): string {
         if (name === "iframe" && faded) {
           faded = false;
           output += "</div>";
+        } else if (name === "video") {
+          output += "</video></div>";
         } else if (!voidTags.has(name)) {
           output += `</${outputTag(name)}>`;
         }

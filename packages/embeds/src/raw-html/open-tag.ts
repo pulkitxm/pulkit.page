@@ -1,8 +1,15 @@
 import { unescapeHtml as decode, escapeHtml } from "@pulkit/shared/html";
+import { videoPlayerScript } from "../lib/video-player.ts";
 import { localVideoSize } from "../lib/video-size.ts";
 import type { PageAssets } from "../types.ts";
 import { type AttributeValues, facadeScript, frameFacade } from "./frame-facade.ts";
-import { allowedAttributes, outputTag, tagClasses, trustedFrames } from "./tag-rules.ts";
+import {
+  allowedAttributes,
+  outputTag,
+  tagClasses,
+  trustedFrames,
+  videoFrame,
+} from "./tag-rules.ts";
 
 export interface OpenedTag {
   html: string;
@@ -55,6 +62,7 @@ export function openTag(name: string, attributes: string, assets: PageAssets): O
     values.set("loading", "lazy");
   }
   if (name === "video" && src !== undefined) {
+    assets.script(videoPlayerScript);
     values.set("loading", "lazy");
     values.set("preload", "none");
     const size = localVideoSize(src);
@@ -64,7 +72,10 @@ export function openTag(name: string, attributes: string, assets: PageAssets): O
     }
   }
   const classes = tagClasses[name] ? ` class="${tagClasses[name]}"` : "";
-  const directive = name === "video" ? "<!-- [html-validate-disable-next no-autoplay] -->" : "";
+  const directive =
+    name === "video"
+      ? `<div class="${videoFrame}" data-video-frame><!-- [html-validate-disable-next no-autoplay] -->`
+      : "";
   return {
     html: `${directive}<${outputTag(name)}${classes}${serializeAttributes(values)}>`,
     faded: false,

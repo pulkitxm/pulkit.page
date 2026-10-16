@@ -14,6 +14,7 @@ import { renderMarkdown } from "../markdown/markdown-export.ts";
 import { crawlerOutputs } from "../seo/crawler-outputs.ts";
 import { cardCategory, renderCard } from "../seo/og-images.ts";
 import { imagePath, isNotFound, markdownPath } from "../seo/routes.ts";
+import { directoryOutputs } from "../site/claude-directory.ts";
 import { renderSitePage } from "../site/generate.ts";
 import { readSite } from "../site/site-inventory.ts";
 import type { Page, SiteInventory } from "../types.ts";
@@ -143,6 +144,15 @@ export function developmentRenderer(origin: () => string): DevelopmentRenderer {
           kind: "content",
           body: crawler,
           type: crawlerType(pathname),
+          description: "generated",
+        };
+      }
+      const directory = directoryOutputs(pages, site).get(pathname.slice(1));
+      if (directory) {
+        return {
+          kind: "content",
+          body: directory,
+          type: "application/json; charset=utf-8",
           description: "generated",
         };
       }

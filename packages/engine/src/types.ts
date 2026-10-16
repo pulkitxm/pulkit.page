@@ -59,12 +59,22 @@ export interface ProjectList {
   projects: ListedProject[];
 }
 
+export interface DirectoryProject {
+  path: string;
+  name: string;
+  category: string;
+  summary: string;
+  stack: string;
+  poster: boolean;
+}
+
 export interface SiteContext extends SiteSettings {
   url?: string;
   author?: string;
   authorUrl?: string;
   external?: Record<string, ListedPage[]>;
   projects?: Record<string, ProjectList>;
+  directory?: DirectoryProject[];
   guestbook?: {
     entries: GuestbookEntry[];
     githubFormUrl: string;

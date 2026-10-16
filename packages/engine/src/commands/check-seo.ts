@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { isArticle } from "../seo/routes.ts";
+import { isArticle, isNotFound } from "../seo/routes.ts";
 import { validateSeo } from "../seo/validate-seo.ts";
-import { readPages, readSiteConfig } from "../site/site-inventory.ts";
+import { readSite } from "../site/site-inventory.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 import type { Page, Site } from "../types.ts";
 
@@ -47,8 +47,9 @@ function checkFeed(pages: readonly Page[], site: Site): void {
   }
 }
 
-const siteConfig = readSiteConfig(resolveSiteOrigin());
-const sitePages = readPages(".");
+const inventory = await readSite(resolveSiteOrigin());
+const siteConfig = inventory.site;
+const sitePages = inventory.pages.filter((page) => !isNotFound(page.route));
 const titles = new Set<string>();
 const descriptions = new Set<string | undefined>();
 for (const page of sitePages) {

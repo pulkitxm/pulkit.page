@@ -1,5 +1,14 @@
 import { matchBlockEmbed, matchInlineEmbed } from "@pulkit/embeds";
 import { markdownProcessor as markdown } from "@pulkit/shared/markdown";
+import {
+  directoryBase,
+  directoryFor,
+  directoryLine,
+  directoryPage,
+  directoryPageCount,
+  directoryPageRoute,
+  directorySource,
+} from "../render/claude-directory.ts";
 import { collectionItems, listingLimit } from "../render/listings.ts";
 import { projectListFor, projectListKey, projectsLine } from "../render/projects.ts";
 import type { ListedPage, PageRecord, Site } from "../types.ts";
@@ -44,6 +53,28 @@ function projectsMarkdown(site: Site, login: string, slug: string): string {
     return `- ${linkTo(project.name, project.url)} (${facts})${summary}`;
   });
   return [list.description, rows.join("\n")].filter(Boolean).join("\n\n");
+}
+
+function directoryMarkdown(context: DirectiveContext, page: number): string {
+  const { resolve, site } = context;
+  const projects = directoryFor(site);
+  const count = directoryPageCount(projects);
+  const base = directoryBase(context.page.route, page);
+  const rows = directoryPage(projects, page).map(
+    (project) =>
+      `- ${linkTo(project.name, directorySource(project))} (${project.category}): ${project.summary}`,
+  );
+  const steps = [
+    page > 1 ? linkTo("Previous page", resolve(directoryPageRoute(base, page - 1))) : "",
+    page < count ? linkTo("Next page", resolve(directoryPageRoute(base, page + 1))) : "",
+  ];
+  return [
+    `Page ${page} of ${count}, ${projects.length} projects in all.`,
+    rows.join("\n"),
+    steps.filter(Boolean).join(" · "),
+  ]
+    .filter(Boolean)
+    .join("\n\n");
 }
 
 function codeRanges(body: string): [number, number][] {
@@ -145,6 +176,9 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
         /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?[ \t]*$/gm,
         (_, collection: string, limit: string | undefined, byYear: string | undefined) =>
           token(listingMarkdown(context, collection, limit, Boolean(byYear))),
+      )
+      .replace(directoryLine, (_, number: string | undefined) =>
+        token(directoryMarkdown(context, Number(number ?? 1))),
       )
       .replace(projectsLine, (_, login: string, slug: string) =>
         token(projectsMarkdown(site, login, slug)),

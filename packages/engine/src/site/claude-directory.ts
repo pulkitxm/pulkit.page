@@ -8,7 +8,7 @@ import {
   directoryPageRoute,
   directoryProjectRoute,
 } from "../render/claude-directory.ts";
-import type { DirectoryProject, Page, PageMetadata, SiteContext } from "../types.ts";
+import type { Directory, DirectoryProject, Page, PageMetadata, SiteContext } from "../types.ts";
 import { readPage } from "./read-page.ts";
 
 const repository = "https://raw.githubusercontent.com/pulkitxm/claude-directory/main/";
@@ -31,6 +31,19 @@ function shorten(text: string): string {
   }
   const cut = text.slice(0, summaryLength);
   return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:.]+$/, "")}…`;
+}
+
+function projectTitle(name: string): string {
+  return name
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function blurFor(posters: Record<string, unknown>, path: string): string {
+  const entry = posters[path];
+  const blur = isRecord(entry) ? entry.blurDataURL : undefined;
+  return typeof blur === "string" && blur.startsWith("data:image/") ? blur : "";
 }
 
 function updatedDates(value: unknown): Map<string, string> {
@@ -75,10 +88,15 @@ export function parseDirectory(
       throw new Error(`Claude Directory project names must be unique and not numeric: ${name}`);
     }
     const text = plain(description);
+    const [group = "", premium, provider = ""] = path.split("/");
     projects.push({
       path,
       name,
+      title: projectTitle(name),
       category,
+      group,
+      provider: premium === "premium" && path.split("/").length >= 4 ? provider : "",
+      blur: blurFor(posters, path),
       summary: shorten(text),
       description: text,
       stack: plain(stack),
@@ -104,11 +122,26 @@ async function download(file: string): Promise<string> {
   return response.text();
 }
 
-export async function fetchDirectory(): Promise<DirectoryProject[]> {
+async function stargazers(): Promise<number> {
+  try {
+    const response = await fetch("https://api.github.com/repos/pulkitxm/claude-directory", {
+      headers: { accept: "application/vnd.github+json", "user-agent": "pulkit.page-build" },
+    });
+    const body: unknown = response.ok ? await response.json() : undefined;
+    return isRecord(body) && typeof body.stargazers_count === "number" ? body.stargazers_count : 0;
+  } catch {
+    return 0;
+  }
+}
+
+export async function fetchDirectory(): Promise<Directory> {
   const [readme, posters, dates] = await Promise.all(
     ["README.md", "posters.json", "project-dates.json"].map(download),
   );
-  return parseDirectory(readme ?? "", JSON.parse(posters ?? ""), JSON.parse(dates ?? ""));
+  return {
+    projects: parseDirectory(readme ?? "", JSON.parse(posters ?? ""), JSON.parse(dates ?? "")),
+    stars: await stargazers(),
+  };
 }
 
 const directoryPageLine = /^:::claude-directory[ \t]*$/m;
@@ -147,7 +180,7 @@ function projectPage(page: Page, project: DirectoryProject): Page {
     page,
     directoryProjectRoute(page.route, project),
     {
-      title: project.name,
+      title: project.title,
       description: project.description,
       ...(page.metadata.layout && { layout: page.metadata.layout }),
     },
@@ -179,7 +212,9 @@ export function directoryOutputs(pages: readonly Page[], site: SiteContext): Map
       .map((page) => [
         directoryIndexPath(page.route).slice(1),
         Buffer.from(
-          JSON.stringify(directoryFor(site).map(({ description: _, ...project }) => project)),
+          JSON.stringify(
+            directoryFor(site).map(({ description: _, blur: __, ...project }) => project),
+          ),
         ),
       ]),
   );

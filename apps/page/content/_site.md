@@ -10,6 +10,8 @@ navigation:
     href: /exp/
   - label: Projects
     href: /projects/
+  - label: Claude Directory
+    href: /claude-directory/
   - label: Contact
     href: /contact/
   - label: Guestbook

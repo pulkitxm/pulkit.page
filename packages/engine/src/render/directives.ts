@@ -3,6 +3,7 @@ import { matchBlockEmbed, matchInlineEmbed, renderEmbed } from "@pulkit/embeds";
 import { escapeHtml } from "@pulkit/shared/html";
 import type { MarkedExtension } from "marked";
 import { directoryDirective, directoryFor, renderDirectory } from "./claude-directory.ts";
+import { renderDirectoryProject } from "./claude-directory-project.ts";
 import { renderGuestbook } from "./guestbook.ts";
 import { safeUrl } from "./html.ts";
 import {
@@ -71,7 +72,7 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
   const carousels = tokenStore<CarouselImage[]>();
   const listings = tokenStore<Listing>();
   const projects = tokenStore<string>();
-  const directoryPages = tokenStore<number>();
+  const directoryPages = tokenStore<{ page: number; project: string | undefined }>();
   return {
     walkTokens: async (token) => {
       if (token.type === "demo") {
@@ -171,16 +172,18 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
             throw new Error("Invalid Claude Directory directive; use :::claude-directory");
           }
           return match
-            ? directoryPages.create("claudeDirectory", match[0], Number(match[1] ?? 1))
+            ? directoryPages.create("claudeDirectory", match[0], {
+                page: Number(match[1] ?? 1),
+                project: match[2],
+              })
             : undefined;
         },
         renderer(token) {
-          return renderDirectory(
-            directoryFor(context.site),
-            directoryPages.read(token),
-            context.route,
-            context.assets,
-          );
+          const { page, project } = directoryPages.read(token);
+          const directory = directoryFor(context.site);
+          return project
+            ? renderDirectoryProject(directory, project, context.route, context.assets)
+            : renderDirectory(directory, page, context.route, context.assets);
         },
       },
       {

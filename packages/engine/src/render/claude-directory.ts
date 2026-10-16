@@ -3,13 +3,15 @@ import type { DirectoryProject, SiteContext } from "../types.ts";
 import { safeUrl } from "./html.ts";
 import type { PageAssets } from "./render-context.ts";
 
-export const directoryDirective = /^:::claude-directory(?: page=([1-9][0-9]*))?[ \t]*(?:\n|$)/;
+export const directoryDirective =
+  /^:::claude-directory(?: (?:page=([1-9][0-9]*)|project=([\w.-]+)))?[ \t]*(?:\n|$)/;
 
-export const directoryLine = /^:::claude-directory(?: page=([1-9][0-9]*))?[ \t]*$/gm;
+export const directoryLine =
+  /^:::claude-directory(?: (?:page=([1-9][0-9]*)|project=([\w.-]+)))?[ \t]*$/gm;
 
-const mediaOrigin = "https://claude-directory.pulkitxm.com/";
+export const mediaOrigin = "https://claude-directory.pulkitxm.com/";
 const sourceOrigin = "https://github.com/pulkitxm/claude-directory/tree/main/";
-const pageSize = 24;
+export const pageSize = 24;
 
 const gapClasses = "px-1 text-muted max-sm:px-0";
 
@@ -29,6 +31,14 @@ export function directoryPageCount(projects: readonly DirectoryProject[]): numbe
 
 export function directoryPageRoute(base: string, page: number): string {
   return page === 1 ? base : `${base}${page}/`;
+}
+
+export function directoryProjectRoute(base: string, project: DirectoryProject): string {
+  return `${base}${project.name}/`;
+}
+
+export function directoryPoster(project: DirectoryProject): string {
+  return `${mediaOrigin}${project.path}/poster.jpg`;
 }
 
 export function directoryIndexPath(base: string): string {
@@ -53,11 +63,11 @@ export function directoryBase(route: string, page: number): string {
   return page === 1 ? route : route.replace(/[0-9]+\/$/, "");
 }
 
-function card(project: DirectoryProject): string {
-  const image = project.poster
-    ? `<img class="block size-full object-cover" src="${safeUrl(`${mediaOrigin}${project.path}/poster.jpg`)}" alt="" width="1280" height="800" loading="lazy" decoding="async" data-card-image>`
+function card(project: DirectoryProject, base: string): string {
+  const image = project.published
+    ? `<img class="block size-full object-cover" src="${safeUrl(directoryPoster(project))}" alt="" width="1280" height="800" loading="lazy" decoding="async" data-card-image>`
     : "No preview";
-  return `<li class="min-w-0"><a class="group grid gap-2.5 text-inherit no-underline" href="${safeUrl(directorySource(project))}" rel="noopener" data-card-link><span class="flex aspect-[16/10] items-center justify-center overflow-hidden rounded-md border border-line bg-surface text-xs text-muted" data-card-frame>${image}</span><span class="flex items-baseline justify-between gap-3"><span class="truncate font-medium underline-offset-4 group-hover:underline" data-card-name>${escapeHtml(project.name)}</span><span class="shrink-0 text-2xs text-muted" data-card-category>${escapeHtml(project.category)}</span></span></a><p class="mt-1.5 mb-0 line-clamp-3 text-sm leading-normal text-muted" data-card-summary>${escapeHtml(project.summary)}</p></li>`;
+  return `<li class="min-w-0"><a class="group grid gap-2.5 text-inherit no-underline" href="${escapeHtml(directoryProjectRoute(base, project))}" data-card-link><span class="flex aspect-[16/10] items-center justify-center overflow-hidden rounded-md border border-line bg-surface text-xs text-muted" data-card-frame>${image}</span><span class="flex items-baseline justify-between gap-3"><span class="truncate font-medium underline-offset-4 group-hover:underline" data-card-name data-title>${escapeHtml(project.name)}</span><span class="shrink-0 text-2xs text-muted" data-card-category>${escapeHtml(project.category)}</span></span></a><p class="mt-1.5 mb-0 line-clamp-3 text-sm leading-normal text-muted" data-card-summary>${escapeHtml(project.summary)}</p></li>`;
 }
 
 function pageNumbers(current: number, count: number): (number | undefined)[] {
@@ -101,7 +111,7 @@ export function renderDirectory(
   const status = `Showing ${first} to ${first + shown.length - 1} of ${projects.length} projects`;
   const placeholder = projects[0];
   const template = placeholder
-    ? `<template data-directory-card>${card({ ...placeholder, poster: true })}</template>`
+    ? `<template data-directory-card>${card({ ...placeholder, published: true }, base)}</template>`
     : "";
-  return `<div class="mt-8" data-directory data-index="${escapeHtml(directoryIndexPath(base))}" data-media="${mediaOrigin}" data-source="${sourceOrigin}"><div class="mb-4" role="search" hidden data-directory-search><label class="sr-only" for="directory-query">Search all ${projects.length} projects</label><input class="box-border w-full rounded-md border border-line bg-transparent px-3.5 py-2.5 text-inherit [font:inherit] placeholder:text-muted" id="directory-query" name="q" type="search" placeholder="Search all ${projects.length} projects" autocomplete="off" spellcheck="false"></div><p class="mt-0 mb-6 text-sm text-muted" aria-live="polite" data-directory-status>${status}</p><ul class="m-0 grid list-none gap-x-6 gap-y-8 p-0 sm:grid-cols-2" data-directory-list>${shown.map(card).join("")}</ul><div class="mt-8 text-center" hidden data-directory-more><button class="cursor-pointer rounded-md border border-line bg-transparent px-4 py-2 text-sm text-inherit [font:inherit] hover:bg-surface" type="button">Show more</button></div><div data-directory-pages>${pagination(base, page, count)}</div>${template}</div>`;
+  return `<div class="mt-8" data-directory data-index="${escapeHtml(directoryIndexPath(base))}" data-media="${mediaOrigin}" data-base="${escapeHtml(base)}"><div class="mb-4 max-w-190" role="search" hidden data-directory-search><label class="sr-only" for="directory-query">Search all ${projects.length} projects</label><input class="box-border w-full rounded-md border border-line bg-transparent px-3.5 py-2.5 text-inherit [font:inherit] placeholder:text-muted" id="directory-query" name="q" type="search" placeholder="Search all ${projects.length} projects" autocomplete="off" spellcheck="false"></div><p class="mt-0 mb-6 text-sm text-muted" aria-live="polite" data-directory-status>${status}</p><ul class="m-0 grid list-none gap-x-6 gap-y-8 p-0 sm:grid-cols-2 min-[64rem]:grid-cols-3 min-[100rem]:grid-cols-4" data-directory-list>${shown.map((project) => card(project, base)).join("")}</ul><div class="mt-8 text-center" hidden data-directory-more><button class="cursor-pointer rounded-md border border-line bg-transparent px-4 py-2 text-sm text-inherit [font:inherit] hover:bg-surface" type="button">Show more</button></div><div data-directory-pages>${pagination(base, page, count)}</div>${template}</div>`;
 }

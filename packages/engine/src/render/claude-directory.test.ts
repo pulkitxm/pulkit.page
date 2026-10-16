@@ -10,8 +10,9 @@ const directory: DirectoryProject[] = Array.from({ length: 60 }, (_, index) => (
   name: `hero-${index}`,
   category: "Heroes & <friends>",
   summary: `Hero number ${index}`,
+  description: `The full story of hero number ${index}`,
   stack: "HTML",
-  poster: index !== 25,
+  published: index !== 25,
 }));
 
 const site = { url: "https://example.invalid", directory } satisfies Site;
@@ -30,7 +31,8 @@ test("the first page lists 24 projects, the search box, and links to later pages
   expect(html).toContain('href="/directory/" aria-current="page"');
   expect(html).toContain("Heroes &amp; &lt;friends&gt;");
   expect(html).toContain("https://claude-directory.pulkitxm.com/heroes/hero-0/poster.jpg");
-  expect(html).toContain("https://github.com/pulkitxm/claude-directory/tree/main/heroes/hero-0");
+  expect(html).toContain('href="/directory/hero-0/"');
+  expect(html).toContain('data-base="/directory/"');
   expect(html).toContain('src="/assets/embeds/claude-directory.js"');
   const config = JSON.parse(
     readFileSync(new URL("../../../../.htmlvalidate.json", import.meta.url), "utf8"),
@@ -69,10 +71,50 @@ test("Markdown copies list the page's projects and the neighbouring pages", () =
     site,
   );
   expect(markdown).toContain("Page 2 of 3, 60 projects in all.");
-  expect(markdown).toContain(
-    "[hero-24](https://github.com/pulkitxm/claude-directory/tree/main/heroes/hero-24)",
-  );
+  expect(markdown).toContain("[hero-24](https://example.invalid/directory/hero-24/)");
   expect(markdown).not.toContain("hero-23]");
   expect(markdown).toContain("[Previous page](https://example.invalid/directory.md)");
   expect(markdown).toContain("[Next page](https://example.invalid/directory/3.md)");
+});
+
+test("a project page shows its demo, details, actions and neighbours", async () => {
+  const html = await renderPage(
+    "---\ntitle: hero-30\ndescription: The full story.\n---\n:::claude-directory project=hero-30\n",
+    { site, route: "/directory/hero-30/" },
+  );
+  expect(html).toContain("https://claude-directory.pulkitxm.com/heroes/hero-30/demo.mp4");
+  expect(html).toContain("The full story of hero number 30");
+  expect(html).toContain("Heroes &amp; &lt;friends&gt;");
+  expect(html).toContain(
+    'data-prompt="https://raw.githubusercontent.com/pulkitxm/claude-directory/main/heroes/hero-30/prompt.md"',
+  );
+  expect(html).toContain('href="https://claude-directory.pulkitxm.com/heroes/hero-30/"');
+  expect(html).toContain('href="/directory/hero-29/"');
+  expect(html).toContain('href="/directory/hero-31/"');
+  expect(html).toContain('href="/directory/2/">Back to page 2');
+});
+
+test("an unpublished project has no demo or live preview", async () => {
+  const html = await renderPage(
+    "---\ntitle: hero-25\ndescription: The full story.\n---\n:::claude-directory project=hero-25\n",
+    { site, route: "/directory/hero-25/" },
+  );
+  expect(html).not.toContain("demo.mp4");
+  expect(html).not.toContain("Open live preview");
+  expect(html).toContain("No preview");
+});
+
+test("project Markdown copies carry the description and links", () => {
+  const markdown = renderMarkdown(
+    {
+      route: "/directory/hero-30/",
+      metadata: { title: "hero-30" },
+      body: ":::claude-directory project=hero-30\n",
+    },
+    [{ route: "/directory/", metadata: { title: "Directory" } }],
+    site,
+  );
+  expect(markdown).toContain("The full story of hero number 30");
+  expect(markdown).toContain("- Stack: HTML");
+  expect(markdown).toContain("[All projects](https://example.invalid/directory.md)");
 });

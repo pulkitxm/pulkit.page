@@ -64,8 +64,9 @@ export interface DirectoryProject {
   name: string;
   category: string;
   summary: string;
+  description: string;
   stack: string;
-  poster: boolean;
+  published: boolean;
 }
 
 export interface SiteContext extends SiteSettings {

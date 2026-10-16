@@ -7,10 +7,13 @@ import {
   directoryPage,
   directoryPageCount,
   directoryPageRoute,
+  directoryProjectRoute,
   directorySource,
 } from "../render/claude-directory.ts";
+import { directoryProjectAt, directoryProjectLinks } from "../render/claude-directory-project.ts";
 import { collectionItems, listingLimit } from "../render/listings.ts";
 import { projectListFor, projectListKey, projectsLine } from "../render/projects.ts";
+import { parentRoute } from "../seo/routes.ts";
 import type { ListedPage, PageRecord, Site } from "../types.ts";
 import { demoMarkdown, embedMarkdown } from "./embed-markdown.ts";
 import type { MarkdownNode } from "./html-fallback.ts";
@@ -62,7 +65,7 @@ function directoryMarkdown(context: DirectiveContext, page: number): string {
   const base = directoryBase(context.page.route, page);
   const rows = directoryPage(projects, page).map(
     (project) =>
-      `- ${linkTo(project.name, directorySource(project))} (${project.category}): ${project.summary}`,
+      `- ${linkTo(project.name, resolve(directoryProjectRoute(base, project)))} (${project.category}): ${project.summary}`,
   );
   const steps = [
     page > 1 ? linkTo("Previous page", resolve(directoryPageRoute(base, page - 1))) : "",
@@ -75,6 +78,24 @@ function directoryMarkdown(context: DirectiveContext, page: number): string {
   ]
     .filter(Boolean)
     .join("\n\n");
+}
+
+function directoryProjectMarkdown(context: DirectiveContext, name: string): string {
+  const { project } = directoryProjectAt(directoryFor(context.site), name);
+  const links = directoryProjectLinks(project);
+  return [
+    project.description,
+    [
+      `- Category: ${project.category}`,
+      `- Stack: ${project.stack}`,
+      links.live ? `- ${linkTo("Live preview", links.live)}` : "",
+      `- ${linkTo("Prompt", links.promptSource)}`,
+      `- ${linkTo("Source on GitHub", directorySource(project))}`,
+      `- ${linkTo("All projects", context.resolve(parentRoute(context.page.route)))}`,
+    ]
+      .filter(Boolean)
+      .join("\n"),
+  ].join("\n\n");
 }
 
 function codeRanges(body: string): [number, number][] {
@@ -177,8 +198,12 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
         (_, collection: string, limit: string | undefined, byYear: string | undefined) =>
           token(listingMarkdown(context, collection, limit, Boolean(byYear))),
       )
-      .replace(directoryLine, (_, number: string | undefined) =>
-        token(directoryMarkdown(context, Number(number ?? 1))),
+      .replace(directoryLine, (_, number: string | undefined, project: string | undefined) =>
+        token(
+          project
+            ? directoryProjectMarkdown(context, project)
+            : directoryMarkdown(context, Number(number ?? 1)),
+        ),
       )
       .replace(projectsLine, (_, login: string, slug: string) =>
         token(projectsMarkdown(site, login, slug)),

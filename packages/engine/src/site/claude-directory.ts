@@ -6,8 +6,9 @@ import {
   directoryIndexPath,
   directoryPageCount,
   directoryPageRoute,
+  directoryProjectRoute,
 } from "../render/claude-directory.ts";
-import type { DirectoryProject, Page, SiteContext } from "../types.ts";
+import type { DirectoryProject, Page, PageMetadata, SiteContext } from "../types.ts";
 import { readPage } from "./read-page.ts";
 
 const repository = "https://raw.githubusercontent.com/pulkitxm/claude-directory/main/";
@@ -19,6 +20,7 @@ const dashPattern = new RegExp(`\\s*${String.fromCodePoint(0x2014)}\\s*`, "g");
 function plain(value: string): string {
   return unescapeHtml(value.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[*`]/g, ""))
     .replace(dashPattern, ", ")
+    .replace(/[<>]/g, "")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -69,13 +71,18 @@ export function parseDirectory(
     if (!(name && category)) {
       throw new Error(`Unreadable Claude Directory row: ${line.slice(0, 80)}`);
     }
+    if (/^[0-9]+$/.test(name) || projects.some((project) => project.name === name)) {
+      throw new Error(`Claude Directory project names must be unique and not numeric: ${name}`);
+    }
+    const text = plain(description);
     projects.push({
       path,
       name,
       category,
-      summary: shorten(plain(description)),
+      summary: shorten(text),
+      description: text,
       stack: plain(stack),
-      poster: Object.hasOwn(posters, path),
+      published: Object.hasOwn(posters, path),
     });
   }
   if (projects.length === 0) {
@@ -110,21 +117,43 @@ export function hasDirectory(page: { body: string }): boolean {
   return directoryPageLine.test(page.body);
 }
 
+function generatedPage(
+  page: Page,
+  route: string,
+  metadata: PageMetadata,
+  directive: string,
+  body = page.body,
+): Page {
+  const text = `---\n${stringify(metadata)}---\n${body.replace(directoryPageLine, directive)}`;
+  return { source: page.source, text, ...readPage(text), route, index: false };
+}
+
 function numberedPage(page: Page, number: number, count: number): Page {
-  const { metadata, body } = page;
-  const frontmatter = stringify({
-    ...metadata,
-    title: `${metadata.title}, page ${number}`,
-    description: `${metadata.description ?? metadata.title} Page ${number} of ${count}.`,
-  });
-  const text = `---\n${frontmatter}---\n${body.replace(directoryPageLine, `:::claude-directory page=${number}`)}`;
-  return {
-    source: page.source,
-    text,
-    ...readPage(text),
-    route: directoryPageRoute(page.route, number),
-    index: false,
-  };
+  const { metadata } = page;
+  return generatedPage(
+    page,
+    directoryPageRoute(page.route, number),
+    {
+      ...metadata,
+      title: `${metadata.title}, page ${number}`,
+      description: `${metadata.description ?? metadata.title} Page ${number} of ${count}.`,
+    },
+    `:::claude-directory page=${number}`,
+  );
+}
+
+function projectPage(page: Page, project: DirectoryProject): Page {
+  return generatedPage(
+    page,
+    directoryProjectRoute(page.route, project),
+    {
+      title: project.name,
+      description: project.description,
+      ...(page.metadata.layout && { layout: page.metadata.layout }),
+    },
+    `:::claude-directory project=${project.name}`,
+    ":::claude-directory\n",
+  );
 }
 
 export function withDirectoryPages(
@@ -135,8 +164,9 @@ export function withDirectoryPages(
   return pages.flatMap((page) =>
     hasDirectory(page)
       ? [
-          page,
+          { ...page, index: true },
           ...Array.from({ length: count - 1 }, (_, index) => numberedPage(page, index + 2, count)),
+          ...projects.map((project) => projectPage(page, project)),
         ]
       : [page],
   );
@@ -148,7 +178,9 @@ export function directoryOutputs(pages: readonly Page[], site: SiteContext): Map
       .filter(hasDirectory)
       .map((page) => [
         directoryIndexPath(page.route).slice(1),
-        Buffer.from(JSON.stringify(directoryFor(site))),
+        Buffer.from(
+          JSON.stringify(directoryFor(site).map(({ description: _, ...project }) => project)),
+        ),
       ]),
   );
 }

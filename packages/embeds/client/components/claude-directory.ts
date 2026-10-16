@@ -6,7 +6,7 @@ interface Project {
   category: string;
   summary: string;
   stack: string;
-  poster: boolean;
+  published: boolean;
 }
 
 interface Searchable {
@@ -24,7 +24,7 @@ function isProject(value: unknown): value is Project {
   return (
     ["path", "name", "category", "summary", "stack"].every(
       (field) => typeof fields[field] === "string",
-    ) && typeof fields.poster === "boolean"
+    ) && typeof fields.published === "boolean"
   );
 }
 
@@ -56,7 +56,7 @@ export function setupClaudeDirectory(root: HTMLElement): void {
   const moreButton = requireElement(more, "button", HTMLButtonElement);
   const pages = findElement(root, "[data-directory-pages]", HTMLElement);
   const template = requireElement(root, "[data-directory-card]", HTMLTemplateElement);
-  const { index = "", media = "", source = "" } = root.dataset;
+  const { index = "", media = "", base = "" } = root.dataset;
   const browsing = [...list.children];
   const browsingStatus = status.textContent ?? "";
   let projects: Promise<Searchable[]> | undefined;
@@ -73,12 +73,12 @@ export function setupClaudeDirectory(root: HTMLElement): void {
     if (!(item instanceof HTMLElement)) {
       throw new Error("Missing directory card template");
     }
-    requireElement(item, "[data-card-link]", HTMLAnchorElement).href = source + project.path;
+    requireElement(item, "[data-card-link]", HTMLAnchorElement).href = `${base}${project.name}/`;
     requireElement(item, "[data-card-name]", HTMLElement).textContent = project.name;
     requireElement(item, "[data-card-category]", HTMLElement).textContent = project.category;
     requireElement(item, "[data-card-summary]", HTMLElement).textContent = project.summary;
     const image = requireElement(item, "[data-card-image]", HTMLImageElement);
-    if (project.poster) {
+    if (project.published) {
       image.src = `${media}${project.path}/poster.jpg`;
     } else {
       requireElement(item, "[data-card-frame]", HTMLElement).textContent = "No preview";

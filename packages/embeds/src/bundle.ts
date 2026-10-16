@@ -6,6 +6,9 @@ import { bundleBrowserScripts } from "@pulkit/shared/bundle";
 export const photoswipeStyles = fileURLToPath(
   new URL("dist/photoswipe.css", import.meta.resolve("photoswipe/package.json")),
 );
+const plyrDirectory = fileURLToPath(new URL("dist", import.meta.resolve("plyr/package.json")));
+export const plyrStyles = join(plyrDirectory, "plyr.css");
+export const plyrIcons = join(plyrDirectory, "plyr.svg");
 export const katexDirectory = fileURLToPath(
   new URL("dist", import.meta.resolve("katex/package.json")),
 );
@@ -35,6 +38,8 @@ export async function bundleEmbedScripts(
 export async function buildEmbedAssets(outdir: string): Promise<void> {
   await bundleEmbedScripts(join(outdir, "embeds"));
   cpSync(photoswipeStyles, join(outdir, "embeds/photoswipe.css"));
+  cpSync(plyrStyles, join(outdir, "embeds/plyr.css"));
+  cpSync(plyrIcons, join(outdir, "embeds/plyr.svg"));
   cpSync(join(katexDirectory, "katex-swap.min.css"), join(outdir, "katex/katex-swap.min.css"));
   cpSync(join(katexDirectory, "fonts"), join(outdir, "katex/fonts"), { recursive: true });
 }

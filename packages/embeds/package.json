@@ -20,6 +20,7 @@
     "embla-carousel": "8.6.0",
     "image-size": "2.0.4",
     "katex": "0.18.7",
-    "photoswipe": "5.4.4"
+    "photoswipe": "5.4.4",
+    "plyr": "3.8.4"
   }
 }

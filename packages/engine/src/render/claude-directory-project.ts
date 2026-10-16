@@ -99,6 +99,9 @@ export function renderDirectoryProject(
 ): string {
   assets.script("/assets/embeds/claude-directory.js");
   const { project, index } = directoryProjectAt(projects, name);
+  if (project.published) {
+    assets.script("/assets/embeds/video-player.js");
+  }
   const links = directoryProjectLinks(project);
   return `<div class="grid gap-8 min-[64rem]:grid-cols-[minmax(0,1fr)_340px] min-[64rem]:items-start"><div class="min-w-0"><div class="flex aspect-[16/10] items-center justify-center overflow-hidden rounded-lg border border-line bg-surface text-sm text-muted">${media(project)}</div><p class="mt-6 mb-0 max-w-190">${escapeHtml(project.description)}</p></div><aside class="grid gap-6 rounded-lg border border-line p-5 min-[64rem]:sticky min-[64rem]:top-6" aria-label="Project details"><dl class="m-0 grid gap-4 text-sm">${fact("Category", project.category)}${fact("Stack", project.stack)}</dl><div class="grid gap-2.5">${actions(links)}</div></aside></div>${steps(projects, index, parentRoute(route))}`;
 }

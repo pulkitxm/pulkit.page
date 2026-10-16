@@ -19,6 +19,9 @@ export function setupProjectView(root: HTMLElement): void {
     preview.hidden = view === "code";
     code.hidden = view !== "code";
     const video = preview.querySelector("video");
+    if (view === "preview") {
+      video?.play().catch(() => undefined);
+    }
     if (view === "code") {
       video?.pause();
       if (!explorer) {

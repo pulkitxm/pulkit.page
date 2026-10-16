@@ -24,7 +24,10 @@ const readme = [
   "</details>",
 ].join("\n");
 
-const posters = { "hero-sections/quiet-hero": {}, "templates/premium/sample/long-shader": {} };
+const posters = {
+  "hero-sections/quiet-hero": { blurDataURL: "data:image/jpeg;base64,AAAA" },
+  "templates/premium/sample/long-shader": {},
+};
 
 const dates = [
   { project: "long-shader", lastUpdated: "2026-08-01T00:00:00Z" },
@@ -46,10 +49,16 @@ test("README rows become projects with categories, plain summaries, posters and 
   expect(long?.description.length).toBeGreaterThan(290);
   expect(loud?.summary).toBe("Bright hero, with confetti");
   expect(loud?.published).toBe(false);
+  expect(long?.provider).toBe("sample");
+  expect(long?.group).toBe("templates");
   expect(quiet).toEqual({
     path: "hero-sections/quiet-hero",
     name: "quiet-hero",
+    title: "Quiet Hero",
     category: "Hero sections",
+    group: "hero-sections",
+    provider: "",
+    blur: "data:image/jpeg;base64,AAAA",
     summary: "A calm hero with italic code details",
     description: "A calm hero with italic code details",
     stack: "HTML, CSS",
@@ -95,7 +104,11 @@ function sampleProjects(count: number): DirectoryProject[] {
   return Array.from({ length: count }, (_, index) => ({
     path: `heroes/hero-${index}`,
     name: `hero-${index}`,
+    title: `Hero ${index}`,
     category: "Heroes",
+    group: "heroes",
+    provider: "",
+    blur: "",
     summary: `Hero number ${index}`,
     description: `The full story of hero number ${index}`,
     stack: "HTML",
@@ -113,10 +126,10 @@ test("a directory page expands into numbered pages and one page per project", ()
     ...Array.from({ length: 49 }, (_, index) => `/directory/hero-${index}/`),
     "/about/",
   ]);
-  expect(pages[0]?.index).toBe(true);
+  expect(pages[0]?.index).toBe(false);
   const project = pages.find((page) => page.route === "/directory/hero-7/");
   expect(project?.metadata).toEqual({
-    title: "hero-7",
+    title: "Hero 7",
     description: "The full story of hero number 7",
   });
   expect(project?.body.trim()).toBe(":::claude-directory project=hero-7");
@@ -131,9 +144,9 @@ test("a directory page expands into numbered pages and one page per project", ()
 
 test("the search index is published next to the first directory page", () => {
   const all = sampleProjects(3);
-  const outputs = directoryOutputs([sourcePage()], { directory: all });
+  const outputs = directoryOutputs([sourcePage()], { directory: { projects: all, stars: 0 } });
   expect([...outputs.keys()]).toEqual(["directory/projects.json"]);
   expect(JSON.parse(outputs.get("directory/projects.json")?.toString() ?? "")).toEqual(
-    all.map(({ description: _, ...project }) => project),
+    all.map(({ description: _, blur: __, ...project }) => project),
   );
 });

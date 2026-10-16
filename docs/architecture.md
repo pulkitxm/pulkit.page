@@ -210,7 +210,7 @@ Both sites look identical because both take their entire presentation from
   replaces the default Tailwind theme with the site tokens, including the
   `--color-syn-*` syntax colors, and keeps the view transition rules that have
   no utility equivalent.
-- [layouts/](../packages/theme/layouts/) holds `home`, `simple`, `wide` and `article`
+- [layouts/](../packages/theme/layouts/) holds `home`, `simple`, `directory` and `article`
   plus the `head`, `header` and `footer` partials. Each app would override them
   by adding its own `layouts/` directory; neither does.
 - `assets/` holds the favicons, the Comic Relief web fonts, the IBM Plex Mono

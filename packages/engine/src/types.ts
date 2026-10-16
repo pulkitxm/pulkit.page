@@ -62,11 +62,20 @@ export interface ProjectList {
 export interface DirectoryProject {
   path: string;
   name: string;
+  title: string;
   category: string;
+  group: string;
+  provider: string;
+  blur: string;
   summary: string;
   description: string;
   stack: string;
   published: boolean;
+}
+
+export interface Directory {
+  projects: DirectoryProject[];
+  stars: number;
 }
 
 export interface SiteContext extends SiteSettings {
@@ -75,7 +84,7 @@ export interface SiteContext extends SiteSettings {
   authorUrl?: string;
   external?: Record<string, ListedPage[]>;
   projects?: Record<string, ProjectList>;
-  directory?: DirectoryProject[];
+  directory?: Directory;
   guestbook?: {
     entries: GuestbookEntry[];
     githubFormUrl: string;

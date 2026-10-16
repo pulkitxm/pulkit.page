@@ -267,7 +267,7 @@ Here's how the pieces fit together:
 The post where I open sourced it went viral, crossing 170k views:
 
 :::embed tweet-embed
-{"tweetUrl":"https://x.com/pu_lkit/status/2098105499879416040","content":"here you go, free and open sourced ✌🏻\n\nhttps://hinge.noveum.ai","stats":{"likes":2206,"bookmarks":0,"comments":57,"retweets":61,"views":"170k"},"timestamp":"September 10, 2026"}
+{"tweetUrl":"https://x.com/puulkit/status/2098105499879416040","content":"here you go, free and open sourced ✌🏻\n\nhttps://hinge.noveum.ai","stats":{"likes":2206,"bookmarks":0,"comments":57,"retweets":61,"views":"170k"},"timestamp":"September 10, 2026"}
 :::
 
 ## Technologies & Skills

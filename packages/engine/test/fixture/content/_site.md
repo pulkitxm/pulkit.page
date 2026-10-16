@@ -15,7 +15,7 @@ social:
   - label: GitHub
     href: https://github.com/Pulkitxm
   - label: X
-    href: https://x.com/pu_lkit
+    href: https://x.com/puulkit
   - label: LinkedIn
     href: https://www.linkedin.com/in/pulkitxm
 ---

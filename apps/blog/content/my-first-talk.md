@@ -27,10 +27,10 @@ The loop was simple. I took prompts from public references, mostly [motionsites.
 I didn't do a big launch. I messaged people I know and told them to repost it only if they actually liked it. A lot of them did, and it snowballed: **75k+ views on X**, **160+ stars**, and **100 to 200 new follows** in twenty-four hours.
 
 :::embed tweet-embed
-{"tweetUrl":"https://x.com/pu_lkit/status/2065401748202860896","content":"I spent thousands of dollars building this repo… so you don't have to\n\n50+ landing pages, hero sections & interactive prototypes: every single one generated with \"Claude Fable 5\", with the exact prompt preserved in its folder.\n\nSteal it. Ship it. Contribute. 👇","stats":{"likes":0,"bookmarks":0,"comments":0,"retweets":0,"views":"75k+"},"timestamp":"June 12, 2026"}
+{"tweetUrl":"https://x.com/puulkit/status/2065401748202860896","content":"I spent thousands of dollars building this repo… so you don't have to\n\n50+ landing pages, hero sections & interactive prototypes: every single one generated with \"Claude Fable 5\", with the exact prompt preserved in its folder.\n\nSteal it. Ship it. Contribute. 👇","stats":{"likes":0,"bookmarks":0,"comments":0,"retweets":0,"views":"75k+"},"timestamp":"June 12, 2026"}
 :::
 
-Then came the bittersweet twist: this morning the [US government blocked Fable 5 everywhere except the US](https://x.com/AnthropicAI/status/2065597531644743999), so a chunk of the people who got excited couldn't even try the tool I'd built the whole thing with. The work is open though, and [at least we have the memories](https://x.com/pu_lkit/status/2065646268672852448).
+Then came the bittersweet twist: this morning the [US government blocked Fable 5 everywhere except the US](https://x.com/AnthropicAI/status/2065597531644743999), so a chunk of the people who got excited couldn't even try the tool I'd built the whole thing with. The work is open though, and [at least we have the memories](https://x.com/puulkit/status/2065646268672852448).
 
 ## My first talk
 

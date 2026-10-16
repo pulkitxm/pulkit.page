@@ -1,46 +1,47 @@
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { escapeHtml } from "@pulkit/shared/html";
+import { faSvg, lucideSvg } from "@pulkit/shared/icons";
+import { ArrowLeft, ArrowRight, Bug, Code2, Copy, Download, ExternalLink, Play } from "lucide";
 import { parentRoute } from "../seo/routes.ts";
 import type { DirectoryProject } from "../types.ts";
+import { directoryProjectRoute, directoryScript } from "./claude-directory.ts";
 import {
-  directoryPageRoute,
+  directoryDemo,
+  directoryDownload,
+  directoryIssue,
   directoryPoster,
-  directoryProjectRoute,
+  directoryPrompt,
   directorySource,
   mediaOrigin,
-  pageSize,
-} from "./claude-directory.ts";
+  pill,
+} from "./claude-directory-card.ts";
 import { safeUrl } from "./html.ts";
 import type { PageAssets } from "./render-context.ts";
 
 const repository = "https://github.com/pulkitxm/claude-directory";
-const rawOrigin = "https://raw.githubusercontent.com/pulkitxm/claude-directory/main/";
 
-const action =
-  "cursor-pointer rounded-md border border-line bg-transparent px-4 py-2.5 text-center text-sm text-inherit no-underline [font:inherit] hover:bg-surface";
-
-const primaryAction =
-  "cursor-pointer rounded-md border border-fg bg-fg px-4 py-2.5 text-center text-sm text-bg [font:inherit] hover:opacity-90";
-
-const stepLink = "text-inherit decoration-muted underline-offset-4 hover:decoration-current";
+const button =
+  "inline-flex h-11 w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[6px] px-4 py-2 font-medium text-md no-underline [font:inherit] transition-[color,background-color,box-shadow]";
+const outline = `${button} border border-line bg-bg text-fg shadow-[0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-surface`;
+const ghost = `${button} border-0 bg-transparent text-fg hover:bg-surface`;
+const primary = `${button} h-12 border-0 bg-fg text-base text-bg shadow-[0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-fg/90`;
+const segment =
+  "inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-[6px] border-0 bg-transparent px-3 py-1.5 font-medium text-md text-muted [font:inherit] transition-colors hover:text-fg aria-pressed:bg-bg aria-pressed:text-fg aria-pressed:shadow-[0_1px_2px_0_rgb(0_0_0/0.05)]";
+const arrow =
+  "inline-flex size-8 items-center justify-center rounded-[6px] text-fg no-underline transition-colors hover:bg-surface";
+const pane = "rounded-[16px] border border-fg/10 bg-bg/80";
 
 export interface DirectoryProjectLinks {
   project: DirectoryProject;
   live: string | undefined;
-  prompt: string;
   promptSource: string;
-  download: string;
-  issue: string;
 }
 
 export function directoryProjectLinks(project: DirectoryProject): DirectoryProjectLinks {
-  const source = directorySource(project);
   return {
     project,
     live: project.published ? `${mediaOrigin}${project.path}/` : undefined,
-    prompt: `${rawOrigin}${project.path}/prompt.md`,
     promptSource: `${repository}/blob/main/${project.path}/prompt.md`,
-    download: `https://download-directory.github.io/?url=${encodeURIComponent(source)}`,
-    issue: `${repository}/issues/new?title=${encodeURIComponent(`Issue with ${project.name}`)}`,
   };
 }
 
@@ -56,39 +57,29 @@ export function directoryProjectAt(
   return { project, index };
 }
 
-function media(project: DirectoryProject): string {
-  if (!project.published) {
-    return "No preview";
-  }
-  return `<video class="block size-full object-cover" src="${safeUrl(`${mediaOrigin}${project.path}/demo.mp4`)}" poster="${safeUrl(directoryPoster(project))}" aria-label="${escapeHtml(`Demo of ${project.name}`)}" controls muted loop playsinline preload="none"></video>`;
+function demo(project: DirectoryProject): string {
+  const frame =
+    "aspect-[1280/800] w-full max-w-[56rem] overflow-hidden rounded-[12px] border border-[#000]/10 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.85)] dark:border-[#fff]/10";
+  const content = project.published
+    ? `<!-- [html-validate-disable-next no-autoplay] --><video class="block size-full object-cover" src="${safeUrl(directoryDemo(project))}" poster="${safeUrl(directoryPoster(project))}" title="${escapeHtml(`Demo of ${project.title}`)}" autoplay muted loop playsinline preload="auto" data-demo-video></video>`
+    : '<div class="flex size-full items-center justify-center bg-surface/40 text-md text-muted">No preview available</div>';
+  return `<div class="relative order-2 aspect-[16/9] min-w-0 overflow-hidden rounded-[16px] border border-line/40 min-[64rem]:order-1 min-[64rem]:aspect-auto min-[64rem]:h-full min-[64rem]:min-h-0" data-project-panel="preview"><div class="absolute inset-0 flex items-center justify-center p-4 sm:p-8 min-[64rem]:p-14"><div class="${frame}">${content}</div></div></div>`;
 }
 
-function fact(label: string, value: string): string {
-  return `<div><dt class="text-2xs tracking-[0.06em] text-muted uppercase">${label}</dt><dd class="m-0 mt-1">${escapeHtml(value)}</dd></div>`;
-}
-
-function actions(links: DirectoryProjectLinks): string {
-  const link = (href: string, label: string): string =>
-    `<a class="${action}" href="${safeUrl(href)}">${label}</a>`;
-  return [
-    `<button class="${primaryAction}" type="button" hidden data-prompt-copy data-prompt="${safeUrl(links.prompt)}">Copy prompt</button>`,
-    links.live ? link(links.live, "Open live preview") : "",
-    link(links.promptSource, "Read the prompt"),
-    link(links.download, "Download the code"),
-    link(directorySource(links.project), "View on GitHub"),
-    link(links.issue, "Report an issue"),
-  ].join("");
-}
-
-function steps(projects: readonly DirectoryProject[], index: number, base: string): string {
-  const previous = projects[index - 1];
-  const next = projects[index + 1];
-  const page = Math.floor(index / pageSize) + 1;
-  const step = (project: DirectoryProject | undefined, label: string): string =>
-    project
-      ? `<a class="${stepLink}" href="${escapeHtml(directoryProjectRoute(base, project))}">${label}: ${escapeHtml(project.name)}</a>`
-      : "<span></span>";
-  return `<nav class="mt-10 grid gap-3 text-sm sm:grid-cols-3" aria-label="More projects">${step(previous, "Previous")}<a class="${stepLink} sm:text-center" href="${escapeHtml(directoryPageRoute(base, page))}">Back to page ${page}</a><span class="sm:text-right">${next ? step(next, "Next") : ""}</span></nav>`;
+function sidebar(
+  project: DirectoryProject,
+  previous: string | undefined,
+  next: string | undefined,
+): string {
+  const links = directoryProjectLinks(project);
+  const step = (href: string | undefined, label: string, icon: typeof ArrowLeft): string =>
+    href
+      ? `<a class="${arrow}" href="${escapeHtml(href)}" aria-label="${label}">${lucideSvg(icon, "size-4 opacity-70")}</a>`
+      : "";
+  const live = links.live
+    ? `<a class="${outline}" href="${safeUrl(links.live)}" target="_blank" rel="noopener noreferrer">${lucideSvg(ExternalLink, "size-4")}Open live preview</a>`
+    : "";
+  return `<aside class="order-1 flex flex-col gap-5 ${pane} p-6 min-[64rem]:order-2 min-[64rem]:overflow-y-auto" aria-label="Project details"><div><h1 class="m-0 text-[24px]/[32px] font-bold tracking-tight text-fg sm:text-[30px]/[36px]" data-title>${escapeHtml(project.title)}</h1><p class="mt-2 mb-0 text-md text-fg/70">Built with Claude from a single prompt.</p></div><span class="${pill} px-2.5 py-0.5 text-xs">${escapeHtml(project.category)}</span><div class="grid grid-cols-2 gap-1 rounded-[8px] border border-line/60 bg-surface/30 p-1" role="group" aria-label="View"><button class="${segment}" type="button" aria-pressed="true" data-project-view="preview">${lucideSvg(Play, "size-3.5")}Preview</button><button class="${segment}" type="button" aria-pressed="false" data-project-view="code">${lucideSvg(Code2, "size-3.5")}Code</button></div><div class="flex flex-col gap-2.5"><button class="${primary}" type="button" data-prompt-copy data-prompt="${safeUrl(directoryPrompt(project))}">${lucideSvg(Copy, "size-4")}Copy prompt</button>${live}<a class="${outline}" href="${safeUrl(directoryDownload(project))}" target="_blank" rel="noopener noreferrer">${lucideSvg(Download, "size-4")}Download</a><a class="${outline}" href="${safeUrl(directorySource(project))}" target="_blank" rel="noopener noreferrer">${faSvg(faGithub, "size-4")}View on GitHub</a></div><div class="mt-auto flex flex-col gap-2.5"><a class="${ghost}" href="${safeUrl(directoryIssue(project))}" target="_blank" rel="noopener noreferrer">${lucideSvg(Bug, "size-4")}Report an issue</a><div class="flex justify-center"><div class="flex items-center gap-0.5">${step(previous, "Previous project", ArrowLeft)}${step(next, "Next project", ArrowRight)}</div></div></div></aside>`;
 }
 
 export function renderDirectoryProject(
@@ -97,11 +88,16 @@ export function renderDirectoryProject(
   route: string,
   assets: PageAssets,
 ): string {
-  assets.script("/assets/embeds/claude-directory.js");
+  assets.script(directoryScript);
   const { project, index } = directoryProjectAt(projects, name);
-  if (project.published) {
-    assets.script("/assets/embeds/video-player.js");
-  }
-  const links = directoryProjectLinks(project);
-  return `<div class="grid gap-8 min-[64rem]:grid-cols-[minmax(0,1fr)_340px] min-[64rem]:items-start"><div class="min-w-0"><div class="flex aspect-[16/10] items-center justify-center overflow-hidden rounded-lg border border-line bg-surface text-sm text-muted">${media(project)}</div><p class="mt-6 mb-0 max-w-190">${escapeHtml(project.description)}</p></div><aside class="grid gap-6 rounded-lg border border-line p-5 min-[64rem]:sticky min-[64rem]:top-6" aria-label="Project details"><dl class="m-0 grid gap-4 text-sm">${fact("Category", project.category)}${fact("Stack", project.stack)}</dl><div class="grid gap-2.5">${actions(links)}</div></aside></div>${steps(projects, index, parentRoute(route))}`;
+  const base = parentRoute(route);
+  const near = (offset: number): string | undefined => {
+    const neighbour = projects[index + offset];
+    return neighbour ? directoryProjectRoute(base, neighbour) : undefined;
+  };
+  const backdrop = project.blur || (project.published ? directoryPoster(project) : "");
+  const glow = backdrop
+    ? `<img class="absolute inset-0 size-full scale-125 object-cover blur-[100px] saturate-150" src="${escapeHtml(backdrop)}" alt="" aria-hidden="true"><div class="absolute inset-0 bg-bg/20 dark:bg-bg/40"></div>`
+    : "";
+  return `<div class="relative -mx-8 -mt-6 min-h-[calc(100dvh-7rem)] overflow-hidden max-sm:-mx-4 min-[64rem]:h-[calc(100dvh-7rem)] min-[64rem]:min-h-0">${glow}<section class="relative flex flex-col gap-4 p-4 sm:p-6 min-[64rem]:grid min-[64rem]:h-full min-[64rem]:grid-cols-[minmax(0,1fr)_360px] min-[64rem]:grid-rows-1 min-[64rem]:gap-5 min-[64rem]:overflow-hidden" data-project data-project-path="${escapeHtml(project.path)}">${sidebar(project, near(-1), near(1))}${demo(project)}<div class="order-2 min-h-[480px] min-w-0 min-[64rem]:order-1 min-[64rem]:h-full min-[64rem]:min-h-0" hidden data-project-panel="code"></div></section></div>`;
 }

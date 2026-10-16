@@ -2,7 +2,12 @@ import { renderDemo } from "@pulkit/demos/render";
 import { matchBlockEmbed, matchInlineEmbed, renderEmbed } from "@pulkit/embeds";
 import { escapeHtml } from "@pulkit/shared/html";
 import type { MarkedExtension } from "marked";
-import { directoryDirective, directoryFor, renderDirectory } from "./claude-directory.ts";
+import {
+  directoryDirective,
+  directoryFor,
+  directoryStars,
+  renderDirectory,
+} from "./claude-directory.ts";
 import { renderDirectoryProject } from "./claude-directory-project.ts";
 import { renderGuestbook } from "./guestbook.ts";
 import { safeUrl } from "./html.ts";
@@ -183,7 +188,13 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
           const directory = directoryFor(context.site);
           return project
             ? renderDirectoryProject(directory, project, context.route, context.assets)
-            : renderDirectory(directory, page, context.route, context.assets);
+            : renderDirectory(
+                directory,
+                directoryStars(context.site),
+                page,
+                context.route,
+                context.assets,
+              );
         },
       },
       {

@@ -110,7 +110,7 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
 export async function readSite(url: string): Promise<SiteInventory> {
   const sources = [...readPages("."), notFoundPage()];
   const directory = sources.some(hasDirectory) ? await fetchDirectory() : undefined;
-  const pages = directory ? withDirectoryPages(sources, directory) : sources;
+  const pages = directory ? withDirectoryPages(sources, directory.projects) : sources;
   const names = new Set(
     pages.flatMap((page) =>
       [...page.body.matchAll(externalList)].flatMap((match) => (match[1] ? [match[1]] : [])),

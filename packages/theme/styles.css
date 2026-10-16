@@ -6,6 +6,7 @@
 @source not "../engine/src/render/*.test.ts";
 @source "../code/src/highlight/token-role.ts";
 @source "../embeds/src";
+@source "../embeds/client";
 
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {

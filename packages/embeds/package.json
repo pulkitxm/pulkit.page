@@ -15,12 +15,16 @@
     "@fortawesome/free-brands-svg-icons": "7.3.1",
     "@fortawesome/free-regular-svg-icons": "7.3.1",
     "@fortawesome/free-solid-svg-icons": "7.3.1",
+    "@pulkit/code": "workspace:*",
     "@pulkit/shared": "workspace:*",
     "@pulkit/theme": "workspace:*",
     "embla-carousel": "8.6.0",
+    "fuse.js": "7.5.0",
     "image-size": "2.0.4",
     "katex": "0.18.7",
+    "lucide": "1.49.0",
     "photoswipe": "5.4.4",
-    "plyr": "3.8.4"
+    "plyr": "3.8.4",
+    "shiki": "4.4.3"
   }
 }

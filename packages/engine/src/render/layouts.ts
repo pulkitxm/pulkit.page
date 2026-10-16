@@ -112,8 +112,8 @@ export function loadLayouts(directory: string = layoutDirectory()): Layouts {
     if (countOf(expanded, /{{\s*content\s*}}/g) !== 1) {
       throw new Error(`Layout ${name} must contain exactly one {{content}} placeholder`);
     }
-    if (countOf(expanded, /{{\s*heading\s*}}/g) !== 1) {
-      throw new Error(`Layout ${name} must contain exactly one {{heading}} placeholder`);
+    if (countOf(expanded, /{{\s*heading\s*}}/g) > 1) {
+      throw new Error(`Layout ${name} must contain at most one {{heading}} placeholder`);
     }
     layouts.set(name, expanded);
   }

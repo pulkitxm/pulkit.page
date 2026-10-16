@@ -5,7 +5,8 @@
   "exports": {
     "./format-code": "./src/format/format-code.ts",
     "./format-html": "./src/format/format-html.ts",
-    "./highlight": "./src/highlight/highlight.ts"
+    "./highlight": "./src/highlight/highlight.ts",
+    "./token-role": "./src/highlight/token-role.ts"
   },
   "dependencies": {
     "@biomejs/js-api": "6.0.0",

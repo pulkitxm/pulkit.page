@@ -8,8 +8,8 @@ import {
   directoryPageCount,
   directoryPageRoute,
   directoryProjectRoute,
-  directorySource,
 } from "../render/claude-directory.ts";
+import { directorySource } from "../render/claude-directory-card.ts";
 import { directoryProjectAt, directoryProjectLinks } from "../render/claude-directory-project.ts";
 import { collectionItems, listingLimit } from "../render/listings.ts";
 import { projectListFor, projectListKey, projectsLine } from "../render/projects.ts";

@@ -46,7 +46,7 @@ const pageLink =
 const pageGap = "px-1 text-muted max-sm:px-0";
 
 const filterItem =
-  "shrink-0 cursor-pointer whitespace-nowrap rounded-full border border-line bg-transparent px-3 py-1.5 text-md text-muted [font:inherit] transition-colors hover:text-fg aria-pressed:border-fg aria-pressed:bg-fg aria-pressed:text-bg min-[64rem]:flex min-[64rem]:w-full min-[64rem]:items-center min-[64rem]:justify-between min-[64rem]:gap-2 min-[64rem]:rounded-[6px] min-[64rem]:border-0 min-[64rem]:py-2 min-[64rem]:text-left min-[64rem]:hover:bg-surface min-[64rem]:aria-pressed:hover:bg-fg";
+  "group/filter shrink-0 cursor-pointer whitespace-nowrap rounded-full border border-line bg-transparent px-3 py-1.5 text-md text-muted [font:inherit] transition-colors hover:text-fg aria-pressed:border-fg aria-pressed:bg-fg aria-pressed:text-bg min-[64rem]:flex min-[64rem]:w-full min-[64rem]:items-center min-[64rem]:justify-between min-[64rem]:gap-2 min-[64rem]:rounded-[6px] min-[64rem]:border-0 min-[64rem]:py-2 min-[64rem]:text-left min-[64rem]:hover:bg-surface min-[64rem]:aria-pressed:hover:bg-fg";
 
 export function directoryFor(site: SiteContext): DirectoryProject[] {
   if (!site.directory) {
@@ -149,7 +149,7 @@ function filterButtons(projects: readonly DirectoryProject[]): string {
   return filterItems(projects)
     .map(
       (item) =>
-        `<button class="${filterItem} ${item.sub ? "min-[64rem]:pr-3 min-[64rem]:pl-7" : "min-[64rem]:px-3"}" type="button" aria-pressed="${item.filter === "all"}" data-filter="${escapeHtml(item.filter)}"><span>${escapeHtml(item.label)}</span><span class="hidden text-xs text-muted/70 tabular-nums min-[64rem]:inline">${item.count}</span></button>`,
+        `<button class="${filterItem} ${item.sub ? "min-[64rem]:pr-3 min-[64rem]:pl-7" : "min-[64rem]:px-3"}" type="button" aria-pressed="${item.filter === "all"}" data-filter="${escapeHtml(item.filter)}"><span>${escapeHtml(item.label)}</span><span class="hidden text-xs text-muted tabular-nums group-aria-pressed/filter:text-bg min-[64rem]:inline">${item.count}</span></button>`,
     )
     .join("");
 }

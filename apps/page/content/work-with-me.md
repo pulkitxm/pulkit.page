@@ -29,7 +29,7 @@ Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [te
 55+ landing pages, hero sections, and prototypes in one repo, each built end to end with Fable 5 and shipped with the prompt that produced it. 75k+ views and 160+ stars in a day, and my first talk on stage at Localhost Build. [The whole story](https://pulkit.blog/my-first-talk/).
 
 :::embed tweet-embed
-{"tweetUrl":"https://x.com/pu_lkit/status/2065401748202860896","content":"I spent thousands of dollars building this repo… so you don't have to\n\n50+ landing pages, hero sections & interactive prototypes: every single one generated with \"Claude Fable 5\", with the exact prompt preserved in its folder.\n\nSteal it. Ship it. Contribute. 👇","stats":{"likes":0,"bookmarks":0,"comments":0,"retweets":0,"views":"75k+"},"timestamp":"June 12, 2026"}
+{"tweetUrl":"https://x.com/puulkit/status/2065401748202860896","content":"I spent thousands of dollars building this repo… so you don't have to\n\n50+ landing pages, hero sections & interactive prototypes: every single one generated with \"Claude Fable 5\", with the exact prompt preserved in its folder.\n\nSteal it. Ship it. Contribute. 👇","stats":{"likes":0,"bookmarks":0,"comments":0,"retweets":0,"views":"75k+"},"timestamp":"June 12, 2026"}
 :::
 
 :::embed replies-carousel
@@ -41,7 +41,7 @@ Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [te
 Someone wanted an open-source version of a tool they were paying for. Built and up the same day, free, at [hinge.noveum.ai](https://hinge.noveum.ai).
 
 :::embed tweet-embed
-{"tweetUrl":"https://x.com/pu_lkit/status/2098105499879416040","content":"here you go, free and open sourced ✌🏻\n\nhttps://hinge.noveum.ai","stats":{"likes":2206,"bookmarks":0,"comments":57,"retweets":61,"views":"170k"},"timestamp":"September 10, 2026"}
+{"tweetUrl":"https://x.com/puulkit/status/2098105499879416040","content":"here you go, free and open sourced ✌🏻\n\nhttps://hinge.noveum.ai","stats":{"likes":2206,"bookmarks":0,"comments":57,"retweets":61,"views":"170k"},"timestamp":"September 10, 2026"}
 :::
 
 ### Warden
@@ -49,7 +49,7 @@ Someone wanted an open-source version of a tool they were paying for. Built and 
 Eight hours at the OpenAI Codex Hackathon: diff an npm package against its last trusted release, run malware heuristics and an LLM verdict, block a risky install before its scripts execute.
 
 :::embed tweet-embed
-{"tweetUrl":"https://x.com/pu_lkit/status/2076984717640114315","content":"Built Warden during the OpenAI Codex Hackathon.\n\nnpm install is still a blind trust fall, so we built Warden to diff packages against their last trusted release, run malware heuristics + an LLM verdict, and block high-risk installs before scripts execute.\n\nWe also got Codex credits as part of the hackathon, which made it an awesome experience to build with.","stats":{"likes":19,"bookmarks":0,"comments":2,"retweets":2,"views":"6.4k"},"timestamp":"July 14, 2026"}
+{"tweetUrl":"https://x.com/puulkit/status/2076984717640114315","content":"Built Warden during the OpenAI Codex Hackathon.\n\nnpm install is still a blind trust fall, so we built Warden to diff packages against their last trusted release, run malware heuristics + an LLM verdict, and block high-risk installs before scripts execute.\n\nWe also got Codex credits as part of the hackathon, which made it an awesome experience to build with.","stats":{"likes":19,"bookmarks":0,"comments":2,"retweets":2,"views":"6.4k"},"timestamp":"July 14, 2026"}
 :::
 
 ## Scope and timelines

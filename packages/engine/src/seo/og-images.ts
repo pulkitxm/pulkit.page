@@ -151,36 +151,60 @@ function fitSubtitleLine(text: string, size: number): string {
   return `${line}…`;
 }
 
-export function wrapSubtitle(text: string, size: number): string[] {
-  const lines = greedyWrap(text.replace(/\s+/g, " ").trim().split(/\s+/), size, titleMaxWidth);
-  if (lines.length <= maxSubtitleLines) {
-    return lines;
+export function wrapSubtitle(
+  text: string,
+  preferredSize: number,
+): { size: number; lines: string[] } {
+  const words = text.replace(/\s+/g, " ").trim().split(/\s+/);
+  for (let size = preferredSize; size >= 28; size -= 2) {
+    const lines = greedyWrap(words, size, titleMaxWidth);
+    if (lines.length <= maxSubtitleLines) {
+      return { size, lines };
+    }
   }
-  return [
-    ...lines.slice(0, maxSubtitleLines - 1),
-    fitSubtitleLine(lines.slice(maxSubtitleLines - 1).join(" "), size),
-  ];
+  const size = 28;
+  const lines = greedyWrap(words, size, titleMaxWidth);
+  return {
+    size,
+    lines: [
+      ...lines.slice(0, maxSubtitleLines - 1),
+      fitSubtitleLine(lines.slice(maxSubtitleLines - 1).join(" "), size),
+    ],
+  };
 }
 
 export function titleLayout(
   title: string,
   subtitle?: string,
-): { size: number; lines: string[]; subtitleLines: string[] } {
+): { size: number; lines: string[]; subtitleLines: string[]; subtitleSize: number } {
   for (const size of titleSizes) {
-    const subtitleLines = subtitle === undefined ? [] : wrapSubtitle(subtitle, subtitleSize(size));
+    const wrapped =
+      subtitle === undefined
+        ? { size: 0, lines: [] as string[] }
+        : wrapSubtitle(subtitle, subtitleSize(size));
     const lines = wrap(title, size);
     if (
-      titleHeight(size, lines.length) <= titleMaxHeight(size, subtitleLines.length) &&
+      titleHeight(size, lines.length) <= titleMaxHeight(size, wrapped.lines.length) &&
       lines.every((line) => titleWidth(line, size) <= titleMaxWidth)
     ) {
-      return { size, lines, subtitleLines };
+      return {
+        size,
+        lines,
+        subtitleLines: wrapped.lines,
+        subtitleSize: wrapped.size,
+      };
     }
   }
   const size = titleSizes.at(-1) ?? 44;
+  const wrapped =
+    subtitle === undefined
+      ? { size: 0, lines: [] as string[] }
+      : wrapSubtitle(subtitle, subtitleSize(size));
   return {
     size,
     lines: wrap(title, size),
-    subtitleLines: subtitle === undefined ? [] : wrapSubtitle(subtitle, subtitleSize(size)),
+    subtitleLines: wrapped.lines,
+    subtitleSize: wrapped.size,
   };
 }
 
@@ -256,7 +280,12 @@ const defs = `<linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-colo
 
 export function cardSvg(page: ListedPage, category: string): string {
   const { portrait, monogram } = cardImages();
-  const { size, lines, subtitleLines } = titleLayout(page.metadata.title, cardSubtitle(page));
+  const {
+    size,
+    lines,
+    subtitleLines,
+    subtitleSize: subSize,
+  } = titleLayout(page.metadata.title, cardSubtitle(page));
   const height = titleHeight(size, lines.length) + subtitleReserve(size, subtitleLines.length);
   const top = blockTop + (safeBottom - blockTop - height) / 2;
   const subtitleY = top + titleHeight(size, lines.length) + subtitleGap(size);
@@ -265,7 +294,6 @@ export function cardSvg(page: ListedPage, category: string): string {
       titleRuns(line, left - size * 0.03, top + capHeight(size) + index * lineHeight(size), size),
     )
     .join("");
-  const subSize = subtitleSize(size);
   const subtitleText =
     subtitleLines.length === 0
       ? ""

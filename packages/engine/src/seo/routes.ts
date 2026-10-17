@@ -12,8 +12,12 @@ export function markdownPath(route: string): string {
   return route === "/" ? "/index.md" : `${route.slice(0, -1)}.md`;
 }
 
-export function imagePath(route: string): string {
-  return `/og/${route === "/" ? "home" : route.slice(1, -1)}/card.png`;
+export type CardVariant = "card" | "card-x";
+
+export const cardVariants = ["card", "card-x"] as const satisfies readonly CardVariant[];
+
+export function imagePath(route: string, variant: CardVariant = "card"): string {
+  return `/og/${route === "/" ? "home" : route.slice(1, -1)}/${variant}.png`;
 }
 
 export function parentRoute(route: string): string {

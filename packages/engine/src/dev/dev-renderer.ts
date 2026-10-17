@@ -13,7 +13,13 @@ import { llmsText } from "../markdown/llms-text.ts";
 import { renderMarkdown } from "../markdown/markdown-export.ts";
 import { crawlerOutputs } from "../seo/crawler-outputs.ts";
 import { cardCategory, renderCard } from "../seo/og-images.ts";
-import { imagePath, isNotFound, markdownPath } from "../seo/routes.ts";
+import {
+  type CardVariant,
+  cardVariants,
+  imagePath,
+  isNotFound,
+  markdownPath,
+} from "../seo/routes.ts";
 import { directoryOutputs } from "../site/claude-directory.ts";
 import { renderSitePage } from "../site/generate.ts";
 import { readSite } from "../site/site-inventory.ts";
@@ -119,14 +125,20 @@ export function developmentRenderer(origin: () => string): DevelopmentRenderer {
       if (page) {
         return renderHtml(page);
       }
-      const card = pages.find((entry) => imagePath(entry.route) === pathname);
-      if (card) {
+      const variant = cardVariants.find((name) =>
+        pages.some((entry) => imagePath(entry.route, name) === pathname),
+      ) as CardVariant | undefined;
+      const card =
+        variant === undefined
+          ? undefined
+          : pages.find((entry) => imagePath(entry.route, variant) === pathname);
+      if (card && variant) {
         const startedAt = performance.now();
         const category = cardCategory(card, pages, site);
         const body = current.get(
           "card",
-          [card.metadata, card.route, site, category],
-          () => renderCard(card, site, category).toString("base64"),
+          [variant, card.metadata, card.route, site, category],
+          () => renderCard(card, category, site, variant).toString("base64"),
           access,
         );
         const description = summary(startedAt);

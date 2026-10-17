@@ -49,6 +49,7 @@ test("build renders nested routes, crawler files, cards, assets and fingerprinte
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).not.toContain("/404/");
   expect(readFileSync(join(cwd, "dist/llms.txt"), "utf8")).not.toContain("404");
   expect(readFileSync(join(cwd, "dist/og/home/card.png")).subarray(1, 4).toString()).toBe("PNG");
+  expect(readFileSync(join(cwd, "dist/og/home/card-x.png")).subarray(1, 4).toString()).toBe("PNG");
   expect(readFileSync(join(cwd, "dist/assets/example.txt"), "utf8")).toBe("asset");
   expect(readFileSync(join(cwd, "dist/CNAME"), "utf8")).toBe("example.com\n");
   expect(readFileSync(join(cwd, "dist/dev-3456/index.html"), "utf8")).toBe("running preview");
@@ -141,7 +142,10 @@ test("preview builds use their own origin and never claim the production domain"
   expect(result.status).toBe(0);
   const html = readFileSync(join(cwd, "dist/index.html"), "utf8");
   expect(html).toContain('href="https://preview.example/"');
-  expect(html).toContain('content="https://preview.example/og/home/card.png"');
+  expect(html).toContain('property="og:image" content="https://preview.example/og/home/card.png"');
+  expect(html).toContain(
+    'name="twitter:image" content="https://preview.example/og/home/card-x.png"',
+  );
   expect(html).not.toContain("https://example.com");
   expect(readFileSync(join(cwd, "dist/sitemap.xml"), "utf8")).toContain(
     "<loc>https://preview.example/</loc>",
@@ -205,7 +209,7 @@ test("rebuilds reuse cached renders and invalidate on content and layout edits",
   writeFileSync(first, readFileSync(first, "utf8").replace("Example body", "Edited body"));
   expect(computed(build(cwd))).toEqual({ html: 1 });
   writeFileSync(first, readFileSync(first, "utf8").replace("title: First", "title: Updated first"));
-  expect(computed(build(cwd))).toMatchObject({ html: 4, card: 1 });
+  expect(computed(build(cwd))).toMatchObject({ html: 4, card: 2 });
   const footer = join(cwd, "layouts/partials/footer.html");
   writeFiles(cwd, {
     "layouts/partials/footer.html": readFileSync(footer, "utf8").replace(

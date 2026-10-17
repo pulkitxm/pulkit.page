@@ -38,7 +38,7 @@ function expectedMetadata(
     "og:title": pageTitle(metadata, site, route),
     "twitter:title": pageTitle(metadata, site, route),
     "og:image": site.url + imagePath(route),
-    "twitter:image": site.url + imagePath(route),
+    "twitter:image": site.url + imagePath(route, "card-x"),
     "og:image:width": "1200",
     "og:image:height": "630",
     "og:image:type": "image/png",
@@ -99,8 +99,10 @@ export function validateSeo(
     require(!post.dateModified &&
       idOf(post.author) === `${site.url}/#person`, "unsupported article date or author");
   }
-  const png = readAsset(imagePath(route));
-  require(png.subarray(0, 8).equals(pngSignature), "invalid PNG signature");
-  require(png.readUInt32BE(16) === 1200 &&
-    png.readUInt32BE(20) === 630, "incorrect image dimensions");
+  for (const variant of ["card", "card-x"] as const) {
+    const png = readAsset(imagePath(route, variant));
+    require(png.subarray(0, 8).equals(pngSignature), `invalid ${variant} PNG signature`);
+    require(png.readUInt32BE(16) === 1200 &&
+      png.readUInt32BE(20) === 630, `incorrect ${variant} image dimensions`);
+  }
 }

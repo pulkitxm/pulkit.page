@@ -6,7 +6,17 @@ import { readFrontmatter, readPage, siteSettings } from "../site/read-page.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 import type { ListedPage, PageMetadata, Site } from "../types.ts";
 import { crawlerOutputs } from "./crawler-outputs.ts";
-import { renderCard, titleLines } from "./og-images.ts";
+import {
+  cardKind,
+  cardSubtitle,
+  cardSvg,
+  renderCard,
+  safeBottom,
+  titleLayout,
+  titleMaxWidth,
+  titleWidth,
+  wrapSubtitle,
+} from "./og-images.ts";
 import { ancestors, notFoundRoute, relatedPages } from "./routes.ts";
 import { robots } from "./seo-head.ts";
 import { safeJson, structuredData } from "./structured-data.ts";
@@ -62,17 +72,82 @@ test("navigation selects ancestors and related topics, excluding unrelated posts
 });
 test("cards render deterministically and preserve long titles", () => {
   const page = { route: "/blogs/example/", metadata };
-  expect(renderCard(page, site, "Writing").equals(renderCard(page, site, "Writing"))).toBe(true);
+  expect(renderCard(page, "Writing", site).equals(renderCard(page, "Writing", site))).toBe(true);
   const title =
     "Understanding distributed systems with practical examples and useful implementation details";
-  expect(titleLines(title).join(" ")).toBe(title);
+  const { size, lines } = titleLayout(title);
+  expect(lines.join(" ")).toBe(title);
+  expect(lines.every((line) => titleWidth(line, size) <= titleMaxWidth)).toBe(true);
+});
+test("Open Graph cards keep the footer while X cards clear the bottom-left corner", () => {
+  const page = {
+    route: "/blogs/example/",
+    metadata: {
+      title: "Database Transaction Internals: ACID, WAL, MVCC & Locking",
+      date: "2026-01-02",
+    },
+  };
+  const openGraph = cardSvg(page, "Writing", site, "card");
+  expect(openGraph).toContain(new URL(site.url).host.toUpperCase());
+  expect(openGraph).toContain("INDIA");
+  const twitter = cardSvg(page, "Writing", site, "card-x");
+  expect(twitter).not.toContain(new URL(site.url).host.toUpperCase());
+  const leftColumnY = [...twitter.matchAll(/<(?:text|tspan|path)[^>]*?\by="?([\d.]+)/g)].map(
+    (match) => Number(match[1]),
+  );
+  expect(Math.max(...leftColumnY)).toBeLessThanOrEqual(safeBottom);
+});
+test("card subtitles follow the page kind instead of a global role fallback", () => {
+  expect(cardKind({ route: "/", metadata: { title: "Pulkit" } })).toBe("home");
+  expect(cardSubtitle({ route: "/", metadata: { title: "Pulkit" } })).toBe("Software engineer");
+  expect(
+    cardSubtitle({
+      route: "/exp/example/",
+      metadata: { title: "Example", period: "Mar 2025 – present", role: "Software Engineer" },
+    }),
+  ).toBe("Mar 2025 – present");
+  expect(
+    cardSubtitle({
+      route: "/blogs/example/",
+      metadata: { title: "Example", date: "2026-01-15" },
+    }),
+  ).toBe("January 15, 2026");
+  expect(
+    cardSubtitle({
+      route: "/claude-directory/altitude/",
+      metadata: {
+        title: "Altitude Index H38",
+        layout: "directory",
+        tags: ["Hero sections"],
+        description: "A long editorial description that must not appear when a tag exists.",
+      },
+    }),
+  ).toBe("Hero sections");
+  expect(
+    cardSubtitle({
+      route: "/about/",
+      metadata: {
+        title: "About",
+        description: "About Pulkit, a software engineer based in India.",
+      },
+    }),
+  ).toBe("About Pulkit, a software engineer based in India.");
+  expect(cardSubtitle({ route: "/blank/", metadata: { title: "Blank" } })).toBeUndefined();
+});
+test("card subtitles wrap instead of truncating mid-phrase", () => {
+  const text =
+    "A growing directory of UI experiments built with Claude. Watch the demos, copy the exact prompts, and browse the code behind each project.";
+  const { lines } = wrapSubtitle(text, 40);
+  expect(lines.length).toBeGreaterThan(1);
+  expect(lines.join(" ")).toBe(text);
+  expect(lines.every((line) => !line.includes("…"))).toBe(true);
 });
 test("validator rejects wrong canonicals, missing metadata, broken JSON and wrong PNG dimensions", async () => {
   const source =
     "---\ntitle: Example\ndescription: Example description\ndate: 2025-01-02\n---\n\nText.\n";
   const data = readPage(source).metadata;
   const html = await renderPage(source, { site, pages, route: "/blogs/example/" });
-  const png = renderCard({ route: "/blogs/example/", metadata: data }, site, "Writing");
+  const png = renderCard({ route: "/blogs/example/", metadata: data }, "Writing", site);
   const validate = (value: string, buffer = png) =>
     validateSeo(value, "/blogs/example/", data, site, () => buffer);
   expect(() => validate(html)).not.toThrow();

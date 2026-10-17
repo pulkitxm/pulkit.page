@@ -47,7 +47,8 @@ export function generationVersion(): string {
       .map((path) => join(packages, path)),
     join(repository, "biome.json"),
     join(repository, "bun.lock"),
-    join(packages, "theme/assets/fonts/ibm-plex-mono-regular.ttf"),
+    join(packages, "profile/profile.json"),
+    ...readdirSync(join(packages, "theme/og")).map((name) => join(packages, "theme/og", name)),
   ];
   return digest(
     files

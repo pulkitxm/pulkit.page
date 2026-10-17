@@ -197,6 +197,7 @@ function projectPage(page: Page, project: DirectoryProject): Page {
     {
       title: project.title,
       description: project.description,
+      tags: [project.category],
       ...(page.metadata.layout && { layout: page.metadata.layout }),
     },
     `:::claude-directory project=${project.name}`,

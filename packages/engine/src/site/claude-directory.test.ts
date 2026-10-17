@@ -131,6 +131,7 @@ test("a directory page expands into numbered pages and one page per project", ()
   expect(project?.metadata).toEqual({
     title: "Hero 7",
     description: "The full story of hero number 7",
+    tags: ["Heroes"],
   });
   expect(project?.body.trim()).toBe(":::claude-directory project=hero-7");
   const third = pages[2];

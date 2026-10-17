@@ -72,24 +72,30 @@ test("navigation selects ancestors and related topics, excluding unrelated posts
 });
 test("cards render deterministically and preserve long titles", () => {
   const page = { route: "/blogs/example/", metadata };
-  expect(renderCard(page, "Writing").equals(renderCard(page, "Writing"))).toBe(true);
+  expect(renderCard(page, "Writing", site).equals(renderCard(page, "Writing", site))).toBe(true);
   const title =
     "Understanding distributed systems with practical examples and useful implementation details";
   const { size, lines } = titleLayout(title);
   expect(lines.join(" ")).toBe(title);
   expect(lines.every((line) => titleWidth(line, size) <= titleMaxWidth)).toBe(true);
 });
-test("cards keep the bottom-left corner clear for platform title overlays", () => {
-  for (const title of ["Pulkit", "Database Transaction Internals: ACID, WAL, MVCC & Locking"]) {
-    const svg = cardSvg(
-      { route: "/blogs/example/", metadata: { title, date: "2026-01-02" } },
-      "Writing",
-    );
-    const leftColumnY = [...svg.matchAll(/<(?:text|tspan|path)[^>]*?\by="?([\d.]+)/g)].map(
-      (match) => Number(match[1]),
-    );
-    expect(Math.max(...leftColumnY)).toBeLessThanOrEqual(safeBottom);
-  }
+test("Open Graph cards keep the footer while X cards clear the bottom-left corner", () => {
+  const page = {
+    route: "/blogs/example/",
+    metadata: {
+      title: "Database Transaction Internals: ACID, WAL, MVCC & Locking",
+      date: "2026-01-02",
+    },
+  };
+  const openGraph = cardSvg(page, "Writing", site, "card");
+  expect(openGraph).toContain(new URL(site.url).host.toUpperCase());
+  expect(openGraph).toContain("INDIA");
+  const twitter = cardSvg(page, "Writing", site, "card-x");
+  expect(twitter).not.toContain(new URL(site.url).host.toUpperCase());
+  const leftColumnY = [...twitter.matchAll(/<(?:text|tspan|path)[^>]*?\by="?([\d.]+)/g)].map(
+    (match) => Number(match[1]),
+  );
+  expect(Math.max(...leftColumnY)).toBeLessThanOrEqual(safeBottom);
 });
 test("card subtitles follow the page kind instead of a global role fallback", () => {
   expect(cardKind({ route: "/", metadata: { title: "Pulkit" } })).toBe("home");
@@ -141,7 +147,7 @@ test("validator rejects wrong canonicals, missing metadata, broken JSON and wron
     "---\ntitle: Example\ndescription: Example description\ndate: 2025-01-02\n---\n\nText.\n";
   const data = readPage(source).metadata;
   const html = await renderPage(source, { site, pages, route: "/blogs/example/" });
-  const png = renderCard({ route: "/blogs/example/", metadata: data }, "Writing");
+  const png = renderCard({ route: "/blogs/example/", metadata: data }, "Writing", site);
   const validate = (value: string, buffer = png) =>
     validateSeo(value, "/blogs/example/", data, site, () => buffer);
   expect(() => validate(html)).not.toThrow();

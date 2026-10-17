@@ -6,7 +6,14 @@ import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { GenerationCache } from "../lib/generation-cache.ts";
 import { longDate } from "../render/html.ts";
 import type { ListedPage, Site, SiteContext } from "../types.ts";
-import { categoryOf, imagePath, isArticle, parentRoute } from "./routes.ts";
+import {
+  type CardVariant,
+  cardVariants,
+  categoryOf,
+  imagePath,
+  isArticle,
+  parentRoute,
+} from "./routes.ts";
 
 const cardWidth = 1200;
 const cardHeight = 630;
@@ -278,7 +285,20 @@ const label = (x: number, y: number, fill: string, text: string) =>
 
 const defs = `<linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-color="${palette.background}"/><stop offset="0.3" stop-color="${palette.background}" stop-opacity="0.6"/><stop offset="0.6" stop-color="${palette.background}" stop-opacity="0"/></linearGradient><radialGradient id="edge" cx="0.45" cy="0.45" r="0.7"><stop offset="0.5" stop-color="${palette.background}" stop-opacity="0"/><stop offset="1" stop-color="${palette.background}" stop-opacity="0.85"/></radialGradient><filter id="tone"><feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0.02 0.31 0.31 0.31 0 0.02 0.27 0.27 0.27 0 0.01 0 0 0 1 0"/><feComponentTransfer><feFuncR type="linear" slope="0.82"/><feFuncG type="linear" slope="0.82"/><feFuncB type="linear" slope="0.82"/></feComponentTransfer></filter>`;
 
-export function cardSvg(page: ListedPage, category: string): string {
+const footerMetaY = 565;
+const footerRuleY = 520;
+
+function cardFooter(site: Site): string {
+  const meta = [profile.location, profile.employer, new URL(site.url).host].join("  ·  ");
+  return `<path d="M${left} ${footerRuleY}H${left + 80}" stroke="${palette.accent}" stroke-width="1.5"/>${label(left, footerMetaY, palette.muted, meta)}`;
+}
+
+export function cardSvg(
+  page: ListedPage,
+  category: string,
+  site: Site,
+  variant: CardVariant = "card",
+): string {
   const { portrait, monogram } = cardImages();
   const {
     size,
@@ -303,11 +323,17 @@ export function cardSvg(page: ListedPage, category: string): string {
               `<tspan x="${left}" y="${subtitleY + index * subtitleLineHeight(size)}">${xml(line)}</tspan>`,
           )
           .join("")}</text>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}"><defs>${defs}</defs><rect width="${cardWidth}" height="${cardHeight}" fill="${palette.background}"/><image href="${portrait}" x="630" y="0" width="630" height="630" preserveAspectRatio="xMidYMid slice" filter="url(#tone)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#fade)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#edge)"/><image href="${monogram}" x="${left}" y="72" width="31" height="40"/>${label(left + 52, 99, palette.accent, category)}<text font-family="${serif}" font-size="${size}" letter-spacing="${titleTracking * size}" fill="${palette.text}">${title}</text>${subtitleText}</svg>`;
+  const footer = variant === "card" ? cardFooter(site) : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}"><defs>${defs}</defs><rect width="${cardWidth}" height="${cardHeight}" fill="${palette.background}"/><image href="${portrait}" x="630" y="0" width="630" height="630" preserveAspectRatio="xMidYMid slice" filter="url(#tone)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#fade)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#edge)"/><image href="${monogram}" x="${left}" y="72" width="31" height="40"/>${label(left + 52, 99, palette.accent, category)}<text font-family="${serif}" font-size="${size}" letter-spacing="${titleTracking * size}" fill="${palette.text}">${title}</text>${subtitleText}${footer}</svg>`;
 }
 
-export function renderCard(page: ListedPage, category: string): Buffer {
-  return new Resvg(cardSvg(page, category), renderOptions).render().asPng();
+export function renderCard(
+  page: ListedPage,
+  category: string,
+  site: Site,
+  variant: CardVariant = "card",
+): Buffer {
+  return new Resvg(cardSvg(page, category, site, variant), renderOptions).render().asPng();
 }
 
 export function cardOutputs(
@@ -318,21 +344,25 @@ export function cardOutputs(
   const output = new Map<string, Buffer>();
   for (const page of pages) {
     const category = cardCategory(page, pages, site);
-    const encoded = cache.get(
-      "card",
-      [
-        page.route,
-        page.metadata.title,
-        page.metadata.description,
-        page.metadata.date,
-        page.metadata.period,
-        page.metadata.layout,
-        page.metadata.tags,
-        category,
-      ],
-      () => renderCard(page, category).toString("base64"),
-    );
-    output.set(imagePath(page.route).slice(1), Buffer.from(encoded, "base64"));
+    for (const variant of cardVariants) {
+      const encoded = cache.get(
+        "card",
+        [
+          variant,
+          page.route,
+          page.metadata.title,
+          page.metadata.description,
+          page.metadata.date,
+          page.metadata.period,
+          page.metadata.layout,
+          page.metadata.tags,
+          site.url,
+          category,
+        ],
+        () => renderCard(page, category, site, variant).toString("base64"),
+      );
+      output.set(imagePath(page.route, variant).slice(1), Buffer.from(encoded, "base64"));
+    }
   }
   return output;
 }

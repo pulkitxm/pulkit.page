@@ -21,6 +21,7 @@ export function seoHead(
 ): string {
   const url = site.url + route;
   const image = site.url + imagePath(route);
+  const twitterImage = site.url + imagePath(route, "card-x");
   const article = isArticle(route, pages, site);
   const openGraph: MetaEntry[] = [
     ["og:type", article ? "article" : "website"],
@@ -40,7 +41,7 @@ export function seoHead(
     ["twitter:card", "summary_large_image"],
     ["twitter:title", pageTitle(metadata, site, route)],
     ["twitter:description", metadata.description],
-    ["twitter:image", image],
+    ["twitter:image", twitterImage],
     ["twitter:image:alt", metadata.title],
   ];
   return `<link rel="canonical" href="${escapeHtml(url)}" />

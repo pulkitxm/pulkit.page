@@ -18,10 +18,12 @@ export const safeBottom = 500;
 const subtitleSize = (titleSize: number) =>
   Math.round(Math.min(40, Math.max(28, titleSize * 0.42)));
 const subtitleGap = (titleSize: number) => subtitleSize(titleSize) * 1.55;
-const titleMaxHeight = (size: number) => safeBottom - blockTop - subtitleGap(size);
+const titleMaxHeight = (size: number, subtitle: boolean) =>
+  safeBottom - blockTop - (subtitle ? subtitleGap(size) : 0);
 const palette = { background: "#181916", text: "#e9e9e1", muted: "#a5a69b", accent: "#d6b48c" };
 const serif = "Instrument Serif";
 const mono = "Geist Mono";
+const subtitleLimit = 56;
 
 const ogFile = (name: string) => themeFile(`og/${name}`);
 const renderOptions: ResvgRenderOptions = {
@@ -130,11 +132,11 @@ const lineHeight = (size: number) => size * 1.05;
 const titleHeight = (size: number, lines: number) =>
   capHeight(size) + (lines - 1) * lineHeight(size);
 
-export function titleLayout(title: string): { size: number; lines: string[] } {
+export function titleLayout(title: string, subtitle = true): { size: number; lines: string[] } {
   for (const size of titleSizes) {
     const lines = wrap(title, size);
     if (
-      titleHeight(size, lines.length) <= titleMaxHeight(size) &&
+      titleHeight(size, lines.length) <= titleMaxHeight(size, subtitle) &&
       lines.every((line) => titleWidth(line, size) <= titleMaxWidth)
     ) {
       return { size, lines };
@@ -144,6 +146,31 @@ export function titleLayout(title: string): { size: number; lines: string[] } {
   return { size, lines: wrap(title, size) };
 }
 
+export type CardKind = "home" | "dated" | "directory" | "page";
+
+export function cardKind(page: ListedPage): CardKind {
+  if (page.route === "/") {
+    return "home";
+  }
+  if (page.metadata.period !== undefined || page.metadata.date !== undefined) {
+    return "dated";
+  }
+  if (page.metadata.layout === "directory") {
+    return "directory";
+  }
+  return "page";
+}
+
+function shortenSubtitle(text: string, limit = subtitleLimit): string {
+  const compact = text.replace(/\s+/g, " ").trim();
+  if (compact.length <= limit) {
+    return compact;
+  }
+  const cut = compact.slice(0, limit - 1);
+  const at = cut.lastIndexOf(" ");
+  return `${(at > 20 ? cut.slice(0, at) : cut).replace(/[,:;.-]+$/u, "")}…`;
+}
+
 export function cardCategory(
   page: ListedPage,
   pages: readonly ListedPage[],
@@ -151,6 +178,13 @@ export function cardCategory(
 ): string {
   if (page.index) {
     return page.metadata.title;
+  }
+  if (page.metadata.layout === "directory") {
+    return (
+      categoryOf(page.route, pages)?.metadata.title ??
+      nearestAncestor(page.route, pages)?.metadata.title ??
+      page.metadata.title.replace(/, page \d+$/u, "")
+    );
   }
   return (
     categoryOf(page.route, pages)?.metadata.title ??
@@ -173,9 +207,18 @@ function nearestAncestor(route: string, pages: readonly ListedPage[]): ListedPag
   return undefined;
 }
 
-function cardSubtitle(page: ListedPage): string {
-  const { period, date } = page.metadata;
-  return period ?? (date === undefined ? profile.role : longDate(date));
+export function cardSubtitle(page: ListedPage): string | undefined {
+  const { period, date, description, tags } = page.metadata;
+  switch (cardKind(page)) {
+    case "home":
+      return profile.role;
+    case "dated":
+      return period ?? (date === undefined ? undefined : longDate(date));
+    case "directory":
+      return tags?.[0] ?? (description === undefined ? undefined : shortenSubtitle(description));
+    case "page":
+      return description === undefined ? undefined : shortenSubtitle(description);
+  }
 }
 
 const label = (x: number, y: number, fill: string, text: string) =>
@@ -185,8 +228,9 @@ const defs = `<linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-colo
 
 export function cardSvg(page: ListedPage, category: string): string {
   const { portrait, monogram } = cardImages();
-  const { size, lines } = titleLayout(page.metadata.title);
-  const height = titleHeight(size, lines.length) + subtitleGap(size);
+  const subtitle = cardSubtitle(page);
+  const { size, lines } = titleLayout(page.metadata.title, subtitle !== undefined);
+  const height = titleHeight(size, lines.length) + (subtitle === undefined ? 0 : subtitleGap(size));
   const top = blockTop + (safeBottom - blockTop - height) / 2;
   const subtitleY = top + height;
   const title = lines
@@ -194,7 +238,11 @@ export function cardSvg(page: ListedPage, category: string): string {
       titleRuns(line, left - size * 0.03, top + capHeight(size) + index * lineHeight(size), size),
     )
     .join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}"><defs>${defs}</defs><rect width="${cardWidth}" height="${cardHeight}" fill="${palette.background}"/><image href="${portrait}" x="630" y="0" width="630" height="630" preserveAspectRatio="xMidYMid slice" filter="url(#tone)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#fade)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#edge)"/><image href="${monogram}" x="${left}" y="72" width="31" height="40"/>${label(left + 52, 99, palette.accent, category)}<text font-family="${serif}" font-size="${size}" letter-spacing="${titleTracking * size}" fill="${palette.text}">${title}</text><text x="${left}" y="${subtitleY}" font-family="${serif}" font-style="italic" font-size="${subtitleSize(size)}" fill="${palette.muted}">${xml(cardSubtitle(page))}</text></svg>`;
+  const subtitleText =
+    subtitle === undefined
+      ? ""
+      : `<text x="${left}" y="${subtitleY}" font-family="${serif}" font-style="italic" font-size="${subtitleSize(size)}" fill="${palette.muted}">${xml(subtitle)}</text>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}"><defs>${defs}</defs><rect width="${cardWidth}" height="${cardHeight}" fill="${palette.background}"/><image href="${portrait}" x="630" y="0" width="630" height="630" preserveAspectRatio="xMidYMid slice" filter="url(#tone)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#fade)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#edge)"/><image href="${monogram}" x="${left}" y="72" width="31" height="40"/>${label(left + 52, 99, palette.accent, category)}<text font-family="${serif}" font-size="${size}" letter-spacing="${titleTracking * size}" fill="${palette.text}">${title}</text>${subtitleText}</svg>`;
 }
 
 export function renderCard(page: ListedPage, category: string): Buffer {
@@ -217,6 +265,8 @@ export function cardOutputs(
         page.metadata.description,
         page.metadata.date,
         page.metadata.period,
+        page.metadata.layout,
+        page.metadata.tags,
         category,
       ],
       () => renderCard(page, category).toString("base64"),

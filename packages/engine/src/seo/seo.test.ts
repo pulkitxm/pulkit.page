@@ -7,6 +7,8 @@ import { resolveSiteOrigin } from "../site/site-origin.ts";
 import type { ListedPage, PageMetadata, Site } from "../types.ts";
 import { crawlerOutputs } from "./crawler-outputs.ts";
 import {
+  cardKind,
+  cardSubtitle,
   cardSvg,
   renderCard,
   safeBottom,
@@ -78,12 +80,52 @@ test("cards render deterministically and preserve long titles", () => {
 });
 test("cards keep the bottom-left corner clear for platform title overlays", () => {
   for (const title of ["Pulkit", "Database Transaction Internals: ACID, WAL, MVCC & Locking"]) {
-    const svg = cardSvg({ route: "/blogs/example/", metadata: { title } }, "Writing");
+    const svg = cardSvg(
+      { route: "/blogs/example/", metadata: { title, date: "2026-01-02" } },
+      "Writing",
+    );
     const leftColumnY = [...svg.matchAll(/<(?:text|tspan|path)[^>]*?\by="?([\d.]+)/g)].map(
       (match) => Number(match[1]),
     );
     expect(Math.max(...leftColumnY)).toBeLessThanOrEqual(safeBottom);
   }
+});
+test("card subtitles follow the page kind instead of a global role fallback", () => {
+  expect(cardKind({ route: "/", metadata: { title: "Pulkit" } })).toBe("home");
+  expect(cardSubtitle({ route: "/", metadata: { title: "Pulkit" } })).toBe("Software engineer");
+  expect(
+    cardSubtitle({
+      route: "/exp/example/",
+      metadata: { title: "Example", period: "Mar 2025 – present", role: "Software Engineer" },
+    }),
+  ).toBe("Mar 2025 – present");
+  expect(
+    cardSubtitle({
+      route: "/blogs/example/",
+      metadata: { title: "Example", date: "2026-01-15" },
+    }),
+  ).toBe("January 15, 2026");
+  expect(
+    cardSubtitle({
+      route: "/claude-directory/altitude/",
+      metadata: {
+        title: "Altitude Index H38",
+        layout: "directory",
+        tags: ["Hero sections"],
+        description: "A long editorial description that must not appear when a tag exists.",
+      },
+    }),
+  ).toBe("Hero sections");
+  expect(
+    cardSubtitle({
+      route: "/about/",
+      metadata: {
+        title: "About",
+        description: "About Pulkit, a software engineer based in India.",
+      },
+    }),
+  ).toBe("About Pulkit, a software engineer based in India.");
+  expect(cardSubtitle({ route: "/blank/", metadata: { title: "Blank" } })).toBeUndefined();
 });
 test("validator rejects wrong canonicals, missing metadata, broken JSON and wrong PNG dimensions", async () => {
   const source =

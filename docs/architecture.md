@@ -213,8 +213,10 @@ Both sites look identical because both take their entire presentation from
 - [layouts/](../packages/theme/layouts/) holds `home`, `simple`, `directory` and `article`
   plus the `head`, `header` and `footer` partials. Each app would override them
   by adding its own `layouts/` directory; neither does.
-- `assets/` holds the favicons, the Comic Relief web fonts, the IBM Plex Mono
-  TTF used only for social cards, and the author portrait.
+- `assets/` holds the favicons, the Comic Relief web fonts, and the author portrait.
+- `og/` holds what only social cards use and is never copied into a site: the
+  Instrument Serif and Geist Mono TTFs with their licenses, the card portrait,
+  and the brass monogram.
 - [theme.ts](../packages/theme/src/client/theme.ts) is loaded without `defer` in the head so
   a stored theme applies before the body renders. It also names the shared
   element for view transitions and skips the animation under reduced motion.

@@ -97,13 +97,14 @@ X handle the visitor renamed without updating GitHub, are left out. Messages,
 names, and avatars are not refreshed, and manual edits to a GitHub-linked entry's
 links are replaced on the next run.
 
-Every CI run checks the stored links with
-`bun run --cwd tooling/guestbook verify:links --strict`. It fails when a profile no
-longer exists, such as a renamed X handle, and when a stored link is not one of
-those professional profiles. The error names the entry and the link. A profile
-only counts as missing on a definite not-found response; blocked, rate-limited,
-or failed checks pass. Run the command without a flag for the same report, or
-with `--write` to remove missing profiles and unsupported links from the data.
+Pull requests check the stored links with
+`bun run --cwd tooling/guestbook verify:links --strict`. The check fails when a
+profile no longer exists, such as a renamed X handle, and when a stored link is
+not one of those professional profiles. The error names the entry and the link.
+A push to main runs the same check with `--write`, then commits the removed links
+through Pukbot when the guestbook data changed. A profile only counts as missing
+on a definite not-found response; blocked, rate-limited, or failed checks pass.
+Run the command without a flag for the same report.
 
 To remove a published entry, add its `id` to `removedEntryIds` in
 `apps/page/data/guestbook-settings.json` and delete it from

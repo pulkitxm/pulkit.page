@@ -22,6 +22,8 @@ jobs:
     name: Verify
     runs-on: ubuntu-26.04
     timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -44,9 +46,49 @@ jobs:
           key: turbo-${{ runner.os }}-${{ github.sha }}
           restore-keys: turbo-${{ runner.os }}-
       - name: Check guestbook profile links
+        if: github.event_name != 'push' || github.ref != 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bun run --cwd tooling/guestbook verify:links --strict
+      - name: Strip unsupported guestbook links
+        id: guestbook
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          bun run --cwd tooling/guestbook verify:links --write
+          git add apps/page/data/guestbook.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install Pukbot
+        if: steps.guestbook.outputs.changed == 'true'
+        run: >
+          curl --proto '=https' --tlsv1.2 -fsSL
+          https://github.com/pulkitxm/pukbot/releases/download/v0.3.30/pukbot-linux-x86_64 -o
+          "$RUNNER_TEMP/pukbot"
+
+          printf '%s  %s\n' bd2539c5a5d45650bd80ba48efc6e42ca14251b2eb0e586622ed064652c8e033
+          "$RUNNER_TEMP/pukbot" | sha256sum --check
+
+          chmod +x "$RUNNER_TEMP/pukbot"
+      - name: Publish stripped guestbook links
+        if: steps.guestbook.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: >
+          current="$(git ls-remote origin refs/heads/main | cut -f1)"
+
+          if [ "$current" != "$(git rev-parse HEAD)" ]; then
+            echo "main changed during the link check; retry the workflow against the latest data"
+            exit 1
+          fi
+
+          "$RUNNER_TEMP/pukbot" commit create --repo "$REPOSITORY" --branch main --message "Drop
+          unsupported guestbook links" --json
       - name: Verify
         env:
           POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}

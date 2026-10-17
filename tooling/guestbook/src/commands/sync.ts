@@ -57,15 +57,25 @@ async function sync(): Promise<void> {
     const login = entry.github?.toLowerCase();
     if (login && !linksByLogin.has(login)) {
       const links = (await githubProfileLinks(login, token)) ?? [];
-      const available = await Promise.all(
+      const checked = await Promise.all(
         links.map(async (href) => {
           const profile = socialProfile(href);
-          return !profile || (await profileStatus(profile, token)) !== "missing";
+          if (!profile || (await profileStatus(profile, token)) === "missing") {
+            return null;
+          }
+          return profile.url;
         }),
       );
+      const seen = new Set<string>();
       linksByLogin.set(
         login,
-        links.filter((_, index) => available[index]),
+        checked.flatMap((url) => {
+          if (!url || seen.has(url.toLowerCase())) {
+            return [];
+          }
+          seen.add(url.toLowerCase());
+          return [url];
+        }),
       );
     }
   }

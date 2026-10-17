@@ -59,7 +59,7 @@ test("API failures abort the import instead of publishing partial results", asyn
   );
 });
 
-test("profile links combine the website and social accounts without unsafe or duplicate URLs", async () => {
+test("profile links keep canonical social profiles and drop websites and unsafe URLs", async () => {
   const request: Request = (url) =>
     Promise.resolve(
       Response.json(
@@ -71,6 +71,9 @@ test("profile links combine the website and social accounts without unsafe or du
               { provider: "generic", url: "http://insecure.example" },
               { provider: "generic", url: "https://github.com/Sample-Visitor" },
               { provider: "generic", url: "https://sample.example/" },
+              { provider: "generic", url: "https://leetcode.com/u/sample" },
+              { provider: "generic", url: "https://hashnode.com/@sample" },
+              { provider: "generic", url: "https://sample.github.io/portfolio" },
               { provider: "generic", url: "in process" },
             ]
           : {
@@ -84,8 +87,7 @@ test("profile links combine the website and social accounts without unsafe or du
       ),
     );
   expect(await githubProfileLinks("sample-visitor", "test-token", request)).toEqual([
-    "https://sample.example",
-    "https://twitter.com/sample",
+    "https://x.com/sample",
     "https://www.linkedin.com/in/sample",
   ]);
 });

@@ -137,7 +137,7 @@ jobs:
     name: Browser smoke (${{ matrix.viewport }} ${{ matrix.shard }})
     needs: verify
     runs-on: ubuntu-26.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:

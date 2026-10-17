@@ -15,6 +15,7 @@ import {
   titleLayout,
   titleMaxWidth,
   titleWidth,
+  wrapSubtitle,
 } from "./og-images.ts";
 import { ancestors, notFoundRoute, relatedPages } from "./routes.ts";
 import { robots } from "./seo-head.ts";
@@ -126,6 +127,17 @@ test("card subtitles follow the page kind instead of a global role fallback", ()
     }),
   ).toBe("About Pulkit, a software engineer based in India.");
   expect(cardSubtitle({ route: "/blank/", metadata: { title: "Blank" } })).toBeUndefined();
+});
+test("card subtitles wrap instead of truncating mid-phrase", () => {
+  const text =
+    "A growing directory of UI experiments built with Claude. Watch the demos, copy the exact prompts, and browse the code behind each project.";
+  const lines = wrapSubtitle(text, 32);
+  expect(lines.length).toBeGreaterThan(1);
+  expect(lines.join(" ")).toContain("Claude");
+  expect(
+    lines.every((line) => !line.endsWith("…") || lines.indexOf(line) === lines.length - 1),
+  ).toBe(true);
+  expect(lines.slice(0, -1).every((line) => !line.includes("…"))).toBe(true);
 });
 test("validator rejects wrong canonicals, missing metadata, broken JSON and wrong PNG dimensions", async () => {
   const source =

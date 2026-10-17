@@ -15,15 +15,18 @@ export const titleMaxWidth = 560;
 const titleSizes = [128, 112, 96, 84, 72, 64, 56, 50, 44];
 const blockTop = 160;
 export const safeBottom = 500;
+const maxSubtitleLines = 3;
 const subtitleSize = (titleSize: number) =>
   Math.round(Math.min(40, Math.max(28, titleSize * 0.42)));
 const subtitleGap = (titleSize: number) => subtitleSize(titleSize) * 1.55;
-const titleMaxHeight = (size: number, subtitle: boolean) =>
-  safeBottom - blockTop - (subtitle ? subtitleGap(size) : 0);
+const subtitleLineHeight = (titleSize: number) => subtitleSize(titleSize) * 1.2;
+const subtitleReserve = (size: number, lines: number) =>
+  lines === 0 ? 0 : subtitleGap(size) + (lines - 1) * subtitleLineHeight(size);
+const titleMaxHeight = (size: number, subtitleLines: number) =>
+  safeBottom - blockTop - subtitleReserve(size, subtitleLines);
 const palette = { background: "#181916", text: "#e9e9e1", muted: "#a5a69b", accent: "#d6b48c" };
 const serif = "Instrument Serif";
 const mono = "Geist Mono";
-const subtitleLimit = 56;
 
 const ogFile = (name: string) => themeFile(`og/${name}`);
 const renderOptions: ResvgRenderOptions = {
@@ -132,18 +135,53 @@ const lineHeight = (size: number) => size * 1.05;
 const titleHeight = (size: number, lines: number) =>
   capHeight(size) + (lines - 1) * lineHeight(size);
 
-export function titleLayout(title: string, subtitle = true): { size: number; lines: string[] } {
+function fitSubtitleLine(text: string, size: number): string {
+  if (titleWidth(text, size) <= titleMaxWidth) {
+    return text;
+  }
+  const words = text.split(/\s+/);
+  let line = words[0] ?? "";
+  for (const word of words.slice(1)) {
+    if (titleWidth(`${line} ${word}…`, size) <= titleMaxWidth) {
+      line = `${line} ${word}`;
+    } else {
+      break;
+    }
+  }
+  return `${line}…`;
+}
+
+export function wrapSubtitle(text: string, size: number): string[] {
+  const lines = greedyWrap(text.replace(/\s+/g, " ").trim().split(/\s+/), size, titleMaxWidth);
+  if (lines.length <= maxSubtitleLines) {
+    return lines;
+  }
+  return [
+    ...lines.slice(0, maxSubtitleLines - 1),
+    fitSubtitleLine(lines.slice(maxSubtitleLines - 1).join(" "), size),
+  ];
+}
+
+export function titleLayout(
+  title: string,
+  subtitle?: string,
+): { size: number; lines: string[]; subtitleLines: string[] } {
   for (const size of titleSizes) {
+    const subtitleLines = subtitle === undefined ? [] : wrapSubtitle(subtitle, subtitleSize(size));
     const lines = wrap(title, size);
     if (
-      titleHeight(size, lines.length) <= titleMaxHeight(size, subtitle) &&
+      titleHeight(size, lines.length) <= titleMaxHeight(size, subtitleLines.length) &&
       lines.every((line) => titleWidth(line, size) <= titleMaxWidth)
     ) {
-      return { size, lines };
+      return { size, lines, subtitleLines };
     }
   }
   const size = titleSizes.at(-1) ?? 44;
-  return { size, lines: wrap(title, size) };
+  return {
+    size,
+    lines: wrap(title, size),
+    subtitleLines: subtitle === undefined ? [] : wrapSubtitle(subtitle, subtitleSize(size)),
+  };
 }
 
 export type CardKind = "home" | "dated" | "directory" | "page";
@@ -159,16 +197,6 @@ export function cardKind(page: ListedPage): CardKind {
     return "directory";
   }
   return "page";
-}
-
-function shortenSubtitle(text: string, limit = subtitleLimit): string {
-  const compact = text.replace(/\s+/g, " ").trim();
-  if (compact.length <= limit) {
-    return compact;
-  }
-  const cut = compact.slice(0, limit - 1);
-  const at = cut.lastIndexOf(" ");
-  return `${(at > 20 ? cut.slice(0, at) : cut).replace(/[,:;.-]+$/u, "")}…`;
 }
 
 export function cardCategory(
@@ -215,9 +243,9 @@ export function cardSubtitle(page: ListedPage): string | undefined {
     case "dated":
       return period ?? (date === undefined ? undefined : longDate(date));
     case "directory":
-      return tags?.[0] ?? (description === undefined ? undefined : shortenSubtitle(description));
+      return tags?.[0] ?? description?.replace(/\s+/g, " ").trim();
     case "page":
-      return description === undefined ? undefined : shortenSubtitle(description);
+      return description?.replace(/\s+/g, " ").trim();
   }
 }
 
@@ -228,20 +256,25 @@ const defs = `<linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-colo
 
 export function cardSvg(page: ListedPage, category: string): string {
   const { portrait, monogram } = cardImages();
-  const subtitle = cardSubtitle(page);
-  const { size, lines } = titleLayout(page.metadata.title, subtitle !== undefined);
-  const height = titleHeight(size, lines.length) + (subtitle === undefined ? 0 : subtitleGap(size));
+  const { size, lines, subtitleLines } = titleLayout(page.metadata.title, cardSubtitle(page));
+  const height = titleHeight(size, lines.length) + subtitleReserve(size, subtitleLines.length);
   const top = blockTop + (safeBottom - blockTop - height) / 2;
-  const subtitleY = top + height;
+  const subtitleY = top + titleHeight(size, lines.length) + subtitleGap(size);
   const title = lines
     .map((line, index) =>
       titleRuns(line, left - size * 0.03, top + capHeight(size) + index * lineHeight(size), size),
     )
     .join("");
+  const subSize = subtitleSize(size);
   const subtitleText =
-    subtitle === undefined
+    subtitleLines.length === 0
       ? ""
-      : `<text x="${left}" y="${subtitleY}" font-family="${serif}" font-style="italic" font-size="${subtitleSize(size)}" fill="${palette.muted}">${xml(subtitle)}</text>`;
+      : `<text font-family="${serif}" font-style="italic" font-size="${subSize}" fill="${palette.muted}">${subtitleLines
+          .map(
+            (line, index) =>
+              `<tspan x="${left}" y="${subtitleY + index * subtitleLineHeight(size)}">${xml(line)}</tspan>`,
+          )
+          .join("")}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}"><defs>${defs}</defs><rect width="${cardWidth}" height="${cardHeight}" fill="${palette.background}"/><image href="${portrait}" x="630" y="0" width="630" height="630" preserveAspectRatio="xMidYMid slice" filter="url(#tone)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#fade)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#edge)"/><image href="${monogram}" x="${left}" y="72" width="31" height="40"/>${label(left + 52, 99, palette.accent, category)}<text font-family="${serif}" font-size="${size}" letter-spacing="${titleTracking * size}" fill="${palette.text}">${title}</text>${subtitleText}</svg>`;
 }
 

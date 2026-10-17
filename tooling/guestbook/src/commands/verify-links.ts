@@ -10,13 +10,16 @@ async function verifyLinks(mode: "report" | "strict" | "write"): Promise<void> {
   }
   const annotate = process.env.GITHUB_ACTIONS === "true";
   const entries = await readEntries();
+  let unsupported = 0;
   for (const entry of entries) {
     for (const href of entry.links ?? []) {
       if (!socialProfile(href)) {
+        unsupported++;
         const message = `${entry.name} (${entry.id}): ${href} is not a supported social profile and is not shown`;
+        const title = "Unsupported guestbook link";
         console.log(
           annotate
-            ? `::warning title=Unsupported guestbook link::${message}`
+            ? `::${mode === "strict" ? "error" : "warning"} title=${title}::${message}`
             : `skipped ${message}`,
         );
       }
@@ -67,20 +70,22 @@ async function verifyLinks(mode: "report" | "strict" | "write"): Promise<void> {
       counts.filter((status) => status === "unknown").length
     } inconclusive.`,
   );
-  if (removed === 0) {
+  if (removed === 0 && unsupported === 0) {
     return;
   }
   if (mode === "write") {
     await writeEntries(
       entries.map((entry) => {
-        const links = entry.links?.filter((href) => !missing(href));
+        const links = entry.links?.filter((href) => socialProfile(href) && !missing(href));
         const github =
           entry.github && missing(`https://github.com/${entry.github}`) ? null : entry.github;
         const { links: _previous, ...rest } = entry;
         return { ...rest, github, ...(links?.length ? { links } : {}) };
       }),
     );
-    console.log(`Removed ${removed} unavailable profiles from the guestbook data.`);
+    console.log(
+      `Removed ${removed} unavailable profiles and ${unsupported} unsupported links from the guestbook data.`,
+    );
   } else if (mode === "strict") {
     console.log("Remove them with: bun run --cwd tooling/guestbook verify:links --write");
     process.exitCode = 1;

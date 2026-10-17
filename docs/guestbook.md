@@ -86,26 +86,24 @@ The store only appends new entries and orders them newest first. It does not
 overwrite or delete published messages when an issue or response changes.
 
 Every run also refreshes profile links for each entry with a GitHub username. The
-worker reads the profile's website and social accounts from the GitHub API, keeps
-only `https` URLs, and stores up to eight in the entry's `links`. The page shows
-them as small icons beside the name, after the GitHub profile icon. Links that a
-visitor removes from their profile disappear on the next run, as do all links of
-a deleted account. Social profiles that no longer exist, such as an X handle
-the visitor renamed without updating GitHub, are left out. Messages, names, and
-avatars are not refreshed, and manual edits to a GitHub-linked entry's links are
-replaced on the next run.
+worker reads the profile's website and social accounts from the GitHub API and
+stores up to eight professional profiles: GitHub, X, LinkedIn, npm, and crates.io.
+Each stored link is the canonical profile URL. Websites, Instagram, LeetCode,
+Hashnode, and any other unsupported link are left out of the data. The page shows
+the stored profiles as small icons beside the name, after the GitHub profile icon.
+Links that a visitor removes from their profile disappear on the next run, as do
+all links of a deleted account. Social profiles that no longer exist, such as an
+X handle the visitor renamed without updating GitHub, are left out. Messages,
+names, and avatars are not refreshed, and manual edits to a GitHub-linked entry's
+links are replaced on the next run.
 
-The page only shows professional social profiles: GitHub, X, LinkedIn, npm, and
-crates.io, normalized to one canonical URL each. Websites, Instagram, and other
-links stay in the data but are not rendered.
-
-Every CI run checks each shown profile with
-`bun run --cwd tooling/guestbook verify:links --strict` and fails when one no longer
-exists, such as a renamed X handle, naming the entry and link in the error.
-Unsupported links, such as websites, appear as warnings and do not fail the run.
-A profile only counts as missing on a definite not-found response; blocked,
-rate-limited, or failed checks pass. Run the command without a flag for the same
-report, or with `--write` to remove the missing profiles from the data.
+Every CI run checks the stored links with
+`bun run --cwd tooling/guestbook verify:links --strict`. It fails when a profile no
+longer exists, such as a renamed X handle, and when a stored link is not one of
+those professional profiles. The error names the entry and the link. A profile
+only counts as missing on a definite not-found response; blocked, rate-limited,
+or failed checks pass. Run the command without a flag for the same report, or
+with `--write` to remove missing profiles and unsupported links from the data.
 
 To remove a published entry, add its `id` to `removedEntryIds` in
 `apps/page/data/guestbook-settings.json` and delete it from

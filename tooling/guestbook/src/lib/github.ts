@@ -1,4 +1,9 @@
-import { type GuestbookEntry, guestbookEntry, profileLink } from "@pulkit/shared/guestbook";
+import {
+  type GuestbookEntry,
+  guestbookEntry,
+  profileLink,
+  socialProfile,
+} from "@pulkit/shared/guestbook";
 import { z } from "zod";
 
 export type Request = (url: string, options?: RequestInit) => Promise<Response>;
@@ -162,20 +167,15 @@ export async function githubProfileLinks(
     profile.twitter_username ? `https://x.com/${profile.twitter_username}` : null,
   ];
   const links: string[] = [];
-  const hosts = new Set([`github.com/${profile.login}`.toLowerCase()]);
+  const seen = new Set([`https://github.com/${profile.login}`.toLowerCase()]);
   for (const candidate of candidates) {
     const url = profileUrl(candidate);
-    if (!url) {
+    const social = url ? socialProfile(url) : null;
+    if (!social || seen.has(social.url.toLowerCase()) || links.length >= 8) {
       continue;
     }
-    const host = new URL(url).hostname.replace(/^www\./, "").replace(/^twitter\.com$/, "x.com");
-    const key =
-      host === "x.com" ? host : `${host}${new URL(url).pathname.replace(/\/$/, "")}`.toLowerCase();
-    if (hosts.has(key) || links.length >= 8) {
-      continue;
-    }
-    hosts.add(key);
-    links.push(url);
+    seen.add(social.url.toLowerCase());
+    links.push(social.url);
   }
   return links;
 }

@@ -1,21 +1,147 @@
+import { readFileSync } from "node:fs";
+import profile from "@pulkit/profile";
 import { escapeXml as xml } from "@pulkit/shared/html";
 import { themeFile } from "@pulkit/theme/files";
-import { Resvg } from "@resvg/resvg-js";
+import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import type { GenerationCache } from "../lib/generation-cache.ts";
+import { longDate } from "../render/html.ts";
 import type { ListedPage, Site, SiteContext } from "../types.ts";
-import { categoryOf, imagePath, isArticle } from "./routes.ts";
+import { categoryOf, imagePath, isArticle, parentRoute } from "./routes.ts";
 
-export function titleLines(title: string, width = 29): string[] {
+const cardWidth = 1200;
+const cardHeight = 630;
+const left = 88;
+export const titleMaxWidth = 560;
+const titleSizes = [128, 112, 96, 84, 72, 64, 56, 50, 44];
+const blockTop = 160;
+export const safeBottom = 500;
+const subtitleSize = (titleSize: number) =>
+  Math.round(Math.min(40, Math.max(28, titleSize * 0.42)));
+const subtitleGap = (titleSize: number) => subtitleSize(titleSize) * 1.55;
+const titleMaxHeight = (size: number) => safeBottom - blockTop - subtitleGap(size);
+const palette = { background: "#181916", text: "#e9e9e1", muted: "#a5a69b", accent: "#d6b48c" };
+const serif = "Instrument Serif";
+const mono = "Geist Mono";
+
+const ogFile = (name: string) => themeFile(`og/${name}`);
+const renderOptions: ResvgRenderOptions = {
+  font: {
+    loadSystemFonts: false,
+    fontFiles: [
+      ogFile("instrument-serif-regular.ttf"),
+      ogFile("instrument-serif-italic.ttf"),
+      ogFile("geist-mono-regular.ttf"),
+    ],
+    defaultFontFamily: serif,
+  },
+};
+
+let images: { portrait: string; monogram: string } | undefined;
+function cardImages(): { portrait: string; monogram: string } {
+  images ??= {
+    portrait: `data:image/jpeg;base64,${readFileSync(ogFile("portrait.jpg")).toString("base64")}`,
+    monogram: `data:image/svg+xml;base64,${readFileSync(ogFile("monogram.svg")).toString("base64")}`,
+  };
+  return images;
+}
+
+const titleTracking = -0.022;
+
+const inkBoxes = new Map<string, string>();
+function inkBox(text: string, family: string): string {
+  const key = `${family}:${text}`;
+  let box = inkBoxes.get(key);
+  if (box === undefined) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="4000" height="200"><text x="0" y="150" font-family="${family}" font-size="100" xml:space="preserve">${xml(text)}</text></svg>`;
+    const bounds = new Resvg(svg, renderOptions).getBBox();
+    box = bounds ? [bounds.x, bounds.y, bounds.width, bounds.height].join(",") : "";
+    inkBoxes.set(key, box);
+  }
+  return box;
+}
+
+const inkWidth = (text: string, family: string) => Number(inkBox(text, family).split(",")[2] ?? 0);
+
+function glyphFamily(char: string): string {
+  const covered = char.charCodeAt(0) < 128 || inkBox(char, serif) !== inkBox(char, mono);
+  return covered ? serif : mono;
+}
+
+export function titleWidth(text: string, size: number): number {
+  const advances = [...text].reduce((sum, char) => {
+    const family = glyphFamily(char);
+    return sum + inkWidth(`I${char}I`, family) - inkWidth("II", family);
+  }, 0);
+  return (advances * size) / 100 + [...text].length * titleTracking * size;
+}
+
+function titleRuns(line: string, x: number, y: number, size: number): string {
+  const runs = [...line].reduce<{ family: string; text: string }[]>((result, char) => {
+    const family = glyphFamily(char);
+    const last = result.at(-1);
+    if (last?.family === family) {
+      last.text += char;
+    } else {
+      result.push({ family, text: char });
+    }
+    return result;
+  }, []);
+  let cursor = x;
+  return runs
+    .map(({ family, text }) => {
+      const tspan = `<tspan x="${cursor}" y="${y}" font-family="${family}" xml:space="preserve">${xml(text)}</tspan>`;
+      cursor += titleWidth(text, size);
+      return tspan;
+    })
+    .join("");
+}
+
+function greedyWrap(words: readonly string[], size: number, limit: number): string[] {
   const lines: string[] = [];
-  for (const word of title.split(/\s+/)) {
+  for (const word of words) {
     const last = lines.at(-1);
-    if (last !== undefined && last.length + word.length + 1 <= width) {
+    if (last !== undefined && titleWidth(`${last} ${word}`, size) <= limit) {
       lines[lines.length - 1] = `${last} ${word}`;
     } else {
       lines.push(word);
     }
   }
   return lines;
+}
+
+function wrap(title: string, size: number): string[] {
+  const words = title.split(/\s+/);
+  const lineCount = greedyWrap(words, size, titleMaxWidth).length;
+  let low = Math.max(...words.map((word) => titleWidth(word, size)));
+  let high = titleMaxWidth;
+  while (high - low > 1) {
+    const middle = (low + high) / 2;
+    if (greedyWrap(words, size, middle).length <= lineCount) {
+      high = middle;
+    } else {
+      low = middle;
+    }
+  }
+  return greedyWrap(words, size, high);
+}
+
+const capHeight = (size: number) => size * 0.72;
+const lineHeight = (size: number) => size * 1.05;
+const titleHeight = (size: number, lines: number) =>
+  capHeight(size) + (lines - 1) * lineHeight(size);
+
+export function titleLayout(title: string): { size: number; lines: string[] } {
+  for (const size of titleSizes) {
+    const lines = wrap(title, size);
+    if (
+      titleHeight(size, lines.length) <= titleMaxHeight(size) &&
+      lines.every((line) => titleWidth(line, size) <= titleMaxWidth)
+    ) {
+      return { size, lines };
+    }
+  }
+  const size = titleSizes.at(-1) ?? 44;
+  return { size, lines: wrap(title, size) };
 }
 
 export function cardCategory(
@@ -28,23 +154,51 @@ export function cardCategory(
   }
   return (
     categoryOf(page.route, pages)?.metadata.title ??
+    nearestAncestor(page.route, pages)?.metadata.title ??
     (isArticle(page.route, pages, site) || page.route === site.articles ? "Writing" : "Portfolio")
   );
 }
 
-export function renderCard(page: ListedPage, site: Site, category: string): Buffer {
-  const lines = titleLines(page.metadata.title);
-  const size = lines.length > 4 ? 44 : 54;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#0b0b0b"/><g fill="#f2f2ef" font-family="IBM Plex Mono"><text x="72" y="96" font-size="26">${xml(site.brand)} / ${category}</text><path d="M72 135H1128" stroke="#414141"/>${lines.map((line, index) => `<text x="72" y="${225 + index * 64}" font-size="${size}">${xml(line)}</text>`).join("")}<text x="72" y="565" font-size="22" fill="#aaa">${xml(new URL(site.url).host)}</text><text x="1128" y="565" text-anchor="end" font-size="22" fill="#aaa">${xml(page.metadata.period ?? page.metadata.date ?? "Software engineer")}</text></g></svg>`;
-  return new Resvg(svg, {
-    font: {
-      loadSystemFonts: false,
-      fontFiles: [themeFile("assets/fonts/ibm-plex-mono-regular.ttf")],
-      defaultFontFamily: "IBM Plex Mono",
-    },
-  })
-    .render()
-    .asPng();
+function nearestAncestor(route: string, pages: readonly ListedPage[]): ListedPage | undefined {
+  for (
+    let parent = parentRoute(route);
+    parent !== "/" && parent !== "";
+    parent = parentRoute(parent)
+  ) {
+    const page = pages.find((entry) => entry.route === parent);
+    if (page) {
+      return page;
+    }
+  }
+  return undefined;
+}
+
+function cardSubtitle(page: ListedPage): string {
+  const { period, date } = page.metadata;
+  return period ?? (date === undefined ? profile.role : longDate(date));
+}
+
+const label = (x: number, y: number, fill: string, text: string) =>
+  `<text x="${x}" y="${y}" font-family="${mono}" font-size="16" letter-spacing="1.3" fill="${fill}">${xml(text.toUpperCase())}</text>`;
+
+const defs = `<linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-color="${palette.background}"/><stop offset="0.3" stop-color="${palette.background}" stop-opacity="0.6"/><stop offset="0.6" stop-color="${palette.background}" stop-opacity="0"/></linearGradient><radialGradient id="edge" cx="0.45" cy="0.45" r="0.7"><stop offset="0.5" stop-color="${palette.background}" stop-opacity="0"/><stop offset="1" stop-color="${palette.background}" stop-opacity="0.85"/></radialGradient><filter id="tone"><feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0.02 0.31 0.31 0.31 0 0.02 0.27 0.27 0.27 0 0.01 0 0 0 1 0"/><feComponentTransfer><feFuncR type="linear" slope="0.82"/><feFuncG type="linear" slope="0.82"/><feFuncB type="linear" slope="0.82"/></feComponentTransfer></filter>`;
+
+export function cardSvg(page: ListedPage, category: string): string {
+  const { portrait, monogram } = cardImages();
+  const { size, lines } = titleLayout(page.metadata.title);
+  const height = titleHeight(size, lines.length) + subtitleGap(size);
+  const top = blockTop + (safeBottom - blockTop - height) / 2;
+  const subtitleY = top + height;
+  const title = lines
+    .map((line, index) =>
+      titleRuns(line, left - size * 0.03, top + capHeight(size) + index * lineHeight(size), size),
+    )
+    .join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}"><defs>${defs}</defs><rect width="${cardWidth}" height="${cardHeight}" fill="${palette.background}"/><image href="${portrait}" x="630" y="0" width="630" height="630" preserveAspectRatio="xMidYMid slice" filter="url(#tone)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#fade)"/><rect x="630" width="570" height="${cardHeight}" fill="url(#edge)"/><image href="${monogram}" x="${left}" y="72" width="31" height="40"/>${label(left + 52, 99, palette.accent, category)}<text font-family="${serif}" font-size="${size}" letter-spacing="${titleTracking * size}" fill="${palette.text}">${title}</text><text x="${left}" y="${subtitleY}" font-family="${serif}" font-style="italic" font-size="${subtitleSize(size)}" fill="${palette.muted}">${xml(cardSubtitle(page))}</text></svg>`;
+}
+
+export function renderCard(page: ListedPage, category: string): Buffer {
+  return new Resvg(cardSvg(page, category), renderOptions).render().asPng();
 }
 
 export function cardOutputs(
@@ -63,11 +217,9 @@ export function cardOutputs(
         page.metadata.description,
         page.metadata.date,
         page.metadata.period,
-        site.brand,
-        site.url,
         category,
       ],
-      () => renderCard(page, site, category).toString("base64"),
+      () => renderCard(page, category).toString("base64"),
     );
     output.set(imagePath(page.route).slice(1), Buffer.from(encoded, "base64"));
   }

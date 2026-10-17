@@ -6,7 +6,14 @@ import { readFrontmatter, readPage, siteSettings } from "../site/read-page.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 import type { ListedPage, PageMetadata, Site } from "../types.ts";
 import { crawlerOutputs } from "./crawler-outputs.ts";
-import { renderCard, titleLines } from "./og-images.ts";
+import {
+  cardSvg,
+  renderCard,
+  safeBottom,
+  titleLayout,
+  titleMaxWidth,
+  titleWidth,
+} from "./og-images.ts";
 import { ancestors, notFoundRoute, relatedPages } from "./routes.ts";
 import { robots } from "./seo-head.ts";
 import { safeJson, structuredData } from "./structured-data.ts";
@@ -62,17 +69,28 @@ test("navigation selects ancestors and related topics, excluding unrelated posts
 });
 test("cards render deterministically and preserve long titles", () => {
   const page = { route: "/blogs/example/", metadata };
-  expect(renderCard(page, site, "Writing").equals(renderCard(page, site, "Writing"))).toBe(true);
+  expect(renderCard(page, "Writing").equals(renderCard(page, "Writing"))).toBe(true);
   const title =
     "Understanding distributed systems with practical examples and useful implementation details";
-  expect(titleLines(title).join(" ")).toBe(title);
+  const { size, lines } = titleLayout(title);
+  expect(lines.join(" ")).toBe(title);
+  expect(lines.every((line) => titleWidth(line, size) <= titleMaxWidth)).toBe(true);
+});
+test("cards keep the bottom-left corner clear for platform title overlays", () => {
+  for (const title of ["Pulkit", "Database Transaction Internals: ACID, WAL, MVCC & Locking"]) {
+    const svg = cardSvg({ route: "/blogs/example/", metadata: { title } }, "Writing");
+    const leftColumnY = [...svg.matchAll(/<(?:text|tspan|path)[^>]*?\by="?([\d.]+)/g)].map(
+      (match) => Number(match[1]),
+    );
+    expect(Math.max(...leftColumnY)).toBeLessThanOrEqual(safeBottom);
+  }
 });
 test("validator rejects wrong canonicals, missing metadata, broken JSON and wrong PNG dimensions", async () => {
   const source =
     "---\ntitle: Example\ndescription: Example description\ndate: 2025-01-02\n---\n\nText.\n";
   const data = readPage(source).metadata;
   const html = await renderPage(source, { site, pages, route: "/blogs/example/" });
-  const png = renderCard({ route: "/blogs/example/", metadata: data }, site, "Writing");
+  const png = renderCard({ route: "/blogs/example/", metadata: data }, "Writing");
   const validate = (value: string, buffer = png) =>
     validateSeo(value, "/blogs/example/", data, site, () => buffer);
   expect(() => validate(html)).not.toThrow();

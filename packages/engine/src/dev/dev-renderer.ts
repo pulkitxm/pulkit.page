@@ -126,7 +126,7 @@ export function developmentRenderer(origin: () => string): DevelopmentRenderer {
         const body = current.get(
           "card",
           [card.metadata, card.route, site, category],
-          () => renderCard(card, site, category).toString("base64"),
+          () => renderCard(card, category).toString("base64"),
           access,
         );
         const description = summary(startedAt);

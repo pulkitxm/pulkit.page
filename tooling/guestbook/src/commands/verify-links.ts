@@ -16,10 +16,9 @@ async function verifyLinks(mode: "report" | "strict" | "write"): Promise<void> {
       if (!socialProfile(href)) {
         unsupported++;
         const message = `${entry.name} (${entry.id}): ${href} is not a supported social profile and is not shown`;
-        const title = "Unsupported guestbook link";
         console.log(
           annotate
-            ? `::${mode === "strict" ? "error" : "warning"} title=${title}::${message}`
+            ? `::warning title=Unsupported guestbook link::${message}`
             : `skipped ${message}`,
         );
       }
@@ -70,10 +69,7 @@ async function verifyLinks(mode: "report" | "strict" | "write"): Promise<void> {
       counts.filter((status) => status === "unknown").length
     } inconclusive.`,
   );
-  if (removed === 0 && unsupported === 0) {
-    return;
-  }
-  if (mode === "write") {
+  if (mode === "write" && (removed > 0 || unsupported > 0)) {
     await writeEntries(
       entries.map((entry) => {
         const links = entry.links?.filter((href) => socialProfile(href) && !missing(href));
@@ -86,7 +82,9 @@ async function verifyLinks(mode: "report" | "strict" | "write"): Promise<void> {
     console.log(
       `Removed ${removed} unavailable profiles and ${unsupported} unsupported links from the guestbook data.`,
     );
-  } else if (mode === "strict") {
+    return;
+  }
+  if (mode === "strict" && removed > 0) {
     console.log("Remove them with: bun run --cwd tooling/guestbook verify:links --write");
     process.exitCode = 1;
   }

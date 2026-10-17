@@ -99,11 +99,12 @@ links are replaced on the next run.
 
 Every CI run checks the stored links with
 `bun run --cwd tooling/guestbook verify:links --strict`. It fails when a profile no
-longer exists, such as a renamed X handle, and when a stored link is not one of
-those professional profiles. The error names the entry and the link. A profile
-only counts as missing on a definite not-found response; blocked, rate-limited,
-or failed checks pass. Run the command without a flag for the same report, or
-with `--write` to remove missing profiles and unsupported links from the data.
+longer exists, such as a renamed X handle, and the error names the entry and the
+link. Unsupported links, such as websites, are warnings and do not fail the run.
+A profile only counts as missing on a definite not-found response; blocked,
+rate-limited, or failed checks pass. Run the command without a flag for the same
+report, or with `--write` to remove missing profiles and unsupported links from
+the data.
 
 To remove a published entry, add its `id` to `removedEntryIds` in
 `apps/page/data/guestbook-settings.json` and delete it from

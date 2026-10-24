@@ -5,4 +5,4 @@ description: Hackathons, contests, bootcamps, and community events I have attend
 
 The moments that shaped my journey.
 
-:::list events by-year
+:::list events grid

@@ -2,11 +2,12 @@
 title: ICPC Amritapuri
 description: ICPC Amritapuri 2023, a national level programming contest.
 date: 2024-01-27
+cover: /assets/content/events/icpc-amritapuri/1.webp
 ---
 
 ICPC Amritapuri 2023 was a national level programming contest.
 
-:::carousel
+:::gallery
 
 ![ICPC Amritapuri photo 1](/assets/content/events/icpc-amritapuri/1.webp)
 

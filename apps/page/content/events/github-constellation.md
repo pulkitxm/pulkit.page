@@ -3,13 +3,14 @@ title: GitHub Constellation
 description: An amazing day at GitHub Constellation 2024 in Bangalore, meeting the GitHub team and
   learning a lot about open source.
 date: 2024-06-13
+cover: /assets/content/events/github-constellation/1.webp
 ---
 
 GitHub Constellation 2024 was an amazing event in Bangalore where I met the GitHub team and learned a lot about open source.
 
 [View the post](https://www.linkedin.com/posts/pulkitxm_githubconstellation-activity-7206997836423471104-E_eo)
 
-:::carousel
+:::gallery
 
 ![GitHub Constellation photo 1](/assets/content/events/github-constellation/1.webp)
 

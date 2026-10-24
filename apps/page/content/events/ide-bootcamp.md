@@ -2,13 +2,14 @@
 title: IDE Bootcamp
 description: A 3-day bootcamp on innovation and entrepreneurship.
 date: 2024-09-29
+cover: /assets/content/events/ide-bootcamp/1.webp
 ---
 
 IDE Bootcamp 2024 was a 3-day bootcamp where I learned about innovation and entrepreneurship.
 
 [View the post](https://www.linkedin.com/posts/pulkitxm_idebootcamp2024-dronacharyaengineering-studentinnovation-activity-7246105751406927872-Ww5C)
 
-:::carousel
+:::gallery
 
 ![IDE Bootcamp photo 1](/assets/content/events/ide-bootcamp/1.webp)
 

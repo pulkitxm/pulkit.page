@@ -2,13 +2,14 @@
 title: HackKRMU Hackathon
 description: A 24-hour hackathon where I built an AI/ML model for a travel solution.
 date: 2024-03-07
+cover: /assets/content/events/hackkrmu-hackathon/1.webp
 ---
 
 HackKRMU Hackathon 2024 was a 24-hour hackathon where I built an AI/ML model to make a travel solution.
 
 [View the post](https://www.linkedin.com/posts/pulkitxm_krmuhackathon-ai-ml-activity-7171504117083684865-N7RB)
 
-:::carousel
+:::gallery
 
 ![HackKRMU Hackathon photo 1](/assets/content/events/hackkrmu-hackathon/1.webp)
 

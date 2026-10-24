@@ -2,13 +2,14 @@
 title: Debug Decrypt
 description: A technical event where I organized a CTF competition.
 date: 2024-08-13
+cover: /assets/content/events/debug-decrypt/1.webp
 ---
 
 Debug Decrypt 2024 was a technical event where I organized a CTF competition.
 
 [View the post](https://legacy.deviatorsclub.tech/gallery/debug-decrypt)
 
-:::carousel
+:::gallery
 
 ![Debug Decrypt photo 1](/assets/content/events/debug-decrypt/1.webp)
 

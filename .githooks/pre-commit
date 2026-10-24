@@ -15,6 +15,7 @@ git checkout-index --all --prefix="$snapshot/"
   cd "$snapshot"
   git init --quiet
   git add --all
+  git -c user.name=pre-commit -c user.email=pre-commit@localhost commit --quiet --message snapshot
   if [ -f bun.lock ]; then
     bun install --frozen-lockfile --ignore-scripts >/dev/null
   fi

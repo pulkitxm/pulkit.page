@@ -12,6 +12,7 @@ export const pageFields = [
   "darkIcon",
   "secondaryIcon",
   "priorityImage",
+  "cover",
   "tags",
   "links",
 ] as const;

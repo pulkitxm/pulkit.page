@@ -37,6 +37,22 @@
     animation: entry-title-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-gallery-image] {
+      animation: gallery-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+@keyframes gallery-drift {
+  from {
+    transform: translateY(-24px) scale(1.25);
+  }
+  to {
+    transform: translateY(24px) scale(1.25);
+  }
+}
 @keyframes entry-title-in {
   from {
     opacity: 0;

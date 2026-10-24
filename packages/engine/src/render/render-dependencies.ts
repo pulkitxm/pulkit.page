@@ -34,6 +34,8 @@ export function renderDependencies(
           entry.metadata.darkIcon,
           entry.metadata.secondaryIcon,
           entry.metadata.role,
+          entry.metadata.cover,
+          entry.metadata.description,
         ]),
     ),
   };

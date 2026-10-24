@@ -128,6 +128,14 @@ function valueErrors(
       errors.push(`${field} must reference an existing experience icon`);
     }
   }
+  const cover = data.cover;
+  if (
+    cover &&
+    (!/^\/assets\/[a-z0-9/-]+\.(webp|png|jpe?g)$/.test(String(cover)) ||
+      !existsSync(join(repositoryRoot, root || "apps/page/", String(cover).slice(1))))
+  ) {
+    errors.push("cover must reference an existing image under /assets/");
+  }
   return errors;
 }
 

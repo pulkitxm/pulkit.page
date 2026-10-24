@@ -17,6 +17,7 @@ The repository has two site apps: `apps/page/` (pulkit.page, the portfolio) and 
 | `role`        | Required on experience details; optional elsewhere                     | Detail line                                                            |
 | `period`      | Required on experience details; optional elsewhere                     | Human-readable period in details/lists                                 |
 | `tags`        | Optional nonempty array of unique trimmed strings                      | Related-writing scores and JSON-LD keywords; no tag archives           |
+| `cover`       | Optional self-hosted image path                                        | Card image in `:::list ... grid` listings                              |
 
 Unknown fields, including `draft`, `slug`, author, and custom SEO fields, fail the current schema. Do not add them without coordinated checker/renderer/tests changes. Routes come from filenames, not titles or metadata. Future dates are accepted if calendar-valid and will sort first; they do not schedule publication.
 
@@ -68,7 +69,7 @@ Page links must be root-relative, HTTP(S), mailto, or fragments; use trailing sl
 The renderer promotes body headings to at least H2 and assigns IDs from lowercase text stripped of HTML tags and non-ASCII-alphanumeric runs. IDs not beginning with a letter get `section-`; collisions receive numeric suffixes, and `main` is reserved. The strict authoring checker rejects duplicate heading labels even though the renderer can disambiguate IDs. Heading wording changes may break inbound fragment links, which the local link checker does not verify.
 
 ```text
-:::list <collection> [limit=N] [by-year]
+:::list <collection> [limit=N] [by-year] [grid]
 ```
 
 ```md
@@ -79,9 +80,11 @@ The renderer promotes body headings to at least H2 and assigns IDs from lowercas
 :::list all by-year
 
 :::list blog:all limit=5
+
+:::list events grid
 ```
 
-Place one directive in its own paragraph. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. `<site>:all` lists every post of another app in the workspace, such as `blog:all` for `apps/blog`, linking each entry to that site's domain from the shared profile. Items sort newest date first then title. Ungrouped lists display the period, or the month and year; a list with a limit shows the day and month for this year's posts and the full date for older ones. With `by-year`, the list is grouped under year headings and each entry shows its day and month. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
+Place one directive in its own paragraph. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. `<site>:all` lists every post of another app in the workspace, such as `blog:all` for `apps/blog`, linking each entry to that site's domain from the shared profile. Items sort newest date first then title. Ungrouped lists display the period, or the month and year; a list with a limit shows the day and month for this year's posts and the full date for older ones. With `by-year`, the list is grouped under year headings and each entry shows its day and month. With `grid`, entries render as photo cards in two columns (one on narrow screens): the page's `cover` image, title, date, and description. Every entry in a grid list must set `cover`, a self-hosted image path such as `/assets/content/events/ide-bootcamp/1.webp`, or rendering fails; `cover` is an optional page field with no other effect. `grid` combines with `by-year`. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
 
 ```text
 :::projects <login>/<list-slug>
@@ -122,6 +125,8 @@ Group two or more related images into a sliding carousel with Previous and Next 
 ```
 
 The block may contain only images, each with alt text. Each slide links to its full-size image, which also makes the scrolling region reachable by keyboard. Without JavaScript it still scrolls horizontally with snap points; the page loads `/assets/embeds/image-carousel.js` from `@pulkit/embeds`, which wires the buttons and the position counter.
+
+A gallery block takes the same images with `gallery` in place of `carousel` and lays them out as a two-column grid of fixed-height tiles, one column on narrow screens, each opening the lightbox. Where the browser supports scroll-driven animations and the reader allows motion, each photo drifts slightly as it scrolls through its tile. The event pages under `apps/page/content/events/` use it.
 
 ## Components
 

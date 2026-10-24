@@ -43,7 +43,7 @@ function checkUrl(node: MarkdownNode, page: boolean, fail: Fail): void {
 function checkDirective(node: MarkdownNode, fail: Fail): void {
   const text = sourceText(node);
   if (
-    !/^(?::::list (?:[a-z0-9-]+:all|[a-z0-9]+(?:[-/][a-z0-9]+)*)(?: limit=[1-9][0-9]*)?(?: by-year)?|:::carousel|:::)$/.test(
+    !/^(?::::list (?:[a-z0-9-]+:all|[a-z0-9]+(?:[-/][a-z0-9]+)*)(?: limit=[1-9][0-9]*)?(?: by-year)?(?: grid)?|:::carousel|:::gallery|:::)$/.test(
       text,
     ) &&
     !/^:::demo [a-z0-9]+(?:-[a-z0-9]+)*(?: [a-z0-9]+(?:-[a-z0-9]+)*)?$/.test(text) &&

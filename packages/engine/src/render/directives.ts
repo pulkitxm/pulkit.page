@@ -42,11 +42,14 @@ interface CarouselImage {
 const carouselButton =
   "cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit] disabled:cursor-default disabled:opacity-40";
 
-function carouselImages(src: string): { raw: string; images: CarouselImage[] } | undefined {
-  if (!/^:::carousel\b/.test(src)) {
+function blockImages(
+  name: "carousel" | "gallery",
+  src: string,
+): { raw: string; images: CarouselImage[] } | undefined {
+  if (!new RegExp(`^:::${name}\\b`).test(src)) {
     return;
   }
-  const match = /^:::carousel[ \t]*\n([\s\S]*?)\n:::[ \t]*(?:\n|$)/.exec(src);
+  const match = new RegExp(`^:::${name}[ \\t]*\\n([\\s\\S]*?)\\n:::[ \\t]*(?:\\n|$)`).exec(src);
   const content = match?.[1] ?? "";
   const images = match
     ? [...content.matchAll(/!\[([^\]\n]+)\]\(([^)\s]+)\)/g)].map(([, alt = "", href = ""]) => ({
@@ -55,7 +58,7 @@ function carouselImages(src: string): { raw: string; images: CarouselImage[] } |
       }))
     : [];
   if (!match || images.length < 2 || content.replace(/!\[[^\]\n]+\]\([^)\s]+\)/g, "").trim()) {
-    throw new Error("Invalid carousel directive; wrap two or more images in :::carousel and :::");
+    throw new Error(`Invalid ${name} directive; wrap two or more images in :::${name} and :::`);
   }
   return { raw: match[0], images };
 }
@@ -71,10 +74,21 @@ function renderCarousel(images: readonly CarouselImage[], context: RenderContext
   return `<figure class="mx-0 my-7" data-carousel><section class="flex snap-x snap-mandatory items-center overflow-x-auto overscroll-x-contain rounded-md [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-roledescription="carousel" aria-label="${escapeHtml(`${images[0]?.alt} and ${images.length - 1} more`)}" data-carousel-track>${slides}</section><figcaption class="mt-3 flex items-center justify-center gap-4 text-xs text-muted"><button class="${carouselButton}" type="button" aria-label="Previous image" data-carousel-previous>Prev</button><span aria-live="polite" data-carousel-status>1 / ${images.length}</span><button class="${carouselButton}" type="button" aria-label="Next image" data-carousel-next>Next</button></figcaption></figure>`;
 }
 
+function renderGallery(images: readonly CarouselImage[], context: RenderContext): string {
+  const tiles = images
+    .map(
+      (image) =>
+        `<a class="group relative block h-64 cursor-zoom-in overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}"${zoomAttributes(image.href, context.assets)}><img class="m-0 block size-full object-cover transition-opacity duration-300 group-hover:opacity-90" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}"${sizeAttributes(image.href)} loading="lazy" data-gallery-image></a>`,
+    )
+    .join("");
+  return `<div class="mx-0 my-7 grid grid-cols-2 gap-4 max-sm:grid-cols-1" data-gallery>${tiles}</div>`;
+}
+
 export function directiveExtension(context: RenderContext): MarkedExtension {
   const embeds = tokenStore<EmbedMatch>();
   const demos = tokenStore<Demo>();
   const carousels = tokenStore<CarouselImage[]>();
+  const galleries = tokenStore<CarouselImage[]>();
   const listings = tokenStore<Listing>();
   const projects = tokenStore<string>();
   const directoryPages = tokenStore<{ page: number; project: string | undefined }>();
@@ -143,11 +157,23 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
         level: "block",
         start: (src) => src.indexOf(":::carousel"),
         tokenizer(src) {
-          const carousel = carouselImages(src);
+          const carousel = blockImages("carousel", src);
           return carousel ? carousels.create("carousel", carousel.raw, carousel.images) : undefined;
         },
         renderer(token) {
           return renderCarousel(carousels.read(token), context);
+        },
+      },
+      {
+        name: "gallery",
+        level: "block",
+        start: (src) => src.indexOf(":::gallery"),
+        tokenizer(src) {
+          const gallery = blockImages("gallery", src);
+          return gallery ? galleries.create("gallery", gallery.raw, gallery.images) : undefined;
+        },
+        renderer(token) {
+          return renderGallery(galleries.read(token), context);
         },
       },
       {
@@ -204,13 +230,14 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
         tokenizer(src) {
           const match = listDirective.exec(src);
           if (!match && /^:::list\b/.test(src)) {
-            throw new Error("Invalid list directive; use :::list collection limit=5 by-year");
+            throw new Error("Invalid list directive; use :::list collection limit=5 by-year grid");
           }
           return match
             ? listings.create("listing", match[0], {
                 collection: match[1] ?? "",
                 limit: listingLimit(match[2]),
                 grouped: Boolean(match[3]),
+                grid: Boolean(match[4]),
               })
             : undefined;
         },

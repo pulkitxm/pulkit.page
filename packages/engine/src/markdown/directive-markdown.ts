@@ -194,7 +194,7 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
           token(demoMarkdown(name, variant, pageUrl)),
       )
       .replace(
-        /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?[ \t]*$/gm,
+        /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?(?: grid)?[ \t]*$/gm,
         (_, collection: string, limit: string | undefined, byYear: string | undefined) =>
           token(listingMarkdown(context, collection, limit, Boolean(byYear))),
       )
@@ -208,7 +208,7 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
       .replace(projectsLine, (_, login: string, slug: string) =>
         token(projectsMarkdown(site, login, slug)),
       )
-      .replace(/^:::carousel[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (_, images: string) =>
+      .replace(/^:::(?:carousel|gallery)[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (_, images: string) =>
         token(
           [...images.matchAll(/!\[([^\]\n]+)\]\(([^)\s]+)\)/g)]
             .map(([, alt = "", src = ""]) => imageTo(alt, resolve(src)))

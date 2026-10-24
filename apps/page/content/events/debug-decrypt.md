@@ -7,7 +7,7 @@ cover: /assets/content/events/debug-decrypt/1.webp
 
 Debug Decrypt 2024 was a technical event where I organized a CTF competition.
 
-[View the post](https://legacy.deviatorsclub.tech/gallery/debug-decrypt)
+[View the post](https://v1.deviators.club/gallery/debug-decrypt)
 
 :::gallery
 

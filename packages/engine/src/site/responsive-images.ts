@@ -55,6 +55,9 @@ function displaySizes(element: Element, image: Image): string {
   if (classes.includes("size-10")) {
     return classes.includes("sm:size-12") ? "(min-width: 40rem) 48px, 40px" : "40px";
   }
+  if (attribute(element, "data-gallery-image") !== undefined) {
+    return "(min-width: 760px) 344px, (min-width: 640px) calc(50vw - 36px), calc(100vw - 44px)";
+  }
   if (classes.includes("size-36")) {
     return "144px";
   }

@@ -90,6 +90,48 @@ test("HTML formatting preserves check marks in highlighted shell transcripts", a
   expect(html).not.toContain("√");
 });
 
+test("gallery directives render a zoomable photo grid and reject stray content", async () => {
+  const images = ["First", "Second"].map((alt) => `![${alt}](/assets/${alt}.webp)`).join("\n\n");
+  const html = await renderPage(`${source}\n:::gallery\n\n${images}\n\n:::\n`);
+  expect(html.match(/data-gallery-image/g)).toHaveLength(2);
+  expect(html.match(/data-media-zoom/g)).toHaveLength(2);
+  expect(html).toContain('alt="Second"');
+  expect(html).not.toContain("image-carousel.js");
+  await expect(renderPage(`${source}\n:::gallery\n\n${images}\n\nText\n\n:::\n`)).rejects.toThrow(
+    "Invalid gallery directive",
+  );
+});
+
+test("grid lists render cover cards and require a cover on every entry", async () => {
+  const pages: ListedPage[] = [
+    {
+      route: "/events/old/",
+      metadata: { title: "Old", date: "2024-03-07", cover: "/assets/old.webp" },
+    },
+    {
+      route: "/events/new/",
+      metadata: {
+        title: "New",
+        description: "A <new> event.",
+        date: "2025-04-11",
+        cover: "/assets/new.webp",
+      },
+    },
+  ];
+  const html = await renderPage(`${source}\n:::list events grid\n`, { pages, route: "/events/" });
+  expect(html.match(/data-gallery-image/g)).toHaveLength(2);
+  expect(html).toContain('src="/assets/new.webp"');
+  expect(html).toContain("A &lt;new&gt; event.");
+  expect(html).toContain('datetime="2025-04-11">Apr 2025</time>');
+  expect(html.indexOf('href="/events/new/"')).toBeLessThan(html.indexOf('href="/events/old/"'));
+  const grouped = await renderPage(`${source}\n:::list events by-year grid\n`, { pages });
+  expect(grouped).toMatch(/<h2\s+class="[^"]+"\s*>\s*2025\s*<\/h2>/);
+  const uncovered: ListedPage[] = [{ route: "/events/bare/", metadata: { title: "Bare" } }];
+  await expect(
+    renderPage(`${source}\n:::list events grid\n`, { pages: uncovered }),
+  ).rejects.toThrow("Grid list entry needs a cover image: /events/bare/");
+});
+
 test("by-year lists group newest first with day and month dates", async () => {
   const pages: ListedPage[] = [
     { route: "/blogs/old/", metadata: { title: "Old", date: "2024-12-31" } },

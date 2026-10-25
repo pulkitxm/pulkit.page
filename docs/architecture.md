@@ -355,8 +355,9 @@ invalidates every task.
 ## Gates, hooks and deployment
 
 The same `bun run ci` runs locally and inside the pre-commit hook against the
-staged snapshot. GitHub Actions splits its source checks, tests, builds and site
-checks into parallel jobs. Each site builds independently, then its static
+staged snapshot. GitHub Actions first validates media and can publish repairs
+through Pukbot. Source checks, tests, builds and site checks use the resulting
+revision in parallel jobs. Each site builds independently, then its static
 checks, browser page matrix and browser interactions consume that exact output.
 On `main`, both deployments wait for every required job and publish the checked
 artifacts from the same run. See

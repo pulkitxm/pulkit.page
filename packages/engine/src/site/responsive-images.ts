@@ -80,7 +80,7 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
   async function prepare(src: string, priority: boolean): Promise<Image | undefined> {
     if (
       src.startsWith("/assets/responsive/") ||
-      !/^\/assets\/[^?#]+\.(?:png|jpe?g|webp)$/i.test(src)
+      !/^\/assets\/[^?#]+\.(?:png|jpe?g|webp|avif)$/i.test(src)
     ) {
       return;
     }

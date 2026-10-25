@@ -2,6 +2,7 @@ import { lstatSync, readFileSync, statSync } from "node:fs";
 import { reportFailures } from "@pulkit/shared/failures";
 import { siteConfigFile } from "@pulkit/shared/frontmatter";
 import { repositoryFiles } from "@pulkit/shared/repository";
+import { mediaKind } from "../lib/media/policy.ts";
 
 const maximumBytes = 2 * 1024 * 1024;
 const maximumSourceLines = 400;
@@ -14,10 +15,10 @@ const failures: string[] = [];
 const normalized = new Map<string, string>();
 
 function sizeLimit(file: string): number {
-  if (/^apps\/[a-z0-9-]+\/assets\/content\/.*\.mp4$/.test(file)) {
-    return 20 * 1024 * 1024;
+  if (mediaKind(file)) {
+    return 100 * 1024 * 1024;
   }
-  return /^apps\/[a-z0-9-]+\/assets\/content\//.test(file) && /\.(gif|webp|png|jpg|pdf)$/.test(file)
+  return /^apps\/[a-z0-9-]+\/assets\/content\//.test(file) && /\.pdf$/.test(file)
     ? 5 * 1024 * 1024
     : maximumBytes;
 }

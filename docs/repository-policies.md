@@ -29,6 +29,15 @@ A shebang at byte zero is executable interpreter metadata and is accepted. Strin
 
 Unknown source types and unknown fence languages cause a failure requesting an explicit parser registration. This prevents newly added languages from silently bypassing checks. The scanner uses error-tolerant syntax trees for partial tutorial snippets; it is a policy check, not a compiler or proof that example code is runnable. Code examples in content Markdown retain their original comments and formatting.
 
+## Media budgets
+
+`bun run check:media` is an uncached, read-only gate over all Git-listed image and
+video assets. It validates actual formats, dimensions, byte budgets, animation
+bounds, video codecs, and fast-start metadata. `bun run media:optimize <file>`
+prepares specific assets locally; committing remains a separate Pukbot operation.
+See [media budgets and optimization](media.md) for limits, quality settings, and
+the three exact compatibility exceptions.
+
 ## Knip
 
 [knip.json](../knip.json) configures each workspace separately. The engine declares its CLI modules and test setup as entries, embeds declare their `client/entries/*.ts` browser scripts, demos declare `client/index.ts`, and checks declare their `commands/check-*.ts` CLIs; package `exports` and `bin` fields supply the rest. Apps have no scripts of their own and ignore their `@pulkit/theme` dependency, which is consumed through CSS. `includeEntryExports` also checks unnecessary public exports in entry points.

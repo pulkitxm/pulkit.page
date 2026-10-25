@@ -47,7 +47,10 @@ jobs:
           fi
       - name: Verify the updated site
         if: steps.changes.outputs.changed == 'true'
-        run: bun run ci
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y ffmpeg
+          bun run ci
       - name: Install Pukbot
         if: steps.changes.outputs.changed == 'true'
         run: >
@@ -85,9 +88,10 @@ jobs:
     if: needs.sync.outputs.changed == 'true'
     uses: ./.github/workflows/ci.yml
     permissions:
-      contents: read
+      contents: write
       id-token: write
       pages: write
+      checks: write
     with:
       revision: ${{ needs.sync.outputs.revision }}
     secrets: inherit

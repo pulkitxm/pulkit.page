@@ -81,3 +81,24 @@ test("responsive copies preserve original downloads and layout", async () => {
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("AVIF sources receive responsive copies and retain their full-size download", async () => {
+  const directory = mkdtempSync(join(tmpdir(), "responsive-avif-"));
+  try {
+    mkdirSync(join(directory, "assets"));
+    const source = await sharp({
+      create: { width: 400, height: 200, channels: 3, background: "#1977bb" },
+    })
+      .avif()
+      .toBuffer();
+    writeFileSync(join(directory, "assets/photo.avif"), source);
+    writeFileSync(join(directory, "index.html"), '<img src="/assets/photo.avif" alt="Photo">');
+    expect(await optimizeImages(directory)).toBe(1);
+    const html = readFileSync(join(directory, "index.html"), "utf8");
+    expect(html).toContain("/assets/responsive/");
+    expect(html).toContain("/assets/photo.avif 400w");
+    expect(readFileSync(join(directory, "assets/photo.avif"))).toEqual(source);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});

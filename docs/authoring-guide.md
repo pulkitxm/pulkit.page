@@ -2,6 +2,10 @@
 
 [Documentation index](index.md)
 
+See [media budgets and optimization](media.md) before adding images or videos.
+`bun run check:media` enforces formats, dimensions, byte budgets, and video playback
+requirements. Use `bun run media:optimize <file>` to prepare an asset locally.
+
 The repository has two site apps: `apps/page/` (pulkit.page, the portfolio) and `apps/blog/` (pulkit.blog, every post). Paths such as `content/` or `assets/` in this guide are relative to whichever app you are editing, unless they start with `apps/`, `packages/`, `tooling/`, or `docs/`. Run both development servers with `bun run dev` from the repository root: pulkit.page prefers port 3000 and pulkit.blog prefers port 3001.
 
 ## Page schema

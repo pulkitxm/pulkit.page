@@ -180,7 +180,9 @@ test("turbo verify runs every check, lint, format and test script", () => {
     .flatMap((file) => Object.keys(manifest(file).scripts ?? {}))
     .filter((name) => name.startsWith("check:") || name === "test");
   const missing = [
-    ...rootScripts.filter((name) => !verify.has(`//#${name}`)),
+    ...rootScripts.filter(
+      (name) => !verify.has(`//#${name}`) && !ciWorkflow.includes(`bun run ${name}`),
+    ),
     ...new Set(
       workspaceScripts.filter(
         (name) => !verify.has(name) && !ciWorkflow.includes(`turbo run ${name}`),
@@ -200,7 +202,11 @@ test("independent checks start immediately and every check blocks deployment", (
   const checks = Object.keys(jobs).filter((id) => id !== "ci" && !id.startsWith("deploy-"));
   expect(new Set(job(jobs, "ci").needs)).toEqual(new Set(checks));
   for (const id of checks) {
-    expect(job(jobs, id).needs).toBeUndefined();
+    if (["source", "tests", "guestbook", "sites"].includes(id)) {
+      expect(job(jobs, id).needs).toBe("media");
+    } else {
+      expect(job(jobs, id).needs).toBeUndefined();
+    }
   }
   const site = workflow("site-ci.yml");
   expect(job(jobs, "sites").uses).toBe("./.github/workflows/site-ci.yml");
@@ -329,17 +335,23 @@ test("guestbook publishing uses Pukbot and the automatic token, then verifies th
     type: "string",
   });
   expect(job(workflow("ci.yml").jobs, "sites").with?.revision).toMatch(
-    /^\$\{\{ inputs.revision \|\| github.sha \}\}$/,
+    /^\$\{\{ needs.media.outputs.revision \}\}$/,
   );
   for (const name of ["ci.yml", "site-ci.yml"]) {
-    for (const definition of Object.values(workflow(name).jobs)) {
+    for (const [id, definition] of Object.entries(workflow(name).jobs)) {
       for (const step of definition.steps ?? []) {
         if (step.uses?.startsWith("actions/checkout@")) {
-          expect(step.with?.ref).toMatch(
-            name === "ci.yml"
-              ? /^\$\{\{ inputs.revision \|\| github.sha \}\}$/
-              : /^\$\{\{ inputs.revision \}\}$/,
-          );
+          if (name === "site-ci.yml") {
+            expect(step.with?.ref).toMatch(/^\$\{\{ inputs.revision \}\}$/);
+          } else if (id === "media") {
+            expect(step.with?.ref).toMatch(
+              /^\$\{\{ github.event.pull_request.head.sha \|\| inputs.revision \|\| github.sha \}\}$/,
+            );
+          } else if (["source", "tests", "guestbook"].includes(id)) {
+            expect(step.with?.ref).toMatch(/^\$\{\{ needs.media.outputs.revision \}\}$/);
+          } else {
+            expect(step.with?.ref).toMatch(/^\$\{\{ inputs.revision \|\| github.sha \}\}$/);
+          }
         }
       }
     }

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Pulkit's design practice: thoughtful interfaces, expressive websites, and products made for people." />
+    <meta name="theme-color" content="#f0eee8" />
+    <title>{{ TITLE }}</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23f04c24'/%3E%3Ctext x='18' y='46' font-size='49' font-family='Georgia' fill='%23f0eee8'%3Ep%3C/text%3E%3C/svg%3E" />
+    {{ STYLES }}
+  </head>
+  <body data-page="{{KIND}}" data-slug="{{SLUG}}">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="progress" aria-hidden="true"></div>
+    <header class="site-header shell">
+      <a href="index.html" class="wordmark" data-label="Pulkit" aria-label="Pulkit, home">pulkit<span class="brand-star" aria-hidden="true">✳</span></a>
+      <span class="header-caption eyebrow">Design & engineering / India</span>
+      <nav aria-label="Main navigation">
+        <a href="work.html" data-label="Selected work" data-nav="work">Work <sup>03</sup></a><a href="about.html" data-label="About Pulkit" data-nav="about">About</a><a href="contact.html" data-label="Let's talk" data-nav="contact">Let’s talk <span>↗</span></a>
+      </nav>
+    </header>
+    <main id="main">{{ CONTENT }}</main>
+    <footer class="site-footer shell">
+      <a class="wordmark" href="index.html" data-label="Pulkit">pulkit<span class="brand-star" aria-hidden="true">✳</span></a><span>© 2026 / Made with intention.</span>
+      <div class="footer-links"><a href="https://pulkit.page/" target="_blank" rel="noopener noreferrer">Main portfolio ↗</a><a href="https://x.com/puulkit" target="_blank" rel="noopener noreferrer">X ↗</a><button type="button" id="motion-toggle" aria-pressed="false">Motion on</button></div>
+    </footer>
+    <div class="pointer-ring" aria-hidden="true"></div>
+    <svg class="pointer-trail" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+    <div class="project-cursor" aria-hidden="true">View<br />project ↗</div>
+    <div class="page-transition" aria-hidden="true">
+      <div class="transition-back"></div>
+      <div class="transition-front"><span class="transition-star">✳</span><span id="transition-name">Pulkit</span><span class="eyebrow">A different perspective.</span></div>
+    </div>
+    <div class="toast" role="status" aria-live="polite"></div>
+    {{ LIBRARIES }}
+    {{ MOTION }}
+  </body>
+</html>

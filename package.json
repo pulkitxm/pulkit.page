@@ -38,7 +38,8 @@
     "check:types": "tsc -p tsconfig.json",
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "check:shell": "sh -n tooling/checks/install-hooks.sh && sh -n .githooks/pre-commit",
-    "postinstall": "sh tooling/checks/install-hooks.sh"
+    "postinstall": "sh tooling/checks/install-hooks.sh",
+    "dev:design": "python3 apps/design/build.py && python3 -m http.server 4178 --bind 127.0.0.1 --directory apps/design/dist"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

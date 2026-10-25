@@ -66,6 +66,17 @@ export function reportData(output: string, filename = "measurements.json") {
       variant: variant.id,
       pipeline: summarize(rows.map((row) => row.wallMs)),
       process: summarize(rows.map((row) => row.processMs)),
+      stages: Object.fromEntries(
+        ["tailwind", "transform", "bundle", "optimize"].map((stage) => [
+          stage,
+          summarize(
+            rows.flatMap((row) => {
+              const value = row.stages[stage];
+              return typeof value === "number" ? [value] : [];
+            }),
+          ),
+        ]),
+      ),
     };
   });
   const groups = measured.metadata.environment.flatMap(({ engine, profile }) =>
@@ -95,7 +106,7 @@ export function reportData(output: string, filename = "measurements.json") {
     ),
   );
   const comparisons = groups.flatMap((group) =>
-    ["utilities", "composed"].flatMap((reference) =>
+    ["utilities", "composed", "pruned"].flatMap((reference) =>
       Object.keys(metricLabels).map((metric) => {
         const baseline = measured.samples.filter(
           (row) =>

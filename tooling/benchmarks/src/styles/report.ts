@@ -5,6 +5,7 @@ import process from "node:process";
 import { escapeHtml } from "@pulkit/shared/html";
 import { root, variants } from "./config.ts";
 import { metricLabels, reportData } from "./report-data.ts";
+import type { ShiftDiagnostic } from "./shift-diagnostics.ts";
 
 export function renderReport(output: string, filename = "measurements.json"): void {
   const data = reportData(output, filename);
@@ -36,7 +37,7 @@ export function renderReport(output: string, filename = "measurements.json"): vo
   const buildRows = data.builds
     .map(
       (item) =>
-        `<tr><th>${e(variants.find((variant) => variant.id === item.variant)?.label)}</th><td>${stat(item.pipeline)}</td><td>${stat(item.process)}</td></tr>`,
+        `<tr><th>${e(variants.find((variant) => variant.id === item.variant)?.label)}</th><td>${stat(item.pipeline)}</td><td>${stat(item.process)}</td>${["tailwind", "transform", "bundle", "optimize"].map((stage) => `<td>${stat(item.stages[stage])}</td>`).join("")}</tr>`,
     )
     .join("");
   const environments = data.metadata.environment
@@ -85,7 +86,7 @@ export function renderReport(output: string, filename = "measurements.json"): vo
       return `<details${profile.id === "severe" ? " open" : ""}><summary>${e(key)}: ${e(profile.label)}</summary>${tables}${interactions}</details>`;
     })
     .join("");
-  const difference = (variant: string, reference: string) => {
+  const difference = (variant: string, reference: string, inline = false) => {
     const interval = data.comparisons.find(
       (row) =>
         row.profile === "chromium:severe" &&
@@ -103,17 +104,60 @@ export function renderReport(output: string, filename = "measurements.json"): vo
     } else if (interval.lower > 0) {
       resolved = "slower in this sample";
     }
-    return `${number(interval.median)} ms<small>95% interval: ${number(interval.lower)} to ${number(interval.upper)} ms; ${resolved}</small>`;
+    const detail = `95% interval: ${number(interval.lower)} to ${number(interval.upper)} ms; ${resolved}`;
+    if (inline) {
+      return `${number(interval.median)} ms (${detail})`;
+    }
+    return `${number(interval.median)} ms<small>${detail}</small>`;
   };
   const comparisons = data.artifacts
     .map(
       (item) =>
-        `<tr><th>${e(item.label)}</th><td>${difference(item.id, "utilities")}</td><td>${difference(item.id, "composed")}</td></tr>`,
+        `<tr><th>${e(item.label)}</th><td>${difference(item.id, "utilities")}</td><td>${difference(item.id, "composed")}</td><td>${difference(item.id, "pruned")}</td></tr>`,
     )
     .join("");
   const baseline = data.artifacts.find((item) => item.id === "utilities");
   const pruned = data.artifacts.find((item) => item.id === "pruned");
   const direct = data.artifacts.find((item) => item.id === "direct");
+  const current = data.artifacts.find((item) => item.id === "composed");
+  const constrainedMetric = (variant: string, metric: string) =>
+    data.groups.find(
+      (group) =>
+        group.profile === "chromium:severe" && group.cache === "cold" && group.variant === variant,
+    )?.metrics[metric];
+  const constrainedPaint = (variant: string) => {
+    const value = constrainedMetric(variant, "lcpMs");
+    return value ? `${number(value.median)} ms` : "unavailable";
+  };
+  const constrainedCLS = (variant: string) => {
+    const value = constrainedMetric(variant, "cls");
+    return value ? number(value.median, 6) : "unavailable";
+  };
+  const diagnosticPath = join(output, "shift-diagnostics.json");
+  const diagnostics: ShiftDiagnostic[] = existsSync(diagnosticPath)
+    ? JSON.parse(readFileSync(diagnosticPath, "utf8"))
+    : [];
+  const sourceSignatures = new Set(
+    diagnostics.map((row) =>
+      JSON.stringify(
+        row.shifts.filter((entry) => entry.value !== undefined).map((entry) => entry.sources),
+      ),
+    ),
+  );
+  const diagnosticRows = diagnostics
+    .map((row) => {
+      const entries = row.shifts.filter((entry) => entry.value !== undefined);
+      const raw = entries.reduce((sum, entry) => sum + (entry.value ?? 0), 0);
+      const filtered = entries
+        .filter((entry) => !entry.recentInput)
+        .reduce((sum, entry) => sum + (entry.value ?? 0), 0);
+      return `<tr><th>${e(variants.find((item) => item.id === row.variant)?.label)}</th><td>${number(raw, 6)}</td><td>${number(filtered, 6)}</td><td>${entries.filter((entry) => entry.recentInput).length}</td></tr>`;
+    })
+    .join("");
+  const diagnosticSection =
+    diagnostics.length > 0
+      ? `<h3>Loading stability diagnostics</h3><p>Four additional cold visits, one per selected variant, record raw shift entries and font timing. No clicks occur during these visits. These probes are separate from the nine-repeat navigation samples.</p><div class="scroll"><table><thead><tr><th>Strategy</th><th>Raw shift-score sum</th><th>Sum after recent-input exclusion</th><th>Entries excluded</th></tr></thead><tbody>${diagnosticRows}</tbody></table></div><p>${sourceSignatures.size === 1 ? "The attributed before/after source rectangles match across these diagnostic visits." : "The diagnostic source rectangles differ between visits."} Movement occurs around web-font loading, consistent with the existing font-display:swap behavior. Chromium can flag raw movement as having recent input even though this probe sends none. The filtered CLS score therefore does not establish that the zero-scoring build had no movement. The cause of those browser flags is not isolated here. <a href="shift-diagnostics.json">Raw attribution and font timings</a>.</p>`
+      : "<p>Run the diagnose phase to capture raw layout-shift attribution and font timing.</p>";
   const savings = (bytes: number) =>
     baseline ? `${number((1 - bytes / baseline.coldHtmlCssGzip) * 100)}%` : "unknown";
   const parityStatus = data.parity.failures === 0 ? "Passed" : "FAILED";
@@ -138,21 +182,30 @@ summary { cursor: pointer; font-weight: 650; } code { background: #e9eee9; paddi
 <p class="muted">LOCAL PERFORMANCE STUDY · ${e(data.metadata.startedAt)}</p><h1>Home-page CSS strategies</h1>
 <p class="intro">Six builds of the same home page, tested with identical content and assets in isolated Chromium and Firefox contexts. This experiment changes the local fixtures only.</p>
 <div class="cards"><div class="card"><strong>${data.parity.checks}</strong>Rendering and interaction checks: ${parityStatus}</div><div class="card"><strong>${pruned ? savings(pruned.coldHtmlCssGzip) : "unknown"}</strong>HTML + CSS gzip reduction from pruning alone</div><div class="card"><strong>${direct ? savings(direct.coldHtmlCssGzip) : "unknown"}</strong>HTML + CSS gzip reduction with direct rules</div><div class="card"><strong>${data.metadata.runs}</strong>Measured repetitions per strategy and environment</div></div>
+<h2>Measured findings</h2><ul>
+<li>Direct inline rules produce ${current && direct ? number((1 - direct.coldHtmlCssGzip / current.coldHtmlCssGzip) * 100) : "unknown"}% less gzip HTML + CSS than current composition, with ${direct?.cssRules} CSS rules compared with ${current?.cssRules}.</li>
+<li>On severely constrained Chromium, median cold LCP is ${constrainedPaint("composed")} for current composition, ${constrainedPaint("direct")} for direct inline rules and ${constrainedPaint("pruned")} for pruning alone. Direct minus current: ${difference("direct", "composed", true)}. Direct minus pruned: ${difference("direct", "pruned", true)}. This separates the benefit of pruning from the additional composition changes.</li>
+<li>Direct external CSS reaches ${constrainedPaint("external")} median cold LCP in that environment. Its additional stylesheet request is a tradeoff under this latency model; cross-page cache reuse was not measured.</li>
+<li>Severe-profile median CLS is ${constrainedCLS("direct")} for direct inline CSS and ${constrainedCLS("composed")} for current composition. The supplementary diagnostics below check raw movement and Chromium's recent-input filtering. Settled screenshot parity does not establish identical loading stability.</li>
+</ul><p>These are observations on this shared host and fixture. Use the environment-specific tables and intervals below rather than extrapolating the constrained result to every device.</p>
 <h2>What the comparison isolates</h2><ul>${data.artifacts.map((item) => `<li><strong>${e(item.label)}:</strong> ${e(item.detail)}</li>`).join("")}</ul>
 <p>The original and pruned utility versions are controls. They show how much benefit comes from removing unused CSS before attributing any improvement to removing utility names or composing declarations.</p>
 <p>Tailwind stays in the source and runs during compilation. Every variant serves ordinary CSS, with no Tailwind JavaScript runtime. Direct rules use Tailwind's own compiler to expand each home-page class combination into a generated selector. Responsive rules, pseudo-classes and dark-mode selectors still require CSS; moving everything into style attributes would lose that behavior.</p>
 ${figure("payload.png", "Deterministic output sizes and selector rule counts. External CSS bytes are added to the HTML for the cold-payload comparison.")}
 <div class="scroll"><table><thead><tr><th>Strategy</th><th>HTML gzip bytes</th><th>External CSS gzip bytes</th><th>Cold HTML + CSS gzip bytes</th><th>HTML Brotli bytes</th><th>CSS rules</th><th>Class tokens</th></tr></thead><tbody>${payloadRows}</tbody></table></div>
-<h2>Build cost</h2><p>Build samples use fresh Bun processes and a warm filesystem. Pipeline time covers CSS compilation, transformation, home-script bundling and output. Content discovery, Markdown rendering, image optimization and the other site routes are excluded. The second column includes process startup and benchmark-only size analysis.</p>
+<h2>Build cost</h2><p>Build samples use fresh Bun processes and a warm filesystem. Pipeline time covers CSS compilation, transformation, home-script bundling and output. Content discovery, Markdown rendering, image optimization and the other site routes are excluded. Complete process time includes startup and benchmark-only size analysis.</p>
+<p>The rendered HTML, responsive assets and class catalog are prepared before the trials and supplied as fixture inputs. The current composition variant retains its production-wide browser-source scan and fallback demo-catalog compilation. The prototypes scan only the home page's browser dependency graph. These timings compare the strategies as implemented; they do not isolate selector-generation cost or predict a full-site build speedup.</p>
 ${figure("build.png", "Build medians with p25 to p75 error bars. These are home styling builds, not full-site deployment times.")}
-<div class="scroll"><table><thead><tr><th>Strategy</th><th>Pipeline ms</th><th>Complete process ms</th></tr></thead><tbody>${buildRows}</tbody></table></div>
+<div class="scroll"><table><thead><tr><th>Strategy</th><th>Pipeline ms</th><th>Complete process ms</th><th>Tailwind stage ms</th><th>Transform stage ms</th><th>Bundle stage ms</th><th>Optimize stage ms</th></tr></thead><tbody>${buildRows}</tbody></table></div>
+<p>Named stages exclude input/output bookkeeping and finalization included in the pipeline total. A missing stage was not separately instrumented; it is not zero work.</p>
 <h2>Environments and navigation</h2><p>CPU multipliers are relative to this host and throttle Chromium's main thread. They do not reproduce a specific phone, RAM limit, GPU, thermal state or old browser. Firefox runs use its real engine without CPU or bandwidth emulation.</p>
 <div class="scroll"><table><thead><tr><th>Environment</th><th>CSS viewport</th><th>DPR</th><th>CPU slowdown</th><th>Added response delay</th><th>Down / up Mbps</th></tr></thead><tbody>${environments}</tbody></table></div>
 ${figure("lcp.png", "Cold-cache LCP medians with p25 to p75 error bars. Scales differ between environments; compare strategies within each panel.")}
 <h3>Severely constrained Chromium: paired cold-LCP differences</h3><p>Candidate minus reference, paired by run round. Negative values mean faster. Intervals are deterministic 2,000-resample percentile bootstrap intervals of the median paired difference. An interval crossing zero does not resolve a winner.</p>
-<div class="scroll"><table><thead><tr><th>Candidate</th><th>Compared with original utilities</th><th>Compared with current composition</th></tr></thead><tbody>${comparisons}</tbody></table></div>
+<div class="scroll"><table><thead><tr><th>Candidate</th><th>Compared with original utilities</th><th>Compared with current composition</th><th>Compared with pruning alone</th></tr></thead><tbody>${comparisons}</tbody></table></div>
 <p>Decision guide: pruning is the simplest payload improvement. Direct inline rules are the candidate for removing utility names and reducing the current composition's selector expansion. Check the measured paint intervals and build cost before choosing it for production. External CSS trades an additional cold request for independent caching; this same-page experiment cannot establish its cross-route caching benefit.</p>
 <h2>Responsiveness and style work</h2>
+${diagnosticSection}
 ${figure("interaction.png", "One real theme-button click after the warm visit. The proxy ends two animation frames after the theme attribute changes. It is not field INP.")}
 ${figure("style.png", "A separate stress workload changes the root theme and forces style/layout 40 times. This exaggerates style work and does not represent normal browsing.")}
 <h2>Detailed metrics and spread</h2><p>Cells show median, p25 to p75 and sample count. Missing browser APIs remain unavailable rather than being reported as zero. Firefox's cached transfer-size accounting differs from Chromium, so the tables use response-body bytes counted by the fixture server. Additional navigation timestamps, request/cache counts and task counters are available in the raw JSON and CSV.</p>${profileTables}
@@ -169,9 +222,9 @@ ${figure("style.png", "A separate stress workload changes the root theme and for
 <li>This is one shared host, with ${data.metadata.runs} samples per cell. Quantized paint timings, host scheduling and browser variability limit conclusions about small differences. The bootstrap intervals are exploratory and are not adjusted for multiple comparisons.</li>
 </ul>
 <h2>Host and reproducibility</h2><pre>${e(JSON.stringify({ ...data.metadata, environment: undefined }, null, 2))}</pre>
-<p>Whole-host CPU busy percentage during measured rounds: ${data.hostActivity ? `median ${number(data.hostActivity.median)}%, range ${number(data.hostActivity.min)}% to ${number(data.hostActivity.max)}%.` : "not recorded in this preflight."} This includes the benchmark and unrelated background work. Browser contexts isolate cache and state; they do not isolate the host scheduler. Per-round host activity and load averages are retained in the raw measurements.</p>
+<p>Per-round whole-host CPU busy percentage: ${data.hostActivity ? `median ${number(data.hostActivity.median)}%, range ${number(data.hostActivity.min)}% to ${number(data.hostActivity.max)}%.` : "not recorded in this preflight."} This includes the benchmark and unrelated background work. Browser contexts isolate cache and state; they do not isolate the host scheduler. Per-round host activity and load averages are retained in the raw measurements.</p>
 <p><a href="${e(filename)}">Raw measurements and order</a> · <a href="measurements.csv">CSV</a> · <a href="summary.json">Summaries and intervals</a> · <a href="parity.json">Correctness checks</a></p>
-<p>API references: <a href="https://playwright.dev/docs/api/class-cdpsession">Playwright CDP sessions</a>, <a href="https://web.dev/articles/lcp">LCP definition</a>, <a href="https://web.dev/articles/inp">INP definition</a>, <a href="https://developer.chrome.com/docs/lighthouse/performance/performance-scoring">Performance measurement variability</a>, <a href="https://tailwindcss.com/docs/functions-and-directives">Tailwind directives</a>.</p>
+<p>API references: <a href="https://playwright.dev/docs/api/class-cdpsession">Playwright CDP sessions</a>, <a href="https://web.dev/articles/lcp">LCP definition</a>, <a href="https://web.dev/articles/inp">INP definition</a>, <a href="https://web.dev/articles/cls">CLS definition and recent-input filtering</a>, <a href="https://developer.chrome.com/docs/lighthouse/performance/performance-scoring">Performance measurement variability</a>, <a href="https://tailwindcss.com/docs/functions-and-directives">Tailwind directives</a>.</p>
 </body></html>\n`;
   writeFileSync(join(output, "index.html"), html);
 }

@@ -14,15 +14,16 @@ const { values } = parseArgs({
   },
 });
 const output = resolve(values.output);
-const stages = ["prepare", "verify", "measure", "report"];
+const stages = ["prepare", "verify", "measure", "diagnose", "report"];
 if (values.phase !== "all" && !stages.includes(values.phase)) {
-  throw new Error("phase must be all, prepare, verify, measure or report");
+  throw new Error("phase must be all, prepare, verify, measure, diagnose or report");
 }
 for (const phase of stages.filter((stage) => values.phase === "all" || values.phase === stage)) {
   const names: Record<string, string> = {
     prepare: "prepare-styles",
     verify: "verify-style-variants",
     measure: "measure-styles",
+    diagnose: "diagnose-style-shifts",
     report: "render-style-report",
   };
   let argumentsForStage = [output];

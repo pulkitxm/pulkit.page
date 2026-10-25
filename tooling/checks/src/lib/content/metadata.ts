@@ -126,7 +126,7 @@ function valueErrors(
     const icon = data[field];
     if (
       icon &&
-      (!/^\/assets\/exp\/[a-z0-9-]+\.(webp|svg)$/.test(String(icon)) ||
+      (!/^\/assets\/exp\/[a-z0-9-]+\.(webp|avif|svg)$/.test(String(icon)) ||
         !existsSync(join(repositoryRoot, root || "apps/page/", String(icon).slice(1))))
     ) {
       errors.push(`${field} must reference an existing experience icon`);
@@ -135,7 +135,7 @@ function valueErrors(
   const cover = data.cover;
   if (
     cover &&
-    (!/^\/assets\/[a-z0-9/-]+\.(webp|png|jpe?g)$/.test(String(cover)) ||
+    (!/^\/assets\/[a-z0-9/-]+\.(webp|avif|png|jpe?g)$/.test(String(cover)) ||
       !existsSync(join(repositoryRoot, root || "apps/page/", String(cover).slice(1))))
   ) {
     errors.push("cover must reference an existing image under /assets/");

@@ -21,13 +21,18 @@ function isKnownBinary(file: string, bytes: Buffer): boolean {
   const second = bytes[1] ?? -1;
   return (
     (/\.webp$/i.test(file) && header.startsWith("RIFF") && header.slice(8, 12) === "WEBP") ||
+    (/\.avif$/i.test(file) && header.slice(4, 8) === "ftyp" && /avif|mif1/.test(header.slice(8))) ||
     (/\.gif$/i.test(file) && /^GIF8[79]a/.test(header)) ||
     (/\.ttf$/i.test(file) && bytes.length >= 12 && bytes.readUInt32BE(0) === 65_536) ||
     (/\.woff2?$/i.test(file) && /^wOF[2F]/.test(header)) ||
     (/\.pdf$/i.test(file) && header.startsWith("%PDF-")) ||
     (/\.png$/i.test(file) && first === 137 && header.slice(1, 4) === "PNG") ||
     (/\.jpe?g$/i.test(file) && first === 255 && second === 216) ||
-    (/\.mp4$/i.test(file) && header.slice(4, 8) === "ftyp") ||
+    (/\.(mp4|m4v|mov|heic|heif)$/i.test(file) && header.slice(4, 8) === "ftyp") ||
+    (/\.(webm|mkv)$/i.test(file) && bytes.length >= 4 && bytes.readUInt32BE(0) === 0x1a45dfa3) ||
+    (/\.avi$/i.test(file) && header.startsWith("RIFF") && header.slice(8, 12) === "AVI ") ||
+    (/\.bmp$/i.test(file) && header.startsWith("BM")) ||
+    (/\.tiff?$/i.test(file) && (header.startsWith("II*\0") || header.startsWith("MM\0*"))) ||
     (/\.mp3$/i.test(file) && (header.startsWith("ID3") || (first === 255 && second >= 224)))
   );
 }

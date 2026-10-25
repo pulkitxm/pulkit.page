@@ -23,6 +23,9 @@ This is a static publishing system for two sites, organized as a Bun and Turbore
 
 ## Scope of this explanation
 
+[Media budgets and optimization](media.md) covers accepted image and video
+formats, quality settings, the local optimizer, and the mandatory media gate.
+
 These documents describe the current implemented behavior of the checked-in code, not an earlier migration snapshot. Local development and GitHub Actions both use Bun 1.4.2. The validation record is in [maintenance and snapshot](maintenance-and-snapshot.md).
 
 Canonical URLs, Open Graph and Twitter metadata, JSON-LD, social-card PNGs, Markdown copies of every page, `llms.txt`, sitemap, breadcrumbs, related writing, a noindex not-found page, and an Atom feed for sites with articles are implemented. Production uses each app's CNAME; development and custom environments use their resolved origin. See [SEO and environments](seo-and-environments.md) for the complete behavior and limitations.

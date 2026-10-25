@@ -24,7 +24,15 @@ The repository, content, and comment CLIs use `git ls-files --cached --others --
 
 [check-repository.ts](../tooling/checks/src/commands/check-repository.ts) rejects symlinks, case/NFC collisions, temporary suffixes, certain forbidden tracked paths, invalid source path spelling, any `.js`, `.mjs`, `.cjs` or `.jsx` file (every source is strict TypeScript, typechecked by `check:types` and transpiled by Bun at build time), and TypeScript files longer than 400 lines. The lowercase kebab-case filename rule applies under `apps/<app>/content/`, `apps/<app>/layouts/`, `packages/<package>/src/`, `tooling/<tool>/src/`, and `docs/`, with `content/_site.md` excepted. `.DS_Store`, dist, node\_modules, and exact `.env` names are forbidden; this is not a comprehensive secret-file detector for every possible environment filename.
 
-Files are capped at 2 MiB except selected gif/webp/png/jpg/pdf media beneath `apps/<app>/assets/content/`, which allow 5 MiB, and MP4 recordings in the same tree, which allow 20 MiB. NUL-containing or empty files skip text-ending checks; other files reject CRLF and require a final newline. This binary heuristic is not MIME validation, image optimization, or malware detection.
+Files are capped at 2 MiB except PDFs beneath `apps/<app>/assets/content/`, which allow 5 MiB, and media inputs, which allow up to 100 MiB to reach CI repair. NUL-containing or empty files skip text-ending checks; other files reject CRLF and require a final newline.
+
+`check:media` separately inspects image and video contents, applies tighter format,
+resolution, byte, animation, bitrate, duration, and playback limits, and fails
+without rewriting files. The uncached gate runs before and after CI repair and is
+available as an explicit local command. It is outside the pre-commit hook so raw
+uploads can reach CI. See [media budgets and optimization](media.md) for every
+limit, the specific icon exceptions, and the local repair CLI. Passing these
+technical budgets does not prove perceptual quality or replace malware scanning.
 
 ## Rendered output and HTML
 
@@ -71,9 +79,9 @@ Shell syntax checks do not simulate runtime failure paths. Actionlint and zizmor
 
 ## Browser smoke audit
 
-[check-browser.ts](../packages/engine/src/commands/check-browser.ts) serves `dist/` with Vite preview and drives Chromium through Playwright. It is not part of `verify`; CI runs it as the Browser smoke job with `bunx turbo run check:browser --only` against the `apps/*/dist` artifact uploaded by the Verify job. Locally, `bunx turbo run check:browser --filter=@pulkit/page` (or `--filter=@pulkit/blog`) builds first, and `PLAYWRIGHT_CHANNEL=chrome` reuses an installed Chrome. Every route found by walking `index.html` files, excluding `assets` and development trees, is loaded at 1440x900 and 390x844, with one worker per available core split between the audited viewports.
+[check-browser.ts](../packages/engine/src/commands/check-browser.ts) serves `dist/` with Vite preview and drives Chromium through Playwright. It is not part of `verify`; CI runs page and interaction checks separately with `bunx turbo run check:browser --only --filter="./apps/$SITE"` against that site's `built-page` or `built-blog` artifact. Locally, `bunx turbo run check:browser --filter=@pulkit/page` (or `--filter=@pulkit/blog`) builds first, and `PLAYWRIGHT_CHANNEL=chrome` reuses an installed Chrome. Every route found by walking `index.html` files, excluding `assets` and development trees, is loaded at 1440x900 and 390x844, with one worker per available core split between the audited viewports.
 
-`BROWSER_VIEWPORT` restricts the run to one viewport and `BROWSER_SHARD`, written `index/count`, restricts which pages that run asserts on: every page is still loaded so links and anchors can be resolved, but only the shard's pages are audited in depth. CI therefore runs four jobs, `desktop` and `mobile` crossed with `1/2` and `2/2`. The whole-site flows below run once, in the last audited viewport of the last shard.
+`BROWSER_VIEWPORT` restricts the run to one viewport and `BROWSER_SHARD`, written `index/count`, restricts which pages that run asserts on: every page is still loaded so links and anchors can be resolved, but only the shard's pages are audited in depth. CI uses `BROWSER_SUITE=pages` with eight shards per viewport for the portfolio and one per viewport for the blog. A separate `BROWSER_SUITE=flows` job runs the whole-site flows once per site alongside the page audits. Local commands default to `BROWSER_SUITE=all`, which includes flows in the last mobile shard.
 
 Each page must return 200 without uncaught errors, console errors, or failed same-origin requests. It must have one `main`, one `h1`, a language, a title and a responsive viewport; every image must decode after lazy loading is disabled; and the document must not scroll horizontally once fonts and images settle. New-tab links need `noopener` or `noreferrer`, links need an accessible name, IDs must be unique, and the theme toggle must be visible. [axe-core](https://github.com/dequelabs/axe-core-npm) runs WCAG 2.0 to 2.2 A/AA and best-practice rules in both themes and fails on moderate, serious or critical violations.
 

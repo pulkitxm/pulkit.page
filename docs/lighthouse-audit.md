@@ -8,6 +8,8 @@ The optimized build contains source revision `2794463dab381b201ad2fd5eefb199ba98
 
 The optimized sites were built for their production CNAMEs with the public production analytics configuration enabled and served through Vite preview, which compresses responses. The live sites include CDN latency, cache policy, and injected Cloudflare scripts that the local previews do not reproduce. Production collection overlapped repository build and validation work; the optimized sweep ran after production collection without a simultaneous build. Scores are single-run lab measurements and are sensitive to resource contention, network conditions, and video playback. Changes in scores are directional evidence, not a controlled causal estimate or a guarantee of deployed scores.
 
+The measurements were completed before independent CI and media-budget updates from main were merged into this PR branch. The recorded source revision identifies the measured snapshot; hosted CI validates the final combined branch. The later upstream asset optimizations are not attributed to this Lighthouse change.
+
 ## Results
 
 Retried 482 device audits after the analytics proxy failure recovered. The rerun is `2026-10-25T13-30-01Z-local`. The latest measurement is used, regardless of whether its performance score is higher or lower; initial optimized measurements remain in the dataset for every retried route.

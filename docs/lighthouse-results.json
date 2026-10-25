@@ -26,7 +26,8 @@
     ],
     "metric_units": ["ms", "ms", "ms", "ratio", "ms"],
     "environment_note": "During the optimized run, the execution proxy intermittently returned HTTP 503 on the path to PostHog, with upstream connection failures and missing CORS headers. Affected scores are retained and marked analytics-network-error; this does not establish a production code regression.",
-    "comparison_note": "Live production baseline versus locally served optimized production builds. Both use standard Lighthouse mobile/desktop simulation and gzip. Local delivery lacks production CDN latency, injected Cloudflare scripts and production cache policy. These are single-run lab measurements, not a promise of deployed scores."
+    "comparison_note": "Live production baseline versus locally served optimized production builds. Both use standard Lighthouse mobile/desktop simulation and gzip. Local delivery lacks production CDN latency, injected Cloudflare scripts and production cache policy. These are single-run lab measurements, not a promise of deployed scores.",
+    "upstream_update_note": "After measurement, independent CI and media-budget changes from main were merged into the PR branch. Scores identify the measured source snapshot, not those later upstream changes."
   },
   "summary": [
     {

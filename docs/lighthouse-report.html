@@ -83,7 +83,8 @@
     <p id="intro"></p>
     <p class="note">
       The production column measures the live sites before this PR. The optimized column measures the changed production builds locally, with analytics enabled. Both use standard Lighthouse settings, mobile and desktop, cold browser caches and five workers. Local delivery lacks the live CDN latency and injected
-      Cloudflare scripts, so this comparison does not predict the exact deployed score. No audit categories or third-party requests were blocked for scoring. Both intentional 404 pages are included; their noindex SEO deductions are expected and were preserved.
+      Cloudflare scripts, so this comparison does not predict the exact deployed score. No audit categories or third-party requests were blocked for scoring. Measurements identify the recorded source snapshot; independent CI and media-budget updates merged afterward are not included in these scores. Both intentional
+      404 pages are included; their noindex SEO deductions are expected and were preserved.
     </p>
     <h2>Summary</h2>
     <div class="scroll">

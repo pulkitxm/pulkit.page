@@ -85,6 +85,9 @@ The root `check:*` scripts run the individual repository gates that
 `check:repository`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
 `check:shell`.
 
+CI also runs `check:media` before and after automatic Pukbot repairs. This gate
+stays outside the local pre-commit hook so original media can reach CI.
+
 Lighthouse uses up to five audit workers by default and checks both mobile and desktop.
 Run `bun run lighthouse:prod --concurrency 5 --min-score 100` to audit the live sites
 and fail if any page category scores below 100. Use `--site pulkit.page` or
@@ -130,9 +133,10 @@ explains all three caching layers.
 The pre-commit hook checks out the staged index into a temporary directory, installs
 dependencies there with `bun install --frozen-lockfile --ignore-scripts`, and runs
 `bun run ci` with `TURBO_CACHE_DIR` pointing at the repository's `.turbo/cache`, so
-unchanged tasks replay from cache. GitHub Actions runs the same `bun run ci` and then a
-separate browser smoke job against the uploaded build, and deploys both sites from the
-same run; see [continuous integration](docs/continuous-integration.md).
+unchanged tasks replay from cache. GitHub Actions splits the same checks into parallel
+source, test, and site jobs. Each site builds independently, then its static and browser
+checks reuse that build. Both deployments require every check to pass; see
+[continuous integration](docs/continuous-integration.md).
 
 ## Authoring
 
@@ -154,6 +158,13 @@ Images belong in the app's
 `assets/`, for example `apps/blog/assets/content/`, and each app's navigation and
 footer links live in its `content/_site.md`. Social links default to the shared
 `@pulkit/profile` list.
+
+Committed media must pass `bun run check:media`: WebP or AVIF stills up to 2048 px
+and 512 KiB, bounded animated WebP, SVG vectors, and fast-start H.264 MP4 video.
+Use `bun run media:optimize <file>` for a specific asset, review its output, then
+commit with Pukbot. Videos need FFmpeg and ffprobe installed locally. See
+[media budgets and optimization](docs/media.md) for format choices, limits,
+quality settings, and the icon exceptions.
 
 The optional `articles` field in `_site.md` is a root-relative prefix such as `/`
 or `/notes/` that marks which non-index pages are posts. pulkit.page has none;

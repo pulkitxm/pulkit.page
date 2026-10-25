@@ -22,7 +22,7 @@ interface PackageManifest {
 }
 
 interface TurboConfig {
-  tasks: { verify: { dependsOn: string[] } };
+  tasks: Record<string, { dependsOn?: string[] }>;
 }
 
 interface WorkflowJob {
@@ -34,7 +34,13 @@ interface WorkflowJob {
   needs?: string | string[];
   if?: string;
   "timeout-minutes"?: unknown;
-  steps?: { id?: string; uses?: string; run?: string; if?: string }[];
+  steps?: {
+    id?: string;
+    uses?: string;
+    run?: string;
+    if?: string;
+    with?: Record<string, unknown>;
+  }[];
 }
 
 interface Workflow {
@@ -145,8 +151,20 @@ test("Knip rejects unused files, exports, and dependencies", () => {
 
 test("turbo verify runs every check, lint, format and test script", () => {
   const turbo: TurboConfig = JSON.parse(readText("turbo.json"));
-  const verify = new Set(turbo.tasks.verify.dependsOn);
-  const ciWorkflow = readText(".github/workflows/ci.yml");
+  const verify = new Set<string>();
+  const visit = (name: string) => {
+    if (verify.has(name)) {
+      return;
+    }
+    verify.add(name);
+    for (const dependency of turbo.tasks[name]?.dependsOn ?? []) {
+      visit(dependency);
+    }
+  };
+  visit("verify");
+  const ciWorkflow = readdirSync(join(repository, ".github/workflows"))
+    .map((name) => readText(join(".github/workflows", name)))
+    .join("\n");
   const root = manifest("package.json");
   const rootScripts = Object.keys(root.scripts ?? {}).filter(
     (name) => name.startsWith("check:") || ["format:check", "lint"].includes(name),
@@ -162,7 +180,9 @@ test("turbo verify runs every check, lint, format and test script", () => {
     .flatMap((file) => Object.keys(manifest(file).scripts ?? {}))
     .filter((name) => name.startsWith("check:") || name === "test");
   const missing = [
-    ...rootScripts.filter((name) => !verify.has(`//#${name}`)),
+    ...rootScripts.filter(
+      (name) => !verify.has(`//#${name}`) && !ciWorkflow.includes(`bun run ${name}`),
+    ),
     ...new Set(
       workspaceScripts.filter(
         (name) => !verify.has(name) && !ciWorkflow.includes(`turbo run ${name}`),
@@ -176,6 +196,53 @@ const workflows = readdirSync(join(repository, ".github/workflows")).map((name) 
   ...workflow(name),
   name,
 }));
+
+test("independent checks start immediately and every check blocks deployment", () => {
+  const { jobs } = workflow("ci.yml");
+  const checks = Object.keys(jobs).filter((id) => id !== "ci" && !id.startsWith("deploy-"));
+  expect(new Set(job(jobs, "ci").needs)).toEqual(new Set(checks));
+  for (const id of checks) {
+    if (["source", "tests", "guestbook", "sites"].includes(id)) {
+      expect(job(jobs, id).needs).toBe("media");
+    } else {
+      expect(job(jobs, id).needs).toBeUndefined();
+    }
+  }
+  const site = workflow("site-ci.yml");
+  expect(job(jobs, "sites").uses).toBe("./.github/workflows/site-ci.yml");
+  expect(job(site.jobs, "build").needs).toBeUndefined();
+  for (const id of ["validate", "browser", "interactions"]) {
+    expect(job(site.jobs, id).needs).toBe("build");
+    const steps = job(site.jobs, id).steps ?? [];
+    expect(steps.find((step) => step.uses?.startsWith("actions/download-artifact@"))?.with).toEqual(
+      {
+        name: expect.stringMatching(/^built-\$\{\{ inputs.site \}\}$/),
+        path: expect.stringMatching(/^apps\/\$\{\{ inputs.site \}\}\/dist$/),
+      },
+    );
+    expect(steps.some((step) => step.run?.includes('--only --filter="./apps/$SITE"'))).toBe(true);
+  }
+});
+
+test("the CI gate rejects failures, cancellations and skipped checks", () => {
+  const gate = job(workflow("ci.yml").jobs, "ci");
+  expect(gate.if).toBe("always()");
+  const script = gate.steps?.[0]?.run;
+  if (!script) {
+    throw new Error("Missing CI gate script");
+  }
+  for (const result of ["success", "failure", "cancelled", "skipped"]) {
+    const execution = spawnSync("bash", ["-eo", "pipefail", "-c", script], {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        CHECK_RESULTS: JSON.stringify({ source: { result: "success" }, sites: { result } }),
+      },
+    });
+    expect(execution.status).toBe(result === "success" ? 0 : 1);
+    expect(execution.stdout.includes("every required check passed")).toBe(result === "success");
+  }
+});
 
 test("main CI runs are isolated by workflow and revision while branch runs stay cancellable", () => {
   const { concurrency } = workflow("ci.yml");
@@ -267,9 +334,28 @@ test("guestbook publishing uses Pukbot and the automatic token, then verifies th
     required: true,
     type: "string",
   });
-  expect(
-    readText(".github/workflows/ci.yml").match(/ref: \$\{\{ inputs.revision \|\| github.sha \}\}/g),
-  ).toHaveLength(7);
+  expect(job(workflow("ci.yml").jobs, "sites").with?.revision).toMatch(
+    /^\$\{\{ needs.media.outputs.revision \}\}$/,
+  );
+  for (const name of ["ci.yml", "site-ci.yml"]) {
+    for (const [id, definition] of Object.entries(workflow(name).jobs)) {
+      for (const step of definition.steps ?? []) {
+        if (step.uses?.startsWith("actions/checkout@")) {
+          if (name === "site-ci.yml") {
+            expect(step.with?.ref).toMatch(/^\$\{\{ inputs.revision \}\}$/);
+          } else if (id === "media") {
+            expect(step.with?.ref).toMatch(
+              /^\$\{\{ github.event.pull_request.head.sha \|\| inputs.revision \|\| github.sha \}\}$/,
+            );
+          } else if (["source", "tests", "guestbook"].includes(id)) {
+            expect(step.with?.ref).toMatch(/^\$\{\{ needs.media.outputs.revision \}\}$/);
+          } else {
+            expect(step.with?.ref).toMatch(/^\$\{\{ inputs.revision \|\| github.sha \}\}$/);
+          }
+        }
+      }
+    }
+  }
 });
 
 test("every workflow job has a timeout and pins actions to a commit", () => {

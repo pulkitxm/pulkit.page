@@ -44,6 +44,7 @@ export function setupLightbox(): void {
     pswpModule: () => import("photoswipe"),
     thumbSelector: zoomSelector,
   });
+  lightbox.on("beforeOpen", () => document.dispatchEvent(new Event("media-viewer-open")));
   lightbox.addFilter("itemData", (itemData) => {
     if (!(itemData.width && itemData.height)) {
       const image = itemData.element?.querySelector<HTMLImageElement>("img:not([aria-hidden])");

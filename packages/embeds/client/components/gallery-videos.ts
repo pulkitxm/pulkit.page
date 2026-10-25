@@ -59,6 +59,7 @@ export function setupGalleryVideos(): void {
     preview ??= document.createElement("video");
     preview.className =
       "pointer-events-none absolute inset-0 m-0 size-full object-contain opacity-0 transition-opacity duration-200";
+    preview.style.opacity = "0";
     preview.setAttribute("aria-hidden", "true");
     preview.muted = true;
     preview.loop = true;
@@ -118,6 +119,7 @@ export function setupGalleryVideos(): void {
     }
   });
   globalThis.addEventListener("pagehide", stop);
+  document.addEventListener("media-viewer-open", stop);
   reducedMotion.addEventListener("change", stop);
   finePointer.addEventListener("change", stop);
   connection?.addEventListener("change", stop);

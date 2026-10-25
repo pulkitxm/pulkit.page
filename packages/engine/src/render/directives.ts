@@ -93,7 +93,7 @@ function renderGallery(images: readonly CarouselImage[], context: RenderContext)
         zoomAttributes(poster, context.assets);
         return `<a class="group relative block h-64 overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}" aria-label="${escapeHtml(`Play ${image.alt}`)}" data-gallery-video data-video-preview="${safeUrl(preview)}">${galleryImage(poster, image.alt)}<span class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center" aria-hidden="true"><span class="flex size-14 items-center justify-center rounded-full border border-[#fff]/40 bg-[#000]/65 text-[#fff] shadow-lg transition-transform duration-200 group-hover:scale-110 motion-reduce:transition-none">${faSvg(faPlay, "ml-0.5 size-5")}</span><span class="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#000]/80 to-transparent px-3 pt-8 pb-3 text-xs font-medium text-[#fff]">Video</span></span></a>`;
       }
-      return `<a class="group relative block h-64 cursor-zoom-in overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}"${zoomAttributes(image.href, context.assets)}>${galleryImage(image.href, image.alt)}</a>`;
+      return `<a class="group relative block h-64 cursor-zoom-in overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}" aria-label="${escapeHtml(image.alt)}"${zoomAttributes(image.href, context.assets)}>${galleryImage(image.href, image.alt)}</a>`;
     })
     .join("");
   return `<div class="mx-0 my-7 grid grid-cols-2 gap-4 max-sm:grid-cols-1" data-gallery>${tiles}</div>`;

@@ -7,6 +7,11 @@ in parallel and gates both deployments on their combined result. It calls
 [site-ci.yml](../.github/workflows/site-ci.yml) once per site, so each site's
 browser checks can start as soon as its own build finishes.
 
+The media job first validates uploads and, on trusted branches, repairs violations
+through Pukbot. Source checks, tests, guestbook validation, and both site builds
+consume its exact resulting revision. Configuration scanners remain independent.
+See [media budgets and optimization](media.md) for limits and quality settings.
+
 ## The same checks in three places
 
 | Where               | Command                                                        | Scope                                                          |
@@ -32,20 +37,30 @@ describes the hook in detail.
 
 The workflow runs on pull requests, merge groups, pushes to `main`, and manual
 dispatch. [Sync guestbook](../.github/workflows/guestbook.yml) also calls it with
-the revision it published. Every checkout and site build uses that exact revision.
+the revision it published. Media repair can publish a newer revision, which all
+source, test, and site jobs then use consistently.
 
 A new pull request or branch run cancels the older run for that ref. Main runs
 are isolated by workflow and revision and are allowed to finish. Each deployment
 serializes in its own concurrency group and checks the current main revision
 before publishing, so a completed run for an older revision skips deployment.
 
-The default permission is `contents: read`. Only the pulkit.page deploy adds
-`id-token: write` and `pages: write`. Build secrets go only to site builds.
+The default permission is `contents: read`. The media job adds `contents: write`
+for Pukbot commits, and the final gate adds `checks: write` to record the aggregate
+result on the exact verified commit. Pukbot has no check-run creation command, so
+that status uses GitHub's checks API. The pulkit.page deploy adds `id-token: write`
+and `pages: write`. Build secrets go only to site builds.
 
 ## The run graph
 
 ```mermaid
 flowchart LR
+  media[Media budgets and Pukbot repairs] --> source
+  media --> tests
+  media --> guestbook
+  media --> pagebuild
+  media --> blogbuild
+  media --> gate
   source[Source checks] --> gate[CI gate]
   tests[Tests and layouts] --> gate
   guestbook[Guestbook links] --> gate
@@ -71,6 +86,7 @@ flowchart LR
 | Job                       | What it runs                                                                        |
 | ------------------------- | ----------------------------------------------------------------------------------- |
 | Source checks             | Format, lint, content, comment, repository, import, type, dead code and shell gates |
+| Media budgets and repairs | Validate formats and budgets, repair violations, and publish through Pukbot         |
 | Tests and layouts         | Every workspace test suite and the layout checks                                    |
 | Guestbook links           | Strict profile link verification with the workflow token                            |
 | Site: Build               | One app build, followed immediately by its artifact upload                          |
@@ -89,7 +105,7 @@ The portfolio uses eight page shards per viewport; the smaller blog uses one.
 That gives sixteen portfolio page jobs and two blog page jobs, plus one interaction
 job per site.
 
-Neither source checks nor tests delay a build. Site validation and browsers
+After media verification, neither source checks nor tests delay a build. Site validation and browsers
 wait only for their own site's build, and run alongside each other. Browser
 matrices use `fail-fast: false`, so a failing shard does not cancel other shards.
 The parent site matrix also allows both sites to finish independently.

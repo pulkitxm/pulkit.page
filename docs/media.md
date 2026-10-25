@@ -41,9 +41,10 @@ assets.
 
 CI repairs violations automatically on branches in this repository. It runs the
 read-only media check, optimizes only failing assets, updates matching references,
-and stages only those paths. The complete site verification must pass before
-Pukbot commits the repairs. CI then dispatches a fresh run for the updated branch,
-so required checks verify the new commit. Fork pull requests receive the same
+and stages only those paths. Source verification must pass before Pukbot commits
+the repairs. The parallel source, test, and site jobs then check out that exact
+commit. The aggregate CI result is attached to the verified SHA, without a second
+workflow run. Fork pull requests receive the same
 validation but cannot publish automatic repairs. Unsupported or unfixable assets
 still fail and report the affected file.
 

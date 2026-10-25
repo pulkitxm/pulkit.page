@@ -39,7 +39,7 @@
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    [data-gallery-image] {
+    [data-gallery-backdrop] {
       animation: gallery-drift linear both;
       animation-timeline: view();
     }
@@ -57,6 +57,20 @@
   from {
     opacity: 0;
     transform: translateY(12px);
+  }
+}
+[data-gallery] > a {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 256px;
+}
+[data-event-grid] > li {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 340px;
+}
+@media print {
+  [data-gallery] > a,
+  [data-event-grid] > li {
+    content-visibility: visible;
   }
 }
 [data-wordmark] {

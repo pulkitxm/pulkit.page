@@ -36,7 +36,7 @@ export function setupLightbox(): void {
     msrc: link.getAttribute("href") ?? undefined,
     width: Number(link.dataset.width) || 0,
     height: Number(link.dataset.height) || 0,
-    alt: findElement(link, "img", HTMLImageElement)?.alt ?? "",
+    alt: findElement(link, "img:not([aria-hidden])", HTMLImageElement)?.alt ?? "",
     element: link,
   }));
   const lightbox = new PhotoSwipeLightbox({
@@ -44,9 +44,10 @@ export function setupLightbox(): void {
     pswpModule: () => import("photoswipe"),
     thumbSelector: zoomSelector,
   });
+  lightbox.on("beforeOpen", () => document.dispatchEvent(new Event("media-viewer-open")));
   lightbox.addFilter("itemData", (itemData) => {
     if (!(itemData.width && itemData.height)) {
-      const image = itemData.element?.querySelector("img");
+      const image = itemData.element?.querySelector<HTMLImageElement>("img:not([aria-hidden])");
       itemData.width = image?.naturalWidth || fallbackWidth;
       itemData.height = image?.naturalHeight || fallbackHeight;
     }

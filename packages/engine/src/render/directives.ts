@@ -1,6 +1,8 @@
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { renderDemo } from "@pulkit/demos/render";
 import { matchBlockEmbed, matchInlineEmbed, renderEmbed } from "@pulkit/embeds";
 import { escapeHtml } from "@pulkit/shared/html";
+import { faSvg } from "@pulkit/shared/icons";
 import type { MarkedExtension } from "marked";
 import {
   directoryDirective,
@@ -9,6 +11,7 @@ import {
   renderDirectory,
 } from "./claude-directory.ts";
 import { renderDirectoryProject } from "./claude-directory-project.ts";
+import { galleryImage } from "./gallery-image.ts";
 import { renderGuestbook } from "./guestbook.ts";
 import { safeUrl } from "./html.ts";
 import {
@@ -57,8 +60,15 @@ function blockImages(
         href,
       }))
     : [];
-  if (!match || images.length < 2 || content.replace(/!\[[^\]\n]+\]\([^)\s]+\)/g, "").trim()) {
-    throw new Error(`Invalid ${name} directive; wrap two or more images in :::${name} and :::`);
+  const minimum = name === "gallery" ? 1 : 2;
+  if (
+    !match ||
+    images.length < minimum ||
+    content.replace(/!\[[^\]\n]+\]\([^)\s]+\)/g, "").trim()
+  ) {
+    throw new Error(
+      `Invalid ${name} directive; wrap at least ${minimum} media items in :::${name} and :::`,
+    );
   }
   return { raw: match[0], images };
 }
@@ -81,9 +91,9 @@ function renderGallery(images: readonly CarouselImage[], context: RenderContext)
         const poster = image.href.replace(/\.mp4$/, "-poster.webp");
         const preview = image.href.replace(/\.mp4$/, "-preview.mp4");
         zoomAttributes(poster, context.assets);
-        return `<a class="group relative block h-64 overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}" aria-label="${escapeHtml(`Play ${image.alt}`)}" data-gallery-video><img class="m-0 block size-full object-cover" src="${safeUrl(poster)}" alt="${escapeHtml(image.alt)}"${sizeAttributes(poster)} loading="lazy" data-gallery-image><video class="pointer-events-none absolute inset-0 m-0 size-full object-cover opacity-0" data-video-preview="${safeUrl(preview)}" muted loop playsinline preload="none" aria-hidden="true"></video><span class="pointer-events-none absolute inset-0 flex items-center justify-center"><span class="rounded-full bg-[#000]/70 px-4 py-2 text-sm text-[#fff]" aria-hidden="true">▶ Play video</span></span></a>`;
+        return `<a class="group relative block h-64 overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}" aria-label="${escapeHtml(`Play ${image.alt}`)}" data-gallery-video data-video-preview="${safeUrl(preview)}">${galleryImage(poster, image.alt)}<span class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center" aria-hidden="true"><span class="flex size-14 items-center justify-center rounded-full border border-[#fff]/40 bg-[#000]/65 text-[#fff] shadow-lg transition-transform duration-200 group-hover:scale-110 motion-reduce:transition-none">${faSvg(faPlay, "ml-0.5 size-5")}</span><span class="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#000]/80 to-transparent px-3 pt-8 pb-3 text-xs font-medium text-[#fff]">Video</span></span></a>`;
       }
-      return `<a class="group relative block h-64 cursor-zoom-in overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}"${zoomAttributes(image.href, context.assets)}><img class="m-0 block size-full object-cover transition-opacity duration-300 group-hover:opacity-90" src="${safeUrl(image.href)}" alt="${escapeHtml(image.alt)}"${sizeAttributes(image.href)} loading="lazy" data-gallery-image></a>`;
+      return `<a class="group relative block h-64 cursor-zoom-in overflow-hidden rounded-lg bg-line" href="${safeUrl(image.href)}" aria-label="${escapeHtml(image.alt)}"${zoomAttributes(image.href, context.assets)}>${galleryImage(image.href, image.alt)}</a>`;
     })
     .join("");
   return `<div class="mx-0 my-7 grid grid-cols-2 gap-4 max-sm:grid-cols-1" data-gallery>${tiles}</div>`;

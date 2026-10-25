@@ -71,7 +71,7 @@ The key inputs we need are:
 <center>
 
 :::embed image
-{"src":"/assets/content/blogs/virtualized-list/example.webp","alt":"Virtualized list example","loading":"lazy","decoding":"async","style":{"borderRadius":"0.5rem","width":"auto","height":"auto","maxHeight":"400px"}}
+{"src":"/assets/content/blogs/virtualized-list/example.gif","alt":"Virtualized list example","loading":"lazy","decoding":"async","style":{"borderRadius":"0.5rem","width":"auto","height":"auto","maxHeight":"400px"}}
 :::
 
 </center>

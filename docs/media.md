@@ -37,6 +37,21 @@ assets.
 
 ## Optimize a specific asset
 
+CI repairs violations automatically on branches in this repository. It runs the
+read-only media check, optimizes only failing assets, updates matching references,
+and stages only those paths. The complete site verification must pass before
+Pukbot commits the repairs. CI then dispatches a fresh run for the updated branch,
+so required checks verify the new commit. Fork pull requests receive the same
+validation but cannot publish automatic repairs. Unsupported or unfixable assets
+still fail and report the affected file.
+
+The automated command is `bun run media:fix --stage`. It preserves existing
+compliant assets, prefers the current format when possible, and tries AVIF if a
+still cannot fit the WebP budget. Format changes update content references before
+removing the old file. Inline SVG boolean attributes are normalized to valid XML
+without changing the paths. Concurrent branch changes stop publication so an older
+run cannot overwrite newer work.
+
 Install dependencies with `bun install`. Videos also need FFmpeg and ffprobe:
 `brew install ffmpeg` on macOS, or `sudo apt-get install ffmpeg` on Ubuntu.
 GitHub Actions installs FFmpeg before verification.
@@ -88,8 +103,8 @@ larger or longer animations should use MP4 video, which compresses motion better
 Compare small text, faces, gradients, transparent edges, and motion against the
 source before committing. A passing check establishes technical budgets, not a
 perceptual quality score. Keep original masters outside the repository. The
-optimizer does not commit or upload files; stage reviewed output and use
-`pukbot commit create` as usual.
+local optimizer does not commit or upload files; CI publishes automatic repairs
+through `pukbot commit create` after verification.
 
 The settings follow [Sharp's encoding documentation](https://sharp.pixelplumbing.com/api-output/),
 [web.dev's video guidance](https://web.dev/learn/performance/video-performance),

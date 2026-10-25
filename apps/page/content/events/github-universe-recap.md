@@ -11,9 +11,9 @@ A year-end GitTogether recapping everything announced at GitHub Universe '25, or
 
 :::gallery
 
-![GitHub Universe '25 Recap photo 5](/assets/content/events/github-universe-recap/5.avif)
+![GitHub Universe '25 Recap photo 5](/assets/content/events/github-universe-recap/5.webp)
 
-![GitHub Universe '25 Recap photo 6](/assets/content/events/github-universe-recap/6.avif)
+![GitHub Universe '25 Recap photo 6](/assets/content/events/github-universe-recap/6.webp)
 
 ![GitHub Universe '25 Recap photo 3](/assets/content/events/github-universe-recap/3.webp)
 
@@ -39,7 +39,7 @@ A year-end GitTogether recapping everything announced at GitHub Universe '25, or
 
 ![GitHub Universe '25 Recap photo 2](/assets/content/events/github-universe-recap/2.webp)
 
-![GitHub Universe '25 Recap photo 15](/assets/content/events/github-universe-recap/15.avif)
+![GitHub Universe '25 Recap photo 15](/assets/content/events/github-universe-recap/15.webp)
 
 ![GitHub Universe '25 Recap photo 16](/assets/content/events/github-universe-recap/16.webp)
 

@@ -9,6 +9,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, extname, join } from "node:path";
+import { parseFragment, serialize } from "parse5";
 import sharp from "sharp";
 import { imagePolicy, mediaKind, videoPolicy } from "./policy.ts";
 import { validateMedia } from "./validate.ts";
@@ -160,7 +161,21 @@ export async function optimizeMedia(input: string, format?: "avif" | "webp"): Pr
     return input;
   }
   if (extname(input).toLowerCase() === ".svg") {
-    throw new Error("Simplify oversized SVG vectors before committing them");
+    const directory = mkdtempSync(join(dirname(input), ".media-"));
+    const temporary = join(directory, "optimized.svg");
+    try {
+      writeFileSync(temporary, `${serialize(parseFragment(readFileSync(input, "utf8")))}\n`);
+      const failures = await validateMedia(temporary, input);
+      if (failures.length > 0) {
+        throw new Error(
+          "SVG cannot meet its budget through syntax normalization; simplify the vector source",
+        );
+      }
+      renameSync(temporary, input);
+      return input;
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
   }
   const compatibility = imagePolicy(input).format;
   const preserveFormat = compatibility === "png" || compatibility === "jpeg";

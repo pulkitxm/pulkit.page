@@ -13,7 +13,7 @@ GitTogether Delhi NCR, hosted by Vipul Gupta and Tauqeer Ahmad with GitHub and H
 
 ![GitTogether Delhi NCR photo 1](/assets/content/events/gittogether-delhi-ncr/1.webp)
 
-![GitTogether Delhi NCR photo 2](/assets/content/events/gittogether-delhi-ncr/2.avif)
+![GitTogether Delhi NCR photo 2](/assets/content/events/gittogether-delhi-ncr/2.webp)
 
 ![GitTogether Delhi NCR photo 3](/assets/content/events/gittogether-delhi-ncr/3.webp)
 

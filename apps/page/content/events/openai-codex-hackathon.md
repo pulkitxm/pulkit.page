@@ -21,7 +21,7 @@ An OpenAI Codex hackathon at Masters' Union. My teammates and I built Warden, wh
 
 ![OpenAI Codex Hackathon photo 9](/assets/content/events/openai-codex-hackathon/9.webp)
 
-![OpenAI Codex Hackathon photo 10](/assets/content/events/openai-codex-hackathon/10.avif)
+![OpenAI Codex Hackathon photo 10](/assets/content/events/openai-codex-hackathon/10.webp)
 
 ![OpenAI Codex Hackathon photo 11](/assets/content/events/openai-codex-hackathon/11.webp)
 

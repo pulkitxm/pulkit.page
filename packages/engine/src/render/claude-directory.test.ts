@@ -80,6 +80,13 @@ test("a project page shows its demo, actions and neighbours", async () => {
   expect(html).toContain(">Hero 30<");
   expect(html).toContain("https://claude-directory.pulkitxm.com/heroes/hero-30/demo.mp4");
   expect(html).toContain(
+    'data-src="https://claude-directory.pulkitxm.com/heroes/hero-30/demo.mp4"',
+  );
+  expect(html).not.toContain(
+    ' src="https://claude-directory.pulkitxm.com/heroes/hero-30/demo.mp4"',
+  );
+  expect(html).toContain('preload="none" data-demo-video');
+  expect(html).toContain(
     'data-prompt="https://raw.githubusercontent.com/pulkitxm/claude-directory/main/heroes/hero-30/prompt.md"',
   );
   expect(html).toContain('href="https://claude-directory.pulkitxm.com/heroes/hero-30/"');

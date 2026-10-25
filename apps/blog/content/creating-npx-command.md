@@ -1,5 +1,6 @@
 ---
 title: Creating Your Own npx Command
+priorityImage: /assets/content/blogs/how-i-created-npx-devpulkit/c7e73998-b9bf-4bc1-aafb-e743296c1f7a.webp
 description: Learn to create a personalized `npx` command to share your details with others
   efficiently. Follow my step-by-step guide on creating `npx devpulkit`
 date: 2024-07-27

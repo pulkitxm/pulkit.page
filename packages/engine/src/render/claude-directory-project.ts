@@ -61,7 +61,7 @@ function demo(project: DirectoryProject): string {
   const frame =
     "aspect-[1280/800] w-full max-w-[56rem] overflow-hidden rounded-[12px] border border-[#000]/10 shadow-[0_40px_100px_-20px_rgb(0_0_0/0.85)] dark:border-[#fff]/10";
   const content = project.published
-    ? `<!-- [html-validate-disable-next no-autoplay] --><video class="block size-full object-cover" src="${safeUrl(directoryDemo(project))}" poster="${safeUrl(directoryPoster(project))}" title="${escapeHtml(`Demo of ${project.title}`)}" autoplay muted loop playsinline preload="auto" data-demo-video></video>`
+    ? `<!-- [html-validate-disable-next no-autoplay] --><video class="block size-full object-cover" data-src="${safeUrl(directoryDemo(project))}" poster="${safeUrl(directoryPoster(project))}" title="${escapeHtml(`Demo of ${project.title}`)}" autoplay muted loop playsinline preload="none" data-demo-video></video>`
     : '<div class="flex size-full items-center justify-center bg-surface/40 text-md text-muted">No preview available</div>';
   return `<div class="relative order-2 aspect-[16/9] min-w-0 overflow-hidden rounded-[16px] border border-line/40 min-[64rem]:order-1 min-[64rem]:aspect-auto min-[64rem]:h-full min-[64rem]:min-h-0" data-project-panel="preview"><div class="absolute inset-0 flex items-center justify-center p-4 sm:p-8 min-[64rem]:p-14"><div class="${frame}">${content}</div></div></div>`;
 }

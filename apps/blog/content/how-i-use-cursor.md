@@ -15,7 +15,7 @@ tags:
 I'm about to graduate in July. I started coding seriously in my freshman year, so I haven't been at this for that long. And yet, before even graduating, I'm able to write and ship at a speed that feels insane. That's only possible because of how I've learned to use Cursor, and I owe a huge thanks to [Shashank Agarwal](https://www.linkedin.com/in/shashankagarwal2), our CEO, who put in so much time teaching us. He runs the dev syncs every two weeks, personally onboarded each of us on Cursor, and made sure everyone on the team understood the importance of AI and agentic coding. He's the one who taught us.
 
 :::embed image-grid
-{"images":["/assets/content/blogs/how-i-use-cursor/cursor-top-11-perc.webp","/assets/content/blogs/how-i-use-cursor/cursor-2025.webp","/assets/content/blogs/how-i-use-cursor/cursor-2025-models.webp"]}
+{"loading":"eager","images":["/assets/content/blogs/how-i-use-cursor/cursor-top-11-perc.webp","/assets/content/blogs/how-i-use-cursor/cursor-2025.webp","/assets/content/blogs/how-i-use-cursor/cursor-2025-models.webp"]}
 :::
 
 I've gone through the usual arc: VS Code with a million extensions, Vim motions that made me feel like a hacker, terminal workflows that were more ritual than productivity. But nothing, and I mean nothing, has changed the way I build software the way Cursor has.

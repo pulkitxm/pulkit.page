@@ -1,5 +1,9 @@
-function activate(media: HTMLElement, video: HTMLVideoElement, visible: boolean): void {
-  const source = media.dataset.demo ?? "";
+import { afterPageLoad } from "@pulkit/shared/idle";
+
+const sources = new WeakMap<HTMLVideoElement, string>();
+
+function activate(video: HTMLVideoElement, visible: boolean): void {
+  const source = sources.get(video) ?? "";
   if (visible) {
     if (video.getAttribute("src") !== source) {
       video.src = source;
@@ -14,27 +18,35 @@ function activate(media: HTMLElement, video: HTMLVideoElement, visible: boolean)
 const observer = new IntersectionObserver(
   (entries) => {
     for (const entry of entries) {
-      const media = entry.target;
-      const video = media.querySelector("[data-card-video]");
-      if (media instanceof HTMLElement && video instanceof HTMLVideoElement) {
-        activate(media, video, entry.isIntersecting);
+      const video = entry.target;
+      if (video instanceof HTMLVideoElement) {
+        activate(video, entry.isIntersecting && entry.intersectionRatio >= 0.5);
       }
     }
   },
-  { rootMargin: "200px" },
+  { threshold: 0.5 },
 );
+
+export function watchVisibleVideo(video: HTMLVideoElement, source: string): void {
+  sources.set(video, source);
+  video.muted = true;
+  afterPageLoad(() => {
+    if (video.isConnected) {
+      observer.observe(video);
+    }
+  });
+}
 
 export function watchCardVideo(media: HTMLElement): void {
   const video = media.querySelector("[data-card-video]");
   if (!(video instanceof HTMLVideoElement) || !media.dataset.demo) {
     return;
   }
-  video.muted = true;
   video.addEventListener("loadeddata", () => {
     video.style.opacity = "1";
   });
   video.addEventListener("error", () => {
     video.remove();
   });
-  observer.observe(media);
+  watchVisibleVideo(video, media.dataset.demo);
 }

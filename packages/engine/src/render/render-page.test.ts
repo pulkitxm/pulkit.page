@@ -265,6 +265,18 @@ test("tables scroll sideways as a keyboard-focusable region without splitting wo
   expect(html).toMatch(/<table tabindex="0" class="[^"]*overflow-x-auto[^"]*wrap-normal/);
 });
 
+test("comparison tables with an empty corner use row headers without changing their weight", async () => {
+  const html = await renderPage(
+    `${source}\n| | Single | Multiple |\n| --- | --- | --- |\n| Sharded | One | Many |\n| Unsharded | One | Many |\n`,
+  );
+  expect(html.match(/<th scope="row"/g)).toHaveLength(2);
+  expect(html.match(/<th scope="col"/g)).toHaveLength(3);
+  expect(html).toMatch(/<th scope="row" class="font-normal [^"]*">Sharded<\/th>/);
+  expect(html).toMatch(/<td[^>]*>One<\/td>/);
+  const ordinary = await renderPage(`${source}\n| Name | Value |\n| --- | --- |\n| A | B |\n`);
+  expect(ordinary).not.toContain('scope="row"');
+});
+
 test("only images at the start of page content receive loading priority", async () => {
   const imagePage = "---\ntitle: Images\n---\n";
   for (const first of [

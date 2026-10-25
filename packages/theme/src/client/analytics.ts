@@ -1,4 +1,4 @@
-import posthog from "posthog-js";
+import { afterPageLoad } from "@pulkit/shared/idle";
 
 const tag = document.querySelector<HTMLScriptElement>("script[data-posthog-key]");
 const key = tag?.dataset.posthogKey;
@@ -23,15 +23,12 @@ async function excluded(expected: string | undefined): Promise<boolean> {
 }
 
 if (key && host && !(await excluded(tag?.dataset.posthogIgnore))) {
-  posthog.init(key, {
-    api_host: host,
-    capture_pageview: true,
-    capture_pageleave: true,
-    disable_session_recording: true,
-    disable_surveys: true,
-    advanced_disable_feature_flags: true,
-    disable_external_dependency_loading: true,
-    debug: tag?.dataset.posthogDebug === "true",
-  });
-  Object.assign(globalThis, { posthog });
+  const start = () => {
+    void import("./analytics-sdk.ts")
+      .then(({ initializeAnalytics }) =>
+        initializeAnalytics(key, host, tag?.dataset.posthogDebug === "true"),
+      )
+      .catch(() => {});
+  };
+  afterPageLoad(start);
 }

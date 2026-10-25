@@ -31,7 +31,7 @@ And just like that, we have our plain Vite React app ready to go!
 
 This will set up a new React project with TypeScript support. You should see a default Vite React app running at [`http://localhost:3000`](http://localhost:3000).
 
-![Default Vite React app running in browser](/assets/content/blogs/react-image-gallery-with-photoswipe/40786bd6-5690-47a8-a52c-b7bf7aba230c.webp)
+![Default Vite React app running in browser](/assets/content/blogs/react-image-gallery-with-photoswipe/40786bd6-5690-47a8-a52c-b7bf7aba230c.png)
 
 ## Clean Up the Default Setup
 

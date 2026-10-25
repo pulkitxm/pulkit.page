@@ -1,4 +1,5 @@
 import { findElement, findElements } from "../lib/dom.ts";
+import { watchVisibleVideo } from "./card-videos.ts";
 import { setupFileExplorer } from "./file-explorer.ts";
 
 type View = "preview" | "code";
@@ -11,6 +12,10 @@ export function setupProjectView(root: HTMLElement): void {
   if (!(preview && code)) {
     return;
   }
+  const video = findElement(preview, "[data-demo-video]", HTMLVideoElement);
+  if (video?.dataset.src) {
+    watchVisibleVideo(video, video.dataset.src);
+  }
   let explorer = false;
   const show = (view: View): void => {
     for (const button of buttons) {
@@ -18,9 +23,8 @@ export function setupProjectView(root: HTMLElement): void {
     }
     preview.hidden = view === "code";
     code.hidden = view !== "code";
-    const video = preview.querySelector("video");
-    if (view === "preview") {
-      video?.play().catch(() => undefined);
+    if (view === "preview" && video?.getAttribute("src")) {
+      video.play().catch(() => undefined);
     }
     if (view === "code") {
       video?.pause();

@@ -2,7 +2,7 @@ import process from "node:process";
 import { builtRoutes } from "@pulkit/shared/built-site";
 import { type Browser, chromium } from "playwright";
 import { preview } from "vite";
-import { auditsSiteFlows, buildDirectory } from "../browser/audit-config.ts";
+import { auditsPages, auditsSiteFlows, buildDirectory } from "../browser/audit-config.ts";
 import { auditLinks, auditPages } from "../browser/page-audit.ts";
 import { report, reportedProblems } from "../browser/problems.ts";
 import { auditSiteFlows } from "../browser/site-flows.ts";
@@ -30,8 +30,10 @@ try {
   if (paths.length === 0) {
     report("build", "The build must contain pages");
   }
-  const documents = await auditPages(browser, origin, paths);
-  auditLinks(documents, origin);
+  if (auditsPages) {
+    const documents = await auditPages(browser, origin, paths);
+    auditLinks(documents, origin);
+  }
   if (auditsSiteFlows) {
     await auditSiteFlows(browser, origin, paths, { collections, navigationTarget });
   }

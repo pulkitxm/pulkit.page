@@ -319,12 +319,15 @@ flowchart LR
   build --> html[check:html]
   build --> browser[check:browser]
   build --> start
-  test --> verify
-  layouts --> verify
-  seo --> verify
-  site --> verify
-  html --> verify
-  root[Root tasks: format:check, lint, check:content, check:comments, check:repository, check:em-dashes, check:imports, check:dead-code, check:shell] --> verify
+  test --> tests[verify:tests]
+  layouts --> tests
+  tests --> verify
+  seo --> checks[verify:site]
+  site --> checks
+  html --> checks
+  checks --> verify
+  root[Root tasks: format:check, lint, check:content, check:comments, check:repository, check:em-dashes, check:imports, check:types, check:dead-code, check:shell] --> source[verify:source]
+  source --> verify
 ```
 
 `build` is the only task with outputs (`dist/**`), and `.cache/**` is excluded
@@ -351,10 +354,12 @@ invalidates every task.
 
 ## Gates, hooks and deployment
 
-The same `bun run ci` runs locally, inside the pre-commit hook against the
-staged snapshot, and in the Verify job of GitHub Actions. CI then runs the
-browser smoke matrix against the uploaded build and, on `main`, deploys both
-sites from the same run. See
+The same `bun run ci` runs locally and inside the pre-commit hook against the
+staged snapshot. GitHub Actions splits its source checks, tests, builds and site
+checks into parallel jobs. Each site builds independently, then its static
+checks, browser page matrix and browser interactions consume that exact output.
+On `main`, both deployments wait for every required job and publish the checked
+artifacts from the same run. See
 [continuous integration](continuous-integration.md) for the jobs and the run
 graph, [deployment](deployment.md) for how each site reaches GitHub Pages, and
 [quality checks](quality-checks.md) for what each gate proves and what it misses.

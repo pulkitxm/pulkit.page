@@ -1,3 +1,4 @@
+import { availableParallelism } from "node:os";
 import type { Browser, Page } from "playwright";
 import { themeKey } from "./audit-config.ts";
 import { expect, report } from "./problems.ts";
@@ -20,19 +21,24 @@ async function auditWithoutJavaScript(
   origin: string,
   paths: readonly string[],
 ): Promise<void> {
-  const { context, page } = await openSession(browser, origin, "no-js", {
-    javaScriptEnabled: false,
-  });
-  for (const path of paths) {
-    const scope = `no-js ${path}`;
-    const response = await page.goto(new URL(path, origin).href);
-    expect(scope, response?.status() === 200, `Page returned HTTP ${response?.status()}`);
-    expect(scope, (await page.locator("main").count()) === 1, "Main is missing");
-    expect(scope, (await page.locator("h1").count()) === 1, "Heading is missing");
-    const text = await page.locator("main").innerText();
-    expect(scope, text.trim().length > 0, "Main content is empty");
-  }
-  await context.close();
+  const queue = [...paths];
+  await Promise.all(
+    Array.from({ length: Math.min(availableParallelism(), paths.length) }, async () => {
+      const { context, page } = await openSession(browser, origin, "no-js", {
+        javaScriptEnabled: false,
+      });
+      for (let path = queue.shift(); path; path = queue.shift()) {
+        const scope = `no-js ${path}`;
+        const response = await page.goto(new URL(path, origin).href);
+        expect(scope, response?.status() === 200, `Page returned HTTP ${response?.status()}`);
+        expect(scope, (await page.locator("main").count()) === 1, "Main is missing");
+        expect(scope, (await page.locator("h1").count()) === 1, "Heading is missing");
+        const text = await page.locator("main").innerText();
+        expect(scope, text.trim().length > 0, "Main content is empty");
+      }
+      await context.close();
+    }),
+  );
   console.log(`Rendered ${paths.length} pages without JavaScript`);
 }
 

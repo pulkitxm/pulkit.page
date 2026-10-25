@@ -36,7 +36,15 @@ export function ownsPath(index: number): boolean {
   return index % shardCount === shardIndex - 1;
 }
 
-export const auditsSiteFlows = auditedViewports.includes(mobile) && shardIndex === shardCount;
+const suite = process.env.BROWSER_SUITE ?? "all";
+if (!["all", "pages", "flows"].includes(suite)) {
+  throw new Error(`Unknown BROWSER_SUITE ${suite}`);
+}
+
+export const auditsPages = suite !== "flows";
+export const auditsSiteFlows =
+  suite === "flows" ||
+  (suite === "all" && auditedViewports.includes(mobile) && shardIndex === shardCount);
 
 export const workersPerViewport = Math.max(
   1,

@@ -130,9 +130,10 @@ explains all three caching layers.
 The pre-commit hook checks out the staged index into a temporary directory, installs
 dependencies there with `bun install --frozen-lockfile --ignore-scripts`, and runs
 `bun run ci` with `TURBO_CACHE_DIR` pointing at the repository's `.turbo/cache`, so
-unchanged tasks replay from cache. GitHub Actions runs the same `bun run ci` and then a
-separate browser smoke job against the uploaded build, and deploys both sites from the
-same run; see [continuous integration](docs/continuous-integration.md).
+unchanged tasks replay from cache. GitHub Actions splits the same checks into parallel
+source, test, and site jobs. Each site builds independently, then its static and browser
+checks reuse that build. Both deployments require every check to pass; see
+[continuous integration](docs/continuous-integration.md).
 
 ## Authoring
 

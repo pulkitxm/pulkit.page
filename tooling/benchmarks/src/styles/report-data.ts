@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import type { Artifact, BuildSample, NavigationSample, Profile } from "./config.ts";
+import type { Artifact, BuildSample, HostActivity, NavigationSample, Profile } from "./config.ts";
 import { variants } from "./config.ts";
 import type { ParityResult } from "./parity.ts";
 import { pairedDifference, summarize } from "./statistics.ts";
@@ -19,6 +19,7 @@ interface Measurements {
   };
   builds: BuildSample[];
   samples: NavigationSample[];
+  hostActivity?: HostActivity[];
 }
 
 export const metricLabels: Record<string, string> = {
@@ -146,6 +147,11 @@ export function reportData(output: string, filename = "measurements.json") {
       largestPixelDifference: Math.max(...parity.map((row) => row.pixelMean ?? 0)),
     },
     sampleErrors: measured.samples.filter((row) => row.errors.length > 0),
+    hostActivity: summarize(
+      (measured.hostActivity ?? [])
+        .filter((row) => row.round >= 0)
+        .map((row) => row.cpuBusyPercent),
+    ),
   };
   writeFileSync(join(output, "summary.json"), `${JSON.stringify(summary, null, 2)}\n`);
   const keys = [...new Set(measured.samples.flatMap((row) => Object.keys(row.metrics)))].sort();

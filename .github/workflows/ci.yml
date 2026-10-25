@@ -18,6 +18,91 @@ concurrency:
     github.ref == 'refs/heads/main' && (inputs.revision || github.sha) || 'latest' }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
+  media:
+    name: Media budgets and repairs
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.publish.outputs.revision || steps.source.outputs.revision }}
+    steps:
+      - name: Select source revision
+        id: source
+        env:
+          REVISION: ${{ github.event.pull_request.head.sha || inputs.revision || github.sha }}
+        run: echo "revision=$REVISION" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || inputs.revision || github.sha }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      - name: Install media tools
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install --no-install-recommends -y ffmpeg
+          fi
+      - name: Check media budgets
+        id: media
+        continue-on-error: true
+        run: bun run check:media
+      - name: Repair media and stage related references
+        if: steps.media.outcome == 'failure' && (github.event_name == 'push' || github.event_name ==
+          'workflow_dispatch' || (github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository))
+        run: bun run media:fix --stage
+      - name: Require valid media
+        run: bun run check:media
+      - name: Verify repaired sources
+        if: steps.media.outcome == 'failure'
+        run: bunx turbo run verify:source
+      - name: Install Pukbot for media fixes
+        if: steps.media.outcome == 'failure'
+        run: >
+          curl --proto '=https' --tlsv1.2 -fsSL
+          https://github.com/pulkitxm/pukbot/releases/download/v0.3.30/pukbot-linux-x86_64 -o
+          "$RUNNER_TEMP/pukbot"
+
+          printf '%s  %s\n' bd2539c5a5d45650bd80ba48efc6e42ca14251b2eb0e586622ed064652c8e033
+          "$RUNNER_TEMP/pukbot" | sha256sum --check
+
+          chmod +x "$RUNNER_TEMP/pukbot"
+      - name: Publish media fixes
+        id: publish
+        if: steps.media.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || inputs.revision || github.sha }}
+        run: >
+          current="$(git ls-remote origin "refs/heads/$BRANCH" | cut -f1)"
+
+          if [ "$current" != "$SOURCE_REVISION" ]; then
+            echo "branch changed during media optimization; retry CI against the latest revision"
+            exit 1
+          fi
+
+          git config user.name 'github-actions[bot]'
+
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          "$RUNNER_TEMP/pukbot" commit create --repo "$REPOSITORY" --branch "$BRANCH" --message
+          "Optimize media assets and update references" --json > "$RUNNER_TEMP/media-publish.json"
+
+          revision="$(jq -er '.resourceUrl | capture("/commit/(?<sha>[0-9a-f]{40})$") | .sha'
+          "$RUNNER_TEMP/media-publish.json")"
+
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
   source:
     name: Source checks
     runs-on: ubuntu-26.04
@@ -26,7 +111,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          ref: ${{ inputs.revision || github.sha }}
+          ref: ${{ needs.media.outputs.revision }}
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
@@ -42,6 +127,7 @@ jobs:
           key: turbo-${{ runner.os }}-source-${{ inputs.revision || github.sha }}
           restore-keys: turbo-${{ runner.os }}-source-
       - run: bunx turbo run verify:source
+    needs: media
   tests:
     name: Tests and layouts
     runs-on: ubuntu-26.04
@@ -50,7 +136,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          ref: ${{ inputs.revision || github.sha }}
+          ref: ${{ needs.media.outputs.revision }}
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
@@ -65,7 +151,14 @@ jobs:
           path: .turbo/cache
           key: turbo-${{ runner.os }}-tests-${{ inputs.revision || github.sha }}
           restore-keys: turbo-${{ runner.os }}-tests-
+      - name: Install media test tools
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install --no-install-recommends -y ffmpeg
+          fi
       - run: bunx turbo run verify:tests
+    needs: media
   guestbook:
     name: Guestbook links
     runs-on: ubuntu-26.04
@@ -74,7 +167,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          ref: ${{ inputs.revision || github.sha }}
+          ref: ${{ needs.media.outputs.revision }}
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: 1.4.2
@@ -88,6 +181,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bun run --cwd tooling/guestbook verify:links --strict
+    needs: media
   sites:
     name: Site (${{ matrix.site }})
     strategy:
@@ -102,10 +196,11 @@ jobs:
     with:
       site: ${{ matrix.site }}
       shards: ${{ matrix.shards }}
-      revision: ${{ inputs.revision || github.sha }}
+      revision: ${{ needs.media.outputs.revision }}
     secrets:
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
+    needs: media
   workflows:
     name: Workflow lint
     runs-on: ubuntu-26.04
@@ -183,6 +278,7 @@ jobs:
     name: CI
     if: always()
     needs:
+      - media
       - source
       - tests
       - guestbook
@@ -201,6 +297,25 @@ jobs:
         run: |
           echo "$CHECK_RESULTS" | jq -e 'all(.[]; .result == "success")'
           echo "every required check passed"
+      - name: Attach CI result to the verified revision
+        if: always() && needs.media.outputs.revision && needs.media.outputs.revision != github.sha &&
+          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name ==
+          github.repository)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ needs.media.outputs.revision }}
+          CONCLUSION: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh api --method POST "repos/$REPOSITORY/check-runs" --silent \
+            -f name=CI -f head_sha="$REVISION" -f status=completed \
+            -f conclusion="$CONCLUSION" -f details_url="$RUN_URL"
+    permissions:
+      contents: read
+      checks: write
+    outputs:
+      revision: ${{ needs.media.outputs.revision }}
   deploy-page:
     name: Deploy pulkit.page
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name ==
@@ -225,7 +340,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
-          REVISION: ${{ inputs.revision || github.sha }}
+          REVISION: ${{ needs.ci.outputs.revision }}
         run: |
           head="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
           if [ "$head" = "$REVISION" ]; then
@@ -267,7 +382,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
-          REVISION: ${{ inputs.revision || github.sha }}
+          REVISION: ${{ needs.ci.outputs.revision }}
         run: |
           head="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
           if [ "$head" = "$REVISION" ]; then
@@ -285,7 +400,7 @@ jobs:
         if: steps.revision.outputs.current == 'true'
         env:
           DEPLOY_KEY: ${{ secrets.BLOG_DEPLOY_KEY }}
-          SOURCE: ${{ github.repository }}@${{ inputs.revision || github.sha }}
+          SOURCE: ${{ github.repository }}@${{ needs.ci.outputs.revision }}
         run: >
           if [ -z "$DEPLOY_KEY" ]; then
             echo "::warning::BLOG_DEPLOY_KEY is not set, so pulkit.blog was not published"

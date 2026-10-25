@@ -51,12 +51,16 @@ flowchart LR
   guestbook[Guestbook links] --> gate
   pagebuild[Build page] --> pagestatic[Page HTML, SEO and links]
   pagebuild --> pagebrowser[Page browser matrix]
+  pagebuild --> pageflows[Page browser interactions]
   blogbuild[Build blog] --> blogstatic[Blog HTML, SEO and links]
   blogbuild --> blogbrowser[Blog browser matrix]
+  blogbuild --> blogflows[Blog browser interactions]
   pagestatic --> gate
   pagebrowser --> gate
+  pageflows --> gate
   blogstatic --> gate
   blogbrowser --> gate
+  blogflows --> gate
   scanners[Workflow lint and security, secrets, dependency audit, ShellCheck] --> gate
   gate --> deploypage[Deploy pulkit.page]
   gate --> deployblog[Deploy pulkit.blog]
@@ -81,21 +85,27 @@ flowchart LR
 | Deploy pulkit.page        | Publishes the checked page artifact through GitHub Pages                            |
 | Deploy pulkit.blog        | Publishes the checked blog artifact to its own repository                           |
 
+The portfolio uses four page shards per viewport; the smaller blog uses one.
+That gives eight portfolio page jobs and two blog page jobs, plus one interaction
+job per site.
+
 Neither source checks nor tests delay a build. Site validation and browsers
 wait only for their own site's build, and run alongside each other. Browser
 matrices use `fail-fast: false`, so a failing shard does not cancel other shards.
 The parent site matrix also allows both sites to finish independently.
 
 Each build uploads just its `dist` directory as `built-page` or `built-blog`, with
-one day retention. Its validation, browsers, and deployment download that same
+one day retention and compression disabled for the media-heavy output. Its validation, browsers, and deployment download that same
 artifact into `apps/<site>/dist`, with no rebuild and no other site's media.
 
 [check-browser.ts](../packages/engine/src/commands/check-browser.ts) reads
-`BROWSER_VIEWPORT` and `BROWSER_SHARD`. Each shard reads every route for link and
+`BROWSER_VIEWPORT`, `BROWSER_SHARD` and `BROWSER_SUITE`. Each shard reads every route for link and
 anchor validation, but performs the expensive page assertions only for its
-share. Whole-site flows run once per site in the last mobile shard: rendering
+share. With `BROWSER_SUITE=pages`, shards skip whole-site flows. A separate
+`BROWSER_SUITE=flows` job runs those once per site alongside page audits: rendering
 without JavaScript, theme persistence, blocked storage, keyboard navigation and
-view transitions. `PLAYWRIGHT_CHANNEL=chrome` reuses the runner's Chrome.
+view transitions. Local runs default to `BROWSER_SUITE=all`, which runs page
+audits and includes flows in the last mobile shard. `PLAYWRIGHT_CHANNEL=chrome` reuses the runner's Chrome.
 
 The final `CI` job always runs and requires every upstream result to be
 `success`. Both deploy jobs depend on it and run only on main for pushes or
@@ -120,8 +130,12 @@ Bun is pinned to 1.4.2. Runner jobs use `ubuntu-26.04`, registered in
 Every Bun job restores `~/.bun/install/cache` keyed on `bun.lock`. Source checks,
 tests, and each site's build have separate Turbo cache namespaces, so concurrent
 jobs do not overwrite each other's cache. Build jobs also restore their site's
-`apps/<site>/.cache/generate`. Keys use the requested revision with a group-specific
-restore prefix. Builds prune week-old Turbo entries before saving their cache.
+`apps/<site>/.cache/generate` and `.cache/responsive-images`. Responsive variants
+are content-addressed, so source image edits generate new variants while unchanged
+images reuse previous work. Build cache prefixes include the lockfile and image
+optimizer source hash to invalidate variants when their implementation or
+dependencies change. Keys end with the requested revision; restore prefixes stay
+scoped to the group or site. Builds prune week-old Turbo entries before saving their cache.
 See [architecture](architecture.md#three-layers-of-caching).
 
 Engine tests keep their 30 second timeout for initial Shiki grammar and Biome

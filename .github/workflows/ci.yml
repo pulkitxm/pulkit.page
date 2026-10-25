@@ -93,12 +93,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        site:
-          - page
-          - blog
+        include:
+          - site: page
+            shards: '["1/4", "2/4", "3/4", "4/4"]'
+          - site: blog
+            shards: '["1/1"]'
     uses: ./.github/workflows/site-ci.yml
     with:
       site: ${{ matrix.site }}
+      shards: ${{ matrix.shards }}
       revision: ${{ inputs.revision || github.sha }}
     secrets:
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}

@@ -205,7 +205,7 @@ test("independent checks start immediately and every check blocks deployment", (
   const site = workflow("site-ci.yml");
   expect(job(jobs, "sites").uses).toBe("./.github/workflows/site-ci.yml");
   expect(job(site.jobs, "build").needs).toBeUndefined();
-  for (const id of ["validate", "browser"]) {
+  for (const id of ["validate", "browser", "interactions"]) {
     expect(job(site.jobs, id).needs).toBe("build");
     const steps = job(site.jobs, id).steps ?? [];
     expect(steps.find((step) => step.uses?.startsWith("actions/download-artifact@"))?.with).toEqual(

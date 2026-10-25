@@ -28,7 +28,11 @@ function isKnownBinary(file: string, bytes: Buffer): boolean {
     (/\.pdf$/i.test(file) && header.startsWith("%PDF-")) ||
     (/\.png$/i.test(file) && first === 137 && header.slice(1, 4) === "PNG") ||
     (/\.jpe?g$/i.test(file) && first === 255 && second === 216) ||
-    (/\.mp4$/i.test(file) && header.slice(4, 8) === "ftyp") ||
+    (/\.(mp4|m4v|mov|heic|heif)$/i.test(file) && header.slice(4, 8) === "ftyp") ||
+    (/\.(webm|mkv)$/i.test(file) && bytes.length >= 4 && bytes.readUInt32BE(0) === 0x1a45dfa3) ||
+    (/\.avi$/i.test(file) && header.startsWith("RIFF") && header.slice(8, 12) === "AVI ") ||
+    (/\.bmp$/i.test(file) && header.startsWith("BM")) ||
+    (/\.tiff?$/i.test(file) && (header.startsWith("II*\0") || header.startsWith("MM\0*"))) ||
     (/\.mp3$/i.test(file) && (header.startsWith("ID3") || (first === 255 && second >= 224)))
   );
 }

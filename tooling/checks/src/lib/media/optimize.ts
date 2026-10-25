@@ -164,7 +164,10 @@ export async function optimizeMedia(input: string, format?: "avif" | "webp"): Pr
     const directory = mkdtempSync(join(dirname(input), ".media-"));
     const temporary = join(directory, "optimized.svg");
     try {
-      writeFileSync(temporary, `${serialize(parseFragment(readFileSync(input, "utf8")))}\n`);
+      writeFileSync(
+        temporary,
+        `${serialize(parseFragment(readFileSync(input, "utf8"))).trimEnd()}\n`,
+      );
       const failures = await validateMedia(temporary, input);
       if (failures.length > 0) {
         throw new Error(

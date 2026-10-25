@@ -35,6 +35,7 @@ afterEach(() => {
 
 test("automatic repair updates references, normalizes SVG syntax, and stages only related changes", async () => {
   const directory = fixture();
+  writeFileSync(join(directory, ".gitignore"), "apps/example/assets/\n");
   const asset = join(directory, "apps/example/assets/photo.png");
   const page = join(directory, "apps/example/content/home.md");
   await sharp({ create: { width: 80, height: 40, channels: 3, background: "#1977bb" } })
@@ -53,7 +54,7 @@ test("automatic repair updates references, normalizes SVG syntax, and stages onl
     vector,
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" data-fold><path d="M0 0H16V16H0Z" /></svg>\n',
   );
-  execFileSync("git", ["add", "apps"], { cwd: directory });
+  execFileSync("git", ["add", "--force", "apps"], { cwd: directory });
   execFileSync(
     "git",
     [
@@ -77,6 +78,7 @@ test("automatic repair updates references, normalizes SVG syntax, and stages onl
   expect(await validateMedia(asset.replace(/\.png$/, ".webp"))).toEqual([]);
   expect(await validateMedia(vector)).toEqual([]);
   expect(readFileSync(vector, "utf8")).toContain('data-fold=""');
+  expect(readFileSync(vector, "utf8").endsWith("\n\n")).toBe(false);
   expect(readFileSync(stable)).toEqual(original);
   const staged = execFileSync("git", ["diff", "--cached", "--name-only"], {
     cwd: directory,

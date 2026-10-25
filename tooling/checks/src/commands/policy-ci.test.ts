@@ -180,7 +180,9 @@ test("turbo verify runs every check, lint, format and test script", () => {
     .flatMap((file) => Object.keys(manifest(file).scripts ?? {}))
     .filter((name) => name.startsWith("check:") || name === "test");
   const missing = [
-    ...rootScripts.filter((name) => !verify.has(`//#${name}`)),
+    ...rootScripts.filter(
+      (name) => !verify.has(`//#${name}`) && !ciWorkflow.includes(`bun run ${name}`),
+    ),
     ...new Set(
       workspaceScripts.filter(
         (name) => !verify.has(name) && !ciWorkflow.includes(`turbo run ${name}`),

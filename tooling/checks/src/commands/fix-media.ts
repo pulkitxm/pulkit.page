@@ -18,7 +18,7 @@ try {
   }
   reportFailures(failures, "All media assets satisfy their budgets");
   if (args.includes("--stage") && changed.length > 0) {
-    execFileSync("git", ["add", "--", ...changed]);
+    execFileSync("git", ["add", "--force", "--", ...changed]);
   }
   console.log(`Repaired ${changed.length} media and reference paths`);
 } catch (error) {

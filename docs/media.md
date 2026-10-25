@@ -8,9 +8,11 @@ works on explicitly supplied files and validates its output before replacing an
 existing asset. It leaves compliant files byte-for-byte unchanged.
 
 Run `bun run check:media` to inspect every Git-listed image and video, including
-force-tracked files in ignored directories. The gate runs without caching inside
-`bun run ci`, the staged-snapshot pre-commit hook, and GitHub Actions. A violation
-fails verification and prints the affected path, policy, and optimization command.
+force-tracked files in ignored directories. The read-only gate runs directly in
+GitHub Actions before repair and again afterward, outside Turbo caching. A violation
+prints the affected path, policy, and optimization command. Local pre-commit checks
+allow raw media uploads so CI can repair them; `bun run check:media` is available
+locally when an explicit validation is wanted.
 
 ## Formats and limits
 

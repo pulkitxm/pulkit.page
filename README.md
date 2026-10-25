@@ -82,8 +82,11 @@ Run these from the repository root:
 
 The root `check:*` scripts run the individual repository gates that
 `bun run ci` aggregates: `check:content`, `check:comments`,
-`check:repository`, `check:media`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
+`check:repository`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
 `check:shell`.
+
+CI also runs `check:media` before and after automatic Pukbot repairs. This gate
+stays outside the local pre-commit hook so original media can reach CI.
 
 Lighthouse uses up to five audit workers by default and checks both mobile and desktop.
 Run `bun run lighthouse:prod --concurrency 5 --min-score 100` to audit the live sites

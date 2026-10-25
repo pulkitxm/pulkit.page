@@ -110,7 +110,7 @@ test("galleries mix photos with lazy video previews and playable fallback links"
   expect(html).toContain('href="/assets/video-1.mp4" aria-label="Play Awards ceremony"');
   expect(html).toContain('data-video-preview="/assets/video-1-preview.mp4"');
   expect(html).toContain('src="/assets/video-1-poster.webp"');
-  expect(html).toContain('muted loop playsinline preload="none"');
+  expect(html).not.toContain("<video");
   expect(html).not.toContain(
     '<img class="m-0 block size-full object-cover" src="/assets/video-1.mp4"',
   );
@@ -123,6 +123,17 @@ test("event pages render with an empty description", async () => {
   });
   expect(html).toContain("Awards ceremony");
   expect(html).toMatch(/name="description" content="Awards ceremony"/);
+});
+
+test("galleries support a single photo or video without creating idle video elements", async () => {
+  for (const src of ["/assets/photo.webp", "/assets/clip.mp4"]) {
+    const html = await renderPage(
+      `---\ntitle: Event\n---\n\n:::gallery\n\n![Event](${src})\n\n:::\n`,
+    );
+    expect(html.match(/data-gallery-image/g)).toHaveLength(1);
+    expect(html).toContain(`href="${src}"`);
+    expect(html).not.toContain("<video");
+  }
 });
 
 test("grid lists render cover cards and require a cover on every entry", async () => {

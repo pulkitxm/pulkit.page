@@ -56,7 +56,8 @@ function displaySizes(element: Element, image: Image): string {
     return classes.includes("sm:size-12") ? "(min-width: 40rem) 48px, 40px" : "40px";
   }
   if (attribute(element, "data-gallery-image") !== undefined) {
-    return "(min-width: 760px) 344px, (min-width: 640px) calc(50vw - 36px), calc(100vw - 44px)";
+    const containedWidth = Math.ceil((256 * image.width) / image.height);
+    return `(min-width: 760px) ${Math.min(344, containedWidth)}px, (min-width: 561px) min(calc(50vw - 36px), ${containedWidth}px), min(calc(100vw - 44px), ${containedWidth}px)`;
   }
   if (classes.includes("size-36")) {
     return "144px";
@@ -154,7 +155,10 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
       if (!image) {
         continue;
       }
-      if (attribute(element, "aria-hidden") === "true" && inCarousel(element)) {
+      if (
+        attribute(element, "data-gallery-backdrop") !== undefined ||
+        (attribute(element, "aria-hidden") === "true" && inCarousel(element))
+      ) {
         setAttribute(element, "src", image.backdrop);
       } else {
         setAttribute(

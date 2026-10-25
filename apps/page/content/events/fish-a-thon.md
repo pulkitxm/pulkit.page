@@ -11,6 +11,12 @@ Fish-a-Thon was a Fish Audio hackathon organised by Akshat and Pranshu. I spent 
 
 :::gallery
 
+![Fish-a-Thon photo 3](/assets/content/events/fish-a-thon/3.webp)
+
+![Fish-a-Thon photo 4](/assets/content/events/fish-a-thon/4.webp)
+
+![Fish-a-Thon photo 5](/assets/content/events/fish-a-thon/5.webp)
+
 ![Fish-a-Thon photo 1](/assets/content/events/fish-a-thon/1.webp)
 
 ![Fish-a-Thon photo 2](/assets/content/events/fish-a-thon/2.webp)

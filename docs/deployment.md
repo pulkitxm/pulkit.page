@@ -16,20 +16,23 @@ every deployment replaces its `gh-pages` branch contents.
 ## What runs when
 
 The [CI workflow](../.github/workflows/ci.yml) builds and checks both apps on
-every pull request and push. A newer push to the same pull request or branch,
-including `main`, cancels the older CI run, so only the latest commit is checked.
+every pull request and push to main. A newer pull request or branch run cancels
+the older run for that ref. Main runs are isolated by workflow and revision and
+are allowed to finish.
 
 The two deploy jobs are part of the same workflow, so they appear in the same
 run graph after the `CI` gate. They run only on a push to `main` or a manual run
-on `main`, after every required job has passed, and they download the run's
-`built-sites` artifact instead of building again. A newer push cancels an older
-run even while it deploys; both deploys are all or nothing, so the previous site
-stays live and the newer run deploys the newer commit.
+on `main`, after every required job has passed. Each downloads its own
+`built-page` or `built-blog` artifact instead of building again. Deployments
+serialize per site and check the current main revision before publishing, so
+completed checks for an older revision skip deployment. The scheduled guestbook
+workflow also runs this pipeline against its published revision and can deploy
+pulkit.page after every check passes.
 
 - **Deploy pulkit.page** uploads `apps/page/dist` as this repository's Pages
   artifact and deploys it in the `github-pages` environment. It is the only job
   that gets `pages: write` and `id-token: write`.
-- **Deploy pulkit.blog** takes the same build, adds `.nojekyll`, and pushes
+- **Deploy pulkit.blog** takes the checked blog build, adds `.nojekyll`, and pushes
   `apps/blog/dist` as one new commit on top of the `gh-pages` branch of
   pulkitxm/pulkit.blog, in the `pulkit-blog` environment. It initializes a
   repository inside the downloaded `dist`, shallow-fetches the existing

@@ -1,0 +1,21 @@
+{
+  "name": "@pulkit/benchmarks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "styles": "bun src/commands/styles.ts",
+    "test": "bun test ./src"
+  },
+  "dependencies": {
+    "@pulkit/demos": "workspace:*",
+    "@pulkit/engine": "workspace:*",
+    "@pulkit/shared": "workspace:*",
+    "@pulkit/theme": "workspace:*",
+    "lightningcss": "1.33.0",
+    "magic-string": "0.30.21",
+    "parse5": "8.0.1",
+    "playwright": "1.63.0",
+    "sharp": "0.35.5",
+    "simple-statistics": "7.12.1"
+  }
+}

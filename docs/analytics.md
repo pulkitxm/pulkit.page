@@ -10,8 +10,9 @@ module script in `<head>` and the build emits `/assets/analytics.js`. When the
 variable is absent the placeholder renders as an empty string, no bundle is
 produced, and the output is byte for byte what it was before.
 
-Deployed pages are built by the Verify job of the
-[CI workflow](../.github/workflows/ci.yml), which reads `POSTHOG_KEY` and
+Deployed pages are built by the per-site Build jobs in
+[site-ci.yml](../.github/workflows/site-ci.yml), called by the
+[CI workflow](../.github/workflows/ci.yml). Those jobs read `POSTHOG_KEY` and
 `POSTHOG_IGNORE_KEY` from repository secrets. Remove either secret and the next
 deployment drops that part of the behavior with no code change. The project key
 is not a credential: it is public by design and visible in the page source of

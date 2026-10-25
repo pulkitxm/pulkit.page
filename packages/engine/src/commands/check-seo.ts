@@ -54,11 +54,16 @@ const titles = new Set<string>();
 const descriptions = new Set<string | undefined>();
 for (const page of sitePages) {
   const { metadata } = page;
-  if (titles.has(metadata.title) || descriptions.has(metadata.description)) {
+  if (
+    titles.has(metadata.title) ||
+    (metadata.description && descriptions.has(metadata.description))
+  ) {
     throw new Error(`${page.source}: duplicate title or description`);
   }
   titles.add(metadata.title);
-  descriptions.add(metadata.description);
+  if (metadata.description) {
+    descriptions.add(metadata.description);
+  }
   checkPage(page, siteConfig);
 }
 const sitemap = readFileSync(join(root, "sitemap.xml"), "utf8");

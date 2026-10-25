@@ -102,6 +102,29 @@ test("gallery directives render a zoomable photo grid and reject stray content",
   );
 });
 
+test("galleries mix photos with lazy video previews and playable fallback links", async () => {
+  const html = await renderPage(
+    `${source}\n:::gallery\n\n![Photo](/assets/photo.webp)\n\n![Awards ceremony](/assets/video-1.mp4)\n\n:::\n`,
+  );
+  expect(html.match(/data-media-zoom/g)).toHaveLength(1);
+  expect(html).toContain('href="/assets/video-1.mp4" aria-label="Play Awards ceremony"');
+  expect(html).toContain('data-video-preview="/assets/video-1-preview.mp4"');
+  expect(html).toContain('src="/assets/video-1-poster.webp"');
+  expect(html).toContain('muted loop playsinline preload="none"');
+  expect(html).not.toContain(
+    '<img class="m-0 block size-full object-cover" src="/assets/video-1.mp4"',
+  );
+  expect(html).toContain("/assets/embeds/lightbox.js");
+});
+
+test("event pages render with an empty description", async () => {
+  const html = await renderPage('---\ntitle: Awards ceremony\ndescription: ""\n---\n\nPhotos.\n', {
+    site: { description: "Portfolio overview" },
+  });
+  expect(html).toContain("Awards ceremony");
+  expect(html).toMatch(/name="description" content="Awards ceremony"/);
+});
+
 test("grid lists render cover cards and require a cover on every entry", async () => {
   const pages: ListedPage[] = [
     {

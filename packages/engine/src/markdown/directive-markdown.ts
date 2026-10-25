@@ -211,7 +211,9 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
       .replace(/^:::(?:carousel|gallery)[ \t]*\n([\s\S]*?)\n:::[ \t]*$/gm, (_, images: string) =>
         token(
           [...images.matchAll(/!\[([^\]\n]+)\]\(([^)\s]+)\)/g)]
-            .map(([, alt = "", src = ""]) => imageTo(alt, resolve(src)))
+            .map(([, alt = "", src = ""]) =>
+              src.endsWith(".mp4") ? linkTo(alt, resolve(src)) : imageTo(alt, resolve(src)),
+            )
             .join("\n\n"),
         ),
       );

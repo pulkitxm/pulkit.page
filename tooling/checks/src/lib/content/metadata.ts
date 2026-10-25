@@ -84,11 +84,15 @@ function valueErrors(
   data: Record<string, unknown>,
   fields: readonly string[],
   root: string,
+  emptyDescription: boolean,
 ): string[] {
   const errors: string[] = [];
   for (const field of fields.filter(
     (key) => !["tags", "links", "navigation", "social"].includes(key),
   )) {
+    if (field === "description" && emptyDescription && data[field] === "") {
+      continue;
+    }
     if (data[field] !== undefined && !isText(data[field])) {
       errors.push(`${field} must be a trimmed, nonempty string`);
     }
@@ -180,7 +184,12 @@ export function metadataErrors(data: unknown, file: string, root: string): strin
     }
   }
   errors.push(
-    ...valueErrors(data, fields, root),
+    ...valueErrors(
+      data,
+      fields,
+      root,
+      file.startsWith("content/events/") && !file.endsWith("/index.md"),
+    ),
     ...tagErrors(data.tags),
     ...urlListErrors(data.links),
   );

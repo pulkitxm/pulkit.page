@@ -31,9 +31,9 @@ function expectedMetadata(
 ): Record<string, string | undefined> {
   const url = site.url + route;
   return {
-    description: metadata.description,
-    "og:description": metadata.description,
-    "twitter:description": metadata.description,
+    description: metadata.description || metadata.title,
+    "og:description": metadata.description || metadata.title,
+    "twitter:description": metadata.description || metadata.title,
     "og:url": url,
     "og:title": pageTitle(metadata, site, route),
     "twitter:title": pageTitle(metadata, site, route),

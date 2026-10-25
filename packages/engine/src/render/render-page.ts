@@ -118,7 +118,11 @@ export async function renderPage(
       seo: `${headExtras(route, metadata, site, pages)}${assets.tags()}${demoAssets}`,
       breadcrumbs: breadcrumbs(route, pages),
       related: relatedNavigation(route, metadata, pages, site),
-      description: escapeHtml(metadata.description ?? site.description ?? metadata.title),
+      description: escapeHtml(
+        metadata.description === ""
+          ? metadata.title
+          : (metadata.description ?? site.description ?? metadata.title),
+      ),
       brand: site.wordmark ?? escapeHtml(site.brand ?? "Pulkit"),
       author: escapeHtml(site.author ?? ""),
       authorUrl: site.authorUrl ? safeUrl(site.authorUrl) : "/",

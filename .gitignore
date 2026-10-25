@@ -8,3 +8,5 @@ extras/
 .cache/
 .turbo/
 reports/
+
+.DS_Store

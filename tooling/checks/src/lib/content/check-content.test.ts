@@ -65,6 +65,13 @@ describe("strict content conventions", () => {
     expect(checkContent("content/_site.md", source).errors.join("\n")).toContain("safe href");
   });
 
+  test("event descriptions may be empty while other page descriptions remain required", () => {
+    const source = '---\ntitle: Meetup\ndescription: ""\n---\n\nPhotos.\n';
+    expect(checkContent("content/events/meetup.md", source).errors).toEqual([]);
+    expect(checkContent("content/about.md", source).errors.join("\n")).toContain("nonempty");
+    expect(checkContent("content/events/index.md", source).errors.join("\n")).toContain("nonempty");
+  });
+
   test("formatting preserves code bytes, including comments and directive examples", () => {
     const code = "// an example\nconst value = 'unchanged';\n\tconsole.log(value);";
     const source = page("", `~~~js\n${code}\n~~~\n\n\`\`\`md\n:::list blogs\n\`\`\`\n`);

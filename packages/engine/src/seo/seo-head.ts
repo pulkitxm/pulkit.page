@@ -28,7 +28,7 @@ export function seoHead(
     ["og:site_name", site.brand],
     ["og:locale", "en_US"],
     ["og:title", pageTitle(metadata, site, route)],
-    ["og:description", metadata.description],
+    ["og:description", metadata.description || metadata.title],
     ["og:url", url],
     ["og:image", image],
     ["og:image:secure_url", image],
@@ -40,7 +40,7 @@ export function seoHead(
   const twitter: MetaEntry[] = [
     ["twitter:card", "summary_large_image"],
     ["twitter:title", pageTitle(metadata, site, route)],
-    ["twitter:description", metadata.description],
+    ["twitter:description", metadata.description || metadata.title],
     ["twitter:image", twitterImage],
     ["twitter:image:alt", metadata.title],
   ];

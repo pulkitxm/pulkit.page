@@ -40,6 +40,9 @@ export function readFrontmatter(source: string): Frontmatter {
   }
   for (const field of textFields) {
     const value = data[field];
+    if (field === "description" && value === "") {
+      continue;
+    }
     if (value !== undefined && (typeof value !== "string" || !value.trim())) {
       throw new Error(`${field} must be a nonempty string`);
     }

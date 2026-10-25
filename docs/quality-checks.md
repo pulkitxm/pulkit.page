@@ -24,7 +24,7 @@ The repository, content, and comment CLIs use `git ls-files --cached --others --
 
 [check-repository.ts](../tooling/checks/src/commands/check-repository.ts) rejects symlinks, case/NFC collisions, temporary suffixes, certain forbidden tracked paths, invalid source path spelling, any `.js`, `.mjs`, `.cjs` or `.jsx` file (every source is strict TypeScript, typechecked by `check:types` and transpiled by Bun at build time), and TypeScript files longer than 400 lines. The lowercase kebab-case filename rule applies under `apps/<app>/content/`, `apps/<app>/layouts/`, `packages/<package>/src/`, `tooling/<tool>/src/`, and `docs/`, with `content/_site.md` excepted. `.DS_Store`, dist, node\_modules, and exact `.env` names are forbidden; this is not a comprehensive secret-file detector for every possible environment filename.
 
-Files are capped at 2 MiB except selected gif/webp/png/jpg/pdf media beneath `apps/<app>/assets/content/`, which allow 5 MiB. NUL-containing or empty files skip text-ending checks; other files reject CRLF and require a final newline. This binary heuristic is not MIME validation, image optimization, or malware detection.
+Files are capped at 2 MiB except selected gif/webp/png/jpg/pdf media beneath `apps/<app>/assets/content/`, which allow 5 MiB, and MP4 recordings in the same tree, which allow 20 MiB. NUL-containing or empty files skip text-ending checks; other files reject CRLF and require a final newline. This binary heuristic is not MIME validation, image optimization, or malware detection.
 
 ## Rendered output and HTML
 

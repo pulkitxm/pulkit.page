@@ -97,6 +97,23 @@ Because both sites share one layout set, `check:layouts` is a script of [package
 
 Tests live beside the modules they cover: `packages/engine/src/**/*.test.ts` (shared helpers in `packages/engine/test/lib/`), `tooling/checks/src/**/*.test.ts`, `packages/theme/src/lib/files.test.ts`, and `packages/shared/src/**/*.test.ts`. The engine's [bunfig.toml](../packages/engine/bunfig.toml) preloads [test/setup.ts](../packages/engine/test/setup.ts), which changes into `test/fixture/` (layouts, `content/_site.md`, and CNAME) so engine tests run against a small app. Engine tests use a 30 second timeout because the first fence test loads Shiki grammars and Biome's WebAssembly. See [quality checks](quality-checks.md#regression-coverage) for what each test file covers.
 
+## Home-page CSS comparison
+
+The optional `@pulkit/benchmarks` workspace compares original utilities, home-only pruning, short aliases, the current composition compiler, direct composed declarations, and direct declarations in an external stylesheet. It creates isolated fixtures under the ignored `reports/style-benchmark/` directory. Production output and source Tailwind usage stay unchanged.
+
+Start with a successful `bun run build` so the render cache and responsive assets exist, then install the local measurement dependencies:
+
+```sh
+PLAYWRIGHT_SKIP_BROWSER_GC=1 bun tooling/benchmarks/node_modules/playwright/cli.js install chromium firefox
+python3 -m venv .cache/style-benchmark-plotting
+.cache/style-benchmark-plotting/bin/pip install matplotlib
+bun run --filter '@pulkit/benchmarks' styles --runs 9
+```
+
+The command prepares all six builds, checks visual and interaction parity in Chromium and Firefox, measures fresh-process home styling builds and cold/warm visits, then generates a self-contained `reports/style-benchmark/index.html` with charts, methodology, raw JSON and CSV. `--smoke` runs a one-sample preflight. `--phase prepare`, `--phase verify`, `--phase measure` and `--phase report` run individual stages. `--output /absolute/path` changes the report directory; `STYLE_BENCH_PYTHON` selects a Python interpreter with matplotlib.
+
+Chromium profiles cover desktop through a 320-pixel viewport with 12x main-thread CPU slowdown, 300 ms response delay and 0.6 Mbps download. Firefox provides unthrottled desktop and small-screen engine comparisons. These are reproducible simulations on one host, not physical-device or legacy-browser results. Fixtures bind to loopback and block external connections. Run measurements without concurrent builds or other heavy workloads. Build timings cover the home CSS/script pipeline, not full-site content and image generation.
+
 ## Development server details
 
 The development server runs in the app directory and binds Vite to `127.0.0.1`. Unset PORT prefers `SITE_PORT` when set, otherwise 3000, and tries higher ports when occupied; pulkit.blog's `dev` script sets `SITE_PORT=3001` so both sites run side by side. Explicit occupied ports fail; PORT=0 requests an available port. Canonical URLs use the actual bound origin. Vite's file access is limited to the app directory and the repository root, so workspace packages can be served.

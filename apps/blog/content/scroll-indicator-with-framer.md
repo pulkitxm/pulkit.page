@@ -1,5 +1,6 @@
 ---
 title: Scroll Indicator with Framer Motion useScroll
+priorityImage: /assets/content/blogs/creating-a-dynamic-horizontal-scroll-percentage-indicator-with-react-and-framer-motion/a1036438-6dac-4c32-bcf3-78d877cd2de8.webp
 description: Build a horizontal scroll indicator with Framer Motion using the useScroll and
   useTransform hooks to track scroll progress in React.
 date: 2024-07-24

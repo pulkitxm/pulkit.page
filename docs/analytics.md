@@ -52,7 +52,7 @@ so turning analytics on or off re-renders the pages it affects.
 
 `POSTHOG_IGNORE_KEY` holds a phrase you choose. A build hashes it with SHA-256
 and publishes only that digest on the script tag, so the phrase itself never
-appears in the page. Before initializing, the browser reads `IGNORE_KEY` from
+appears in the page. Before downloading the SDK, the browser reads `IGNORE_KEY` from
 local storage, hashes it the same way, and skips PostHog entirely when the two
 digests match: no client, no requests, no events. Run this once in the console
 of each browser you want excluded:
@@ -76,13 +76,19 @@ and turns session recording off. The client is exposed as `posthog` on the
 global object, which makes `posthog.capture("example")` usable from the browser
 console while you are trying it out.
 
-The bundle is the full `posthog-js` client, about 100 KB compressed. That is
-acceptable for a local trial and is the main thing to weigh before it ships,
-next to two properties of the current hosting: GitHub Pages cannot proxy the
-ingestion endpoint, so common blocklists will hide part of the traffic, and
-PostHog's default cookie persistence is what pulls a consent banner into scope.
-Switching `persistence` to `memory` removes the cookie at the cost of returning
-visitor counts.
+The initial module is a small loader, under 1.5 KB before compression. After the
+window load event, it imports the full `posthog-js` client in an idle callback
+with a one-second timeout, or a zero-delay task where idle callbacks are unavailable.
+The SDK is still about 100 KB compressed, but no longer competes with initial
+fonts and content. Excluded visits never download it. Import failures, including
+content blockers, do not raise an uncaught page error. Very brief visits that end
+before initialization may not be counted, and interaction autocapture begins only
+after initialization.
+
+GitHub Pages cannot proxy the ingestion endpoint, so common blocklists will hide
+part of the traffic. PostHog's default cookie persistence is what pulls a consent
+banner into scope. Switching `persistence` to `memory` removes the cookie at the
+cost of returning visitor counts.
 
 ## Where the pieces live
 

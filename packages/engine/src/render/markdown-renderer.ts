@@ -138,16 +138,25 @@ export function createMarkdown(context: RenderContext): Marked {
         );
       },
       table(token) {
+        let html: string = Renderer.prototype.table.call(this, token);
+        if (token.header[0]?.text.trim() === "") {
+          html = html.replace(
+            /(<tr>\s*)<td([^>]*)>([\s\S]*?)<\/td>/g,
+            (_match, row, attrs, text) =>
+              `${row}<th scope="row"${attrs.replace('class="', 'class="font-normal ')}>${text}</th>`,
+          );
+        }
         return withClass(
-          Renderer.prototype.table.call(this, token),
+          html,
           "mt-0 mb-6 block overflow-x-auto border-collapse text-md wrap-normal",
         ).replace(/^<table /, '<table tabindex="0" ');
       },
       tablecell(token) {
-        return withClass(
+        const html = withClass(
           Renderer.prototype.tablecell.call(this, token),
           "border-b border-line px-3.5 py-2.5 text-left",
         );
+        return token.header ? html.replace(/^<th /, '<th scope="col" ') : html;
       },
       link(token) {
         return withClass(Renderer.prototype.link.call(this, token), linkClasses);

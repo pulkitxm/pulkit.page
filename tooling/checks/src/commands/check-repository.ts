@@ -17,7 +17,7 @@ function sizeLimit(file: string): number {
   if (/^apps\/[a-z0-9-]+\/assets\/content\/.*\.mp4$/.test(file)) {
     return 20 * 1024 * 1024;
   }
-  return /^apps\/[a-z0-9-]+\/assets\/content\//.test(file) && /\.(gif|webp|png|jpg|pdf)$/.test(file)
+  return /^apps\/[a-z0-9-]+\/assets\/content\//.test(file) && /\.pdf$/.test(file)
     ? 5 * 1024 * 1024
     : maximumBytes;
 }

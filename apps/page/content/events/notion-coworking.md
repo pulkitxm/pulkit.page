@@ -9,7 +9,7 @@ cover: /assets/content/events/notion-coworking/6.webp
 
 ![Cowork x Notion Cafe photo 1](/assets/content/events/notion-coworking/1.webp)
 
-![Cowork x Notion Cafe photo 2](/assets/content/events/notion-coworking/2.webp)
+![Cowork x Notion Cafe photo 2](/assets/content/events/notion-coworking/2.avif)
 
 ![Cowork x Notion Cafe photo 3](/assets/content/events/notion-coworking/3.webp)
 

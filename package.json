@@ -31,6 +31,7 @@
     "media:optimize": "bun tooling/checks/src/commands/optimize-media.ts",
     "check:comments": "bun tooling/checks/src/commands/check-comments.ts",
     "check:repository": "bun tooling/checks/src/commands/check-repository.ts",
+    "check:media": "bun tooling/checks/src/commands/check-media.ts",
     "check:em-dashes": "bun tooling/checks/src/commands/check-em-dashes.ts",
     "check:imports": "bun tooling/checks/src/commands/check-imports.ts",
     "check:types": "tsc -p tsconfig.json",

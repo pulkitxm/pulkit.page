@@ -81,6 +81,21 @@ test("animated WebP conversion retains frames, timing and loop count", async () 
   expect(after.loop).toBe(before.loop);
   expect(await validateMedia(output)).toEqual([]);
   await expect(optimizeMedia(file, "avif")).rejects.toThrow("animation encoding");
+  const fast = join(directory, "fast.gif");
+  writeFileSync(
+    fast,
+    await sharp(readFileSync(file), { animated: true })
+      .gif({ delay: [10, 20] })
+      .toBuffer(),
+  );
+  const fastBefore = await sharp(readFileSync(fast), { animated: true }).metadata();
+  const fastOutput = await optimizeMedia(fast);
+  const fastAfter = await sharp(readFileSync(fastOutput), { animated: true }).metadata();
+  const browserDuration = (fastBefore.delay ?? []).reduce(
+    (sum, delay) => sum + (delay <= 10 ? 100 : delay),
+    0,
+  );
+  expect((fastAfter.delay ?? []).reduce((sum, delay) => sum + delay, 0)).toBe(browserDuration);
 }, 30_000);
 
 test("video optimization produces fast-start H.264 with AAC and silent bounded previews", async () => {
@@ -110,6 +125,21 @@ test("video optimization produces fast-start H.264 with AAC and silent bounded p
   const original = readFileSync(file);
   expect(await optimizeMedia(file)).toBe(file);
   expect(readFileSync(file)).toEqual(original);
+  const fullRange = join(directory, "full-range.mp4");
+  ffmpeg(
+    "-i",
+    file,
+    "-vf",
+    "scale=out_range=pc",
+    "-pix_fmt",
+    "yuvj420p",
+    "-color_range",
+    "pc",
+    fullRange,
+  );
+  expect(probeVideo(fullRange).streams[0]?.pix_fmt).toBe("yuvj420p");
+  await optimizeMedia(fullRange);
+  expect(await validateMedia(fullRange)).toEqual([]);
   const preview = join(directory, "clip-preview.mp4");
   ffmpeg("-i", file, "-c", "copy", preview);
   expect((await validateMedia(preview)).join("\n")).toContain("no audio");

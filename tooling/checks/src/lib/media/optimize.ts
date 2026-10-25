@@ -26,10 +26,10 @@ async function encodeImage(
     throw new Error("AVIF animation encoding is unsupported; use animated WebP or MP4");
   }
   const policy = imagePolicy(output, animated);
-  const image = () =>
+  const image = (edge = policy.edge) =>
     sharp(source, { animated }).autoOrient().resize({
-      width: policy.edge,
-      height: policy.edge,
+      width: edge,
+      height: edge,
       fit: "inside",
       withoutEnlargement: true,
     });
@@ -46,14 +46,20 @@ async function encodeImage(
     }
   }
   const qualities = format === "avif" ? [65, 60] : [85, 80];
-  for (const quality of qualities) {
-    const pipeline = image();
-    const bytes = await (format === "avif"
-      ? pipeline.avif({ quality, effort: 6, chromaSubsampling: "4:4:4" })
-      : pipeline.webp({ quality, effort: 4, smartSubsample: true, mixed: animated })
-    ).toBuffer();
-    if (bytes.length <= policy.bytes) {
-      return bytes;
+  for (const edge of [
+    policy.edge,
+    Math.round(policy.edge * 0.875),
+    Math.round(policy.edge * 0.75),
+  ]) {
+    for (const quality of qualities) {
+      const pipeline = image(edge);
+      const bytes = await (format === "avif"
+        ? pipeline.avif({ quality, effort: 6, chromaSubsampling: "4:4:4" })
+        : pipeline.webp({ quality, effort: 4, smartSubsample: true, mixed: animated })
+      ).toBuffer();
+      if (bytes.length <= policy.bytes) {
+        return bytes;
+      }
     }
   }
   throw new Error(
@@ -101,14 +107,18 @@ async function encodeVideo(input: string, output: string, temporary: string): Pr
   }
   const short = policy.shortEdge;
   const long = policy.edge;
-  const scale = `scale=w='if(gte(iw,ih),min(iw,${long}),min(iw,${short}))':h='if(gte(iw,ih),min(ih,${short}),min(ih,${long}))':force_original_aspect_ratio=decrease:force_divisible_by=2:flags=lanczos,setsar=1`;
+  const scale = `scale=w='if(gte(iw,ih),min(iw,${long}),min(iw,${short}))':h='if(gte(iw,ih),min(ih,${short}),min(ih,${long}))':force_original_aspect_ratio=decrease:force_divisible_by=2:flags=lanczos:out_range=tv,setsar=1`;
   const fps = frameRate(video.avg_frame_rate);
   const filters = Number.isFinite(fps) && fps > policy.fps ? `${scale},fps=${policy.fps}` : scale;
   const args = ["-nostdin", "-hide_banner", "-loglevel", "error", "-i", input, "-map", "0:v:0"];
   if (policy.preview) {
     args.push("-an", "-t", String(policy.seconds));
   } else {
-    args.push("-map", "0:a:0?", "-c:a", "aac", "-b:a", "128k");
+    const audio = source.streams.find((stream) => stream.codec_type === "audio");
+    args.push("-map", "0:a:0?", "-c:a", audio?.codec_name === "aac" ? "copy" : "aac");
+    if (audio?.codec_name !== "aac") {
+      args.push("-b:a", "128k");
+    }
   }
   args.push(
     "-vf",
@@ -121,6 +131,8 @@ async function encodeVideo(input: string, output: string, temporary: string): Pr
     "21",
     "-pix_fmt",
     "yuv420p",
+    "-color_range",
+    "tv",
     "-maxrate",
     "3500k",
     "-bufsize",

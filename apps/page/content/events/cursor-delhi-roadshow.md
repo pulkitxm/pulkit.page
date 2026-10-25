@@ -7,7 +7,7 @@ cover: /assets/content/events/cursor-delhi-roadshow/4.webp
 
 :::gallery
 
-![Cursor India Roadshow: Delhi Buildathon photo 1](/assets/content/events/cursor-delhi-roadshow/1.webp)
+![Cursor India Roadshow: Delhi Buildathon photo 1](/assets/content/events/cursor-delhi-roadshow/1.avif)
 
 ![Cursor India Roadshow: Delhi Buildathon photo 2](/assets/content/events/cursor-delhi-roadshow/2.webp)
 

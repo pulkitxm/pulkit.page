@@ -15,7 +15,7 @@ ICPC Amritapuri 2023 was a national level programming contest.
 
 ![ICPC Amritapuri photo 12](/assets/content/events/icpc-amritapuri/12.webp)
 
-![ICPC Amritapuri photo 13](/assets/content/events/icpc-amritapuri/13.webp)
+![ICPC Amritapuri photo 13](/assets/content/events/icpc-amritapuri/13.avif)
 
 ![ICPC Amritapuri photo 14](/assets/content/events/icpc-amritapuri/14.webp)
 

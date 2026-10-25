@@ -71,6 +71,10 @@
     "//#check:repository": {
       "outputs": []
     },
+    "//#check:media": {
+      "cache": false,
+      "outputs": []
+    },
     "//#check:em-dashes": {
       "outputs": []
     },
@@ -97,6 +101,7 @@
         "//#check:content",
         "//#check:comments",
         "//#check:repository",
+        "//#check:media",
         "//#check:em-dashes",
         "//#check:imports",
         "//#check:types",

@@ -7,6 +7,11 @@ not just extensions. It reports failures without rewriting files. The optimizer
 works on explicitly supplied files and validates its output before replacing an
 existing asset. It leaves compliant files byte-for-byte unchanged.
 
+Run `bun run check:media` to inspect every Git-listed image and video, including
+force-tracked files in ignored directories. The gate runs without caching inside
+`bun run ci`, the staged-snapshot pre-commit hook, and GitHub Actions. A violation
+fails verification and prints the affected path, policy, and optimization command.
+
 ## Formats and limits
 
 | Media                                         | Format                | Resolution                           | File budget | Other limits                                |
@@ -53,12 +58,22 @@ lossless WebP so text and fine lines survive exactly when the file budget permit
 Other WebP encodes try quality 85, then 80. AVIF tries quality 65, then 60, with
 4:4:4 chroma to retain colored text and edges. These quality scales are different
 and are not directly comparable. Encoding stops with an error if the budget
-cannot be met at the quality floor. EXIF orientation is applied before removing
+cannot be met at the quality floor. Before failing, it also tries longest-edge
+caps at 87.5% and 75% of the maximum, always encoding directly from the source.
+For stills these caps are 1792 px and 1536 px, enough for twice the article's
+704 px display width. EXIF orientation is applied before removing
 metadata. Animated WebP preserves animation timing, loop count, and transparency.
+
+The animation encoder can merge identical frames. GIF delays of 10 ms or less
+are normalized to 100 ms, matching browser GIF playback, so the encoded frame
+count and nominal duration can change while the displayed timing stays the same.
+
+Try `--format avif` for a detailed photo that exceeds the WebP budget. Update its
+references to the new `.avif` path and remove the original after review.
 
 Video optimization first tries a lossless remux to repair container metadata.
 If that cannot satisfy the policy, FFmpeg uses H.264 CRF 21 and the slow preset,
-preserves audio as AAC at 128 kbps, and scales only when necessary. Previews are
+copies existing AAC audio, converts other audio to AAC at 128 kbps, and scales only when necessary. Previews are
 muted and capped at six seconds. Failed conversions leave the source intact.
 
 The site already generates responsive image copies and browser `srcset`/`sizes`

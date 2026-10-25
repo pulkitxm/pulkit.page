@@ -82,7 +82,7 @@ Run these from the repository root:
 
 The root `check:*` scripts run the individual repository gates that
 `bun run ci` aggregates: `check:content`, `check:comments`,
-`check:repository`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
+`check:repository`, `check:media`, `check:em-dashes`, `check:imports`, `check:dead-code`, and
 `check:shell`.
 
 Lighthouse uses up to five audit workers by default and checks both mobile and desktop.
@@ -155,6 +155,13 @@ Images belong in the app's
 `assets/`, for example `apps/blog/assets/content/`, and each app's navigation and
 footer links live in its `content/_site.md`. Social links default to the shared
 `@pulkit/profile` list.
+
+Committed media must pass `bun run check:media`: WebP or AVIF stills up to 2048 px
+and 512 KiB, bounded animated WebP, SVG vectors, and fast-start H.264 MP4 video.
+Use `bun run media:optimize <file>` for a specific asset, review its output, then
+commit with Pukbot. Videos need FFmpeg and ffprobe installed locally. See
+[media budgets and optimization](docs/media.md) for format choices, limits,
+quality settings, and the icon exceptions.
 
 The optional `articles` field in `_site.md` is a root-relative prefix such as `/`
 or `/notes/` that marks which non-index pages are posts. pulkit.page has none;

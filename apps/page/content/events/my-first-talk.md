@@ -31,13 +31,13 @@ cover: /assets/content/events/my-first-talk/10.webp
 
 ![My First Talk photo 11](/assets/content/events/my-first-talk/11.webp)
 
-![My First Talk photo 12](/assets/content/events/my-first-talk/12.webp)
+![My First Talk photo 12](/assets/content/events/my-first-talk/12.avif)
 
 ![My First Talk photo 13](/assets/content/events/my-first-talk/13.webp)
 
-![My First Talk photo 14](/assets/content/events/my-first-talk/14.webp)
+![My First Talk photo 14](/assets/content/events/my-first-talk/14.avif)
 
-![My First Talk photo 15](/assets/content/events/my-first-talk/15.webp)
+![My First Talk photo 15](/assets/content/events/my-first-talk/15.avif)
 
 ![My First Talk photo 16](/assets/content/events/my-first-talk/16.webp)
 

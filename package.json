@@ -28,6 +28,7 @@
     "format:check": "biome format . && bun tooling/checks/src/commands/check-content.ts",
     "lint": "biome check --error-on-warnings .",
     "check:content": "bun tooling/checks/src/commands/check-content.ts",
+    "media:optimize": "bun tooling/checks/src/commands/optimize-media.ts",
     "check:comments": "bun tooling/checks/src/commands/check-comments.ts",
     "check:repository": "bun tooling/checks/src/commands/check-repository.ts",
     "check:em-dashes": "bun tooling/checks/src/commands/check-em-dashes.ts",

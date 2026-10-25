@@ -31,7 +31,8 @@
       "project": ["src/**/*.ts"]
     },
     "tooling/checks": {
-      "entry": ["src/commands/check-*.ts"],
+      "entry": ["src/commands/check-*.ts", "src/commands/optimize-media.ts"],
+      "ignoreBinaries": ["ffmpeg", "ffprobe"],
       "project": ["src/**/*.ts"]
     },
     "tooling/lighthouse": {

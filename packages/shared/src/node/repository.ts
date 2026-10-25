@@ -21,6 +21,7 @@ function isKnownBinary(file: string, bytes: Buffer): boolean {
   const second = bytes[1] ?? -1;
   return (
     (/\.webp$/i.test(file) && header.startsWith("RIFF") && header.slice(8, 12) === "WEBP") ||
+    (/\.avif$/i.test(file) && header.slice(4, 8) === "ftyp" && /avif|mif1/.test(header.slice(8))) ||
     (/\.gif$/i.test(file) && /^GIF8[79]a/.test(header)) ||
     (/\.ttf$/i.test(file) && bytes.length >= 12 && bytes.readUInt32BE(0) === 65_536) ||
     (/\.woff2?$/i.test(file) && /^wOF[2F]/.test(header)) ||

@@ -27,13 +27,10 @@ export function pruneCss(
     visitor: {
       Rule(rule) {
         if (rule.type !== "style") {
-          return rule;
+          return;
         }
         const names = namesIn(rule.value.selectors).filter((name) => utilities.has(name));
-        if (names.length > 0 && !names.some((name) => used.has(name))) {
-          return [];
-        }
-        return rule;
+        return names.length > 0 && !names.some((name) => used.has(name)) ? [] : undefined;
       },
     },
   }).code.toString();

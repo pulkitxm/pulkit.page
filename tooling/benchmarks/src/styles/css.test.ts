@@ -1,4 +1,9 @@
 import { expect, test } from "bun:test";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { compileTailwind } from "@pulkit/shared/tailwind";
+import { themeFile } from "@pulkit/theme/files";
 import { cssRuleCount, pruneCss, renameCss, utilityNames } from "./css.ts";
 
 test("home pruning removes unused utility rules and preserves global rules and conditions", () => {
@@ -28,4 +33,20 @@ test("aliasing handles nested selectors and registered properties without changi
   expect(result).toContain("var(--value)");
   expect(result.indexOf(".a")).toBeLessThan(result.indexOf(".c"));
   expect(cssRuleCount(result)).toBe(2);
+});
+
+test("pruning handles the complete compiled theme without replacing untouched native rules", () => {
+  const directory = mkdtempSync(join(tmpdir(), "home-css-pruning-"));
+  try {
+    const output = join(directory, "styles.css");
+    compileTailwind({ input: themeFile("styles.css"), output, minify: true });
+    const css = readFileSync(output, "utf8");
+    const result = pruneCss(css, utilityNames(css), new Set(["flex"]));
+    expect(result).toContain(".flex{display:flex}");
+    expect(result).toContain("@font-face");
+    expect(result).not.toContain(".grid{");
+    expect(cssRuleCount(result)).toBeLessThan(cssRuleCount(css));
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });

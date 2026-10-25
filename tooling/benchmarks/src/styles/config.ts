@@ -129,3 +129,10 @@ export interface BuildSample {
   processMs: number;
   stages: Record<string, number>;
 }
+
+export interface HostActivity {
+  stage: string;
+  round: number;
+  cpuBusyPercent: number;
+  loadAverage: number[];
+}

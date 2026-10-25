@@ -14,6 +14,7 @@ const policy =
   "default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';img-src 'self' data:;font-src 'self' data:;connect-src 'none';frame-src 'none';object-src 'none';base-uri 'none';form-action 'none';worker-src 'none'";
 
 function fixtureServer(directory: string) {
+  let latency = 0;
   const counters: Counters = { requests: 0, bodyBytes: 0, revalidations: 0, missing: 0 };
   const resources = new Map<
     string,
@@ -22,8 +23,11 @@ function fixtureServer(directory: string) {
   const server = Bun.serve({
     hostname: "127.0.0.1",
     port: 0,
-    fetch(request) {
+    async fetch(request) {
       counters.requests++;
+      if (latency > 0) {
+        await Bun.sleep(latency);
+      }
       const path = decodeURIComponent(new URL(request.url).pathname);
       const document = path === "/";
       if (
@@ -83,6 +87,9 @@ function fixtureServer(directory: string) {
   return {
     url: server.url.origin,
     counters: () => ({ ...counters }),
+    setLatency: (milliseconds: number) => {
+      latency = milliseconds;
+    },
     close: () => server.stop(true),
   };
 }

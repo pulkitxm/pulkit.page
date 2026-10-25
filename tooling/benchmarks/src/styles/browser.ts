@@ -62,6 +62,7 @@ export async function sampleVisit(
   round: number,
   server: FixtureServer,
 ): Promise<NavigationSample[]> {
+  server.setLatency(profile.latency);
   const context = await browser.newContext({
     viewport: { width: profile.width, height: profile.height },
     deviceScaleFactor: profile.dpr,
@@ -96,7 +97,7 @@ export async function sampleVisit(
       await session.send("Emulation.setCPUThrottlingRate", { rate: profile.cpu });
       await session.send("Network.emulateNetworkConditions", {
         offline: false,
-        latency: profile.latency,
+        latency: 0,
         downloadThroughput: profile.download ? (profile.download * 1000000) / 8 : -1,
         uploadThroughput: profile.upload ? (profile.upload * 1000000) / 8 : -1,
       });

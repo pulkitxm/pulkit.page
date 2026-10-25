@@ -1,7 +1,7 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { randomInt } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { cpus, release, totalmem } from "node:os";
+import { cpus, loadavg, release, totalmem } from "node:os";
 import { join, resolve } from "node:path";
 import process from "node:process";
 import { parseArgs } from "node:util";
@@ -11,6 +11,7 @@ import { sampleVisit } from "../styles/browser.ts";
 import {
   type Artifact,
   type BuildSample,
+  type HostActivity,
   type NavigationSample,
   type Profile,
   profiles,
@@ -40,6 +41,7 @@ const samples: NavigationSample[] = [];
 const builds: BuildSample[] = [];
 const orders: { stage: string; round: number; order: string[] }[] = [];
 const browsers: Record<string, string> = {};
+const hostActivity: HostActivity[] = [];
 const environment: { engine: string; profile: Profile }[] = [];
 const metadata = {
   startedAt: new Date().toISOString(),
@@ -62,7 +64,31 @@ const metadata = {
 };
 const resultsFile = join(output, values.smoke ? "smoke.json" : "measurements.json");
 function save(): void {
-  writeFileSync(resultsFile, `${JSON.stringify({ metadata, orders, builds, samples }, null, 2)}\n`);
+  writeFileSync(
+    resultsFile,
+    `${JSON.stringify({ metadata, orders, builds, samples, hostActivity }, null, 2)}\n`,
+  );
+}
+
+function hostSnapshot() {
+  return cpus().reduce(
+    (sum, cpu) => ({
+      idle: sum.idle + cpu.times.idle,
+      total: sum.total + Object.values(cpu.times).reduce((a, b) => a + b, 0),
+    }),
+    { idle: 0, total: 0 },
+  );
+}
+
+function recordHost(before: ReturnType<typeof hostSnapshot>, stage: string, round: number): void {
+  const after = hostSnapshot();
+  const total = after.total - before.total;
+  hostActivity.push({
+    stage,
+    round,
+    cpuBusyPercent: total > 0 ? (1 - (after.idle - before.idle) / total) * 100 : 0,
+    loadAverage: loadavg(),
+  });
 }
 
 function shuffle<T>(items: readonly T[]): T[] {
@@ -78,6 +104,7 @@ if (!values["skip-build"]) {
   const trialRoot = join(output, "build-trials");
   mkdirSync(trialRoot, { recursive: true });
   for (let round = values.smoke ? 0 : -1; round < runs; round++) {
+    const hostBefore = hostSnapshot();
     const order = shuffle(variants);
     orders.push({ stage: "build", round, order: order.map((variant) => variant.id) });
     for (const variant of order) {
@@ -108,6 +135,7 @@ if (!values["skip-build"]) {
         });
       }
     }
+    recordHost(hostBefore, "build", round);
     save();
     console.log(`build round ${round + 1}/${runs}`);
   }
@@ -141,6 +169,7 @@ try {
       for (const profile of settings) {
         environment.push({ engine, profile });
         for (let round = values.smoke ? 0 : -1; round < runs; round++) {
+          const hostBefore = hostSnapshot();
           const order = shuffle(variants);
           orders.push({
             stage: `${engine}:${profile.id}`,
@@ -163,6 +192,7 @@ try {
               );
             }
           }
+          recordHost(hostBefore, `${engine}:${profile.id}`, round);
           save();
           console.log(`${engine}:${profile.id} round ${round + 1}/${runs}`);
         }

@@ -154,7 +154,10 @@ export async function optimizeImages(outputDirectory: string): Promise<number> {
       if (!image) {
         continue;
       }
-      if (attribute(element, "aria-hidden") === "true" && inCarousel(element)) {
+      if (
+        attribute(element, "data-gallery-backdrop") !== undefined ||
+        (attribute(element, "aria-hidden") === "true" && inCarousel(element))
+      ) {
         setAttribute(element, "src", image.backdrop);
       } else {
         setAttribute(

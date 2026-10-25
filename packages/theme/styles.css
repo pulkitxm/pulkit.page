@@ -39,7 +39,7 @@
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    [data-gallery-image] {
+    [data-gallery-backdrop] {
       animation: gallery-drift linear both;
       animation-timeline: view();
     }

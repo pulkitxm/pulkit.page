@@ -1,8 +1,8 @@
 import { escapeHtml } from "@pulkit/shared/html";
 import { articles, newestFirstByTitle, parentRoute } from "../seo/routes.ts";
 import type { ListedPage, PageMetadata, SiteContext } from "../types.ts";
+import { galleryImage } from "./gallery-image.ts";
 import { safeUrl } from "./html.ts";
-import { sizeAttributes } from "./render-context.ts";
 
 export const listDirective =
   /^:::list ((?:[a-z0-9-]+:all)|[a-z0-9/-]+)(?: limit=([1-9][0-9]*))?( by-year)?( grid)?\s*(?:\n|$)/;
@@ -113,7 +113,7 @@ function gridEntry(page: ListedPage, grouped: boolean, recent: boolean): string 
   const description = metadata.description
     ? `<span class="mt-1 line-clamp-2 text-xs leading-normal text-muted">${escapeHtml(metadata.description)}</span>`
     : "";
-  return `<li class="m-0"><a class="group flex flex-col text-inherit no-underline underline-offset-4" href="${safeUrl(page.route)}"><span class="block h-64 overflow-hidden rounded-lg bg-line"><img class="m-0 block size-full object-cover transition-opacity duration-300 group-hover:opacity-90" src="${safeUrl(metadata.cover)}" alt=""${sizeAttributes(metadata.cover)} loading="lazy" data-gallery-image></span><span class="mt-3 flex items-baseline justify-between gap-3 leading-normal"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(metadata, grouped, recent)}</span></span>${description}</a></li>`;
+  return `<li class="m-0"><a class="group flex flex-col text-inherit no-underline underline-offset-4" href="${safeUrl(page.route)}"><span class="relative block h-64 overflow-hidden rounded-lg bg-line">${galleryImage(metadata.cover, "")}</span><span class="mt-3 flex items-baseline justify-between gap-3 leading-normal"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(metadata, grouped, recent)}</span></span>${description}</a></li>`;
 }
 
 function gridEntries(entries: readonly ListedPage[], grouped: boolean, recent: boolean): string {

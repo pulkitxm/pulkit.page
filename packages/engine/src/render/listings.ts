@@ -117,7 +117,7 @@ function gridEntry(page: ListedPage, grouped: boolean, recent: boolean): string 
 }
 
 function gridEntries(entries: readonly ListedPage[], grouped: boolean, recent: boolean): string {
-  return `<ul class="mt-0 mb-6 grid list-none grid-cols-2 gap-x-4 gap-y-8 p-0 max-sm:grid-cols-1">${entries
+  return `<ul class="mt-0 mb-6 grid list-none grid-cols-2 gap-x-4 gap-y-8 p-0 max-sm:grid-cols-1" data-event-grid>${entries
     .map((page) => gridEntry(page, grouped, recent))
     .join("")}</ul>`;
 }

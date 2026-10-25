@@ -30,10 +30,11 @@ test("responsive copies preserve original downloads and layout", async () => {
       '</a></section><img src="https://example.com/photo.webp">',
       '<img src="/assets/photo.webp" class="size-9">',
       '<img src="/assets/photo.webp" alt="" aria-hidden="true" data-gallery-backdrop loading="lazy">',
+      '<img src="/assets/photo.webp" alt="Portrait" data-gallery-image loading="lazy">',
       '<script>const label = "<img>";</script></body></html>',
     ].join("");
     writeFileSync(join(directory, "index.html"), html);
-    expect(await optimizeImages(directory)).toBe(4);
+    expect(await optimizeImages(directory)).toBe(5);
     const updated = readFileSync(join(directory, "index.html"), "utf8");
     expect(updated).toContain('<a href="/assets/photo.webp" data-media-zoom>');
     expect(updated).toContain(
@@ -53,6 +54,9 @@ test("responsive copies preserve original downloads and layout", async () => {
     expect(galleryBackdrop).toContain(`src="${backdrop}"`);
     expect(galleryBackdrop).not.toContain("srcset");
     expect(galleryBackdrop).toContain('loading="lazy"');
+    const galleryImage = updated.match(/<img[^>]+data-gallery-image[^>]*>/)?.[0];
+    expect(galleryImage).toContain('sizes="(min-width: 760px) 192px,');
+    expect(galleryImage).toContain("(min-width: 561px) min(calc(50vw - 36px), 192px)");
     const full = updated.match(/srcset="([^"]+)"/)?.[1];
     expect(full).toContain("/assets/photo.webp 1200w");
     const intermediate = full?.match(/(\/assets\/responsive\/[^, ]+) 672w/)?.[1];

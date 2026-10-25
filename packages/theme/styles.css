@@ -59,6 +59,20 @@
     transform: translateY(12px);
   }
 }
+[data-gallery] > a {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 256px;
+}
+[data-event-grid] > li {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 340px;
+}
+@media print {
+  [data-gallery] > a,
+  [data-event-grid] > li {
+    content-visibility: visible;
+  }
+}
 [data-wordmark] {
   display: block;
   width: auto;

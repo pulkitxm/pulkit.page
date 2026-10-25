@@ -87,12 +87,11 @@
       "outputs": []
     },
     "verify": {
+      "dependsOn": ["verify:source", "verify:tests", "verify:site"],
+      "outputs": []
+    },
+    "verify:source": {
       "dependsOn": [
-        "test",
-        "check:layouts",
-        "check:seo",
-        "check:site",
-        "check:html",
         "//#format:check",
         "//#lint",
         "//#check:content",
@@ -104,6 +103,14 @@
         "//#check:dead-code",
         "//#check:shell"
       ],
+      "outputs": []
+    },
+    "verify:tests": {
+      "dependsOn": ["test", "check:layouts"],
+      "outputs": []
+    },
+    "verify:site": {
+      "dependsOn": ["check:seo", "check:site", "check:html"],
       "outputs": []
     }
   }

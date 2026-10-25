@@ -1,0 +1,124 @@
+name: Site CI
+on:
+  workflow_call:
+    inputs:
+      site:
+        required: true
+        type: string
+      revision:
+        required: true
+        type: string
+    secrets:
+      POSTHOG_KEY:
+        required: false
+      POSTHOG_IGNORE_KEY:
+        required: false
+permissions:
+  contents: read
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.revision }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: |
+            .turbo/cache
+            apps/${{ inputs.site }}/.cache/generate
+          key: turbo-${{ runner.os }}-${{ inputs.site }}-${{ inputs.revision }}
+          restore-keys: turbo-${{ runner.os }}-${{ inputs.site }}-
+      - name: Build site
+        env:
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
+          SITE: ${{ inputs.site }}
+        run: bunx turbo run build --filter="./apps/$SITE"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: built-${{ inputs.site }}
+          path: apps/${{ inputs.site }}/dist
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 1
+      - name: Prune week-old Turbo cache entries
+        run: find .turbo/cache -type f -mtime +7 -delete
+  validate:
+    name: HTML, SEO and links
+    needs: build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.revision }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: built-${{ inputs.site }}
+          path: apps/${{ inputs.site }}/dist
+      - name: Validate built site
+        env:
+          SITE: ${{ inputs.site }}
+        run: bunx turbo run check:seo check:site check:html --only --filter="./apps/$SITE"
+  browser:
+    name: Browser smoke (${{ matrix.viewport }} ${{ matrix.shard }})
+    needs: build
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        viewport:
+          - desktop
+          - mobile
+        shard:
+          - 1/2
+          - 2/2
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.revision }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: built-${{ inputs.site }}
+          path: apps/${{ inputs.site }}/dist
+      - name: Run browser check
+        env:
+          SITE: ${{ inputs.site }}
+          BROWSER_VIEWPORT: ${{ matrix.viewport }}
+          BROWSER_SHARD: ${{ matrix.shard }}
+          PLAYWRIGHT_CHANNEL: chrome
+        run: bunx turbo run check:browser --only --filter="./apps/$SITE"

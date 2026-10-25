@@ -18,8 +18,8 @@ concurrency:
     github.ref == 'refs/heads/main' && (inputs.revision || github.sha) || 'latest' }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
-  verify:
-    name: Verify
+  source:
+    name: Source checks
     runs-on: ubuntu-26.04
     timeout-minutes: 15
     steps:
@@ -38,28 +38,71 @@ jobs:
       - run: bun install --frozen-lockfile
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
-          path: |
-            .turbo/cache
-            apps/*/.cache/generate
-          key: turbo-${{ runner.os }}-${{ github.sha }}
-          restore-keys: turbo-${{ runner.os }}-
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-source-${{ inputs.revision || github.sha }}
+          restore-keys: turbo-${{ runner.os }}-source-
+      - run: bunx turbo run verify:source
+  tests:
+    name: Tests and layouts
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.revision || github.sha }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-tests-${{ inputs.revision || github.sha }}
+          restore-keys: turbo-${{ runner.os }}-tests-
+      - run: bunx turbo run verify:tests
+  guestbook:
+    name: Guestbook links
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.revision || github.sha }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.2
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+      - run: bun install --frozen-lockfile
       - name: Check guestbook profile links
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bun run --cwd tooling/guestbook verify:links --strict
-      - name: Verify
-        env:
-          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
-          POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
-        run: bun run ci
-      - name: Prune week-old Turbo cache entries
-        run: find .turbo/cache -type f -mtime +7 -delete
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: built-sites
-          path: apps/*/dist
-          include-hidden-files: true
-          retention-days: 1
+  sites:
+    name: Site (${{ matrix.site }})
+    strategy:
+      fail-fast: false
+      matrix:
+        site:
+          - page
+          - blog
+    uses: ./.github/workflows/site-ci.yml
+    with:
+      site: ${{ matrix.site }}
+      revision: ${{ inputs.revision || github.sha }}
+    secrets:
+      POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
   workflows:
     name: Workflow lint
     runs-on: ubuntu-26.04
@@ -133,63 +176,28 @@ jobs:
         with:
           tool: shellcheck
       - run: shellcheck tooling/checks/install-hooks.sh .githooks/pre-commit
-  browser:
-    name: Browser smoke (${{ matrix.viewport }} ${{ matrix.shard }})
-    needs: verify
-    runs-on: ubuntu-26.04
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        viewport:
-          - desktop
-          - mobile
-        shard:
-          - 1/2
-          - 2/2
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          persist-credentials: false
-          ref: ${{ inputs.revision || github.sha }}
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
-        with:
-          bun-version: 1.4.2
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-          path: ~/.bun/install/cache
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
-          restore-keys: bun-${{ runner.os }}-
-      - run: bun install --frozen-lockfile
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
-        with:
-          name: built-sites
-          path: apps
-      - name: Run browser check
-        env:
-          BROWSER_VIEWPORT: ${{ matrix.viewport }}
-          BROWSER_SHARD: ${{ matrix.shard }}
-          PLAYWRIGHT_CHANNEL: chrome
-        run: bunx turbo run check:browser --only
   ci:
     name: CI
     if: always()
     needs:
-      - verify
+      - source
+      - tests
+      - guestbook
+      - sites
       - workflows
       - workflow-security
       - secrets
       - audit
       - shellcheck
-      - browser
     runs-on: ubuntu-26.04
     timeout-minutes: 5
     steps:
       - name: Require every check
-        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') ||
-          contains(needs.*.result, 'skipped')
-        run: exit 1
-      - run: echo "every required check passed"
+        env:
+          CHECK_RESULTS: ${{ toJSON(needs) }}
+        run: |
+          echo "$CHECK_RESULTS" | jq -e 'all(.[]; .result == "success")'
+          echo "every required check passed"
   deploy-page:
     name: Deploy pulkit.page
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name ==
@@ -226,8 +234,8 @@ jobs:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         if: steps.revision.outputs.current == 'true'
         with:
-          name: built-sites
-          path: apps
+          name: built-page
+          path: apps/page/dist
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         if: steps.revision.outputs.current == 'true'
         with:
@@ -268,8 +276,8 @@ jobs:
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         if: steps.revision.outputs.current == 'true'
         with:
-          name: built-sites
-          path: apps
+          name: built-blog
+          path: apps/blog/dist
       - name: Publish to the pulkit.blog repository
         if: steps.revision.outputs.current == 'true'
         env:

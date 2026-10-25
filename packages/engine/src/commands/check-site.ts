@@ -4,7 +4,7 @@ import process from "node:process";
 import { builtFiles } from "@pulkit/shared/built-site";
 import { errorMessage, reportFailures } from "@pulkit/shared/failures";
 import { unescapeHtml } from "@pulkit/shared/html";
-import { stylesheetClasses } from "../lib/mangle-classes.ts";
+import { stylesheetClasses } from "../lib/compiled-styles.ts";
 
 const root = resolve(process.argv[2] ?? "dist");
 const failures: string[] = [];

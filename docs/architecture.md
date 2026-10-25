@@ -79,8 +79,9 @@ flowchart TD
   outputs --> write[Write every file, then save the render cache]
   write --> assets[Copy theme assets, then app assets, favicon, theme script, CNAME]
   assets --> styles[Compile Tailwind CSS]
-  styles --> bundles[Bundle embed scripts, and demo scripts when a page uses one]
-  bundles --> fingerprint[Fingerprint styles.css and theme.js, rewrite references]
+  styles --> compose[Compile utility combinations and browser class references]
+  compose --> bundles[Bundle embed scripts, and demo scripts when a page uses one]
+  bundles --> fingerprint[Embed page-specific CSS and fingerprint downloads]
 ```
 
 [build.ts](../packages/engine/src/commands/build.ts) drives those steps in order and
@@ -127,13 +128,26 @@ prints the duration of each one.
    production build also copies `CNAME`.
 8. **Styles.** The Tailwind CLI compiles the app's one-line `styles.css` into
    minified `dist/styles.css`.
-9. **Bundles.** `buildEmbedAssets` always writes `dist/assets/embeds/` plus the
-   KaTeX and PhotoSwipe files it needs. `buildDemoAssets` runs only when some
-   page body contains a demo directive, so pulkit.blog gets
-   `dist/assets/demos/` and pulkit.page does not.
-10. **Fingerprints.** `styles.css` and `theme.js` are renamed with the first 12
-    hexadecimal characters of their SHA-256 digest, and every built HTML file is
-    rewritten to reference the hashed names.
+9. **Compiled classes and bundles.** Embed styles are copied first, and demo
+   styles are compiled when a page uses a demo. The
+   [style compiler](../packages/engine/src/lib/compile-site-styles.ts) replaces
+   static utility combinations with shared generated classes. CSS selectors
+   retain their original order, specificity, conditions and pseudo-elements.
+   Classes that scripts toggle or select remain separate generated classes.
+   Browser sources are rewritten before bundling, so chunk hashes describe
+   the final code. The demos' class conflict rules are computed during the
+   build and emitted as a table of generated names, replacing the browser
+   dependency on `tailwind-merge`. Internal `--tw-*` properties are renamed
+   consistently across document styles, shadow styles and browser code.
+   Development continues to use the original Tailwind classes and tooling.
+10. **Inline styles and fingerprints.** Every page embeds the compiled CSS for
+    its own class combinations and combinations its scripts can create. KaTeX
+    and demo document styles are embedded only where needed. The complete
+    stylesheet keeps a filename containing the first 12 hexadecimal characters
+    of its SHA-256 digest. PDF download filenames stay fixed and get a digest
+    in their URL query instead. Displayed source and JSON `code` fields retain
+    their original text. Demo JSON `html` fields are compiled because the
+    browser injects that markup into a shadow root.
 
 The not-found page is also written to `dist/404.html`, which is the file
 GitHub Pages serves for every unmatched path.

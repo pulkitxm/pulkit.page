@@ -36,17 +36,40 @@ export class CompiledStyles {
   readonly names = new Map<string, string>();
   readonly combinations = new Map<string, readonly string[]>();
   readonly mutable = new Set<string>();
+  readonly runtime = new Set<string>();
+  collectRuntime = false;
   private readonly memberships = new Map<string, Set<string>>();
   private readonly combinedNames = new Map<string, string>();
+  private readonly properties = new Map<string, string>();
   private next = 0;
 
   constructor(
     classes: Iterable<string>,
     private readonly reserved: ReadonlySet<string>,
+    variables: Iterable<string> = [],
   ) {
     for (const name of [...new Set(classes)].sort()) {
       this.names.set(name, this.allocate());
     }
+    const variableNames = new Set(variables);
+    let index = 0;
+    for (const name of [...variableNames]
+      .filter((variable) => variable.startsWith("--tw-"))
+      .sort((left, right) => left.localeCompare(right, "en"))) {
+      let alias: string;
+      do {
+        alias = `--v${(index++).toString(36)}`;
+      } while (variableNames.has(alias));
+      this.properties.set(name, alias);
+    }
+  }
+
+  variable(name: string): string {
+    return this.properties.get(name) ?? name;
+  }
+
+  inlineStyle(source: string): string {
+    return source.replace(/--tw-[\w-]+/g, (name) => this.variable(name));
   }
 
   private allocate(): string {
@@ -80,6 +103,9 @@ export class CompiledStyles {
         this.memberships.set(name, members);
       }
     }
+    if (this.collectRuntime) {
+      this.runtime.add(combined);
+    }
     return [
       combined,
       ...tokens
@@ -88,12 +114,14 @@ export class CompiledStyles {
     ].join(" ");
   }
 
-  private selectors(names: Iterable<string>): Selector {
+  private selectors(names: Iterable<string>, used?: ReadonlySet<string>): Selector {
     const aliases = new Set<string>();
     for (const name of names) {
       aliases.add(this.names.get(name) ?? name);
       for (const member of this.memberships.get(name) ?? []) {
-        aliases.add(member);
+        if (!used || used.has(member)) {
+          aliases.add(member);
+        }
       }
     }
     const selectors: Selector[] = [...aliases].map((name) => [{ type: "class", name }]);
@@ -102,12 +130,13 @@ export class CompiledStyles {
       : [{ type: "pseudo-class", kind: "is", selectors }];
   }
 
-  css(source: string, filename: string): string {
+  css(source: string, filename: string, used?: ReadonlySet<string>): string {
     return transform({
       filename,
       code: Buffer.from(source),
       minify: true,
       visitor: {
+        DashedIdent: (name) => this.variable(name),
         Selector: (selector) => {
           const rewrite = (value: unknown): unknown => {
             if (Array.isArray(value)) {
@@ -118,7 +147,7 @@ export class CompiledStyles {
                   typeof item.name === "string" &&
                   this.names.has(item.name)
                 ) {
-                  return this.selectors([item.name]);
+                  return this.selectors([item.name], used);
                 }
                 if (
                   isRecord(item) &&
@@ -151,7 +180,7 @@ export class CompiledStyles {
                         `${filename}: exact class attribute selectors cannot be combined`,
                       );
                     }
-                    return this.selectors(matches);
+                    return this.selectors(matches, used);
                   }
                 }
                 return [rewrite(item)];

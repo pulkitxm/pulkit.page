@@ -2,6 +2,7 @@ import { escapeHtml } from "@pulkit/shared/html";
 import MagicString from "magic-string";
 import { type DefaultTreeAdapterTypes, parse } from "parse5";
 import type { CompiledStyles } from "./compiled-styles.ts";
+import { isRecord } from "./guards.ts";
 
 interface MarkupTransforms {
   script?: (source: string) => string;
@@ -18,6 +19,17 @@ export function compileMarkup(
   const walk = (node: DefaultTreeAdapterTypes.Node): void => {
     if ("attrs" in node) {
       for (const attribute of node.attrs) {
+        if (attribute.name === "style") {
+          const location = node.sourceCodeLocation?.attrs?.style;
+          const rewritten = styles.inlineStyle(attribute.value);
+          if (location && rewritten !== attribute.value) {
+            output.overwrite(
+              location.startOffset,
+              location.endOffset,
+              `style="${escapeHtml(rewritten)}"`,
+            );
+          }
+        }
         if (attribute.name !== "class" && !/^data-[\w-]+-class$/.test(attribute.name)) {
           continue;
         }
@@ -38,6 +50,32 @@ export function compileMarkup(
       let transform = executable ? transforms.script : undefined;
       if (node.tagName === "style") {
         transform = transforms.stylesheet;
+      }
+      if (
+        node.tagName === "script" &&
+        type === "application/json" &&
+        node.parentNode &&
+        "tagName" in node.parentNode &&
+        node.parentNode.tagName === "demo-showcase"
+      ) {
+        transform = (json) => {
+          const sources: unknown = JSON.parse(json);
+          if (
+            !Array.isArray(sources) ||
+            !sources.every(
+              (entry) =>
+                isRecord(entry) &&
+                typeof entry.filename === "string" &&
+                typeof entry.code === "string" &&
+                typeof entry.html === "string",
+            )
+          ) {
+            throw new Error("Demo source payload must contain filename, code and highlighted HTML");
+          }
+          return JSON.stringify(
+            sources.map((entry) => ({ ...entry, html: compileMarkup(entry.html, styles) })),
+          ).replaceAll("<", "\\u003c");
+        };
       }
       for (const child of node.childNodes) {
         if (

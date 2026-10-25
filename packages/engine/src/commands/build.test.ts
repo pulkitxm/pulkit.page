@@ -10,8 +10,49 @@ import {
   pageSource as source,
 } from "../../test/lib/build-fixture.ts";
 import { removeTemporaryDirectories, writeFiles } from "../../test/lib/harness.ts";
+import { stylesheetClasses } from "../lib/compiled-styles.ts";
 
 afterEach(removeTemporaryDirectories);
+
+test("build embeds only the page's combinations and keeps literal code examples intact", () => {
+  const cwd = buildProject({
+    "styles.css": ".sample-flex{display:flex}.sample-grid{display:grid}.sample-gap{gap:1rem}",
+    "content/other.md": source.replace("layout: home", "layout: simple"),
+  });
+  for (const [layout, classes] of [
+    ["home", "sample-flex sample-gap"],
+    ["simple", "sample-grid sample-gap"],
+  ]) {
+    const path = join(cwd, `layouts/${layout}.html`);
+    writeFileSync(
+      path,
+      readFileSync(path, "utf8").replace(
+        "<article>",
+        `<article class="${classes}" data-style-sample>`,
+      ),
+    );
+  }
+  const example = "<code>&lt;div class=&quot;sample-flex sample-gap&quot;&gt;</code>";
+  const footer = join(cwd, "layouts/partials/footer.html");
+  writeFileSync(footer, `${readFileSync(footer, "utf8")}${example}`);
+  expect(build(cwd).status).toBe(0);
+  const home = readFileSync(join(cwd, "dist/index.html"), "utf8");
+  const other = readFileSync(join(cwd, "dist/other/index.html"), "utf8");
+  const homeClass = /<article class="([^"]+)" data-style-sample>/.exec(home)?.[1] ?? "";
+  const otherClass = /<article class="([^"]+)" data-style-sample>/.exec(other)?.[1] ?? "";
+  expect(homeClass).toMatch(/^s[a-z0-9]+$/);
+  expect(otherClass).toMatch(/^s[a-z0-9]+$/);
+  expect(homeClass).not.toBe(otherClass);
+  const defined = new Set(
+    [...home.matchAll(/<style>([\s\S]*?)<\/style>/g)].flatMap(([, css = ""]) => [
+      ...stylesheetClasses(css, "inline.css"),
+    ]),
+  );
+  expect(defined.has(homeClass)).toBe(true);
+  expect(defined.has(otherClass)).toBe(false);
+  expect(home).toContain(example);
+  expect(home).not.toContain(".sample-flex");
+}, 30_000);
 
 function computed(result: SpawnSyncReturns<string>): unknown {
   expect(result.status).toBe(0);

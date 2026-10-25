@@ -3,6 +3,7 @@ interface BrowserBundle {
   outdir: string;
   minify: boolean;
   label: string;
+  plugins?: Bun.BunPlugin[];
 }
 
 export async function bundleBrowserScripts({
@@ -10,6 +11,7 @@ export async function bundleBrowserScripts({
   outdir,
   minify,
   label,
+  plugins,
 }: BrowserBundle): Promise<void> {
   const result = await Bun.build({
     entrypoints,
@@ -18,6 +20,7 @@ export async function bundleBrowserScripts({
     minify,
     format: "esm",
     target: "browser",
+    plugins,
     naming: { entry: "[name].[ext]", chunk: "[name]-[hash].[ext]" },
   });
   if (!result.success) {

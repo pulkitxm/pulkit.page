@@ -15,11 +15,12 @@ export const katexDirectory = fileURLToPath(
 
 interface BundleOptions {
   minify?: boolean;
+  plugins?: Bun.BunPlugin[];
 }
 
 export async function bundleEmbedScripts(
   outdir: string,
-  { minify = true }: BundleOptions = {},
+  { minify = true, plugins }: BundleOptions = {},
 ): Promise<void> {
   const entries = fileURLToPath(new URL("../client/entries/", import.meta.url));
   const entrypoints = readdirSync(entries)
@@ -31,12 +32,12 @@ export async function bundleEmbedScripts(
       outdir,
       minify,
       label: "embed scripts",
+      plugins,
     });
   }
 }
 
-export async function buildEmbedAssets(outdir: string): Promise<void> {
-  await bundleEmbedScripts(join(outdir, "embeds"));
+export function buildEmbedStyles(outdir: string): void {
   cpSync(photoswipeStyles, join(outdir, "embeds/photoswipe.css"));
   cpSync(plyrStyles, join(outdir, "embeds/plyr.css"));
   cpSync(plyrIcons, join(outdir, "embeds/plyr.svg"));

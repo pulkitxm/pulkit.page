@@ -1,10 +1,73 @@
 import { parse } from "@babel/parser";
 import MagicString from "magic-string";
-import type { CompiledStyles } from "./compiled-styles.ts";
+import { type CompiledStyles, stylesheetClasses } from "./compiled-styles.ts";
 import { isRecord } from "./guards.ts";
 import { compileMarkup } from "./style-markup.ts";
 
 type Node = Record<string, unknown>;
+const selectorFunctions = new Set([
+  "querySelector",
+  "querySelectorAll",
+  "closest",
+  "matches",
+  "queryAll",
+  "closestTarget",
+]);
+const cssKeywords = new Set([
+  "ease-in",
+  "ease-out",
+  "ease-in-out",
+  "inline-block",
+  "inline-flex",
+  "inline-grid",
+  "inline-table",
+  "flow-root",
+  "list-item",
+  "table-row",
+  "table-cell",
+  "table-caption",
+  "table-column",
+  "table-row-group",
+  "table-header-group",
+  "table-footer-group",
+  "break-all",
+  "break-keep",
+  "tabular-nums",
+  "lining-nums",
+  "oldstyle-nums",
+  "proportional-nums",
+  "diagonal-fractions",
+  "stacked-fractions",
+  "slashed-zero",
+]);
+
+function textValue(parents: readonly Node[], text: string): boolean {
+  for (const node of parents) {
+    if (node.type === "ObjectProperty") {
+      return (
+        !text.includes("<") &&
+        ["label", "name", "title", "description", "message", "easing", "ease"].includes(
+          property(node.key) ?? "",
+        )
+      );
+    }
+    if (node.type === "AssignmentExpression") {
+      return ["textContent", "innerText"].includes(property(node.left) ?? "");
+    }
+    if (isCall(node)) {
+      return false;
+    }
+  }
+  return false;
+}
+
+function isCall(node: Node): boolean {
+  return node.type === "CallExpression" || node.type === "OptionalCallExpression";
+}
+
+function selectorContext(parents: readonly Node[]): boolean {
+  return parents.some((node) => isCall(node) && selectorFunctions.has(property(node.callee) ?? ""));
+}
 
 function walk(
   value: unknown,
@@ -52,9 +115,9 @@ function classContext(parents: readonly Node[]): boolean {
     ) {
       return true;
     }
-    if (node.type === "CallExpression") {
+    if (isCall(node)) {
       const name = property(node.callee);
-      if (["cn", "faSvg", "icon", "stage"].includes(name ?? "")) {
+      if (["cn", "faSvg", "lucideSvg", "icon", "stage"].includes(name ?? "")) {
         return true;
       }
       if (
@@ -89,11 +152,7 @@ export function scriptClasses(source: string, filename: string): Set<string> {
     plugins: filename.endsWith(".ts") ? ["typescript"] : [],
   });
   walk(tree, (node) => {
-    if (
-      node.type !== "CallExpression" ||
-      !isRecord(node.callee) ||
-      !Array.isArray(node.arguments)
-    ) {
+    if (!isCall(node) || !isRecord(node.callee) || !Array.isArray(node.arguments)) {
       return;
     }
     if (isRecord(node.callee.object) && property(node.callee.object) === "classList") {
@@ -111,6 +170,20 @@ export function scriptClasses(source: string, filename: string): Set<string> {
         }
       }
     }
+    if (selectorFunctions.has(property(node.callee) ?? "")) {
+      for (const argument of node.arguments) {
+        if (
+          isRecord(argument) &&
+          argument.type === "StringLiteral" &&
+          typeof argument.value === "string" &&
+          argument.value.includes(".")
+        ) {
+          for (const name of stylesheetClasses(`${argument.value}{}`, filename)) {
+            mutable.add(name);
+          }
+        }
+      }
+    }
   });
   return mutable;
 }
@@ -121,7 +194,14 @@ export function compileScript(source: string, filename: string, styles: Compiled
     plugins: filename.endsWith(".ts") ? ["typescript"] : [],
   });
   const output = new MagicString(source);
+  const classExpressions = new Set<unknown>();
   const value = (text: string, context: boolean): string => {
+    if (!context && cssKeywords.has(text.trim())) {
+      return text;
+    }
+    if (styles.variable(text) !== text) {
+      return styles.variable(text);
+    }
     if (/<[a-z][\s\S]*[\s>]/i.test(text)) {
       return compileMarkup(text, styles);
     }
@@ -130,7 +210,10 @@ export function compileScript(source: string, filename: string, styles: Compiled
       !context &&
       !(
         tokens.length > 0 &&
-        tokens.every((token) => styles.names.has(token)) &&
+        tokens.every(
+          (token) => styles.names.has(token) || /^__style_expression_\d+__$/.test(token),
+        ) &&
+        tokens.some((token) => styles.names.has(token)) &&
         (tokens.length > 1 || /[-:[/]/.test(text))
       )
     ) {
@@ -153,7 +236,20 @@ export function compileScript(source: string, filename: string, styles: Compiled
       ) {
         return;
       }
-      const updated = value(node.value, classContext(parents));
+      const context =
+        classContext(parents) ||
+        classExpressions.has(node) ||
+        parents.some((ancestor) => classExpressions.has(ancestor));
+      let updated =
+        !context && textValue(parents, node.value) ? node.value : value(node.value, context);
+      if (selectorContext(parents) && node.value.includes(".") && !node.value.includes("<")) {
+        const names = stylesheetClasses(`${node.value}{}`, filename);
+        if ([...names].some((name) => styles.names.has(name))) {
+          updated = styles
+            .css(`${node.value}{--style-probe:0}`, filename)
+            .replace(/\{--style-probe:0\}$/, "");
+        }
+      }
       if (updated !== node.value) {
         output.overwrite(node.start, node.end, JSON.stringify(updated));
       }
@@ -163,8 +259,24 @@ export function compileScript(source: string, filename: string, styles: Compiled
       const original = quasis.map((part) =>
         isRecord(part.value) ? String(part.value.cooked ?? part.value.raw) : "",
       );
-      const text = original.join("__style_expression__");
-      const rewritten = value(text, classContext(parents)).split("__style_expression__");
+      const text = original
+        .map((part, index) =>
+          index === original.length - 1 ? part : `${part}__style_expression_${index}__`,
+        )
+        .join("");
+      for (const [, attribute = ""] of text.matchAll(
+        /\b(?:class|data-[\w-]+-class)=["']([^"']*)["']/g,
+      )) {
+        for (const [, index] of attribute.matchAll(/__style_expression_(\d+)__/g)) {
+          if (Array.isArray(node.expressions)) {
+            classExpressions.add(node.expressions[Number(index)]);
+          }
+        }
+      }
+      const context = classContext(parents);
+      const rewritten = (!context && textValue(parents, text) ? text : value(text, context)).split(
+        /__style_expression_\d+__/,
+      );
       if (rewritten.length !== quasis.length) {
         throw new Error(`${filename}: invalid template rewrite`);
       }

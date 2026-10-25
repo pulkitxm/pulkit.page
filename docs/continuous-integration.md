@@ -85,8 +85,8 @@ flowchart LR
 | Deploy pulkit.page        | Publishes the checked page artifact through GitHub Pages                            |
 | Deploy pulkit.blog        | Publishes the checked blog artifact to its own repository                           |
 
-The portfolio uses four page shards per viewport; the smaller blog uses one.
-That gives eight portfolio page jobs and two blog page jobs, plus one interaction
+The portfolio uses eight page shards per viewport; the smaller blog uses one.
+That gives sixteen portfolio page jobs and two blog page jobs, plus one interaction
 job per site.
 
 Neither source checks nor tests delay a build. Site validation and browsers
@@ -104,7 +104,9 @@ anchor validation, but performs the expensive page assertions only for its
 share. With `BROWSER_SUITE=pages`, shards skip whole-site flows. A separate
 `BROWSER_SUITE=flows` job runs those once per site alongside page audits: rendering
 without JavaScript, theme persistence, blocked storage, keyboard navigation and
-view transitions. Local runs default to `BROWSER_SUITE=all`, which runs page
+view transitions. JavaScript-disabled visits share a queue across the runner's
+available cores, so every route is checked once without serial navigation.
+Local runs default to `BROWSER_SUITE=all`, which runs page
 audits and includes flows in the last mobile shard. `PLAYWRIGHT_CHANNEL=chrome` reuses the runner's Chrome.
 
 The final `CI` job always runs and requires every upstream result to be

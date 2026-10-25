@@ -20,7 +20,7 @@ function run(environment: NodeJS.ProcessEnv) {
 test("separate browser suites retain page audits and run interactions exactly once", () => {
   for (const suite of ["all", "pages", "flows"]) {
     for (const viewport of ["desktop", "mobile"]) {
-      for (const shard of ["1/4", "2/4", "3/4", "4/4"]) {
+      for (const shard of ["1/8", "2/8", "3/8", "4/8", "5/8", "6/8", "7/8", "8/8"]) {
         const result = run({
           BROWSER_SUITE: suite,
           BROWSER_VIEWPORT: viewport,
@@ -29,7 +29,7 @@ test("separate browser suites retain page audits and run interactions exactly on
         expect(result.status).toBe(0);
         expect(JSON.parse(result.stdout)).toEqual({
           pages: suite !== "flows",
-          flows: suite === "flows" || (suite === "all" && viewport === "mobile" && shard === "4/4"),
+          flows: suite === "flows" || (suite === "all" && viewport === "mobile" && shard === "8/8"),
         });
       }
     }

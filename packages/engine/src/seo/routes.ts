@@ -63,8 +63,7 @@ export function pageTitle(metadata: PageMetadata, site: SiteContext, route: stri
   if (route === "/") {
     return site.brand ?? "Pulkit";
   }
-  const branded = `${metadata.title} | ${site.brand ?? "Pulkit"}`;
-  return branded.length > 70 ? metadata.title : branded;
+  return metadata.title;
 }
 
 export function ancestors<T extends ListedPage>(route: string, pages: readonly T[]): T[] {

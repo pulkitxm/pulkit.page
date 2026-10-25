@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { scanText } from "@pulkit/checks/comments";
 import { highlightFence } from "@pulkit/code/highlight";
@@ -8,9 +8,9 @@ import { codeInner, visibleText } from "../../test/lib/code-html.ts";
 import { renderPage } from "./render-page.ts";
 
 const theme = readFileSync(join(repository, "packages/theme/styles.css"), "utf8");
-const appStyles = readdirSync(join(repository, "apps")).map((app) =>
-  readFileSync(join(repository, "apps", app, "styles.css"), "utf8"),
-);
+const appStyles = readdirSync(join(repository, "apps"))
+  .filter((app) => existsSync(join(repository, "apps", app, "content")))
+  .map((app) => readFileSync(join(repository, "apps", app, "styles.css"), "utf8"));
 
 describe("build-time syntax highlighting", () => {
   test("TypeScript fences become classed spans without inline colors", async () => {
@@ -62,7 +62,7 @@ describe("build-time syntax highlighting", () => {
     expect(html).not.toContain('<span class="text-syn-k">const</span>');
   });
 
-  test("the shared theme defines token colors for light and dark and every app uses it", () => {
+  test("the shared theme defines token colors for light and dark and every Markdown app uses it", () => {
     expect(theme).toContain(':root:not([data-theme="light"])');
     expect(theme).toContain('[data-theme="dark"] *');
     expect(theme).toContain("@media (prefers-color-scheme: dark)");

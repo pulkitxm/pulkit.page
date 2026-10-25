@@ -7,7 +7,8 @@
       "!!extras",
       "!!**/node_modules",
       "!!**/.turbo",
-      "!packages/theme/assets"
+      "!packages/theme/assets",
+      "!apps/design/source/libraries.html"
     ]
   },
   "formatter": {
@@ -171,6 +172,19 @@
       "json": {
         "formatter": {
           "expand": "always"
+        }
+      }
+    },
+    {
+      "includes": ["apps/design/source/styles.html"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          },
+          "complexity": {
+            "noImportantStyles": "off"
+          }
         }
       }
     }

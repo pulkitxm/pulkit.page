@@ -42,6 +42,10 @@ interface CarouselImage {
   href: string;
 }
 
+const sectionDirective = /^::::section ([a-z][a-z0-9-]*)[ \t]*\n([\s\S]*?)\n::::[ \t]*(?:\n|$)/;
+
+const sectionClasses = "relative my-16";
+
 const carouselButton =
   "cursor-pointer rounded-md border border-line bg-transparent px-2.5 py-1.25 text-inherit [font:inherit] disabled:cursor-default disabled:opacity-40";
 
@@ -115,6 +119,29 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
       }
     },
     extensions: [
+      {
+        name: "section",
+        level: "block",
+        start: (src) => src.indexOf("::::section"),
+        tokenizer(src) {
+          const match = sectionDirective.exec(src);
+          if (!match && /^::::section\b/.test(src)) {
+            throw new Error(
+              "Invalid section directive; use ::::section name, then close with ::::",
+            );
+          }
+          if (!match) {
+            return;
+          }
+          const token = { type: "section", raw: match[0], name: match[1] ?? "", tokens: [] };
+          this.lexer.blockTokens(match[2] ?? "", token.tokens);
+          return token;
+        },
+        renderer(token) {
+          const name = String(token.name);
+          return `<section class="${sectionClasses}" data-section="${escapeHtml(name)}">${this.parser.parse(token.tokens ?? [])}</section>`;
+        },
+      },
       {
         name: "guestbook",
         level: "block",

@@ -332,3 +332,28 @@ test("explicit image priority selects one image without changing its lightbox or
   expect(explicit.match(/<img[^>]+alt="Leading"[^>]*>/)?.[0]).toContain('loading="lazy"');
   expect(explicit.match(/fetchpriority="high"/g)).toHaveLength(1);
 });
+
+test("section directives wrap nested Markdown and directives in a named section", async () => {
+  const html = await renderPage(
+    [
+      "---",
+      "title: Sections",
+      "---",
+      "",
+      "::::section intro",
+      "",
+      "## Hello",
+      "",
+      "Some **text**.",
+      "",
+      "::::",
+      "",
+    ].join("\n"),
+  );
+  expect(html).toMatch(/<section class="[^"]*" data-section="intro">/);
+  expect(html).toContain("<strong>text</strong>");
+  expect(html).toMatch(/data-section="intro">\s*<h2/);
+  await expect(renderPage("---\ntitle: Broken\n---\n\n::::section Bad\n\ntext\n")).rejects.toThrow(
+    "Invalid section directive",
+  );
+});

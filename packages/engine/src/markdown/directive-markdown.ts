@@ -155,6 +155,7 @@ export function replaceDirectives(body: string, context: DirectiveContext): stri
   const pageUrl = `${site.url}${page.route}`;
   return outsideCode(body, (segment) => {
     const text = segment
+      .replace(/^::::(?:section [a-z][a-z0-9-]*)?[ \t]*\n?/gm, "")
       .replace(/^:::guestbook[ \t]*$/gm, () => {
         const guestbook = site.guestbook;
         if (!guestbook) {

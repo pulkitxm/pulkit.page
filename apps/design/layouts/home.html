@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-page-transitions class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light" data-layout="home">
+  {{ > head }}
+  <body class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg">
+    {{ > header }}
+    <main id="main" data-main>
+      <section class="relative flex min-h-svh flex-col justify-end overflow-hidden px-8 pt-32 pb-10 max-sm:px-5 max-sm:pb-8" data-hero>
+        <div class="pointer-events-none absolute inset-0" aria-hidden="true" data-scene="hero"></div>
+        <p class="relative m-0 mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-[0.14em] text-muted" data-hero-kicker>
+          <span>Software engineer</span><span>Design engineer</span><span>Writer</span>
+        </p>
+        <h1 class="relative m-0 text-[clamp(88px,24.5vw,420px)] font-bold leading-[0.8] tracking-[-0.05em]" data-title data-hero-title>{{ heading }}</h1>
+        <div class="relative mt-8 flex flex-wrap items-end justify-between gap-8">
+          <p class="m-0 max-w-120 text-lg leading-snug" data-hero-lead>{{ description }}</p>
+          <svg class="absolute -top-44 right-[12%] size-36 max-md:hidden" viewBox="0 0 200 200" aria-hidden="true" data-badge>
+            <defs><path id="badge-circle" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0"></path></defs>
+            <text font-size="15.5" letter-spacing="3.2" fill="currentColor"><textPath href="#badge-circle">SOFTWARE ENGINEER ✳ DESIGN ENGINEER ✳ WRITER ✳</textPath></text>
+            <path d="M100 76l6 18 18 6-18 6-6 18-6-18-18-6 18-6z" fill="currentColor" data-badge-star></path>
+          </svg>
+          <a class="flex items-center gap-4 font-mono text-xs uppercase tracking-[0.14em] text-inherit no-underline" href="#intro" data-scroll-cue data-cursor="scroll">
+            <svg class="h-14 w-24 overflow-visible" viewBox="0 0 96 56" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" data-doodle><path d="M60 6C34 0 6 10 4 28c-2 18 34 24 58 20 24-4 34-18 26-30C82 8 64 4 46 6"></path></svg>
+            <span class="-ml-24 w-24 text-center">Scroll</span>
+          </a>
+        </div>
+      </section>
+      <div class="relative h-[clamp(140px,18vw,240px)] overflow-x-clip" aria-hidden="true" data-tapes>
+        <div class="absolute inset-x-[-5%] top-1/2 bg-fg py-4 font-bold text-[clamp(24px,3.4vw,48px)] leading-none whitespace-nowrap text-bg" data-marquee data-tape="1">
+          <div class="flex w-max gap-12" data-marquee-track>
+            <span>Software engineer ✳ System design ✳ Design engineering ✳ Motion ✳ Developer tools ✳ Open source ✳</span>
+            <span>Software engineer ✳ System design ✳ Design engineering ✳ Motion ✳ Developer tools ✳ Open source ✳</span>
+          </div>
+        </div>
+        <div class="absolute inset-x-[-5%] top-1/2 border-y border-line bg-surface py-4 font-bold text-[clamp(24px,3.4vw,48px)] leading-none whitespace-nowrap" data-marquee data-tape="2" data-reverse>
+          <div class="flex w-max gap-12" data-marquee-track>
+            <span>Next.js ✳ TypeScript ✳ Kubernetes ✳ ClickHouse ✳ Three.js ✳ MCP ✳ Postgres ✳ Bun ✳</span>
+            <span>Next.js ✳ TypeScript ✳ Kubernetes ✳ ClickHouse ✳ Three.js ✳ MCP ✳ Postgres ✳ Bun ✳</span>
+          </div>
+        </div>
+      </div>
+      <div class="relative" id="intro" data-home>{{ content }}</div>
+    </main>
+    {{ > footer }}
+  </body>
+</html>

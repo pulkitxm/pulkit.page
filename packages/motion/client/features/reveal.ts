@@ -5,10 +5,18 @@ import { splitText } from "../lib/split.ts";
 const blockSelector =
   ":scope > :is(p, ul, ol, dl, blockquote, table, h3, h4, details, figure, hr, section, div:not([data-code-block])), :scope > [data-code-block]";
 
+function belowFold(element: Element): boolean {
+  return element.getBoundingClientRect().top > globalThis.innerHeight * 0.92;
+}
+
 function tagBlocks(container: Element): void {
   let index = 0;
   for (const block of container.querySelectorAll<HTMLElement>(blockSelector)) {
-    if (block.dataset.reveal !== undefined || block.dataset.section !== undefined) {
+    if (
+      block.dataset.reveal !== undefined ||
+      block.dataset.section !== undefined ||
+      !belowFold(block)
+    ) {
       continue;
     }
     const media =
@@ -26,7 +34,7 @@ export function startReveal(): void {
     return;
   }
   for (const heading of elements("[data-split]", HTMLElement)) {
-    if (heading.dataset.colossal !== undefined) {
+    if (heading.dataset.colossal !== undefined || !belowFold(heading)) {
       continue;
     }
     splitText(heading, heading.dataset.split === "chars" ? "chars" : "words", true);
@@ -39,6 +47,9 @@ export function startReveal(): void {
     tagBlocks(container);
   }
   for (const heading of elements("[data-prose] h2, [data-home] [data-section] > h2", HTMLElement)) {
+    if (!belowFold(heading)) {
+      continue;
+    }
     if (heading.querySelector("a, code, em, strong")) {
       heading.dataset.reveal = "";
     } else {

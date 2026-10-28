@@ -1,5 +1,6 @@
 import { startChrome } from "./features/chrome.ts";
 import { startCursor } from "./features/cursor.ts";
+import { startDoodles } from "./features/doodles.ts";
 import { startHero } from "./features/hero.ts";
 import { startMagnetic } from "./features/magnetic.ts";
 import { startMarquee } from "./features/marquee.ts";
@@ -10,6 +11,7 @@ import { startRoll } from "./features/roll.ts";
 import { startScrollEffects } from "./features/scrollfx.ts";
 import { startSphere } from "./features/sphere.ts";
 import { startTilt } from "./features/tilt.ts";
+import { startTransitions } from "./features/transitions.ts";
 import { afterLoad, elements, onFirstInteraction, reducedMotion, yieldToMain } from "./lib/env.ts";
 import { startScroll } from "./lib/scroll.ts";
 
@@ -19,6 +21,7 @@ async function start(): Promise<void> {
   startReveal();
   startMenu();
   startChrome();
+  startTransitions();
   await yieldToMain();
   startRoll();
   startCursor();
@@ -27,6 +30,7 @@ async function start(): Promise<void> {
   await yieldToMain();
   startScrollEffects();
   startSphere();
+  startDoodles();
   await yieldToMain();
   startPreview();
   startTilt(

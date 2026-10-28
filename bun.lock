@@ -20,6 +20,15 @@
         "html-validate": "11.16.0",
       },
     },
+    "apps/design": {
+      "name": "@pulkit/design",
+      "dependencies": {
+        "@pulkit/engine": "workspace:*",
+        "@pulkit/motion": "workspace:*",
+        "@pulkit/theme": "workspace:*",
+        "html-validate": "11.16.0",
+      },
+    },
     "apps/page": {
       "name": "@pulkit/page",
       "dependencies": {
@@ -446,6 +455,8 @@
     "@pulkit/code": ["@pulkit/code@workspace:packages/code"],
 
     "@pulkit/demos": ["@pulkit/demos@workspace:packages/demos"],
+
+    "@pulkit/design": ["@pulkit/design@workspace:apps/design"],
 
     "@pulkit/embeds": ["@pulkit/embeds@workspace:packages/embeds"],
 

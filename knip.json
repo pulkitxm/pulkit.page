@@ -19,6 +19,11 @@
       "entry": ["client/entries/*.ts"],
       "project": ["src/**/*.ts", "client/**/*.ts"]
     },
+    "apps/design": {
+      "entry": [],
+      "project": [],
+      "ignoreDependencies": ["@pulkit/theme", "@pulkit/motion"]
+    },
     "packages/motion": {
       "entry": ["client/index.ts"],
       "project": ["client/**/*.ts", "src/**/*.ts"]

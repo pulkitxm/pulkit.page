@@ -1,0 +1,61 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/assets/fonts/comic-relief-regular-core.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/comic-relief-bold-core.woff2" as="font" type="font/woff2" crossorigin />
+  <style>
+  @view-transition {
+    navigation: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition {
+      navigation: none;
+    }
+  }
+  </style>
+  <meta name="description" content="{{description}}" />
+  {{ seo }}
+  <meta name="theme-color" content="#faebd7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#181916" media="(prefers-color-scheme: dark)" />
+  <script>
+  "use strict";
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.dataset.motion = "";
+  }
+  addEventListener("pagereveal", () => {
+    try {
+      const origin = JSON.parse(sessionStorage.getItem("page-origin") ?? "null");
+      sessionStorage.removeItem("page-origin");
+      if (origin) {
+        document.documentElement.style.setProperty("--page-x", `${origin.x * 100}%`);
+        document.documentElement.style.setProperty("--page-y", `${origin.y * 100}%`);
+      }
+    } catch {}
+  });
+  </script>
+  {{ themeScript }}
+  {{ analyticsScript }}
+  <title>{{ title }}</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script type="module" src="/assets/motion/index.js"></script>
+  <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "where": {
+            "and": [
+              { "href_matches": "/*" },
+              { "not": { "href_matches": "/*.md" } },
+              { "not": { "href_matches": "/assets/*" } },
+              { "not": { "href_matches": "/feed.xml" } }
+            ]
+          },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+  </script>
+</head>

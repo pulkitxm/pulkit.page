@@ -15,6 +15,7 @@ export function startMarquee(): void {
     let visible = false;
     let offset = 0;
     let skew = 0;
+    const reverse = marquee.dataset.reverse === undefined ? 1 : -1;
     let direction = 1;
     onVisible(marquee, (state) => {
       visible = state;
@@ -29,12 +30,12 @@ export function startMarquee(): void {
       }
       const speed = 0.06 + Math.min(2.4, Math.abs(velocity) * 0.035);
       const half = track.scrollWidth / 2;
-      offset = (offset - speed * delta * direction) % half;
+      offset = (offset - speed * delta * direction * reverse) % half;
       if (offset > 0) {
         offset -= half;
       }
       skew += (Math.max(-12, Math.min(12, velocity * 0.6)) - skew) * 0.12;
-      track.style.transform = `translate3d(${offset}px, 0, 0) skewX(${-skew}deg)`;
+      track.style.transform = `translate3d(${offset}px, 0, 0) skewX(${-skew * reverse}deg)`;
     });
   }
 }

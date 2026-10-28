@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "cache": false,
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!.cache/**",
+        "$TURBO_ROOT$/apps/page/content/**",
+        "$TURBO_ROOT$/apps/page/assets/**",
+        "$TURBO_ROOT$/apps/page/data/**",
+        "$TURBO_ROOT$/apps/blog/content/**",
+        "$TURBO_ROOT$/apps/blog/assets/**"
+      ]
+    },
+    "check:seo": {
+      "cache": false
+    },
+    "check:site": {
+      "cache": false
+    },
+    "check:html": {
+      "cache": false
+    }
+  }
+}

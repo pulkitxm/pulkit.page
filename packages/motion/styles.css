@@ -517,19 +517,20 @@ body {
   padding-bottom: 0.05em;
 }
 
-:root[data-motion] [data-hero-title] [data-split-unit] {
-  transform: translateY(102%) rotateX(-70deg) scale(0.9);
-  transform-origin: 50% 100%;
-  transition: transform 1400ms var(--ease-out);
-  transition-delay: calc(120ms + var(--i, 0) * 70ms);
+:root[data-motion] [data-hero-title],
+:root[data-motion] [data-page-hero] h1 {
+  animation: title-rise 1500ms var(--ease-out) 80ms both;
 }
 
-:root[data-motion] [data-hero-title][data-in] [data-split-unit] {
+@keyframes title-rise {
+  from {
+    filter: blur(14px);
+    transform: translateY(16%) scale(0.96) skewY(3deg);
+  }
+}
+
+[data-hero-title] [data-split-unit] {
   transform: translateY(calc(var(--lift, 0) * -1px)) scaleY(calc(1 + var(--stretch, 0)));
-  transition:
-    transform 600ms var(--ease-out),
-    font-weight 400ms;
-  transition-delay: 0ms;
 }
 
 [data-hero-title] [data-split-unit] {
@@ -1416,11 +1417,11 @@ ul[data-event-grid] img[data-gallery-image] {
 
 @keyframes page-arrive {
   from {
-    clip-path: inset(100% 0 0 0 round 40px 40px 0 0);
-    transform: translateY(18vh);
+    clip-path: circle(0 at var(--page-x, 50%) var(--page-y, 100%));
+    transform: scale(1.08);
   }
   to {
-    clip-path: inset(0 0 0 0 round 0);
+    clip-path: circle(150vmax at var(--page-x, 50%) var(--page-y, 100%));
     transform: none;
   }
 }
@@ -1518,4 +1519,96 @@ ul[data-event-grid] img[data-gallery-image] {
 
 :root[data-motion] [data-nav] a[aria-current="page"]::after {
   animation: underline-draw 700ms var(--ease-out) both;
+}
+
+[data-tapes] {
+  margin-block: clamp(20px, 4vw, 60px);
+}
+
+[data-tape] {
+  box-shadow: 0 18px 40px -24px color-mix(in srgb, #000 60%, transparent);
+}
+
+[data-tape="1"] {
+  z-index: 2;
+  transform: translateY(-50%) rotate(-3.2deg);
+}
+
+[data-tape="2"] {
+  transform: translateY(-50%) rotate(2.6deg);
+}
+
+[data-tape] [data-marquee-track] > span {
+  padding-right: 3rem;
+}
+
+[data-badge] {
+  color: var(--color-fg);
+}
+
+:root[data-motion] [data-badge] {
+  animation:
+    fade-up 1200ms var(--ease-out) 1100ms both,
+    badge-spin 22s linear infinite;
+}
+
+[data-badge-star] {
+  color: var(--accent);
+  fill: var(--accent);
+  transform-origin: 100px 100px;
+}
+
+:root[data-motion] [data-badge-star] {
+  animation: badge-spin 6s linear infinite reverse;
+}
+
+@keyframes badge-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+[data-sticker] {
+  position: absolute;
+  z-index: 1;
+  width: clamp(28px, 0.42em, 72px);
+  height: auto;
+  overflow: visible;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+[data-sticker]:nth-of-type(odd),
+[data-section]:nth-child(odd) [data-sticker] {
+  stroke: var(--accent-cool);
+}
+
+[data-home] [data-section] > h2 [data-sticker] {
+  top: -0.35em;
+  left: calc(100% - 1.3em);
+}
+
+[data-home] [data-section] > h2 {
+  width: 100%;
+}
+
+[data-home] [data-section] > h2 > [data-split-mask]:last-of-type {
+  margin-right: auto;
+}
+
+[data-page-hero] h1 [data-sticker] {
+  top: -0.2em;
+  margin-left: 0.15em;
+  position: relative;
+  vertical-align: top;
+}
+
+[data-footer-cta] [data-sticker] {
+  top: -12%;
+  left: 38%;
+  width: clamp(40px, 6vw, 96px);
 }

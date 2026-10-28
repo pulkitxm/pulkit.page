@@ -12,14 +12,6 @@ export function wideScreen(): boolean {
   return globalThis.matchMedia("(min-width: 64rem)").matches;
 }
 
-export function whenActivated(callback: () => void): void {
-  if ("prerendering" in document && document.prerendering) {
-    document.addEventListener("prerenderingchange", callback, { once: true });
-  } else {
-    callback();
-  }
-}
-
 export function afterLoad(callback: () => void): void {
   const idle = () => {
     if (typeof globalThis.requestIdleCallback === "function") {

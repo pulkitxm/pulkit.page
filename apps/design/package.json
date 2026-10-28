@@ -1,0 +1,21 @@
+{
+  "name": "@pulkit/design",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "SITE_PORT=3002 site dev",
+    "build": "site build",
+    "start": "SITE_PORT=3002 site start",
+    "clean": "site clean",
+    "check:seo": "site check-seo",
+    "check:site": "site check-site",
+    "check:html": "html-validate \"dist/**/*.html\"",
+    "check:browser": "site check-browser"
+  },
+  "dependencies": {
+    "@pulkit/engine": "workspace:*",
+    "@pulkit/motion": "workspace:*",
+    "@pulkit/theme": "workspace:*",
+    "html-validate": "11.16.0"
+  }
+}

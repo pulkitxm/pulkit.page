@@ -1,4 +1,4 @@
-import { clamp, elements, finePointer, reducedMotion, whenActivated } from "../lib/env.ts";
+import { clamp, elements, finePointer, reducedMotion } from "../lib/env.ts";
 import { onScroll } from "../lib/scroll.ts";
 import { splitText } from "../lib/split.ts";
 import { onTick } from "../lib/ticker.ts";
@@ -10,13 +10,6 @@ export function startHero(): void {
     return;
   }
   const characters = splitText(title, "chars", false);
-  whenActivated(() =>
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        title.dataset.in = "";
-      }),
-    ),
-  );
   onScroll(({ y }) => {
     const amount = clamp(y / globalThis.innerHeight, 0, 1);
     title.style.transform = `translate3d(0, ${amount * 22}vh, 0) scale(${1 - amount * 0.08})`;
@@ -39,9 +32,6 @@ export function startHero(): void {
   let boxes: DOMRect[] = [];
   let measuredAt = 0;
   onTick((time) => {
-    if (title.dataset.in === undefined) {
-      return;
-    }
     if (time - measuredAt > 500) {
       boxes = characters.map((character) => character.getBoundingClientRect());
       measuredAt = time;

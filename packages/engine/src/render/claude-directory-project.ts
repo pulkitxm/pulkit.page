@@ -89,6 +89,10 @@ export function renderDirectoryProject(
   assets: PageAssets,
 ): string {
   assets.script(directoryScript);
+  const featured = directoryProjectAt(projects, name).project;
+  if (featured.published) {
+    assets.preloadImage(directoryPoster(featured));
+  }
   const { project, index } = directoryProjectAt(projects, name);
   const base = parentRoute(route);
   const near = (offset: number): string | undefined => {

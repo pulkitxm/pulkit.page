@@ -47,6 +47,7 @@ function styleTag(href: string): string {
 export function createPageAssets(): PageAssets {
   const styles = new Set<string>();
   const scripts = new Set<string>();
+  const images = new Set<string>();
   const claimed = new Set<string>();
   return {
     style: (href) => {
@@ -54,6 +55,9 @@ export function createPageAssets(): PageAssets {
     },
     script: (src) => {
       scripts.add(src);
+    },
+    preloadImage: (href) => {
+      images.add(href);
     },
     claim: (key) => {
       if (claimed.has(key)) {
@@ -64,6 +68,10 @@ export function createPageAssets(): PageAssets {
     },
     tags: () =>
       [
+        ...[...images].map(
+          (href) =>
+            `<link rel="preload" as="image" href="${escapeHtml(href)}" fetchpriority="high">`,
+        ),
         ...[...styles].map(styleTag),
         ...[...scripts].map(
           (src) => `<script type="module" src="${src}" fetchpriority="low"></script>`,

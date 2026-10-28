@@ -5,6 +5,7 @@ export type EscapeHtml = (value: unknown) => string;
 export interface PageAssets {
   style(href: string): void;
   script(src: string): void;
+  preloadImage(href: string): void;
   claim(key: string): boolean;
   tags(): string;
 }

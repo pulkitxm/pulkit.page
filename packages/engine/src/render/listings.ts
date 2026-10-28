@@ -105,7 +105,7 @@ function experienceEntry(page: ListedPage): string {
   return `<li class="border-b border-line"><a class="group grid grid-cols-[48px_minmax(0,1fr)_auto] items-center justify-between gap-4 py-5 leading-normal text-inherit no-underline underline-offset-4 max-sm:grid-cols-[48px_minmax(0,1fr)] max-sm:gap-3" href="${safeUrl(page.route)}"><span class="flex w-12 items-center max-sm:row-span-2">${icons}</span><span class="grid gap-0.75"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="text-xs text-muted">${escapeHtml(metadata.role)}</span></span><span class="shrink-0 text-xs whitespace-nowrap text-muted tabular-nums max-sm:col-start-2 max-sm:text-2xs">${experiencePeriod(metadata)}</span></a></li>`;
 }
 
-function gridEntry(page: ListedPage, grouped: boolean, recent: boolean): string {
+function gridEntry(page: ListedPage, grouped: boolean, recent: boolean, priority: boolean): string {
   const { metadata } = page;
   if (!metadata.cover) {
     throw new Error(`Grid list entry needs a cover image: ${page.route}`);
@@ -113,16 +113,26 @@ function gridEntry(page: ListedPage, grouped: boolean, recent: boolean): string 
   const description = metadata.description
     ? `<span class="mt-1 line-clamp-2 text-xs leading-normal text-muted">${escapeHtml(metadata.description)}</span>`
     : "";
-  return `<li class="m-0"><a class="group flex flex-col text-inherit no-underline underline-offset-4" href="${safeUrl(page.route)}"><span class="relative block h-64 overflow-hidden rounded-lg bg-line">${galleryImage(metadata.cover, "")}</span><span class="mt-3 flex items-baseline justify-between gap-3 leading-normal"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(metadata, grouped, recent)}</span></span>${description}</a></li>`;
+  return `<li class="m-0"><a class="group flex flex-col text-inherit no-underline underline-offset-4" href="${safeUrl(page.route)}"><span class="relative block h-64 overflow-hidden rounded-lg bg-line">${galleryImage(metadata.cover, "", priority)}</span><span class="mt-3 flex items-baseline justify-between gap-3 leading-normal"><span class="group-hover:underline" data-title>${escapeHtml(metadata.title)}</span><span class="shrink-0 text-xs text-muted max-sm:text-2xs">${listingDate(metadata, grouped, recent)}</span></span>${description}</a></li>`;
 }
 
-function gridEntries(entries: readonly ListedPage[], grouped: boolean, recent: boolean): string {
+function gridEntries(
+  entries: readonly ListedPage[],
+  grouped: boolean,
+  recent: boolean,
+  leading = false,
+): string {
   return `<ul class="mt-0 mb-6 grid list-none grid-cols-2 gap-x-4 gap-y-8 p-0 max-sm:grid-cols-1" data-event-grid>${entries
-    .map((page) => gridEntry(page, grouped, recent))
+    .map((page, index) => gridEntry(page, grouped, recent, leading && !recent && index < 2))
     .join("")}</ul>`;
 }
 
-function listEntries(entries: readonly ListedPage[], grouped: boolean, recent: boolean): string {
+function listEntries(
+  entries: readonly ListedPage[],
+  grouped: boolean,
+  recent: boolean,
+  _leading = false,
+): string {
   return `<ul class="mt-0 mb-6 list-none p-0">${entries
     .map((page) =>
       page.metadata.icon
@@ -140,13 +150,13 @@ export function renderListing(items: readonly ListedPage[], listing: Listing): s
   const recent = Number.isFinite(listing.limit);
   const entries = listing.grid ? gridEntries : listEntries;
   if (!grouped) {
-    return entries(items, grouped, recent);
+    return entries(items, grouped, recent, true);
   }
   const years = Map.groupBy(items, (page) => (page.metadata.date ?? "").slice(0, 4));
   return [...years]
     .map(
-      ([year, yearEntries]) =>
-        `<h2 class="mt-10 mb-2 flex items-center gap-4 text-md font-medium leading-tight tracking-normal text-muted after:h-px after:flex-1 after:bg-line">${escapeHtml(year)}</h2>${entries(yearEntries, grouped, recent)}`,
+      ([year, yearEntries], index) =>
+        `<h2 class="mt-10 mb-2 flex items-center gap-4 text-md font-medium leading-tight tracking-normal text-muted after:h-px after:flex-1 after:bg-line">${escapeHtml(year)}</h2>${entries(yearEntries, grouped, recent, index === 0)}`,
     )
     .join("");
 }

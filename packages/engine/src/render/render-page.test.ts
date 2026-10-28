@@ -136,7 +136,7 @@ test("galleries support a single photo or video without creating idle video elem
   }
 });
 
-test("grid lists render cover cards and require a cover on every entry", async () => {
+test("grid lists render cover cards, prioritize the leading covers of full lists, and require covers", async () => {
   const pages: ListedPage[] = [
     {
       route: "/events/old/",
@@ -158,6 +158,9 @@ test("grid lists render cover cards and require a cover on every entry", async (
   expect(html).toContain("A &lt;new&gt; event.");
   expect(html).toContain('datetime="2025-04-11">Apr 2025</time>');
   expect(html.indexOf('href="/events/new/"')).toBeLessThan(html.indexOf('href="/events/old/"'));
+  expect(html.match(/fetchpriority="high"/g)).toHaveLength(2);
+  const recent = await renderPage(`${source}\n:::list events limit=2 grid\n`, { pages });
+  expect(recent).not.toContain('fetchpriority="high"');
   const grouped = await renderPage(`${source}\n:::list events by-year grid\n`, { pages });
   expect(grouped).toMatch(/<h2\s+class="[^"]+"\s*>\s*2025\s*<\/h2>/);
   const uncovered: ListedPage[] = [{ route: "/events/bare/", metadata: { title: "Bare" } }];

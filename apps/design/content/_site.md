@@ -1,6 +1,5 @@
 ---
 brand: Pulkit
-wordmark: wordmark.svg
 description: Pulkit is a software engineer in India who designs, builds, and writes about products for the web.
 copyright: © 2026 Pulkit
 articles: /writing/

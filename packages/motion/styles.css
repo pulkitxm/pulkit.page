@@ -720,7 +720,7 @@ ul[data-event-grid] a:hover [data-title] {
   padding-bottom: 64px;
 }
 
-[data-directory] {
+[data-directory-page] {
   width: min(100% - 2 * var(--page-margin), 1280px);
   margin: 0 auto;
   padding-block: 40px 72px;

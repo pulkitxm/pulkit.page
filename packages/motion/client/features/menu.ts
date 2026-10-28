@@ -7,6 +7,12 @@ export function startMenu(): void {
   if (!(dialog && toggle)) {
     return;
   }
+  const behind = elements("[data-main], [data-footer], [data-nav], [data-chrome] > a", HTMLElement);
+  const setInert = (value: boolean) => {
+    for (const element of behind) {
+      element.inert = value;
+    }
+  };
   elements("[data-menu-links] a", HTMLElement, dialog).forEach((link, index) => {
     link.style.setProperty("--i", String(index));
   });
@@ -20,6 +26,7 @@ export function startMenu(): void {
     const finish = () => {
       delete dialog.dataset.closing;
       dialog.close();
+      setInert(false);
       pauseScroll(false);
     };
     if (panel && getComputedStyle(panel).animationName !== "none") {
@@ -35,6 +42,7 @@ export function startMenu(): void {
     }
     toggle.setAttribute("aria-expanded", "true");
     dialog.show();
+    setInert(true);
     pauseScroll(true);
     dialog.querySelector<HTMLElement>("[data-menu-links] a")?.focus({ preventScroll: true });
   });
@@ -61,6 +69,7 @@ export function startMenu(): void {
       delete dialog.dataset.closing;
       dialog.close();
       toggle.setAttribute("aria-expanded", "false");
+      setInert(false);
       pauseScroll(false);
     }
   });

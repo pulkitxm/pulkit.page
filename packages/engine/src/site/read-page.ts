@@ -111,12 +111,18 @@ export function siteSettings(data: Record<string, unknown>): SiteSettings {
   if (social) {
     settings.social = social;
   }
-  const { mounts } = data;
+  const { mounts, motion } = data;
   if (mounts !== undefined) {
     if (!isSiteMountArray(mounts)) {
       throw new Error("mounts must be a list of sites with a site name and a route like /writing/");
     }
     settings.mounts = mounts;
+  }
+  if (motion !== undefined) {
+    if (typeof motion !== "boolean") {
+      throw new Error("motion must be true or false");
+    }
+    settings.motion = motion;
   }
   return settings;
 }

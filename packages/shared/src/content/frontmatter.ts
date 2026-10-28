@@ -25,6 +25,7 @@ export const siteFields = [
   "navigation",
   "social",
   "mounts",
+  "motion",
   "articles",
 ] as const;
 

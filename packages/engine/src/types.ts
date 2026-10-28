@@ -52,6 +52,7 @@ export interface SiteSettings {
   social?: SiteLink[];
   articles?: string;
   mounts?: SiteMount[];
+  motion?: boolean;
 }
 
 export interface ListedProject {

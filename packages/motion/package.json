@@ -1,0 +1,17 @@
+{
+  "name": "@pulkit/motion",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./bundle": "./src/bundle.ts",
+    "./styles.css": "./styles.css"
+  },
+  "dependencies": {
+    "@pulkit/shared": "workspace:*",
+    "lenis": "1.3.27",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/three": "0.186.0"
+  }
+}

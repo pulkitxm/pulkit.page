@@ -88,7 +88,7 @@ function valueErrors(
 ): string[] {
   const errors: string[] = [];
   for (const field of fields.filter(
-    (key) => !["tags", "links", "navigation", "social", "mounts"].includes(key),
+    (key) => !["tags", "links", "navigation", "social", "mounts", "motion"].includes(key),
   )) {
     if (field === "description" && emptyDescription && data[field] === "") {
       continue;
@@ -96,6 +96,9 @@ function valueErrors(
     if (data[field] !== undefined && !isText(data[field])) {
       errors.push(`${field} must be a trimmed, nonempty string`);
     }
+  }
+  if (data.motion !== undefined && typeof data.motion !== "boolean") {
+    errors.push("motion must be true or false");
   }
   if (
     data.mounts !== undefined &&

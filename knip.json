@@ -19,6 +19,10 @@
       "entry": ["client/entries/*.ts"],
       "project": ["src/**/*.ts", "client/**/*.ts"]
     },
+    "packages/motion": {
+      "entry": ["client/index.ts"],
+      "project": ["client/**/*.ts", "src/**/*.ts"]
+    },
     "packages/demos": {
       "entry": ["client/index.ts"],
       "project": ["client/**/*.ts", "src/**/*.ts", "*.css"]

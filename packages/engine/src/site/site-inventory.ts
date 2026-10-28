@@ -131,6 +131,10 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
   return Object.fromEntries(lists);
 }
 
+export function usesMotion(): boolean {
+  return readSiteConfig("").motion === true;
+}
+
 export function mountedSources(): string[] {
   return (readSiteConfig("").mounts ?? []).flatMap((mount) => {
     const root = mountRoot(mount);

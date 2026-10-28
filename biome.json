@@ -7,8 +7,7 @@
       "!!extras",
       "!!**/node_modules",
       "!!**/.turbo",
-      "!packages/theme/assets",
-      "!apps/design/source/libraries.html"
+      "!packages/theme/assets"
     ]
   },
   "formatter": {
@@ -132,6 +131,16 @@
   },
   "overrides": [
     {
+      "includes": ["packages/motion/styles.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["packages/*/src/**", "packages/*/test/**", "tooling/*/src/**"],
       "linter": {
         "rules": {
@@ -172,19 +181,6 @@
       "json": {
         "formatter": {
           "expand": "always"
-        }
-      }
-    },
-    {
-      "includes": ["apps/design/source/styles.html"],
-      "linter": {
-        "rules": {
-          "style": {
-            "noDescendingSpecificity": "off"
-          },
-          "complexity": {
-            "noImportantStyles": "off"
-          }
         }
       }
     }

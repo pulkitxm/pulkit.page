@@ -12,6 +12,7 @@ import { relative } from "node:path";
 import process from "node:process";
 import { buildDemoAssets } from "@pulkit/demos/assets";
 import { buildEmbedAssets } from "@pulkit/embeds/bundle";
+import { bundleMotionScripts } from "@pulkit/motion/bundle";
 import { builtFiles, developmentOutput } from "@pulkit/shared/built-site";
 import { logDuration, timed, timedAsync } from "@pulkit/shared/duration";
 import { sha256Hex } from "@pulkit/shared/hash";
@@ -22,6 +23,7 @@ import { mangleClasses } from "../lib/mangle-classes.ts";
 import { resolveAnalytics } from "../site/analytics.ts";
 import { generateSite } from "../site/generate.ts";
 import { optimizeImages } from "../site/responsive-images.ts";
+import { usesMotion } from "../site/site-inventory.ts";
 import { resolveSiteOrigin } from "../site/site-origin.ts";
 
 const buildStartedAt = performance.now();
@@ -63,6 +65,9 @@ await timedAsync("Built demo assets", async () => {
     await buildDemoAssets("dist/assets/demos");
   }
   await buildEmbedAssets("dist/assets");
+  if (usesMotion()) {
+    await bundleMotionScripts("dist/assets/motion");
+  }
   if (resolveAnalytics()) {
     await bundleAnalyticsScript("dist/assets");
   }

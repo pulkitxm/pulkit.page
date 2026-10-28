@@ -10,6 +10,7 @@ import type { DevelopmentAssets } from "./dev-assets.ts";
 import type { DevelopmentRenderer } from "./dev-renderer.ts";
 
 const demoSources = /^\/packages\/demos\//;
+const motionSources = /^\/packages\/motion\/client\//;
 const resetSources =
   /^\/(?:packages\/[a-z-]+\/src\/|bun.lock$|biome.json$|packages\/theme\/assets\/fonts\/|packages\/demos\/showcases\/)/;
 const pageSources =
@@ -49,6 +50,11 @@ export function watchSources(
       ? file.slice(project.length)
       : `/${file.slice(`${repository}/`.length)}`;
     const reset = resetSources.test(path);
+    if (motionSources.test(path)) {
+      assets.invalidateMotion();
+      vite.ws.send({ type: "full-reload" });
+      return;
+    }
     if (demoSources.test(path) && !reset) {
       assets.invalidateDemos();
       vite.ws.send({ type: "full-reload" });

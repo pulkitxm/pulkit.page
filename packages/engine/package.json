@@ -17,6 +17,7 @@
     "@pulkit/code": "workspace:*",
     "@pulkit/demos": "workspace:*",
     "@pulkit/embeds": "workspace:*",
+    "@pulkit/motion": "workspace:*",
     "@pulkit/profile": "workspace:*",
     "@pulkit/shared": "workspace:*",
     "@pulkit/theme": "workspace:*",

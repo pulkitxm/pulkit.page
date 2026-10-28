@@ -9,6 +9,7 @@ import {
   plyrIcons,
   plyrStyles,
 } from "@pulkit/embeds/bundle";
+import { bundleMotionScripts } from "@pulkit/motion/bundle";
 import { bundleAnalyticsScript } from "@pulkit/theme/analytics";
 import { assetFile } from "@pulkit/theme/files";
 
@@ -20,6 +21,7 @@ type AssetResolution =
 export interface DevelopmentAssets {
   resolve(pathname: string): Promise<AssetResolution> | undefined;
   invalidateDemos(): void;
+  invalidateMotion(): void;
 }
 
 const sharedTypes: Readonly<Record<string, string>> = {
@@ -43,6 +45,7 @@ const sharedTypes: Readonly<Record<string, string>> = {
 const analyticsOutput = ".cache/analytics-dev";
 const demoOutput = ".cache/demos-dev";
 const embedOutput = ".cache/embeds-dev";
+const motionOutput = ".cache/motion-dev";
 const missing: AssetResolution = { kind: "missing" };
 const vite: AssetResolution = { kind: "vite" };
 
@@ -76,6 +79,19 @@ export function developmentAssets(): DevelopmentAssets {
   let embedBundle: Promise<void> | undefined;
   let demoBundle: Promise<void> | undefined;
   let demoStyles: ReturnType<typeof compileDemoStyles> | undefined;
+  let motionBundle: Promise<void> | undefined;
+
+  async function motionAsset(name: string): Promise<AssetResolution> {
+    motionBundle ??= rm(motionOutput, { force: true, recursive: true }).then(() =>
+      bundleMotionScripts(motionOutput, { minify: false }),
+    );
+    await motionBundle;
+    const path = resolve(motionOutput, name);
+    if (!/^[\w.-]+\.js$/.test(name) || !existsSync(path)) {
+      return missing;
+    }
+    return file("text/javascript", readFileSync(path));
+  }
 
   async function analyticsAsset(name: string): Promise<AssetResolution> {
     analyticsBundle ??= rm(analyticsOutput, { force: true, recursive: true }).then(() =>
@@ -149,6 +165,9 @@ export function developmentAssets(): DevelopmentAssets {
       if (pathname.startsWith("/assets/embeds/")) {
         return embedAsset(pathname.slice("/assets/embeds/".length));
       }
+      if (pathname.startsWith("/assets/motion/")) {
+        return motionAsset(pathname.slice("/assets/motion/".length));
+      }
       if (pathname.startsWith("/assets/demos/")) {
         return demoAsset(pathname.slice("/assets/demos/".length));
       }
@@ -162,6 +181,9 @@ export function developmentAssets(): DevelopmentAssets {
     invalidateDemos() {
       demoBundle = undefined;
       demoStyles = undefined;
+    },
+    invalidateMotion() {
+      motionBundle = undefined;
     },
   };
 }

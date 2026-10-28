@@ -99,8 +99,11 @@ function entryTransition(
     (current.pathname.startsWith(other.pathname)
       ? titles.find((candidate) => candidate.tagName === "H1")
       : null);
-  if (current.origin !== other.origin || current.pathname === other.pathname || !title) {
-    transition.skipTransition();
+  const sameDocument = current.origin !== other.origin || current.pathname === other.pathname;
+  if (sameDocument || !title) {
+    if (sameDocument || !document.documentElement.hasAttribute("data-page-transitions")) {
+      transition.skipTransition();
+    }
     return;
   }
   title.style.viewTransitionName = "entry-title";

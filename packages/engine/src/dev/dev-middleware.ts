@@ -5,6 +5,7 @@ import { themeFile } from "@pulkit/theme/files";
 import type { Connect, ViteDevServer } from "vite";
 import { developmentLog } from "../lib/log.ts";
 import { logRequest } from "../lib/server.ts";
+import { mountedSources } from "../site/site-inventory.ts";
 import type { DevelopmentAssets } from "./dev-assets.ts";
 import type { DevelopmentRenderer } from "./dev-renderer.ts";
 
@@ -12,7 +13,7 @@ const demoSources = /^\/packages\/demos\//;
 const resetSources =
   /^\/(?:packages\/[a-z-]+\/src\/|bun.lock$|biome.json$|packages\/theme\/assets\/fonts\/|packages\/demos\/showcases\/)/;
 const pageSources =
-  /^(?:content\/|data\/|layouts\/|CNAME$|\/packages\/theme\/[a-z-]+\.svg$|\/packages\/theme\/layouts\/)/;
+  /^(?:content\/|data\/|layouts\/|CNAME$|\/apps\/[a-z-]+\/(?:content|data)\/|\/packages\/theme\/[a-z-]+\.svg$|\/packages\/theme\/layouts\/)/;
 
 function errorStatus(error: unknown): number {
   if (error instanceof URIError) {
@@ -39,7 +40,7 @@ export function watchSources(
   assets: DevelopmentAssets,
 ): void {
   const project = `${process.cwd()}/`;
-  vite.watcher.add([themeFile("layouts"), themeFile("wordmark.svg")]);
+  vite.watcher.add([themeFile("layouts"), themeFile("wordmark.svg"), ...mountedSources()]);
   vite.watcher.on("all", (event, file) => {
     if (!["add", "change", "unlink"].includes(event)) {
       return;

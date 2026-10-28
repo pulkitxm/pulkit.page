@@ -24,6 +24,7 @@ export const siteFields = [
   "copyright",
   "navigation",
   "social",
+  "mounts",
   "articles",
 ] as const;
 

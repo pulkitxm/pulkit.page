@@ -53,7 +53,7 @@ export function structuredData(
       "@type": "Person",
       "@id": person,
       name: site.author ?? site.brand,
-      url: site.authorUrl ?? `${origin}/`,
+      url: new URL(site.authorUrl ?? "/", `${origin}/`).href,
       sameAs: (site.social ?? []).map((item) => item.href),
     },
     {

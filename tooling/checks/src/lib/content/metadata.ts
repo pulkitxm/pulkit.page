@@ -88,7 +88,7 @@ function valueErrors(
 ): string[] {
   const errors: string[] = [];
   for (const field of fields.filter(
-    (key) => !["tags", "links", "navigation", "social"].includes(key),
+    (key) => !["tags", "links", "navigation", "social", "mounts"].includes(key),
   )) {
     if (field === "description" && emptyDescription && data[field] === "") {
       continue;
@@ -96,6 +96,24 @@ function valueErrors(
     if (data[field] !== undefined && !isText(data[field])) {
       errors.push(`${field} must be a trimmed, nonempty string`);
     }
+  }
+  if (
+    data.mounts !== undefined &&
+    !(
+      Array.isArray(data.mounts) &&
+      data.mounts.every(
+        (mount) =>
+          isRecord(mount) &&
+          typeof mount.site === "string" &&
+          slug.test(mount.site) &&
+          typeof mount.route === "string" &&
+          /^\/(?:[a-z0-9-]+\/)*$/.test(mount.route),
+      )
+    )
+  ) {
+    errors.push(
+      "mounts must list sites with a slug name and a root-relative route such as /writing/",
+    );
   }
   if (data.articles !== undefined && !/^\/(?:[a-z0-9-]+\/)*$/.test(String(data.articles))) {
     errors.push("articles must be a root-relative directory such as / or /notes/");

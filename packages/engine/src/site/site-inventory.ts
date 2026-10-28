@@ -8,10 +8,11 @@ import { themeFile } from "@pulkit/theme/files";
 import { loadLayouts } from "../render/layouts.ts";
 import { projectListKey, projectsLine } from "../render/projects.ts";
 import { articles, isNotFound } from "../seo/routes.ts";
-import type { ListedPage, Page, ProjectList, Site, SiteInventory } from "../types.ts";
+import type { ListedPage, Page, ProjectList, Site, SiteInventory, SiteMount } from "../types.ts";
 import { fetchDirectory, hasDirectory, withDirectoryPages } from "./claude-directory.ts";
 import { fetchProjectList } from "./github-projects.ts";
 import { readGuestbook } from "./guestbook.ts";
+import { localizeLinks, mountRoot, mountRoute, registerMountedAssets } from "./mounts.ts";
 import { notFoundPage } from "./not-found.ts";
 import { readFrontmatter, readPage, siteSettings } from "./read-page.ts";
 
@@ -48,14 +49,20 @@ function pageSources(root: string, content: string): string[] {
   });
 }
 
-function readPages(root: string): Page[] {
+interface PageTree {
+  root: string;
+  pages: Page[];
+}
+
+function readPages(root: string, mounts: readonly SiteMount[] = [], mount?: SiteMount): Page[] {
   const content = join(root, "content");
   const routes = new Set<string>();
   const pages = pageSources(root, content)
     .sort((left, right) => Number(left > right) - Number(left < right))
     .map((source): Page => {
       const name = relative(content, source).replace(/\.md$/i, "");
-      const route = name === "home" || name === "index" ? "/" : `/${name.replace(/\/index$/, "")}/`;
+      const local = name === "home" || name === "index" ? "/" : `/${name.replace(/\/index$/, "")}/`;
+      const route = mount ? mountRoute(mount, local) : local;
       const key = route.normalize("NFC").toLowerCase();
       if (routes.has(key)) {
         throw new Error(`Multiple Markdown sources map to ${route}`);
@@ -67,13 +74,30 @@ function readPages(root: string): Page[] {
         throw new Error(`Remove ${source}: ${route} renders from the shared not-found page`);
       }
       routes.add(key);
-      const text = readFileSync(source, "utf8");
-      return { source, text, ...readPage(text), route, index: source.endsWith("/index.md") };
+      const original = readFileSync(source, "utf8");
+      const text = mounts.length > 0 ? localizeLinks(original, mounts, mount) : original;
+      const index =
+        source.endsWith("/index.md") || (mount !== undefined && local === "/" && route !== "/");
+      return { source, text, ...readPage(text), route, index };
     });
-  if (!routes.has("/")) {
+  if (!(mount || routes.has("/"))) {
     throw new Error("Missing homepage source: content/home.md");
   }
   return pages;
+}
+
+function readTrees(mounts: readonly SiteMount[]): PageTree[] {
+  const local: PageTree = { root: ".", pages: readPages(".", mounts) };
+  const claimed = new Set(local.pages.map((page) => page.route));
+  const mounted = mounts.map((mount): PageTree => {
+    const root = mountRoot(mount);
+    const pages = readPages(root, mounts, mount).filter((page) => !claimed.has(page.route));
+    for (const page of pages) {
+      claimed.add(page.route);
+    }
+    return { root, pages };
+  });
+  return [local, ...mounted];
 }
 
 function readExternalArticles(name: string): ListedPage[] {
@@ -107,8 +131,25 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
   return Object.fromEntries(lists);
 }
 
+export function mountedSources(): string[] {
+  return (readSiteConfig("").mounts ?? []).flatMap((mount) => {
+    const root = mountRoot(mount);
+    return [join(root, "content"), join(root, "data")];
+  });
+}
+
+const guestbookDirective = /^:::guestbook[ \t]*$/m;
+
 export async function readSite(url: string): Promise<SiteInventory> {
-  const sources = [...readPages("."), notFoundPage()];
+  const settings = readSiteConfig(url);
+  const mounts = settings.mounts ?? [];
+  const config =
+    mounts.length > 0 && settings.authorUrl
+      ? { ...settings, authorUrl: localizeLinks(settings.authorUrl, mounts) }
+      : settings;
+  registerMountedAssets(mounts);
+  const trees = readTrees(mounts);
+  const sources = [...trees.flatMap((tree) => tree.pages), notFoundPage()];
   const directory = sources.some(hasDirectory) ? await fetchDirectory() : undefined;
   const pages = directory ? withDirectoryPages(sources, directory.projects) : sources;
   const names = new Set(
@@ -116,17 +157,18 @@ export async function readSite(url: string): Promise<SiteInventory> {
       [...page.body.matchAll(externalList)].flatMap((match) => (match[1] ? [match[1]] : [])),
     ),
   );
+  const guestbookTree = trees.find((tree) =>
+    tree.pages.some((page) => guestbookDirective.test(page.body)),
+  );
   return {
     pages,
     layouts: loadLayouts(),
     site: {
-      ...readSiteConfig(url),
+      ...config,
       external: Object.fromEntries([...names].map((name) => [name, readExternalArticles(name)])),
       projects: await readProjectLists(pages),
       ...(directory && { directory }),
-      ...(pages.some((page) => /^:::guestbook[ \t]*$/m.test(page.body)) && {
-        guestbook: readGuestbook(),
-      }),
+      ...(guestbookTree && { guestbook: readGuestbook(guestbookTree.root) }),
     },
   };
 }

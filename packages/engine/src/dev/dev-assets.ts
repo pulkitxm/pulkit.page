@@ -31,6 +31,13 @@ const sharedTypes: Readonly<Record<string, string>> = {
   ".woff2": "font/woff2",
   ".ttf": "font/ttf",
   ".txt": "text/plain",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm",
+  ".pdf": "application/pdf",
+  ".json": "application/json",
 };
 
 const analyticsOutput = ".cache/analytics-dev";

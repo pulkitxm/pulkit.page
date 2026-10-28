@@ -38,6 +38,11 @@ export interface Page extends PageRecord {
   index: boolean;
 }
 
+export interface SiteMount {
+  site: string;
+  route: string;
+}
+
 export interface SiteSettings {
   brand?: string;
   wordmark?: string;
@@ -46,6 +51,7 @@ export interface SiteSettings {
   navigation?: SiteLink[];
   social?: SiteLink[];
   articles?: string;
+  mounts?: SiteMount[];
 }
 
 export interface ListedProject {

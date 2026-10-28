@@ -17,7 +17,7 @@ import { logDuration, timed, timedAsync } from "@pulkit/shared/duration";
 import { sha256Hex } from "@pulkit/shared/hash";
 import { compileTailwind } from "@pulkit/shared/tailwind";
 import { bundleAnalyticsScript } from "@pulkit/theme/analytics";
-import { themeFile } from "@pulkit/theme/files";
+import { assetDirectories, themeFile } from "@pulkit/theme/files";
 import { mangleClasses } from "../lib/mangle-classes.ts";
 import { resolveAnalytics } from "../site/analytics.ts";
 import { generateSite } from "../site/generate.ts";
@@ -41,9 +41,10 @@ const production =
   origin === resolveSiteOrigin({ NODE_ENV: "production" });
 const pages = await timedAsync("Rendered pages", () => generateSite("dist", origin));
 timed("Copied shared assets", () => {
-  cpSync(themeFile("assets"), "dist/assets", { recursive: true });
-  if (existsSync("assets")) {
-    cpSync("assets", "dist/assets", { recursive: true });
+  for (const directory of assetDirectories().reverse()) {
+    if (existsSync(directory)) {
+      cpSync(directory, "dist/assets", { recursive: true });
+    }
   }
   copyFileSync(themeFile("assets/favicon-32.png"), "dist/favicon.ico");
   if (production) {

@@ -14,12 +14,22 @@ function inside(directory: string, path: string): string | undefined {
   return file.startsWith(`${directory}${sep}`) ? file : undefined;
 }
 
+let mountedAssets: readonly string[] = [];
+
+export function setMountedAssets(directories: readonly string[]): void {
+  mountedAssets = directories;
+}
+
+export function assetDirectories(appAssets = resolve("assets")): string[] {
+  return [appAssets, ...mountedAssets, sharedAssets];
+}
+
 export function assetFile(pathname: string, appAssets = resolve("assets")): string | undefined {
   if (!pathname.startsWith("/assets/")) {
     return;
   }
   const path = pathname.slice("/assets".length);
-  return [inside(appAssets, path), inside(sharedAssets, path)].find(
-    (file) => file !== undefined && existsSync(file),
-  );
+  return assetDirectories(appAssets)
+    .map((directory) => inside(directory, path))
+    .find((file) => file !== undefined && existsSync(file));
 }

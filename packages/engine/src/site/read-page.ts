@@ -1,6 +1,6 @@
 import { splitFrontmatter, textFields } from "@pulkit/shared/frontmatter";
 import { parse } from "yaml";
-import { isRecord, isSiteLinkArray, isStringArray } from "../lib/guards.ts";
+import { isRecord, isSiteLinkArray, isSiteMountArray, isStringArray } from "../lib/guards.ts";
 import type { PageMetadata, SiteLink, SiteSettings } from "../types.ts";
 
 interface Frontmatter {
@@ -110,6 +110,13 @@ export function siteSettings(data: Record<string, unknown>): SiteSettings {
   const social = links(data, "social");
   if (social) {
     settings.social = social;
+  }
+  const { mounts } = data;
+  if (mounts !== undefined) {
+    if (!isSiteMountArray(mounts)) {
+      throw new Error("mounts must be a list of sites with a site name and a route like /writing/");
+    }
+    settings.mounts = mounts;
   }
   return settings;
 }

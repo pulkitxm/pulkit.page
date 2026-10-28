@@ -32,6 +32,9 @@ test("links to mounted sites stay on the combined site, while code samples keep 
   expect(localized).toContain(":::list writing/system-design by-year");
   expect(localized).toContain(":::list all by-year");
   expect(localized).toContain("[kept](/system-design/) https://pulkit.blog/");
+  expect(
+    localizeLinks("[map](https://www.pulkit.page/sitemap.xml) http://pulkit.blog", mounts),
+  ).toBe("[map](/sitemap.xml) /writing/");
 });
 
 test("root mounts only rewrite the origins of other mounted sites", () => {

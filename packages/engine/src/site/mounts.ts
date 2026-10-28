@@ -48,9 +48,11 @@ export function localizeLinks(
     for (const target of mounts) {
       const origin = sites[target.site];
       if (origin) {
-        localized = localized
-          .replaceAll(`${origin}/`, target.route)
-          .replace(new RegExp(`${origin.replaceAll(".", "\\.")}(?![\\w./-])`, "g"), target.route);
+        const host = new URL(origin).host.replaceAll(".", "\\.");
+        localized = localized.replace(
+          new RegExp(`https?://(?:www\\.)?${host}(?:/|(?![\\w./-]))`, "g"),
+          target.route,
+        );
       }
     }
     return localized;

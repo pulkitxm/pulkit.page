@@ -11,6 +11,29 @@ function intro(): void {
     return;
   }
   const words = splitWordsDeep(paragraph);
+  const pills: readonly [string, string][] = [
+    ["Pulkit,", "/assets/content/pulkit-portrait.webp"],
+    ["India.", "/assets/content/events/fish-a-thon/1.webp"],
+    ["interfaces,", "/assets/content/work/deviators-club.webp"],
+  ];
+  for (const [word, image] of pills) {
+    const anchor = words.find((candidate) => candidate.textContent === word);
+    if (!anchor) {
+      continue;
+    }
+    const pill = document.createElement("span");
+    pill.dataset.inlineImage = "";
+    pill.setAttribute("aria-hidden", "true");
+    const picture = document.createElement("img");
+    picture.src = image;
+    picture.alt = "";
+    picture.loading = "eager";
+    picture.decoding = "async";
+    pill.append(picture);
+    anchor.after(" ", pill);
+    pill.dataset.wordIndex = String(words.indexOf(anchor));
+  }
+  const pillElements = elements("[data-inline-image]", HTMLElement, paragraph);
   const position = track(paragraph);
   onScroll(({ y }) => {
     const progress = position.progress(y, 0.85, 0.55);
@@ -18,6 +41,10 @@ function intro(): void {
     words.forEach((word, index) => {
       word.style.setProperty("--word", clamp(0.14 + (lit - index) * 0.3, 0.14, 1).toFixed(3));
     });
+    for (const pill of pillElements) {
+      const open = clamp((lit - Number(pill.dataset.wordIndex) - 0.5) * 0.6, 0, 1);
+      pill.style.setProperty("--open", open.toFixed(3));
+    }
   });
 }
 
@@ -92,7 +119,7 @@ function cylinder(): void {
   gallery.dataset.cylinder = "";
   gallery.replaceChildren(floor, ring);
   const layout = () => {
-    const width = Math.min(globalThis.innerWidth * 0.62, 640);
+    const width = Math.min(globalThis.innerWidth * 0.56, 620);
     const height = width * 0.52;
     const radius = width / 2 / Math.tan(Math.PI / cards.length) + 24;
     gallery.style.setProperty("--card-w", `${width}px`);

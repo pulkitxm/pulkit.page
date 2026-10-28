@@ -10,6 +10,7 @@ import { startReveal } from "./features/reveal.ts";
 import { startRoll } from "./features/roll.ts";
 import { startScrollEffects } from "./features/scrollfx.ts";
 import { startSphere } from "./features/sphere.ts";
+import { startSectionSpy } from "./features/spy.ts";
 import { startTilt } from "./features/tilt.ts";
 import { startTransitions } from "./features/transitions.ts";
 import { afterLoad, elements, onFirstInteraction, reducedMotion, yieldToMain } from "./lib/env.ts";
@@ -31,6 +32,7 @@ async function start(): Promise<void> {
   startScrollEffects();
   startSphere();
   startDoodles();
+  startSectionSpy();
   await yieldToMain();
   startPreview();
   startTilt(

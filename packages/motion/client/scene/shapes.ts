@@ -67,9 +67,7 @@ export function wave(count: number): Shape {
 
 export function monogram(count: number): Shape {
   const size = 160;
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
+  const canvas = new OffscreenCanvas(size, size);
   const context = canvas.getContext("2d", { willReadFrequently: true });
   const points = new Float32Array(count * 3);
   if (!context) {

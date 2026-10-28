@@ -1,5 +1,8 @@
-import { elements } from "../lib/env.ts";
-import { pauseScroll } from "../lib/scroll.ts";
+import { elements, root } from "../lib/env.ts";
+
+function pauseScroll(paused: boolean): void {
+  root.style.overflow = paused ? "hidden" : "";
+}
 
 export function startMenu(): void {
   const [dialog] = elements("[data-menu]", HTMLDialogElement);
@@ -7,7 +10,7 @@ export function startMenu(): void {
   if (!(dialog && toggle)) {
     return;
   }
-  const behind = elements("[data-main], [data-footer], [data-nav], [data-chrome] > a", HTMLElement);
+  const behind = elements("[data-main], [data-footer], [data-brand]", HTMLElement);
   const setInert = (value: boolean) => {
     for (const element of behind) {
       element.inert = value;

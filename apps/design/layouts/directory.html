@@ -3,9 +3,8 @@
   {{ > head }}
   <body class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg">
     {{ > header }}
-    <main id="main" class="relative min-h-[56vh] overflow-hidden px-8 pt-32 pb-18 max-sm:px-4 max-sm:pt-24" data-main>
-      <div class="pointer-events-none absolute inset-x-0 top-0 h-[80vh]" aria-hidden="true" data-scene="page"></div>
-      <div class="relative mx-auto max-w-300" data-prose data-wide>{{ content }}</div>
+    <main id="main" data-main>
+      <div data-directory>{{ content }}</div>
     </main>
     {{ > footer }}
   </body>

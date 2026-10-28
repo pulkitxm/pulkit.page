@@ -1,35 +1,17 @@
 ---
 title: Pulkit
 layout: home
-description: Pulkit is a software engineer in India who builds products for the web at Noveum.ai,
-  writes about system design and motion, and ships experiments in public.
+description: Software engineer in India. I build products for the web at Noveum.ai, write about
+  system design and motion, and ship my experiments in public.
 ---
 
-::::section intro
+::::section now
 
-I'm Pulkit, a software engineer based in India. I build products for the web at **Noveum.ai**, write about system design and the craft of interfaces, and ship my experiments in public.
+## Now
 
-[More about me](/about/) · [Work with me](/work-with-me/)
+Building [Noveum.ai](/exp/magicapi/), a platform that evaluates AI agents and fixes them, from trace ingestion and eval jobs to billing and two cloud migrations. Before that, API.market, CrowdVolt, DatawaveLabs and the Deviators community.
 
-::::
-
-::::section numbers
-
-:::embed stat-row
-{"stats":[{"value":"50+","label":"Technical blogs"},{"value":"90+","label":"Public repos"},{"value":"55+","label":"Prototypes shipped"},{"value":"62 bil.","label":"AI tokens to date"}]}
-:::
-
-::::
-
-::::section experience
-
-## Experience
-
-Teams I've worked with and the products I helped build, from API marketplaces to AI evaluation platforms.
-
-:::list exp
-
-[Every role, in detail](/exp/)
+[About me](/about/) · [Work with me](/work-with-me/) · [Résumé](/resume/)
 
 ::::
 
@@ -37,47 +19,32 @@ Teams I've worked with and the products I helped build, from API marketplaces to
 
 ## Selected work
 
-Portfolios, community sites, hackathon platforms and studio websites, each designed and built end to end.
+| Project                                                                              | What it is                                                                 | Year |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- | ---- |
+| [Claude Directory](/claude-directory/)                                               | 55+ landing pages and prototypes, each shipped with the prompt behind it   | 2026 |
+| [Orbit](/exp/magicapi/#orbit)                                                        | An open source Linear alternative with realtime sync over WebSockets       | 2026 |
+| [Hinge](/exp/magicapi/#hinge)                                                        | A macOS app that folds the desktop as the lid closes, 170k views on launch | 2026 |
+| [Private browser runtime](/exp/magicapi/#yodu-ai-a-private-browser-for-ai-employees) | Locked down Chromium sessions that AI employees drive over MCP             | 2026 |
+| [Warden](/events/openai-codex-hackathon/)                                            | Blocks risky npm installs before their scripts run, built in eight hours   | 2026 |
+| [Kaksha](/writing/kaksha/)                                                           | A tablet app that builds a whole school timetable, shipped in one night    | 2026 |
 
-:::gallery
-
-![The fifth version of my portfolio, with the hero introduction and navigation.](/assets/content/work/portfolio-v5.webp)
-
-![The Devolympus hackathon site, with the event title, countdown timer, and registration buttons.](/assets/content/work/devolympus.webp)
-
-![The eosdesignstudio.in site, showing pottery work over a full-bleed studio photograph.](/assets/content/work/eos-design-studio.webp)
-
-![The deviators.club community site with its landing section.](/assets/content/work/deviators-club.webp)
-
-![The fourth version of my portfolio.](/assets/content/work/portfolio-v4.webp)
-
-![The third version of my portfolio.](/assets/content/work/portfolio-v3.webp)
-
-![The second version of my portfolio.](/assets/content/work/portfolio-v2.webp)
-
-![The first version of my portfolio.](/assets/content/work/portfolio-v1.webp)
-
-:::
-
-[How I work](/work-with-me/) · [Open source projects](/projects/) · [Claude Directory](/claude-directory/)
+[All projects](/projects/) · [Claude Directory](/claude-directory/)
 
 ::::
 
-::::section skills
+::::section experience
 
-## Skills
+## Experience
 
-:::embed tech-badges
-{"groups":[{"label":"Frontend","technologies":["React","Next.js","TypeScript","Tailwind CSS","Framer Motion","GSAP","Three.js"]},{"label":"Mobile","technologies":["React Native","Expo","iOS","Android"]},{"label":"Backend","technologies":["Node.js","Bun","Hono","Python","FastAPI","PostgreSQL","ClickHouse","Redis","BullMQ","Prisma"]},{"label":"Infrastructure","technologies":["Docker","Kubernetes","AWS","GCP","OpenTofu","Vercel","Cloudflare","GitHub Actions"]},{"label":"AI","technologies":["MCP","LLM evals","Agents","RAG","Claude","OpenAI"]}]}
-:::
+:::list exp
+
+[Every role, in detail](/exp/)
 
 ::::
 
 ::::section writing
 
 ## Writing
-
-Notes on building software, from database internals and distributed systems to easing curves and the physics of motion.
 
 :::list all limit=6
 
@@ -87,32 +54,24 @@ Notes on building software, from database internals and distributed systems to e
 
 ::::section events
 
-## Events
+## Talks and events
 
-Hackathons, talks, meetups and bootcamps: the moments that shaped how I build.
+I gave my [first talk](/writing/my-first-talk/) at Localhost Build, and talked about getting a remote job from college on a [podcast with Harkirat Singh](https://youtu.be/tmITb7u662M).
 
-:::list events limit=8 grid
+:::list events limit=4 grid
 
 [Every event](/events/)
 
 ::::
 
-::::section podcast
+::::section toolkit
 
-## Podcast
+## Toolkit
 
-:::embed youtube-embed
-{"videoId":"tmITb7u662M","title":"My Podcast with Harkirat Singh","imgLink":"/assets/content/podcast-harkirat-singh.webp"}
+:::embed tech-badges
+{"groups":[{"label":"Frontend","technologies":["React","Next.js","TypeScript","Tailwind CSS","Motion","Three.js"]},{"label":"Mobile","technologies":["React Native","Expo"]},{"label":"Backend","technologies":["Node.js","Bun","Hono","Python","FastAPI","PostgreSQL","ClickHouse","Redis","BullMQ"]},{"label":"Infrastructure","technologies":["Docker","Kubernetes","AWS","GCP","OpenTofu","GitHub Actions"]},{"label":"AI","technologies":["MCP","Evals","Agents","RAG"]}]}
 :::
 
-::::
-
-::::section contact
-
-## Let's build something.
-
-Have a project in mind, a question, or just want to say hello? I usually reply within a day.
-
-[Start a conversation](/contact/) · [Sign the guestbook](/guestbook/)
+[My setup](/gears/)
 
 ::::

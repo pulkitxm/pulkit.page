@@ -1,16 +1,13 @@
 <a class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-fg focus:px-4 focus:py-2 focus:text-bg" href="#main">Skip to content</a>
-<header class="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-6 px-8 py-6 max-sm:px-5 max-sm:py-4" data-chrome>
-  <a class="relative z-10 text-inherit no-underline" href="/" aria-label="Pulkit, home" data-magnetic data-cursor="home">{{ brand }}</a>
-  <nav class="flex items-center gap-7 text-sm max-[64rem]:hidden" aria-label="Main navigation" data-nav>
+<header data-header data-grid>
+  <a class="text-inherit no-underline" href="/" aria-label="Pulkit, home" data-brand>{{ brand }}</a>
+  <nav aria-label="Main navigation" data-nav>
     {{ navigation }}
   </nav>
-  <div class="relative z-10 flex items-center gap-3">
-    <p class="m-0 mr-2 flex items-center gap-2 font-mono text-2xs uppercase tracking-[0.12em] text-muted max-[48rem]:hidden" data-status>
-      <span class="relative flex size-2" aria-hidden="true" data-pulse></span>
-      <span>Available · <time data-clock>IST</time></span>
-    </p>
-    <button class="grid size-11 cursor-pointer place-items-center rounded-full border border-line bg-bg/70 p-0 text-inherit backdrop-blur-md" type="button" data-theme-toggle aria-label="Switch color theme" data-magnetic data-cursor="theme">
-      <svg class="size-5" viewBox="0 0 24 24" aria-hidden="true" data-theme-icon>
+  <div data-actions>
+    <p class="m-0" data-status><span aria-hidden="true" data-dot></span><time data-clock>IST</time></p>
+    <button class="cursor-pointer" type="button" data-theme-toggle aria-label="Switch color theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true" data-theme-icon>
         <mask id="theme-icon-mask">
           <rect width="24" height="24" fill="#fff"></rect>
           <circle cx="24" cy="4" r="8" fill="#000" data-theme-bite></circle>
@@ -21,22 +18,19 @@
         </g>
       </svg>
     </button>
-    <button class="flex h-11 cursor-pointer items-center gap-3 rounded-full border border-line bg-bg/70 px-4.5 text-sm text-inherit backdrop-blur-md [font:inherit]" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle data-magnetic data-cursor="menu">
-      <span class="relative block h-[1lh] overflow-hidden" data-roll="Menu">Menu</span>
-      <span class="relative block h-2.5 w-5" aria-hidden="true" data-burger><span></span><span></span></span>
+    <button class="cursor-pointer" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+      <span>Menu</span>
+      <span aria-hidden="true" data-burger><span></span><span></span></span>
     </button>
   </div>
 </header>
-<dialog class="fixed inset-0 z-30 m-0 h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-0 text-fg" id="site-menu" aria-label="Site menu" data-menu>
-  <div class="relative flex h-full flex-col justify-between overflow-y-auto bg-fg px-8 pt-28 pb-10 text-bg max-sm:px-5 max-sm:pt-24" data-menu-panel>
-    <nav class="flex flex-col" aria-label="Menu navigation" data-menu-links>
+<dialog class="m-0 max-h-none max-w-none border-0 p-0" id="site-menu" aria-label="Site menu" data-menu>
+  <div data-menu-panel>
+    <nav aria-label="Menu navigation" data-menu-links>
       {{ navigation }}
       <a href="/guestbook/">Guestbook</a>
       <a href="/claude-directory/">Claude Directory</a>
     </nav>
-    <div class="mt-12 flex flex-wrap items-end justify-between gap-8 font-mono text-xs uppercase tracking-[0.12em]" data-menu-footer>
-      <p class="m-0 flex flex-wrap gap-x-6 gap-y-2">{{ social }}</p>
-      <p class="m-0 opacity-70">Based in India · UTC+5:30</p>
-    </div>
+    <p class="m-0" data-menu-social>{{ social }}</p>
   </div>
 </dialog>

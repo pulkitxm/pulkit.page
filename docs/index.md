@@ -8,18 +8,19 @@ This is a static publishing system for two sites, organized as a Bun and Turbore
 2. [Repository map](repository-map.md): the workspace tree, which files you edit, which are generated, and which are historical.
 3. [Scripts and commands](scripts-and-commands.md): root and app scripts, Turbo tasks, modules, checks, hooks, and workflows.
 4. [Authoring guide](authoring-guide.md): schema, syntax, embeds, demos, layouts, appearance, and safe editing recipes.
-5. [Content inventory](content-inventory.md): all page types on both sites, portfolio pages, experience, posts, metadata, and the linked article catalog.
-6. [Article catalog](article-catalog.md): every pulkit.blog post, its route, date, subject, and tags.
-7. [Rendering and deployment flow](rendering-flow.md): follow an actual page from Markdown to GitHub Pages across the package boundaries.
-8. [Continuous integration](continuous-integration.md): the workflow jobs, the concurrency model, the CI gate, and the pre-commit hook.
-9. [Deployment](deployment.md): how both sites reach GitHub Pages, and the one-time setup for pulkit.blog.
-10. [Quality checks and limits](quality-checks.md): what validation proves and what it misses.
-11. [Repository policies](repository-policies.md): the no-comments, no-em-dash, formatting, dead-code, and contribution rules.
-12. [SEO and environments](seo-and-environments.md): metadata, cards, origin selection, preview isolation, and validation.
-13. [Analytics](analytics.md): the opt-in PostHog client, the environment that enables it, and why builds stay clean without it.
-14. [Development benchmarks](development-benchmarks.md): request-time rendering measurements and a reproducible runner.
-15. [Maintenance and snapshot](maintenance-and-snapshot.md): findings, troubleshooting, and suggested improvements.
-16. [Migration audit explained](migration-audit.md): what `content-migration.json` means and why it is not a manifest.
+5. [Design system](design-system.md): the grid, type, components, motion budget and performance rules of design.pulkit.page.
+6. [Content inventory](content-inventory.md): all page types on both sites, portfolio pages, experience, posts, metadata, and the linked article catalog.
+7. [Article catalog](article-catalog.md): every pulkit.blog post, its route, date, subject, and tags.
+8. [Rendering and deployment flow](rendering-flow.md): follow an actual page from Markdown to GitHub Pages across the package boundaries.
+9. [Continuous integration](continuous-integration.md): the workflow jobs, the concurrency model, the CI gate, and the pre-commit hook.
+10. [Deployment](deployment.md): how both sites reach GitHub Pages, and the one-time setup for pulkit.blog.
+11. [Quality checks and limits](quality-checks.md): what validation proves and what it misses.
+12. [Repository policies](repository-policies.md): the no-comments, no-em-dash, formatting, dead-code, and contribution rules.
+13. [SEO and environments](seo-and-environments.md): metadata, cards, origin selection, preview isolation, and validation.
+14. [Analytics](analytics.md): the opt-in PostHog client, the environment that enables it, and why builds stay clean without it.
+15. [Development benchmarks](development-benchmarks.md): request-time rendering measurements and a reproducible runner.
+16. [Maintenance and snapshot](maintenance-and-snapshot.md): findings, troubleshooting, and suggested improvements.
+17. [Migration audit explained](migration-audit.md): what `content-migration.json` means and why it is not a manifest.
 
 ## Scope of this explanation
 

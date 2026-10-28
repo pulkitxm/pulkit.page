@@ -2,23 +2,23 @@
 <html lang="en" data-page-transitions class="scheme-light-dark data-[theme=dark]:scheme-dark data-[theme=light]:scheme-light" data-layout="article">
   {{ > head }}
   <body class="m-0 bg-bg font-sans text-base/relaxed text-fg antialiased **:box-border **:focus-visible:outline-2 **:focus-visible:outline-offset-5 **:focus-visible:outline-fg">
+    <div aria-hidden="true" data-progress></div>
     {{ > header }}
-    <main id="main" class="min-h-[56vh]" data-main>
-      <header class="relative overflow-hidden px-8 pt-40 pb-16 max-sm:px-5 max-sm:pt-32 max-sm:pb-10" data-page-hero>
-        <div class="pointer-events-none absolute inset-0" aria-hidden="true" data-scene="page"></div>
-        <div class="fixed inset-x-0 top-0 z-50 h-0.75 origin-left scale-x-0 bg-fg" aria-hidden="true" data-progress></div>
-        <div class="relative mx-auto max-w-300">
+    <main id="main" data-main>
+      <header data-page-head data-grid>
+        <div data-margin>
           {{ breadcrumbs }}
-          <h1 class="m-0 max-w-[14ch] text-[clamp(48px,9vw,148px)] font-bold leading-[0.92] tracking-[-0.04em] text-balance" data-title>{{ heading }}</h1>
-          <p class="mt-8 mb-0 max-w-140 text-lg leading-snug text-muted" data-lead>{{ description }}</p>
-          <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3" data-meta>
-            <a class="flex w-fit items-center gap-2.5 text-sm text-inherit no-underline" href="/about/" data-cursor="about"><img class="m-0 size-8 rounded-full object-cover" src="/assets/content/pulkit-portrait-56.webp" alt="" width="32" height="32" />{{ author }}</a>{{ date }}
-          </div>
+          <a class="text-inherit no-underline" href="/about/" data-author><img src="/assets/content/pulkit-portrait-56.webp" alt="" width="28" height="28" />{{ author }}</a>
+          <div data-meta>{{ date }}</div>
+        </div>
+        <div data-head-main>
+          <h1 class="m-0" data-title>{{ heading }}</h1>
+          <p class="m-0" data-lead>{{ description }}</p>
         </div>
       </header>
-      <div class="relative mx-auto max-w-190 px-7 pb-18 max-sm:px-5.5" data-prose>
-        <div class="wrap-break-word">{{ content }}</div>
-        {{ related }}
+      <div data-grid>
+        <div class="wrap-break-word" data-prose>{{ content }}</div>
+        <div data-related>{{ related }}</div>
       </div>
     </main>
     {{ > footer }}

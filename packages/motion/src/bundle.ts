@@ -10,7 +10,9 @@ export async function bundleMotionScripts(
   { minify = true }: BundleOptions = {},
 ): Promise<void> {
   await bundleBrowserScripts({
-    entrypoints: [fileURLToPath(new URL("../client/index.ts", import.meta.url))],
+    entrypoints: ["../client/index.ts", "../client/scene/worker.ts"].map((entry) =>
+      fileURLToPath(new URL(entry, import.meta.url)),
+    ),
     outdir,
     minify,
     label: "motion scripts",

@@ -1,8 +1,13 @@
 export const vertexShader = `
+precision highp float;
+attribute vec3 position;
 attribute vec3 aSphere;
 attribute vec3 aKnot;
 attribute vec3 aWave;
 attribute float aSeed;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
 uniform vec4 uMix;
 uniform float uTime;
 uniform float uSize;
@@ -36,6 +41,7 @@ void main() {
 `;
 
 export const fragmentShader = `
+precision highp float;
 uniform vec3 uColor;
 uniform float uOpacity;
 varying float vAlpha;

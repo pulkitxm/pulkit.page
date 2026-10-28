@@ -1,7 +1,8 @@
 # pulkit.page
 
-Two small static sites built as a Bun and Turborepo monorepo: the pulkit.page
-portfolio in `apps/page` and the pulkit.blog writing in `apps/blog`. Pages are
+Three static sites built as a Bun and Turborepo monorepo: the pulkit.page
+portfolio in `apps/page`, the pulkit.blog writing in `apps/blog`, and the
+animated design.pulkit.page in `apps/design`, which mounts the other two. Pages are
 Markdown in each app's `content/`; a small static site generator in
 `packages/engine` renders them into that app's `dist/`. Both sites use Tailwind CSS
 compiled at build time and a small theme script, without a client framework.
@@ -15,6 +16,7 @@ or the [documentation index](docs/index.md).
 apps/
   page/               @pulkit/page: the pulkit.page portfolio (content, assets, styles.css, CNAME)
   blog/               @pulkit/blog: the pulkit.blog writing (content, assets, styles.css, CNAME)
+  design/             @pulkit/design: design.pulkit.page, its layouts and home, mounting page and blog
 packages/
   engine/             @pulkit/engine: the static site generator and its `site` CLI
   theme/              @pulkit/theme: the shared stylesheet, layouts, assets, and theme script
@@ -22,6 +24,7 @@ packages/
   code/               @pulkit/code: build-time syntax highlighting and code formatting
   embeds/             @pulkit/embeds: Markdown embed renderers and their browser scripts
   demos/              @pulkit/demos: interactive motion demos rendered by demo directives
+  motion/             @pulkit/motion: smooth scroll, cursor, scroll effects and the particle scene
   profile/            @pulkit/profile: shared author name, profile URL, site domains, and social links
 tooling/
   checks/             @pulkit/checks: repository-wide content, comment, text, and import gates
@@ -43,7 +46,8 @@ bun run dev
 `bun install` also installs the pre-commit hook. `bun run dev` starts both
 development servers side by side; open the URLs printed in the terminal. pulkit.page
 prefers `http://localhost:3000/` and pulkit.blog prefers `http://localhost:3001/`
-(its `dev` and `start` scripts set `SITE_PORT=3001`); each tries higher ports until one
+(its `dev` and `start` scripts set `SITE_PORT=3001`), and design.pulkit.page prefers
+`http://localhost:3002/`; each tries higher ports until one
 binds. Set `PORT` to require a specific port or `PORT=0` to ask the OS for one. Vite renders HTML and
 social cards only when requested, reloads the browser after content and layout
 edits, and uses hot replacement for CSS.

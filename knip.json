@@ -25,7 +25,7 @@
       "ignoreDependencies": ["@pulkit/theme", "@pulkit/motion"]
     },
     "packages/motion": {
-      "entry": ["client/index.ts"],
+      "entry": ["client/index.ts", "client/scene/worker.ts"],
       "project": ["client/**/*.ts", "src/**/*.ts"]
     },
     "packages/demos": {

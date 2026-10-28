@@ -19,9 +19,6 @@
   <meta name="theme-color" content="#181916" media="(prefers-color-scheme: dark)" />
   <script>
   "use strict";
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.documentElement.dataset.motion = "";
-  }
   addEventListener("pagereveal", () => {
     try {
       const origin = JSON.parse(sessionStorage.getItem("page-origin") ?? "null");

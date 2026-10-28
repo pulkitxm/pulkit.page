@@ -25,9 +25,11 @@ The repository has two site apps: `apps/page/` (pulkit.page, the portfolio) and 
 
 Unknown fields, including `draft`, `slug`, author, and custom SEO fields, fail the current schema. Do not add them without coordinated checker/renderer/tests changes. Routes come from filenames, not titles or metadata. Future dates are accepted if calendar-valid and will sort first; they do not schedule publication.
 
-`content/_site.md` instead requires `brand`, `description`, `copyright`, and `navigation`, allows the optional `social` and `articles` fields, and has no body. Navigation/social are nonempty arrays whose items contain only `label` and `href`; duplicate hrefs fail within each array. URLs must begin with a single `/`, `https://`, or `mailto:`. Navigation gets `aria-current="page"` only for an exact route match, not a section-prefix match.
+`content/_site.md` instead requires `brand`, `description`, `copyright`, and `navigation`, allows the optional `social`, `articles`, and `mounts` fields, and has no body. Navigation/social are nonempty arrays whose items contain only `label` and `href`; duplicate hrefs fail within each array. URLs must begin with a single `/`, `https://`, or `mailto:`. Navigation gets `aria-current="page"` only for an exact route match, not a section-prefix match.
 
 `social` is optional because the engine's `readSiteConfig` merges the shared [@pulkit/profile](../packages/profile/profile.json) under each site's `_site.md`: the profile supplies the author name, the author URL (`https://pulkit.page/`), and the GitHub, X, and LinkedIn links, and a site's own `social` list replaces the profile's links when present. Neither site sets `social` today.
+
+`mounts` renders other apps of the workspace inside this site. Each item names a site from the shared profile and the route it mounts at, for example `site: blog` and `route: /writing/`. Mounted pages keep their Markdown and render through this site's layouts; a local page with the same route wins. Inside mounted Markdown, links to any mounted origin become local routes, root-relative links and list collections of a mounted site move under its route, and its assets resolve after the app's own. A site that mounts pulkit.page at `/` and pulkit.blog at `/writing/` serves every page of both from one domain.
 
 `articles` is a root-relative directory prefix such as `/` or `/notes/`; the content checker rejects any other shape. It marks which pages are posts: every non-index page whose route starts with the prefix, except home. pulkit.page has no `articles` field, so it has no posts. pulkit.blog sets `articles: /`, so every non-index page other than home is a post. For a site with articles:
 
@@ -88,7 +90,7 @@ The renderer promotes body headings to at least H2 and assigns IDs from lowercas
 :::list events grid
 ```
 
-Place one directive in its own paragraph. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. `<site>:all` lists every post of another app in the workspace, such as `blog:all` for `apps/blog`, linking each entry to that site's domain from the shared profile. Items sort newest date first then title. Ungrouped lists display the period, or the month and year; a list with a limit shows the day and month for this year's posts and the full date for older ones. With `by-year`, the list is grouped under year headings and each entry shows its day and month. With `grid`, entries render as photo cards in two columns (one on narrow screens): the page's `cover` image, title, date, and description. Every entry in a grid list must set `cover`, a self-hosted image path such as `/assets/content/events/ide-bootcamp/1.webp`, or rendering fails; `cover` is an optional page field with no other effect. `grid` combines with `by-year`. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
+Place one directive in its own paragraph. A full grid list loads its first two covers eagerly with high fetch priority, since it usually opens the page. The collection is a route prefix without slashes at either end, or `all`. The limit must be a positive integer; omission means all items. A named collection is recursive by route prefix and excludes indexes and the current page; `all` selects every post of the site (see `articles` above), also excluding the current page. `<site>:all` lists every post of another app in the workspace, such as `blog:all` for `apps/blog`, linking each entry to that site's domain from the shared profile. Items sort newest date first then title. Ungrouped lists display the period, or the month and year; a list with a limit shows the day and month for this year's posts and the full date for older ones. With `by-year`, the list is grouped under year headings and each entry shows its day and month. With `grid`, entries render as photo cards in two columns (one on narrow screens): the page's `cover` image, title, date, and description. Every entry in a grid list must set `cover`, a self-hosted image path such as `/assets/content/events/ide-bootcamp/1.webp`, or rendering fails; `cover` is an optional page field with no other effect. `grid` combines with `by-year`. Unknown or empty collections fail rendering. Tags and directory names do not automatically create landing pages: author an index page with a directive if needed.
 
 Event entries may use `description: ""` while the description is being written. Search and social metadata then use the event title. A gallery may also include MP4 recordings using `![Video label](/assets/content/events/example/video-1.mp4)`. Each recording needs a matching `video-1-poster.webp` and a short, muted `video-1-preview.mp4`. Videos preview on hover or keyboard focus and open in a modal with playback controls. Reduced-motion preferences disable previews.
 
@@ -177,6 +179,22 @@ Press :embed[cmd-key]{{}} + K to open it.
 | `math`, `info-tip`, `cmd-key` | Inline formula, hover tip, and command-key glyph                               |
 
 Carousels that share a page need distinct accessible names: pass `label` to each `image-grid` so the landmarks stay unique. Components that need behavior load their own script and stylesheet; each one still renders readable markup without JavaScript. Renderers live in `packages/embeds/src/renderers/` and are registered in `registry.ts`; their browser scripts are the entries in `packages/embeds/client/entries/` and are bundled to `/assets/embeds/` by the build, so `image-popup` loads `/assets/embeds/image-popup.js`.
+
+## Sections
+
+Wrap Markdown, including other directives, in a named section to give a layout something to style:
+
+```md
+::::section experience
+
+## Experience
+
+:::list exp
+
+::::
+```
+
+The opening line names the section in lowercase, and the section closes at the next line that holds only four colons. Keep a blank line after the opening and before the closing line. It renders as `<section data-section="experience">`, and Markdown copies drop the markers. The shared theme layouts render sections as plain blocks; a site's own layouts can style them by name.
 
 ## Interactive demos
 

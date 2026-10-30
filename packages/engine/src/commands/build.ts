@@ -10,15 +10,15 @@ import {
 } from "node:fs";
 import { relative } from "node:path";
 import process from "node:process";
-import { buildDemoAssets } from "@pulkit/demos/assets";
-import { buildEmbedAssets } from "@pulkit/embeds/bundle";
+import { buildDemoStyles, bundleDemoScripts } from "@pulkit/demos/assets";
+import { buildEmbedStyles, bundleEmbedScripts } from "@pulkit/embeds/bundle";
 import { builtFiles, developmentOutput } from "@pulkit/shared/built-site";
 import { logDuration, timed, timedAsync } from "@pulkit/shared/duration";
 import { sha256Hex } from "@pulkit/shared/hash";
 import { compileTailwind } from "@pulkit/shared/tailwind";
 import { bundleAnalyticsScript } from "@pulkit/theme/analytics";
 import { themeFile } from "@pulkit/theme/files";
-import { mangleClasses } from "../lib/mangle-classes.ts";
+import { compileSiteStyles } from "../lib/compile-site-styles.ts";
 import { resolveAnalytics } from "../site/analytics.ts";
 import { generateSite } from "../site/generate.ts";
 import { optimizeImages } from "../site/responsive-images.ts";
@@ -57,23 +57,24 @@ await timedAsync(
 timed("Compiled styles", () =>
   compileTailwind({ input: "styles.css", output: "dist/styles.css", minify: true }),
 );
-await timedAsync("Built demo assets", async () => {
-  if (pages.some((page) => page.body.includes(":::demo "))) {
-    await buildDemoAssets("dist/assets/demos");
+const demos = pages.some((page) => page.body.includes(":::demo "));
+timed("Copied embed styles", () => buildEmbedStyles("dist/assets"));
+if (demos) {
+  timed("Compiled demo styles", () => buildDemoStyles("dist/assets/demos"));
+}
+const compiledStyles = timed("Composed page styles", () => compileSiteStyles("dist"));
+await timedAsync("Built browser assets", async () => {
+  if (demos) {
+    await bundleDemoScripts("dist/assets/demos", compiledStyles);
   }
-  await buildEmbedAssets("dist/assets");
+  await bundleEmbedScripts("dist/assets/embeds", compiledStyles);
   if (resolveAnalytics()) {
     await bundleAnalyticsScript("dist/assets");
   }
 });
-timed(
-  ({ renamed, kept }) =>
-    `Renamed ${renamed} classes, kept ${kept} referenced by scripts or other styles`,
-  () => mangleClasses("dist", "styles.css"),
-);
+timed(`Compiled ${compiledStyles.combinations} style combinations`, () => compiledStyles.finish());
 timed("Fingerprinted styles and downloads", () => {
   const fingerprinted = new Map<string, string>();
-  const styles = readFileSync("dist/styles.css", "utf8");
   let mathStyles: string | undefined;
   let demoStyles: string | undefined;
   const downloads = builtFiles("dist")
@@ -92,7 +93,7 @@ timed("Fingerprinted styles and downloads", () => {
     let html = readFileSync(file, "utf8")
       .replace(
         /<link rel="stylesheet" href="\/styles\.css"\s*\/?>/g,
-        () => `<style>${styles}</style>`,
+        () => `<style>${compiledStyles.pageStyles(file)}</style>`,
       )
       .replace(
         /<link rel="stylesheet" href="\/assets\/katex\/katex-swap\.min\.css"\s*\/?>/g,

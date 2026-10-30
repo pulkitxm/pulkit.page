@@ -1,5 +1,17 @@
 [
   {
+    "id": "github-140",
+    "name": "Akshit Bhandari",
+    "message": "very bad jokes \nbut quite a good dev",
+    "createdAt": "2026-10-30T17:34:21.000Z",
+    "github": "AkshitBhandariCodes",
+    "avatar": "/assets/guestbook/github-user-174789015.webp",
+    "links": [
+      "https://www.linkedin.com/in/akshitbhandaricodes",
+      "https://x.com/akshitbhandarix"
+    ]
+  },
+  {
     "id": "github-101",
     "name": "Tushar Teotia",
     "message": "amazing projects, kinda crazy tho",

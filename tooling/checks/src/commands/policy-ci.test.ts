@@ -319,6 +319,19 @@ test("deploys run in the CI workflow after the gate and only on main", () => {
   expect(job(jobs, "deploy-page").if).not.toContain("github.event_name == 'schedule'");
 });
 
+test("blog publishing downloads the verified artifact after checkout and dependency setup", () => {
+  const steps = job(workflow("ci.yml").jobs, "deploy-blog").steps ?? [];
+  const checkout = steps.findIndex((step) => step.uses?.startsWith("actions/checkout@"));
+  const install = steps.findIndex((step) => step.run === "bun install --frozen-lockfile");
+  const download = steps.findIndex((step) => step.uses?.startsWith("actions/download-artifact@"));
+  const verify = steps.findIndex((step) => step.run?.includes("check-gallery-withdrawal.ts blog"));
+  expect(checkout).toBeGreaterThan(-1);
+  expect(install).toBeGreaterThan(checkout);
+  expect(download).toBeGreaterThan(install);
+  expect(verify).toBeGreaterThan(download);
+  expect(steps[download]?.with).toEqual({ name: "built-blog", path: "apps/blog/dist" });
+});
+
 test("guestbook publishing uses Pukbot and the automatic token, then verifies the published revision", () => {
   const source = readText(".github/workflows/guestbook.yml");
   const { jobs } = workflow("guestbook.yml");

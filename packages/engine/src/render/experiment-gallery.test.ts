@@ -16,9 +16,12 @@ const projects: DirectoryProject[] = Array.from({ length: 60 }, (_, index) => {
     group: "hero-sections",
     summary: `Synthetic example ${index}`,
     description: `Independent synthetic example ${index} for gallery verification.`,
-    thumbnail:
-      index === 0 ? "/assets/experiment-artwork/hero-sections--mock-0/original-visual.svg" : "",
-    hue: index * 5,
+    thumbnail: [0, 30].includes(index)
+      ? `/assets/project-previews/${path.replaceAll("/", "--")}/poster.webp`
+      : "",
+    video: [0, 30].includes(index)
+      ? `/assets/project-previews/${path.replaceAll("/", "--")}/demo.mp4`
+      : "",
     source: experimentSource(path),
     preview: experimentPreview(path),
   };
@@ -37,16 +40,14 @@ async function valid(html: string): Promise<boolean> {
   return (await new HtmlValidate(config).validateString(html)).valid;
 }
 
-test("renders the owned gallery layout with reviewed artwork, filters and current links", async () => {
+test("renders the owned gallery layout with fresh project posters, filters and current links", async () => {
   const html = await renderPage(source(":::experiment-gallery"), { site, route: "/directory/" });
   expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
   expect(html.match(/data-card-link/g)).toHaveLength(25);
   expect(html).toContain(">UI experiments</h1>");
   expect(html).toContain('data-filter="category:hero-sections"');
   expect(html).toContain('href="/directory/experiments/hero-sections--mock-0/"');
-  expect(html).toContain(
-    'src="/assets/experiment-artwork/hero-sections--mock-0/original-visual.svg"',
-  );
+  expect(html).toContain('src="/assets/project-previews/hero-sections--mock-0/poster.webp"');
   expect(html).toContain('href="/directory/pages/2/"');
   expect(html).toContain(`data-index="/directory/reviewed-projects.json?v=${revision}"`);
   expect(html).toContain("https://claude-directory.pulkitxm.com/hero-sections/mock-0/");
@@ -54,7 +55,7 @@ test("renders the owned gallery layout with reviewed artwork, filters and curren
     "https://github.com/pulkitxm/claude-directory/tree/main/hero-sections/mock-0",
   );
   for (const retired of [
-    "demo.mp4",
+    "/assets/experiment-artwork/",
     "poster.jpg",
     "data-prompt",
     "download-directory",
@@ -67,14 +68,15 @@ test("renders the owned gallery layout with reviewed artwork, filters and curren
   expect(await valid(html)).toBe(true);
 });
 
-test("renders later pages and original CSS artwork without requesting absent images", async () => {
+test("renders later pages and an explicit preparing state without requesting absent images", async () => {
   const html = await renderPage(source(":::experiment-gallery page=2"), {
     site,
     route: "/directory/pages/2/",
   });
   expect(html).toContain(">Sample project 24<");
   expect(html).not.toContain(">Sample project 23<");
-  expect(html).toContain("data-artwork-css");
+  expect(html).toContain("Preview preparing");
+  expect(html).not.toContain("Original artwork");
   expect(html).not.toContain('src=""');
   expect(html).toContain('href="/directory/pages/2/" aria-current="page"');
   expect(html).not.toContain("<video");
@@ -93,7 +95,7 @@ test("fails instead of generating pages outside the approved catalog", async () 
   ).rejects.toThrow("no project missing");
 });
 
-test("project details retain current preview, source and neighbour navigation without legacy media", async () => {
+test("project details provide controlled current recordings with source and neighbour navigation", async () => {
   const html = await renderPage(source(":::experiment-gallery project=hero-sections--mock-30"), {
     site,
     route: "/directory/experiments/hero-sections--mock-30/",
@@ -108,14 +110,23 @@ test("project details retain current preview, source and neighbour navigation wi
   );
   expect(html).toContain("Open current preview");
   expect(html).toContain("Source folder");
-  expect(html).toContain("Asset provenance");
+  expect(html).toContain("Project licenses");
+  expect(html).toContain(
+    'href="/assets/project-previews/hero-sections--mock-30/source-notices.txt"',
+  );
+  expect(html).not.toContain("Asset provenance");
+  expect(html).toContain('controls playsinline preload="none"');
+  expect(html).toContain('poster="/assets/project-previews/hero-sections--mock-30/poster.webp"');
+  expect(html).toContain('src="/assets/project-previews/hero-sections--mock-30/demo.mp4"');
+  expect(html).toContain("Capture provenance");
+  expect(html).not.toContain("autoplay");
+  expect(html).not.toContain(" loop");
   for (const retired of [
-    "<video",
     "<iframe",
     "data-project-view",
     "data-prompt",
     "Download",
-    "demo.mp4",
+    "/assets/experiment-artwork/",
     "poster.jpg",
     "raw.githubusercontent",
   ]) {

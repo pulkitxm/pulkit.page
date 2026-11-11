@@ -87,9 +87,34 @@ export async function auditExperimentGallery(
     );
     expect(
       label,
-      (await page.locator("video, iframe, [data-prompt], [data-file-explorer]").count()) === 0,
+      (await page.locator("iframe, [data-prompt], [data-file-explorer]").count()) === 0,
       "Retired media or source-copy controls returned",
     );
+    const recording = page.locator("video[data-project-recording]");
+    expect(label, (await recording.count()) === 1, "Fresh project recording is missing");
+    expect(
+      label,
+      (await recording.getAttribute("preload")) === "none",
+      "Recording eagerly loads media",
+    );
+    expect(
+      label,
+      (await recording.getAttribute("controls")) !== null,
+      "Recording controls are missing",
+    );
+    expect(
+      label,
+      (await recording.getAttribute("autoplay")) === null,
+      "Detail recording autoplays",
+    );
+    await recording.evaluate(async (video: HTMLVideoElement) => {
+      await video.play();
+    });
+    await page.waitForFunction(() => {
+      const video = document.querySelector<HTMLVideoElement>("[data-project-recording]");
+      return Boolean(video && video.currentTime > 0 && !video.paused);
+    });
+    await recording.evaluate((video: HTMLVideoElement) => video.pause());
     await page.getByRole("link", { name: "All experiments", exact: true }).click();
     await page.waitForURL(new URL(route, origin).href);
     expect(

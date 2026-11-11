@@ -33,10 +33,8 @@ const experimentProjectSchema = z
     group: z.string().min(1).max(80),
     summary: z.string().min(1).max(200),
     description: z.string().min(1).max(500),
-    thumbnail: z
-      .string()
-      .regex(/^(?:\/assets\/experiment-artwork\/[a-z0-9-]+\/original-visual\.svg)?$/),
-    hue: z.number().int().min(0).max(359),
+    thumbnail: z.string().regex(/^(?:\/assets\/project-previews\/[a-z0-9-]+\/poster\.webp)?$/),
+    video: z.string().regex(/^(?:\/assets\/project-previews\/[a-z0-9-]+\/demo\.mp4)?$/),
     source: z.string().url(),
     preview: z.string().url(),
   })
@@ -46,7 +44,9 @@ const experimentProjectSchema = z
       project.group === project.path.split("/")[0] &&
       project.category === experimentCategories[project.group] &&
       (!project.thumbnail ||
-        project.thumbnail === `/assets/experiment-artwork/${project.name}/original-visual.svg`) &&
+        project.thumbnail === `/assets/project-previews/${project.name}/poster.webp`) &&
+      (!project.video || project.video === `/assets/project-previews/${project.name}/demo.mp4`) &&
+      Boolean(project.thumbnail) === Boolean(project.video) &&
       project.source === `https://github.com/${experimentRepository}/tree/main/${project.path}` &&
       project.preview === `${experimentPreviewOrigin}${project.path}/`,
   );

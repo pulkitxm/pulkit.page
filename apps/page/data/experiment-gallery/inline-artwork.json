@@ -1,0 +1,1865 @@
+{
+	"version": 1,
+	"files": [
+		{
+			"path": "3d-games/sidi-bou-said-3d-walk/index.html",
+			"sha256": "b10c042219de75995ab422c22c56a077a4ae4593e82948caf2731487f419bec2",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "animations-loaders/apex-scroll-hero/app/components/ScrollHero.tsx",
+			"sha256": "ccd4dbc47c3dde1fa9f845111390de044967bb3f311d908b6a39ae311fbcc45c",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "animations-loaders/apex-scroll-hero/app/globals.css",
+			"sha256": "9b2b5335e173cec2baa7570134cea08d7e8f5f6b48f5da9bbfa929767d3c2d3b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "components-ui/background-paths-hero/src/components/ui/background-paths.tsx",
+			"sha256": "bf116d7c10dc35a2e7e49b878d213b06c1179a05ae13bb91449dc8ba857ced60",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "components-ui/crimson-mill-supply-card-h61/index.html",
+			"sha256": "bf4f6c30c89fd302028d943b41272a10bf87b032056daafe54884bc1543cbca3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "components-ui/crimson-mill-supply-card-h61/style.css",
+			"sha256": "3096a4066b5887aa87d871ea81168437fd9de9cab90994c664d48e78b9d9fa90",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "components-ui/lumen-aurora-vcard-h62/index.html",
+			"sha256": "bea7f83d239647859a952b74186c84cff5b262879b71fbab8cdeefd9c133ed8d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "components-ui/lumen-aurora-vcard-h62/styles.css",
+			"sha256": "e5043d5666c24af57ebba69a3238da2cbd815e106d63e1a3ea53011950a8f370",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/altitude-index-h38/index.html",
+			"sha256": "f8f128bb9c19372da37a90f31ad019864b30beb272b521ee527ad510828387db",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/altitude-index-h38/styles.css",
+			"sha256": "da521bb759ddf13a3572dd4cebe1885d193ca062295dab31677045eb7c73cd70",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/helix-vault-h55/index.html",
+			"sha256": "39ebea730745e9222ae2565d9534edcf1725f817d398e9a007b32721b63a835b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/helix-vault-h55/styles.css",
+			"sha256": "8f69fc6c67469cec325a261a09c92ca30f0536a57e78a598c4d6e498e8a74288",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "hero-sections/monocrit-studio-h27/index.html",
+			"sha256": "28babbba67f745cb7d532d81d1f6d50c39c7111b5d01f982300cf1fa93f6f307",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/monocrit-studio-h27/main.js",
+			"sha256": "461aa73e3a2f80b8fc030196af0f76c5a19e1dc16d0c4e31024bf8782b35f67b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/monocrit-studio-h27/styles.css",
+			"sha256": "4f61266cb4038211a0da3a7ab4aa944f012753f1de9359a469fd3d9dd6d80bf4",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/prisma-noir-h52/index.html",
+			"sha256": "d66d1727bea01f0ef17e0bf4499d92a45d26a814325d09409558a8be6fa3af1f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/prisma-noir-h52/main.js",
+			"sha256": "a691fff4bd6f2a328e729d3fbaecf25bb9d8a7f1aab95aabc373466b6e858c28",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "hero-sections/prisma-noir-h52/styles.css",
+			"sha256": "50ac5e327034439aab44cab64764b3355e15f732127a50de1e64c3b6d0aa7d20",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "hero-sections/shape-landing-hero/src/index.css",
+			"sha256": "ad058dcd828caa0837dc3027ea1b2a04902fea8014bb2e292dd17c3f9b8fb0fd",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "hero-sections/verdant-advisory-h10/index.html",
+			"sha256": "82a0997be2e76825a7b06fa0d6e71651dbb1d8b54dcca50956f7a15499855e19",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/aegis-console-h39/index.html",
+			"sha256": "7e9ca42e8cfca88db60328ac957779e25c141ff087235f9e694f5ccdd73865fa",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/aegis-console-h39/styles.css",
+			"sha256": "f5f4ca95ecd55e9a584abf2e788ece313c8e20cbdb20ab07e31ab168b65029d0",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/almond-hours-h65/index.html",
+			"sha256": "09d76a8b723760e9dbd2b9599024c70d926fab50a6153136aaa7dfe23417ae98",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/almond-hours-h65/style.css",
+			"sha256": "31b65a07d492373fd704d0daecb331952e9f0a1d022d42d6a6e625abab0469de",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/amber-foundry-h9/index.html",
+			"sha256": "7afd439a8a74635c409859c2e5ce56c83dd432904754e55f1d9c4a14fca379e5",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/amber-foundry-h9/styles.css",
+			"sha256": "85ffed2bc531c1630ef5374637d03928a7ab77583aa540a97bea73aa75bd4a57",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/amberhaus-pet-atelier-h31/index.html",
+			"sha256": "18617461960f29ca3021592234df1f35d094c3977730e6524a45a4a9ba38da79",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/amberhaus-pet-atelier-h31/main.js",
+			"sha256": "95fef3affb91e27c695e25a0e71cacccc4e814c2db78169c3dc081d72cf411c7",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/amberhaus-pet-atelier-h31/styles.css",
+			"sha256": "c3ca2616ea3f911d11283fcce8ca0c4c4a51c3f6df6f904393c6038963d8914d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/archway-summit-h21/index.html",
+			"sha256": "f4d6ee0dc905001b6a1972ee652b7e74668191f928ee440aaf02f60de415ea77",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/archway-summit-h21/styles.css",
+			"sha256": "43ff3b64e9c96b4563f2d975164b131a2585f647aa1e01cc8f43b5e13b71cfe3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/astral-veil-h6/index.html",
+			"sha256": "66ffcc687bef9d75c42dd25d2a7947639c8777c11a083abb00af8967fc42fda3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/astral-veil-h6/main.js",
+			"sha256": "2211fb508cc4b017373e2f30d317b3d766acd392c35c022b5d283b5128c078d3",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/astral-veil-h6/styles.css",
+			"sha256": "a48057ee55fab5a936a5b680398525ceb314a3bb80bb6bd7e1eef8119546ad96",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/atelier-noir-h7/index.html",
+			"sha256": "219b6c71ef467a41d83e8a0d5dc1ed1599989395075786f060649dad5d82a401",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/atelier-noir-h7/styles.css",
+			"sha256": "5e7ca3b78edf5257eccea4706155b36be44442b8f2da45a3f1f7d9e25969d0f3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/atelier-press-h51/index.html",
+			"sha256": "860652e2df0085685041b689dfa0ceee7926449fd366ee4af9479fbdc3b16116",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/atelier-press-h51/styles.css",
+			"sha256": "1006507a0fcb98233282d10dacea93bc6a49dd09f57ecb9fce4c2fa386232514",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/auric-clinic-glow-h37/index.html",
+			"sha256": "72b0849ad560a964a97b43432a5d8430a8c0d1aa4608f03ce8f97634da3a3877",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/auric-clinic-glow-h37/styles.css",
+			"sha256": "7a3333e19103b22116a1c19ee836560065af97f688af5eebd17f94c7da09c58f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/axis-quotient-h30/index.html",
+			"sha256": "a3230b40482c463bb2e46f99192625f92c29212690e4d0dd5a5b078ef57c7364",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/axis-quotient-h30/script.js",
+			"sha256": "45bdae55e79cfd4dfd0097da326aac045b8b69d84b6be909c08de1a9030f0841",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/axis-quotient-h30/styles.css",
+			"sha256": "cff59b2cbf1651522db80c17fd09c17da5dda2e05215b2c937f4879edab029ff",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/azimuth-realty-engine-h36/index.html",
+			"sha256": "856457684d0dd274e720bbe2806690916fc7ec0e66f2521c70792bddc2c79f91",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/azimuth-realty-engine-h36/styles.css",
+			"sha256": "037e8e7d06015d0e356e03b1c8218bf15b107279d16dee053092d1e94a76e66e",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/carbon-bloom-h95/index.html",
+			"sha256": "4fae2fe0d6c7f16dfb32c33583f1f7ba63505fbb465ea474930e76cc35d192d8",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/carbon-bloom-h95/styles.css",
+			"sha256": "4f7c9bd216699cdeb1b91a5a2ca45a4b4480576eb090016fdf5f739621680148",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/cartwright-relocation-h47/index.html",
+			"sha256": "bb64f81ca0175f83487b301735564ded2f53c0e404e4003c230a3bcacf762516",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/cartwright-relocation-h47/main.js",
+			"sha256": "234845c6fa59d9418859d4977672e328cbbd68f23fe0bb4404c4334d8465a8bb",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/cartwright-relocation-h47/styles.css",
+			"sha256": "9332e33be369dba27bfd81dedbfcff96fb8f44a7b8c57cf58280238925ff360b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/cerulean-precision-collective-h67/index.html",
+			"sha256": "b4beb3a135ef068c3092563dba040a579ea93e87c9495831fd0c53ee3a654f66",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/cerulean-precision-collective-h67/styles.css",
+			"sha256": "c78d1ceb2d3e8c5db8c0c5790654932985fe980a2127c3d94138b701df3a7504",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/citron-atlas-h79/index.html",
+			"sha256": "b0a2a2e450395ce38bbab3e1414fde2a039d7577a9c08a7f81441dc1baf03121",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/citron-atlas-h79/styles.css",
+			"sha256": "a6bed77ccb88051ae4f1f6609fc8c65bc189974deb03cf799a64a5349d7e6691",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/claywell-solene-h5/index.html",
+			"sha256": "69d4406631a7acc4418bbd7acd2ecc1d6c5c316135b4a6fcf31daf10875f3e90",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/claywell-solene-h5/styles.css",
+			"sha256": "98b09a66362dcdfc38cae624a055bdf7404dc4b3ace7a6802cfebb202e640181",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/cobalt-repairworks-h78/index.html",
+			"sha256": "ce01d739f9a32abcc50bece16f89bba5b7fa91ee0ed94838e04c54498bcb5448",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/cobalt-repairworks-h78/styles.css",
+			"sha256": "0b2507698fdd5274536aa462bda540fa061a5ffb1b0fe64907e5733290812546",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/concrete-bazaar-h87/index.html",
+			"sha256": "c6a953c7499db71542860a682a28d1b9830eb2a918d54fb819c0f35376d0f131",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/concrete-bazaar-h87/script.js",
+			"sha256": "cc835682d386491025b758b5d4fba632c971745ad5a216d0d45ad1f274da6527",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/concrete-bazaar-h87/styles.css",
+			"sha256": "5c7897bd7fbc00d1497f7a50d3ed6bcdaa75e139a37651689819de99b68153f1",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/crimson-cut-studio-h72/index.html",
+			"sha256": "daba3b839952a75e40c875bf5722f24576e9724a91b259fe2f0900fa374b9e23",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/crimson-cut-studio-h72/styles.css",
+			"sha256": "bfa12c475d84ccc976fc3b0e717e70f92cafc8e4534d6ce9fc29cc8233d05d13",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/dhara-heritage-edit-h88/index.html",
+			"sha256": "232ed1a05b83c27aecdb0aca4cd7984981416c2a4577d55e63265723c3f570c2",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/dhara-heritage-edit-h88/main.js",
+			"sha256": "757df95fe612ecf7abb15323129afdde0ebacdbce44a2abcdd93cf6e4b0fd723",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/dhara-heritage-edit-h88/styles.css",
+			"sha256": "2fd1ba5fcdafaf6605d062aa2831631874b9302b4db637f49280a0911ceefd1f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/ember-quietude-h26/assets/styles.css",
+			"sha256": "725881a3ab49b24e24131ae2fcc645d02518606991fc74b912460b510a52c46e",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/ember-quietude-h26/index.html",
+			"sha256": "471f68b0deb6fff3c7255c5fc82354c958e8d5c319dcbca5f348fbda64f097ba",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/evergreen-ledger-h94/index.html",
+			"sha256": "6b083390304d2c21ffd0d366ee78f77b9fbfce4b4d388ae9a52bc47b77892031",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/evergreen-ledger-h94/styles.css",
+			"sha256": "ba529dcdeeec22bf211ea5d4b092cb716aa37b3c9b5d06968909c09b0345358b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/fernhollow-pet-wellness-h68/index.html",
+			"sha256": "78d83d904b7e8630d22d21e44efa3cab9b513e2f6f224dd692ab6be3945d1cb8",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/fernhollow-pet-wellness-h68/styles.css",
+			"sha256": "bdea9480dbde7cbd74cae16aaac092aca9a37a1fd69b2f0b7ccfa0b53764291b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/freightleaf-clean-haul-h80/index.html",
+			"sha256": "e3ec90e82e2a8c04ea7d47d10cf26e543c0c350f69e131ba40c1849d3078d077",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/freightleaf-clean-haul-h80/script.js",
+			"sha256": "cb57a3e2940817384a2007d0ceae717445789a1d802e959b19bca0b4f6ec7af0",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/freightleaf-clean-haul-h80/styles.css",
+			"sha256": "e6826e8788388d2964f62221c69bbe9da8de7142d94a6ff91d96a23476f5b350",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/graft-modular-h93/index.html",
+			"sha256": "16a29ca2b580b7f0315ddf8b063095b339b670c0a8e4cba38b205130803c1346",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/graft-modular-h93/main.js",
+			"sha256": "f0f5c19e3f86b40655d56d28d2cc307806dcc96967b6d7c4bac5383e33590d72",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/graft-modular-h93/styles.css",
+			"sha256": "984aedca904cadecf5d76748e60fb95089d2534e98f1529f666c298223ec3430",
+			"review": "Manual layout review: zero-minimum grid tracks, bounded form controls and compact mobile header sizing preserve visible content. Existing gradient geometry, licensed inline icons, copy and notices are unchanged. No media was added."
+		},
+		{
+			"path": "landing-pages/gridframe-precision-h74/app.js",
+			"sha256": "405f215dc973bc9e0deb6c9ebadbfd3470ed4adc1cb660bf073888945d56928a",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/gridframe-precision-h74/index.html",
+			"sha256": "f159a3dc88ed962dcb24721658dadff8aa5efc074890fce7bde683dd1bd5aaf9",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/gridframe-precision-h74/styles.css",
+			"sha256": "cf5d9570b4e44af4abe62f8ab895e3b89a465c3c36efe56c8aa8ef55e2c94867",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/gridwright-h48/index.html",
+			"sha256": "00adfa4ca32a407facc3aeecf2d6303ad29f581db8028ed61cb6dd5dfbef6135",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/gridwright-h48/styles.css",
+			"sha256": "df8ecd2c3bd4162989037946a026623b39f2abbe61bd0ba2789791fdef4b84ff",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/grove-kitchen-fresh-h70/index.html",
+			"sha256": "b1bb4493831557bb5efbc365739b0f8255dab010e84945288a78b76168955298",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/halcyon-mesh-h56/index.html",
+			"sha256": "1cb83e4c12753019c3646c43be65f8666197007f470be9bfed1fa7b2db89a137",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/halcyon-mesh-h56/main.js",
+			"sha256": "ed2dfc7c42a87c256467022cc77a34ec7d5a0dde4c04abcbc0368e2c5648314f",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/harbour-hearth-h64/index.html",
+			"sha256": "4d32ddc959f0330f4f3fe25506ed45a7374a83b11b6f34a4b35d5f2af15e5bab",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/harbour-hearth-h64/styles.css",
+			"sha256": "4b40bd71e432bf17ed501cc685110be3f991d5d6fef2a109fa63e0a00d68ee83",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/hearthwell-homeware-h71/index.html",
+			"sha256": "65f06d52e863a32b2610e09fd0c5493c04d84d10ccbb7b8012ad4a40a64c1b02",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/hearthwell-homeware-h71/styles.css",
+			"sha256": "eb29b82a2d5535d49a137314c3ec1cdd22caf70f57ddc2f0ba6753479957e392",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/helix-strata-h76/index.html",
+			"sha256": "ad4c48f584f2dc1d54351c3bf063bb335beb3736eb389280264cf4ce70e40542",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/helix-strata-h76/styles.css",
+			"sha256": "93f15b1b7774899598a86cfa569808c9fe13dba1cfc4b7d3d25a0bab9045921c",
+			"review": "Manual layout review: two grid-track minimums were corrected to prevent procedural graphic dimensions from widening cards. Artwork, inline SVGs, copy and notices are unchanged. No media was added."
+		},
+		{
+			"path": "landing-pages/ink-vermilion-personal-brand-h23/index.html",
+			"sha256": "5c2474dd0491beca720b3188304f7d9c916ff07f817a0149ee8f5438e767228f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/ink-vermilion-personal-brand-h23/styles.css",
+			"sha256": "f35a426e23cc64d59323c249bdfc72dcc25e58d48c7b6bd05848b2a5db8bb453",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/kairos-academy-h0/index.html",
+			"sha256": "fac2b287c0a1e65b6f312b0aac76462b17f89f4a10d2501058231a458223e5cb",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/kairos-academy-h0/script.js",
+			"sha256": "a5d494533f82980be83bf787c2bbf73380efa772c93403c354352f4ce1065007",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/kairos-academy-h0/styles.css",
+			"sha256": "48491ccc1444f45ab1ba2da73c49dcfc3ddeded0a61e5acd40713859e25b303b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lantern-broth-midnight-ramen-h8/index.html",
+			"sha256": "16dd47b0335d0f758dfa613898d2711d7f140e42c2b192df3898b888d342a6ec",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lantern-broth-midnight-ramen-h8/script.js",
+			"sha256": "efa2f12728198dcf12116f3bc45d73e763e5a0cf17190b3f73b74b9411dfea73",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lantern-broth-midnight-ramen-h8/styles.css",
+			"sha256": "884c78643d8022ea61c29c0d3e0aa717e26944c6566fb21d22d22a58cda35eba",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lantern-loft-tutoring-h1/index.html",
+			"sha256": "64b0f7bc638f7c6a84a56be499052c994c16b27e2ce63a7c28dffee41d341332",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lantern-loft-tutoring-h1/styles.css",
+			"sha256": "00ba5e0f3c620690b97e0be367d49a16911a316435c24cbb195ea7526205da43",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumen-grove-h63/index.html",
+			"sha256": "7f1afb7551df2e7d6ce052f2ecb33f72e132f06971db637c53588b36c8e01869",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumen-launch-h44/index.html",
+			"sha256": "17cec1db860df562d88110944b4fe9ef99cf3bf019e3c6bc55cfd555e50dc1bb",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumen-launch-h44/main.js",
+			"sha256": "6fc2d504b5a4bb900e616481f84472f312e4e5b685b9da320cdd671ed7675d8c",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/lumen-launch-h44/styles.css",
+			"sha256": "ce9f12c2b36fb43aef932102a9aad773b9dac7c21db2458014986bfd607ebd47",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumen-vector-h92/index.html",
+			"sha256": "e0ba60294edf6839a777c184b360688c82ef14014889471ffd950dc8e0e1bb6e",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumen-vector-h92/styles.css",
+			"sha256": "9f29532c13e5eafec955e9fb07ee1a557b92b4cc4dab68822230d1d04c96bffb",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumina-maternite-h2/index.html",
+			"sha256": "ced79252f730f79d9385310668fd0c6e1175a2cf0b70034be46c81d2a01cdc40",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/lumina-maternite-h2/main.js",
+			"sha256": "fff31524235ed1a21509e2a8a6cd5fc13e64ec5b67e2bf6c9502583713b36a35",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/lumina-maternite-h2/styles.css",
+			"sha256": "9644ead83a38ed9b603316d3aedde8a977d5e656ce62fcfc742cd31c35756097",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/meridian-grid-systems-h81/index.html",
+			"sha256": "64073b884e466c8c61544eb721c551fd60fa8e1d06214925824bb89c11642ea5",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/meridian-grid-systems-h81/styles.css",
+			"sha256": "6b938b3d082105ee80dda930c71b3abd90d7e89124f76db5286ea66dddf97be7",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/meridian-precision-clinic-h35/index.html",
+			"sha256": "dc070c87b15387fb72ea4b2f520aca74500bb1141d9928af094595a2a81bfa57",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/meridian-precision-clinic-h35/styles.css",
+			"sha256": "d9b471b244b3539155b49121aa01e8e75f2d7eef7166677c21899eafcc10be10",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/monolith-grid-atelier-h59/index.html",
+			"sha256": "0bb7d52ac012b6fb4c26c8a5ab1eb3cfd60e9facad604a41848c448c5e99be0f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/monolith-grid-atelier-h59/styles.css",
+			"sha256": "8ad180f8b48cbc9381f593d5366b0799df42b4cc2af8bb7d86bbabe30483cb6c",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/noctis-aurum-h69/index.html",
+			"sha256": "adb3bd9e871efd912ad33ec8d1aafa18fccef8af047ec3f936a9ba70b2bc1b6f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/noctis-aurum-h69/script.js",
+			"sha256": "b3337fe0261f525c56a27c6d0579d67adb2e18811282592949a8beb9548cf799",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/noctis-aurum-h69/styles.css",
+			"sha256": "6c49573c53b7a7091545b7dac7495f0321a6504aa171e9f5c9759b8c048366b3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/obsidian-lacquer-h57/index.html",
+			"sha256": "3c87631ebc637afc932d4a85b101dd09da81498dabc5e4709dbbe56b9f7a1139",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/obsidian-lacquer-h57/styles.css",
+			"sha256": "bf0f0cd83dd589fb6c6cebcd93530b36eb58148b7bc5eb829026cdde3bcf6515",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/obsidian-meridian-h85/index.html",
+			"sha256": "b4c4ff823eed112ca816641442c297190f87ef8aaf3c1020901199955aae80c6",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/obsidian-meridian-h85/styles.css",
+			"sha256": "8be47cc3b7b1ac776418179c7c1ee2115b488f0eeb99015944541ce4d20ab144",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/ochre-stone-studio-h11/index.html",
+			"sha256": "7aa1bf81183a2bb5ac4059c804e5a2488712d6371c79aa33ea6fae5f1ff840ce",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/ochre-stone-studio-h11/styles.css",
+			"sha256": "8c0d89aeefbf69bdac51495091ea9d41e6df77d9a1d61577621c7e7e007cd26f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/orbital-frequency-summit-h22/index.html",
+			"sha256": "f9d8db4b8296656a2db6b604a293cfd41955bfe47a211b9cd84406af2e312f37",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/orbital-frequency-summit-h22/styles.css",
+			"sha256": "57bd569f7c21460609a808535f9c7984cead9c1d43ea231f288b94d4db8d2970",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/paper-circuit-agentic-saas-h16/index.html",
+			"sha256": "33ad9a9b0d952e9b68bd35e2c232b2e1088e864b6386252033449758d94013ce",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/paper-circuit-agentic-saas-h16/styles.css",
+			"sha256": "94c5747ba3644df079848b5e8ee8d2deca8620b502e1717ce1d3c74af7da6c55",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/riso-rebel-fest-h20/index.html",
+			"sha256": "355dcb7ecbe3fab5067f018c71624858127d9b03ef548018ec1efc7415f9e9fe",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/riso-rebel-fest-h20/styles.css",
+			"sha256": "3f87c8ac1c3af394a02d009ead470c605dcc543a63f59aaf3e12e7a20afef0dd",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/saaj-heritage-bazaar-h90/index.html",
+			"sha256": "7f2cd2f52da43b54b7136f52fb0a82221eed9d2c8e3b832fda4c227e9b8bc0ad",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/saaj-heritage-bazaar-h90/script.js",
+			"sha256": "7751b1ca7ad2fe3b6ee2dc4c83b4df7cd62b877464a8f5b7059ea94e67fee948",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/saaj-heritage-bazaar-h90/style.css",
+			"sha256": "0553589da314fd4251f1aaa67f0cf4abcfc7fca17ffbbae4d99b27cf5b0251c3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/sencha-atelier-h12/index.html",
+			"sha256": "c866eb4db42482e5992bf9b28b9cab4793ada079d7813e6ee55d4a8c29be7178",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/sencha-atelier-h12/styles.css",
+			"sha256": "183f2cd60cc60b83b1204fb94c4447a2d216c9746e7b03b32d6f556910a81645",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/sentinel-meridian-h77/index.html",
+			"sha256": "05888edb2855f71a86bab612a9995aded68260919fb060f82003dedc1ebe9cc5",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/sentinel-meridian-h77/styles.css",
+			"sha256": "ec81b9aaf594554d716366258e55989d7de6f27508a4a6fab3d3fd5883fd98ef",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/slate-stone-architectural-h73/index.html",
+			"sha256": "c8d882e91f583471546c4ccce7e37c4b78fc545f3d9a694e575943bbaf753ef3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/slate-stone-architectural-h73/styles.css",
+			"sha256": "2ee0648774e5dfde1bfceca7dd05a7f46bba814591688fce3166acfd46a9893d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/slow-roast-atelier-h84/index.html",
+			"sha256": "e56f66489c057ace4487a931ae147448b4204352d299c3af7d8d3e470a0ee727",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/slow-roast-atelier-h84/styles.css",
+			"sha256": "8d9224db12e3d5688fd2d7383bc21f79f0f7509d9854955250fd32284b84a7df",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/snip-and-snout-grooming-h18/index.html",
+			"sha256": "b6e807b51571e286ff52647167659eebd183f182722485a26e0039b774660a32",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/snip-and-snout-grooming-h18/script.js",
+			"sha256": "4db551b636cc27d246dca54166d1d60e5d3def8147b54d2b3f94cee2f14b292e",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/snip-and-snout-grooming-h18/styles.css",
+			"sha256": "35b2f842541edea7c5c0848fd4fd5274fb9a7679d03a422f2031cc75ff90ff49",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/solace-wellness-grid-h13/index.html",
+			"sha256": "0029e34c766743fb03de9a5b5c5ca1b946384de5bb03087161869f9242c90e37",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/solace-wellness-grid-h13/styles.css",
+			"sha256": "5adcce6100f7ce79c7f0de7854c36a0ad9855db745fed8ab3d13092acb179eaf",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/spectral-orbit-novascale-h17/assets/styles.css",
+			"sha256": "2f7e2519436d4eb4a64700c80fef132a51761c5c7357748d5257a2f4bafb1d8b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/spectral-orbit-novascale-h17/index.html",
+			"sha256": "0fd5e69a790f01853bfce806db07d7c79c5fefceec9cc41c0974abdc1f6c1bcd",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/terra-craft-editorial-h58/assets/styles.css",
+			"sha256": "92aa1d62808fa67e80e4a6535ed84e5fd6c6bee8c87129f445ff7565d348b023",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/terra-craft-editorial-h58/index.html",
+			"sha256": "401bd40ec1abd0f7d109a498bf95c51f5cc3f88223d7bcb529b877135414d421",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/terra-siena-atelier-h14/index.html",
+			"sha256": "2e8255c8e0505eccb560d9033ad05ad9b48f8b159d2d080afefc2108c8c93a23",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/tide-table-h82/index.html",
+			"sha256": "bb25704f892cfac4187c01247ed8cfc544d2463894fa33f2fdb240af23ebc10f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/tide-table-h82/styles.css",
+			"sha256": "9319be6423f2adcb0c5f9c8706a4ff1716cdff8c9201747137755bfec0c06798",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vantix-precision-medicine-h34/index.html",
+			"sha256": "fc3b2a3f42241cc28a02703e6dc5cc7a10f54949db2815ecaa60ecc19f3fa09e",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vantix-precision-medicine-h34/styles.css",
+			"sha256": "3c67ea61ca03c2c8473534c7792456ffe4ee809b0d6c14b06a97bb857cd2b9ef",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vellum-apothecary-archive-h32/index.html",
+			"sha256": "fd4f4192496e32b00aecf416a33dec64924a124d400b3853810596332e10a158",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vellum-apothecary-archive-h32/styles.css",
+			"sha256": "d5e4fc47650ff77506d5ede5d90c2970e399836d17571e66a6cb56620c035af8",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vellum-atelier-h33/index.html",
+			"sha256": "c3cd8045acb3a7965a57beecfd64b9b87a580104293a5cbdc169007fdc156fb9",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vellum-atelier-h33/styles.css",
+			"sha256": "23820c7dd5fecd7adbf8d07404927705274ede7afb682ec2eb0ecd78425d4e76",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/velvet-vellum-agency-h4/assets/styles.css",
+			"sha256": "29cfa13c14c2c8032079d70c33979f0e3e25675dac6d3290bd39dcd57fa57c3c",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/velvet-vellum-agency-h4/index.html",
+			"sha256": "6fb47fccf40274255c9649b46cf7867e18970cdecaa0b1cc9389d1bf0d93bef9",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-atelier-h40/assets/styles.css",
+			"sha256": "81db386453adb547ff98ca18fb3522df3c89d1bfa99cab287a0455e5f3712733",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-atelier-h40/index.html",
+			"sha256": "8502d1a9e665e9d7c91ca731e4b37b463b0b9c5b1fd00d12277bff5f6a1ef976",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-pledge-bento-h49/index.html",
+			"sha256": "0b88ff41451d865f581953b5249334aba9e36aa4430c88263454dd9bdf419aa8",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-pledge-bento-h49/styles.css",
+			"sha256": "af66e209bf04fcb111d5d7a82917e9a7a49d549ba61bf129d54349820bfec829",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-salon-h91/index.html",
+			"sha256": "0bab456f6fed4b02bbf2e8cf4e90490f4414e2588502ed56122d70b1f81a361b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-salon-h91/styles.css",
+			"sha256": "a84682c6ba8a0609015789d4310e627325dce9e44cdda04133bc110eae3cba65",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-spine-clinic-h66/index.html",
+			"sha256": "22e20236ec05cb90d765941f271cc694caefcb386e368a976ff2bfbe378271ed",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdant-spine-clinic-h66/styles.css",
+			"sha256": "27357f1833ae53de078c74fde8dd57987f99c57af63ede4021fe13ee9117fffa",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdigris-trail-h50/index.html",
+			"sha256": "9fe8cf1db8d42b0bc67017e321d7f82972480cb20edee4a56c5b5cfe50a9752c",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/verdigris-trail-h50/styles.css",
+			"sha256": "f099b22a315755f01fa6ddbc395d70ebfc188ea82769fbb3158f20667c8c6c28",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vermillion-cram-h3/index.html",
+			"sha256": "ac898aace976c600fe32e7003d67c1ff9ea4bb9d8007ce86600473fcba00c74e",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vermillion-cram-h3/main.js",
+			"sha256": "0ffd2f037d700ca9e85b6a1b4db9fee5f5570ec3ef58d5a1a0a8e4843829810f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vermillion-cram-h3/styles.css",
+			"sha256": "bf5a75cd52bab2be5db209a4968c4d067286dcd7f971946984213113a20fe78f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vermillion-table-h83/index.html",
+			"sha256": "a6f051c1bb8f4420876be647750d298cebcb280a66b2d49657be8b612c5f8db3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/vermillion-table-h83/styles.css",
+			"sha256": "b1ced1096b2f64b2f12fecae6e77a83750ca1ba54aace89921b72bfe262d612f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltaic-grid-advisory-h75/index.html",
+			"sha256": "c543c90d19ab2d06e32ff2be9f921eca7cd9889cbe64e9920b2c8884f0f41d73",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltaic-grid-advisory-h75/styles.css",
+			"sha256": "d6f958420f7fa4a58f3cf551acfaf2d86c9475cb5ebf4f5fe6f2b2e6cdb2d963",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltframe-dev-h29/index.html",
+			"sha256": "ebb35df6a71f5003360e9ac336fa14013455adfb3ed19cbdbcc57c75f359c178",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltframe-dev-h29/styles.css",
+			"sha256": "4103c1d3ec2f7141d35901c35e805801e5b105e292ae0450caaa26315a89e802",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltic-showroom-h89/index.html",
+			"sha256": "bcc95f56e451c351c4b53a59e6d21a33f1ef170d64c1ca1005ac1fd2fc452014",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltic-showroom-h89/styles.css",
+			"sha256": "2c22084a19e1774cc62bc2b7c12c9bf8ce431e26a2d8da9aaae7eb78377d6e9a",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltline-automation-h60/index.html",
+			"sha256": "61d4ff1098b338cd5567058ce37faaa43b869d8ff5cc5fe3d479eaca43d7ac65",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/voltline-automation-h60/styles.css",
+			"sha256": "163023e5f6d257c89e13da6b536e4a422d0af5a156f43ba15eedc17d34ba0384",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "landing-pages/wayfare-expedition-journal-h86/index.html",
+			"sha256": "961aff5287b646b6720e3a7a57ed983028c94837ebee3cd419516f139627ad58",
+			"review": "Manual layout review: removed an unnecessary generic aspect-ratio fallback because every visual slot already has explicit dimensions. All original gradients, inline icons, copy and controls are unchanged. No media was added."
+		},
+		{
+			"path": "landing-pages/wayfare-expedition-journal-h86/main.js",
+			"sha256": "7a2c9e58a73dc3d9b4bdbad6e5453036d62fa5c060dd482b9de70f2c804ced70",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "landing-pages/wayfare-expedition-journal-h86/styles.css",
+			"sha256": "265f804710a8c3736b4c414ba5c45436132d846021aad279d1f7ac82656d3e64",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/circuit-ledger-h15/index.html",
+			"sha256": "832fb489cb7a8d18d2aa01cd4d5e0f18c8c90d8a878ca6e333aa25db887ff0b5",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/circuit-ledger-h15/styles.css",
+			"sha256": "ae21a6d8bba44c9ba57b0b82998d56a6aaab72fdaa8bb49a19eb3deb4e7525c2",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/cobalt-bento-folio-h43/index.html",
+			"sha256": "e647f1185db995ce808af95d16ab172f2dcc722acdf483da77c67f5994ab2e96",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/cobalt-bento-folio-h43/styles.css",
+			"sha256": "981885f4717828deb8973d557c0768a8cbceb6ef80be37d3b8a40eb28aa6e394",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/crimson-press-kit-h25/index.html",
+			"sha256": "ec662d4ce70fe9b52ef2692d1db089f4edbded091d872faa036bef842a7fe445",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/crimson-press-kit-h25/script.js",
+			"sha256": "339457338835425a9c89a0b73cc5358296c20472896e9da1b70826c5ce73b8c3",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/crimson-press-kit-h25/styles.css",
+			"sha256": "5c15239823b2daf16a5993976fa89b5790d48586688fb52dd49660bedaf3a647",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/electric-volt-folio-h45/index.html",
+			"sha256": "bdb0304bfe57bdc501a00cdcc82ce898dbc534f750b7a94365e8d0a171d6a257",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/electric-volt-folio-h45/styles.css",
+			"sha256": "f1cead090646f4825b4947de80771930a9fda9c2fd977c673037784f7d90def5",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/inkpress-atelier-h46/index.html",
+			"sha256": "0ae5cf163d2edce116c04bc16999704c511305d9f136fe60aa59f1622faf8d0d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/inkpress-atelier-h46/styles.css",
+			"sha256": "9451fe9205c4d16e137ce5bb5be33dcedc3759c48ccb5c329096618286b7e2d1",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/lumen-folio-h19/index.html",
+			"sha256": "f2a622d4f20dafff21b282e927da6c343a9e30dce996babf1854d9863e99aaed",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/lumen-folio-h19/styles.css",
+			"sha256": "99fa6de31887f41c661a8da3e2b8c28f496e4ce379907f81f95ab5bb8785895a",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/meridian-drafthouse-h54/index.html",
+			"sha256": "e3ef742864c6ec0fe1542654c8a24ac4f84c065be602a5deee2c2c7dd99217ee",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/meridian-drafthouse-h54/styles.css",
+			"sha256": "c705c6914782eb858dc1c42c9f093424bffb7149ebe5c5d4087446b7eb43e633",
+			"review": "Manual layout review: zero-minimum hero and project grid tracks and a bounded headline clamp keep all content visible across six viewport widths. HTML, all six inline SVGs, existing graphics and notices are unchanged. No media was added."
+		},
+		{
+			"path": "portfolios/monogram-terminal-h42/assets/styles.css",
+			"sha256": "0c90c097b8fb23175abbc211d80efc8cbf3fafb850276729228d17cc92935508",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/monogram-terminal-h42/index.html",
+			"sha256": "4afeb1d5ae0b3cca3c18bf1280ae382cc827e129e99a6f5025a318af6a13ed79",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/nocturne-bento-h28/index.html",
+			"sha256": "39b1177488801bb0b77e38481041d337c436545423f321178004052f6d517bfe",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/nocturne-bento-h28/styles.css",
+			"sha256": "d035c44b169b4db5943afe1c725028fb4bb25de2ecfabab4568cefa8b3be2a7e",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/voltline-resume-h53/assets/styles.css",
+			"sha256": "323e9249cdeae55139837771193b676af2ee6f5f8f5ed17336fa9fda68961760",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/voltmark-engineer-terminal-h24/index.html",
+			"sha256": "40437d9b0e098465075ae9d68ad529908c0650a74093cff0ad6f3206208ad203",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "portfolios/voltmark-engineer-terminal-h24/script.js",
+			"sha256": "b1ed642928b82d1779356884a9ebf752ae6616028853a642e735db3f46196fad",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "portfolios/voltmark-engineer-terminal-h24/styles.css",
+			"sha256": "044973e1476fdf683e6474c0e1db7f1cc83fc854e31b8e39c81950047e12d483",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "shaders/shader-animation-integration/src/components/code-block.tsx",
+			"sha256": "69e30a78ec8d8db1582119fbfc0ce89caf8d92a3c4a80a45928a8e5069d963af",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-animation-integration/src/components/ui/shader-animation.tsx",
+			"sha256": "c884985da03b0467d4bd1601dbbee06993d587a8c4d27e4a32f51925112bd6da",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-flow-field-rings/src/components/code-block.tsx",
+			"sha256": "89d527629d82aa664fb1a2ead7dfe2f3ccf8703814e2247edc34436861506a48",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-flow-field-rings/src/components/ui/shader-animation.tsx",
+			"sha256": "598d90c44cd470e232e25ac9d8a6b96b326aab30b0d9ffe898274e31a55c5922",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-lines-showcase/src/App.tsx",
+			"sha256": "2d53c990bd59047dff16dc3695cba8c78652613987465d8a43c17997a4343290",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-lines-showcase/src/components/code-block.tsx",
+			"sha256": "0532bfa1f099929adce7ddd3d1b9c8f208745fc6e2b0cdebb6dad430210a70ba",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-lines-showcase/src/components/ui/shader-lines.tsx",
+			"sha256": "244ff40282dcf1b9aa3f7ee18d91cacda6abf327795a59ca111235ae72955b76",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "shaders/shader-lines-showcase/src/lib/snippets.ts",
+			"sha256": "9f5936c9fabf2bfb1cc26569bfc66ce09231fb1aeec041ceeceb9aee172bd930",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "templates/cyber-serif-template/index.html",
+			"sha256": "30103c3f2bbe7b6a8dac80a16255f8b7d004beee983e65d6eb753c39997e5b70",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "templates/stacking-cards-portfolio/index.html",
+			"sha256": "0d50437aea97c375b57708b1e52c3895ab8107184f2f36c7c0860bb25b70ed0b",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "templates/sticky-content-switch/index.html",
+			"sha256": "a2d5a881822d8c37ae0639c176461e8c06681c70424780f336fa05670f236125",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "templates/synapse-design-system/index.html",
+			"sha256": "a956791f436974c37629660f6f978cf2f7da8825035a016bd8e5458ed7187230",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "templates/vertical-clip-text-slide/index.html",
+			"sha256": "26069e17dba109586b3ffae091e58f8bdba92e463fa949e2bd4128eafb11e31d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/academia-classical-showcase/index.html",
+			"sha256": "534a7a7019b41e916df0512096b2db8549d30e27c26446995f24c2e538c09756",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/academia-classical-showcase/styles.css",
+			"sha256": "4f1b834b2b6d26781b22da8ab45f3599c83002afc4ae96f011e1968cac7cdf7d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/aperture-minimalist-dark/src/components/Logo.tsx",
+			"sha256": "8c875db4c9b900d56ca7dc2c230bfdac4c28d186cf442e20917ea0f489add5c9",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/aperture-minimalist-dark/src/index.css",
+			"sha256": "f667bfaf11625bed4a679f436876324302f9925c26ab491290b7ab8e7d9e72fd",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/art-deco-gatsby-showcase/index.html",
+			"sha256": "78829e0815062313394a918f3ce3f1c1b3ab1f9de371877f0a3ae9d49affc958",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/art-deco-gatsby-showcase/styles.css",
+			"sha256": "63e28e15a4d02da163aab64f40835310a16078736b83f0dd1d810bb24b0f2fed",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/aurora-flow-landing/index.html",
+			"sha256": "4611b8be6dd003faf9b82585bd1ec48fb62dc1fb1484560772f94aecaefb5e53",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/aurora-flow-landing/src/components/ui/Footer.tsx",
+			"sha256": "389d5c125d763d5234e039d52dcbf06099f702699bbc2bb57faf5193df6dfa4a",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/aurora-flow-landing/src/components/ui/Hero.tsx",
+			"sha256": "343a1a136d2c160aacd2e8de6cdb05cb5905849743b11e338ae8bdca52a39160",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/aurora-flow-landing/src/components/ui/Navbar.tsx",
+			"sha256": "ff77dda853633f827e9a441af7a6feb4e158703e3415f14e96d1061b4343977a",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/bauhaus-form-follows-function/index.html",
+			"sha256": "d6f188f2b20fff2c487868feacca9e445b062a27007e3cc7492938fdb5710853",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/bauhaus-form-follows-function/src/App.tsx",
+			"sha256": "e5d81f6878545f5b22bc4c81a64e333b2df768dd2b4ec08c9495ff200526b7b0",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/bitcoin-defi-aurum/index.html",
+			"sha256": "02490e08369e3312106336eb1e61ee3d0c1f83b0837b48d4cf69c6c17bc861a6",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/bitcoin-defi-aurum/src/components/ui/Logo.tsx",
+			"sha256": "70b982fbb90a27351f0087bc042f81a993540adaa29ee6e02bb8cc457684f5df",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/bold-typography-design-system/index.html",
+			"sha256": "0468e3e85f96d88261d46f665d6c1f0a5d032a21bfd6ecede22f96e598691e65",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/bold-typography-design-system/src/components/Journal.tsx",
+			"sha256": "f2aca93a946e5a718e7fe5439b94c0ad6ec0f5267893c709f767c156a183c575",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/bold-typography-design-system/src/components/Specimen.tsx",
+			"sha256": "0fe93b68d21ded1dcf305594ca3be4b06219e58807df6eee5935086701342667",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/bold-typography-design-system/src/index.css",
+			"sha256": "f2701e0f6f8bd76919548b7c8671d7c8d070a2404a767ebb23f0572fd182d23b",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/botanical-organic-serif/index.html",
+			"sha256": "738732f1e5e73d6de9e8ccafa79672d184788431403b27934565a8933e6b5717",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/botanical-organic-serif/src/App.tsx",
+			"sha256": "eb9e7da7e235095dbc02ebd58d1fea7456bf4e73a80604a1930440f4ad5776bf",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/botanical-organic-serif/src/ui.tsx",
+			"sha256": "e4bf8b86cace55bc9b7c5e9de3f4a70d1150470542c345617b88569b59eef2df",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/clay-design-system/src/components/Logo.tsx",
+			"sha256": "a4dcd3a3c5afb4108242dcf08913ad2aa4174c351ae9c92b2ffdc0a7429a86e3",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/copy-machine-pixel-perfect/src/components/ui/BoardCanvas.tsx",
+			"sha256": "d09afe3f0c262877fbc6984983ebdec5339b1f1c3b22e363d29b0982323750ef",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "ui-design/copy-machine-pixel-perfect/src/components/ui/TraceField.tsx",
+			"sha256": "d066f73635ec4bcbadf0c9f24719b06380590bb13dfdab7d48e8a3a9459c3a0e",
+			"review": "Original baseline documents, custom source and precise library grants reviewed; fresh or licensed geometry and system typography verified with the recorded source comparison, source notices and responsive interaction checks."
+		},
+		{
+			"path": "ui-design/copy-machine-setup/index.html",
+			"sha256": "efd72b092340499aaa125242721fb68292330eeaa6f02892b7201904c1ee78b6",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/corporate-trust-design-system/src/components/Hero.tsx",
+			"sha256": "35814f6c61ed0cc17e72a6baf7c903c6855879dfa45592223731c05e701a3fe4",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/corporate-trust-design-system/src/components/Logo.tsx",
+			"sha256": "d809b7e2457f7ebc1d97c39a4d2c1be05f9009c4c32f11f3636c702724d11542",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/cyberpunk-glitch-design-system/assets/styles.css",
+			"sha256": "b47e82e824ea71b4a82743261e0d0edddb42aaeb3af1da16d0f13be3f8572dea",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/cyberpunk-glitch-design-system/index.html",
+			"sha256": "3712005be97de5feaaca2444915eaa3e82555013a934e5e81eb152132f6eb60a",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/components/BoardSketch.tsx",
+			"sha256": "6f35c58185fe247520465fae484a79bc34d8420a7daf730ab9ffc200d20a991e",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/components/Hero.tsx",
+			"sha256": "1352050a29ad3b461c23a593dd34cd2b00e20331f88f164747e7372b1bd97ff6",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/components/Logo.tsx",
+			"sha256": "c39739da3cd944eca05c4ced21e0d55e5cdad12233cdf9269f85692cde9c8d7f",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/components/Pricing.tsx",
+			"sha256": "c237c2b3111ce873f41829efe909608a9b5b41e9e86c65197ae7435d1d9e7794",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/components/primitives.tsx",
+			"sha256": "f25401a5e2bae0f40c20f8b5322ea4481244c4de15631b469a35c1a34bbf9c54",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/components/Testimonials.tsx",
+			"sha256": "2cfae748407fd38d048e5e0f2bb9d3e859604ab0d58d2d566b97ff5238a0de11",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/handcraft-paper-ui/src/index.css",
+			"sha256": "df77b3a970c9be20bc35a7fb99ea0557fa42c32d2ee934d6737e7e81f632ce81",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/industrial-skeuomorphism/index.html",
+			"sha256": "50d376835d4f40801f0ca9052f7ab44c1cce3b3066dab00e274f1dd018a8d0a1",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/industrial-skeuomorphism/src/components/Hero.tsx",
+			"sha256": "eb9292697e6ae1f41c3e5ca87355c57e3fdbd96c7defd8b48e1963635ac76248",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/industrial-skeuomorphism/src/components/Showcase.tsx",
+			"sha256": "416dea7e7c5cd74413e4ada0bc77d90d3dac25c7e216648b3b76b76f8fab14d0",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/industrial-skeuomorphism/src/components/Testimonials.tsx",
+			"sha256": "a0012833672e3addafa91830545f7401506b155acc957f8f9c6ee3b599ff1348",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/kinetic-typography-poster/src/components/Noise.tsx",
+			"sha256": "a44b72fc191f881be5e96e3dfa9aa37fffa0b690debed8e8acb0578a4952cbeb",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/lumen-design-system/src/components/AmbientBackground.tsx",
+			"sha256": "484e7a0ce19fc5d674290b66c655778b7ec54290032dfc35dc520da9537a8e30",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/lumen-design-system/src/components/Logo.tsx",
+			"sha256": "7682bfe2db1bc1e443a1f8442816a70c066267ee356cc54a8283441e61adc5ae",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/lumen-design-system/src/components/ProductMock.tsx",
+			"sha256": "d60b88ce9a07d7109302be265b43f9f600ffd5a4da7d40dedfc99298bf19e7b8",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/luxury-editorial-design-system/index.html",
+			"sha256": "acb6e2656345d70ec6f4b60460d3d956294a7e982b614e740b46ec7a55e49b6d",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/luxury-editorial-design-system/src/components/Primitives.tsx",
+			"sha256": "874da4d194e0e4aebc62e524bde59b322032e3019e5438361117b5e76d89b953",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/luxury-editorial-design-system/src/components/Testimonials.tsx",
+			"sha256": "60a46e8dbc2fe9f02726bfe850eeffea8a3c37578523bbde753de94d315cff5f",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/luxury-editorial-design-system/src/index.css",
+			"sha256": "4d09c05e46cd17aa485e983128186fdc797aa1ee4075ae16adcd4d8fd116c26e",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/material-you-showcase/src/components/Hero.tsx",
+			"sha256": "9c89ac0e6c3a95d6df248002f119e17e9aa2abfd285fc9af24c4585ba73048db",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/material-you-showcase/src/components/icons.tsx",
+			"sha256": "c14ac10c5ab1759b85dbd8f4cd100f3afab1a71363dc4c4f728779bea8db1b20",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/material-you-showcase/src/components/Journal.tsx",
+			"sha256": "8abb19f24898f79ed489d3358b6502d4a64879e484e9b38391f2b7504a42a4a2",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/material-you-showcase/src/components/Logo.tsx",
+			"sha256": "b9ce16fb52882782bbf8bdc3773a1bb156e05e56cf6ed2773fe042223e28794c",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/maximalism-dopamine-system/index.html",
+			"sha256": "93b9a1e23a74a1ae86a69d944d443d2f92ac960af866cb84a3bf6e26e10222ad",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/neo-brutalism-loud-system/src/index.css",
+			"sha256": "26e6026e8c8fa5bfea330a4ca9e15c185294926295b6549b01916f32ba1f11b6",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/neumorphism-soft-ui/index.html",
+			"sha256": "acf9e0c2838c0e6dacaf35bd6522fc0673381a3b71c45c8d722738839e1fa3d4",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/newsprint-editorial-press/index.html",
+			"sha256": "b4aec698e2ae7c5bac09168d9fb0526222cacd1d7002e9c33673e254b6842d80",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/newsprint-editorial-press/src/components/sections/Dispatches.tsx",
+			"sha256": "cd4d20e6cc7aaf6329a7f205897606f2e2817993833bbf431076bf63bea0ad4c",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/newsprint-editorial-press/src/components/ui/EditorialImage.tsx",
+			"sha256": "4ccb4ddb7f988f96714ccbb10740019c6d2e2c49f02240b95c45182d1af59031",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/newsprint-editorial-press/src/index.css",
+			"sha256": "0b32d25246317bb9bf0a30b8975d9e26f186b36d997ffb0732f12658f370c315",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/playful-geometric-design-system/src/App.tsx",
+			"sha256": "e751b24ee28b2a5db7e77f78fcfe0d28521691b302b71736368e3105ed41e164",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/playful-geometric-design-system/src/illustration.tsx",
+			"sha256": "162a848043c7e79994af58c96f109f49278c8781bc31b12095f14db3c1a4e403",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/playful-geometric-design-system/src/shapes.tsx",
+			"sha256": "e53d3d4700513e15a9205ea9d799f2bde86f9d59a3419039d2ed2f7b7b38128f",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/playful-geometric-design-system/src/ui.tsx",
+			"sha256": "8767fcabef878aeb023eafd594af8a571623508b0d24ddfbde706af433941db3",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/retro-90s-nostalgia-design-system/index.html",
+			"sha256": "0cabde63a1ecea76a18f13062f4c21c4ee6de30f1d5b49a9e42184a65f2efc46",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/scaffold-ready-splash/src/components/ui/ScaffoldReady.tsx",
+			"sha256": "357eb3500d081760cd45f1f9e579beb9c68c91f0689b983fee69d27098128277",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/serif-editorial-design-system/src/components/Plates.tsx",
+			"sha256": "bb8e61ae68c238408629c586d675c1fa220df3b3eac2982cec06510854b7b61f",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/serif-editorial-design-system/src/index.css",
+			"sha256": "3b688285fd80215211d1b070bbb4a9265c52c92c58201c543cd253e04730a594",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/swiss-design-system/assets/styles.css",
+			"sha256": "e989b8597f384bb606115f8e88d5121f973fc6803ddc0a31227d82c09c9b98e9",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/swiss-design-system/index.html",
+			"sha256": "168954eb32217bef9f4c21a3743e9b1d9e86b27c5998427b9472a7dcf8acd8f1",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/vaporwave-outrun-design-system/src/components/Logo.tsx",
+			"sha256": "9239eb908745a843177d33c86fc72c7ad52e157a880fd6604618ce387d4a7453",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/verdant-organic-design-system/index.html",
+			"sha256": "6fdf6afb2d8cffd585b8ccfb84ab79bd1cff589964cc18ae67bb3c54dbbc0339",
+			"review": "Media-free source review: standalone original drawings were removed. CSS gradients and DOM geometry were authored directly, image selectors and interactive update bindings were converted, and pre-existing licensed inline paths and notices were preserved. No disputed media was embedded or transformed."
+		},
+		{
+			"path": "ui-design/verdant-organic-design-system/src/components/Botanical.tsx",
+			"sha256": "24701abbb6e33710f0d4d0282be504a3af4f1da530e7638ee864609970e27e26",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/verdant-organic-design-system/src/components/Hero.tsx",
+			"sha256": "8d6417fe0dc07933753ad18cf19975bbccfe3cd983f7e56d6c7a83a157e9fe9f",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/verdant-organic-design-system/src/components/HowItWorks.tsx",
+			"sha256": "38a1fe7ec4c4fa00880217836dd3ee7412986f80639948168a377d9c9d41e35b",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		},
+		{
+			"path": "ui-design/verdant-organic-design-system/src/components/Logo.tsx",
+			"sha256": "4f01b4fd341abbf156022d3ba1a92817b9438e51d7e5f814461214ecdf642a93",
+			"review": "Original baseline briefs and implementation were reviewed against removed and captured source. Custom geometry, procedural artwork and exact licensed icon paths were assessed separately; applicable grants and full notices are recorded in compliance/inline-icon-provenance.json."
+		}
+	],
+	"licenses": [
+		{
+			"path": "compliance/licenses/heroicons-react-1.0.6.txt",
+			"sha256": "75523ddd65d9620bea09f84e89d0c373b4205a3708b8a1e9f9598a5438a3e641"
+		},
+		{
+			"path": "compliance/licenses/heroicons-react-2.2.0.txt",
+			"sha256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985"
+		},
+		{
+			"path": "compliance/licenses/material-design-icons-svg-0.14.15.txt",
+			"sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+		},
+		{
+			"path": "compliance/licenses/material-design-icons-svg-0.14.15-1.txt",
+			"sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+		},
+		{
+			"path": "compliance/licenses/phosphor-icons-core-2.1.1.txt",
+			"sha256": "ddbe6082ec3cf979db47e5af549d2849c5d6182b3e005ef91ce1dbb9eb122f11"
+		},
+		{
+			"path": "compliance/licenses/feather-icons-4.29.2.txt",
+			"sha256": "308028e93fcf84972523cdf6e616f73168546b4953895f516d01287f16fe7bee"
+		},
+		{
+			"path": "compliance/licenses/lucide-static-1.72.0.txt",
+			"sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+		},
+		{
+			"path": "compliance/licenses/lucide-react-0.469.0.txt",
+			"sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+		}
+	],
+	"notices": [
+		{
+			"path": "THIRD_PARTY_NOTICES.md",
+			"sha256": "92b38e08b505eec847d7e5224e8f623b974b638e613f3a31dfbe471087fe684e"
+		},
+		{
+			"path": "components-ui/background-paths-hero/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a22e89e26dc9b7ec73c39f32d8a9bc8fbc0faac7ea0c7e87e1db6d9aa2bb89bd"
+		},
+		{
+			"path": "components-ui/background-paths-hero/public/THIRD_PARTY_NOTICES.txt",
+			"sha256": "993057ed64ca82525ec0d63bf033dc546376896c3236922642a8579163fcfef3"
+		},
+		{
+			"path": "components-ui/crimson-mill-supply-card-h61/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "hero-sections/altitude-index-h38/THIRD_PARTY_NOTICES.txt",
+			"sha256": "f91fee6c7d153b3edc8fe2eb67a6c0290345aa868a222cce30153777b32b7347"
+		},
+		{
+			"path": "hero-sections/animated-text-rotate-hero/THIRD_PARTY_NOTICES.txt",
+			"sha256": "6d8d3695bf60f35325cf4a6af745c2c12f58f5ff57ce7fdc0a236432329a97e7"
+		},
+		{
+			"path": "hero-sections/animated-text-rotate-hero/public/THIRD_PARTY_NOTICES.txt",
+			"sha256": "6dc777244e440229a346673d8c632f2de0f80870dae2d24408328191d61d47f2"
+		},
+		{
+			"path": "hero-sections/helix-vault-h55/THIRD_PARTY_NOTICES.txt",
+			"sha256": "08c7d1106c5ecd01b2d432d9c9bf697439fe7dbd1674a9d4a3108c83bb34e692"
+		},
+		{
+			"path": "hero-sections/shape-landing-hero/THIRD_PARTY_NOTICES.txt",
+			"sha256": "54d94d1e96840b10df5f60e712c878b0fb13dba029bfa5710ef19a1a5042b769"
+		},
+		{
+			"path": "hero-sections/shape-landing-hero/public/THIRD_PARTY_NOTICES.txt",
+			"sha256": "ff7b8a8df1ec6bf47017e64bbc45ed066fc67c66992c2935ea19d325023c6cc3"
+		},
+		{
+			"path": "hero-sections/verdant-advisory-h10/THIRD_PARTY_NOTICES.txt",
+			"sha256": "c8ca633488569e6a483b512bbd75973296d3423bd1cab295878033b448fdd772"
+		},
+		{
+			"path": "landing-pages/aegis-console-h39/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/amber-foundry-h9/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/amberhaus-pet-atelier-h31/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/astral-veil-h6/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "landing-pages/axis-quotient-h30/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/azimuth-realty-engine-h36/THIRD_PARTY_NOTICES.txt",
+			"sha256": "767901cea66713b96789264b6f431f2a03e5d74df9ae4619ea91f7a17dc2a4be"
+		},
+		{
+			"path": "landing-pages/carbon-bloom-h95/THIRD_PARTY_NOTICES.txt",
+			"sha256": "cc206004d0a85b92a11f7dbdec7570aae05d020c22a3c7e03c8c617138f06c04"
+		},
+		{
+			"path": "landing-pages/cartwright-relocation-h47/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "landing-pages/cerulean-precision-collective-h67/THIRD_PARTY_NOTICES.txt",
+			"sha256": "e152937e1cc387a547501f573b192ab87e6a20081e32322557e639039e4adfbc"
+		},
+		{
+			"path": "landing-pages/citron-atlas-h79/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3dcbb70827de61aca711f25b4a37b64ed3e583bbdec57009bcc12b5bfbfd4e43"
+		},
+		{
+			"path": "landing-pages/claywell-solene-h5/THIRD_PARTY_NOTICES.txt",
+			"sha256": "08c7d1106c5ecd01b2d432d9c9bf697439fe7dbd1674a9d4a3108c83bb34e692"
+		},
+		{
+			"path": "landing-pages/cobalt-repairworks-h78/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/crimson-cut-studio-h72/THIRD_PARTY_NOTICES.txt",
+			"sha256": "08c7d1106c5ecd01b2d432d9c9bf697439fe7dbd1674a9d4a3108c83bb34e692"
+		},
+		{
+			"path": "landing-pages/dhara-heritage-edit-h88/THIRD_PARTY_NOTICES.txt",
+			"sha256": "2572f6f7914b7206867e5bcf7292deabc536a887931f7734e41b90edfa8df9a8"
+		},
+		{
+			"path": "landing-pages/ember-quietude-h26/THIRD_PARTY_NOTICES.txt",
+			"sha256": "c8ca633488569e6a483b512bbd75973296d3423bd1cab295878033b448fdd772"
+		},
+		{
+			"path": "landing-pages/evergreen-ledger-h94/THIRD_PARTY_NOTICES.txt",
+			"sha256": "7b1d9bd3a34719c320757966a77cd502937c4848bc31f355b493c4512cf512c3"
+		},
+		{
+			"path": "landing-pages/fernhollow-pet-wellness-h68/THIRD_PARTY_NOTICES.txt",
+			"sha256": "e32562ffb8077dbe5d206100744013757bf8d76adc6ff2474784997a8b2a371d"
+		},
+		{
+			"path": "landing-pages/freightleaf-clean-haul-h80/THIRD_PARTY_NOTICES.txt",
+			"sha256": "ca3818df3e0a58dd0365dcedde4fae3db7729769d68b3b12b1f58e3265067720"
+		},
+		{
+			"path": "landing-pages/graft-modular-h93/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/gridwright-h48/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/grove-kitchen-fresh-h70/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/halcyon-mesh-h56/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/harbour-hearth-h64/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/hearthwell-homeware-h71/THIRD_PARTY_NOTICES.txt",
+			"sha256": "d55cf0157a7b62fe4b7f30a4ff74218bae9de0d39646f1de85531f6a9e005d5c"
+		},
+		{
+			"path": "landing-pages/helix-strata-h76/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/ink-vermilion-personal-brand-h23/THIRD_PARTY_NOTICES.txt",
+			"sha256": "d55cf0157a7b62fe4b7f30a4ff74218bae9de0d39646f1de85531f6a9e005d5c"
+		},
+		{
+			"path": "landing-pages/kairos-academy-h0/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/lantern-broth-midnight-ramen-h8/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/lantern-loft-tutoring-h1/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/lumen-launch-h44/THIRD_PARTY_NOTICES.txt",
+			"sha256": "cc206004d0a85b92a11f7dbdec7570aae05d020c22a3c7e03c8c617138f06c04"
+		},
+		{
+			"path": "landing-pages/lumina-maternite-h2/THIRD_PARTY_NOTICES.txt",
+			"sha256": "c8ca633488569e6a483b512bbd75973296d3423bd1cab295878033b448fdd772"
+		},
+		{
+			"path": "landing-pages/obsidian-lacquer-h57/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/obsidian-meridian-h85/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/ochre-stone-studio-h11/THIRD_PARTY_NOTICES.txt",
+			"sha256": "d55cf0157a7b62fe4b7f30a4ff74218bae9de0d39646f1de85531f6a9e005d5c"
+		},
+		{
+			"path": "landing-pages/orbital-frequency-summit-h22/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/paper-circuit-agentic-saas-h16/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "landing-pages/saaj-heritage-bazaar-h90/THIRD_PARTY_NOTICES.txt",
+			"sha256": "7c96c9346d15f66bd285da90b8ca429be9cf3179558251ff613f0d70b966baf2"
+		},
+		{
+			"path": "landing-pages/slow-roast-atelier-h84/THIRD_PARTY_NOTICES.txt",
+			"sha256": "2572f6f7914b7206867e5bcf7292deabc536a887931f7734e41b90edfa8df9a8"
+		},
+		{
+			"path": "landing-pages/snip-and-snout-grooming-h18/THIRD_PARTY_NOTICES.txt",
+			"sha256": "02b8674ca3612719f2f28beb9dab4ecbf3e27a1565bdbff58bbaccce8543d27f"
+		},
+		{
+			"path": "landing-pages/solace-wellness-grid-h13/THIRD_PARTY_NOTICES.txt",
+			"sha256": "2572f6f7914b7206867e5bcf7292deabc536a887931f7734e41b90edfa8df9a8"
+		},
+		{
+			"path": "landing-pages/spectral-orbit-novascale-h17/THIRD_PARTY_NOTICES.txt",
+			"sha256": "08c7d1106c5ecd01b2d432d9c9bf697439fe7dbd1674a9d4a3108c83bb34e692"
+		},
+		{
+			"path": "landing-pages/terra-siena-atelier-h14/THIRD_PARTY_NOTICES.txt",
+			"sha256": "02b8674ca3612719f2f28beb9dab4ecbf3e27a1565bdbff58bbaccce8543d27f"
+		},
+		{
+			"path": "landing-pages/tide-table-h82/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/vantix-precision-medicine-h34/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/velvet-vellum-agency-h4/THIRD_PARTY_NOTICES.txt",
+			"sha256": "08c7d1106c5ecd01b2d432d9c9bf697439fe7dbd1674a9d4a3108c83bb34e692"
+		},
+		{
+			"path": "landing-pages/verdant-atelier-h40/THIRD_PARTY_NOTICES.txt",
+			"sha256": "02b8674ca3612719f2f28beb9dab4ecbf3e27a1565bdbff58bbaccce8543d27f"
+		},
+		{
+			"path": "landing-pages/verdant-pledge-bento-h49/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "landing-pages/verdant-salon-h91/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/verdant-spine-clinic-h66/THIRD_PARTY_NOTICES.txt",
+			"sha256": "e32562ffb8077dbe5d206100744013757bf8d76adc6ff2474784997a8b2a371d"
+		},
+		{
+			"path": "landing-pages/vermillion-cram-h3/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "landing-pages/voltframe-dev-h29/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/voltic-showroom-h89/THIRD_PARTY_NOTICES.txt",
+			"sha256": "a5a34c8615eb77aa83329a4dec4f33d8c8bc800d9109e4eb377c2a82ac80833e"
+		},
+		{
+			"path": "landing-pages/wayfare-expedition-journal-h86/THIRD_PARTY_NOTICES.txt",
+			"sha256": "c8ca633488569e6a483b512bbd75973296d3423bd1cab295878033b448fdd772"
+		},
+		{
+			"path": "portfolios/circuit-ledger-h15/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "portfolios/cobalt-bento-folio-h43/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "portfolios/electric-volt-folio-h45/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "portfolios/lumen-folio-h19/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "portfolios/meridian-drafthouse-h54/THIRD_PARTY_NOTICES.txt",
+			"sha256": "d55cf0157a7b62fe4b7f30a4ff74218bae9de0d39646f1de85531f6a9e005d5c"
+		},
+		{
+			"path": "portfolios/monogram-terminal-h42/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "portfolios/nocturne-bento-h28/THIRD_PARTY_NOTICES.txt",
+			"sha256": "2572f6f7914b7206867e5bcf7292deabc536a887931f7734e41b90edfa8df9a8"
+		},
+		{
+			"path": "portfolios/voltmark-engineer-terminal-h24/THIRD_PARTY_NOTICES.txt",
+			"sha256": "7b1d9bd3a34719c320757966a77cd502937c4848bc31f355b493c4512cf512c3"
+		},
+		{
+			"path": "shaders/grain-gradient-corners-lab/THIRD_PARTY_NOTICES.txt",
+			"sha256": "fcd2a92a44984ec83e3206f4e188758611803a9161491193fed1217411d9e1ed"
+		},
+		{
+			"path": "shaders/liquid-metal-foundry/THIRD_PARTY_NOTICES.txt",
+			"sha256": "fcd2a92a44984ec83e3206f4e188758611803a9161491193fed1217411d9e1ed"
+		},
+		{
+			"path": "shaders/shader-animation-integration/THIRD_PARTY_NOTICES.txt",
+			"sha256": "9abc4aa70aa4a0e27fbf6c13bd0e25e959e394f5767cd0204bed178f6c0f5a70"
+		},
+		{
+			"path": "shaders/shader-flow-field-rings/THIRD_PARTY_NOTICES.txt",
+			"sha256": "050630303e29226ccd52461eec42585909cb35e3294e9643a0541dae794b38b0"
+		},
+		{
+			"path": "shaders/shader-lines-showcase/THIRD_PARTY_NOTICES.txt",
+			"sha256": "db651d4d5e458c1d4e009128b0245dbefc1fc3263d4efb08050249925d1b55ea"
+		},
+		{
+			"path": "shaders/warp-checks-background-lab/THIRD_PARTY_NOTICES.txt",
+			"sha256": "fcd2a92a44984ec83e3206f4e188758611803a9161491193fed1217411d9e1ed"
+		},
+		{
+			"path": "templates/cyber-serif-template/THIRD_PARTY_NOTICES.txt",
+			"sha256": "806472d9cc509db7af83ba296ea25e0da8bbf2fc5fd1b536aa1fc1922d9f51dc"
+		},
+		{
+			"path": "templates/synapse-design-system/THIRD_PARTY_NOTICES.txt",
+			"sha256": "3c324ea9fba09692c9ae2a59bb36f3f19c9a83a5776e0e232efef990466a0140"
+		},
+		{
+			"path": "ui-design/cyberpunk-glitch-design-system/THIRD_PARTY_NOTICES.txt",
+			"sha256": "7562ab11744c02cee612d0fd20ea5fb07ad1cd5c72e08ef6f67d1d1beb1cca6a"
+		}
+	]
+}

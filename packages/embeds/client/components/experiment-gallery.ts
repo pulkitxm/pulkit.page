@@ -1,6 +1,6 @@
 import { type ExperimentProject, experimentIndexSchema } from "@pulkit/shared/experiments";
 import Fuse from "fuse.js";
-import { findElement, findElements, requireElement } from "../lib/dom.ts";
+import { findElements, requireElement } from "../lib/dom.ts";
 
 interface Filters {
   query: string;
@@ -111,27 +111,27 @@ export function setupExperimentGallery(root: HTMLElement): void {
     requireElement(item, "[data-card-category]", HTMLElement).textContent = project.category;
     requireElement(item, "[data-card-preview]", HTMLAnchorElement).href = project.preview;
     requireElement(item, "[data-card-source]", HTMLAnchorElement).href = project.source;
+    requireElement(item, "[data-card-link]", HTMLAnchorElement).dataset.cardVideo = project.video;
     const frame = requireElement(item, "[data-card-media]", HTMLElement);
-    requireElement(frame, "[data-artwork-css]", HTMLElement).style.setProperty(
-      "--art-hue",
-      String(project.hue),
-    );
-    let image = findElement(frame, "[data-artwork-image]", HTMLImageElement);
+    frame.replaceChildren();
     if (project.thumbnail) {
-      if (!image) {
-        image = document.createElement("img");
-        image.className = "absolute inset-0 size-full object-cover";
-        image.alt = "";
-        image.width = 1600;
-        image.height = 1000;
-        image.loading = "lazy";
-        image.decoding = "async";
-        image.dataset.artworkImage = "";
-        frame.append(image);
-      }
+      const image = document.createElement("img");
+      image.className = "absolute inset-0 size-full object-cover";
+      image.alt = "";
+      image.width = 1280;
+      image.height = 800;
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.dataset.previewPoster = "";
       image.src = project.thumbnail;
+      frame.append(image);
     } else {
-      image?.remove();
+      const placeholder = document.createElement("div");
+      placeholder.className =
+        "absolute inset-0 grid place-items-center bg-surface text-sm text-muted";
+      placeholder.dataset.previewPlaceholder = "";
+      placeholder.textContent = "Preview preparing";
+      frame.append(placeholder);
     }
     return item;
   };
@@ -223,7 +223,12 @@ export function setupExperimentGallery(root: HTMLElement): void {
       if (scroll) {
         const top = status.getBoundingClientRect().top + globalThis.scrollY - 16;
         if (Math.abs(globalThis.scrollY - top) > 4) {
-          globalThis.scrollTo({ top, behavior: "smooth" });
+          globalThis.scrollTo({
+            top,
+            behavior: globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "instant"
+              : "smooth",
+          });
         }
       }
     } catch {

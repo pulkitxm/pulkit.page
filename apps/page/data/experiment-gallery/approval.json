@@ -1,7 +1,8 @@
 {
   "version": 1,
   "repository": "pulkitxm/claude-directory",
-  "revision": "edaeace133815bfc90f6831cee8da63d72326132",
+  "revision": "85aa28e003e5788055c18915a9d3ccbb4c0e4038",
+  "tree": "b999253764c6f69170a1318cdca22f2298a643c8",
   "paths": [
     "3d-games/sidi-bou-said-3d-walk",
     "animations-loaders/apex-scroll-hero",
@@ -150,6 +151,7 @@
     "ui-design/verdant-organic-design-system"
   ],
   "registry_sha256": "7dc9fb91289c2a67563a113586c1c6842274e017485297dfc63716da3e5432a0",
-  "provenance_sha256": "6d7caa562d0f85ce5c9aa7bda5e489e1eaf255171877df5c507115379c90b48a",
-  "license_sha256": "1c859b177f1b62fdc126921fe7db7b5cfc9ba254aaf388b16f71aa76771193a5"
+  "provenance_sha256": "eadc5efdeaf1b8e5866fb334a7c11a07cc0b249e39f70f5a029d8fdceac00ddd",
+  "license_sha256": "1c859b177f1b62fdc126921fe7db7b5cfc9ba254aaf388b16f71aa76771193a5",
+  "inline_artwork_sha256": "70c20c967bb48a335a57deb2086f82f4f213710d58b0ad4ee4a4e0f3de053562"
 }

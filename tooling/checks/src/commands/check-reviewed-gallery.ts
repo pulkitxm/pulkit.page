@@ -6,5 +6,5 @@ import { repositoryRoot } from "@pulkit/shared/repository";
 
 await verifyExperimentCatalogSource(repositoryRoot);
 console.log(
-  `Verified ${readExperimentCatalog(repositoryRoot).projects.length} explicitly approved gallery projects and their artwork provenance.`,
+  `Verified ${readExperimentCatalog(repositoryRoot).projects.length} explicitly approved gallery projects and their fresh capture provenance.`,
 );

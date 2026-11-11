@@ -40,7 +40,9 @@
     "check:types": "tsc -p tsconfig.json",
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "check:shell": "sh -n tooling/checks/install-hooks.sh && sh -n tooling/checks/install-media-tools.sh && sh -n tooling/checks/publish-blog.sh && sh -n .githooks/pre-commit",
-    "postinstall": "sh tooling/checks/install-hooks.sh"
+    "postinstall": "sh tooling/checks/install-hooks.sh",
+    "gallery:record": "bun packages/engine/src/captures/capture-projects.ts",
+    "gallery:finalize": "bun packages/engine/src/captures/finalize-project-captures.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

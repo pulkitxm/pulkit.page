@@ -23,10 +23,6 @@ cover: /assets/content/events/my-first-talk/10.webp
 
 ![My First Talk photo 7](/assets/content/events/my-first-talk/7.webp)
 
-![My First Talk photo 8](/assets/content/events/my-first-talk/8.webp)
-
-![My First Talk photo 9](/assets/content/events/my-first-talk/9.webp)
-
 ![My First Talk photo 10](/assets/content/events/my-first-talk/10.webp)
 
 ![My First Talk photo 11](/assets/content/events/my-first-talk/11.webp)

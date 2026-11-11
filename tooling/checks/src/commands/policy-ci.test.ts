@@ -304,7 +304,9 @@ test("deploys run in the CI workflow after the gate and only on main", () => {
   for (const id of ["deploy-page", "deploy-blog"]) {
     expect(job(jobs, id).needs).toBe("ci");
     expect(job(jobs, id).if).toContain("github.ref == 'refs/heads/main'");
-    expect(job(jobs, id).if).toContain("github.event_name == 'push'");
+    expect(job(jobs, id).if).toContain("github.event_name == 'workflow_dispatch'");
+    expect(job(jobs, id).if).toContain("inputs.publish == true");
+    expect(job(jobs, id).if).not.toContain("github.event_name == 'push'");
     expect(job(jobs, "ci").needs).not.toContain(id);
   }
   expect(
@@ -314,8 +316,7 @@ test("deploys run in the CI workflow after the gate and only on main", () => {
       )
       .map(({ name }) => name),
   ).toEqual(["ci.yml"]);
-  expect(job(jobs, "deploy-page").if).toContain("github.workflow == 'Sync guestbook'");
-  expect(job(jobs, "deploy-page").if).toContain("github.event_name == 'schedule'");
+  expect(job(jobs, "deploy-page").if).not.toContain("github.event_name == 'schedule'");
 });
 
 test("guestbook publishing uses Pukbot and the automatic token, then verifies the published revision", () => {
@@ -347,6 +348,8 @@ test("guestbook publishing uses Pukbot and the automatic token, then verifies th
             expect(step.with?.ref).toMatch(
               /^\$\{\{ github.event.pull_request.head.sha \|\| inputs.revision \|\| github.sha \}\}$/,
             );
+          } else if (id === "deploy-blog") {
+            expect(step.with?.ref).toMatch(/^\$\{\{ needs.ci.outputs.revision \}\}$/);
           } else if (["source", "tests", "guestbook"].includes(id)) {
             expect(step.with?.ref).toMatch(/^\$\{\{ needs.media.outputs.revision \}\}$/);
           } else {

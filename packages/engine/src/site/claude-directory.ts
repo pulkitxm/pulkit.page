@@ -1,5 +1,4 @@
 import { unescapeHtml } from "@pulkit/shared/html";
-import sharp from "sharp";
 import { stringify } from "yaml";
 import { isRecord } from "../lib/guards.ts";
 import {
@@ -12,7 +11,6 @@ import {
 import type { Directory, DirectoryProject, Page, PageMetadata, SiteContext } from "../types.ts";
 import { readPage } from "./read-page.ts";
 
-const repository = "https://raw.githubusercontent.com/pulkitxm/claude-directory/main/";
 const sectionPattern = /^<summary><b>(.+?) \(\d+\)<\/b><\/summary>$/;
 const rowPattern = /^\| \[[^\]]+\]\(\.\/([\w./-]+?)\/?\) \| (.+) \| (.+) \|$/;
 const summaryLength = 180;
@@ -113,50 +111,10 @@ export function parseDirectory(
     .map(({ project }) => project);
 }
 
-async function download(file: string): Promise<string> {
-  const response = await fetch(repository + file, {
-    headers: { "user-agent": "pulkit.page-build" },
-  });
-  if (!response.ok) {
-    throw new Error(`GitHub replied ${response.status} ${response.statusText} for ${file}`);
-  }
-  return response.text();
-}
-
-async function stargazers(): Promise<number> {
-  try {
-    const response = await fetch("https://api.github.com/repos/pulkitxm/claude-directory", {
-      headers: { accept: "application/vnd.github+json", "user-agent": "pulkit.page-build" },
-    });
-    const body: unknown = response.ok ? await response.json() : undefined;
-    return isRecord(body) && typeof body.stargazers_count === "number" ? body.stargazers_count : 0;
-  } catch {
-    return 0;
-  }
-}
-
-async function reencoded(project: DirectoryProject): Promise<DirectoryProject> {
-  if (!project.blur) {
-    return project;
-  }
-  try {
-    const source = Buffer.from(project.blur.slice(project.blur.indexOf(",") + 1), "base64");
-    const webp = await sharp(source).webp({ quality: 50 }).toBuffer();
-    return { ...project, blur: `data:image/webp;base64,${webp.toString("base64")}` };
-  } catch {
-    return { ...project, blur: "" };
-  }
-}
-
-export async function fetchDirectory(): Promise<Directory> {
-  const [readme, posters, dates] = await Promise.all(
-    ["README.md", "posters.json", "project-dates.json"].map(download),
+export function fetchDirectory(): Promise<Directory> {
+  return Promise.reject(
+    new Error("The UI experiment gallery is withheld pending asset and licensing review"),
   );
-  const projects = parseDirectory(readme ?? "", JSON.parse(posters ?? ""), JSON.parse(dates ?? ""));
-  return {
-    projects: await Promise.all(projects.map(reencoded)),
-    stars: await stargazers(),
-  };
 }
 
 const directoryPageLine = /^:::claude-directory[ \t]*$/m;

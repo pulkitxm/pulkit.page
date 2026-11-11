@@ -5,6 +5,6 @@ description: Open-source tools, apps, and experiments Pulkit has built and maint
 
 :::projects pulkitxm/tools-and-projects
 
-Every experiment from claude-directory is browsable and searchable on the [Claude Directory](/claude-directory/) page.
+The [UI experiment gallery](/claude-directory/) is temporarily unavailable during an asset and licensing review.
 
 More of my work lives on [GitHub](https://github.com/Pulkitxm).

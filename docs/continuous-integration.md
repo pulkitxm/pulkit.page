@@ -141,7 +141,11 @@ It also checks that every local check, lint, format and test script is reachable
 from `verify` or named in a workflow.
 
 Bun is pinned to 1.4.2. Runner jobs use `ubuntu-26.04`, registered in
-[.github/actionlint.yaml](../.github/actionlint.yaml).
+[.github/actionlint.yaml](../.github/actionlint.yaml). Media jobs reuse existing FFmpeg
+and ffprobe binaries. When either is missing, the shared installer uses the Linux
+Kernel Archives Ubuntu mirror with the runner's existing Ubuntu signature keys,
+restricted Ubuntu sources, bounded network retries and command timeouts. Installation
+failure stops the job before media validation.
 
 ## Caches in CI
 

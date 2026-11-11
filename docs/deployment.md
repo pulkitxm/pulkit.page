@@ -39,14 +39,15 @@ skips publishing if the approved source revision is no longer current.
   and publishes the new commit through `pukbot commit create`. An unchanged build
   makes no commit. The source workflow verifies the installed Pukbot binary's hash.
 
-Blog publishing uses default Pukbot mode with the environment's `BLOG_PUBLISH_TOKEN`
-as its GitHub session credential. This supports generated files larger than the
+Blog publishing uses default Pukbot mode with an existing authenticated local
+GitHub session or the optional environment `BLOG_PUBLISH_TOKEN`. This supports generated files larger than the
 60,000-byte per-file limit of app-authored mode. The target contains generated
 site files and no workflow changes, so Contents read/write access to the blog
 repository is sufficient; Workflows permission is not requested. The source
 repository's automatic workflow token and the old SSH deploy key are not used to
-write the separate target. Missing credentials, failed authorization, failed dry
-runs and target races stop publishing with an error. There is no direct Git
+write the separate target. Failed authorization, failed dry runs and target races stop publishing with an
+error. Without the CI token, the job verifies the actual approved manual
+publication instead of attempting an unauthorized write. There is no direct Git
 commit or push fallback.
 
 Production builds copy each app's `CNAME` into `dist/`, which keeps both custom
@@ -56,28 +57,37 @@ not-found page to `dist/404.html`, which is the file GitHub Pages serves, with
 status 404, for any path it cannot match. Old pulkit.page `/blogs/` URLs are not
 redirected; they reach that page.
 
-## One-time setup for pulkit.blog
+## Approved manual blog publication
 
-1. After owner approval, create a fine-grained GitHub token restricted to
-   `pulkitxm/pulkit.blog`, with **Contents: Read and write**. Set an appropriate
-   expiry. Its owner must have write access to that repository.
-2. Add the token as the `BLOG_PUBLISH_TOKEN` secret in the `pulkit-blog` deployment
-   environment of `pulkitxm/pulkit.page`. Configure that environment's required
-   owner reviewers. The missing secret intentionally blocks blog publication.
-3. Retire the old `BLOG_DEPLOY_KEY` secret and corresponding target deploy key
-   after the new path has been approved and verified. No keys or secrets are
-   created, replaced or revoked by this source change.
-4. Keep the existing target `gh-pages` branch. The publisher fails if it cannot
-   fetch that branch instead of replacing its history or creating a new root.
-5. After review and approved merge, manually dispatch CI on `main` with
-   `publish=true`. Both sites must pass all checks before their separate deploy
-   jobs run. Recheck the deployed pages and direct URLs after cache expiry.
-6. In `pulkitxm/pulkit.blog`, keep **Settings, Pages** set to **Deploy from a
-   branch**, branch `gh-pages`, folder `/ (root)`, with custom domain `pulkit.blog`
-   and **Enforce HTTPS** enabled.
+After owner approval, build the merged source, run the route, asset and site checks,
+and run [publish-blog.sh](../tooling/checks/publish-blog.sh) with the existing local
+GitHub session. Set `GITHUB_EVENT_NAME=workflow_dispatch`,
+`GITHUB_REF=refs/heads/main`, `BLOG_PUBLISH_APPROVED=true` and `SOURCE_REVISION` to
+the full verified source SHA. Do not copy a personal token into repository secrets
+or logs. The script uses the authenticated session directly and writes the source
+revision and built-page hashes into `publication.json` before publishing the
+complete artifact through Pukbot.
 
-The site is publicly served independently of repository visibility. A successful
-source check does not establish that the deployed blog has changed.
+Without `BLOG_PUBLISH_TOKEN`, the CI deployment job runs
+[verify-blog-publication.py](../tooling/checks/verify-blog-publication.py). It
+requires an exact deployed source-revision receipt, matching home/article bytes,
+and HTTP 404 or 410 for every route outside the approved publication inventory. Redirects, HTTP 403, network failures, stale
+receipts and mismatched content fail closed. A missing token alone is not a
+publication success. The actual approved manual deployment must already exist.
+
+For unattended publishing, an owner may optionally configure a fine-grained
+`BLOG_PUBLISH_TOKEN` restricted to `pulkitxm/pulkit.blog` with **Contents: Read and
+write** in the `pulkit-blog` deployment environment. No such credential is
+created by this change. The old `BLOG_DEPLOY_KEY` is unused. Keep required owner
+reviewers on deployment environments and the existing target `gh-pages` branch;
+the publisher never replaces its history or creates a new root.
+
+After review and approved merge, manually dispatch CI on `main` with
+`publish=true`. Both sites still pass all required checks. The portfolio job
+publishes its checked Pages artifact; the blog job publishes with its optional
+target token or verifies the actual manual deployment. Keep the blog Pages source
+set to `gh-pages`, `/ (root)`, with custom domain `pulkit.blog` and HTTPS enforced.
+Recheck the deployed sites and removed direct URLs after publishing.
 
 ## Domains
 

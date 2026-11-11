@@ -20,13 +20,23 @@ function fixture(
   const build = join(root, "build");
   mkdirSync(bin);
   mkdirSync(build);
+  mkdirSync(join(build, "my-first-talk"));
+  writeFileSync(join(build, "my-first-talk/index.html"), "synthetic article\n");
   for (const name of ["index.html", "404.html", "feed.xml", "sitemap.xml"]) {
     writeFileSync(join(build, name), "synthetic content\n".repeat(5000));
   }
   writeFileSync(join(build, "CNAME"), "pulkit.blog\n");
   const programs = {
-    gh: `printf "%s\\n" "\${PUBLISH_CAN_PUSH:-true}"`,
-    git: `case "$1" in
+    gh: `case "$1 $2" in
+  'auth status') [ "\${PUBLISH_EXISTING_SESSION:-false}" = true ]; exit $? ;;
+esac
+printf '%s\\n' "\${PUBLISH_CAN_PUSH:-true}"`,
+    git: `if [ "\${PUBLISH_REJECT_GIT_ENV:-false}" = true ]; then
+  for variable in GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES; do
+    if env | grep -q "^$variable="; then exit 97; fi
+  done
+fi
+case "$1" in
   diff) exit 1 ;;
   rev-parse) printf '%s\\n' "$SOURCE_REVISION" ;;
   ls-remote) printf '%s\\trefs/heads/gh-pages\\n' "\${PUBLISH_TARGET_HEAD:-$SOURCE_REVISION}" ;;
@@ -77,7 +87,7 @@ test("blog publishing fails closed without manual approval or a target-repositor
     fixture((_, invoke) => {
       const result = invoke(env);
       expect(result.status).toBe(1);
-      expect(result.stderr?.toString()).toMatch(/manual dispatch|BLOG_PUBLISH_TOKEN is required/);
+      expect(result.stderr?.toString()).toMatch(/manual dispatch|authenticated GitHub session/);
     });
   }
 });
@@ -127,5 +137,27 @@ test("a failed Pukbot dry run prevents publication", () => {
     const commits = trace.split("\n").filter((line) => line.startsWith("pukbot commit create"));
     expect(commits).toHaveLength(1);
     expect(commits[0]).toContain("--dry-run");
+  });
+});
+
+test("an existing local GitHub session can publish without storing a new token", () => {
+  fixture((_, invoke) => {
+    expect(invoke({ GH_TOKEN: "", PUBLISH_EXISTING_SESSION: "true" }).status).toBe(0);
+  });
+});
+
+test("temporary publishing does not inherit repository-control Git variables", () => {
+  fixture((root, invoke) => {
+    expect(
+      invoke({
+        PUBLISH_REJECT_GIT_ENV: "true",
+        GIT_DIR: join(root, "unrelated-git"),
+        GIT_WORK_TREE: join(root, "unrelated-worktree"),
+        GIT_INDEX_FILE: join(root, "unrelated-index"),
+        GIT_COMMON_DIR: join(root, "unrelated-common"),
+        GIT_OBJECT_DIRECTORY: join(root, "unrelated-objects"),
+        GIT_ALTERNATE_OBJECT_DIRECTORIES: join(root, "unrelated-alternates"),
+      }).status,
+    ).toBe(0);
   });
 });

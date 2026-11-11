@@ -9,7 +9,7 @@ import { loadLayouts } from "../render/layouts.ts";
 import { projectListKey, projectsLine } from "../render/projects.ts";
 import { articles, isNotFound } from "../seo/routes.ts";
 import type { ListedPage, Page, ProjectList, Site, SiteInventory } from "../types.ts";
-import { fetchDirectory, hasDirectory, withDirectoryPages } from "./claude-directory.ts";
+import { hasDirectory, loadDirectory, withDirectoryPages } from "./experiment-gallery.ts";
 import { fetchProjectList } from "./github-projects.ts";
 import { readGuestbook } from "./guestbook.ts";
 import { notFoundPage } from "./not-found.ts";
@@ -109,7 +109,7 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
 
 export async function readSite(url: string): Promise<SiteInventory> {
   const sources = [...readPages("."), notFoundPage()];
-  const directory = sources.some(hasDirectory) ? await fetchDirectory() : undefined;
+  const directory = sources.some(hasDirectory) ? loadDirectory() : undefined;
   const pages = directory ? withDirectoryPages(sources, directory.projects) : sources;
   const names = new Set(
     pages.flatMap((page) =>

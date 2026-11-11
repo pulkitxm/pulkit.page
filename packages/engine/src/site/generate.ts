@@ -14,7 +14,7 @@ import { crawlerOutputs } from "../seo/crawler-outputs.ts";
 import { cardOutputs } from "../seo/og-images.ts";
 import { isNotFound, notFoundFile } from "../seo/routes.ts";
 import type { Page, SiteInventory } from "../types.ts";
-import { directoryOutputs } from "./claude-directory.ts";
+import { directoryOutputs } from "./experiment-gallery.ts";
 import { readSite } from "./site-inventory.ts";
 
 function outputFor(route: string): string {

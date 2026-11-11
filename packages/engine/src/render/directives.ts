@@ -9,8 +9,8 @@ import {
   directoryFor,
   directoryStars,
   renderDirectory,
-} from "./claude-directory.ts";
-import { renderDirectoryProject } from "./claude-directory-project.ts";
+} from "./experiment-gallery.ts";
+import { renderDirectoryProject } from "./experiment-gallery-project.ts";
 import { galleryImage } from "./gallery-image.ts";
 import { renderGuestbook } from "./guestbook.ts";
 import { safeUrl } from "./html.ts";
@@ -209,16 +209,16 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
         },
       },
       {
-        name: "claudeDirectory",
+        name: "experimentGallery",
         level: "block",
-        start: (src) => src.indexOf(":::claude-directory"),
+        start: (src) => src.indexOf(":::experiment-gallery"),
         tokenizer(src) {
           const match = directoryDirective.exec(src);
-          if (!match && /^:::claude-directory\b/.test(src)) {
-            throw new Error("Invalid Claude Directory directive; use :::claude-directory");
+          if (!match && /^:::experiment-gallery\b/.test(src)) {
+            throw new Error("Invalid reviewed gallery directive; use :::experiment-gallery");
           }
           return match
-            ? directoryPages.create("claudeDirectory", match[0], {
+            ? directoryPages.create("experimentGallery", match[0], {
                 page: Number(match[1] ?? 1),
                 project: match[2],
               })
@@ -228,12 +228,13 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
           const { page, project } = directoryPages.read(token);
           const directory = directoryFor(context.site);
           return project
-            ? renderDirectoryProject(directory, project, context.route, context.assets)
+            ? renderDirectoryProject(directory, project, context.route)
             : renderDirectory(
                 directory,
                 directoryStars(context.site),
                 page,
                 context.route,
+                context.site.directory?.revision ?? "",
                 context.assets,
               );
         },

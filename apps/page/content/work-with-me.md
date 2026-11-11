@@ -26,7 +26,7 @@ Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [te
 
 ### UI experiments
 
-The interface experiment collection is undergoing an asset and licensing review. Its gallery, previews, and downloads are temporarily unavailable. The goal is a collection of independent implementations with documented asset rights.
+The [UI experiment gallery](/claude-directory/) presents reviewed independent implementations with original artwork, current previews, source folders, and documented asset rights.
 
 ### Hinge
 

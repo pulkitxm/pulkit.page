@@ -19,9 +19,9 @@ I launched a project, watched it do numbers I've never seen on anything I've mad
 
 ## UI experiments
 
-The project began as a collection of interface experiments. Its gallery, downloads, and demo material are now withheld during an asset and licensing review. Publicly accessible previews do not establish redistribution permission, and generated implementations can still involve third-party rights.
+The project began as a collection of interface experiments. Its original preview captures and unreviewed downloads remain withheld during an asset and licensing review. The [reviewed experiment gallery](https://pulkit.page/claude-directory/) now links to independent projects, current previews, and documented source and asset rights.
 
-The collection is being reviewed so that future examples use independent designs and original or properly licensed assets.
+Additional projects remain excluded until their source and redistribution rights have been reviewed.
 
 ## My first talk
 

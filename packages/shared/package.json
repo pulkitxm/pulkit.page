@@ -18,6 +18,8 @@
     "./files": "./src/node/files.ts",
     "./hash": "./src/node/hash.ts",
     "./repository": "./src/node/repository.ts",
+    "./experiments": "./src/content/experiments.ts",
+    "./experiment-catalog": "./src/node/experiment-catalog.ts",
     "./tailwind": "./src/node/tailwind.ts"
   },
   "scripts": {

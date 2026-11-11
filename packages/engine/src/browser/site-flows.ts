@@ -1,6 +1,7 @@
 import { availableParallelism } from "node:os";
 import type { Browser, Page } from "playwright";
 import { themeKey } from "./audit-config.ts";
+import { auditExperimentGallery } from "./experiment-gallery.ts";
 import { expect, report } from "./problems.ts";
 import { openSession } from "./session.ts";
 
@@ -14,6 +15,7 @@ type SystemScheme = "light" | "dark";
 interface SiteTargets {
   collections: readonly string[];
   navigationTarget: string;
+  galleryRoute?: string;
 }
 
 async function auditWithoutJavaScript(
@@ -237,11 +239,14 @@ export async function auditSiteFlows(
   browser: Browser,
   origin: string,
   paths: readonly string[],
-  { collections, navigationTarget }: SiteTargets,
+  { collections, navigationTarget, galleryRoute }: SiteTargets,
 ): Promise<void> {
   await auditWithoutJavaScript(browser, origin, paths);
   await auditThemes(browser, origin, navigationTarget);
   await auditBlockedStorage(browser, origin);
   await auditKeyboard(browser, origin);
   await auditTransitions(browser, origin, collections);
+  if (galleryRoute) {
+    await auditExperimentGallery(browser, origin, galleryRoute);
+  }
 }

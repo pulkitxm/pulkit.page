@@ -2,6 +2,7 @@ import { cpSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { bundleBrowserScripts } from "@pulkit/shared/bundle";
+import { writeGalleryLicenses } from "./gallery-licenses.ts";
 
 export const photoswipeStyles = fileURLToPath(
   new URL("dist/photoswipe.css", import.meta.resolve("photoswipe/package.json")),
@@ -23,7 +24,7 @@ export async function bundleEmbedScripts(
 ): Promise<void> {
   const entries = fileURLToPath(new URL("../client/entries/", import.meta.url));
   const entrypoints = readdirSync(entries)
-    .filter((file) => file.endsWith(".ts") && file !== "claude-directory.ts")
+    .filter((file) => file.endsWith(".ts"))
     .map((file) => join(entries, file));
   for (const entrypoint of entrypoints) {
     await bundleBrowserScripts({
@@ -37,6 +38,7 @@ export async function bundleEmbedScripts(
 
 export async function buildEmbedAssets(outdir: string): Promise<void> {
   await bundleEmbedScripts(join(outdir, "embeds"));
+  writeGalleryLicenses(join(outdir, "embeds"));
   cpSync(photoswipeStyles, join(outdir, "embeds/photoswipe.css"));
   cpSync(plyrStyles, join(outdir, "embeds/plyr.css"));
   cpSync(plyrIcons, join(outdir, "embeds/plyr.svg"));

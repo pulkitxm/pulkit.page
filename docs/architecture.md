@@ -279,8 +279,10 @@ GitHub over the network at build time and Turbo hashes only local files. Without
 the opt-out, an unchanged commit can replay an older Projects page. The render
 cache still applies inside that build.
 
-The former UI experiment gallery is withheld during rights review. Its directive
-fails builds, no gallery subpages are generated, and its browser bundle is excluded.
+The UI experiment gallery uses an explicit, revision-pinned approval list. Only
+reviewed projects enter the search index or generated pages. Retired routes,
+captures, raw source browsing and downloads remain withdrawn. See
+[reviewed gallery](reviewed-gallery.md) for the ingestion and artwork checks.
 
 [generation-cache.ts](../packages/engine/src/lib/generation-cache.ts) computes the
 version from every non-test `packages/*/src/**/*.ts` file, the demo showcases, `biome.json`,

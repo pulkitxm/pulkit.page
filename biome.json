@@ -131,6 +131,26 @@
   },
   "overrides": [
     {
+      "includes": [
+        "apps/page/data/experiment-gallery/registry.json",
+        "apps/page/data/experiment-gallery/provenance.json",
+        "apps/page/assets/experiment-artwork/**/*.svg"
+      ],
+      "formatter": {
+        "enabled": false
+      }
+    },
+    {
+      "includes": ["apps/page/assets/experiment-artwork/**/*.svg"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noSvgWithoutTitle": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["packages/*/src/**", "packages/*/test/**", "tooling/*/src/**"],
       "linter": {
         "rules": {

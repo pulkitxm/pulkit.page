@@ -52,11 +52,7 @@ jobs:
           restore-keys: bun-${{ runner.os }}-
       - run: bun install --frozen-lockfile
       - name: Install media tools
-        run: |
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update
-            sudo apt-get install --no-install-recommends -y ffmpeg
-          fi
+        run: sh tooling/checks/install-media-tools.sh
       - name: Check media budgets
         id: media
         continue-on-error: true
@@ -158,11 +154,7 @@ jobs:
           key: turbo-${{ runner.os }}-tests-${{ inputs.revision || github.sha }}
           restore-keys: turbo-${{ runner.os }}-tests-
       - name: Install media test tools
-        run: |
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update
-            sudo apt-get install --no-install-recommends -y ffmpeg
-          fi
+        run: sh tooling/checks/install-media-tools.sh
       - run: bunx turbo run verify:tests
     needs: media
   guestbook:
@@ -279,7 +271,8 @@ jobs:
       - uses: taiki-e/install-action@4076c08d76dba979c11a7285295b0716c1d67908
         with:
           tool: shellcheck
-      - run: shellcheck tooling/checks/install-hooks.sh tooling/checks/publish-blog.sh .githooks/pre-commit
+      - run: shellcheck tooling/checks/install-hooks.sh tooling/checks/install-media-tools.sh
+          tooling/checks/publish-blog.sh .githooks/pre-commit
   ci:
     name: CI
     if: always()

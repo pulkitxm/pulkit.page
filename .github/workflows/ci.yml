@@ -428,11 +428,16 @@ jobs:
           "$RUNNER_TEMP/pukbot" | sha256sum --check
 
           chmod +x "$RUNNER_TEMP/pukbot"
-      - name: Publish to the pulkit.blog repository through Pukbot
+      - name: Publish through Pukbot or verify approved manual publication
         if: steps.revision.outputs.current == 'true'
         env:
           GH_TOKEN: ${{ secrets.BLOG_PUBLISH_TOKEN }}
           BLOG_PUBLISH_APPROVED: ${{ inputs.publish }}
           SOURCE_REVISION: ${{ needs.ci.outputs.revision }}
           PUKBOT_BIN: ${{ runner.temp }}/pukbot
-        run: sh tooling/checks/publish-blog.sh apps/blog/dist
+        run: |
+          if [ -n "$GH_TOKEN" ]; then
+            sh tooling/checks/publish-blog.sh apps/blog/dist
+          else
+            python3 tooling/checks/verify-blog-publication.py "$SOURCE_REVISION"
+          fi

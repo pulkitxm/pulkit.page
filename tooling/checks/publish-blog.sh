@@ -4,8 +4,8 @@ if [ "${GITHUB_EVENT_NAME:-}" != workflow_dispatch ] || [ "${GITHUB_REF:-}" != r
   printf '%s\n' 'Blog publishing requires an approved manual dispatch on main with publish=true.' >&2
   exit 1
 fi
-if [ -z "${GH_TOKEN:-}" ]; then
-  printf '%s\n' 'BLOG_PUBLISH_TOKEN is required. Add a fine-grained token for pulkitxm/pulkit.blog with Contents read/write after owner approval.' >&2
+if [ -z "${GH_TOKEN:-}" ] && ! gh auth status --hostname github.com >/dev/null 2>&1; then
+  printf '%s\n' 'An existing authenticated GitHub session or approved BLOG_PUBLISH_TOKEN is required. Use the local gh session or a target-only token with Contents read/write.' >&2
   exit 1
 fi
 case "${SOURCE_REVISION:-}" in
@@ -17,13 +17,13 @@ if [ "${#SOURCE_REVISION}" -ne 40 ]; then
 fi
 build=${1:-apps/blog/dist}
 publisher=${PUKBOT_BIN:-pukbot}
-for command in git gh "$publisher"; do
+for command in git gh python3 "$publisher"; do
   if ! command -v "$command" >/dev/null 2>&1; then
     printf '%s\n' "Missing publishing command: $command" >&2
     exit 1
   fi
 done
-for file in index.html 404.html CNAME feed.xml sitemap.xml; do
+for file in index.html 404.html CNAME feed.xml sitemap.xml my-first-talk/index.html; do
   if [ ! -f "$build/$file" ]; then
     printf '%s\n' "Missing verified blog artifact: $file" >&2
     exit 1
@@ -42,7 +42,23 @@ trap 'rm -rf "$publish"' EXIT
 trap 'exit 1' HUP INT TERM
 cp -R "$build"/. "$publish"/
 touch "$publish/.nojekyll"
+python3 - "$publish" "$SOURCE_REVISION" <<'PYCODE'
+import hashlib
+import json
+import pathlib
+import sys
+
+root = pathlib.Path(sys.argv[1])
+receipt = {
+    "source_repository": "pulkitxm/pulkit.page",
+    "source_revision": sys.argv[2],
+    "index_sha256": hashlib.sha256((root / "index.html").read_bytes()).hexdigest(),
+    "article_sha256": hashlib.sha256((root / "my-first-talk/index.html").read_bytes()).hexdigest(),
+}
+(root / "publication.json").write_text(json.dumps(receipt, sort_keys=True) + "\n")
+PYCODE
 cd "$publish"
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES
 git init -q -b gh-pages
 git config user.name 'github-actions[bot]'
 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

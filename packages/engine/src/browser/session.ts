@@ -1,10 +1,75 @@
-import type { Browser, BrowserContext, BrowserContextOptions, Page } from "playwright";
+import type { Browser, BrowserContext, BrowserContextOptions, Page, Request } from "playwright";
 import { defaultViewport } from "./audit-config.ts";
 import { report } from "./problems.ts";
 
 export interface Session {
   context: BrowserContext;
   page: Page;
+}
+
+const pendingFailures = new Set<Promise<void>>();
+
+export async function verifiedPdfAbort(
+  url: string,
+  error: string | undefined,
+  origin: string,
+  navigation: boolean,
+): Promise<boolean> {
+  const target = new URL(url);
+  if (
+    !navigation ||
+    error !== "net::ERR_ABORTED" ||
+    target.origin !== origin ||
+    !target.pathname.toLowerCase().endsWith(".pdf")
+  ) {
+    return false;
+  }
+  try {
+    const response = await fetch(target, {
+      redirect: "error",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (
+      response.status !== 200 ||
+      response.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase() !==
+        "application/pdf"
+    ) {
+      return false;
+    }
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    return new TextDecoder().decode(bytes.subarray(0, 5)) === "%PDF-";
+  } catch {
+    return false;
+  }
+}
+
+export async function settleRequestFailures(): Promise<void> {
+  while (pendingFailures.size > 0) {
+    await Promise.all(pendingFailures);
+  }
+}
+
+export function recordRequestFailure(
+  request: Pick<Request, "url" | "failure" | "isNavigationRequest">,
+  origin: string,
+  scope: string,
+): void {
+  if (new URL(request.url()).origin !== origin) {
+    return;
+  }
+  const verification = verifiedPdfAbort(
+    request.url(),
+    request.failure()?.errorText,
+    origin,
+    request.isNavigationRequest(),
+  )
+    .then((verified) => {
+      if (!verified) {
+        report(scope, `Request failed for ${new URL(request.url()).pathname}`);
+      }
+    })
+    .finally(() => pendingFailures.delete(verification));
+  pendingFailures.add(verification);
 }
 
 export async function openSession(
@@ -42,9 +107,7 @@ export async function openSession(
     }
   });
   page.on("requestfailed", (request) => {
-    if (request.url().startsWith(origin)) {
-      report(scope(), `Request failed for ${new URL(request.url()).pathname}`);
-    }
+    recordRequestFailure(request, origin, scope());
   });
   return { context, page };
 }

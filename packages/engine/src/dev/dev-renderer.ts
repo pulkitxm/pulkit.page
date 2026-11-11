@@ -20,7 +20,7 @@ import {
   isNotFound,
   markdownPath,
 } from "../seo/routes.ts";
-import { directoryOutputs } from "../site/claude-directory.ts";
+import { directoryOutputs } from "../site/experiment-gallery.ts";
 import { renderSitePage } from "../site/generate.ts";
 import { readSite } from "../site/site-inventory.ts";
 import type { Page, SiteInventory } from "../types.ts";

@@ -48,8 +48,7 @@ jobs:
       - name: Verify the updated site
         if: steps.changes.outputs.changed == 'true'
         run: |
-          sudo apt-get update
-          sudo apt-get install --no-install-recommends -y ffmpeg
+          sh tooling/checks/install-media-tools.sh
           bun run ci
       - name: Install Pukbot
         if: steps.changes.outputs.changed == 'true'

@@ -26,7 +26,7 @@ Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [te
 
 ### UI experiments
 
-The [Claude directory](/claude-directory/) contains independent interface experiments with documented asset rights.
+The [UI experiment gallery](/claude-directory/) presents reviewed independent implementations with original artwork, current previews, source folders, and documented asset rights.
 
 ### Hinge
 

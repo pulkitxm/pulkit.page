@@ -8,12 +8,11 @@ import {
   directoryPageCount,
   directoryPageRoute,
   directoryProjectRoute,
-} from "../render/claude-directory.ts";
-import { directorySource } from "../render/claude-directory-card.ts";
-import { directoryProjectAt, directoryProjectLinks } from "../render/claude-directory-project.ts";
+} from "../render/experiment-gallery.ts";
+import { directorySource } from "../render/experiment-gallery-card.ts";
+import { directoryProjectAt } from "../render/experiment-gallery-project.ts";
 import { collectionItems, listingLimit } from "../render/listings.ts";
 import { projectListFor, projectListKey, projectsLine } from "../render/projects.ts";
-import { parentRoute } from "../seo/routes.ts";
 import type { ListedPage, PageRecord, Site } from "../types.ts";
 import { demoMarkdown, embedMarkdown } from "./embed-markdown.ts";
 import type { MarkdownNode } from "./html-fallback.ts";
@@ -82,16 +81,13 @@ function directoryMarkdown(context: DirectiveContext, page: number): string {
 
 function directoryProjectMarkdown(context: DirectiveContext, name: string): string {
   const { project } = directoryProjectAt(directoryFor(context.site), name);
-  const links = directoryProjectLinks(project);
   return [
     project.description,
     [
       `- Category: ${project.category}`,
-      `- Stack: ${project.stack}`,
-      links.live ? `- ${linkTo("Live preview", links.live)}` : "",
-      `- ${linkTo("Prompt", links.promptSource)}`,
+      `- ${linkTo("Current preview", project.preview)}`,
       `- ${linkTo("Source on GitHub", directorySource(project))}`,
-      `- ${linkTo("All projects", context.resolve(parentRoute(context.page.route)))}`,
+      `- ${linkTo("All projects", context.resolve(directoryBase(context.page.route, 0)))}`,
     ]
       .filter(Boolean)
       .join("\n"),

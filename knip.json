@@ -34,7 +34,8 @@
       "entry": [
         "src/commands/check-*.ts",
         "src/commands/optimize-media.ts",
-        "src/commands/fix-media.ts"
+        "src/commands/fix-media.ts",
+        "src/commands/sync-reviewed-gallery.ts"
       ],
       "ignoreBinaries": ["ffmpeg", "ffprobe"],
       "project": ["src/**/*.ts"]

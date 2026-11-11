@@ -279,7 +279,9 @@ GitHub over the network at build time and Turbo hashes only local files. Without
 the opt-out, an unchanged commit can replay an older Projects page. The render
 cache still applies inside that build.
 
-Project publication uses the approved project registry and documented asset permissions.
+The UI experiment gallery uses an explicit, revision-pinned approval list. Only
+reviewed projects enter the search index or generated pages. See
+[reviewed gallery](reviewed-gallery.md) for the ingestion and artwork checks.
 
 [generation-cache.ts](../packages/engine/src/lib/generation-cache.ts) computes the
 version from every non-test `packages/*/src/**/*.ts` file, the demo showcases, `biome.json`,

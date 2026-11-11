@@ -8,6 +8,7 @@ import { report, reportedProblems } from "../browser/problems.ts";
 import { settleRequestFailures } from "../browser/session.ts";
 import { auditSiteFlows } from "../browser/site-flows.ts";
 import { localServerUrl } from "../lib/server.ts";
+import { hasDirectory } from "../site/experiment-gallery.ts";
 import { readSite } from "../site/site-inventory.ts";
 
 const { pages, site } = await readSite("http://localhost");
@@ -36,7 +37,11 @@ try {
     auditLinks(documents, origin);
   }
   if (auditsSiteFlows) {
-    await auditSiteFlows(browser, origin, paths, { collections, navigationTarget });
+    await auditSiteFlows(browser, origin, paths, {
+      collections,
+      navigationTarget,
+      galleryRoute: pages.find(hasDirectory)?.route,
+    });
   }
 } finally {
   await browser?.close();

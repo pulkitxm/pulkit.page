@@ -1,3 +1,4 @@
+import type { ExperimentProject } from "@pulkit/shared/experiments";
 import type { GuestbookEntry } from "@pulkit/shared/guestbook";
 
 export interface SiteLink {
@@ -60,21 +61,10 @@ export interface ProjectList {
   projects: ListedProject[];
 }
 
-export interface DirectoryProject {
-  path: string;
-  name: string;
-  title: string;
-  category: string;
-  group: string;
-  provider: string;
-  blur: string;
-  summary: string;
-  description: string;
-  stack: string;
-  published: boolean;
-}
+export type DirectoryProject = ExperimentProject;
 
 export interface Directory {
+  revision: string;
   projects: DirectoryProject[];
   stars: number;
 }

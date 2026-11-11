@@ -1,32 +1,52 @@
-# Reviewed experiment gallery
+# Project preview gallery
 
-The portfolio gallery shows only paths explicitly approved in
-[approval.json](../apps/page/data/experiment-gallery/approval.json). Its registry,
-asset provenance and repository license snapshots are pinned by revision and
-SHA-256. Extra upstream projects are never automatically added. A reviewer must
-approve additions and the exact primary source revision before changing this list.
+The gallery lists only projects explicitly approved in
+[approval.json](../apps/page/data/experiment-gallery/approval.json). The pinned
+registry, empty standalone-asset inventory, inline artwork reviews and source
+license are verified with SHA-256. New upstream projects are never added
+automatically. Changes to the allowlist or source revision require manual review.
 
-Run `bun run gallery:sync /path/to/source-checkout` after updating the explicit
-approval. It reads only pinned metadata and approved original artwork with Git,
-checks provenance and hashes, and refuses unknown or locally changed artwork.
-Run `bun run check:gallery` to verify the snapshots against the pinned public
-source and ensure every approved project remains cleared and every imported artwork retains
-its hash and original MIT permission on current source main.
-Network failures and revoked projects fail this check. These checks complement
-manual rights review and do not establish legal clearance by themselves.
+Cards show fresh screenshots of the reviewed implementations. Hovering or focusing
+a card starts a muted recording when motion and data preferences permit it. Detail
+pages provide native playback controls, current preview links and source links.
+Search, category filters, pagination and project navigation remain available.
 
-Cards use unchanged original MIT SVG geometry with a local license and provenance
-manifest. Projects without approved artwork use original CSS shapes. Cards are
-illustrations, rather than captures of the previews. The gallery retains search,
-category filters, native pagination and project navigation. Links open only the
-current canonical preview and source folder. Public artwork records are at
-`/assets/experiment-artwork/provenance.json`; software notices are at
-`/assets/embeds/experiment-gallery-notices.txt`.
+Run `bun run gallery:sync <source-checkout>` after approving an exact source commit
+and tree. Run `bun run gallery:record --site <verified-media-free-build> --out <fresh-staging-directory> --workers 4` to produce fresh local recordings. Inputs
+must contain no standalone image, font, audio or video files. The recorder accepts
+only the local build, blocks service workers and external HTTP and WebSocket
+requests, and checks both 1280px and 390px viewports. It records at 1280 by 800 with
+30fps output. Scroll timing follows a gentle top-to-bottom-and-back sequence;
+short pages retain their visible animation. Posters are extracted from those
+fresh recordings. No vendor previews or previous gallery media are capture inputs.
 
-The versioned search index is `reviewed-projects.json`. Legacy project routes,
-The built artifact guard checks approved routes, exact index contents, artwork bytes and current publication permissions before publishing. The blog receives no gallery routes or artwork.
+Run `bun run gallery:finalize --site <verified-build> --source <source-checkout> --jobs <private-job-manifest>` after the complete sweep. Promotion checks every
+project's built files, reviewed Git subtree, runtime results, media budgets and
+notices. It requires every approved project and rejects unknown files. A manually
+reviewed history translation may change commit identifiers while preserving the
+recorded project trees and build hashes. Record the reviewed source revision and
+final source revision separately in that case. Do not regenerate unchanged
+recordings merely to change a commit identifier.
 
-Production publishing remains a manually approved workflow. Validate the current
-source previews first, then merge the reviewed portfolio change, publish the exact
-blog artifact and verify its revision receipt before dispatching the final portfolio
-publish workflow. Verify live approved routes and unpublished direct URLs afterward.
+Public provenance is `/assets/project-previews/provenance.json`. It records exact
+source and build identities, viewport, recipe, capture software, asset hashes and
+source-specific notices. The exact worker, producer and finalizer recipes are
+included as hashed text records. Software used to capture a recording is not
+redistributed with it. Source code and dependencies retain their applicable
+licenses; the repository MIT license does not replace those terms. Per-project
+`source-notices.txt` files accompany the captures, with line endings normalized to
+LF and original notice hashes retained. License and attribution text is preserved, and gallery software notices
+remain at `/assets/embeds/experiment-gallery-notices.txt`.
+
+`bun run check:gallery` verifies pinned public snapshots and current clearance.
+Revoked projects, changed reviewed artwork or notices, network failures and missing
+capture provenance block the check. These safeguards complement manual review;
+they do not establish originality or legal compliance.
+
+The versioned browser index remains `reviewed-projects.json`. The built artifact guard checks approved routes, exact capture hashes and current publication permissions.
+The blog receives no gallery routes or preview assets.
+
+Publishing uses the approved manual workflow. Verify the primary previews, merge
+only after the required checks pass, publish the exact blog artifact and verify
+its revision receipt, then dispatch the portfolio publish workflow. Verify the
+live gallery, playback and unpublished direct URLs afterward.

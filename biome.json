@@ -134,20 +134,10 @@
       "includes": [
         "apps/page/data/experiment-gallery/registry.json",
         "apps/page/data/experiment-gallery/provenance.json",
-        "apps/page/assets/experiment-artwork/**/*.svg"
+        "apps/page/data/experiment-gallery/inline-artwork.json"
       ],
       "formatter": {
         "enabled": false
-      }
-    },
-    {
-      "includes": ["apps/page/assets/experiment-artwork/**/*.svg"],
-      "linter": {
-        "rules": {
-          "a11y": {
-            "noSvgWithoutTitle": "off"
-          }
-        }
       }
     },
     {

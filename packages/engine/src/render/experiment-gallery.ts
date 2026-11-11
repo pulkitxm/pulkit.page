@@ -16,7 +16,7 @@ const pageSize = 24;
 const directoryScript = "/assets/embeds/experiment-gallery.js";
 const repository = "https://github.com/pulkitxm/claude-directory";
 const tagline =
-  "UI experiments with reviewed source and assets, original gallery artwork, and current previews.";
+  "Interactive interfaces, motion studies and developer tools. Watch a recording or open a live preview.";
 const groupOrder = [
   "hero-sections",
   "landing-pages",
@@ -179,5 +179,5 @@ export function renderDirectory(
     .map((project) => directoryCard(project, directoryProjectRoute(base, project)))
     .join("");
   const results = `<div class="min-w-0 flex-1"><p class="mt-0 mb-5 text-md text-muted" aria-live="polite" data-directory-status><span class="font-medium text-fg">${projects.length}</span> projects</p><section class="relative"><div class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 min-[80rem]:grid-cols-3" data-directory-list>${cards}</div><div class="rounded-[12px] border border-dashed border-line/60 py-20 text-center" hidden data-directory-empty><p class="m-0 text-md font-medium text-fg">No projects match your filters</p><p class="mt-1 mb-0 text-md text-muted">Try a different search or category.</p></div></section><div data-directory-pages>${pagination(base, page, directoryPageCount(projects))}</div><div data-directory-result-pages></div></div>`;
-  return `<div class="w-full pb-8 sm:pb-12">${header(stars)}<div class="mt-8 flex flex-col gap-6 sm:mt-12 min-[64rem]:flex-row min-[64rem]:items-start min-[64rem]:gap-10" data-directory data-index="${escapeHtml(directoryIndexPath(base))}?v=${escapeHtml(revision)}" data-revision="${escapeHtml(revision)}" data-base="${escapeHtml(base)}" data-page="${page}">${sidebar(projects)}${results}${templates(projects, base)}</div><p class="mt-8 text-xs text-muted"><a class="text-inherit underline underline-offset-4" href="/assets/experiment-artwork/provenance.json">Artwork provenance</a> · <a class="text-inherit underline underline-offset-4" href="/assets/embeds/experiment-gallery-notices.txt">Gallery software notices</a></p></div>`;
+  return `<div class="w-full pb-8 sm:pb-12">${header(stars)}<div class="mt-8 flex flex-col gap-6 sm:mt-12 min-[64rem]:flex-row min-[64rem]:items-start min-[64rem]:gap-10" data-directory data-index="${escapeHtml(directoryIndexPath(base))}?v=${escapeHtml(revision)}" data-revision="${escapeHtml(revision)}" data-base="${escapeHtml(base)}" data-page="${page}">${sidebar(projects)}${results}${templates(projects, base)}</div><p class="mt-8 text-xs text-muted"><a class="text-inherit underline underline-offset-4" href="/assets/project-previews/provenance.json">Capture provenance</a> · <a class="text-inherit underline underline-offset-4" href="/assets/embeds/experiment-gallery-notices.txt">Gallery software notices</a></p></div>`;
 }

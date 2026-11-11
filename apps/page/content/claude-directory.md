@@ -1,8 +1,8 @@
 ---
 title: UI experiments
 layout: directory
-description: Reviewed independent UI experiments with original artwork, current previews, and
-  documented asset provenance.
+description: Explore independent UI projects through fresh screenshots, short recordings,
+  interactive previews, and source code.
 ---
 
 :::experiment-gallery

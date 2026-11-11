@@ -1,0 +1,318 @@
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { extname, join, relative, resolve } from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
+import sharp from "sharp";
+
+const flags = new Map(
+  process.argv
+    .slice(2)
+    .flatMap((value, index, values) =>
+      value.startsWith("--") ? [[value.slice(2), values[index + 1] ?? ""]] : [],
+    ),
+);
+const root = fileURLToPath(new URL("../../../../", import.meta.url));
+const site = resolve(flags.get("site") ?? "");
+const output = resolve(flags.get("out") ?? "");
+const workers = Number(flags.get("workers") ?? 3);
+const only = flags.get("only");
+const skipped = new Set((flags.get("skip") ?? "").split(",").filter(Boolean));
+if (
+  !flags.has("site") ||
+  !flags.has("out") ||
+  !Number.isInteger(workers) ||
+  workers < 1 ||
+  workers > 4 ||
+  output === site ||
+  output.startsWith(`${site}/`)
+) {
+  throw new Error(
+    "Usage: gallery:record --site <verified-media-free-build> --out <fresh-staging-directory> [--workers 1..4] [--only <approved-path>] [--skip <approved-path,...>]",
+  );
+}
+const approval: { revision: string; paths: string[] } = JSON.parse(
+  readFileSync(join(root, "apps/page/data/experiment-gallery/approval.json"), "utf8"),
+);
+const queue = approval.paths.filter((path) => (!only || path === only) && !skipped.has(path));
+if (
+  queue.length === 0 ||
+  (only && !approval.paths.includes(only)) ||
+  [...skipped].some((path) => !approval.paths.includes(path))
+) {
+  throw new Error("Only explicitly approved projects may be captured");
+}
+const mediaExtensions = new Set([
+  ".svg",
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".webp",
+  ".avif",
+  ".gif",
+  ".ico",
+  ".mp4",
+  ".webm",
+  ".mov",
+  ".mp3",
+  ".wav",
+  ".woff",
+  ".woff2",
+  ".ttf",
+  ".otf",
+  ".bmp",
+  ".tiff",
+]);
+function files(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    if (entry.isSymbolicLink()) {
+      throw new Error("Symlinks cannot enter a capture source");
+    }
+    return entry.isDirectory() ? files(path) : [path];
+  });
+}
+function sha256(value: string | Uint8Array): string {
+  return createHash("sha256").update(value).digest("hex");
+}
+function projectFiles(path: string) {
+  const prefix = join(site, path);
+  if (!existsSync(join(prefix, "index.html"))) {
+    throw new Error(`Approved built project is missing: ${path}`);
+  }
+  return files(prefix)
+    .sort((a, b) => a.localeCompare(b))
+    .map((file) => ({ path: relative(prefix, file), sha256: sha256(readFileSync(file)) }));
+}
+function digest(records: { path: string; sha256: string }[]): string {
+  return sha256(records.map((record) => `${record.path}\0${record.sha256}\n`).join(""));
+}
+const allFiles = files(site);
+for (const file of allFiles) {
+  const bytes = readFileSync(file);
+  if (
+    mediaExtensions.has(extname(file).toLowerCase()) ||
+    bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) ||
+    bytes.subarray(0, 3).equals(Buffer.from([255, 216, 255])) ||
+    bytes.subarray(0, 6).toString().startsWith("GIF8") ||
+    bytes.subarray(8, 12).toString() === "WEBP" ||
+    bytes.subarray(4, 8).toString() === "ftyp" ||
+    ["wOFF", "wOF2", "OTTO"].includes(bytes.subarray(0, 4).toString())
+  ) {
+    throw new Error(`Source build contains standalone media: ${relative(site, file)}`);
+  }
+}
+mkdirSync(output, { recursive: true });
+const worker = fileURLToPath(new URL("./record-project-preview.mjs", import.meta.url));
+const toolHash = sha256(readFileSync(worker));
+const jobPath = join(output, "capture-job.json");
+const input = {
+  version: 1,
+  source_repository: "pulkitxm/claude-directory",
+  approved_paths: approval.paths,
+  frame_width: 1280,
+  frame_height: 800,
+  fps: 30,
+  tool_sha256: toolHash,
+  source_mode: "pinned-local-build",
+};
+if (existsSync(jobPath)) {
+  const previous = JSON.parse(readFileSync(jobPath, "utf8"));
+  if (JSON.stringify(previous) !== JSON.stringify(input)) {
+    throw new Error("A capture job with another source or recipe cannot be reused");
+  }
+} else {
+  writeFileSync(jobPath, `${JSON.stringify(input, null, 2)}\n`);
+}
+const server = Bun.serve({
+  hostname: "127.0.0.1",
+  port: 0,
+  async fetch(request) {
+    if (!["GET", "HEAD"].includes(request.method)) {
+      return new Response("Read only", { status: 405 });
+    }
+    const pathname = decodeURIComponent(new URL(request.url).pathname);
+    const path = resolve(site, `.${pathname}${pathname.endsWith("/") ? "index.html" : ""}`);
+    if (!path.startsWith(`${site}/`)) {
+      return new Response("Missing", { status: 404 });
+    }
+    const file = Bun.file(path);
+    return (await file.exists()) ? new Response(file) : new Response("Missing", { status: 404 });
+  },
+});
+const results: { path: string; status: string; error?: string }[] = [];
+const env = Object.fromEntries(
+  Object.entries(process.env).filter(([name]) => !name.startsWith("GIT_")),
+);
+try {
+  await Promise.all(
+    Array.from({ length: workers }, async () => {
+      for (let path = queue.shift(); path; path = queue.shift()) {
+        const name = path.replaceAll("/", "--");
+        const destination = join(output, name);
+        const before = projectFiles(path);
+        const buildHash = digest(before);
+        const recordPath = join(destination, "capture.json");
+        if (existsSync(recordPath)) {
+          const old = JSON.parse(readFileSync(recordPath, "utf8"));
+          if (
+            old.project_build_sha256 !== buildHash ||
+            old.capture_tool_sha256 !== toolHash ||
+            ["poster.webp", "demo.mp4"].some(
+              (file) =>
+                !existsSync(join(destination, file)) ||
+                sha256(readFileSync(join(destination, file))) !== old.assets[file]?.sha256,
+            )
+          ) {
+            throw new Error(`Changed capture output requires manual review: ${path}`);
+          }
+          results.push({ path, status: "retained-fresh-capture" });
+          continue;
+        }
+        mkdirSync(destination, { recursive: true });
+        const log = Bun.file(join(destination, "capture.log"));
+        try {
+          const child = Bun.spawn(
+            [
+              process.execPath,
+              worker,
+              "--url",
+              `${server.url.origin}/${path}/`,
+              "--out",
+              join(destination, "demo.mp4"),
+              "--tmp",
+              join(destination, "work"),
+            ],
+            { env, cwd: root, stdout: log, stderr: log },
+          );
+          if ((await child.exited) !== 0) {
+            throw new Error("Capture or responsive runtime validation failed");
+          }
+          if (digest(projectFiles(path)) !== buildHash) {
+            throw new Error("Source project changed during capture");
+          }
+          const poster = execFileSync(
+            "ffmpeg",
+            [
+              "-hide_banner",
+              "-loglevel",
+              "error",
+              "-i",
+              join(destination, "demo.mp4"),
+              "-vf",
+              `thumbnail=${90}`,
+              "-frames:v",
+              "1",
+              "-f",
+              "image2pipe",
+              "-c:v",
+              "png",
+              "pipe:1",
+            ],
+            { maxBuffer: 8 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] },
+          );
+          await sharp(poster)
+            .resize({ width: 1280, withoutEnlargement: true })
+            .webp({ quality: 80 })
+            .toFile(join(destination, "poster.webp"));
+          const metadata = JSON.parse(
+            execFileSync(
+              "ffprobe",
+              [
+                "-v",
+                "error",
+                "-select_streams",
+                "v:0",
+                "-show_entries",
+                "stream=width,height,r_frame_rate:format=duration,size",
+                "-of",
+                "json",
+                join(destination, "demo.mp4"),
+              ],
+              { encoding: "utf8" },
+            ),
+          );
+          const stream = metadata.streams[0];
+          if (
+            stream.width !== 1280 ||
+            stream.height !== 800 ||
+            stream.r_frame_rate !== "30/1" ||
+            Number(metadata.format.duration) > 40 ||
+            Number(metadata.format.size) > 6 * 1024 * 1024
+          ) {
+            throw new Error("Captured video exceeds its verified dimensions, frame rate or budget");
+          }
+          const assets = Object.fromEntries(
+            ["poster.webp", "demo.mp4"].map((file) => {
+              const bytes = readFileSync(join(destination, file));
+              return [file, { sha256: sha256(bytes), bytes: bytes.byteLength }];
+            }),
+          );
+          if (!assets["poster.webp"] || assets["poster.webp"].bytes > 512 * 1024) {
+            throw new Error("Captured poster exceeds its image budget");
+          }
+          const observations = JSON.parse(
+            readFileSync(join(destination, "observations.json"), "utf8"),
+          );
+          const notices = join(site, path, "THIRD_PARTY_NOTICES.txt");
+          const license = readFileSync(join(site, "LICENSE"), "utf8");
+          const terms = `${license}\n\n${existsSync(notices) ? readFileSync(notices, "utf8") : ""}`;
+          writeFileSync(join(destination, "source-notices.txt"), terms);
+          const capture = {
+            version: 1,
+            project: path,
+            captured_at: new Date().toISOString(),
+            source_mode: "pinned-local-build",
+            source_repository: "pulkitxm/claude-directory",
+            source_revision: null,
+            source_tree: null,
+            project_build_sha256: buildHash,
+            built_files: before,
+            capture_tool_sha256: toolHash,
+            command:
+              "bun run gallery:record --site <verified-media-free-build> --out <fresh-staging-directory> --workers 3",
+            viewport: { width: 1280, height: 800 },
+            fps: 30,
+            duration_seconds: Number(metadata.format.duration),
+            mode: observations.mode,
+            assets,
+            notices_sha256: sha256(terms),
+            software: {
+              playwright: { version: "1.63.0", license: "Apache-2.0" },
+              browser: {
+                version: observations.browser,
+                terms: "https://www.google.com/chrome/terms/",
+                redistributed: false,
+              },
+              ffmpeg: {
+                license: "GPL-3.0-or-later",
+                license_url: "https://www.gnu.org/licenses/gpl-3.0.html",
+                version: execFileSync("ffmpeg", ["-version"], { encoding: "utf8" }).split("\n")[0],
+                redistributed: false,
+              },
+            },
+            runtime: observations,
+          };
+          writeFileSync(recordPath, `${JSON.stringify(capture, null, 2)}\n`);
+          results.push({ path, status: "captured-and-checked" });
+          console.log(`Captured ${results.length}: ${path}`);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "Capture failed";
+          results.push({ path, status: "manual-review-required", error: message });
+          console.error(`Capture requires review: ${path}: ${message}`);
+        }
+        writeFileSync(
+          join(output, "progress.json"),
+          `${JSON.stringify({ version: 1, expected: approval.paths.length, completed: results.filter((item) => item.status !== "manual-review-required").length, results }, null, 2)}\n`,
+        );
+      }
+    }),
+  );
+} finally {
+  await server.stop(true);
+}
+if (results.some((result) => result.status === "manual-review-required")) {
+  process.exitCode = 1;
+}
+console.log(`Finished ${results.length} approved project capture attempts`);

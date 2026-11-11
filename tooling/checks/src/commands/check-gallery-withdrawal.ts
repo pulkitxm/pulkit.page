@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import process from "node:process";
 import { galleryLicenses } from "@pulkit/embeds/gallery-licenses";
@@ -24,25 +24,19 @@ const { pages, socialCards } = approvedGalleryPaths(
 );
 const previews = new Set(catalog.projects.map((project) => project.preview));
 const artwork = new Map(
-  catalog.projects
-    .filter((project) => project.thumbnail)
-    .map((project) => [
-      project.thumbnail.slice(1),
-      readFileSync(join(repositoryRoot, "apps/page", project.thumbnail.slice(1))),
-    ]),
+  builtFiles(join(repositoryRoot, "apps/page/assets/project-previews")).map((file) => [
+    relative(join(repositoryRoot, "apps/page"), file),
+    readFileSync(file),
+  ]),
 );
-for (const name of ["license.txt", "provenance.json"]) {
-  artwork.set(
-    `assets/experiment-artwork/${name}`,
-    readFileSync(join(repositoryRoot, "apps/page/assets/experiment-artwork", name)),
-  );
-}
 const failures: string[] = [];
 const noticeFile = join(root, "assets/embeds/experiment-gallery-notices.txt");
 if (!existsSync(noticeFile) || readFileSync(noticeFile, "utf8") !== galleryLicenses()) {
   failures.push("Gallery software license notices are missing or stale");
 }
+let publishedBytes = 0;
 for (const file of builtFiles(root)) {
+  publishedBytes += statSync(file).size;
   const path = relative(root, file);
   if (
     path.startsWith("claude-directory/") &&
@@ -64,6 +58,9 @@ for (const file of builtFiles(root)) {
     failures.push(`${path}: unpublished media or unsupported gallery script`);
   }
   if (path.startsWith("assets/experiment-artwork/")) {
+    failures.push(`${path}: retired abstract artwork`);
+  }
+  if (path.startsWith("assets/project-previews/")) {
     const expected = artwork.get(path);
     if (
       site !== "page" ||
@@ -71,7 +68,7 @@ for (const file of builtFiles(root)) {
       createHash("sha256").update(readFileSync(file)).digest("hex") !==
         createHash("sha256").update(expected).digest("hex")
     ) {
-      failures.push(`${path}: unverified gallery artwork`);
+      failures.push(`${path}: unverified fresh project preview`);
     }
   }
   if (!/\.(?:html|md|json|js)$/.test(path)) {
@@ -109,8 +106,11 @@ if (site === "page") {
   }
   for (const path of artwork.keys()) {
     if (!existsSync(join(root, path))) {
-      failures.push(`${path}: missing authorized artwork or notice`);
+      failures.push(`${path}: missing verified fresh recording or notice`);
     }
   }
+}
+if (site === "page" && publishedBytes > 900 * 1024 * 1024) {
+  failures.push("Portfolio artifact exceeds its 900 MiB publication budget");
 }
 reportFailures(failures, `Verified approved gallery routes and retired media for ${site}`);

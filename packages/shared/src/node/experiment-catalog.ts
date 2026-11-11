@@ -193,8 +193,8 @@ export function readExperimentCatalog(root: string): z.infer<typeof experimentIn
       title,
       category,
       group,
-      summary: `An independent ${category.toLowerCase()} experiment.`,
-      description: `An independent ${category.toLowerCase()} experiment with reviewed source and asset provenance. Open the current preview or source folder to explore the implementation.`,
+      summary: `A reviewed ${category.toLowerCase()} experiment.`,
+      description: `${title}: a reviewed ${category.toLowerCase()} experiment with source and asset provenance. Open its current preview or source folder to explore the implementation.`,
       thumbnail: visual ? `/assets/experiment-artwork/${name}/original-visual.svg` : "",
       hue: Number.parseInt(sha256(path).slice(0, 8), 16) % 360,
       source: experimentSource(path),
@@ -240,7 +240,7 @@ function artworkManifest(
               sha256: visual.sha256,
               origin: visual.origin,
               source_path: visual.path,
-              source_url: `https://github.com/${approval.repository}/blob/main/${visual.path}`,
+              source_url: `https://github.com/${approval.repository}/blob/${approval.revision}/${visual.path}`,
               license: "MIT",
               redistribution_permission:
                 "MIT permits redistribution with the included copyright and permission notice",
@@ -346,19 +346,43 @@ export async function verifyExperimentCatalogSource(
       throw new Error("The approved gallery snapshots do not match their primary source revision");
     }
   }
-  const current = await request(`${raw}main/compliance/projects.json`, {
-    redirect: "error",
-    cache: "no-store",
-    signal: AbortSignal.timeout(20_000),
-  });
-  if (!current.ok) {
+  const current = await Promise.all(
+    ["compliance/projects.json", "ASSET_PROVENANCE.json"].map((path) =>
+      request(`${raw}main/${path}`, {
+        redirect: "error",
+        cache: "no-store",
+        signal: AbortSignal.timeout(20_000),
+      }),
+    ),
+  );
+  const [registry, provenance] = current;
+  if (!registry?.ok || !provenance?.ok) {
     throw new Error("Current primary clearance could not be verified; stop for manual review");
   }
-  const registry = registrySchema.parse(await current.json());
-  for (const path of approval.paths) {
-    const entry = registry.find((record) => record.path === path);
-    if (entry?.status !== "cleared" || !completedReview(entry.review)) {
-      throw new Error(`Primary clearance was withdrawn or is uncertain: ${path}`);
+  try {
+    const reviewed = records(
+      approval,
+      readFileSync(join(root, dataPath, "registry.json")),
+      readFileSync(join(root, dataPath, "provenance.json")),
+    );
+    const latest = records(
+      approval,
+      Buffer.from(await registry.arrayBuffer()),
+      Buffer.from(await provenance.arrayBuffer()),
+    );
+    for (const entry of reviewed) {
+      const asset = latest.find((record) => record.path === entry.path)?.visual;
+      if (
+        entry.visual &&
+        (asset?.path !== entry.visual.path || asset.sha256 !== entry.visual.sha256)
+      ) {
+        throw new Error("Previously approved artwork was removed or changed");
+      }
     }
+  } catch (cause) {
+    throw new Error(
+      "Primary clearance was withdrawn or artwork permission changed; stop for manual review",
+      { cause },
+    );
   }
 }

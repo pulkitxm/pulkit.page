@@ -44,6 +44,9 @@ const experimentProjectSchema = z
     (project) =>
       project.name === project.path.replaceAll("/", "--") &&
       project.group === project.path.split("/")[0] &&
+      project.category === experimentCategories[project.group] &&
+      (!project.thumbnail ||
+        project.thumbnail === `/assets/experiment-artwork/${project.name}/original-visual.svg`) &&
       project.source === `https://github.com/${experimentRepository}/tree/main/${project.path}` &&
       project.preview === `${experimentPreviewOrigin}${project.path}/`,
   );

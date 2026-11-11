@@ -105,8 +105,13 @@ function setup() {
 }
 
 test("imports only the explicit approved subset with unchanged licensed artwork", () =>
-  fixture(({ root }) => {
+  fixture(({ root, approval }) => {
     const catalog = readExperimentCatalog(root);
+    const manifest = JSON.parse(readFileSync(join(root, assets, "provenance.json"), "utf8"));
+    expect(manifest.source_revision).toBe(approval.revision);
+    expect(manifest.assets[0]?.source_url).toBe(
+      `https://github.com/${experimentRepository}/blob/${approval.revision}/${visual}`,
+    );
     expect(catalog.projects).toHaveLength(1);
     expect(catalog.projects[0]?.path).toBe(project);
     expect(catalog.projects[0]?.name).toBe("hero-sections--mock-alpha");
@@ -182,7 +187,7 @@ test("rejects embedded images and scripts even with matching provenance hashes",
   }));
 
 test("checks pinned upstream bytes and fails when current primary clearance is revoked", () =>
-  fixture(async ({ root, source, registry }) => {
+  fixture(async ({ root, source, registry, provenance }) => {
     const pinned = (url: string): Response => {
       if (url.endsWith("/LICENSE")) {
         return new Response(license);
@@ -196,12 +201,27 @@ test("checks pinned upstream bytes and fails when current primary clearance is r
     await expect(
       verifyExperimentCatalogSource(root, (url) =>
         Promise.resolve(
-          url.includes("/main/")
+          url.endsWith("/main/compliance/projects.json")
             ? Response.json(registry.map((record) => ({ ...record, status: "pending" })))
             : pinned(url),
         ),
       ),
     ).rejects.toThrow("clearance was withdrawn");
+    for (const currentAssets of [
+      [],
+      [{ ...provenance.assets[0], license: "Unverified" }],
+      [{ ...provenance.assets[0], sha256: "b".repeat(64) }],
+    ]) {
+      await expect(
+        verifyExperimentCatalogSource(root, (url) =>
+          Promise.resolve(
+            url.endsWith("/main/ASSET_PROVENANCE.json")
+              ? Response.json({ ...provenance, assets: currentAssets })
+              : pinned(url),
+          ),
+        ),
+      ).rejects.toThrow("artwork permission changed");
+    }
     await expect(
       verifyExperimentCatalogSource(root, () =>
         Promise.resolve(new Response("Denied", { status: 403 })),
@@ -238,6 +258,23 @@ test("the browser index rejects legacy arrays, unverified media and historical s
         projects: [
           { ...entry, source: `https://github.com/${experimentRepository}/tree/old/${project}` },
         ],
+      }).success,
+    ).toBe(false);
+    expect(
+      experimentIndexSchema.safeParse({
+        ...catalog,
+        projects: [
+          {
+            ...entry,
+            thumbnail: "/assets/experiment-artwork/hero-sections--mock-other/original-visual.svg",
+          },
+        ],
+      }).success,
+    ).toBe(false);
+    expect(
+      experimentIndexSchema.safeParse({
+        ...catalog,
+        projects: [{ ...entry, category: "Unreviewed" }],
       }).success,
     ).toBe(false);
   }));

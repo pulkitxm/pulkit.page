@@ -8,6 +8,7 @@ import { readExperimentCatalog } from "@pulkit/shared/experiment-catalog";
 import { experimentIndexSchema } from "@pulkit/shared/experiments";
 import { reportFailures } from "@pulkit/shared/failures";
 import { repositoryRoot } from "@pulkit/shared/repository";
+import { approvedGalleryPaths } from "../lib/gallery-routes.ts";
 
 const site = process.argv[2];
 if (site !== "page" && site !== "blog") {
@@ -18,21 +19,9 @@ if (!existsSync(root)) {
   throw new Error(`Missing built site: ${root}`);
 }
 const catalog = readExperimentCatalog(repositoryRoot);
-const routes = [
-  "",
-  ...Array.from(
-    { length: Math.ceil(catalog.projects.length / 24) - 1 },
-    (_, index) => `pages/${index + 2}/`,
-  ),
-  ...catalog.projects.map((project) => `experiments/${project.name}/`),
-];
-const pages = new Set(
-  routes.flatMap((route) => [
-    `${route}index.html`,
-    route ? `${route.slice(0, -1)}.md` : "index.md",
-  ]),
+const { pages, socialCards } = approvedGalleryPaths(
+  catalog.projects.map((project) => project.name),
 );
-pages.add("reviewed-projects.json");
 const previews = new Set(catalog.projects.map((project) => project.preview));
 const artwork = new Map(
   catalog.projects
@@ -63,12 +52,7 @@ for (const file of builtFiles(root)) {
   }
   if (path.startsWith("og/claude-directory/")) {
     const child = path.slice("og/claude-directory/".length);
-    if (
-      site !== "page" ||
-      !routes.some((route) =>
-        ["card.png", "card-x.png"].some((name) => child === `${route}${name}`),
-      )
-    ) {
+    if (site !== "page" || !socialCards.has(child)) {
       failures.push(`${path}: retired gallery card`);
     }
   }

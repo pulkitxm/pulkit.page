@@ -26,7 +26,16 @@ export function galleryLicenses(): string {
     ) {
       throw new Error(`Gallery dependency rights require renewed manual review: ${name}`);
     }
-    const license = readFileSync(join(directory, file), "utf8");
+    const fullLicense = readFileSync(join(directory, file), "utf8");
+    let license = fullLicense;
+    if (name.startsWith("@fortawesome/")) {
+      const fontSection = fullLicense.indexOf("# Fonts: SIL OFL 1.1 License");
+      const codeSection = fullLicense.indexOf("# Code: MIT License", fontSection);
+      if (fontSection < 0 || codeSection <= fontSection) {
+        throw new Error("Font Awesome license sections require renewed manual review");
+      }
+      license = `${fullLicense.slice(0, fontSection)}Font-only OFL text omitted because no Font Awesome font files are distributed.\n\n${fullLicense.slice(codeSection)}`;
+    }
     const header =
       name === "fuse.js"
         ? (readFileSync(join(directory, "dist/fuse.mjs"), "utf8")
@@ -34,8 +43,8 @@ export function galleryLicenses(): string {
             ?.replace(/^\/\*\*\s*|^\s*\* ?/gm, "")
             .trim() ?? "")
         : "";
-    const digest = createHash("sha256").update(license).digest("hex");
-    return `${name} ${metadata.version}\nSource: https://www.npmjs.com/package/${name}/v/${metadata.version}\nLicense: ${expected}\nLicense file SHA-256: ${digest}\n\n${header}\n\n${license}`;
+    const digest = createHash("sha256").update(fullLicense).digest("hex");
+    return `${name} ${metadata.version}\nSource: https://www.npmjs.com/package/${name}/v/${metadata.version}\nLicense: ${expected}\nUpstream license file SHA-256: ${digest}\n\n${header}\n\n${license}`;
   });
   return `${notices.join("\n\n================\n\n")}\n`;
 }

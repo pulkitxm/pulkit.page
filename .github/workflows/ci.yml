@@ -401,8 +401,38 @@ jobs:
         with:
           name: built-blog
           path: apps/blog/dist
-      - name: Hold blog publication during publisher migration
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         if: steps.revision.outputs.current == 'true'
-        run: |
-          echo 'Blog publishing is held until the reviewed publisher migration is complete.' >&2
-          exit 1
+        with:
+          persist-credentials: false
+          ref: ${{ needs.ci.outputs.revision }}
+          clean: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        if: steps.revision.outputs.current == 'true'
+        with:
+          bun-version: 1.4.2
+      - name: Install verification dependencies
+        if: steps.revision.outputs.current == 'true'
+        run: bun install --frozen-lockfile
+      - name: Verify the publishing artifact
+        if: steps.revision.outputs.current == 'true'
+        run: bun tooling/checks/src/commands/check-gallery-withdrawal.ts blog
+      - name: Install Pukbot for blog publishing
+        if: steps.revision.outputs.current == 'true'
+        run: >
+          curl --proto '=https' --tlsv1.2 -fsSL
+          https://github.com/pulkitxm/pukbot/releases/download/v0.3.30/pukbot-linux-x86_64 -o
+          "$RUNNER_TEMP/pukbot"
+
+          printf '%s  %s\n' bd2539c5a5d45650bd80ba48efc6e42ca14251b2eb0e586622ed064652c8e033
+          "$RUNNER_TEMP/pukbot" | sha256sum --check
+
+          chmod +x "$RUNNER_TEMP/pukbot"
+      - name: Publish to the pulkit.blog repository through Pukbot
+        if: steps.revision.outputs.current == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BLOG_PUBLISH_TOKEN }}
+          BLOG_PUBLISH_APPROVED: ${{ inputs.publish }}
+          SOURCE_REVISION: ${{ needs.ci.outputs.revision }}
+          PUKBOT_BIN: ${{ runner.temp }}/pukbot
+        run: sh tooling/checks/publish-blog.sh apps/blog/dist

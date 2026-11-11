@@ -20,28 +20,34 @@ every pull request and push to main. A newer pull request or branch run cancels
 the older run for that ref. Main runs are isolated by workflow and revision and
 are allowed to finish.
 
-The two deploy jobs are part of the same workflow, so they appear in the same
-run graph after the `CI` gate. They run only on a push to `main` or a manual run
-on `main`, after every required job has passed. Each downloads its own
-`built-page` or `built-blog` artifact instead of building again. Deployments
-serialize per site and check the current main revision before publishing, so
-completed checks for an older revision skip deployment. The scheduled guestbook
-workflow also runs this pipeline against its published revision and can deploy
-pulkit.page after every check passes.
+The two deploy jobs run after the `CI` gate only when an owner approves publishing
+and manually dispatches CI on `main` with `publish=true`. The input defaults to
+false. Pushes, pull requests and scheduled guestbook updates do not deploy.
+Configure required owner approval on both deployment environments as an additional
+gate. Each job downloads its checked build artifact, serializes per site and
+skips publishing if the approved source revision is no longer current.
 
-- **Deploy pulkit.page** uploads `apps/page/dist` as this repository's Pages
-  artifact and deploys it in the `github-pages` environment. It is the only job
-  that gets `pages: write` and `id-token: write`.
-- **Deploy pulkit.blog** takes the checked blog build, adds `.nojekyll`, and pushes
-  `apps/blog/dist` as one new commit on top of the `gh-pages` branch of
-  pulkitxm/pulkit.blog, in the `pulkit-blog` environment. It initializes a
-  repository inside the downloaded `dist`, shallow-fetches the existing
-  `gh-pages` and resets onto it so the branch keeps its history, stages
-  everything, and stops without a commit when nothing changed. It authenticates
-  with a deploy key written to the runner's temporary directory and pins
-  GitHub's published SSH host key with strict host key checking. Without the
-  `BLOG_DEPLOY_KEY` secret the job succeeds with a warning and publishes
-  nothing.
+- **Deploy pulkit.page** uploads the checked Pages artifact and deploys it in the
+  `github-pages` environment. It is the only job with `pages: write` and
+  `id-token: write`.
+- **Deploy pulkit.blog** checks the artifact for withdrawn gallery material, then
+  runs [publish-blog.sh](../tooling/checks/publish-blog.sh). The script requires
+  the approved manual dispatch, a full verified source SHA, the production domain
+  and expected output files, and target repository access. It stages the entire
+  new build, including deletions, in an isolated temporary checkout based on the
+  existing `gh-pages` head. It rejects a changed target head, runs a Pukbot dry run,
+  and publishes the new commit through `pukbot commit create`. An unchanged build
+  makes no commit. The source workflow verifies the installed Pukbot binary's hash.
+
+Blog publishing uses default Pukbot mode with the environment's `BLOG_PUBLISH_TOKEN`
+as its GitHub session credential. This supports generated files larger than the
+60,000-byte per-file limit of app-authored mode. The target contains generated
+site files and no workflow changes, so Contents read/write access to the blog
+repository is sufficient; Workflows permission is not requested. The source
+repository's automatic workflow token and the old SSH deploy key are not used to
+write the separate target. Missing credentials, failed authorization, failed dry
+runs and target races stop publishing with an error. There is no direct Git
+commit or push fallback.
 
 Production builds copy each app's `CNAME` into `dist/`, which keeps both custom
 domains attached to their Pages sites. A preview build for another origin leaves
@@ -52,31 +58,26 @@ redirected; they reach that page.
 
 ## One-time setup for pulkit.blog
 
-1. Create a deploy key pair locally. Keep the private half out of the
-   repository and delete it after step 3.
+1. After owner approval, create a fine-grained GitHub token restricted to
+   `pulkitxm/pulkit.blog`, with **Contents: Read and write**. Set an appropriate
+   expiry. Its owner must have write access to that repository.
+2. Add the token as the `BLOG_PUBLISH_TOKEN` secret in the `pulkit-blog` deployment
+   environment of `pulkitxm/pulkit.page`. Configure that environment's required
+   owner reviewers. The missing secret intentionally blocks blog publication.
+3. Retire the old `BLOG_DEPLOY_KEY` secret and corresponding target deploy key
+   after the new path has been approved and verified. No keys or secrets are
+   created, replaced or revoked by this source change.
+4. Keep the existing target `gh-pages` branch. The publisher fails if it cannot
+   fetch that branch instead of replacing its history or creating a new root.
+5. After review and approved merge, manually dispatch CI on `main` with
+   `publish=true`. Both sites must pass all checks before their separate deploy
+   jobs run. Recheck the deployed pages and direct URLs after cache expiry.
+6. In `pulkitxm/pulkit.blog`, keep **Settings, Pages** set to **Deploy from a
+   branch**, branch `gh-pages`, folder `/ (root)`, with custom domain `pulkit.blog`
+   and **Enforce HTTPS** enabled.
 
-   ```sh
-   ssh-keygen -t ed25519 -C "pulkit.blog publish" -N "" -f pulkit-blog-deploy
-   ```
-
-2. In **pulkitxm/pulkit.blog**, open **Settings, Deploy keys, Add deploy key**.
-   Paste the contents of `pulkit-blog-deploy.pub` and tick **Allow write
-   access**. The key can push to that one repository and nothing else.
-
-3. In **pulkitxm/pulkit.page**, open **Settings, Secrets and variables,
-   Actions** and add a repository secret named `BLOG_DEPLOY_KEY` containing the
-   whole private key file `pulkit-blog-deploy`.
-
-4. Merge to `main` or run the CI workflow on `main` so the first publish creates
-   the `gh-pages` branch.
-
-5. In **pulkitxm/pulkit.blog**, open **Settings, Pages**. Set **Source** to
-   **Deploy from a branch**, branch `gh-pages`, folder `/ (root)`. Set the
-   custom domain to `pulkit.blog` and enable **Enforce HTTPS** once the
-   certificate is issued.
-
-Both repositories are private, which GitHub Pages supports on paid plans. The
-published site is public either way.
+The site is publicly served independently of repository visibility. A successful
+source check does not establish that the deployed blog has changed.
 
 ## Domains
 

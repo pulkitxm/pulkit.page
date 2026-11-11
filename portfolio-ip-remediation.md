@@ -2,7 +2,7 @@
 
 Review date: 2026-11-11. Repository: `pulkitxm/pulkit.page`. Local branch: `ip-remediation-portfolio`, based on `97d2b60` from `origin/main`.
 
-Local remediation and verification are complete. Branch publication and review were approved; the checkpoint series is published for PR review. No deployment, merge, history rewrite or cache purge is authorized by that approval. Live deployments remain untouched.
+Local remediation and verification are complete. Branch publication and review were approved; PR141 was squash-merged after all checks passed. Subsequent user approval authorized publication; deployment verification is tracked in the [central deployment record](https://github.com/pulkitxm/claude-directory/blob/main/DEPLOYMENT_REMEDIATION.md). No history rewrite or destructive cache purge is included.
 
 ## Findings and prepared changes
 
@@ -14,7 +14,7 @@ The first-talk blog article retains the author's talk narrative but replaces cla
 
 A new built-output guard runs before site artifacts are uploaded in Site CI. It rejects old gallery project/pagination/index outputs, generated project social cards, withdrawn capture paths, the old gallery bundle, external demo-host references, raw code/prompt/download links, and the removed video IDs. The gallery fetch regression test verifies publication stays blocked. These checks are safeguards, not a legal conclusion.
 
-Both deployment jobs now require a manually dispatched CI run on `main` with `publish=true`. Pushes, pull requests, and scheduled guestbook updates do not deploy. Owner approval must precede that dispatch. The blog publisher now stages the checked artifact and all deletions in an isolated temporary checkout and publishes exclusively through default-mode `pukbot commit create`, after a successful dry run and a target-head race check. App-authored mode is not used because generated files exceed its per-file limit. The workflow requires `BLOG_PUBLISH_TOKEN`, restricted to the blog repository with Contents read/write permission, and fails closed if it is missing or unauthorized. Read-only secret-name inspection confirmed the new token is not currently configured; the old deploy key is never used by the new path. No secret values were read or changed.
+Both deployment jobs now require a manually dispatched CI run on `main` with `publish=true`. Pushes, pull requests, and scheduled guestbook updates do not deploy. Owner approval must precede that dispatch. The blog publisher now stages the checked artifact and all deletions in an isolated temporary checkout and publishes exclusively through default-mode `pukbot commit create`, after a successful dry run and a target-head race check. App-authored mode is not used because generated files exceed its per-file limit. The workflow uses an optional target-only `BLOG_PUBLISH_TOKEN`, or verifies an actual approved manual publication through its deployed source-revision receipt, matching page hashes and canonical withdrawn-URL 404/410 responses. Stale receipts, redirects, forbidden responses and network failures cannot pass. The local publisher supports the existing authenticated GitHub session, so a personal token need not be stored in CI. Read-only secret-name inspection confirmed the new token is not currently configured; the old deploy key is never used by the new path. No secret values were read or changed.
 
 ## Deployment inventory and observations
 

@@ -86,3 +86,22 @@ test("the mirror rewrite preserves Ubuntu signing keys and unrelated source reco
   expect(result.stdout).toContain("Suites: resolute-security");
   expect(result.stdout).toContain("URIs: https://example.test/packages");
 });
+
+test("the actual runner mirror-list URI is replaced while its deb822 signing record stays intact", () => {
+  const pattern = /sudo sed -i -E '([^']+)'/.exec(readFileSync(installer, "utf8"))?.[1];
+  if (!pattern) {
+    throw new Error("The bounded Ubuntu source rewrite is missing");
+  }
+  const source =
+    "Types: deb\nURIs: mirror+file:/etc/apt/apt-mirrors.txt\nSuites: resolute resolute-updates resolute-backports resolute-security\nComponents: main restricted universe multiverse\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\nURIs: mirror+file:/etc/apt/vendor-mirrors.txt\n";
+  const result = spawnSync("/usr/bin/sed", ["-E", pattern], { input: source, encoding: "utf8" });
+  expect(result.status).toBe(0);
+  expect(result.stdout).toBe(
+    source.replace(
+      "mirror+file:/etc/apt/apt-mirrors.txt",
+      "https://mirrors.edge.kernel.org/ubuntu/",
+    ),
+  );
+  expect(result.stdout).not.toContain("URIs: mirror+file:/etc/apt/apt-mirrors.txt");
+  expect(result.stdout).toContain("URIs: mirror+file:/etc/apt/vendor-mirrors.txt");
+});

@@ -23,7 +23,7 @@ export async function bundleEmbedScripts(
 ): Promise<void> {
   const entries = fileURLToPath(new URL("../client/entries/", import.meta.url));
   const entrypoints = readdirSync(entries)
-    .filter((file) => file.endsWith(".ts"))
+    .filter((file) => file.endsWith(".ts") && file !== "claude-directory.ts")
     .map((file) => join(entries, file));
   for (const entrypoint of entrypoints) {
     await bundleBrowserScripts({

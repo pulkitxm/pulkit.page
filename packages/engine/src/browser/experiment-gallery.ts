@@ -21,6 +21,20 @@ export async function auditExperimentGallery(
     );
     const firstTitle = await cards.first().locator("[data-card-title]").innerText();
     const input = root.locator("[data-directory-query]");
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    const firstLink = cards.first().locator("[data-card-link]");
+    expect(
+      label,
+      (await root.locator("[data-card-media] video").count()) === 0,
+      "Card recordings eagerly loaded",
+    );
+    await firstLink.hover();
+    await root.locator("[data-card-media] video").waitFor();
+    await page.waitForFunction(() => {
+      const video = document.querySelector<HTMLVideoElement>("[data-card-media] video");
+      return Boolean(video?.muted && video.loop && video.currentTime > 0);
+    });
+
     await input.fill(firstTitle);
     await page.waitForFunction(() =>
       Boolean(document.querySelector<HTMLElement>("[data-directory-pages]")?.hidden),
@@ -29,6 +43,11 @@ export async function auditExperimentGallery(
       label,
       (await cards.locator("[data-card-title]").allTextContents()).includes(firstTitle),
       "Search omitted the matching approved project",
+    );
+    expect(
+      label,
+      (await root.locator("[data-card-media] video").count()) === 0,
+      "Filtering retained an active recording",
     );
     await input.fill("z".repeat(48));
     await root.locator("[data-directory-empty]").waitFor({ state: "visible" });
@@ -42,6 +61,14 @@ export async function auditExperimentGallery(
       label,
       (await cards.count()) === initial,
       "Clearing filters did not restore approved browsing",
+    );
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await cards.first().locator("[data-card-link]").hover();
+    await page.waitForTimeout(200);
+    expect(
+      label,
+      (await root.locator("[data-card-media] video").count()) === 0,
+      "Reduced motion started an automatic recording",
     );
     const category = root.locator("[data-filter^='category:']").first();
     if (await category.count()) {

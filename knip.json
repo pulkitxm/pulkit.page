@@ -12,8 +12,9 @@
       "ignoreDependencies": ["@pulkit/theme"]
     },
     "packages/engine": {
-      "entry": ["src/commands/*.ts", "test/setup.ts"],
-      "project": ["src/**/*.{ts,css}", "test/**/*.ts"]
+      "entry": ["src/commands/*.ts", "test/setup.ts", "src/captures/*.ts"],
+      "project": ["src/**/*.{ts,css}", "test/**/*.ts"],
+      "ignoreBinaries": ["ffmpeg", "ffprobe"]
     },
     "packages/embeds": {
       "entry": ["client/entries/*.ts"],

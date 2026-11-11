@@ -4,6 +4,35 @@ Review date: 2026-11-11. Repository: `pulkitxm/pulkit.page`. Local branch: `ip-r
 
 Local remediation and verification are complete. Branch publication and review were approved; PR141 was squash-merged after all checks passed. Subsequent user approval authorized publication; deployment verification is tracked in the [central deployment record](https://github.com/pulkitxm/claude-directory/blob/main/DEPLOYMENT_REMEDIATION.md). No history rewrite or destructive cache purge is included.
 
+## Fresh preview preparation
+
+The sections below preserve the initial withdrawal findings. The gallery was later
+restored to an explicit allowlist of 145 reviewed projects. This update replaces
+its abstract illustrations with fresh screenshots and silent recordings of the
+current media-free local builds. No earlier commercial captures, premium projects,
+posters or recordings are restored. The 145 desktop and mobile observations pass
+with no page errors, failed or external requests, blank output or horizontal
+overflow after four targeted source layout fixes.
+
+Each recording is bound to a reviewed source revision, unchanged project Git tree,
+built-file SHA-256 records, viewport, capture recipe and media hashes. Exact
+source-specific notices accompany the previews. Only CRLF line endings are
+normalized for repository formatting; original notice hashes and all license text
+are preserved. Capture software and source dependencies retain their applicable
+licenses. Current clearance is resolved through the GitHub commit API and immutable
+metadata, so stale raw branch-alias caches cannot silently supply old reviews.
+
+The fresh preview changes are prepared for review and the approved publishing
+workflow. Live publication and final verification follow the required checks.
+No new stored personal token is required. PR visuals continue to use synthetic
+fixtures, even though the owner authorized actual project captures for the public
+portfolio assets. The two external recordings retain the owner's explicit public
+visibility exception.
+
+See [the current gallery workflow](docs/reviewed-gallery.md) for generation,
+source rebinding and publishing safeguards. The historical deployment observations
+below are superseded by the central deployment record linked above.
+
 ## Findings and prepared changes
 
 The portfolio build previously ingested every project from the public directory README and its poster/date manifests. It generated a gallery, numbered pages, one route per project, a search index, blurred poster content, autoplay demo videos, source browsing, prompt copying, links to the original live demos, and third-party directory-download links. Public availability was effectively the publication criterion. No project rights allowlist was present.

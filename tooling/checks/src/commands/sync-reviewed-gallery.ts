@@ -8,5 +8,5 @@ if (!source || process.argv.length !== 3) {
 }
 syncExperimentCatalog(source, repositoryRoot);
 console.log(
-  "Updated only explicitly approved projects from the pinned primary registry and authorized original artwork.",
+  "Updated only explicitly approved projects from the pinned primary registry and its media-free source reviews.",
 );

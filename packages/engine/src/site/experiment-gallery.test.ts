@@ -27,7 +27,7 @@ function sampleProjects(count: number): DirectoryProject[] {
       summary: `Synthetic example ${index}`,
       description: `Independent synthetic example ${index} for gallery verification.`,
       thumbnail: "",
-      hue: index,
+      video: "",
       source: experimentSource(path),
       preview: experimentPreview(path),
     };

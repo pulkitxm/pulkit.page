@@ -1,0 +1,727 @@
+{
+  "3d-games/sidi-bou-said-3d-walk": {
+    "title": "Sidi Bou Said 3D Walk",
+    "summary": "Procedural hilltown walking experience.",
+    "description": "Walk through a generated hillside town using keyboard and pointer controls."
+  },
+  "animations-loaders/apex-scroll-hero": {
+    "title": "Apex Scroll Hero",
+    "summary": "Scroll-driven light and motion study.",
+    "description": "Move through an original gradient sequence as the page scrolls."
+  },
+  "components-ui/background-paths-hero": {
+    "title": "Path Study",
+    "summary": "Animated path and headline playground.",
+    "description": "Switch headline presets, replay the entrance and compare light and dark themes."
+  },
+  "components-ui/crimson-mill-supply-card-h61": {
+    "title": "Crimson Mill Supply Card",
+    "summary": "Compact supplier contact card.",
+    "description": "Explore a single-screen business identity with service and contact links."
+  },
+  "components-ui/lumen-aurora-vcard-h62": {
+    "title": "Lumen Aurora Contact Card",
+    "summary": "Aurora-themed digital contact card.",
+    "description": "Use contact-saving and link-copy controls in a compact personal profile."
+  },
+  "components-ui/terminal-cli-control-deck": {
+    "title": "Terminal CLI Control Deck",
+    "summary": "Interactive terminal-style control deck.",
+    "description": "Enter commands and explore simulated console output and system panels."
+  },
+  "hero-sections/altitude-index-h38": {
+    "title": "Altitude Index",
+    "summary": "Expedition-outfitter hero study.",
+    "description": "Explore oversized editorial type, an expedition overview and contact navigation."
+  },
+  "hero-sections/animated-text-rotate-hero": {
+    "title": "Rotating Headline Study",
+    "summary": "Rotating headline interaction study.",
+    "description": "Pause the word cycle, advance it manually and switch the interface theme."
+  },
+  "hero-sections/helix-vault-h55": {
+    "title": "Helix Vault",
+    "summary": "Digital-asset dashboard hero.",
+    "description": "Explore a sample balance panel and simulated send and deposit controls."
+  },
+  "hero-sections/monocrit-studio-h27": {
+    "title": "Monocrit Studio",
+    "summary": "Experimental creative-studio hero.",
+    "description": "Browse a stark typographic introduction and studio navigation."
+  },
+  "hero-sections/prisma-noir-h52": {
+    "title": "Prisma Noir",
+    "summary": "Creative-director portfolio hero.",
+    "description": "Explore a layered introductory composition with a responsive menu and discovery link."
+  },
+  "hero-sections/shape-landing-hero": {
+    "title": "Geometric Hero Study",
+    "summary": "Live geometric hero playground.",
+    "description": "Edit the headline, preview its composition and copy local setup commands."
+  },
+  "hero-sections/verdant-advisory-h10": {
+    "title": "Verdant Advisory",
+    "summary": "Strategy-advisory landing page.",
+    "description": "Browse an engagement process, service positioning and contact sections."
+  },
+  "landing-pages/aegis-console-h39": {
+    "title": "Aegis Console",
+    "summary": "Security-console product landing page.",
+    "description": "Explore sample defense capabilities, a resolution workflow and product tiers."
+  },
+  "landing-pages/almond-hours-h65": {
+    "title": "Almond Hours",
+    "summary": "Senior-care service landing page.",
+    "description": "Browse care information, common questions and consultation prompts."
+  },
+  "landing-pages/amber-foundry-h9": {
+    "title": "Amber Foundry",
+    "summary": "Workflow-automation service page.",
+    "description": "Explore solution panels, engagement plans, common questions and a contact form."
+  },
+  "landing-pages/amberhaus-pet-atelier-h31": {
+    "title": "Amberhaus Pet Atelier",
+    "summary": "Pet-care boutique storefront.",
+    "description": "Browse service and product sections with cart-style controls and visit prompts."
+  },
+  "landing-pages/archway-summit-h21": {
+    "title": "Archway Summit",
+    "summary": "Developer-conference landing page.",
+    "description": "Switch between event days, inspect the schedule and expand common questions."
+  },
+  "landing-pages/astral-veil-h6": {
+    "title": "Astral Veil",
+    "summary": "Software-platform product page.",
+    "description": "Browse feature sections, scheduling examples and trial or sales navigation."
+  },
+  "landing-pages/atelier-noir-h7": {
+    "title": "Atelier Noir",
+    "summary": "Editorial fashion storefront.",
+    "description": "Explore collection sections, selected pieces, search and newsletter signup."
+  },
+  "landing-pages/atelier-press-h51": {
+    "title": "Atelier Press",
+    "summary": "Creative-workspace membership page.",
+    "description": "Browse studio spaces and membership options, then open a tour inquiry."
+  },
+  "landing-pages/auric-clinic-glow-h37": {
+    "title": "Auric CLInic Glow",
+    "summary": "Skincare-clinic service page.",
+    "description": "Explore treatment information, a care process and consultation navigation."
+  },
+  "landing-pages/axis-quotient-h30": {
+    "title": "Axis Quotient",
+    "summary": "Quantitative-advisory service page.",
+    "description": "Browse strategy offerings, engagement questions and a briefing signup form."
+  },
+  "landing-pages/azimuth-realty-engine-h36": {
+    "title": "Azimuth Realty Engine",
+    "summary": "Real-estate marketing service page.",
+    "description": "Explore service capabilities, project sections and access-request navigation."
+  },
+  "landing-pages/carbon-bloom-h95": {
+    "title": "Carbon Bloom",
+    "summary": "Digital-agency subscription page.",
+    "description": "Browse brand, engineering and strategy services, then expand engagement questions."
+  },
+  "landing-pages/cartwright-relocation-h47": {
+    "title": "Cartwright Relocation",
+    "summary": "Relocation-service quote page.",
+    "description": "Explore moving services and guides, then complete a sample quote form."
+  },
+  "landing-pages/cerulean-precision-collective-h67": {
+    "title": "Cerulean Precision Collective",
+    "summary": "Healthcare booking-page study.",
+    "description": "Browse care specialties and fill a sample appointment form."
+  },
+  "landing-pages/citron-atlas-h79": {
+    "title": "Citron Atlas",
+    "summary": "Enterprise digital-services page.",
+    "description": "Explore service panels, a delivery process and newsletter signup."
+  },
+  "landing-pages/claywell-solene-h5": {
+    "title": "Claywell Solene",
+    "summary": "Movement and rehabilitation service page.",
+    "description": "Browse clinical disciplines, a treatment approach and inquiry navigation."
+  },
+  "landing-pages/cobalt-repairworks-h78": {
+    "title": "Cobalt Repairworks",
+    "summary": "Electronics-repair service page.",
+    "description": "Explore device-repair categories, service standards and customer questions."
+  },
+  "landing-pages/concrete-bazaar-h87": {
+    "title": "Concrete Bazaar",
+    "summary": "Streetwear storefront study.",
+    "description": "Browse product categories and collections, open the lookbook and use signup controls."
+  },
+  "landing-pages/crimson-cut-studio-h72": {
+    "title": "Crimson Cut Studio",
+    "summary": "Video-editing studio service page.",
+    "description": "Explore editing packages, work sections and expandable service questions."
+  },
+  "landing-pages/dhara-heritage-edit-h88": {
+    "title": "Dhara Heritage Edit",
+    "summary": "Contemporary fashion storefront.",
+    "description": "Browse clothing categories, use filter and sort controls and explore membership signup."
+  },
+  "landing-pages/ember-quietude-h26": {
+    "title": "Ember Quietude",
+    "summary": "Focus-software product page.",
+    "description": "Explore writing and planning features, switch billing periods and compare plans."
+  },
+  "landing-pages/evergreen-ledger-h94": {
+    "title": "Evergreen Ledger",
+    "summary": "Investment-firm editorial page.",
+    "description": "Browse capital services, firm principles and research signup."
+  },
+  "landing-pages/fernhollow-pet-wellness-h68": {
+    "title": "Fernhollow Pet Wellness",
+    "summary": "Pet-wellness service and product page.",
+    "description": "Explore care programs, product sections, expandable questions and signup."
+  },
+  "landing-pages/freightleaf-clean-haul-h80": {
+    "title": "Freightleaf Clean Haul",
+    "summary": "Logistics-services landing page.",
+    "description": "Browse transport capabilities, industry sections and contact navigation."
+  },
+  "landing-pages/graft-modular-h93": {
+    "title": "Graft Modular",
+    "summary": "Modular-building systems page.",
+    "description": "Explore structural components and the production process, then send a sample inquiry."
+  },
+  "landing-pages/gridframe-precision-h74": {
+    "title": "Gridframe Precision",
+    "summary": "Enterprise-growth advisory page.",
+    "description": "Explore capabilities, sample outcomes, engagement questions and contact signup."
+  },
+  "landing-pages/gridwright-h48": {
+    "title": "Gridwright",
+    "summary": "Developer-platform product page.",
+    "description": "Browse service modules and plans, expand system questions and use a request form."
+  },
+  "landing-pages/grove-kitchen-fresh-h70": {
+    "title": "Grove Kitchen Fresh",
+    "summary": "Fresh pet-food subscription page.",
+    "description": "Browse meal options, preparation steps and product questions through a responsive menu."
+  },
+  "landing-pages/halcyon-mesh-h56": {
+    "title": "Halcyon Mesh",
+    "summary": "Operations-automation product page.",
+    "description": "Explore workflow capabilities, an onboarding sequence and subscription tiers."
+  },
+  "landing-pages/harbour-hearth-h64": {
+    "title": "Harbour Hearth",
+    "summary": "Senior-living community page.",
+    "description": "Browse care programs, team sections and inquiry navigation."
+  },
+  "landing-pages/hearthwell-homeware-h71": {
+    "title": "Hearthwell Homeware",
+    "summary": "Homeware collection storefront.",
+    "description": "Explore product collections and craftsmanship sections, then join the mailing list."
+  },
+  "landing-pages/helix-strata-h76": {
+    "title": "Helix Strata",
+    "summary": "Business-transformation advisory page.",
+    "description": "Browse service capabilities, company information and inquiry navigation."
+  },
+  "landing-pages/ink-vermilion-personal-brand-h23": {
+    "title": "Ink Vermilion Personal Brand",
+    "summary": "Marketing-consultant profile page.",
+    "description": "Explore a personal introduction, newsletter signup and a contact form."
+  },
+  "landing-pages/kairos-academy-h0": {
+    "title": "Kairos Academy",
+    "summary": "Exam-preparation academy page.",
+    "description": "Browse course streams and teaching information, expand questions and explore enrollment."
+  },
+  "landing-pages/lantern-broth-midnight-ramen-h8": {
+    "title": "Lantern Broth Midnight Ramen",
+    "summary": "Ramen product and rewards page.",
+    "description": "Browse bowl options, preparation guidance and purchase or rewards navigation."
+  },
+  "landing-pages/lantern-loft-tutoring-h1": {
+    "title": "Lantern Loft Tutoring",
+    "summary": "Personal-tutoring service page.",
+    "description": "Explore learning programs, teaching support and mentorship inquiry sections."
+  },
+  "landing-pages/lumen-grove-h63": {
+    "title": "Lumen Grove",
+    "summary": "Bathhouse and spa service page.",
+    "description": "Browse treatment choices, visit pathways and membership options."
+  },
+  "landing-pages/lumen-launch-h44": {
+    "title": "Lumen Launch",
+    "summary": "Screen-recording product page.",
+    "description": "Explore an editing workflow, product capabilities and expandable launch questions."
+  },
+  "landing-pages/lumen-vector-h92": {
+    "title": "Lumen Vector",
+    "summary": "Digital-growth agency page.",
+    "description": "Browse services, selected work and engagement plans."
+  },
+  "landing-pages/lumina-maternite-h2": {
+    "title": "Lumina Maternite",
+    "summary": "Maternity-care service page.",
+    "description": "Explore care programs, birth-package information and consultation navigation."
+  },
+  "landing-pages/meridian-grid-systems-h81": {
+    "title": "Meridian Grid Systems",
+    "summary": "Business-automation systems page.",
+    "description": "Browse pipeline capabilities, deployment steps and onboarding navigation."
+  },
+  "landing-pages/meridian-precision-clinic-h35": {
+    "title": "Meridian Precision CLInic",
+    "summary": "Precision-clinic service page.",
+    "description": "Explore clinical specialties and a care process, then open appointment navigation."
+  },
+  "landing-pages/monolith-grid-atelier-h59": {
+    "title": "Monolith Grid Atelier",
+    "summary": "Spatial-design studio portfolio.",
+    "description": "Browse selected projects and studio information, then complete an inquiry form."
+  },
+  "landing-pages/noctis-aurum-h69": {
+    "title": "Noctis Aurum",
+    "summary": "Fine-jewelry collection storefront.",
+    "description": "Explore collection categories and product-style interaction controls."
+  },
+  "landing-pages/obsidian-lacquer-h57": {
+    "title": "Obsidian Lacquer",
+    "summary": "Automotive-detailing service page.",
+    "description": "Explore detailing packages, compare billing choices and browse the service process."
+  },
+  "landing-pages/obsidian-meridian-h85": {
+    "title": "Obsidian Meridian",
+    "summary": "Architectural real-estate portfolio.",
+    "description": "Browse selected properties and an advisory process, then send a sample inquiry."
+  },
+  "landing-pages/ochre-stone-studio-h11": {
+    "title": "Ochre Stone Studio",
+    "summary": "Interior-design studio portfolio.",
+    "description": "Explore services, selected work and the studio process with contact navigation."
+  },
+  "landing-pages/orbital-frequency-summit-h22": {
+    "title": "Orbital Frequency Summit",
+    "summary": "Aerospace event and challenge page.",
+    "description": "Browse challenge tracks, a mission schedule and event participation sections."
+  },
+  "landing-pages/paper-circuit-agentic-saas-h16": {
+    "title": "Paper Circuit Agentic SaaS",
+    "summary": "Outbound-sales software page.",
+    "description": "Explore product capabilities, sales-workflow sections and enterprise navigation."
+  },
+  "landing-pages/riso-rebel-fest-h20": {
+    "title": "Riso Rebel Fest",
+    "summary": "Design-festival event page.",
+    "description": "Browse speakers, program tracks and ticket sections."
+  },
+  "landing-pages/saaj-heritage-bazaar-h90": {
+    "title": "Saaj Heritage Bazaar",
+    "summary": "Furniture catalog storefront.",
+    "description": "Explore furniture categories, material details and catalog navigation."
+  },
+  "landing-pages/sencha-atelier-h12": {
+    "title": "Sencha Atelier",
+    "summary": "Tea-house menu and reservation page.",
+    "description": "Browse ceremonial-tea offerings and visit information, then open reservation navigation."
+  },
+  "landing-pages/sentinel-meridian-h77": {
+    "title": "Sentinel Meridian",
+    "summary": "Intelligence-advisory service page.",
+    "description": "Explore specialist services, an engagement process and contact navigation."
+  },
+  "landing-pages/slate-stone-architectural-h73": {
+    "title": "Slate Stone Architectural",
+    "summary": "Property-advisory portfolio page.",
+    "description": "Browse selected residences, service stages and an inquiry form."
+  },
+  "landing-pages/slow-roast-atelier-h84": {
+    "title": "Slow Roast Atelier",
+    "summary": "Specialty-coffee editorial storefront.",
+    "description": "Explore roasting information and product sections, then join the mailing list."
+  },
+  "landing-pages/snip-and-snout-grooming-h18": {
+    "title": "Snip And Snout Grooming",
+    "summary": "Pet-grooming service page.",
+    "description": "Browse grooming services and customer sections, then request an appointment."
+  },
+  "landing-pages/solace-wellness-grid-h13": {
+    "title": "Solace Wellness Grid",
+    "summary": "Wellness-program membership page.",
+    "description": "Explore practice offerings and introductory membership navigation."
+  },
+  "landing-pages/spectral-orbit-novascale-h17": {
+    "title": "Spectral Orbit Novascale",
+    "summary": "Advertising-agency service page.",
+    "description": "Browse growth-service sections and expandable campaign questions."
+  },
+  "landing-pages/terra-craft-editorial-h58": {
+    "title": "Terra Craft Editorial",
+    "summary": "Furniture-studio editorial storefront.",
+    "description": "Explore collection sections, studio craft and visit or mailing-list navigation."
+  },
+  "landing-pages/terra-siena-atelier-h14": {
+    "title": "Terra Siena Atelier",
+    "summary": "Ceramics-studio collection page.",
+    "description": "Browse vessel collections, studio information and responsive navigation."
+  },
+  "landing-pages/tide-table-h82": {
+    "title": "Tide Table",
+    "summary": "Seafood-restaurant menu page.",
+    "description": "Explore seasonal dishes and dining sections, then open table-reservation navigation."
+  },
+  "landing-pages/vantix-precision-medicine-h34": {
+    "title": "Vantix Precision Medicine",
+    "summary": "Clinical-services information page.",
+    "description": "Browse specialties, care-center navigation and a sample clinical-brief form."
+  },
+  "landing-pages/vellum-apothecary-archive-h32": {
+    "title": "Vellum Apothecary Archive",
+    "summary": "Apothecary and wellness-studio page.",
+    "description": "Explore ritual offerings and studio information, then open an invitation request."
+  },
+  "landing-pages/vellum-atelier-h33": {
+    "title": "Vellum Atelier",
+    "summary": "Hair-studio service portfolio.",
+    "description": "Browse the service menu and portfolio sections, then use signup navigation."
+  },
+  "landing-pages/velvet-vellum-agency-h4": {
+    "title": "Velvet Vellum Agency",
+    "summary": "Marketing-agency editorial page.",
+    "description": "Explore a growth-service proposition, methodology and engagement navigation."
+  },
+  "landing-pages/verdant-atelier-h40": {
+    "title": "Verdant Atelier",
+    "summary": "Product-photographer portfolio page.",
+    "description": "Browse project sections and use portfolio-expansion controls."
+  },
+  "landing-pages/verdant-pledge-bento-h49": {
+    "title": "Verdant Pledge Bento",
+    "summary": "Conservation-campaign landing page.",
+    "description": "Explore environmental project sections, common questions and participation prompts."
+  },
+  "landing-pages/verdant-salon-h91": {
+    "title": "Verdant Salon",
+    "summary": "Social-strategy agency page.",
+    "description": "Browse service capabilities, campaign sections and an inquiry form."
+  },
+  "landing-pages/verdant-spine-clinic-h66": {
+    "title": "Verdant Spine CLInic",
+    "summary": "Chiropractic and recovery service page.",
+    "description": "Explore treatment modalities and recovery information, then request an appointment."
+  },
+  "landing-pages/verdigris-trail-h50": {
+    "title": "Verdigris Trail",
+    "summary": "Architecture-studio project page.",
+    "description": "Browse design principles, selected buildings and project-inquiry navigation."
+  },
+  "landing-pages/vermillion-cram-h3": {
+    "title": "Vermillion Cram",
+    "summary": "School-exam preparation page.",
+    "description": "Explore subject programs, teaching information and a sample trial-request form."
+  },
+  "landing-pages/vermillion-table-h83": {
+    "title": "Vermillion Table",
+    "summary": "Dining and hospitality service page.",
+    "description": "Explore menu presentation, service positioning and partnership navigation."
+  },
+  "landing-pages/voltaic-grid-advisory-h75": {
+    "title": "Voltaic Grid Advisory",
+    "summary": "Business-advisory service page.",
+    "description": "Browse strategy offerings, company information and contact navigation."
+  },
+  "landing-pages/voltframe-dev-h29": {
+    "title": "Voltframe Dev",
+    "summary": "Developer portfolio landing page.",
+    "description": "Browse featured projects, personal background and contact navigation."
+  },
+  "landing-pages/voltic-showroom-h89": {
+    "title": "Voltic Showroom",
+    "summary": "Electronics-showroom catalog page.",
+    "description": "Explore device-demo sections, showroom zones and consultation options."
+  },
+  "landing-pages/voltline-automation-h60": {
+    "title": "Voltline Automation",
+    "summary": "Custom-workflow software page.",
+    "description": "Explore automation capabilities and product-onboarding navigation."
+  },
+  "landing-pages/wayfare-expedition-journal-h86": {
+    "title": "Wayfare Expedition Journal",
+    "summary": "Expedition catalog and travel journal.",
+    "description": "Search or filter sample routes and explore the trip-planning process."
+  },
+  "portfolios/circuit-ledger-h15": {
+    "title": "Circuit Ledger",
+    "summary": "Developer resume and project portfolio.",
+    "description": "Browse technical skills, work samples and project-inquiry navigation."
+  },
+  "portfolios/cobalt-bento-folio-h43": {
+    "title": "Cobalt Bento Folio",
+    "summary": "Bento-style personal portfolio.",
+    "description": "Explore project cards and a personal introduction, then use a contact form."
+  },
+  "portfolios/crimson-press-kit-h25": {
+    "title": "Crimson Press Kit",
+    "summary": "Designer press-kit portfolio.",
+    "description": "Browse section-based contents, selected work and professional profile information."
+  },
+  "portfolios/electric-volt-folio-h45": {
+    "title": "Electric Volt Folio",
+    "summary": "Motion-designer portfolio page.",
+    "description": "Explore work sections, a personal profile and responsive menu navigation."
+  },
+  "portfolios/inkpress-atelier-h46": {
+    "title": "Inkpress Atelier",
+    "summary": "Graphic-designer editorial portfolio.",
+    "description": "Browse design services, selected work and contact navigation."
+  },
+  "portfolios/lumen-folio-h19": {
+    "title": "Lumen Folio",
+    "summary": "Personal resume and project portfolio.",
+    "description": "Explore experience and project sections through individual project links."
+  },
+  "portfolios/meridian-drafthouse-h54": {
+    "title": "Meridian Drafthouse",
+    "summary": "Architect and spatial-designer portfolio.",
+    "description": "Browse recent work, design priorities and contact navigation."
+  },
+  "portfolios/monogram-terminal-h42": {
+    "title": "Monogram Terminal",
+    "summary": "Terminal-style engineering portfolio.",
+    "description": "Explore project and writing sections with compact pagination controls."
+  },
+  "portfolios/nocturne-bento-h28": {
+    "title": "Nocturne Bento",
+    "summary": "Product-designer bento portfolio.",
+    "description": "Browse selected work and design information, then use a project-contact form."
+  },
+  "portfolios/solstice-craft-studio-h41": {
+    "title": "Solstice Craft Studio",
+    "summary": "Product and experience-design portfolio.",
+    "description": "Explore work, process and client sections through responsive navigation."
+  },
+  "portfolios/voltline-resume-h53": {
+    "title": "Voltline Resume",
+    "summary": "Software-engineer resume page.",
+    "description": "Browse experience, technical skills and education in a compact resume layout."
+  },
+  "portfolios/voltmark-engineer-terminal-h24": {
+    "title": "Voltmark Engineer Terminal",
+    "summary": "Engineering project portfolio.",
+    "description": "Filter sample projects and browse work experience and contact sections."
+  },
+  "shaders/grain-gradient-corners-lab": {
+    "title": "Grain Gradient Lab",
+    "summary": "Interactive grain-gradient shader lab.",
+    "description": "Adjust visual parameters, freeze the animation and open controls on mobile."
+  },
+  "shaders/liquid-metal-foundry": {
+    "title": "Liquid Metal Foundry",
+    "summary": "Liquid-metal shader playground.",
+    "description": "Explore shader settings and integration examples with copy controls."
+  },
+  "shaders/shader-animation-integration": {
+    "title": "Shader Animation Showcase",
+    "summary": "Animated shader component showcase.",
+    "description": "Inspect the live shader and switch between preview, code and usage information."
+  },
+  "shaders/shader-flow-field-rings": {
+    "title": "Flow Field Rings",
+    "summary": "Animated interference-ring shader lab.",
+    "description": "Freeze or resume the ring field and explore component and setup tabs."
+  },
+  "shaders/shader-lines-showcase": {
+    "title": "Shader Lines",
+    "summary": "Interactive WebGL line-field study.",
+    "description": "Explore live line rendering, parameter controls and implementation tabs."
+  },
+  "shaders/warp-checks-background-lab": {
+    "title": "Warp Checks Lab",
+    "summary": "Warped-checkerboard shader playground.",
+    "description": "Choose visual presets, adjust parameters and reset the background study."
+  },
+  "templates/cyber-serif-template": {
+    "title": "Cyber Serif Template",
+    "summary": "Compute-platform product page.",
+    "description": "Browse platform features, sample metrics and developer-onboarding sections."
+  },
+  "templates/stacking-cards-portfolio": {
+    "title": "Stacking Cards Portfolio",
+    "summary": "Scroll-driven stacking-card portfolio.",
+    "description": "Scroll through layered project cards and an original generated grid composition."
+  },
+  "templates/sticky-content-switch": {
+    "title": "Sticky Content Switch",
+    "summary": "Sticky editorial content-switch study.",
+    "description": "Scroll between six visual panels and replay the sequence from the beginning."
+  },
+  "templates/synapse-design-system": {
+    "title": "Synapse Design System",
+    "summary": "Dark interface-token showcase.",
+    "description": "Explore a contrast-focused component presentation and copy design-token examples."
+  },
+  "templates/vertical-clip-text-slide": {
+    "title": "Vertical CLIp Text Slide",
+    "summary": "Letter-by-letter headline animation.",
+    "description": "Replay a clipped typographic entrance using pointer or keyboard controls."
+  },
+  "ui-design/academia-classical-showcase": {
+    "title": "Academia Classical Showcase",
+    "summary": "Classical reading-society landing page.",
+    "description": "Browse membership information, reading disciplines and expandable visitor questions."
+  },
+  "ui-design/aperture-minimalist-dark": {
+    "title": "Aperture Minimalist Dark",
+    "summary": "Minimal dark developer-product page.",
+    "description": "Explore product plans and questions with responsive menu navigation."
+  },
+  "ui-design/art-deco-gatsby-showcase": {
+    "title": "Art Deco Gatsby Showcase",
+    "summary": "Art Deco membership-page study.",
+    "description": "Browse a geometric editorial presentation, membership tiers and visitor questions."
+  },
+  "ui-design/aurora-flow-landing": {
+    "title": "Aurora Flow Landing",
+    "summary": "Focus-timer product experience.",
+    "description": "Start or pause a focus session and explore session guidance and plan sections."
+  },
+  "ui-design/bauhaus-form-follows-function": {
+    "title": "Bauhaus Form Follows Function",
+    "summary": "Geometric poster-tool product page.",
+    "description": "Browse a grid-led feature presentation, workflow steps and product plans."
+  },
+  "ui-design/bitcoin-defi-aurum": {
+    "title": "Bitcoin DeFi Aurum",
+    "summary": "Digital-vault product-page study.",
+    "description": "Explore sample financial panels, protocol information and product navigation."
+  },
+  "ui-design/bold-typography-design-system": {
+    "title": "Bold Typography Design System",
+    "summary": "Typography-first product landing page.",
+    "description": "Browse oversized type specimens, layout principles and subscription sections."
+  },
+  "ui-design/botanical-organic-serif": {
+    "title": "Botanical Organic Serif",
+    "summary": "Botanical-studio editorial page.",
+    "description": "Explore a plant-led studio presentation, offerings and responsive navigation."
+  },
+  "ui-design/clay-design-system": {
+    "title": "Clay Design System",
+    "summary": "Soft clay-style component showcase.",
+    "description": "Browse rounded interface components, product features and theme-led presentation."
+  },
+  "ui-design/copy-machine-pixel-perfect": {
+    "title": "Foundry Circuit Study",
+    "summary": "Circuit-board product walkthrough.",
+    "description": "Explore original circuit diagrams, product sections and responsive navigation."
+  },
+  "ui-design/copy-machine-setup": {
+    "title": "Project Console",
+    "summary": "Animated project-status console.",
+    "description": "Watch setup readouts settle and inspect a sample project tree and starter screen."
+  },
+  "ui-design/corporate-trust-design-system": {
+    "title": "Corporate Trust Design System",
+    "summary": "Operations-platform product page.",
+    "description": "Browse workflow features, sample operational panels and subscription tiers."
+  },
+  "ui-design/cyberpunk-glitch-design-system": {
+    "title": "Cyberpunk Glitch Design System",
+    "summary": "Glitch-styled terminal product page.",
+    "description": "Explore simulated console panels, product sections and expandable questions."
+  },
+  "ui-design/flatline-design-system": {
+    "title": "Flatline Design System",
+    "summary": "Flat interface-system product page.",
+    "description": "Browse component principles, workflow steps and product-plan sections."
+  },
+  "ui-design/handcraft-paper-ui": {
+    "title": "Handcraft Paper UI",
+    "summary": "Paper-inspired sketchboard product page.",
+    "description": "Explore hand-drawn-style components, tool sections and product navigation."
+  },
+  "ui-design/industrial-skeuomorphism": {
+    "title": "Industrial Skeuomorphism",
+    "summary": "Tactile monitoring-console presentation.",
+    "description": "Explore instrument-style panels, gauges and product-onboarding sections."
+  },
+  "ui-design/kinetic-typography-poster": {
+    "title": "Kinetic Typography Poster",
+    "summary": "Animated typographic event poster.",
+    "description": "Browse the event program, ticket sections and visitor information."
+  },
+  "ui-design/lumen-design-system": {
+    "title": "Lumen Design System",
+    "summary": "Developer interface-kit landing page.",
+    "description": "Explore component examples, design-token sections and setup navigation."
+  },
+  "ui-design/lumina-minimalist-modern": {
+    "title": "Lumina Minimalist Modern",
+    "summary": "Product-analytics landing page.",
+    "description": "Browse sample insight panels, onboarding steps and subscription options."
+  },
+  "ui-design/luxury-editorial-design-system": {
+    "title": "Luxury Editorial Design System",
+    "summary": "Luxury editorial collection page.",
+    "description": "Explore curated product sections, atelier navigation and newsletter signup."
+  },
+  "ui-design/material-you-showcase": {
+    "title": "Material You Showcase",
+    "summary": "Adaptive-color component showcase.",
+    "description": "Explore color roles, interface examples and theme-setup sections."
+  },
+  "ui-design/maximalism-dopamine-system": {
+    "title": "Maximalism Dopamine System",
+    "summary": "Expressive component-system showcase.",
+    "description": "Browse colorful component variants, type treatments and design-system sections."
+  },
+  "ui-design/neo-brutalism-loud-system": {
+    "title": "Neo Brutalism Loud System",
+    "summary": "Bold component and token playground.",
+    "description": "Explore component examples, design tokens and plan sections through in-page navigation."
+  },
+  "ui-design/neumorphism-soft-ui": {
+    "title": "Neumorphism Soft UI",
+    "summary": "Soft-surface component playground.",
+    "description": "Explore tactile component states, card examples and a working control playground."
+  },
+  "ui-design/newsprint-editorial-press": {
+    "title": "Newsprint Editorial Press",
+    "summary": "Newspaper-style publishing product page.",
+    "description": "Browse editorial sections, publishing steps and subscription options."
+  },
+  "ui-design/playful-geometric-design-system": {
+    "title": "Playful Geometric Design System",
+    "summary": "Playful geometric software page.",
+    "description": "Explore rounded component examples, setup steps and cheerful product-plan sections."
+  },
+  "ui-design/retro-90s-nostalgia-design-system": {
+    "title": "Retro 90s Nostalgia Design System",
+    "summary": "Retro desktop-style component showcase.",
+    "description": "Explore window-like panels, type specimens and nostalgic interface controls."
+  },
+  "ui-design/scaffold-ready-splash": {
+    "title": "Scaffold Ready Splash",
+    "summary": "Minimal application-starter status screen.",
+    "description": "Inspect a project-ready splash with starter structure and setup information."
+  },
+  "ui-design/serif-editorial-design-system": {
+    "title": "Serif Editorial Design System",
+    "summary": "Serif-led publishing product page.",
+    "description": "Browse editorial product sections, reader stories and subscription plans."
+  },
+  "ui-design/swiss-design-system": {
+    "title": "Swiss Design System",
+    "summary": "Grid and typography design-system study.",
+    "description": "Switch grid options and explore type specimens, token sections and components."
+  },
+  "ui-design/vaporwave-outrun-design-system": {
+    "title": "Vaporwave Outrun Design System",
+    "summary": "Neon desktop-style interface showcase.",
+    "description": "Explore terminal-like panels, component controls and responsive navigation."
+  },
+  "ui-design/verdant-organic-design-system": {
+    "title": "Verdant Organic Design System",
+    "summary": "Botanical-apothecary storefront study.",
+    "description": "Browse seasonal product sections, featured offerings and subscription navigation."
+  }
+}

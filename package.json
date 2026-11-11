@@ -35,6 +35,8 @@
     "check:media": "bun tooling/checks/src/commands/check-media.ts",
     "check:em-dashes": "bun tooling/checks/src/commands/check-em-dashes.ts",
     "check:imports": "bun tooling/checks/src/commands/check-imports.ts",
+    "check:gallery": "bun tooling/checks/src/commands/check-reviewed-gallery.ts",
+    "gallery:sync": "bun tooling/checks/src/commands/sync-reviewed-gallery.ts",
     "check:types": "tsc -p tsconfig.json",
     "check:dead-code": "knip --no-progress --max-issues 0 --treat-config-hints-as-errors",
     "check:shell": "sh -n tooling/checks/install-hooks.sh && sh -n tooling/checks/publish-blog.sh && sh -n .githooks/pre-commit",

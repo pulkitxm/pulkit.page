@@ -86,6 +86,10 @@
     "//#check:shell": {
       "outputs": []
     },
+    "//#check:gallery": {
+      "cache": false,
+      "outputs": []
+    },
     "verify": {
       "dependsOn": ["verify:source", "verify:tests", "verify:site"],
       "outputs": []
@@ -101,7 +105,8 @@
         "//#check:imports",
         "//#check:types",
         "//#check:dead-code",
-        "//#check:shell"
+        "//#check:shell",
+        "//#check:gallery"
       ],
       "outputs": []
     },

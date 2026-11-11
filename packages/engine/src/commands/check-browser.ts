@@ -5,6 +5,7 @@ import { preview } from "vite";
 import { auditsPages, auditsSiteFlows, buildDirectory } from "../browser/audit-config.ts";
 import { auditLinks, auditPages } from "../browser/page-audit.ts";
 import { report, reportedProblems } from "../browser/problems.ts";
+import { settleRequestFailures } from "../browser/session.ts";
 import { auditSiteFlows } from "../browser/site-flows.ts";
 import { localServerUrl } from "../lib/server.ts";
 import { readSite } from "../site/site-inventory.ts";
@@ -39,6 +40,7 @@ try {
   }
 } finally {
   await browser?.close();
+  await settleRequestFailures();
   await server.close();
 }
 const problems = reportedProblems();

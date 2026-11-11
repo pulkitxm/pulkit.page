@@ -5,7 +5,13 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: null
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish reviewed site changes
+        required: true
+        default: false
+        type: boolean
   workflow_call:
     inputs:
       revision:
@@ -273,7 +279,7 @@ jobs:
       - uses: taiki-e/install-action@4076c08d76dba979c11a7285295b0716c1d67908
         with:
           tool: shellcheck
-      - run: shellcheck tooling/checks/install-hooks.sh .githooks/pre-commit
+      - run: shellcheck tooling/checks/install-hooks.sh tooling/checks/publish-blog.sh .githooks/pre-commit
   ci:
     name: CI
     if: always()
@@ -318,9 +324,8 @@ jobs:
       revision: ${{ needs.media.outputs.revision }}
   deploy-page:
     name: Deploy pulkit.page
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name ==
-      'workflow_dispatch' || (github.event_name == 'schedule' && github.workflow == 'Sync
-      guestbook'))
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publish ==
+      true
     needs: ci
     runs-on: ubuntu-26.04
     timeout-minutes: 10
@@ -365,8 +370,8 @@ jobs:
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
   deploy-blog:
     name: Deploy pulkit.blog
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name ==
-      'workflow_dispatch')
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publish ==
+      true
     needs: ci
     runs-on: ubuntu-26.04
     timeout-minutes: 10
@@ -396,56 +401,38 @@ jobs:
         with:
           name: built-blog
           path: apps/blog/dist
-      - name: Publish to the pulkit.blog repository
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: steps.revision.outputs.current == 'true'
+        with:
+          persist-credentials: false
+          ref: ${{ needs.ci.outputs.revision }}
+          clean: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        if: steps.revision.outputs.current == 'true'
+        with:
+          bun-version: 1.4.2
+      - name: Install verification dependencies
+        if: steps.revision.outputs.current == 'true'
+        run: bun install --frozen-lockfile
+      - name: Verify the publishing artifact
+        if: steps.revision.outputs.current == 'true'
+        run: bun tooling/checks/src/commands/check-gallery-withdrawal.ts blog
+      - name: Install Pukbot for blog publishing
+        if: steps.revision.outputs.current == 'true'
+        run: >
+          curl --proto '=https' --tlsv1.2 -fsSL
+          https://github.com/pulkitxm/pukbot/releases/download/v0.3.30/pukbot-linux-x86_64 -o
+          "$RUNNER_TEMP/pukbot"
+
+          printf '%s  %s\n' bd2539c5a5d45650bd80ba48efc6e42ca14251b2eb0e586622ed064652c8e033
+          "$RUNNER_TEMP/pukbot" | sha256sum --check
+
+          chmod +x "$RUNNER_TEMP/pukbot"
+      - name: Publish to the pulkit.blog repository through Pukbot
         if: steps.revision.outputs.current == 'true'
         env:
-          DEPLOY_KEY: ${{ secrets.BLOG_DEPLOY_KEY }}
-          SOURCE: ${{ github.repository }}@${{ needs.ci.outputs.revision }}
-        run: >
-          if [ -z "$DEPLOY_KEY" ]; then
-            echo "::warning::BLOG_DEPLOY_KEY is not set, so pulkit.blog was not published"
-            exit 0
-          fi
-
-          key="$RUNNER_TEMP/blog-deploy-key"
-
-          hosts="$RUNNER_TEMP/known_hosts"
-
-          printf '%s\n' "$DEPLOY_KEY" > "$key"
-
-          chmod 600 "$key"
-
-          printf '%s\n' "github.com ssh-ed25519
-          AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > "$hosts"
-
-          export GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes -o UserKnownHostsFile=$hosts -o
-          StrictHostKeyChecking=yes"
-
-          cd apps/blog/dist
-
-          touch .nojekyll
-
-          git init -q -b gh-pages
-
-          git config user.name "github-actions[bot]"
-
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git remote add origin git@github.com:pulkitxm/pulkit.blog.git
-
-          if git fetch -q --depth 1 origin gh-pages 2>/dev/null; then
-            git reset -q --soft FETCH_HEAD
-          fi
-
-          git add -A
-
-          if git diff --cached --quiet; then
-            echo "pulkit.blog is already up to date"
-            exit 0
-          fi
-
-          git commit -q -m "Publish pulkit.blog from $SOURCE"
-
-          git push -q origin gh-pages
-
-          echo "Published pulkit.blog from $SOURCE" >> "$GITHUB_STEP_SUMMARY"
+          GH_TOKEN: ${{ secrets.BLOG_PUBLISH_TOKEN }}
+          BLOG_PUBLISH_APPROVED: ${{ inputs.publish }}
+          SOURCE_REVISION: ${{ needs.ci.outputs.revision }}
+          PUKBOT_BIN: ${{ runner.temp }}/pukbot
+        run: sh tooling/checks/publish-blog.sh apps/blog/dist

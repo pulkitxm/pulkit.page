@@ -1,6 +1,11 @@
 import { expect, test } from "bun:test";
 import type { DirectoryProject, Page } from "../types.ts";
-import { directoryOutputs, parseDirectory, withDirectoryPages } from "./claude-directory.ts";
+import {
+  directoryOutputs,
+  fetchDirectory,
+  parseDirectory,
+  withDirectoryPages,
+} from "./claude-directory.ts";
 import { readPage } from "./read-page.ts";
 
 const dash = String.fromCodePoint(0x2014);
@@ -150,4 +155,8 @@ test("the search index is published next to the first directory page", () => {
   expect(JSON.parse(outputs.get("directory/projects.json")?.toString() ?? "")).toEqual(
     all.map(({ description: _, blur: __, ...project }) => project),
   );
+});
+
+test("the gallery cannot fetch and publish projects outside the approved registry", async () => {
+  await expect(fetchDirectory()).rejects.toThrow("requires an approved publication configuration");
 });

@@ -274,12 +274,12 @@ deleted to force a cold run.
 
 The page app opts out of the Turbo layer. Its `build`, `check:seo`, `check:site`
 and `check:html` tasks set `cache: false` in
-[apps/page/turbo.json](../apps/page/turbo.json), because the projects and
-Claude Directory directives read GitHub over the network at build time and Turbo
-hashes only local files. Without the opt-out, rerunning an unchanged commit
-replays an older `dist` and the Projects page keeps a stale list however many
-times it is redeployed. The render cache still applies inside that build, so a
-rebuild whose inputs did not change stays under a second.
+[apps/page/turbo.json](../apps/page/turbo.json), because GitHub project lists read
+GitHub over the network at build time and Turbo hashes only local files. Without
+the opt-out, an unchanged commit can replay an older Projects page. The render
+cache still applies inside that build.
+
+Project publication uses the approved project registry and documented asset permissions.
 
 [generation-cache.ts](../packages/engine/src/lib/generation-cache.ts) computes the
 version from every non-test `packages/*/src/**/*.ts` file, the demo showcases, `biome.json`,

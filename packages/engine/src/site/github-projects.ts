@@ -72,9 +72,9 @@ export async function fetchProjectList(login: string, slug: string): Promise<Pro
     throw new Error(`GitHub replied ${response.status} ${response.statusText} for ${url}`);
   }
   const html = await response.text();
-  const projects = (await resolveTruncated(readEntries(html))).sort(
-    (left, right) => right.stars - left.stars || left.name.localeCompare(right.name),
-  );
+  const projects = (await resolveTruncated(readEntries(html)))
+    .filter((project) => project.url !== "https://github.com/pulkitxm/claude-directory")
+    .sort((left, right) => right.stars - left.stars || left.name.localeCompare(right.name));
   if (projects.length === 0) {
     throw new Error(
       `No repositories were found on ${url}. The list may be empty or private, or GitHub changed the page markup that this parser depends on.`,

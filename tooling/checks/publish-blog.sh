@@ -58,6 +58,7 @@ receipt = {
 (root / "publication.json").write_text(json.dumps(receipt, sort_keys=True) + "\n")
 PYCODE
 cd "$publish"
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES
 git init -q -b gh-pages
 git config user.name 'github-actions[bot]'
 git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

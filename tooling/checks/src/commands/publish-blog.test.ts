@@ -31,7 +31,12 @@ function fixture(
   'auth status') [ "\${PUBLISH_EXISTING_SESSION:-false}" = true ]; exit $? ;;
 esac
 printf '%s\\n' "\${PUBLISH_CAN_PUSH:-true}"`,
-    git: `case "$1" in
+    git: `if [ "\${PUBLISH_REJECT_GIT_ENV:-false}" = true ]; then
+  for variable in GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR GIT_OBJECT_DIRECTORY GIT_ALTERNATE_OBJECT_DIRECTORIES; do
+    if env | grep -q "^$variable="; then exit 97; fi
+  done
+fi
+case "$1" in
   diff) exit 1 ;;
   rev-parse) printf '%s\\n' "$SOURCE_REVISION" ;;
   ls-remote) printf '%s\\trefs/heads/gh-pages\\n' "\${PUBLISH_TARGET_HEAD:-$SOURCE_REVISION}" ;;
@@ -138,5 +143,21 @@ test("a failed Pukbot dry run prevents publication", () => {
 test("an existing local GitHub session can publish without storing a new token", () => {
   fixture((_, invoke) => {
     expect(invoke({ GH_TOKEN: "", PUBLISH_EXISTING_SESSION: "true" }).status).toBe(0);
+  });
+});
+
+test("temporary publishing does not inherit repository-control Git variables", () => {
+  fixture((root, invoke) => {
+    expect(
+      invoke({
+        PUBLISH_REJECT_GIT_ENV: "true",
+        GIT_DIR: join(root, "unrelated-git"),
+        GIT_WORK_TREE: join(root, "unrelated-worktree"),
+        GIT_INDEX_FILE: join(root, "unrelated-index"),
+        GIT_COMMON_DIR: join(root, "unrelated-common"),
+        GIT_OBJECT_DIRECTORY: join(root, "unrelated-objects"),
+        GIT_ALTERNATE_OBJECT_DIRECTORIES: join(root, "unrelated-alternates"),
+      }).status,
+    ).toBe(0);
   });
 });

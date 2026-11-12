@@ -10,7 +10,7 @@ navigation:
     href: /exp/
   - label: Projects
     href: /projects/
-  - label: UI experiments
+  - label: Claude directory
     href: /claude-directory/
   - label: Contact
     href: /contact/

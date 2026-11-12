@@ -24,9 +24,9 @@ Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [te
 
 ## Shipped in public
 
-### UI experiments
+### Claude directory
 
-The [UI experiment gallery](/claude-directory/) presents independent implementations with fresh project recordings, interactive previews, source folders, and accompanying license notices.
+The [Claude directory](/claude-directory/) presents independent implementations with fresh project recordings, interactive previews, source folders, and accompanying license notices.
 
 ### Hinge
 

@@ -1,134 +1,139 @@
-import { findElement } from "../lib/dom.ts";
+import { afterPageLoad } from "@pulkit/shared/idle";
+import { findElement, findElements } from "../lib/dom.ts";
+
+interface Preview {
+  link: HTMLAnchorElement;
+  source: string;
+  visible: boolean;
+}
 
 export function setupExperimentPreviews(root: HTMLElement): () => void {
   const reduced = globalThis.matchMedia("(prefers-reduced-motion: reduce)");
-  const pointer = globalThis.matchMedia("(hover: hover) and (pointer: fine)");
   const connection = (navigator as Navigator & { connection?: EventTarget & { saveData: boolean } })
     .connection;
-  let active: HTMLAnchorElement | undefined;
-  let video: HTMLVideoElement | undefined;
-  let generation = 0;
-  let suspended = false;
-  const stop = (): void => {
-    generation += 1;
-    if (active) {
-      observer.unobserve(active);
-    }
-    active = undefined;
-    if (!video) {
-      return;
-    }
+  const previews = new Map<HTMLVideoElement, Preview>();
+  const initialized = new WeakSet<HTMLVideoElement>();
+  const failed = new WeakSet<HTMLAnchorElement>();
+  let ready = false;
+
+  const release = (video: HTMLVideoElement): void => {
     video.pause();
-    video.removeAttribute("src");
-    video.load();
-    video.remove();
-    video = undefined;
-  };
-  const observer = new IntersectionObserver((entries) => {
-    if (entries.some((entry) => entry.target === active && !entry.isIntersecting)) {
-      stop();
+    if (video.hasAttribute("src")) {
+      video.removeAttribute("src");
+      video.load();
     }
-  });
-  const linkAt = (target: EventTarget | null): HTMLAnchorElement | null =>
-    target instanceof Element ? target.closest<HTMLAnchorElement>("[data-card-link]") : null;
-  const start = (link: HTMLAnchorElement): void => {
-    if (
-      suspended ||
-      active === link ||
-      reduced.matches ||
-      !pointer.matches ||
-      connection?.saveData ||
-      document.hidden ||
-      !root.contains(link)
-    ) {
+    video.style.opacity = "0";
+  };
+
+  const update = (video: HTMLVideoElement, preview: Preview): void => {
+    if (reduced.matches || connection?.saveData) {
+      release(video);
       return;
     }
-    stop();
-    const source = link.dataset.cardVideo;
-    const frame = findElement(link, "[data-card-media]", HTMLElement);
-    const poster = findElement(link, "[data-preview-poster]", HTMLImageElement);
-    if (!source || !frame || !poster) {
+    if (!preview.visible || document.hidden || !root.contains(preview.link)) {
+      video.pause();
       return;
     }
-    const attempt = generation;
-    const preview = document.createElement("video");
-    preview.className =
-      "pointer-events-none absolute inset-0 m-0 size-full object-cover opacity-0 transition-opacity duration-200 motion-reduce:transition-none";
-    preview.setAttribute("aria-hidden", "true");
-    preview.muted = true;
-    preview.loop = true;
-    preview.playsInline = true;
-    preview.preload = "none";
-    preview.src = source;
-    active = link;
-    video = preview;
-    frame.append(preview);
-    observer.observe(link);
-    preview.play().then(
-      () => {
-        if (attempt === generation && video === preview && root.contains(link)) {
-          preview.style.opacity = "1";
-        }
-      },
-      () => {
-        if (attempt === generation && video === preview) {
-          stop();
-        }
-      },
-    );
+    if (video.getAttribute("src") !== preview.source) {
+      video.src = preview.source;
+      video.load();
+    }
+    video.play().catch(() => undefined);
   };
-  root.addEventListener("pointerover", (event) => {
-    const link = linkAt(event.target);
-    if (
-      link &&
-      event.pointerType !== "touch" &&
-      !link.contains(event.relatedTarget as Node | null)
-    ) {
-      start(link);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const video = entry.target;
+        if (!(video instanceof HTMLVideoElement)) {
+          continue;
+        }
+        const preview = previews.get(video);
+        if (preview) {
+          preview.visible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+          update(video, preview);
+        }
+      }
+    },
+    { threshold: 0.5 },
+  );
+
+  const refresh = (): void => {
+    if (!ready) {
+      return;
     }
-  });
-  root.addEventListener("pointerout", (event) => {
-    const link = linkAt(event.target);
-    if (
-      link === active &&
-      !link?.contains(event.relatedTarget as Node | null) &&
-      !link?.contains(document.activeElement)
-    ) {
-      stop();
-    }
-  });
-  root.addEventListener("pointermove", (event) => {
-    if (suspended && event.pointerType !== "touch") {
-      suspended = false;
-      const link = linkAt(event.target);
-      if (link) {
-        start(link);
+    const links = new Set(findElements(root, "[data-card-link]", HTMLAnchorElement));
+    for (const [video, preview] of previews) {
+      if (!links.has(preview.link)) {
+        observer.unobserve(video);
+        release(video);
+        previews.delete(video);
       }
     }
-  });
-  root.addEventListener("focusin", (event) => {
-    const link = linkAt(event.target);
-    if (link) {
-      suspended = false;
-      start(link);
+    for (const link of links) {
+      const source = link.dataset.cardVideo;
+      const frame = findElement(link, "[data-card-media]", HTMLElement);
+      const poster = findElement(link, "[data-preview-poster]", HTMLImageElement);
+      if (!source || !frame || !poster || failed.has(link)) {
+        continue;
+      }
+      let video = findElement(frame, "[data-card-preview-video]", HTMLVideoElement);
+      if (!video) {
+        video = document.createElement("video");
+        video.className =
+          "pointer-events-none absolute inset-0 m-0 size-full object-cover opacity-0 transition-opacity duration-500 motion-reduce:transition-none";
+        video.dataset.cardPreviewVideo = "";
+        video.setAttribute("aria-hidden", "true");
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = "none";
+        frame.append(video);
+      }
+      if (previews.has(video)) {
+        continue;
+      }
+      video.muted = true;
+      const preview = { link, source, visible: false };
+      previews.set(video, preview);
+      if (!initialized.has(video)) {
+        initialized.add(video);
+        video.addEventListener("loadeddata", () => {
+          if (previews.has(video) && !reduced.matches && !connection?.saveData) {
+            video.style.opacity = "1";
+          }
+        });
+        video.addEventListener("error", () => {
+          observer.unobserve(video);
+          previews.delete(video);
+          failed.add(link);
+          release(video);
+          video.remove();
+        });
+      }
+      observer.observe(video);
     }
-  });
-  root.addEventListener("focusout", (event) => {
-    if (linkAt(event.target) === active && !active?.matches(":hover")) {
-      stop();
-    }
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      stop();
-    }
-  });
-  globalThis.addEventListener("pagehide", stop);
-  reduced.addEventListener("change", stop);
-  pointer.addEventListener("change", stop);
-  connection?.addEventListener("change", stop);
-  return () => {
-    suspended = true;
-    stop();
   };
+
+  const updateAll = (): void => {
+    for (const [video, preview] of previews) {
+      update(video, preview);
+    }
+  };
+
+  document.addEventListener("visibilitychange", updateAll);
+  reduced.addEventListener("change", updateAll);
+  connection?.addEventListener("change", updateAll);
+  globalThis.addEventListener("pagehide", () => {
+    observer.disconnect();
+    for (const video of previews.keys()) {
+      release(video);
+    }
+    previews.clear();
+  });
+  globalThis.addEventListener("pageshow", refresh);
+  afterPageLoad(() => {
+    ready = true;
+    refresh();
+  });
+  return refresh;
 }

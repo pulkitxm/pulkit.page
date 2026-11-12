@@ -41,7 +41,7 @@ export async function auditProjectLayout(page: Page, label: string): Promise<voi
       expect(
         label,
         within(layout.frame, layout.panel) && within(layout.video, layout.frame),
-        `Project recording or native controls are clipped at ${viewport.width}x${viewport.height}`,
+        `Project recording is clipped at ${viewport.width}x${viewport.height}`,
       );
       expect(label, layout.overflow <= 1, "Project layout overflows the viewport");
       if (viewport.width >= 1024) {

@@ -49,6 +49,7 @@ jobs:
             'packages/engine/src/site/responsive-images.ts') }}-
       - name: Build site
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
           POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
           SITE: ${{ inputs.site }}

@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { timed, timedAsync } from "@pulkit/shared/duration";
+import { buildProjectSources } from "@pulkit/shared/project-source-build";
+import { repositoryRoot } from "@pulkit/shared/repository";
 import {
   type GenerationCache,
   generationCache,
@@ -85,6 +87,11 @@ export async function generateSite(outputDirectory: string, origin: string): Pro
       cache.save();
     },
   );
+  if (site.directory) {
+    await timedAsync("Exported approved project source", () =>
+      buildProjectSources(repositoryRoot, outputDirectory),
+    );
+  }
   console.log(`Computed ${JSON.stringify(cache.counts)}`);
   return pages;
 }

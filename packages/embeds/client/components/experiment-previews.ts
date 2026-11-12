@@ -1,4 +1,3 @@
-import { afterPageLoad } from "@pulkit/shared/idle";
 import { findElement, findElements } from "../lib/dom.ts";
 
 interface Preview {
@@ -14,7 +13,6 @@ export function setupExperimentPreviews(root: HTMLElement): () => void {
   const previews = new Map<HTMLVideoElement, Preview>();
   const initialized = new WeakSet<HTMLVideoElement>();
   const failed = new WeakSet<HTMLAnchorElement>();
-  let ready = false;
 
   const release = (video: HTMLVideoElement): void => {
     video.pause();
@@ -59,9 +57,6 @@ export function setupExperimentPreviews(root: HTMLElement): () => void {
   );
 
   const refresh = (): void => {
-    if (!ready) {
-      return;
-    }
     const links = new Set(findElements(root, "[data-card-link]", HTMLAnchorElement));
     for (const [video, preview] of previews) {
       if (!links.has(preview.link)) {
@@ -131,9 +126,6 @@ export function setupExperimentPreviews(root: HTMLElement): () => void {
     previews.clear();
   });
   globalThis.addEventListener("pageshow", refresh);
-  afterPageLoad(() => {
-    ready = true;
-    refresh();
-  });
+  refresh();
   return refresh;
 }

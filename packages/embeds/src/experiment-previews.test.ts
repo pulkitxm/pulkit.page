@@ -83,7 +83,7 @@ function fixture(
   run: (environment: {
     root: Element;
     links: Element[];
-    document: EventTarget & { hidden: boolean };
+    document: EventTarget & { hidden: boolean; readyState: string };
     window: EventTarget;
     reduced: Preference;
     connection: Preference;
@@ -104,7 +104,7 @@ function fixture(
   const connection = new Preference();
   const document = Object.assign(new EventTarget(), {
     hidden: false,
-    readyState: "complete",
+    readyState: "interactive",
     createElement: () => new Video(),
   });
   const window = new EventTarget();
@@ -174,12 +174,13 @@ function fixture(
 }
 
 test("visible cards autoplay at half visibility and keep their source when paused offscreen", () => {
-  fixture(({ links, observer }) => {
+  fixture(({ links, observer, document }) => {
     const video = links[0]?.frame?.video;
     if (!video) {
       throw new Error("Card video missing");
     }
     expect(observer.threshold).toBe(0.5);
+    expect(document.readyState).toBe("interactive");
     expect(video.src).toBe("");
     observer.emit(video, 0.49);
     expect(video.plays).toBe(0);

@@ -1,6 +1,19 @@
 import { z } from "zod";
 import { experimentPathSchema } from "./experiments.ts";
 
+export function projectSourceDisplay(content: string): string {
+  let start: number | undefined;
+  let end = 0;
+  for (const line of content.matchAll(/([^\r\n]*)(?:\r\n|\r|\n|$)/g)) {
+    const text = line[1] ?? "";
+    if (/[^ \t]/.test(text)) {
+      start ??= line.index;
+      end = line.index + text.length;
+    }
+  }
+  return start === undefined ? "" : content.slice(start, end);
+}
+
 export const projectSourceLimits = {
   files: 512,
   fileBytes: 300 * 1024,

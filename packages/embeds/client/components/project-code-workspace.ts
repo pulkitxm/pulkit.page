@@ -2,6 +2,7 @@ import { escapeHtml } from "@pulkit/shared/html";
 import { lucideSvg } from "@pulkit/shared/icons";
 import {
   type ProjectSourceBundle,
+  projectSourceDisplay,
   projectSourceSchema,
   projectSourceUrl,
 } from "@pulkit/shared/project-source";
@@ -161,6 +162,7 @@ export function setupProjectCodeWorkspace(root: HTMLElement): () => void {
     selected = path;
     selection += 1;
     const current = selection;
+    const display = projectSourceDisplay(file.content);
     clearTimeout(copyTimer);
     const focusFile = filesPanel.contains(document.activeElement);
     renderTree();
@@ -169,17 +171,20 @@ export function setupProjectCodeWorkspace(root: HTMLElement): () => void {
         .find((entry) => entry.dataset.sourceFile === path)
         ?.focus();
     }
-    codePanel.innerHTML = `<div class="flex items-center justify-between gap-4 border-b border-fg/10 bg-fg/5 px-4 py-2.5"><p class="m-0 truncate font-mono text-xs text-fg/80">${escapeHtml(path)}</p><div class="flex shrink-0 items-center gap-3"><span class="text-xs text-muted">${fileSize(file.content)}</span><button class="${iconButton}" type="button" aria-label="Wrap lines" aria-pressed="${wrapping}" data-source-wrap>${lucideSvg(WrapText, "size-4")}</button><button class="${iconButton}" type="button" aria-label="Copy file" data-source-copy>${lucideSvg(Copy, "size-4")}</button></div></div><p class="sr-only" role="status" data-source-message></p><pre class="m-0 h-105 overflow-auto bg-transparent p-4 font-mono text-md leading-relaxed min-[64rem]:h-auto min-[64rem]:min-h-0 min-[64rem]:flex-1${wrapping ? " whitespace-pre-wrap wrap-break-word" : " whitespace-pre"}" tabindex="0" aria-label="${escapeHtml(path)} source code" data-source-pre><code data-source-content></code></pre>`;
+    codePanel.innerHTML = `<div class="flex items-center justify-between gap-4 border-b border-fg/10 bg-fg/5 px-4 py-2.5"><p class="m-0 truncate font-mono text-xs text-fg/80">${escapeHtml(path)}</p><div class="flex shrink-0 items-center gap-3"><span class="text-xs text-muted">${fileSize(file.content)}</span><button class="${iconButton}" type="button" aria-label="Wrap lines" aria-pressed="${wrapping}" data-source-wrap>${lucideSvg(WrapText, "size-4")}</button><button class="${iconButton}" type="button" aria-label="Copy file" data-source-copy>${lucideSvg(Copy, "size-4")}</button></div></div><p class="sr-only" role="status" data-source-message></p><pre class="m-0 h-105 overflow-auto bg-transparent p-4 font-mono text-md leading-normal [tab-size:2] min-[64rem]:h-auto min-[64rem]:min-h-0 min-[64rem]:flex-1${wrapping ? " whitespace-pre-wrap wrap-break-word" : " whitespace-pre"}" tabindex="0" aria-label="${escapeHtml(path)} source code" data-source-pre><code class="block [font:inherit]" data-source-content></code></pre>`;
     const content = requireElement(codePanel, "[data-source-content]", HTMLElement);
-    content.textContent = file.content;
+    content.textContent = display;
     try {
-      const html = await highlightProjectCode(file.content, file.language);
+      const html = await highlightProjectCode(display, file.language);
       if (!disposed && current === selection) {
         content.innerHTML = html;
+        if (content.textContent !== display) {
+          content.textContent = display;
+        }
       }
     } catch {
       if (!disposed && current === selection) {
-        content.textContent = file.content;
+        content.textContent = display;
       }
     }
   };

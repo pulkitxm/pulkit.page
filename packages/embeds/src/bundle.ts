@@ -21,27 +21,34 @@ interface BundleOptions {
 export async function bundleEmbedScripts(
   outdir: string,
   { minify = true }: BundleOptions = {},
-): Promise<void> {
+): Promise<Map<string, string>> {
   const entries = fileURLToPath(new URL("../client/entries/", import.meta.url));
   const entrypoints = readdirSync(entries)
     .filter((file) => file.endsWith(".ts"))
     .map((file) => join(entries, file));
+  const emitted = new Map<string, string>();
   for (const entrypoint of entrypoints) {
-    await bundleBrowserScripts({
+    const files = await bundleBrowserScripts({
       entrypoints: [entrypoint],
       outdir,
       minify,
       label: "embed scripts",
+      fingerprint: minify && entrypoint.endsWith("/experiment-gallery.ts"),
     });
+    for (const [logical, filename] of files) {
+      emitted.set(logical, filename);
+    }
   }
+  return emitted;
 }
 
-export async function buildEmbedAssets(outdir: string): Promise<void> {
-  await bundleEmbedScripts(join(outdir, "embeds"));
+export async function buildEmbedAssets(outdir: string): Promise<Map<string, string>> {
+  const emitted = await bundleEmbedScripts(join(outdir, "embeds"));
   writeGalleryLicenses(join(outdir, "embeds"));
   cpSync(photoswipeStyles, join(outdir, "embeds/photoswipe.css"));
   cpSync(plyrStyles, join(outdir, "embeds/plyr.css"));
   cpSync(plyrIcons, join(outdir, "embeds/plyr.svg"));
   cpSync(join(katexDirectory, "katex-swap.min.css"), join(outdir, "katex/katex-swap.min.css"));
   cpSync(join(katexDirectory, "fonts"), join(outdir, "katex/fonts"), { recursive: true });
+  return emitted;
 }

@@ -47,6 +47,8 @@ jobs:
           fi
       - name: Verify the updated site
         if: steps.changes.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           sh tooling/checks/install-media-tools.sh
           bun run ci

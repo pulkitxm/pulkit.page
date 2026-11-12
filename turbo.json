@@ -30,6 +30,7 @@
     },
     "check:seo": {
       "dependsOn": ["build"],
+      "passThroughEnv": ["GITHUB_TOKEN", "GH_TOKEN"],
       "outputs": []
     },
     "check:site": {
@@ -42,6 +43,7 @@
     },
     "check:browser": {
       "dependsOn": ["build"],
+      "passThroughEnv": ["GITHUB_TOKEN", "GH_TOKEN"],
       "outputs": [],
       "env": ["BROWSER_SUITE", "BROWSER_SHARD", "BROWSER_VIEWPORT", "PLAYWRIGHT_CHANNEL"]
     },

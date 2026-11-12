@@ -1,5 +1,6 @@
 import type { Browser } from "playwright";
 import { expect } from "./problems.ts";
+import { auditProjectLayout } from "./project-layout.ts";
 import { openSession } from "./session.ts";
 
 export async function auditExperimentGallery(
@@ -142,6 +143,7 @@ export async function auditExperimentGallery(
       return Boolean(video && video.currentTime > 0 && !video.paused);
     });
     await recording.evaluate((video: HTMLVideoElement) => video.pause());
+    await auditProjectLayout(page, label);
     await page.getByRole("link", { name: "All experiments", exact: true }).click();
     await page.waitForURL(new URL(route, origin).href);
     expect(

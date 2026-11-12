@@ -133,6 +133,29 @@ test("PDF filenames stay fixed while download versions track changes through cac
   ).toBe(false);
 }, 30_000);
 
+test("gallery script filenames and lazy module imports stay versioned through cached renders", () => {
+  const cwd = buildProject({
+    "layouts/partials/footer.html":
+      '<footer>Example studio</footer><script type="module" src="/assets/embeds/experiment-gallery.js"></script>',
+  });
+  expect(build(cwd).status).toBe(0);
+  const firstHtml = readFileSync(join(cwd, "dist/index.html"), "utf8");
+  const entry = firstHtml.match(/src="(\/assets\/embeds\/experiment-gallery-[a-z0-9]+\.js)"/)?.[1];
+  expect(entry).toBeDefined();
+  expect(existsSync(join(cwd, "dist", entry ?? ""))).toBe(true);
+  expect(existsSync(join(cwd, "dist/assets/embeds/experiment-gallery.js"))).toBe(false);
+  expect(firstHtml).not.toContain('src="/assets/embeds/experiment-gallery.js"');
+  for (const file of readdirSync(join(cwd, "dist/assets/embeds"))) {
+    if (file.endsWith(".js")) {
+      expect(readFileSync(join(cwd, "dist/assets/embeds", file), "utf8")).not.toContain(
+        '"./experiment-gallery.js"',
+      );
+    }
+  }
+  expect(computed(build(cwd))).toEqual({});
+  expect(readFileSync(join(cwd, "dist/index.html"), "utf8")).toContain(`src="${entry}"`);
+}, 30_000);
+
 test("preview builds use their own origin and never claim the production domain", () => {
   const cwd = buildProject();
   const result = build(

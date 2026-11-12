@@ -93,6 +93,7 @@ jobs:
           path: apps/${{ inputs.site }}/dist
       - name: Validate built site
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           SITE: ${{ inputs.site }}
         run: bunx turbo run check:seo check:site check:html --only --filter="./apps/$SITE"
   browser:
@@ -127,6 +128,7 @@ jobs:
           path: apps/${{ inputs.site }}/dist
       - name: Run browser check
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           SITE: ${{ inputs.site }}
           BROWSER_SUITE: pages
           BROWSER_VIEWPORT: ${{ matrix.viewport }}
@@ -158,6 +160,7 @@ jobs:
           path: apps/${{ inputs.site }}/dist
       - name: Run whole-site browser flows
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           SITE: ${{ inputs.site }}
           BROWSER_SUITE: flows
           PLAYWRIGHT_CHANNEL: chrome

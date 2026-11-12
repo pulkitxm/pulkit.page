@@ -57,22 +57,26 @@ await timedAsync(
 timed("Compiled styles", () =>
   compileTailwind({ input: "styles.css", output: "dist/styles.css", minify: true }),
 );
-await timedAsync("Built demo assets", async () => {
+const embedScripts = await timedAsync("Built demo assets", async () => {
   if (pages.some((page) => page.body.includes(":::demo "))) {
     await buildDemoAssets("dist/assets/demos");
   }
-  await buildEmbedAssets("dist/assets");
+  const scripts = await buildEmbedAssets("dist/assets");
   if (resolveAnalytics()) {
     await bundleAnalyticsScript("dist/assets");
   }
+  return scripts;
 });
 timed(
   ({ renamed, kept }) =>
     `Renamed ${renamed} classes, kept ${kept} referenced by scripts or other styles`,
   () => mangleClasses("dist", "styles.css"),
 );
-timed("Fingerprinted styles and downloads", () => {
+timed("Fingerprinted styles, scripts and downloads", () => {
   const fingerprinted = new Map<string, string>();
+  for (const [logical, emitted] of embedScripts) {
+    fingerprinted.set(`/assets/embeds/${logical}"`, `/assets/embeds/${emitted}"`);
+  }
   const styles = readFileSync("dist/styles.css", "utf8");
   let mathStyles: string | undefined;
   let demoStyles: string | undefined;

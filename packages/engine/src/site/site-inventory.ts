@@ -109,7 +109,7 @@ async function readProjectLists(pages: readonly Page[]): Promise<Record<string, 
 
 export async function readSite(url: string): Promise<SiteInventory> {
   const sources = [...readPages("."), notFoundPage()];
-  const directory = sources.some(hasDirectory) ? loadDirectory() : undefined;
+  const directory = sources.some(hasDirectory) ? await loadDirectory() : undefined;
   const pages = directory ? withDirectoryPages(sources, directory.projects) : sources;
   const names = new Set(
     pages.flatMap((page) =>

@@ -1,4 +1,5 @@
-import { projectSourceSchema } from "@pulkit/shared/project-source";
+import { sha256Hex } from "@pulkit/shared/hash";
+import { projectSourceDisplay, projectSourceSchema } from "@pulkit/shared/project-source";
 import type { Page } from "playwright";
 import { expect } from "./problems.ts";
 
@@ -36,12 +37,35 @@ export async function auditProjectSource(page: Page, label: string): Promise<voi
   const target = files.last();
   const selected = await target.getAttribute("data-source-file");
   const expectedContent = bundle.files.find((file) => file.path === selected)?.content;
-  await target.click();
-  await page.waitForFunction(
-    (expected) => document.querySelector("[data-source-content]")?.textContent === expected,
-    expectedContent,
-  );
   expect(label, expectedContent !== undefined, "Code view selected an unapproved file");
+  const displayHash = sha256Hex(projectSourceDisplay(expectedContent ?? ""));
+  await target.click();
+  await page.waitForFunction(async (expected) => {
+    const content = document.querySelector("[data-source-content]")?.textContent;
+    if (content === undefined || content === null) {
+      return false;
+    }
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(content));
+    return (
+      [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("") ===
+      expected
+    );
+  }, displayHash);
+  expect(
+    label,
+    await workspace.locator("[data-source-pre]").evaluate((element) => {
+      const style = getComputedStyle(element);
+      const code = element.querySelector("code");
+      return (
+        style.tabSize === "2" &&
+        Number.parseFloat(style.lineHeight) / Number.parseFloat(style.fontSize) === 1.5 &&
+        code !== null &&
+        getComputedStyle(code).fontFamily === style.fontFamily &&
+        getComputedStyle(code).display === "block"
+      );
+    }),
+    "Code view spacing or indentation is incorrect",
+  );
   const wrap = workspace.getByRole("button", { name: "Wrap lines", exact: true });
   await wrap.click();
   expect(
@@ -70,7 +94,7 @@ export async function auditProjectSource(page: Page, label: string): Promise<voi
         expected,
       expectedContent,
     ),
-    "Copy file differs from the displayed source",
+    "Copy file differs from the approved original source",
   );
   await sidebar.getByRole("button", { name: "Preview", exact: true }).click();
   await page.waitForFunction(

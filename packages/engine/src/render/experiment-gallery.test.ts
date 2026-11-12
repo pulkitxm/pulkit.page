@@ -119,6 +119,20 @@ test("project details provide controlled current recordings with source and neig
   expect(html).toContain('poster="/assets/project-previews/hero-sections--mock-30/poster.webp"');
   expect(html).toContain('src="/assets/project-previews/hero-sections--mock-30/demo.mp4"');
   expect(html).toContain("Capture provenance");
+  const sidebar = html.match(/<aside[^>]*data-project-sidebar[\s\S]*?<\/aside>/)?.[0] ?? "";
+  for (const label of [
+    "Project licenses",
+    "Capture provenance",
+    "Gallery software notices",
+    "Report an issue",
+    "All experiments",
+  ]) {
+    expect(sidebar).toContain(label);
+    expect(html.replace(sidebar, "")).not.toContain(label);
+  }
+  expect(html).toContain("data-project-backdrop");
+  expect(html).toContain("data-project-frame");
+  expect(html).not.toContain("Silent project recording");
   expect(html).not.toContain("autoplay");
   expect(html).not.toContain(" loop");
   for (const retired of [

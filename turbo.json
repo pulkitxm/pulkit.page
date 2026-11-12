@@ -16,6 +16,7 @@
     },
     "build": {
       "dependsOn": ["^transit"],
+      "passThroughEnv": ["GITHUB_TOKEN", "GH_TOKEN"],
       "inputs": ["$TURBO_DEFAULT$", "!.cache/**"],
       "outputs": ["dist/**"]
     },
@@ -88,6 +89,7 @@
     },
     "//#check:gallery": {
       "cache": false,
+      "passThroughEnv": ["GITHUB_TOKEN", "GH_TOKEN"],
       "outputs": []
     },
     "verify": {

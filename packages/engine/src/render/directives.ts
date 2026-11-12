@@ -7,6 +7,7 @@ import type { MarkedExtension } from "marked";
 import {
   directoryDirective,
   directoryFor,
+  directoryScript,
   directoryStars,
   renderDirectory,
 } from "./experiment-gallery.ts";
@@ -227,16 +228,23 @@ export function directiveExtension(context: RenderContext): MarkedExtension {
         renderer(token) {
           const { page, project } = directoryPages.read(token);
           const directory = directoryFor(context.site);
-          return project
-            ? renderDirectoryProject(directory, project, context.route)
-            : renderDirectory(
-                directory,
-                directoryStars(context.site),
-                page,
-                context.route,
-                context.site.directory?.revision ?? "",
-                context.assets,
-              );
+          if (project) {
+            context.assets.script(directoryScript);
+            return renderDirectoryProject(
+              directory,
+              project,
+              context.route,
+              context.site.directory?.revision ?? "",
+            );
+          }
+          return renderDirectory(
+            directory,
+            directoryStars(context.site),
+            page,
+            context.route,
+            context.site.directory?.revision ?? "",
+            context.assets,
+          );
         },
       },
       {

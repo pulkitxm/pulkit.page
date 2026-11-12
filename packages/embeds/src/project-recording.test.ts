@@ -256,3 +256,17 @@ test("detail playback never loads external or retired recording sources", async 
     );
   }
 });
+
+test("switching to Code pauses immediately and returning to Preview resumes eligible playback", () =>
+  fixture(async ({ video, visible }) => {
+    visible(1);
+    await Promise.resolve();
+    expect(video.paused).toBe(false);
+    video.dispatchEvent(new CustomEvent("project-viewchange", { detail: { view: "code" } }));
+    expect(video.paused).toBe(true);
+    visible(1);
+    expect(video.paused).toBe(true);
+    video.dispatchEvent(new CustomEvent("project-viewchange", { detail: { view: "preview" } }));
+    await Promise.resolve();
+    expect(video.paused).toBe(false);
+  }));

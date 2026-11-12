@@ -9,6 +9,7 @@ export function initProjectRecording(video: HTMLVideoElement): () => void {
   const connection = (navigator as Navigator & { connection?: EventTarget & { saveData: boolean } })
     .connection;
   let visible = false;
+  let inPreview = true;
   let userPaused = false;
   let manual = false;
   let blocked = false;
@@ -30,7 +31,7 @@ export function initProjectRecording(video: HTMLVideoElement): () => void {
     update();
   };
   const play = (): void => {
-    if (disposed) {
+    if (disposed || !inPreview || document.hidden) {
       return;
     }
     const attempt = ++generation;
@@ -56,7 +57,14 @@ export function initProjectRecording(video: HTMLVideoElement): () => void {
     );
   };
   const sync = (): void => {
-    if (!disposed && visible && !document.hidden && !userPaused && (manual || !needsGesture())) {
+    if (
+      !disposed &&
+      inPreview &&
+      visible &&
+      !document.hidden &&
+      !userPaused &&
+      (manual || !needsGesture())
+    ) {
       play();
     } else {
       video.autoplay = false;
@@ -66,6 +74,13 @@ export function initProjectRecording(video: HTMLVideoElement): () => void {
   const preferencesChanged = (): void => {
     manual = false;
     sync();
+  };
+  const viewChanged = (event: Event): void => {
+    const view = (event as CustomEvent<{ view?: string }>).detail?.view;
+    if (view === "preview" || view === "code") {
+      inPreview = view === "preview";
+      sync();
+    }
   };
   const toggle = (): void => {
     if (video.paused) {
@@ -104,6 +119,7 @@ export function initProjectRecording(video: HTMLVideoElement): () => void {
   video.addEventListener("play", update);
   video.addEventListener("pause", update);
   video.addEventListener("error", failed);
+  video.addEventListener("project-viewchange", viewChanged);
   document.addEventListener("visibilitychange", sync);
   globalThis.addEventListener("pagehide", pause);
   globalThis.addEventListener("pageshow", sync);
@@ -121,6 +137,7 @@ export function initProjectRecording(video: HTMLVideoElement): () => void {
     video.removeEventListener("play", update);
     video.removeEventListener("pause", update);
     video.removeEventListener("error", failed);
+    video.removeEventListener("project-viewchange", viewChanged);
     document.removeEventListener("visibilitychange", sync);
     globalThis.removeEventListener("pagehide", pause);
     globalThis.removeEventListener("pageshow", sync);

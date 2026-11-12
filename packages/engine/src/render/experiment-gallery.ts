@@ -13,7 +13,7 @@ export const directoryLine =
   /^:::experiment-gallery(?: (?:page=([1-9][0-9]*)|project=([\w.-]+)))?[ \t]*$/gm;
 
 const pageSize = 24;
-const directoryScript = "/assets/embeds/experiment-gallery.js";
+export const directoryScript = "/assets/embeds/experiment-gallery.js";
 const repository = "https://github.com/pulkitxm/claude-directory";
 const tagline =
   "Interactive interfaces, motion studies and developer tools. Watch a recording or open a live preview.";

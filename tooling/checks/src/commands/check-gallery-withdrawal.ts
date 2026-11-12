@@ -7,6 +7,7 @@ import { builtFiles } from "@pulkit/shared/built-site";
 import { readExperimentCatalog } from "@pulkit/shared/experiment-catalog";
 import { experimentIndexSchema } from "@pulkit/shared/experiments";
 import { reportFailures } from "@pulkit/shared/failures";
+import { verifyProjectSources } from "@pulkit/shared/project-source-build";
 import { repositoryRoot } from "@pulkit/shared/repository";
 import { approvedGalleryPaths } from "../lib/gallery-routes.ts";
 
@@ -60,6 +61,9 @@ for (const file of builtFiles(root)) {
   if (path.startsWith("assets/experiment-artwork/")) {
     failures.push(`${path}: retired abstract artwork`);
   }
+  if (site !== "page" && path.startsWith("assets/project-source/")) {
+    failures.push(`${path}: project source belongs only to the portfolio`);
+  }
   if (path.startsWith("assets/project-previews/")) {
     const expected = artwork.get(path);
     if (
@@ -95,6 +99,11 @@ for (const file of builtFiles(root)) {
   }
 }
 if (site === "page") {
+  try {
+    verifyProjectSources(repositoryRoot, root);
+  } catch (error) {
+    failures.push(error instanceof Error ? error.message : "Project source verification failed");
+  }
   const index = join(root, "claude-directory/reviewed-projects.json");
   if (!existsSync(index)) {
     failures.push("Reviewed gallery index is missing");

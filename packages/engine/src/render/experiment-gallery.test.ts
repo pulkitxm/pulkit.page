@@ -4,6 +4,7 @@ import { experimentPreview, experimentSource } from "@pulkit/shared/experiments"
 import { HtmlValidate } from "html-validate";
 import { renderMarkdown } from "../markdown/markdown-export.ts";
 import type { DirectoryProject, Site } from "../types.ts";
+import { directoryScript } from "./experiment-gallery.ts";
 import { renderPage } from "./render-page.ts";
 
 const projects: DirectoryProject[] = Array.from({ length: 60 }, (_, index) => {
@@ -113,6 +114,7 @@ test("project details provide chrome-free lazy recordings with source and neighb
     route: "/directory/experiments/hero-sections--mock-30/",
   });
   expect(html).toContain(">Sample project 30<");
+  expect(html).toContain(`src="${directoryScript}"`);
   expect(html).toContain('href="/directory/"');
   expect(html).toContain(
     'href="/directory/experiments/hero-sections--mock-29/" aria-label="Previous project"',
@@ -150,11 +152,20 @@ test("project details provide chrome-free lazy recordings with source and neighb
   expect(sidebar).toContain("Claude directory");
   expect(html).toContain("data-project-backdrop");
   expect(html).toContain("data-project-frame");
+  expect(html).toContain(
+    'aria-pressed="true" aria-controls="project-preview-panel" data-project-view="preview"',
+  );
+  expect(html).toContain(
+    'aria-pressed="false" aria-controls="project-code-panel" data-project-view="code"',
+  );
+  expect(html).toContain('id="project-code-panel" hidden data-project-panel="code"');
+  expect(html).toContain('data-source-url="/assets/project-source/hero-sections--mock-30.json"');
+  expect(html).toContain(`data-source-revision="${revision}"`);
+  expect(html).toContain('data-source-project="hero-sections/mock-30"');
   expect(html).not.toContain("Silent project recording");
   expect(html).not.toContain("autoplay");
   for (const retired of [
     "<iframe",
-    "data-project-view",
     "data-prompt",
     "Download",
     "/assets/experiment-artwork/",

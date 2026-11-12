@@ -81,7 +81,7 @@ export function setupExperimentGallery(root: HTMLElement): void {
   const filterButtons = findElements(root, "[data-filter]", HTMLButtonElement);
   const { index = "", base = "", revision = "" } = root.dataset;
   const initialPage = Number(root.dataset.page ?? 1);
-  const stopPreview = setupExperimentPreviews(root);
+  const refreshPreviews = setupExperimentPreviews(root);
   const browsing = [...list.children];
   const browsingStatus = status.innerHTML;
   let filters = readFilters(initialPage);
@@ -191,7 +191,6 @@ export function setupExperimentGallery(root: HTMLElement): void {
   };
 
   const apply = async (next: Filters, scroll: boolean): Promise<void> => {
-    stopPreview();
     filters = next;
     globalThis.history.replaceState(
       globalThis.history.state,
@@ -200,8 +199,8 @@ export function setupExperimentGallery(root: HTMLElement): void {
     );
     controls();
     if (!filters.query && !filters.category && filters.page === initialPage) {
-      stopPreview();
       list.replaceChildren(...browsing);
+      refreshPreviews();
       status.innerHTML = browsingStatus;
       empty.hidden = true;
       list.hidden = false;
@@ -217,10 +216,10 @@ export function setupExperimentGallery(root: HTMLElement): void {
       const result = matching(all, filters);
       const count = Math.max(1, Math.ceil(result.length / pageSize));
       const selected = Math.min(filters.page, count);
-      stopPreview();
       list.replaceChildren(
         ...result.slice((selected - 1) * pageSize, selected * pageSize).map(fill),
       );
+      refreshPreviews();
       status.textContent = `${result.length} ${result.length === 1 ? "project" : "projects"}${result.length === all.length ? "" : ` of ${all.length}`}`;
       empty.hidden = result.length > 0;
       list.hidden = result.length === 0;
@@ -240,8 +239,8 @@ export function setupExperimentGallery(root: HTMLElement): void {
     } catch {
       status.textContent =
         "Search is temporarily unavailable. Use the page links to browse reviewed projects.";
-      stopPreview();
       list.replaceChildren(...browsing);
+      refreshPreviews();
       list.hidden = false;
       staticPages.hidden = false;
       empty.hidden = true;

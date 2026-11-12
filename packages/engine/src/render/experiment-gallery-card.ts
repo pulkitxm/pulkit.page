@@ -25,7 +25,11 @@ export function directoryRecording(project: DirectoryProject): string {
   if (!project.thumbnail) {
     return '<div class="absolute inset-0 grid place-items-center bg-surface text-sm text-muted" data-preview-placeholder>Preview preparing</div>';
   }
-  return `<img class="absolute inset-0 size-full object-cover" src="${safeUrl(project.thumbnail)}" alt="" width="1280" height="800" loading="lazy" decoding="async" data-preview-poster>`;
+  const poster = `<img class="absolute inset-0 size-full object-cover" src="${safeUrl(project.thumbnail)}" alt="" width="1280" height="800" loading="lazy" decoding="async" data-preview-poster>`;
+  const video = project.video
+    ? '<video class="pointer-events-none absolute inset-0 m-0 size-full object-cover opacity-0 transition-opacity duration-500 motion-reduce:transition-none" loop muted playsinline preload="none" aria-hidden="true" data-card-preview-video></video>'
+    : "";
+  return `${poster}${video}`;
 }
 
 export function directoryCard(project: DirectoryProject, href: string): string {

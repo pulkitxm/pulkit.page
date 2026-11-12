@@ -1,6 +1,8 @@
 import type { Browser } from "playwright";
 import { expect } from "./problems.ts";
 import { auditProjectLayout } from "./project-layout.ts";
+import { auditProjectPlayback } from "./project-playback.ts";
+import { auditProjectSource } from "./project-source.ts";
 import { openSession } from "./session.ts";
 
 export async function auditExperimentGallery(
@@ -11,7 +13,13 @@ export async function auditExperimentGallery(
   const label = "reviewed-gallery";
   const { context, page } = await openSession(browser, origin, label);
   try {
+    await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto(new URL(route, origin).href);
+    expect(
+      label,
+      (await page.getByRole("heading", { name: "Claude directory", exact: true }).count()) === 1,
+      "The original directory heading is missing",
+    );
     const root = page.locator("[data-directory]");
     const cards = root.locator("[data-directory-list] [data-card]");
     const initial = await cards.count();
@@ -22,20 +30,15 @@ export async function auditExperimentGallery(
     );
     const firstTitle = await cards.first().locator("[data-card-title]").innerText();
     const input = root.locator("[data-directory-query]");
-    await page.emulateMedia({ reducedMotion: "no-preference" });
-    const firstLink = cards.first().locator("[data-card-link]");
-    expect(
-      label,
-      (await root.locator("[data-card-media] video").count()) === 0,
-      "Card recordings eagerly loaded",
-    );
-    await firstLink.hover();
-    await root.locator("[data-card-media] video").waitFor();
+    await cards.first().locator("[data-card-link]").scrollIntoViewIfNeeded();
     await page.waitForFunction(() => {
       const video = document.querySelector<HTMLVideoElement>("[data-card-media] video");
-      return Boolean(video?.muted && video.loop && video.currentTime > 0);
+      return Boolean(
+        video?.muted && video.loop && video.playsInline && !video.paused && video.currentTime > 0,
+      );
     });
-
+    const firstRecording = await cards.first().locator("video").elementHandle();
+    await page.waitForLoadState("networkidle");
     await input.fill(firstTitle);
     await page.waitForFunction(() =>
       Boolean(document.querySelector<HTMLElement>("[data-directory-pages]")?.hidden),
@@ -47,14 +50,15 @@ export async function auditExperimentGallery(
     );
     expect(
       label,
-      (await root.locator("[data-card-media] video").count()) === 0,
-      "Filtering retained an active recording",
+      await firstRecording?.evaluate((video) => !video.isConnected && !video.hasAttribute("src")),
+      "Filtering retained the removed card's recording",
     );
+    await page.waitForLoadState("networkidle");
     await input.fill("z".repeat(48));
     await root.locator("[data-directory-empty]").waitFor({ state: "visible" });
     expect(label, (await cards.count()) === 0, "An unmatched query retained stale cards");
+    await page.waitForLoadState("networkidle");
     await root.locator("[data-directory-clear]").click();
-    await root.locator("[data-filter='all']").click();
     await page.waitForFunction(
       () => !document.querySelector<HTMLElement>("[data-directory-pages]")?.hidden,
     );
@@ -63,12 +67,20 @@ export async function auditExperimentGallery(
       (await cards.count()) === initial,
       "Clearing filters did not restore approved browsing",
     );
+    await page.waitForLoadState("networkidle");
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await cards.first().locator("[data-card-link]").hover();
-    await page.waitForTimeout(200);
+    await page.waitForFunction(() =>
+      [...document.querySelectorAll<HTMLVideoElement>("[data-card-media] video")].every(
+        (video) => video.paused && !video.hasAttribute("src"),
+      ),
+    );
     expect(
       label,
-      (await root.locator("[data-card-media] video").count()) === 0,
+      await root
+        .locator("[data-card-media] video")
+        .evaluateAll((videos) =>
+          videos.every((video) => (video as HTMLVideoElement).paused && !video.hasAttribute("src")),
+        ),
       "Reduced motion started an automatic recording",
     );
     const category = root.locator("[data-filter^='category:']").first();
@@ -86,11 +98,13 @@ export async function auditExperimentGallery(
         names.length > 0 && names.every((href) => href.includes(`/experiments/${selected}--`)),
         "Category filtering included another group",
       );
+      await page.waitForLoadState("networkidle");
     }
     await root.locator("[data-filter='all']").click();
     await page.waitForFunction(
       () => !document.querySelector<HTMLElement>("[data-directory-pages]")?.hidden,
     );
+    await page.waitForLoadState("networkidle");
     const next = root.locator("[data-directory-pages] a").filter({ hasText: /^Next$/ });
     if (await next.count()) {
       await next.click();
@@ -100,7 +114,10 @@ export async function auditExperimentGallery(
         (await page.locator("[data-directory-list] [data-card]").count()) > 0,
         "Native pagination produced an empty page",
       );
+      await page.waitForLoadState("networkidle");
     }
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.waitForLoadState("networkidle");
     await page.locator("[data-directory-list] [data-card-link]").first().click();
     await page.locator("[data-project]").waitFor();
     expect(
@@ -118,43 +135,25 @@ export async function auditExperimentGallery(
       (await page.locator("iframe, [data-prompt], [data-file-explorer]").count()) === 0,
       "Retired media or source-copy controls returned",
     );
-    const recording = page.locator("video[data-project-recording]");
-    expect(label, (await recording.count()) === 1, "Fresh project recording is missing");
-    expect(
-      label,
-      (await recording.getAttribute("preload")) === "none",
-      "Recording eagerly loads media",
-    );
-    expect(
-      label,
-      (await recording.getAttribute("controls")) !== null,
-      "Recording controls are missing",
-    );
-    expect(
-      label,
-      (await recording.getAttribute("autoplay")) === null,
-      "Detail recording autoplays",
-    );
-    await recording.evaluate(async (video: HTMLVideoElement) => {
-      await video.play();
-    });
-    await page.waitForFunction(() => {
-      const video = document.querySelector<HTMLVideoElement>("[data-project-recording]");
-      return Boolean(video && video.currentTime > 0 && !video.paused);
-    });
-    await recording.evaluate((video: HTMLVideoElement) => video.pause());
+    await auditProjectSource(page, label);
+    await auditProjectPlayback(page, label);
     await auditProjectLayout(page, label);
-    await page.getByRole("link", { name: "All experiments", exact: true }).click();
+    await page.waitForLoadState("networkidle");
+    await page
+      .locator("[data-project-sidebar]")
+      .getByRole("link", { name: "Claude directory", exact: true })
+      .click();
     await page.waitForURL(new URL(route, origin).href);
     expect(
       label,
       (await page.locator("[data-directory-list] [data-card]").count()) === initial,
       "Detail navigation did not return to the gallery",
     );
+    await page.waitForLoadState("networkidle");
   } finally {
     await context.close();
   }
   console.log(
-    "Validated reviewed gallery search, empty state, category filters, pagination and project navigation",
+    "Validated directory autoplay, reduced motion, search, filters, pagination and project playback",
   );
 }

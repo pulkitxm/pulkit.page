@@ -20,11 +20,23 @@ page errors, failed requests and overflow. Inputs contain no standalone media.
 validates each project's source tree, built files, runtime observations, notices
 and media budgets before adding the complete capture set.
 
-`/assets/project-previews/provenance.json` includes capture source identities,
-build records and exact capture recipes. Per-project `source-notices.txt` files
-preserve upstream license and attribution text. Line endings use LF. Capture
-tools are identified with their applicable licenses and are not included in the
-recordings.
+`bun run gallery:notices --source <current-source-checkout> --revision <commit> --capture-source <capture-source-checkout>`
+updates current project notices without changing recordings. It verifies that
+runtime source files are byte-identical, replaces exact source notice sections,
+and keeps the original capture timestamps, source identities, build records and
+notice hashes. A separate publication binding records the current source tree and
+published notice hashes. Markdown and notice text are excluded from the runtime
+source digest.
+
+Pass `--publication-source <previous-source-checkout>` when the preceding
+publication is stored separately from the current and original capture sources.
+Each supplied revision and tree must match its recorded identity.
+
+`/assets/project-previews/provenance.json` includes the original capture records,
+current publication bindings, implementation hashes and exact capture recipes.
+Per-project `source-notices.txt` files preserve upstream license and attribution
+text. Line endings use LF. Capture tools are identified with their applicable
+licenses and are not included in the recordings.
 
 `bun run check:gallery` verifies the pinned metadata and current source status.
 Missing records, changed graphics or notices, and network errors block the check.

@@ -40,6 +40,17 @@ export const inlineSchema = z.object({
   notices: reviewedFiles,
 });
 const mediaSchema = z.object({ sha256: hashSchema, bytes: z.number().int().positive() });
+const publicationSchema = z.object({
+  source_revision: revisionSchema,
+  source_tree: revisionSchema,
+  project_source_tree: revisionSchema,
+  implementation_sha256: hashSchema,
+  notices_sha256: hashSchema,
+  source_notices_sha256: hashSchema,
+  notices_normalization: z.literal(
+    "CRLF to LF line endings only; license and attribution text unchanged",
+  ),
+});
 const captureSchema = z.object({
   version: z.literal(1),
   project: experimentPathSchema,
@@ -50,6 +61,8 @@ const captureSchema = z.object({
   source_tree: revisionSchema,
   project_source_tree: revisionSchema,
   project_build_sha256: hashSchema,
+  implementation_files: reviewedFiles.min(1),
+  publication: publicationSchema,
   input_video_sha256: hashSchema,
   observations_sha256: hashSchema,
   built_files: reviewedFiles.min(1),
@@ -116,7 +129,7 @@ const captureSchema = z.object({
   }),
 });
 export const manifestSchema = z.object({
-  version: z.literal(1),
+  version: z.literal(2),
   source_repository: z.literal(experimentRepository),
   source_revision: revisionSchema,
   source_tree: revisionSchema,
@@ -135,6 +148,10 @@ export const manifestSchema = z.object({
     )
     .min(1),
   recordings: z.array(captureSchema).min(1),
+});
+export const captureInputManifestSchema = manifestSchema.extend({
+  version: z.literal(1),
+  recordings: z.array(captureSchema.omit({ implementation_files: true, publication: true })).min(1),
 });
 export const descriptionsSchema = z.record(
   experimentPathSchema,

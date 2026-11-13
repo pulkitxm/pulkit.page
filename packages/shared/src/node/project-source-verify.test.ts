@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { projectSourceUrl } from "../content/project-source.ts";
 import { approvalSchema } from "./experiment-capture-schema.ts";
+import { implementationDigest } from "./experiment-publication.ts";
 import { sha256Hex } from "./hash.ts";
 import { verifySourceAssets } from "./project-source-verify.ts";
 
@@ -23,6 +24,18 @@ function fixture(
     bundle: {
       project: string;
       files: { path: string; language: string; content: string; sha256: string }[];
+    };
+    capture: {
+      project_source_tree: string;
+      implementation_files: { path: string; sha256: string }[];
+      publication: {
+        source_revision: string;
+        source_tree: string;
+        project_source_tree: string;
+        implementation_sha256: string;
+        notices_sha256: string;
+        source_notices_sha256: string;
+      };
     };
     saveBundle(updateManifest?: boolean): void;
     saveManifest(): void;
@@ -49,11 +62,28 @@ function fixture(
     href: `/assets/project-previews/${project.replaceAll("/", "--")}/source-notices.txt`,
     sha256: sha256Hex(notice),
   };
+  const implementation = [
+    { path: "index.html", sha256: sha256Hex("<p>Example studio</p>\n") },
+    { path: "styles.css", sha256: sha256Hex("body{margin:0}\n") },
+  ];
   const capture = {
     project,
-    project_source_tree: "c".repeat(40),
-    notices_sha256: notices.sha256,
-    source_notices_sha256: notices.sha256,
+    source_revision: "9".repeat(40),
+    source_tree: "8".repeat(40),
+    project_source_tree: "7".repeat(40),
+    notices_sha256: sha256Hex("Original fixture notice\n"),
+    source_notices_sha256: sha256Hex("Original fixture notice\n"),
+    implementation_files: implementation,
+    publication: {
+      source_revision: revision,
+      source_tree: approval.tree,
+      project_source_tree: "c".repeat(40),
+      implementation_sha256: implementationDigest(implementation),
+      notices_sha256: notices.sha256,
+      source_notices_sha256: notices.sha256,
+      notices_normalization:
+        "CRLF to LF line endings only; license and attribution text unchanged" as const,
+    },
   };
   const bundle = {
     version: 1,
@@ -77,13 +107,13 @@ function fixture(
   };
   const entry = {
     project,
-    project_source_tree: capture.project_source_tree,
+    project_source_tree: capture.publication.project_source_tree,
     href: projectSourceUrl(project),
     sha256: "",
     bytes: 0,
     files: bundle.files.map(({ path, sha256 }) => ({ path, sha256 })),
     notices: { ...notices },
-    source_notices_sha256: capture.source_notices_sha256,
+    source_notices_sha256: capture.publication.source_notices_sha256,
   };
   const { paths: _, repository: __, ...header } = approval;
   const manifest = { ...header, projects: [entry] };
@@ -108,6 +138,7 @@ function fixture(
     run({
       verify: () => verifySourceAssets(output, approval, [capture]),
       output,
+      capture,
       manifest,
       bundle,
       saveBundle,
@@ -120,7 +151,7 @@ function fixture(
   }
 }
 
-test("accepts a complete synthetic source artifact with exact file and full notice bindings", () => {
+test("accepts current publication trees and notices while original capture identities differ", () => {
   fixture(({ verify }) => expect(verify).not.toThrow());
 });
 
@@ -206,5 +237,53 @@ test("rejects unapproved project names and capture paths even after updating out
     }
     saveBundle(true);
     expect(verify).toThrow();
+  });
+});
+
+test("rejects stale current publication revision, tree, notice and implementation bindings", () => {
+  for (const field of [
+    "source_revision",
+    "source_tree",
+    "implementation_sha256",
+    "notices_sha256",
+    "source_notices_sha256",
+  ] as const) {
+    fixture(({ capture, verify }) => {
+      capture.publication[field] = field.endsWith("sha256") ? "f".repeat(64) : "f".repeat(40);
+      expect(verify).toThrow();
+    });
+  }
+});
+
+test("rejects altered implementation inventories even when bundle and outer hashes are updated", () => {
+  fixture(({ bundle, manifest, saveBundle, verify }) => {
+    const file = bundle.files[0];
+    const entry = manifest.projects[0]?.files[0];
+    if (!file || !entry) {
+      throw new Error("Synthetic source fixture is incomplete");
+    }
+    file.content = "<p>Changed synthetic implementation</p>\n";
+    file.sha256 = sha256Hex(file.content);
+    entry.sha256 = file.sha256;
+    saveBundle(true);
+    expect(verify).toThrow("recorded source");
+  });
+  fixture(({ bundle, manifest, saveBundle, verify }) => {
+    bundle.files.pop();
+    manifest.projects[0]?.files.pop();
+    saveBundle(true);
+    expect(verify).toThrow("recorded source");
+  });
+  fixture(({ bundle, manifest, saveBundle, verify }) => {
+    const file = {
+      path: "worker.js",
+      language: "javascript",
+      content: "export const example = 1;\n",
+      sha256: sha256Hex("export const example = 1;\n"),
+    };
+    bundle.files.push(file);
+    manifest.projects[0]?.files.push({ path: file.path, sha256: file.sha256 });
+    saveBundle(true);
+    expect(verify).toThrow("recorded source");
   });
 });

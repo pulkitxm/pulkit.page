@@ -22,7 +22,9 @@
     "./experiment-catalog": "./src/node/experiment-catalog.ts",
     "./tailwind": "./src/node/tailwind.ts",
     "./project-source": "./src/content/project-source.ts",
-    "./project-source-build": "./src/node/project-source.ts"
+    "./project-source-build": "./src/node/project-source.ts",
+    "./experiment-publication": "./src/node/experiment-publication.ts",
+    "./experiment-capture-schema": "./src/node/experiment-capture-schema.ts"
   },
   "scripts": {
     "test": "bun test ./src"

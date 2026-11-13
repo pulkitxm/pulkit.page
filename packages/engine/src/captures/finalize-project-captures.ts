@@ -19,6 +19,7 @@ import { experimentPathSchema } from "@pulkit/shared/experiments";
 import { sha256Hex as hash } from "@pulkit/shared/hash";
 import sharp from "sharp";
 import { normalizeCaptureNotices, verifyCaptureInput } from "./capture-input.ts";
+import { sourcePublication } from "./source-publication.ts";
 
 const argumentsByName = new Map(
   process.argv
@@ -305,6 +306,7 @@ for (const project of approval.paths) {
       project_source_tree: projectTree,
       project_build_sha256: buildHash,
       built_files: built,
+      ...sourcePublication(source, approval, project, noticeBinding),
       capture_tool_sha256: worker_sha256,
       capture_producer_sha256: producer_sha256,
       command:
@@ -391,7 +393,7 @@ for (const item of complete) {
 }
 writeFileSync(
   join(output, "provenance.json"),
-  `${JSON.stringify({ version: 1, source_repository: "pulkitxm/claude-directory", source_revision: approval.revision, source_tree: approval.tree, input_verifier_sha256: verifierHash, input_verifier_source: `recipes/${verifierHash}.txt`, finalizer_sha256: finalizerHash, finalizer_source: `recipes/${finalizerHash}.txt`, recipes: [...recipes.values()], recordings: complete.map((item) => item.record) }, null, 2)}\n`,
+  `${JSON.stringify({ version: 2, source_repository: "pulkitxm/claude-directory", source_revision: approval.revision, source_tree: approval.tree, input_verifier_sha256: verifierHash, input_verifier_source: `recipes/${verifierHash}.txt`, finalizer_sha256: finalizerHash, finalizer_source: `recipes/${finalizerHash}.txt`, recipes: [...recipes.values()], recordings: complete.map((item) => item.record) }, null, 2)}\n`,
 );
 removeRetiredGalleryArtwork(root);
 const catalog = readExperimentCatalog(root);

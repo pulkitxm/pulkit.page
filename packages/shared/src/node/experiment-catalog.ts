@@ -19,7 +19,7 @@ import {
   provenanceSchema,
   registrySchema,
 } from "./experiment-capture-schema.ts";
-
+import { verifyCapturePublication } from "./experiment-publication.ts";
 import { currentExperimentRevision } from "./experiment-source-revision.ts";
 
 const dataPath = "apps/page/data/experiment-gallery";
@@ -160,13 +160,10 @@ export function readExperimentCatalog(root: string): z.infer<typeof experimentIn
   let totalBytes = 0;
   const projects = approval.paths.map((path): ExperimentProject => {
     const capture = manifest.recordings.find((record) => record.project === path);
-    if (
-      !capture ||
-      capture.source_revision !== approval.revision ||
-      capture.source_tree !== approval.tree
-    ) {
+    if (!capture) {
       throw new Error(`Fresh project capture is missing or stale: ${path}`);
     }
+    verifyCapturePublication(capture, approval);
     if (
       capture.normalization
         ? capture.normalization.input_sha256 !== capture.input_video_sha256
@@ -208,7 +205,7 @@ export function readExperimentCatalog(root: string): z.infer<typeof experimentIn
     }
     const notice = readFileSync(join(root, assetPath, name, "source-notices.txt"));
     if (
-      sha256(notice) !== capture.notices_sha256 ||
+      sha256(notice) !== capture.publication.notices_sha256 ||
       !notice.subarray(0, snapshots.license.length).equals(snapshots.license)
     ) {
       throw new Error(`Source license notices are missing or changed: ${path}`);
@@ -331,15 +328,16 @@ export async function verifyExperimentCatalogSource(
     );
     const latest = inlineSchema.parse(JSON.parse(inline.toString()));
     for (const kind of ["files", "licenses", "notices"] as const) {
-      for (const entry of reviewed[kind].filter((file) =>
-        approval.paths.some((path) => file.path.startsWith(`${path}/`)),
+      for (const entry of reviewed[kind].filter(
+        (file) =>
+          kind === "licenses" || approval.paths.some((path) => file.path.startsWith(`${path}/`)),
       )) {
         const now = latest[kind].find((candidate) => candidate.path === entry.path);
         if (
           now?.sha256 !== entry.sha256 ||
           ("review" in entry && (!now || !("review" in now) || now.review !== entry.review))
         ) {
-          throw new Error("Reviewed source artwork or notices were removed or changed");
+          throw new Error("Source artwork or notice bindings changed");
         }
       }
     }
@@ -347,10 +345,9 @@ export async function verifyExperimentCatalogSource(
       throw new Error("Primary license changed");
     }
   } catch (cause) {
-    throw new Error(
-      "Primary clearance was withdrawn or source artwork permission changed; stop for manual review",
-      { cause },
-    );
+    throw new Error("Current source approval or artwork binding changed; stop for manual review", {
+      cause,
+    });
   }
 }
 

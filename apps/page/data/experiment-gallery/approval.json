@@ -1,8 +1,8 @@
 {
   "version": 1,
   "repository": "pulkitxm/claude-directory",
-  "revision": "85aa28e003e5788055c18915a9d3ccbb4c0e4038",
-  "tree": "b999253764c6f69170a1318cdca22f2298a643c8",
+  "revision": "29fe9fecf79efbf6abb07e9cddc5a77123930308",
+  "tree": "fac3147ad95ed3de38d4aabedcc7918ff5a2cb6d",
   "paths": [
     "3d-games/sidi-bou-said-3d-walk",
     "animations-loaders/apex-scroll-hero",
@@ -150,8 +150,8 @@
     "ui-design/vaporwave-outrun-design-system",
     "ui-design/verdant-organic-design-system"
   ],
-  "registry_sha256": "7dc9fb91289c2a67563a113586c1c6842274e017485297dfc63716da3e5432a0",
-  "provenance_sha256": "eadc5efdeaf1b8e5866fb334a7c11a07cc0b249e39f70f5a029d8fdceac00ddd",
-  "license_sha256": "1c859b177f1b62fdc126921fe7db7b5cfc9ba254aaf388b16f71aa76771193a5",
-  "inline_artwork_sha256": "70c20c967bb48a335a57deb2086f82f4f213710d58b0ad4ee4a4e0f3de053562"
+  "registry_sha256": "36bf68da3a73bcb0be7febd22bd0c609a37f8da8b1f2c99c9e16e96f8b501878",
+  "provenance_sha256": "7b45dfc8a39846c236a38ebd6dc958b75413609557b2c750f8121a79778a0960",
+  "license_sha256": "8b809e50c3f716c5728e534fd7d2ee3584d9eb71a6a840f6c930e96c1d1718fd",
+  "inline_artwork_sha256": "a9b481961a4ad5ffd07b3752a5de12b9bf3901e6b0884b3aebfcfa21a64a6a57"
 }

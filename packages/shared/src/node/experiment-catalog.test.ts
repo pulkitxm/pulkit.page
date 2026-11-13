@@ -52,7 +52,7 @@ function setup() {
           "Original isolated fixture source with self-contained markup was manually reviewed.",
       },
     ],
-    licenses: [],
+    licenses: [{ path: "compliance/licenses/mock.txt", sha256: hash("Synthetic grant\n") }],
     notices: [],
   };
   for (const [path, value] of [
@@ -106,6 +106,16 @@ function setup() {
     observations_sha256: hash("Synthetic observations\n"),
     project_build_sha256: hash(`index.html\0${hash(source)}\n`),
     built_files: [{ path: "index.html", sha256: hash(source) }],
+    implementation_files: [{ path: "index.html", sha256: hash(source) }],
+    publication: {
+      source_revision: revision,
+      source_tree: tree,
+      project_source_tree: "c".repeat(40),
+      implementation_sha256: hash(`index.html\0${hash(source)}\n`),
+      notices_sha256: hash(license),
+      source_notices_sha256: hash(license),
+      notices_normalization: "CRLF to LF line endings only; license and attribution text unchanged",
+    },
     capture_tool_sha256: hash(worker),
     capture_producer_sha256: hash(producer),
     command:
@@ -154,7 +164,7 @@ function setup() {
     },
   };
   const manifest = {
-    version: 1,
+    version: 2,
     source_repository: experimentRepository,
     source_revision: revision,
     source_tree: tree,
@@ -229,7 +239,16 @@ test("requires explicit approval, source identity and complete responsive runtim
     for (const recordings of [
       [],
       [capture, capture],
-      [{ ...capture, source_revision: "d".repeat(40) }],
+      [{ ...capture, publication: { ...capture.publication, source_revision: "d".repeat(40) } }],
+      [{ ...capture, implementation_files: [{ path: "index.html", sha256: "a".repeat(64) }] }],
+      [{ ...capture, implementation_files: [{ path: "README.md", sha256: "a".repeat(64) }] }],
+      [{ ...capture, implementation_files: [{ path: "../index.html", sha256: "a".repeat(64) }] }],
+      [
+        {
+          ...capture,
+          implementation_files: [...capture.implementation_files, ...capture.implementation_files],
+        },
+      ],
       [{ ...capture, built_files: [{ path: "../index.html", sha256: "a".repeat(64) }] }],
       [{ ...capture, runtime: { ...capture.runtime, page_errors: ["mock failure"] } }],
       [
@@ -245,6 +264,34 @@ test("requires explicit approval, source identity and complete responsive runtim
       put(`${assets}/provenance.json`, { ...manifest, recordings });
       expect(() => readExperimentCatalog(root)).toThrow();
     }
+  }));
+test("retains original capture facts when current source notices are updated", () =>
+  fixture(({ root, put, capture, manifest, license }) => {
+    const notices = `${license}\nCurrent synthetic package notice\n`;
+    const publication = {
+      ...capture.publication,
+      project_source_tree: "e".repeat(40),
+      notices_sha256: hash(notices),
+      source_notices_sha256: hash(notices),
+    };
+    const record = { ...capture, source_revision: "f".repeat(40), publication };
+    put(`${assets}/${name}/source-notices.txt`, notices);
+    put(`${assets}/provenance.json`, { ...manifest, recordings: [record] });
+    expect(readExperimentCatalog(root).projects).toHaveLength(1);
+    const saved = JSON.parse(readFileSync(join(root, assets, "provenance.json"), "utf8"))
+      .recordings[0];
+    expect(saved.captured_at).toBe(capture.captured_at);
+    expect(saved.notices_sha256).toBe(capture.notices_sha256);
+    expect(saved.source_notices_sha256).toBe(capture.source_notices_sha256);
+    expect(saved.built_files).toEqual(capture.built_files);
+    expect(saved.assets).toEqual(capture.assets);
+    put(`${assets}/provenance.json`, {
+      ...manifest,
+      recordings: [
+        { ...record, publication: { ...publication, notices_sha256: capture.notices_sha256 } },
+      ],
+    });
+    expect(() => readExperimentCatalog(root)).toThrow("notices are missing or changed");
   }));
 test("rejects old artwork, external media and incomplete descriptions", () =>
   fixture(({ root, put }) => {
@@ -296,6 +343,14 @@ test("checks pinned source snapshots and current rights revocation without accep
       ["compliance/projects.json", registry.map((record) => ({ ...record, status: "pending" }))],
       ["ASSET_PROVENANCE.json", { ...provenance, assets: [{}] }],
       ["compliance/inline-artwork.json", { ...inline, files: [] }],
+      ["compliance/inline-artwork.json", { ...inline, licenses: [] }],
+      [
+        "compliance/inline-artwork.json",
+        {
+          ...inline,
+          licenses: inline.licenses.map((file) => ({ ...file, sha256: "d".repeat(64) })),
+        },
+      ],
       [
         "compliance/inline-artwork.json",
         { ...inline, files: inline.files.map((file) => ({ ...file, sha256: "d".repeat(64) })) },
@@ -311,7 +366,7 @@ test("checks pinned source snapshots and current rights revocation without accep
             typeof body === "string" ? new Response(body) : Response.json(body),
           );
         }),
-      ).rejects.toThrow("clearance was withdrawn");
+      ).rejects.toThrow("source approval");
     }
     await expect(
       verifyExperimentCatalogSource(root, () =>

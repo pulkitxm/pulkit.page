@@ -20,15 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Scope notice: This license applies to original material that contributors
-are authorized to license. Third-party materials retain their applicable
-licenses and notices. See LICENSING.md, ASSET_PROVENANCE.json and
-THIRD_PARTY_NOTICES.md.
+Scope notice: This license covers material that the contributors are
+authorized to license. Third-party materials remain subject to their
+applicable licenses and notices. See LICENSING.md, ASSET_PROVENANCE.json
+and THIRD_PARTY_NOTICES.md.
 
 
 Third-party inline icon notices
 
-These notices apply to matched icon geometry recorded in compliance/inline-icon-provenance.json. Each upstream license retains its own scope and conditions.
+The following licenses apply to the inline icon geometry identified in compliance/inline-icon-provenance.json. Each component retains its applicable copyright, attribution and license terms.
 
 @phosphor-icons/core@2.1.1
 License: MIT

@@ -7,12 +7,13 @@ import {
   projectSourceUrl,
 } from "../content/project-source.ts";
 import type { approvalSchema, manifestSchema } from "./experiment-capture-schema.ts";
+import { verifyCapturePublication } from "./experiment-publication.ts";
 import { sha256Hex } from "./hash.ts";
 
 type Approval = z.infer<typeof approvalSchema>;
 type Capture = Pick<
   z.infer<typeof manifestSchema>["recordings"][number],
-  "project" | "project_source_tree" | "notices_sha256" | "source_notices_sha256"
+  "project" | "implementation_files" | "publication"
 >;
 const bindings = [
   "revision",
@@ -64,11 +65,15 @@ export function verifySourceAssets(
   }
   for (const entry of manifest.projects) {
     const capture = captures.find((recording) => recording.project === entry.project);
+    if (capture) {
+      verifyCapturePublication(capture, approval);
+    }
     if (
       !capture ||
-      entry.project_source_tree !== capture.project_source_tree ||
-      entry.notices.sha256 !== capture.notices_sha256 ||
-      entry.source_notices_sha256 !== capture.source_notices_sha256
+      entry.project_source_tree !== capture.publication.project_source_tree ||
+      entry.notices.sha256 !== capture.publication.notices_sha256 ||
+      entry.source_notices_sha256 !== capture.publication.source_notices_sha256 ||
+      JSON.stringify(entry.files) !== JSON.stringify(capture.implementation_files)
     ) {
       throw new Error("Project source manifest differs from its recorded source or notices");
     }
@@ -89,7 +94,7 @@ export function verifySourceAssets(
     }
     if (
       sha256Hex(readAsset(join(resolve(outputDirectory), entry.notices.href))) !==
-      capture.notices_sha256
+      capture.publication.notices_sha256
     ) {
       throw new Error("Project source legal notices are missing or changed");
     }

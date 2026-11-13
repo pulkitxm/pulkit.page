@@ -7,6 +7,7 @@ import {
 } from "../content/project-source.ts";
 import { approvalSchema, manifestSchema } from "./experiment-capture-schema.ts";
 import { readExperimentCatalog, verifyExperimentCatalogSource } from "./experiment-catalog.ts";
+import { implementationDigest, verifyCapturePublication } from "./experiment-publication.ts";
 import { sha256Hex } from "./hash.ts";
 import {
   readProjectSource,
@@ -58,16 +59,14 @@ export async function buildProjectSources(
   }
   const assets = approval.paths.map((project) => {
     const capture = captures.recordings.find((recording) => recording.project === project);
-    if (
-      !capture ||
-      capture.source_revision !== approval.revision ||
-      capture.source_tree !== approval.tree
-    ) {
+    if (!capture) {
       throw new Error("Project recording has no matching approved source binding");
     }
+    verifyCapturePublication(capture, approval);
+    const publication = capture.publication;
     const notices = {
       href: `/assets/project-previews/${project.replaceAll("/", "--")}/source-notices.txt`,
-      sha256: capture.notices_sha256,
+      sha256: publication.notices_sha256,
     };
     const bytes = readFileSync(join(root, "apps/page", notices.href));
     if (sha256Hex(bytes) !== notices.sha256) {
@@ -77,8 +76,15 @@ export async function buildProjectSources(
       repository,
       approval.revision,
       project,
-      capture.project_source_tree,
+      publication.project_source_tree,
     );
+    const fingerprints = files.map(({ path, sha256 }) => ({ path, sha256 }));
+    if (
+      JSON.stringify(fingerprints) !== JSON.stringify(capture.implementation_files) ||
+      implementationDigest(fingerprints) !== publication.implementation_sha256
+    ) {
+      throw new Error("Current project source differs from its recorded implementation");
+    }
     const bundle = projectSourceSchema.parse({
       version: 1,
       revision: approval.revision,
@@ -91,13 +97,13 @@ export async function buildProjectSources(
       content,
       entry: {
         project,
-        project_source_tree: capture.project_source_tree,
+        project_source_tree: publication.project_source_tree,
         href: projectSourceUrl(project),
         sha256: sha256Hex(content),
         bytes: content.length,
-        files: files.map(({ path, sha256 }) => ({ path, sha256 })),
+        files: fingerprints,
         notices,
-        source_notices_sha256: capture.source_notices_sha256,
+        source_notices_sha256: publication.source_notices_sha256,
       },
     };
   });

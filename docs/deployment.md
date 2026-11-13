@@ -30,7 +30,7 @@ skips publishing if the approved source revision is no longer current.
 - **Deploy pulkit.page** uploads the checked Pages artifact and deploys it in the
   `github-pages` environment. It is the only job with `pages: write` and
   `id-token: write`.
-- **Deploy pulkit.blog** checks the artifact against the approved route and asset policy, then
+- **Deploy pulkit.blog** checks the artifact against the gallery route and asset allowlists, then
   runs [publish-blog.sh](../tooling/checks/publish-blog.sh). The script requires
   the approved manual dispatch, a full verified source SHA, the production domain
   and expected output files, and target repository access. It stages the entire
@@ -59,7 +59,7 @@ redirected; they reach that page.
 
 ## Approved manual blog publication
 
-After owner approval, build the merged source, run the route, asset and site checks,
+After owner approval, build the merged source, run the artifact and site checks,
 and run [publish-blog.sh](../tooling/checks/publish-blog.sh) with the existing local
 GitHub session. Set `GITHUB_EVENT_NAME=workflow_dispatch`,
 `GITHUB_REF=refs/heads/main`, `BLOG_PUBLISH_APPROVED=true` and `SOURCE_REVISION` to
@@ -71,7 +71,8 @@ complete artifact through Pukbot.
 Without `BLOG_PUBLISH_TOKEN`, the CI deployment job runs
 [verify-blog-publication.py](../tooling/checks/verify-blog-publication.py). It
 requires an exact deployed source-revision receipt, matching home/article bytes,
-and HTTP 404 or 410 for every route outside the approved publication inventory. Redirects, HTTP 403, network failures, stale
+the current project collection description, and HTTP 404 or 410 for every retired
+capture and gallery bundle. Redirects, HTTP 403, network failures, stale
 receipts and mismatched content fail closed. A missing token alone is not a
 publication success. The actual approved manual deployment must already exist.
 

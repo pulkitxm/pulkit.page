@@ -104,7 +104,7 @@ Place one directive in its own paragraph. It renders a GitHub starred list: the 
 
 `readSite` fetches the list's public page once per build for every distinct list named by a directive and puts the result on the site context. No credentials are involved: the page is public, so `bun run build`, `bun run dev`, and `bun run ci` all work with no token and no configuration. An unreachable page, a private or empty list, or a change to GitHub's list markup fails the build rather than publishing a thinner page. The fetched list is part of the generation cache key, so a changed list rerenders the affected pages. Turbo cannot see that fetch, so the page app turns off its own task cache and every run reads the list again; see [architecture](architecture.md#three-layers-of-caching).
 
-Project publication requires an approved project registry, asset provenance and explicit publishing approval. Add projects through the registered source workflow.
+The project gallery uses an explicit source allowlist, local screenshots and controlled recordings. It provides search, category filters, pagination and per-project preview and source links. See [the project gallery guide](project-gallery.md) for capture, source metadata and notice updates. Upstream project rows and media manifests are not ingested automatically.
 
 Article pages show a byline with the portrait and the author's name from the shared profile, linking to the author URL. The shared [article layout](../packages/theme/layouts/article.html) fills it from the `author` and `authorUrl` template values.
 

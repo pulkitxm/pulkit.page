@@ -13,7 +13,7 @@ import { approvedGalleryPaths } from "../lib/gallery-routes.ts";
 
 const site = process.argv[2];
 if (site !== "page" && site !== "blog") {
-  throw new Error("Usage: check-gallery-withdrawal.ts page|blog");
+  throw new Error("Usage: check-gallery-output.ts page|blog");
 }
 const root = `apps/${site}/dist`;
 if (!existsSync(root)) {
@@ -56,7 +56,7 @@ for (const file of builtFiles(root)) {
     /content\/events\/my-first-talk\/(?:8|9)(?:[.-]|$)/.test(path) ||
     /public\/blogs\/my-first-talk\/(?:0[2-5]|video-thumbnail)(?:[.-]|$)/.test(path)
   ) {
-    failures.push(`${path}: unpublished media or unsupported gallery script`);
+    failures.push(`${path}: unapproved media or gallery script`);
   }
   if (path.startsWith("assets/experiment-artwork/")) {
     failures.push(`${path}: retired abstract artwork`);

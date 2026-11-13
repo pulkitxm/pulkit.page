@@ -54,10 +54,10 @@ jobs:
           POSTHOG_IGNORE_KEY: ${{ secrets.POSTHOG_IGNORE_KEY }}
           SITE: ${{ inputs.site }}
         run: bunx turbo run build --filter="./apps/$SITE"
-      - name: Verify gallery publication policy
+      - name: Verify gallery output
         env:
           SITE: ${{ inputs.site }}
-        run: bun tooling/checks/src/commands/check-gallery-withdrawal.ts "$SITE"
+        run: bun tooling/checks/src/commands/check-gallery-output.ts "$SITE"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: built-${{ inputs.site }}

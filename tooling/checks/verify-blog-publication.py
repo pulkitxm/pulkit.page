@@ -29,7 +29,7 @@ if args.origin != "https://pulkit.blog" and not (
 if args.attempts < 1 or args.interval < 0:
     parser.error("Invalid retry settings")
 client = urllib.request.build_opener(NoRedirect())
-withdrawn = [
+retired = [
     f"/assets/content/public/blogs/my-first-talk/{name}.webp"
     for name in ["02", "03", "04", "05", "video-thumbnail"]
 ] + [
@@ -62,19 +62,23 @@ def verify():
         status, body = fetch(path)
         if status != 200 or hashlib.sha256(body).hexdigest() != receipt.get(key):
             raise ValueError(f"Deployed content does not match the receipt: {path}, HTTP {status}")
-        if path == "/my-first-talk/" and b"collection of interface experiments" not in body:
-            raise ValueError("The deployed article does not contain the expected project description")
-    for path in withdrawn:
+        if path == "/my-first-talk/" and not all(marker in body for marker in (
+            b'href="https://pulkit.page/claude-directory/"',
+            b"responsive interface experiments",
+            b"screenshots, short recordings",
+        )):
+            raise ValueError("The deployed article does not describe and link the current project collection")
+    for path in retired:
         status, _ = fetch(path, "HEAD")
         if status not in {404, 410}:
-            raise ValueError(f"Unpublished content remains reachable or unverified: {path}, HTTP {status}")
+            raise ValueError(f"Retired content remains reachable or unverified: {path}, HTTP {status}")
 
 
 failure = ""
 for attempt in range(args.attempts):
     try:
         verify()
-        print(f"Verified deployed blog revision {args.revision}, matching content and unpublished URL responses")
+        print(f"Verified deployed blog revision {args.revision}, matching content and expected URL responses")
         break
     except (ValueError, urllib.error.URLError, TimeoutError) as error:
         failure = str(error)

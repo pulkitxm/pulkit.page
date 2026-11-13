@@ -324,7 +324,7 @@ test("blog publishing downloads the verified artifact after checkout and depende
   const checkout = steps.findIndex((step) => step.uses?.startsWith("actions/checkout@"));
   const install = steps.findIndex((step) => step.run === "bun install --frozen-lockfile");
   const download = steps.findIndex((step) => step.uses?.startsWith("actions/download-artifact@"));
-  const verify = steps.findIndex((step) => step.run?.includes("check-gallery-withdrawal.ts blog"));
+  const verify = steps.findIndex((step) => step.run?.includes("check-gallery-output.ts blog"));
   expect(checkout).toBeGreaterThan(-1);
   expect(install).toBeGreaterThan(checkout);
   expect(download).toBeGreaterThan(install);

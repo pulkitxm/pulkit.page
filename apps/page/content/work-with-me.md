@@ -26,7 +26,7 @@ Taking on new projects right now. [Book a call](https://cal.com/pulkitxm) or [te
 
 ### Claude directory
 
-The [Claude directory](/claude-directory/) presents independent implementations with fresh project recordings, interactive previews, source folders, and accompanying license notices.
+The [Claude directory](/claude-directory/) presents interface studies with project recordings, interactive previews, source folders, and accompanying license notices.
 
 ### Hinge
 

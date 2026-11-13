@@ -1,6 +1,6 @@
 ---
 title: "My First Talk: Claude Directory"
-description: My first public talk about a collection of interface experiments.
+description: My first public talk about interface experiments and building a browsable project gallery.
 date: 2026-06-13
 tags:
   - AI
@@ -18,7 +18,7 @@ I launched a project, watched it do numbers I've never seen on anything I've mad
 
 ## UI experiments
 
-The project began as a collection of interface experiments. Browse the [Claude directory](https://pulkit.page/claude-directory/) for project previews and source links.
+The [experiment gallery](https://pulkit.page/claude-directory/) collects responsive interface experiments with screenshots, short recordings, interactive previews and source links. Browse by category or search for a project.
 
 ## My first talk
 

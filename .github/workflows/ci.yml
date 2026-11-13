@@ -410,7 +410,7 @@ jobs:
           path: apps/blog/dist
       - name: Verify the publishing artifact
         if: steps.revision.outputs.current == 'true'
-        run: bun tooling/checks/src/commands/check-gallery-withdrawal.ts blog
+        run: bun tooling/checks/src/commands/check-gallery-output.ts blog
       - name: Install Pukbot for blog publishing
         if: steps.revision.outputs.current == 'true'
         run: >

@@ -1,8 +1,7 @@
 ---
 title: Graftify Your CLI
-description: A short idea for anyone who maintains a command line tool. Turn every command into a
-  tool AI agents can call, with zero setup, by hosting it on a Graftcode gateway that installs,
-  starts and stops itself.
+description: How I gave AI agents my Rust CLI through Graftcode without writing an MCP server by
+  hand, and what it took to make it work out of the box.
 date: 2026-11-17
 tags:
   - MCP
@@ -11,16 +10,22 @@ tags:
   - Agents
 ---
 
-Watch an agent try to find out why a CI check failed. It runs `gh pr checks`, copies a job id out of a URL, pulls down a few thousand lines of log and searches them for the word "error". It gets there in the end, but most of its effort goes into work a better tool could have done in one call.
+I have been building [Quinjet](https://github.com/pulkitxm/quinjet), a Git and GitHub client for the terminal, written in Rust. Over time it grew a full command line underneath the interface: status, diffs, branches, pull requests, review threads, check logs and stacks. Almost every command can answer in JSON, and every one of them is documented.
 
-That gap is what this post is about. Agents live in the terminal, and the terminal is full of tools that already know how to answer well. A good CLI describes itself completely. Every command has a name, typed arguments and help text, and many can print JSON. That is exactly what an agent tool is: a schema and a structured answer. We just never hand it over.
+You would think that makes it easy for an AI agent to use. It did not. My agents kept reaching for `git` and `gh` instead, because that is what they already know. When I pointed them at Quinjet, they had to read help pages, guess flags and parse output, and they often gave up halfway and went back to what was familiar. The tools were all there. The agents just could not see them.
 
-Handing it over should not mean writing an MCP server by hand and keeping a second copy of your command list in sync forever. With [Quinjet](https://github.com/pulkitxm/quinjet), my Git client, I let the commands generate the tools instead, and let a [Graftcode](https://graftcode.com) gateway serve them. Each tool runs the command it came from and returns the same JSON. When I add a command, agents get a new tool on the next build, and nothing drifts.
+The obvious answer was an MCP server, so agents would see Quinjet's commands as tools they can call. I kept putting it off. Writing one by hand meant a second definition of every command, a protocol to implement, a server to keep running, and a tool list that would slowly drift away from the CLI. For a side project, it was a headache I did not want.
 
-What decides whether anyone actually uses it is setup, and my rule there was strict: nobody starts a server. People will not open a second terminal so their agent can work. So the agent launches Quinjet itself. Quinjet fetches and verifies the gateway the first time it is needed, keeps one running quietly in the background for every agent on the machine, and shuts it down when nobody needs it anymore. A single command writes the config for every agent you have installed. After that it simply works, in any repository, whether Quinjet is open or not.
+Then I came across [Graftcode](https://graftcode.com). The idea is simple: you give it plain methods, and its gateway serves them as MCP tools. Reading about it, it struck me that Quinjet's commands already were those methods. Each one has a name, arguments and help text, so Quinjet could generate the methods from its own command tree, with each method just running its command and returning the JSON. I would not maintain a server at all. I would describe my CLI once, the way it already was, and let Graftcode do the protocol work.
 
-Letting agents change things turned out to be easier than I feared, because good CLIs solved it long ago. A command that would ask "are you sure?" now tells the agent what it would do, and only acts when the agent asks again with an explicit yes. Those tools are marked as destructive, so the agent checks with you first, and if that is still too much trust, one flag makes everything read-only.
+That part came together quickly. The harder lessons came after, and they are the ones I think are worth sharing.
 
-Quinjet now offers agents 94 tools, from status and commits to review threads and check logs, and it runs on macOS and Linux without Node or anything else installed first. Compared with `gh` in a shell, the difference is not access but effort: one call per answer instead of a chain of commands and text to parse.
+The first is that a server nobody has to run is the whole product. An MCP server you start in a separate terminal is one most people will never start. So Quinjet owns the entire lifecycle. The agent launches Quinjet, Quinjet downloads and verifies the gateway the first time it is needed, keeps one copy running in the background for every agent on the machine, and stops it when nobody needs it anymore. One command connects Claude Code, Codex, Cursor and the rest, and after that the user never thinks about it again.
 
-The whole change lives in [one pull request](https://github.com/pulkitxm/quinjet/pull/161) if you want to see how the pieces fit. Your CLI is probably closer to this than you think. If it already prints JSON, most of the work is done. Graftify it.
+The second is that your CLI already knows how to be safe. Exposing reads felt fine, but letting an agent commit, merge or delete made me nervous, until I noticed that Quinjet's risky commands already asked for confirmation. For an agent, that becomes a preview: the first call says what would happen, and only a second call with an explicit yes does it. Those tools are marked as destructive, so the agent checks with you first, and one flag makes the whole thing read-only.
+
+The third is that "works on my machine" is not the bar. On clean Linux machines, the gateway failed with a message saying Node.js was missing, even when Node was installed. The real cause was a small system library its bundled runtime needed. On a fresh machine, two agents also downloaded the gateway at the same moment and tripped over each other. None of this ever showed up on my laptop. The fix was to make every failure explain itself, naming the missing piece and the exact command that installs it.
+
+Today agents get 94 Quinjet tools, from status and commits to review threads and check logs, on macOS and Linux with nothing installed first. Asking an agent why a check failed is now one call, instead of a chain of `gh` commands and a few thousand lines of log.
+
+If you maintain a CLI, you are probably closer to this than you think. If your commands can print JSON, the tools already exist. Graftcode can serve them, and your job is to make it all disappear for the user. The whole change is in [one pull request](https://github.com/pulkitxm/quinjet/pull/161) if you want to see how the pieces fit together.
